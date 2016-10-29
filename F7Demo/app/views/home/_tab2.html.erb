@@ -1,0 +1,23 @@
+<%= render partial: 'layouts/navbar', locals: {title: '分类'} %>
+<div class="pages navbar-fixed">
+  <div data-page="home-2" class="page">
+    <div class="page-content">
+      
+      <!-- slider -->
+      <div class="content-block-title">分类</div>
+      <% 4.times.each do |i| %>
+      <div class="row" style="margin: 0px 20px;">
+        <% 4.times.each do |item| %>
+          <div class="col-25 text-center">
+            <a href="/product/list" class="external">
+              <img src="/assets/b1.jpg" class="img-responsive" />
+              <p>箱包</p>
+            </a>
+          </div>
+        <% end %>
+      </div> 
+      <% end %>
+
+    </div>
+  </div>
+</div>

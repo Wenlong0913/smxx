@@ -1,0 +1,53 @@
+<%#= render partial: 'layouts/navbar', locals: {title: '产品名称1'} %>
+
+<div class="pages no-navbar toolbar-fixed">
+  <div class="page" data-page="product-show">
+    <div class="page-content hide-toolbar-on-scroll">
+
+      <!-- header -->
+      <div class="card demo-card-header-pic no-border">
+        <div style="background-image:url(/assets/w-slider.jpg)" valign="bottom" class="card-header color-white no-border">原宿风中筒袜纯棉女袜</div>
+        <div class="card-content">
+          <div class="card-content-inner">
+            <p>五双混色装</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="#" class="link">￥35.4</a>
+          <a href="/product/order" class="link button button-round button-green active">立即购买</a>
+        </div>
+      </div><!-- header -->
+      
+      <!-- slider2 -->
+      <div class="content-block-title">他们评论了该产品</div>
+      <div class="swiper-container swiper-follower">
+        <div class="swiper-wrapper">
+          <% 10.times.each do |i| %>
+            <div class="swiper-slide">
+              <a href="/product/share"><img src="/assets/user<%= i%3 %>.jpg" class="img-responsive"/></a>
+            </div>
+          <% end %>
+        </div>
+      </div>
+     <!-- slider2 -->
+
+      <div class="card no-border">
+        <div class="card-content">
+          <div class="card-content-inner">
+            产品展示应该是一个比较新颖的想法。 根据用户上传产品的情况， 生成H5展示页面，同时方便用户分享到朋友圈。
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Bottom Toolbar-->
+<!-- Bottom Toolbar -->
+<div class="toolbar no-border">
+  <div class="toolbar-inner">
+    <%= link_to '立即购买', '/product/order', class: 'button button-big active button-block' %>
+    <!-- <a href="#" class="share-btn button button-big" style="margin-left: 5px;"><i class="fa fa-share"></i> </a> -->
+  </div>
+</div>

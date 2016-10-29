@@ -1,0 +1,25 @@
+<%= render partial: 'layouts/navbar', locals: {title: '分类'} %>
+<div class="pages navbar-fixed">
+  <div data-page="home-2" class="page">
+    <div class="page-content">
+      
+      <div class="content-block-title">* 热门产品</div>
+      <% 5.times.each do |i| %>
+        <!-- product -->
+        <div class="card facebook-card">
+          <div class="card-header no-border">
+            <div class="facebook-avatar"><a href="/agent/homepage" class="external"><img src="/assets/user1.jpg" width="34" height="34"></a></div>
+            <div class="facebook-name"><a href="/agent/homepage" class="external">唐义海</a></div>
+            <div class="facebook-date">我的海淘屋</div>
+          </div>
+          <div class="card-content"><a href="/product/show" class="external"><img src="/assets/b-slider.jpg" width="100%"></a></div>
+          <div class="card-footer no-border">
+            <a href="/product/show" class="link external">SAFELAKE英伦休闲帆布女单肩手提包</a>
+            <a href="/product/show" class="link external">查看</a>
+          </div>
+        </div><!-- product -->
+      <% end %>
+
+    </div>
+  </div>
+</div>

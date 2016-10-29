@@ -1,0 +1,49 @@
+<!-- Tabs, 现在容器是"views" -->
+<div class="views tabs toolbar-fixed">
+  <!-- Tab 1 首页, 默认激活 -->
+  <div id="tab1" class="view tab active">
+    <%= render 'home/tab1' %>
+  </div>
+  <!-- Tab 2 分类, -->
+  <div id="tab2" class="view tab">
+    <%= render 'home/tab2' %>
+  </div>
+  <!-- Tab 3 分享, -->
+  <div id="tab3" class="view tab">
+    <%= render 'home/tab3' %>
+  </div>
+  <!-- Tab 4 商家, -->
+  <div id="tab4" class="view tab">
+    <%= render 'home/tab4' %>
+  </div>
+  <!-- Tab 5 发布, -->
+  <div id="tab5" class="view tab">
+    <%= render 'home/tab5' %>
+  </div>
+  <!-- 带有链接的标签栏 -->
+  <div class="toolbar tabbar">
+    <div class="toolbar-inner">
+      <a href="#tab4" class="tab-link">
+        <i class="fa fa-group"></i>
+        <span class="tabbar-label">商家</span>
+      </a>
+      <a href="#tab2" class="tab-link">
+        <i class="fa fa-th-large"></i>
+        <span class="tabbar-label">分类</span>
+      </a>
+      <a href="#tab1" class="tab-link active">
+        <i class="fa fa-dashboard fa-4x">
+        </i>
+        <span class="tabbar-label"></span>
+      </a>
+      <a href="#tab3" class="tab-link">
+        <i class="fa fa-comments"></i>
+        <span class="tabbar-label">分享</span>
+      </a>
+      <a href="#tab5" class="tab-link">
+         <i class="fa fa-plus"></i>
+        <span class="tabbar-label i18n" data-i18n="index.setting">发布</span>
+      </a>
+    </div>
+  </div>
+</div>

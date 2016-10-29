@@ -1,0 +1,52 @@
+<%#= render partial: 'layouts/navbar', locals: {title: '产品名称1'} %>
+
+<div class="pages no-navbar toolbar-fixed">
+  <div class="page" data-page="product-show">
+    <div class="page-content hide-toolbar-on-scroll">
+
+      <div class="content-block-title text-center"><h2>特别表扬化妆师文艳</h2></div>
+      <div class="content-block">
+        <div class="content-block-inner">
+          <% 5.times.each do |i| %>
+            <p>很棒，摄影师海杰对宝宝的亲和力需要再进一步，总的还是很好。特别表扬化妆师文艳，把我和宝宝化得美美的，以后如果化妆师有时间，我还希望单独她指导我们化妆，感谢。会推荐朋友。如果能换个更舒服的商场环境就更好啦！</p>
+            <img src="/assets/photo<%= i %>.jpg" class="img-responsive" />
+          <% end %> 
+        </div>
+      </div>
+
+      <div class="content-block-title text-center">评论</div>
+      <div class="content-block">
+        <div class="content-block-inner">
+          <div class="list-block media-list">
+            <ul>
+              <% 5.times.each do |i| %>
+                <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                      <div class="item-title-row">
+                        <div class="item-title">用户2</div>
+                        <div class="item-after">大约3分钟前</div>
+                      </div>
+                      <div class="item-text">无意间在朋友圈看到糖豆辣妈，看到他们的客片突然觉得就是我要的那种风格。妹子一直都有公主梦，同样我也有，带着妹子来尝试尝试。...</div>
+                    </div>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+          <%= link_to '发表评论', '#', class: 'button button-big button-block' %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Bottom Toolbar-->
+<!-- Bottom Toolbar -->
+<div class="toolbar no-border">
+  <div class="toolbar-inner">
+    <%= link_to '分享到朋友圈', '#', class: 'button button-big active button-block' %>
+    <!-- <a href="#" class="share-btn button button-big" style="margin-left: 5px;"><i class="fa fa-share"></i> </a> -->
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<!-- Top Navbar-->
+<div class="navbar navbar-clear no-border <%= @navbar_css %>" style="<%= request.path != 'abc' ? 'background: transparent;' : ''%>">
+  <div class="navbar-inner">  
+    <div class="left">
+      <a href="#" class="link open-panel icon-only"><i class="fa fa-navicon fa-2x"></i></a>
+    </div>
+    <div class="center sliding" id="title"><%= title %></div>
+    <div class="right">
+      <% if request.path == '/' %>
+        <i class="fa fa-search"></i>
+      <% else %>
+        <a href="#" class="link back">
+          <i class="fa fa-angle-left fa-2x"></i>
+        </a>
+      <% end %>
+    </div>
+  </div>
+</div>

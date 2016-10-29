@@ -1,0 +1,75 @@
+<%= render partial: 'layouts/navbar', locals: {title: '私享荟'} %>
+<div class="pages navbar-fixed">
+  <div data-page="home-2" class="page">
+    <div class="page-content">
+      <!-- slider -->
+      <div data-pagination=".swiper-pagination" data-next-button=".swiper-button-next" data-prev-button=".swiper-button-prev" data-preload-images="false" data-lazy-loading="true" class="swiper-container swiper-init ks-lazy-slider" style="width: 100%; height: 300px; margin: -45px 0px 0px 0px;">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><a href="/product/show" class="external"><img data-src="/assets/d-slider.jpg" class="swiper-lazy img-responsive"/></a>
+            <div class="preloader"></div>
+          </div>
+          <div class="swiper-slide"><a href="/product/show" class="external"><img data-src="/assets/b-slider.jpg" class="swiper-lazy img-responsive"/></a>
+            <div class="preloader"></div>
+          </div>
+          <div class="swiper-slide"><a href="/product/show" class="external"><img data-src="/assets/w-slider.jpg" class="swiper-lazy img-responsive"/></a>
+            <div class="preloader"></div>
+          </div>
+        </div>
+      <!--<div class="swiper-pagination swiper-pagination-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
+        <div class="swiper-button-next swiper-button-white"></div> -->
+      </div><!-- slider -->
+
+      <!-- slider2 -->
+      <div class="content-block-title">* 热门推荐</div>
+      <div class="swiper-container swiper-3">
+        <div class="swiper-pagination"></div>
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><a href="/product/show" class="external"><img src="/assets/b1.jpg" class="img-responsive"/></a></div>
+          <div class="swiper-slide"><a href="/product/show" class="external"><img src="/assets/b2.jpg" class="img-responsive"/></a></div>
+          <div class="swiper-slide"><a href="/product/show" class="external"><img src="/assets/b3.jpg" class="img-responsive"/></a></div>
+          <div class="swiper-slide"><a href="/product/show" class="external"><img src="/assets/d1.jpg" class="img-responsive"/></a></div>
+          <div class="swiper-slide"><a href="/product/show" class="external"><img src="/assets/d2.jpg" class="img-responsive"/></a></div>
+          <div class="swiper-slide"><a href="/product/show" class="external"><img src="/assets/d3.jpg" class="img-responsive"/></a></div>
+        </div>
+      </div>
+     <!-- slider2 -->
+      
+      <!-- facebook card -->
+      <div class="content-block-title">* 我关注的</div>
+
+      <div class="card facebook-card">
+        <div class="card-header no-border">
+          <div class="facebook-avatar"><a href="/agent/homepage" class="external"><img src="/assets/user1.jpg" width="34" height="34"></a></div>
+          <div class="facebook-name">唐义海</div>
+          <div class="facebook-date">我的海淘屋</div>
+        </div>
+        <div class="card-content"><a href="/product/show" class="external"><img src="/assets/b-slider.jpg" width="100%"></a></div>
+        <div class="card-footer no-border">
+          <a href="/product/show" class="link external">SAFELAKE英伦休闲帆布女单肩手提包</a>
+          <a href="/product/show" class="link external">查看</a>
+        </div>
+      </div>
+       
+      <div class="card facebook-card">
+        <div class="card-header">
+          <div class="facebook-avatar"><img src="/assets/user1.jpg" width="34" height="34"></div>
+          <div class="facebook-name">唐义海</div>
+          <div class="facebook-date">12小时前发布</div>
+        </div>
+        <div class="card-content">
+          <div class="card-content">
+            <p>&nbsp;&nbsp;刚从法国带回来的，法国红酒美美哒，小聚来一瓶!</p>
+            <img src="/assets/d-slider.jpg" width="100%">
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="#" class="link">喜欢(232)</a>
+          <a href="#" class="link">评论(43)</a>
+          <a href="#" class="link">查看</a>
+        </div>
+      </div><!-- facebook card -->   
+
+    </div>
+  </div>
+</div>
