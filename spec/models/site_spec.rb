@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe Site, type: :model do
   
   describe "Create/Update/Destroy" do
-    it { expect(Site::Create).to be_a(Proc) }
-    it { expect(Site::Update).to be_a(Proc) }
-    it { expect(Site::Destroy).to be_a(Proc) }
+    it { expect(described_class::Create).to be_a(Proc) }
+    it { expect(described_class::Update).to be_a(Proc) }
+    it { expect(described_class::Destroy).to be_a(Proc) }
   end
 
   subject { described_class.new(title: 'SXH') }
