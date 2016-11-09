@@ -1,0 +1,20 @@
+h1 
+  | 查看 <%= singular_table_name %>
+  .pull-right
+    = link_to '编辑', edit_<%= singular_table_name %>_path(@<%= singular_table_name %>), class: 'btn btn-primary'
+    = link_to '返回', <%= index_helper %>_path, class: 'btn btn-primary', class: 'btn btn-primary'
+
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+    h4 查看 <%= singular_table_name %>
+  .panel-body
+    dl
+    <%- attributes.each do |attribute| -%>
+      dt: strong <%= attribute.human_name %>
+      dd = @<%= singular_table_name %>.<%= attribute.name %>
+    <%- end -%>

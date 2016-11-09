@@ -1,0 +1,31 @@
+h1 
+  | <%= plural_table_name %> 列表
+  .pull-right
+    = link_to '新建 <%= human_name %>', new_<%= singular_table_name %>_path, class: 'btn btn-primary'
+
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+    h4 <%= plural_table_name %> 列表
+  .panel-body
+    .table-responsive
+      table.table.table-striped
+        thead
+          tr
+<% attributes.each do |attribute| -%>
+            th <%= attribute.human_name %>
+<% end -%>
+
+        tbody
+          - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
+            tr
+<% attributes.each do |attribute| -%>
+              td = <%= singular_table_name %>.<%= attribute.name %>
+<% end -%>
+              td = link_to '查看', <%= singular_table_name %>
+              td = link_to '编辑', edit_<%= singular_table_name %>_path(<%= singular_table_name %>)
+              td = link_to '删除', <%= singular_table_name %>, data: { confirm: '确定要删除吗?' }, method: :delete

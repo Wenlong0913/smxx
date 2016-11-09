@@ -1,0 +1,27 @@
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+        i class="fa fa-times"
+    h4 <%= singular_table_name %>
+  .panel-body
+    = form_for @<%= singular_table_name %>, html: { class: 'form-horizontal' } do |f|
+      - if @<%= singular_table_name %>.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@<%= singular_table_name %>.errors.count, "error")} prohibited this <%= singular_table_name %> from being saved:"
+          ul
+            - @<%= singular_table_name %>.errors.full_messages.each do |message|
+              li = message
+
+<%- attributes.each do |attribute| -%>
+      .form-group
+        = f.label :<%= attribute.name %>, class: 'col-md-3 control-label'
+        .col-md-9
+          = f.<%= attribute.field_type %> :<%= attribute.name %>, class: 'form-control'
+<%- end -%>
+      .form-group
+        .col-md-2
+          = f.submit class: 'btn btn-success'
