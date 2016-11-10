@@ -7,12 +7,25 @@ RSpec.describe User, type: :model do
     it { expect(described_class::Destroy).to be_a(Proc) }
   end
 
+  it { should have_one :mobile }
+
   describe 'attribtues' do
     subject { described_class.new.attributes }
     it { should include('nickname') }
+    it { should include('username') }
+    it { should include('email') }
     it { should include('created_at') }
     it { should include('updated_at') }
   end
 
-  it 'is valid with valid attributes'
+  describe 'instance' do
+    subject { User.new }
+    it { should have_attr_accessor :mobile_phone }
+  end
+
+  it 'is valid with valid attributes' do
+    flag, user = User::Create.(password: 'abc', mobile_phone: '13912345678')
+    expect(flag).to be(true)
+  end
+
 end
