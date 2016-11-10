@@ -1,5 +1,5 @@
 class Page < ApplicationRecord
-  belongs_to :site
+  belongs_to :site, optional: true
 
-  validates_presence_of :site, :title
+  validates_presence_of :title
 end
