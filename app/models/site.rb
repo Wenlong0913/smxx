@@ -4,5 +4,5 @@ class Site < ApplicationRecord
   has_many :pages, dependent: :destroy
 
   validates_presence_of :title, :user
-  validates_uniqueness_of :title, scope: :user
+  validates_uniqueness_of :title, scope: :user_id
 end
