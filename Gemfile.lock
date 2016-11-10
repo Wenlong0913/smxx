@@ -1,4 +1,11 @@
 PATH
+  remote: ../theme_card
+  specs:
+    theme_card (0.0.1)
+      rails (~> 5.0.0.1)
+      themeable
+
+PATH
   remote: ../theme_color_admin
   specs:
     theme_color_admin (0.0.3)
@@ -49,6 +56,7 @@ GEM
     arel (7.1.4)
     builder (3.2.2)
     byebug (9.0.6)
+    coderay (1.1.1)
     coffee-rails (4.2.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.2.x)
@@ -97,6 +105,10 @@ GEM
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
+    pry (0.10.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     puma (3.6.0)
     rack (2.0.1)
     rack-test (0.6.3)
@@ -159,6 +171,7 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (~> 3.0)
+    slop (3.6.0)
     spring (2.0.0)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -205,6 +218,7 @@ DEPENDENCIES
   jquery-rails
   listen (~> 3.0.5)
   mysql2 (>= 0.3.18, < 0.5)
+  pry
   puma (~> 3.0)
   rails (~> 5.0.0, >= 5.0.0.1)
   rspec-rails (~> 3.5)
@@ -212,6 +226,7 @@ DEPENDENCIES
   slim-rails
   spring
   spring-watcher-listen (~> 2.0.0)
+  theme_card!
   theme_color_admin!
   turbolinks (~> 5)
   tzinfo-data
