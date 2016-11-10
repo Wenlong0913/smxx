@@ -6,4 +6,3 @@ class User < ApplicationRecord
   has_one :mobile
 
 end
-require_dependency 'user/mobile'
