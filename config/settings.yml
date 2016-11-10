@@ -1,0 +1,12 @@
+default: &default
+  site:
+    name: tmf
+    host: localhost
+  email:
+    sender: sender@tmf.com
+development:
+  <<: *default
+production:
+  <<: *default
+test:
+  <<: *default
