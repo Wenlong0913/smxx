@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'home#index'
-  devise_for "users", skip: [:sessions]
+  devise_for "users", skip: [:sessions, :passwords, :registrations]
   as :user do
-    post 'sign_in', to: 'users/sessions#create', as: :sign_in
-    post 'sign_up', to: 'users/registrations#create', as: :sign_up
+    post 'sign_in', to: 'users/sessions#create'
+    post 'sign_out', to: 'users/sessions#destroy'
+    post 'sign_up', to: 'users/registrations#create'
   end
 
   namespace :admin do
