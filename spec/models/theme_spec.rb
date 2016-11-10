@@ -10,7 +10,7 @@ RSpec.describe Theme, type: :model do
   describe 'attribtues' do
     subject { described_class.new.attributes }
     it { should include('name') }
-    it { should include('chinese_name') }
+    it { should include('display_name') }
     it { should include('created_at') }
     it { should include('updated_at') }
   end
