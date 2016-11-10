@@ -17,13 +17,16 @@ RSpec.describe Page, type: :model do
     it { should include('updated_at') }
   end
 
-  subject { described_class.new(title: 'SXH') }
-
-  it 'is valid with valid attribtues'
-  it 'is not valid without site'
-  it 'is not valid without title'
-
   it { should belong_to :site }
-  it { should validate_presence_of :site }
   it { should validate_presence_of :title }
+
+  subject { create(:page, site: create(:site)) }
+
+  let(:user) { create(:user) }
+  let(:site) { create(:site, user: user) }
+  subject { build(:page, site: site) }
+
+  it 'is valid with valid attribues' do
+    expect(subject).to be_valid
+  end
 end

@@ -16,23 +16,16 @@ RSpec.describe Site, type: :model do
     it { should include('updated_at') }
   end
 
-  subject { described_class.new(title: 'SXH') }
+  it { should belong_to(:theme_config) }
+  it { should belong_to :user }
+  it { should have_many :pages }
+  it { should validate_presence_of :title }
+  it { should validate_uniqueness_of(:title).scoped_to(:user_id) }
+
+  let(:user) { create(:user) }
+  subject { build(:site, user: user) }
 
   it 'is valid with valid attribues' do
     expect(subject).to be_valid
   end
-
-  it 'is not valid without title' do
-    subject.title = nil
-    expect(subject).not_to be_valid
-  end
-
-  it { should belong_to :theme_config }
-  it { should belong_to :user }
-  it { should have_many :pages }
-  it { should validate_presence_of :theme_config }
-  it { should validate_presence_of :title }
-  it { should validate_presence_of :user }
-  it { should validate_uniqueness_of :user }
-
 end
