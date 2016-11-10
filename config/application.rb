@@ -18,6 +18,7 @@ Bundler.require(*Rails.groups)
 
 module Tmf
   class Application < Rails::Application
+    require 'settings'
     config.generators do |g|
       g.test_framework :rspec
     end
