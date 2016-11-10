@@ -20,10 +20,9 @@ RSpec.describe Page, type: :model do
   it { should belong_to :site }
   it { should validate_presence_of :title }
 
-  subject { create(:page, site: create(:site)) }
-
   let(:user) { create(:user) }
   let(:site) { create(:site, user: user) }
+  
   subject { build(:page, site: site) }
 
   it 'is valid with valid attribues' do
