@@ -8,6 +8,14 @@ RSpec.describe Site, type: :model do
     it { expect(described_class::Destroy).to be_a(Proc) }
   end
 
+  describe 'attribtues' do
+    subject { described_class.new.attributes }
+    it { should include('title') }
+    it { should include('description') }
+    it { should include('created_at') }
+    it { should include('updated_at') }
+  end
+
   subject { described_class.new(title: 'SXH') }
 
   it 'is valid with valid attribues' do
