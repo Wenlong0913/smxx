@@ -9,5 +9,12 @@ RSpec.describe ThemeConfig, type: :model do
 
   it { should belong_to :site }
   it { should belong_to :theme }
-  it { should validate_uniqueness_of :site }
+
+  describe do
+    let(:user) { create(:user) }
+    let(:site) { create(:site, user: user) }
+    let(:theme) { create(:theme) }
+    subject { create(:theme_config, site: site, theme: theme) }
+    it { should validate_uniqueness_of(:theme_id).scoped_to(:site_id) }
+  end
 end
