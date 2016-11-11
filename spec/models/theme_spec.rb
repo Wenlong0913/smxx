@@ -18,5 +18,8 @@ RSpec.describe Theme, type: :model do
   it { should have_many :theme_configs }
   it { should have_many(:sites).through(:theme_configs) }
   it { should validate_presence_of :name }
+  it { should validate_presence_of :display_name }
   it { should validate_uniqueness_of :name }
+  it { should validate_uniqueness_of :display_name }
 end
+
