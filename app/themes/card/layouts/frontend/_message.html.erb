@@ -1,0 +1,17 @@
+<%# Rails flash messages styled for Bootstrap 2.3 %>
+<% flash.each do |name, msg| %>
+  <section class="color-bg">
+    <div class="container">
+      <div class="text-center alert bg-<%= name.to_s == 'notice' ? "success" : "danger" %>">
+        <a class="close" data-dismiss="alert">&times;</a>
+        <div id="flash_<%= name%>" class="text-left">
+          <ul class="list-unstyled">
+            <% Array(msg).each do |m| %>
+              <li><%= m %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+<% end %>

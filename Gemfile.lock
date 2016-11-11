@@ -1,3 +1,20 @@
+GIT
+  remote: git@gitlab.tanmer.com:tm-themes/theme_card.git
+  revision: a2efa2a967b591158ab5c0d2b337139473290429
+  specs:
+    theme_card (0.0.1)
+      rails (~> 5.0.0.1)
+      themeable
+
+GIT
+  remote: git@gitlab.tanmer.com:tm-themes/theme_color_admin.git
+  revision: b772fdf0e1386a17a3a94118c9fb6466a0cc54a6
+  specs:
+    theme_color_admin (0.0.3)
+      rails (>= 4.2.7)
+      slim
+      themeable (~> 1.1.2, >= 1.1.2)
+
 PATH
   remote: components/sms
   specs:
@@ -74,6 +91,8 @@ GEM
       factory_girl (~> 4.7.0)
       railties (>= 3.0.0)
     ffi (1.9.14)
+    font-awesome-rails (4.7.0.0)
+      railties (>= 3.2, < 5.1)
     formatador (0.2.5)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
@@ -220,6 +239,8 @@ GEM
       activesupport (>= 3)
       rails (>= 3)
     temple (0.7.7)
+    themeable (1.1.3)
+      rails (>= 4.0)
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.5)
@@ -250,6 +271,7 @@ DEPENDENCIES
   devise
   devise-i18n
   factory_girl_rails
+  font-awesome-rails
   guard-rspec
   jbuilder (~> 2.5)
   jquery-rails
@@ -268,6 +290,8 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   swagger-docs
+  theme_card!
+  theme_color_admin!
   turbolinks (~> 5)
   tzinfo-data
   uglifier (>= 1.3.0)

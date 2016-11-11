@@ -1,0 +1,7 @@
+h1 
+  | 编辑 <%= singular_table_name %>
+  .pull-right
+    = link_to '查看', @<%= singular_table_name %>, class: 'btn btn-primary'
+    = link_to '返回', <%= index_helper %>_path, class: 'btn btn-primary'
+
+== render 'form'
