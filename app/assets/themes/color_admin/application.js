@@ -1,0 +1,2 @@
+//= require color_admin/backend
+//
