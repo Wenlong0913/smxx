@@ -1,6 +1,6 @@
 GIT
   remote: git@gitlab.tanmer.com:tm-themes/theme_card.git
-  revision: ee3d6f0721e2198a456898810eb203635cc53e56
+  revision: a2efa2a967b591158ab5c0d2b337139473290429
   specs:
     theme_card (0.0.1)
       rails (~> 5.0.0.1)
