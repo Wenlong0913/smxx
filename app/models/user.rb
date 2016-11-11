@@ -5,4 +5,9 @@ class User < ApplicationRecord
     :recoverable, :rememberable, :trackable, :validatable
   has_one :mobile
   attr_accessor :mobile_phone
+
+  def email_required?
+    false
+  end
+
 end

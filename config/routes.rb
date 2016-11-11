@@ -8,6 +8,15 @@ Rails.application.routes.draw do
     post 'sign_up', to: 'users/registrations#create'
   end
 
+  namespace :api do
+    get '/', to: "home#index"
+    namespace :v1 do
+      namespace :sessions do
+        resource :sms, only: [:create]
+      end
+    end
+  end
+
   namespace :admin do
     get '/', to: 'home#index', as: :root
   end
