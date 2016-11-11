@@ -16,7 +16,8 @@ RSpec.describe Site, type: :model do
     it { should include('updated_at') }
   end
 
-  it { should belong_to(:theme_config) }
+  it { should have_many(:theme_configs) }
+  it { should have_one(:active_theme_config) }
   it { should belong_to :user }
   it { should have_many :pages }
   it { should validate_presence_of :title }

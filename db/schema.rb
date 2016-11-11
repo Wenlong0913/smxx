@@ -23,13 +23,11 @@ ActiveRecord::Schema.define(version: 20161110083835) do
   end
 
   create_table "sites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer  "theme_config_id"
     t.integer  "user_id"
     t.string   "title"
-    t.text     "description",     limit: 65535
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.index ["theme_config_id"], name: "index_sites_on_theme_config_id", using: :btree
+    t.text     "description", limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
   end
 
@@ -37,8 +35,9 @@ ActiveRecord::Schema.define(version: 20161110083835) do
     t.integer  "site_id"
     t.integer  "theme_id"
     t.text     "config",     limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.boolean  "active",                   default: false, null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.index ["site_id"], name: "index_theme_configs_on_site_id", using: :btree
     t.index ["theme_id"], name: "index_theme_configs_on_theme_id", using: :btree
   end
