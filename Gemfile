@@ -51,6 +51,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'theme_color_admin', path: '../theme_color_admin'
-gem 'theme_card', path: '../theme_card'
+gem 'theme_color_admin', git: 'git@gitlab.tanmer.com:tm-themes/theme_color_admin.git'
+gem 'theme_card', git: 'git@gitlab.tanmer.com:tm-themes/theme_card.git'
 gem 'font-awesome-rails'
