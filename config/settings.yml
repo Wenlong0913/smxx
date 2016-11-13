@@ -2,6 +2,8 @@ default: &default
   site:
     name: tmf
     host: localhost
+    copyright: © TMF All Right Reserved 2015
+    description: 私享荟网络购物平台
   email:
     sender: sender@tmf.com
 development:
