@@ -29,8 +29,8 @@ we can change it to a real service:
 
     Sms.setup do |s|
       s.service =
-        lambda |token_body| do
-          YunPian::SMS.post(mobile: s.mobile_number, message: s.message)
+        lambda do |token_body|
+          Sms::Services::YunPianService.send_text(token_body.mobile_phone, token_body.message)
         end
     end
 
