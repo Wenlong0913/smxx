@@ -20,7 +20,7 @@
         .icon
             i.fa.fa-sign-in
       .login-content
-        = form_for(@user, url: sign_in_path, remote: true, method: :post, html: {class: "margin-bottom-0"}) do |f|
+        = simple_form_for(@user, url: sign_in_path, remote: true, method: :post, html: {class: "margin-bottom-0"}) do |f|
           - if flash[:alert]
             .alert.alert-danger
               = flash[:alert]

@@ -4,17 +4,22 @@
   <!-- Container -->
   <div class="container">
 
-    <!-- uninav -->
-    <ul class="uninav auto-invert case-c uninav-sm text-center uninav-uline">
-      <li class="hidden-xs"><a href="#"><b class="fg-primary">TRENDING:</b></a></li>
-      <li><a href="#">#orlando shooting</a></li>
-      <li><a href="#">#donald trump</a></li>
-      <li><a href="#">#taylor swift</a></li>
-      <li><a href="#">#playstation 6</a></li>
-      <li><a href="#">#stephen curry</a></li>
-    </ul>
-    <!-- /uninav -->
-
+    <% unless controller_name == 'sessions' && action_name == 'new'%>
+      <!-- uninav -->
+      <ul class="uninav auto-invert case-c uninav-sm text-center uninav-uline">
+        <li class="hidden-xs"><a href="#"><b class="fg-primary">TRENDING:</b></a></li>
+        <li><a href="#">#orlando shooting</a></li>
+        <li><a href="#">#donald trump</a></li>
+        <li><a href="#">#taylor swift</a></li>
+        <li><a href="#">#playstation 6</a></li>
+        <li><a href="#">#stephen curry</a></li>
+      </ul>
+      <!-- /uninav -->
+    <% else %>
+      <div class="text-center">
+        <%= Settings.site.copyright%>
+      </div>
+    <% end %>
   </div>
   <!-- /Container -->
 
