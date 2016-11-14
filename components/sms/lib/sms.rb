@@ -36,12 +36,11 @@ module Sms
   end
 
   def self.cleanup!
-    # TODO: delete all mobiles from Redis
+    @@redis.del(@@redis.keys("#{@@key_prefix}*"))
   end
 
   # Get all mobiles whose token codes are not expired
   def self.mobiles
-    # TODO: fetch mobiles from Redis
-    []
+    @@redis.keys("#{@@key_prefix}*").map{|k| k.gsub(@@key_prefix,'')}
   end
 end
