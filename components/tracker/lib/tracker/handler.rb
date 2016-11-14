@@ -31,21 +31,17 @@ module Tracker
       @tracker_session = session['tracker.session.id'] &&
         Tracker::Session.find_by(id: session['tracker.session.id']) rescue nil
       unless tracker_session
-        tracker_session = Tracker::Session.create
+        @tracker_session = Tracker::Session.create
         session['tracker.session.id'] = tracker_session.id
       end
     end
 
     def process_visit
-      if session['tracker.visit.url'] == request.original_url &&
-        (Time.at(session['tracker.visit.at']) rescue nil) > options.ttl.ago
-        Tracker::Visit.where(id: session['tracker.visit.id']).limit(1).update_all(updated_at: Time.now) if session['tracker.visit.id']
-        session['tracker.visit.at'] = Time.now.to_i
-        return
-      end
-
       Tracker::Visit.where(id: session['tracker.visit.id']).limit(1).update_all(updated_at: Time.now) if session['tracker.visit.id']
-      @tracker_visit = @tracker_session.visits.new
+      # return unless tracker_session
+      return if session['tracker.visit.url'] == request.original_url
+
+      @tracker_visit = tracker_session.visits.new
       tracker_visit.action = Tracker::Action.find_or_create_by(
         controller_name: controller.controller_name,
         action_name: controller.action_name)

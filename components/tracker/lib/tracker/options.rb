@@ -19,10 +19,6 @@ module Tracker
       get_value(:payload)
     end
 
-    def ttl
-      get_value(:ttl, 5.minutes)
-    end
-
     private
     def get_value(key, default=nil)
       value = origin_options.fetch(key, default)
