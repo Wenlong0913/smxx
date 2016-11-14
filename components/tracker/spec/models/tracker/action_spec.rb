@@ -14,5 +14,6 @@ module Tracker
     it { should validate_uniqueness_of(:action_name).scoped_to(:controller_name) }
     it { should validate_presence_of(:controller_name) }
     it { should validate_presence_of(:action_name) }
+    it { should have_many(:visits) }
   end
 end
