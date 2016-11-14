@@ -47,7 +47,7 @@ RSpec.describe Sms::Token do
   end
 
   it 'not exist?' do
-    expect(subject.exist?).to eq(true)
+    expect(subject.exist?).to eq(false)
   end
 
   it 'valid? not exist mobile_phone' do

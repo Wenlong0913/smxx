@@ -5,7 +5,14 @@ module Sms
 
       HOST = 'http://yunpian.com/v1' unless const_defined? :HOST
 
-      mattr_accessor :api_key
+      @@api_key = nil
+      def self.api_key
+        @@api_key
+      end
+
+      def self.api_key=(v)
+        @@api_key = v
+      end
 
       class SentFailed < StandardError
         attr_reader :response
