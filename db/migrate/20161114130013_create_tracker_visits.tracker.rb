@@ -1,3 +1,4 @@
+# This migration comes from tracker (originally 20161114083606)
 class CreateTrackerVisits < ActiveRecord::Migration[5.0]
   def change
     create_table :tracker_visits do |t|
@@ -14,8 +15,8 @@ class CreateTrackerVisits < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
-    add_foreign_key :tracker_visits, :tracker_sessions
-    add_foreign_key :tracker_visits, :tracker_actions
+    add_foreign_key :tracker_visits, :tracker_sessions, column: 'session_id'
+    add_foreign_key :tracker_visits, :tracker_actions, column: 'action_id'
 
   end
 end

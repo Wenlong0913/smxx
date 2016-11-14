@@ -2,7 +2,7 @@ module Tracker
   class Visit < ApplicationRecord
     belongs_to :session
     belongs_to :action
-    belongs_to :resource, polymorphic: true
+    belongs_to :resource, polymorphic: true, optional: true
     validates_presence_of :url
   end
 end

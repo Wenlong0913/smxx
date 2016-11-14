@@ -39,6 +39,7 @@ gem 'swagger-docs'
 
 # require components
 gem 'sms', path: 'components/sms'
+gem 'tracker', path: 'components/tracker'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
