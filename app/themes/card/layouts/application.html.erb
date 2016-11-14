@@ -20,16 +20,20 @@
 <body data-spy="scroll" data-target="#left-navbar"  data-offset="100" data-controller="<%= controller_name %>" data-action="<%= action_name %>">
   <%= render 'layouts/frontend/header' %>
   <!-- Content -->
-  <section class="content bg-black-3">
-    <!-- Container -->
-    <div class="container">
-      <%= render 'layouts/frontend/message' %>
-      <%= yield %>
-    </div><!-- /Container -->
-  </section><!-- /Content -->
-  <%= render 'layouts/frontend/footer_content' %>
+  <% if controller_name == 'sessions' && action_name == 'new' %>
+     <%= yield %>
+  <% else %>
+    <section class="content bg-black-3">
+      <!-- Container -->
+      <div class="container">
+        <%= render 'layouts/frontend/message' %>
+        <%= yield %>
+      </div><!-- /Container -->
+    </section><!-- /Content -->
+    <%= render 'layouts/frontend/footer_content' %>
+  <% end %>
   <%= render 'layouts/frontend/footer' %>
-  <%= render 'pages/search_music' if controller_name == 'pages' && action_name == 'edit' %>
+  <%#= render 'pages/search_music' if controller_name == 'pages' && action_name == 'edit' %>
 </body>
 
 </html>

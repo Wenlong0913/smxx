@@ -1,5 +1,4 @@
-class Agent::HomeController < ApplicationController
-  acts_as_themeable 'card'
+class Agent::HomeController < Agent::BaseController
   def index
   end
 end
