@@ -3,12 +3,13 @@
   .login.login-with-news-feed
     .news-feed
       .news-image
-          = image_tag 'img/login-bg/bg-7.jpg', data: { id: 'login-cover-image' }
+          = image_tag 'http://img3.iqilu.com/data/attachment/forum/201308/21/192654ai88zf6zaa60zddo.jpg', data: { id: 'login-cover-image' }
       .news-caption
         h4.caption-title
-          = fa_icon 'fa fa-diamond text-success' do
-            '鸭先知——更好的管理平台'
-        p 物联网监控与云计算相结合，实时监控漏水
+          i.fa.fa-diamond.text-success'
+            = Settings.site.copyright
+        p
+          = Settings.site.copyright
     .right-content
       .login-header
         .brand
@@ -19,17 +20,17 @@
         .icon
             i.fa.fa-sign-in
       .login-content
-        = simple_form_for(url: sign_in_path, method: :post, remote: true, html: {class: "margin-bottom-0"}) do |f|
-            - if flash[:alert]
-              .alert.alert-danger
-                = flash[:alert]
-            .form-group.m-b-15
-              input.form-control.input-lg[name="user[login]"][type="text"][placeholder="电子邮件或手机号"]
-            .form-group.m-b-15
-              input.form-control input-lg[name="user[password]"][type="password"][placeholder="******"]
-            .login-buttons
-              = f.submit '进入系统', class: 'btn btn-success btn-block btn-lg'
-            hr
-            p.text-center.text-inverse
-              = Settings.site.copyright
-  <%= render 'layouts/theme_panel' %>
+        = form_for(@user, url: sign_in_path, remote: true, method: :post, html: {class: "margin-bottom-0"}) do |f|
+          - if flash[:alert]
+            .alert.alert-danger
+              = flash[:alert]
+          .form-group.m-b-15
+            input.form-control.input-lg[placeholder="电子邮件或手机号"name="user[login]"type="text"]
+          .form-group.m-b-15
+            input.form-control.input-lg[name="user[password]"type="password"placeholder="******"]
+          .login-buttons
+            input.btn.btn-success.btn-block.btn-lg[value='进入系统'type='submit']
+          hr
+          p.text-center.text-inverse
+            = Settings.site.copyright
+  / <%= render 'layouts/theme_panel' %>
