@@ -1,5 +1,6 @@
 require 'redis'
 require 'sms/token'
+require 'sms/services'
 module Sms
 
   def self.setup
