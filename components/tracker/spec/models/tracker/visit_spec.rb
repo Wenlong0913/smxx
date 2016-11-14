@@ -13,7 +13,6 @@ module Tracker
     end
 
     it { should belong_to :session }
-    it { should belong_to :user }
     it { should belong_to :action }
     it { should belong_to :resource }
     it { should validate_presence_of(:url) }
