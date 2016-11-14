@@ -22,6 +22,12 @@ PATH
       redis
       rest-client (~> 2.0)
 
+PATH
+  remote: components/tracker
+  specs:
+    tracker (0.1.0)
+      rails (~> 5.0.0, >= 5.0.0.1)
+
 GEM
   remote: https://gems.ruby-china.org/
   specs:
@@ -309,6 +315,7 @@ DEPENDENCIES
   swagger-docs
   theme_card!
   theme_color_admin!
+  tracker!
   turbolinks (~> 5)
   tzinfo-data
   uglifier (>= 1.3.0)
