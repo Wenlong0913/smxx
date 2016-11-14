@@ -16,14 +16,17 @@ html
   body[class=[controller_path.parameterize, action_name]]
     #page-loader.fade.in
       span.spinner
-    #page-container.fade.page-sidebar-fixed.page-header-fixed
-      = render 'layouts/backend/header'
-      = render 'layouts/backend/sidebar'
-      #content.content
-        == yield
-      #footer.footer
-      a.btn.btn-icon.btn-circle.btn-success.btn-scroll-to-top.fade[href="javascript:;" data-click="scroll-top"]
-        i.fa.fa-angle-up
+    - if controller_name == 'sessions' && action_name == 'new'
+      = yield
+    -else
+      #page-container.fade.page-sidebar-fixed.page-header-fixed
+        = render 'layouts/backend/header'
+        = render 'layouts/backend/sidebar'
+        #content.content
+          = yield
+        #footer.footer
+        a.btn.btn-icon.btn-circle.btn-success.btn-scroll-to-top.fade[href="javascript:;" data-click="scroll-top"]
+          i.fa.fa-angle-up
     / 信息提示ｊｓ
     / javascript:
       var flashMessages = #{raw flash.to_json};
