@@ -1,2 +1,36 @@
-h1 Admin::Sessions#new
-p Find me in app/views/admin/sessions/new.html.slim
+
+#page-container.fade
+  .login.login-with-news-feed
+    .news-feed
+      .news-image
+          = image_tag 'http://img3.iqilu.com/data/attachment/forum/201308/21/192654ai88zf6zaa60zddo.jpg', data: { id: 'login-cover-image' }
+      .news-caption
+        h4.caption-title
+          i.fa.fa-diamond.text-success'
+            = Settings.site.copyright
+        p
+          = Settings.site.copyright
+    .right-content
+      .login-header
+        .brand
+            span.logo
+            = Settings.site.name
+            small
+              = Settings.site.description
+        .icon
+            i.fa.fa-sign-in
+      .login-content
+        = form_for(@user, url: sign_in_path, remote: true, method: :post, html: {class: "margin-bottom-0"}) do |f|
+          - if flash[:alert]
+            .alert.alert-danger
+              = flash[:alert]
+          .form-group.m-b-15
+            input.form-control.input-lg[placeholder="电子邮件或手机号"name="user[login]"type="text"]
+          .form-group.m-b-15
+            input.form-control.input-lg[name="user[password]"type="password"placeholder="******"]
+          .login-buttons
+            input.btn.btn-success.btn-block.btn-lg[value='进入系统'type='submit']
+          hr
+          p.text-center.text-inverse
+            = Settings.site.copyright
+  / <%= render 'layouts/theme_panel' %>
