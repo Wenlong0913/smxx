@@ -8,17 +8,17 @@ class Users::SessionsController < Devise::SessionsController
 
   private
     def login_with_mobile
-      mobile_user = MobileUser.find_by(phone_number: params[:mobile_phone])
-      if mobile_user
+      user = User::Mobile.find_by(phone_number: params[:mobile_phone]).try(:user)
+      if user
         t = Sms::Token.new(params[:mobile_phone])
         if (Rails.env.development? && params[:token] == '1234') || t.valid?(params[:token])
-          sign_in mobile_user.user
+          sign_in user
           render json: {}
         else
           render json: {error: '验证码错误！'}
         end
       else
-        render json: {error: '您尚未注册！'}
+        render json: {error: '账号不可用！'}
       end
     end
 end
