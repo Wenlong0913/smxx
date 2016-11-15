@@ -6,6 +6,7 @@
 //= require color_admin/plugins/slimscroll/jquery.slimscroll
 //= require color_admin/plugins/jquery-cookie/jquery.cookie
 //= require color_admin/js/apps
+//= require admin/sessions
 $(document).ready(function() {
   App.init();
 });
