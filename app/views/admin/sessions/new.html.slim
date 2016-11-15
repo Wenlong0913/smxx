@@ -20,14 +20,6 @@
         .icon
             i.fa.fa-sign-in
       .login-content
-        / = simple_form_for(@user, url: sign_in_path, remote: true, method: :post, html: {class: "margin-bottom-0"}) do |f|
-          - if flash[:alert]
-            .alert.alert-danger
-              = flash[:alert]
-          .form-group.m-b-15
-            input.form-control.input-lg[placeholder="手机号"name="user[login]"type="text"]
-          .form-group.m-b-15
-            input.form-control.input-lg[name="user[password]"type="password"placeholder="******"]
         .login-buttons.m-b-30.m-t-30
             span.btn.btn-success.btn-block.btn-lg[data-toggle='modal'data-target='#mobile_login_modal'] 手机号登陆
         hr
