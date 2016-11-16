@@ -10,6 +10,8 @@ default: &default
     provider: yun_pian_v1
     yun_pian_v1:
       api_key: c97380fa188341572c1bcdadf383dfc2
+  mobile:
+    auth_token_template: "【私享荟】您的验证码是#code#。如非本人操作，请忽略本短信。"
 development:
   <<: *default
 production:

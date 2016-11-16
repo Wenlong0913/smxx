@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $.onReady ->
-  body = $('body.sessions.new')
+  body = $('body.admin-sessions.new')
   if body.length > 0
     setinterval_1 = null
     body.find('#mobile_login_modal').on 'show.bs.modal', ->
@@ -28,7 +28,6 @@ $.onReady ->
             clearInterval setinterval_1
             this_dom.removeAttr('disabled')
         ,1000
-
         $.ajax
           url: url
           type: 'post'
@@ -39,5 +38,11 @@ $.onReady ->
             clearInterval setinterval_1
             this_dom.text('获取验证码')
             this_dom.parents('.form-group').next().text('发送失败！')
-          success: ->
-            console.log 'ok'
+          success: (data)->
+            if data.status == 'error'
+              this_dom.removeAttr('disabled')
+              clearInterval setinterval_1
+              this_dom.text('获取验证码')
+              this_dom.parents('.form-group').next().text(data.message)
+            else
+              console.log 'ok'
