@@ -1,9 +1,9 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-$(window).ready ->
-  body = $ 'body'
-  if true#body.data('controller') is ''
+$.onReady ->
+  body = $('body.sessions.new')
+  if body.length > 0
     setinterval_1 = null
     body.find('#mobile_login_modal').on 'show.bs.modal', ->
       $(this).find('.modal-body .title_error').text('')
