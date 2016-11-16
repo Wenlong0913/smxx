@@ -6,19 +6,23 @@ Short description and motivation.
 In your controller, add this line:
 
     acts_as_commentable resource: Post
+    
 Or
+    
     acts_as_commentable resource: :get_resource_of_comments
 
     def get_resource_of_comments
       Post.find(params[:id])
     end
+    
 Or
+    
     acts_as_commentable resource: -> { Post.find(params[:id]) }
 
 In your routes, add this line:
 
     resources :posts do
-      commentable
+      commentable, model: Post
     end
 
 In your view file, add this line:

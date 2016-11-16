@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
   resources :posts do
-    commentable
+    commentable model: Post
   end
 end
