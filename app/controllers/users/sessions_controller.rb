@@ -1,17 +1,18 @@
 class Users::SessionsController < Devise::SessionsController
   def create
-    login_type = params[:login_type]
-    if login_type == "mobile"
-      login_with_mobile
+    if params[:user][:mobile]
+      login_with_mobile(params[:user][:mobile], params[:user][:code])
+    else
+      render json: {error: '只支持手机号登录！'}
     end
   end
 
   private
-    def login_with_mobile
-      user = User::Mobile.find_by(phone_number: params[:mobile_phone]).try(:user)
+    def login_with_mobile(mobile, code)
+      user = User::Mobile.find_by(phone_number: mobile).try(:user)
       if user
-        t = Sms::Token.new(params[:mobile_phone])
-        if (Rails.env.development? && params[:token] == '1234') || t.valid?(params[:token])
+        t = Sms::Token.new(mobile)
+        if (Rails.env.development? && code == '1234') || t.valid?(code)
           sign_in user
           render json: {}
         else
