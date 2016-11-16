@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/rails/rails-observers.git
+  revision: 3fe157d6cbb5b5e767ded248009fc59443d63fa1
+  specs:
+    rails-observers (0.1.3.alpha)
+      activemodel (>= 4.0, < 5.1)
+
+GIT
   remote: git@gitlab.tanmer.com:tm-themes/theme_card.git
   revision: a2efa2a967b591158ab5c0d2b337139473290429
   specs:
@@ -69,6 +76,9 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (7.1.4)
+    audited (4.3.0)
+      activerecord (>= 4.0, < 5.1)
+      rails-observers (~> 0.1.2)
     bcrypt (3.1.11)
     builder (3.2.2)
     byebug (9.0.6)
@@ -288,6 +298,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  audited (~> 4.3)
   byebug
   coffee-rails (~> 4.2)
   devise
@@ -303,6 +314,7 @@ DEPENDENCIES
   pry-rails
   puma (~> 3.0)
   rails (~> 5.0.0, >= 5.0.0.1)
+  rails-observers!
   rspec-rails (~> 3.5)
   sass-rails (~> 5.0)
   settingslogic
