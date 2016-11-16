@@ -1,17 +1,13 @@
 module Comment
   module EntriesControllerConcern
     def comments_index
-      query = Comment::Entry.all
-      query = query.where(resource: instance_exec(&resource_of_comments))
-      @comments = comments_filter(query)
+      @comments = comment__filter(comment__resolve_resource.comments)
       render json: @comments.as_json(only: [:content])
     end
 
     def create_comment
-      entry = Comment::Entry.new(
-        user_id: comment_user_id,
-        resource: instance_exec(&resource_of_comments),
-        content: params[:content])
+      entry = comment__resolve_resource.comments.new(comment__permitted_params)
+      entry.user_id = comment__user_id
       if entry.save
         head 200
       else
@@ -21,12 +17,26 @@ module Comment
 
     private
 
-    def comments_filter(query)
+    def comment__filter(query)
       query
     end
 
-    def comment_user_id
+    def comment__user_id
       defined?(current_user) && current_user && current_user.id
+    end
+
+    def comment__resolve_resource
+      resource =
+        case resource_of_comments
+        when Proc; instance_exec(&resource_of_comments)
+        when Symbol; __send__(resource_of_comments)
+        else
+          resource_of_comments.find(params[:id])
+        end
+    end
+
+    def comment__permitted_params
+      params.require(:comment).permit(:content)
     end
   end
 end

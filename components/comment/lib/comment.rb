@@ -1,4 +1,3 @@
-require "comment/acts_as_commentable"
 require "comment/engine"
 
 module Comment
