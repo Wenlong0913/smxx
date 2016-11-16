@@ -43,7 +43,7 @@ module Tracker
 
       @tracker_visit = tracker_session.visits.new
       tracker_visit.action = Tracker::Action.find_or_create_by(
-        controller_name: controller.controller_name,
+        controller_path: controller.controller_path,
         action_name: controller.action_name)
       tracker_visit.url = request.original_url
       tracker_visit.user_agent = request.user_agent
