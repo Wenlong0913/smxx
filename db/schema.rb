@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161114130013) do
+ActiveRecord::Schema.define(version: 20161117025600) do
 
   create_table "pages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "site_id"
@@ -90,6 +90,20 @@ ActiveRecord::Schema.define(version: 20161114130013) do
     t.index ["user_id"], name: "index_user_mobiles_on_user_id", using: :btree
   end
 
+  create_table "user_weixins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.string   "uid"
+    t.string   "name"
+    t.string   "headshot"
+    t.string   "city"
+    t.string   "province"
+    t.string   "country"
+    t.integer  "gender"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_weixins_on_user_id", using: :btree
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "nickname"
     t.datetime "created_at",                          null: false
@@ -113,4 +127,5 @@ ActiveRecord::Schema.define(version: 20161114130013) do
   add_foreign_key "tracker_visits", "tracker_actions", column: "action_id"
   add_foreign_key "tracker_visits", "tracker_sessions", column: "session_id"
   add_foreign_key "user_mobiles", "users"
+  add_foreign_key "user_weixins", "users"
 end
