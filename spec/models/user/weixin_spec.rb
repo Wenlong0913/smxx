@@ -6,7 +6,7 @@ RSpec.describe User::Weixin, type: :model do
       id user_id uid name headshot city province country gender
       created_at updated_at
     )
-    diff = User::Weixin.attributes.keys + expected_attributes - (User::Weixin.attributes.keys & expected_attributes)
+    diff = User::Weixin.attribute_names + expected_attributes - (User::Weixin.attribute_names & expected_attributes)
     expect(diff).to be_empty
   end
   it { should belong_to :user }
