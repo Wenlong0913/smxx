@@ -9,9 +9,9 @@ module Comment
       entry = comment__resolve_resource.comments.new(comment__permitted_params)
       entry.user_id = comment__user_id
       if entry.save
-        render json: {comment: entry, status: 'ok'}
+        render json: {comment: entry}
       else
-        render json: {status: 'error'}
+        head 403
       end
     end
 

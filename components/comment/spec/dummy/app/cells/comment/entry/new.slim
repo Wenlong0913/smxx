@@ -1,4 +1,4 @@
 h3 This form comes from dummy
-= form_for :comment, url: path, remote: true do |f|
+= form_for :comment, url: path, remote: true, data: { rel: 'comment-form', uuid: SecureRandom.uuid } do |f|
   = f.text_area :content, size: '20x4'
   = f.submit '发表'
