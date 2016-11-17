@@ -36,6 +36,11 @@ gem 'devise-i18n'
 gem 'jwt'
 gem 'settingslogic'
 gem 'swagger-docs'
+# Audited (previously acts_as_audited) is an ORM extension that logs all changes
+#   to your models. Audited can also record who made those changes, save comments
+#   and associate models related to the changes.
+gem "audited", "~> 4.3"
+gem "rails-observers", github: 'rails/rails-observers'
 
 # require components
 gem 'sms', path: 'components/sms'

@@ -1,5 +1,6 @@
 require 'redis'
 require 'sms/token'
+require 'sms/services'
 module Sms
 
   def self.setup
@@ -36,7 +37,8 @@ module Sms
   end
 
   def self.cleanup!
-    redis.del(redis.keys("#{key_prefix}*"))
+    keys = redis.keys("#{key_prefix}*")
+    redis.del(keys) if keys.size > 0
   end
 
   # Get all mobiles whose token codes are not expired
