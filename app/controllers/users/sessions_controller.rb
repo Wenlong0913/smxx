@@ -12,7 +12,7 @@ class Users::SessionsController < Devise::SessionsController
       user = User::Mobile.find_by(phone_number: mobile).try(:user)
       if user
         t = Sms::Token.new(mobile)
-        if (Rails.env.development? && code == '1234') || t.valid?(code)
+        if t.valid?(code)
           sign_in user
           render json: {}
         else
