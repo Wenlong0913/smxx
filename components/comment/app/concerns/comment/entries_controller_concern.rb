@@ -2,16 +2,16 @@ module Comment
   module EntriesControllerConcern
     def comments_index
       @comments = comment__filter(comment__resolve_resource.comments)
-      render json: @comments.as_json(only: [:content])
+      render json: @comments.as_json(only: [:content])             
     end
 
     def create_comment
       entry = comment__resolve_resource.comments.new(comment__permitted_params)
       entry.user_id = comment__user_id
       if entry.save
-        head 200
+        render js: "$('form').before(\"<p><i>##{entry.id}</i>#{entry.content}</p>\")"
       else
-        head 403
+        render js: "alert('评论发表失败')"
       end
     end
 
