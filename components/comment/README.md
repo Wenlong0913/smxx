@@ -3,6 +3,12 @@ Short description and motivation.
 
 ## 如何使用
 
+In your model, add this line:
+
+    class Post < ApplicationRecord
+        has_many_comments
+    end
+
 In your controller, add this line:
 
     acts_as_commentable resource: Post
@@ -22,12 +28,20 @@ Or
 In your routes, add this line:
 
     resources :posts do
-      commentable, model: Post
+      commentable
     end
 
 In your view file, add this line:
 
     <%= render_comments(resource, path: comments_post_path ) %>
+
+In assets/javascripts/application.js
+
+    //= require comments
+
+In assets/stylesheets/application.css
+
+    //= require comments    
 
 ## 查看使用效果
 

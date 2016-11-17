@@ -4,6 +4,9 @@ module Comment
     require 'cells'
     require 'cells-rails'
     require 'cells-slim'
+
+    config.cells.with_assets = ["comment/base_cell"]
+
     require 'comment/helpers'
     require 'comment/routes'
     require "comment/acts_as_commentable"

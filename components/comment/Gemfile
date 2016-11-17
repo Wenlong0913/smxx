@@ -13,6 +13,8 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
+gem 'coffee-rails'
+gem 'sass-rails'
 gem 'jquery-rails'
 gem "rspec-cells"
 gem "rspec-rails"
