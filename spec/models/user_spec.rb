@@ -8,6 +8,7 @@ RSpec.describe User, type: :model do
   end
 
   it { should have_one :mobile }
+  it { should have_one :weixin }
 
   describe 'attribtues' do
     subject { described_class.new.attributes }
