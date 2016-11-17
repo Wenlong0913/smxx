@@ -54,6 +54,12 @@ In assets/stylesheets/application.css
 
 访问 http://localhost:3000/posts
 
+# 测试
+
+本测试需要安装`geckodriver`, 在Mac上安装：`brew install geckodriver`
+
+安装好之后，执行`rspec`
+
 ```ruby
 gem 'comment'
 ```
