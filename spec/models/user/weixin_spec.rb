@@ -6,8 +6,7 @@ RSpec.describe User::Weixin, type: :model do
       id user_id uid name headshot city province country gender
       created_at updated_at
     )
-    diff = User::Weixin.attribute_names + expected_attributes - (User::Weixin.attribute_names & expected_attributes)
-    expect(diff).to be_empty
+    expect(User::Weixin.attribute_names.sort).to eq(expected_attributes.sort)
   end
   it { should belong_to :user }
   it { should validate_presence_of :uid }
