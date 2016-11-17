@@ -9,9 +9,9 @@ module Comment
       entry = comment__resolve_resource.comments.new(comment__permitted_params)
       entry.user_id = comment__user_id
       if entry.save
-        render js: "$('form').before(\"<p><i>##{entry.id}</i>#{entry.content}</p>\")"
+        render json: {comment: entry, status: 'ok'}
       else
-        render js: "alert('评论发表失败')"
+        render json: {status: 'error'}
       end
     end
 
