@@ -10,6 +10,6 @@
 //= require admin
 //= require color_admin/plugins/nvd3/build/nv.d3
 //= require admin/chart
-$.onReady(function() {
+$(document).ready(function() {
   App.init();
 });

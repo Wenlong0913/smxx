@@ -1,7 +1,7 @@
-$.onReady(function() {
+$(document).ready(function() {
 /*These lines are all chart setup.  Pick and choose which chart features you want to utilize. */
 nv.addGraph(function() {
-  var chart = nv.models.lineChart().showYAxis(false).showYAxis(true).useInteractiveGuideline(true);
+  var chart = nv.models.lineChart().useInteractiveGuideline(true);
                 // .margin({left: 100})  //Adjust chart margins to give the x-axis some breathing room.
                 // .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
                 // .transitionDuration(350)  //how fast do you want the lines to transition?
@@ -11,11 +11,11 @@ nv.addGraph(function() {
 
 
   chart.xAxis     //Chart x-axis settings
-      .axisLabel('Time (ms)')
+      .axisLabel('日期 (ms)')
       .tickFormat(d3.format(',r'));
 
   chart.yAxis     //Chart y-axis settings
-      .axisLabel('Voltage (v)')
+      .axisLabel('访问量 (v)')
       .tickFormat(d3.format('.02f'));
 
   /* Done setting the chart up? Time to render it!*/
@@ -37,7 +37,7 @@ function sinAndCos() {
       // cos = [];
 
   //Data is represented as an array of {x,y} pairs.
-  for (var i = 0; i < 100; i++) {
+  for (var i = 0; i < 200; i++) {
     sin.push({x: i, y: Math.sin(i/10)});
     sin2.push({x: i, y: Math.sin(i/10) *0.25 + 0.5});
     // cos.push({x: i, y: .5 * Math.cos(i/10)});
@@ -47,9 +47,9 @@ function sinAndCos() {
   return [
     {
       values: sin,      //values - represents the array of {x,y} data points
-      key: 'Sine Wave', //key  - the name of the series.
+      key: 'IP量', //key  - the name of the series.
       color: '#ff7f0e', //color - optional: choose your own line color.
-      area: true
+      area: false
     },
     // {
     //   values: cos,
@@ -58,7 +58,7 @@ function sinAndCos() {
     // },
     {
       values: sin2,
-      key: 'Another sine wave',
+      key: '访客数',
       color: '#7777ff',
       area: true      //area - set to true if you want this line to turn into a filled area chart.
     }
