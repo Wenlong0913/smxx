@@ -25,8 +25,14 @@ RSpec.describe User, type: :model do
   end
 
   it 'is valid with valid attributes' do
-    flag, user = User::Create.(password: 'abc', mobile_phone: '13912345678')
+    flag, user = User::Create.(mobile_phone: '13912345678')
     expect(flag).to be(true)
+  end
+
+  it 'is invalid without mobile_phone' do
+    flag, user = User::Create.(password: 'abc1234')
+    expect(flag).to be(false)
+    expect(user.errors[:mobile_phone]).not_to be_empty
   end
 
 end

@@ -7,8 +7,7 @@ module Comment
         id user_id resource_type resource_id content position deleted
         created_at updated_at
       )
-      diff = described_class.new.attributes.keys + expected_attributes - (described_class.new.attributes.keys & expected_attributes)
-      expect(diff).to be_empty
+      expect(described_class.attribute_names).to match_array(expected_attributes)
     end
   end
 end

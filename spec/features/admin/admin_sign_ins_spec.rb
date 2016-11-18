@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Admin::SignIns", type: :feature, js: true do
   let(:user) { create(:user) }
-  it 'login in with mobile and code' do
+  scenario 'login in with mobile and code' do
     user_mobile = create(:user_mobile, user_id: user.id)
     visit admin_sign_in_path
     click_on '手机号登陆'

@@ -81,3 +81,15 @@
 
 **非产品页发布（本地推荐,活动)**
 
+
+# 开发配置
+
+    bundle install
+    rails s
+
+# 测试
+
+运行测试代码，因为需要测试feature，需要用到浏览器插件`capybara`和`selenium-webdriver`，
+Mac系统必须执行`brew install geckodriver`安装插件`geckodriver`
+
+
