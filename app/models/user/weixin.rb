@@ -16,9 +16,14 @@ class User::Weixin < ApplicationRecord
     wx_user.city = auth.info.city
     wx_user.country = auth.info.country
     wx_user.headshot = auth.info.headimgurl
-    # wx_user.sign_in_count += 1
-    fail Weixin::RegisterError.new(wx_user) unless wx_user.save
     wx_user
+  end
+
+  def self.process_weixin_user(user, auth)
+    weixin_user = from_omniauth(auth)
+    weixin_user.user = user
+    weixin_user.user.save
+    weixin_user
   end
 
 end
