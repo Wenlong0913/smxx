@@ -2,7 +2,7 @@
   .modal-dialog
     .modal-content
       .modal-header
-        button.close[type="button"data-dismiss="modal"]
+        button.close[type="button" data-dismiss="modal"]
           span[aria-hidden="true"] &times;
           span.sr-only" Close
         h4.modal-title#myModalLabel 手机号登录
@@ -13,12 +13,12 @@
             .alert.alert-danger
               = flash[:alert]
           .form-group.m-b-25.m-t-10
-            input.form-control.input-lg[placeholder="手机号"name="user[mobile]"type="text"]
+            input.form-control.input-lg[placeholder="手机号" name="user[mobile]"type="text"]
           .form-group.m-b-25.p-0.row
             .col-xs-9
-              input.form-control.input-lg[name="user[code]"type="text"placeholder="验证码"]
+              input.form-control.input-lg[name="user[code]" type="text"placeholder="验证码"]
             .col-xs-3.text-right
-              span.btn.btn-default.input-lg.get_code[pop='false'data-url=api_v1_sessions_sms_path] 获取验证码
+              span.btn.btn-default.input-lg.get_code[pop='false' data-url=api_v1_sessions_sms_path] 获取验证码
           .text-center.title_error
           hr
           .login-buttons

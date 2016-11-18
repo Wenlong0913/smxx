@@ -10,8 +10,8 @@ $.onReady ->
       $(this).find('.modal-body .title_error').text('')
       $(this).find('.modal-body .get_code')
         .text('获取验证码')
-          .removeAttr('disabled')
-            .attr('pop', false)
+        .removeAttr('disabled')
+        .attr('pop', false)
       if setinterval_1
         clearInterval setinterval_1
     #　验证码请求
@@ -21,7 +21,7 @@ $.onReady ->
       if this_dom.attr('pop') != 'true'
         if reg.test(mobile)
           this_dom.attr('pop', true)
-          this_dom.parents('.form-group').next().text('')
+          this_dom.parents('.form-group').next('.title_error').text('')
           url = this_dom.data('url')
           time_second = 60
           this_dom.attr('disabled','disabled')

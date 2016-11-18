@@ -1,9 +1,6 @@
 class Api::V1::Sessions::SmsController < Api::V1::BaseController
 
   def create
-    unless User::Mobile.find_by(phone_number: params[:mobile]).try(:user)
-        User::Create.(mobile_phone: params[:mobile])
-    end
     t = Sms::Token.new(params[:mobile])
     is_dev = !(Rails.env.staging? || Rails.env.production?)
     code = is_dev ? '1234' : (10000 + SecureRandom.random_number(10**8)).to_s[-5..-1]
