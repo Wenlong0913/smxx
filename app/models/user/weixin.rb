@@ -19,10 +19,10 @@ class User::Weixin < ApplicationRecord
     wx_user
   end
 
-  def self.process_weixin_user(user, auth)
+  def self.connect_user(user, auth)
     weixin_user = from_omniauth(auth)
     weixin_user.user = user
-    weixin_user.user.save
+    weixin_user.save
     weixin_user
   end
 

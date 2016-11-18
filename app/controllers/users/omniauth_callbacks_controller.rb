@@ -3,14 +3,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def wechat
     auth = request.env["omniauth.auth"]
 
-    cond = auth.extra.raw_info.unionid ? \
-      User::Weixin.where("uid = ? OR unionid = ?", auth.uid, auth.extra.raw_info.unionid) : \
-      User::Weixin.where(uid: auth.uid)
-
-    weixin_user = cond.first || User::Weixin.new
+    weixin_user = User::Weixin.from_omniauth(auth)
 
     if current_user && !weixin_user.persisted?
-      weixin_user = User::Weixin.process_weixin_user(current_user, auth)
+      weixin_user = User::Weixin.connect_user(current_user, auth)
     end
 
     if weixin_user.persisted?
