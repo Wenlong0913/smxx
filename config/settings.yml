@@ -12,7 +12,6 @@ default: &default
     token_string: 50c2263e7f076bbe75c50ebd54401963 # 微信Token值
     secret_string: 0abcf2c591b0a1b209ca12a20a8eda83 # 微信服务URL配置中，此值用来避免真正使用的Token值暴露在URL上，提高安全性。
     encoding_aes_key:
-    mount_path: '/weixin'
   sms:
     provider: yun_pian_v1
     yun_pian_v1:
