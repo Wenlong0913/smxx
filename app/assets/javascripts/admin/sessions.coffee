@@ -1,7 +1,7 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-$.onReady ->
+$(document).ready ->
   body = $('body.admin-sessions.new')
   if body.length > 0
     setinterval_1 = null
