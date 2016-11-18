@@ -6,6 +6,12 @@ default: &default
     description: 私享荟一个网络购物平台
   email:
     sender: sender@tmf.com
+  weixin:
+    app_id: wx2112a27b1c8bb766
+    app_secret: d4624c36b6795d1d99dcf0547af5443d
+    token_string: 50c2263e7f076bbe75c50ebd54401963 # 微信Token值
+    secret_string: 0abcf2c591b0a1b209ca12a20a8eda83 # 微信服务URL配置中，此值用来避免真正使用的Token值暴露在URL上，提高安全性。
+    encoding_aes_key:
   sms:
     provider: yun_pian_v1
     yun_pian_v1:
