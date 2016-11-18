@@ -7,6 +7,6 @@
 //= require color_admin/plugins/jquery-cookie/jquery.cookie
 //= require color_admin/js/apps
 //= require admin
-$.onReady(function() {
+$(document).ready(function() {
   App.init();
 });
