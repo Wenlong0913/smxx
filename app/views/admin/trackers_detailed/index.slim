@@ -1,58 +1,23 @@
 .row
-  .col-md-2
+  .col-md-12
     / serach
-    form
+    form.col-xs-2.p-l-0.hidden-xs
       .input-group.m-b-15
         input.form-control.input-sm.input-white[placeholder="Search Mail"type="text"]
         span.input-group-btn
           button.btn.btn-sm.btn-inverse[type="button"]
             i.fa.fa-search
-    / left nav
-    .hidden-sm.hidden-xs
-      h5.m-t-20 流量统计
-      ul.nav.nav-pills.nav-stacked.nav-inbox
-          li
-            = link_to admin_trackers_visits_path do
-              i.fa.fa-inbox.fa-fw.m-r-5
-              | 数据总览
-          li.active
-            = link_to admin_trackers_detailed_index_path do
-              i.fa.fa-inbox.fa-fw.m-r-5
-              | 访问明细
-          li
-            a[href="#"]
-              i.fa.fa-inbox.fa-fw.m-r-5
-              | 趋势分析
-          li
-            a[href="#"]
-              i.fa.fa-inbox.fa-fw.m-r-5
-              | 访客分析
-
-      h5.m-t-20 关系分析
-      ul.nav.nav-pills.nav-stacked.nav-inbox
-        li
-          a[href="#"]
-            i.fa.fa-folder.fa-fw.m-r-5
-            | Newsletter
-        li
-          a[href="#"]
-            i.fa.fa-folder.fa-fw.m-r-5
-            | Friend
-        li
-          a[href="#"]
-            i.fa.fa-folder.fa-fw.m-r-5
-            | Company
-        li
-          a[href="#"]
-            i.fa.fa-folder.fa-fw.m-r-5
-            | Downloaded
-  .col-md-10
     / top nav
-    .email-btn-row.hidden-xs
-      a.btn.btn-sm.btn-inverse[href="#"]
-        i.fa.fa-plus.m-r-5
-        | New
-      a.btn.btn-sm.btn-default.disabled[href="#"]Categories
+    .email-btn-row
+      = link_to admin_trackers_visits_path, class: 'btn btn-sm btn-default' do
+        i.fa.fa-inbox.fa-fw.m-r-5
+        | 数据总览
+      = link_to admin_trackers_detailed_index_path, class: 'btn btn-sm btn-inverse' do
+        i.fa.fa-inbox.fa-fw.m-r-5
+        | 访问明细
+      = link_to admin_trackers_detailed_index_path, class: 'btn btn-sm btn-default' do
+        i.fa.fa-inbox.fa-fw.m-r-5
+        | 受访页面
     / content
     .email-content
       table.table.table-email
