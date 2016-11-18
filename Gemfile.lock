@@ -15,7 +15,7 @@ GIT
 
 GIT
   remote: git@gitlab.tanmer.com:tm-themes/theme_color_admin.git
-  revision: b772fdf0e1386a17a3a94118c9fb6466a0cc54a6
+  revision: c4dc7457595ff53f42d6f16629c7e52f4f7883ed
   specs:
     theme_color_admin (0.0.3)
       rails (>= 4.2.7)

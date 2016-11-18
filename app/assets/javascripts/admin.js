@@ -10,11 +10,9 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery_ujs
-//= require turbolinks
-//= require turbolinks-jquery
-//= require d3
+
 //= require admin/sessions
+//= require admin/chart
 
 // can't require tree
 // require_tree .
