@@ -7,8 +7,7 @@ class User < ApplicationRecord
   has_one :mobile, dependent: :destroy
   has_one :weixin, dependent: :destroy
   attr_accessor :mobile_phone
-  validates_associated :mobile
-  validates_presence_of :mobile
+  validates_presence_of :mobile_phone
 
   def email_required?
     false
