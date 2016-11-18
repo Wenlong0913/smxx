@@ -1,5 +1,6 @@
 class Comment::EntryCell < Comment::BaseCell
+  property :comments
   def show
-    render + render(view: :new, locals: { path: options[:path]})
+    render
   end
 end

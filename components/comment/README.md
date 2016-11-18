@@ -35,8 +35,9 @@ In your view file, add this line:
 
     <%= render_comments(resource, path: comments_post_path ) %>
 
-In assets/javascripts/application.js
+In assets/javascripts/application.js, 注意，本插件需要Vue支持
 
+    //= require vue
     //= require comments
 
 In assets/stylesheets/application.css

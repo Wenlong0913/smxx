@@ -1,5 +1,11 @@
-h2.comments Comments
-- model.comments.each do |entry|
-  p
-    i ##{entry.id}
-    span.comment = entry.content
+.[rel='comment-block' data-url=options[:path]]
+  h2.title Comments
+  span[v-if="error"] 评论加载失败!
+  span[v-if="loading"] 正在加载评论...
+  .[v-else]
+    ul
+      li[v-for="comment in comments"]
+        | {{comment.id}} {{comment.created_at}} {{comment.content}}
+    textarea[v-model='content' cols=20 rows=4]
+    button[v-on:click="postComment"] Post
+    span[v-if="posting"] 正在提交评论...

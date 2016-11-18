@@ -2,14 +2,14 @@ module Comment
   module EntriesControllerConcern
     def comments_index
       @comments = comment__filter(comment__resolve_resource.comments)
-      render json: @comments.as_json(only: [:content])
+      render json: @comments.as_json(only: [:id, :content, :created_at])
     end
 
     def create_comment
       entry = comment__resolve_resource.comments.new(comment__permitted_params)
       entry.user_id = comment__user_id
       if entry.save
-        head 200
+        render json: entry.as_json(only: [:id, :content, :created_at])
       else
         head 403
       end
