@@ -71,3 +71,6 @@ gem 'theme_color_admin', git: 'git@gitlab.tanmer.com:tm-themes/theme_color_admin
 gem 'theme_card', git: 'git@gitlab.tanmer.com:tm-themes/theme_card.git'
 gem 'font-awesome-rails'
 gem 'simple_form'
+gem 'kaminari'
+gem 'kaminari-i18n'
+gem 'browser'

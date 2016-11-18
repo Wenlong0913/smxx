@@ -1,0 +1,112 @@
+.row
+  / .col-md-2
+  /   / serach
+  /   form
+  /     .input-group.m-b-15
+  /       input.form-control.input-sm.input-white[placeholder="Search Mail"type="text"]
+  /       span.input-group-btn
+  /         button.btn.btn-sm.btn-inverse[type="button"]
+  /           i.fa.fa-search
+  /   / left nav
+  /   .hidden-sm.hidden-xs
+  /     h5.m-t-20 流量统计
+  /     ul.nav.nav-pills.nav-stacked.nav-inbox
+  /         li.active
+  /           = link_to admin_trackers_visits_path do
+  /             i.fa.fa-inbox.fa-fw.m-r-5
+  /             | 数据总览
+  /         li
+  /           = link_to admin_trackers_detailed_index_path do
+  /             i.fa.fa-inbox.fa-fw.m-r-5
+  /             | 访问明细
+  /         li
+  /           a[href="#"]
+  /             i.fa.fa-inbox.fa-fw.m-r-5
+  /             | 趋势分析
+  /         li
+  /           a[href="#"]
+  /             i.fa.fa-inbox.fa-fw.m-r-5
+  /             | 访客分析
+
+  /     h5.m-t-20 关系分析
+  /     ul.nav.nav-pills.nav-stacked.nav-inbox
+  /       li
+  /         a[href="#"]
+  /           i.fa.fa-folder.fa-fw.m-r-5
+  /           | Newsletter
+  /       li
+  /         a[href="#"]
+  /           i.fa.fa-folder.fa-fw.m-r-5
+  /           | Friend
+  /       li
+  /         a[href="#"]
+  /           i.fa.fa-folder.fa-fw.m-r-5
+  /           | Company
+  /       li
+  /         a[href="#"]
+  /           i.fa.fa-folder.fa-fw.m-r-5
+  /           | Downloaded
+  .col-md-12
+    form.col-xs-2.p-l-0
+      .input-group.m-b-15
+        input.form-control.input-sm.input-white[placeholder="Search Mail"type="text"]
+        span.input-group-btn
+          button.btn.btn-sm.btn-inverse[type="button"]
+            i.fa.fa-search
+    / top nav
+    .email-btn-row.hidden-xs
+      = link_to admin_trackers_visits_path, class: 'btn btn-sm btn-inverse' do
+        i.fa.fa-inbox.fa-fw.m-r-5
+        | 数据总览
+      = link_to admin_trackers_detailed_index_path, class: 'btn btn-sm btn-default' do
+        i.fa.fa-inbox.fa-fw.m-r-5
+        | 访问明细
+    / content
+    .email-content
+      .collect_top.row.text-center.p-b-10[style='border-bottom: 1px solid #ccc;']
+        .col-xs-3.p-t-10.p-b-10[style='border-right:1px solid #ccc']
+          div.h2
+            i.fa.fa-magnet.m-r-20.text-danger[style='font-size: 80%']
+            span 9990
+          div.h4.text-muted 总浏览量
+          div[style='width: 30%;background: #ccc;height: 1px;margin: 20px auto;']
+          div
+            | 今天：
+            span.text-primary 5544
+        .col-xs-3.p-t-10.p-b-10[style='border-right:1px solid #ccc']
+          div.h2
+            i.fa.fa-users.m-r-20.text-primary[style='font-size: 80%']
+            span 9990
+          div.h4.text-muted 总访客量
+          div[style='width: 30%;background: #ccc;height: 1px;margin: 20px auto;']
+          div
+            | 今天：
+            span.text-primary 5544
+        .col-xs-3.p-t-10.p-b-10[style='border-right:1px solid #ccc']
+          div.h2
+            i.fa.fa-history.m-r-20.text-warning[style='font-size: 80%']
+            span 9990
+          div.h4.text-muted 平均停留时间
+          div[style='width: 30%;background: #ccc;height: 1px;margin: 20px auto;']
+          div
+            | 今天：
+            span.text-primary 5544
+        .col-xs-3.p-t-10.p-b-10
+          div.h2
+            i.fa.fa-share-alt.m-r-20.text-info[style='font-size: 80%']
+            span 9990
+          div.h4.text-muted 总分享数
+          div[style='width: 30%;background: #ccc;height: 1px;margin: 20px auto;']
+          div
+            | 今天：
+            span.text-primary 5544
+      .chart-content
+        h4 title
+        #chart
+          svg[width="100%"height="400px"]
+    .email-content.m-t-20
+      .device-content[width="100%"height="400px"]
+/ style
+/   a
+/     background: #f6f6f6
+

@@ -1,6 +1,9 @@
-class Tracker::VisitCell < BaseCell
+class Tracker::VisitCell < Tracker::BaseCell
   def show
-    render
+    # render
   end
 
+  def index
+    render
+  end
 end

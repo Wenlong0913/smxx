@@ -6,7 +6,10 @@
 //= require color_admin/plugins/slimscroll/jquery.slimscroll
 //= require color_admin/plugins/jquery-cookie/jquery.cookie
 //= require color_admin/js/apps
+
 //= require admin
+//= require color_admin/plugins/nvd3/build/nv.d3
+//= require admin/chart
 $.onReady(function() {
   App.init();
 });
