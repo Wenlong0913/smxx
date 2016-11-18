@@ -27,7 +27,7 @@ $.onReady ->
           this_dom.attr('disabled','disabled')
           setinterval_1 = setInterval ->
             if time_second > 0
-              this_dom.text(time_second-- +' S')
+              this_dom.text(--time_second + ' S')
             else
               this_dom.text('获取验证码')
               clearInterval setinterval_1
