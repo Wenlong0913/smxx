@@ -42,6 +42,11 @@ gem 'swagger-docs'
 gem "audited", "~> 4.3"
 gem "rails-observers", github: 'rails/rails-observers'
 
+#weixin
+gem "weixin_rails_middleware", '~> 1.3', '>= 1.3.1'
+gem 'weixin_authorize', '1.6.3'
+gem "omniauth-wechat-oauth2", "~> 0.1.0"
+
 # require components
 gem 'sms', path: 'components/sms'
 gem 'tracker', path: 'components/tracker'
