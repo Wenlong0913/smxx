@@ -11,14 +11,16 @@ $.onReady ->
       $(this).find('.modal-body .get_code')
         .text('获取验证码')
           .removeAttr('disabled')
+            .attr('pop', false)
       if setinterval_1
         clearInterval setinterval_1
     #　验证码请求
     body.find('#mobile_login_modal .modal-body .get_code').on 'click', ->
       this_dom = $(this)
       mobile = this_dom.parents('.modal-body').find("input[name='user[mobile]']").val()
-      if reg.test(mobile)
-        if !this_dom.prop('disabled')
+      if this_dom.attr('pop') != 'true'
+        if reg.test(mobile)
+          this_dom.attr('pop', true)
           this_dom.parents('.form-group').next().text('')
           url = this_dom.data('url')
           time_second = 60
@@ -30,6 +32,7 @@ $.onReady ->
               this_dom.text('获取验证码')
               clearInterval setinterval_1
               this_dom.removeAttr('disabled')
+              this_dom.attr('pop', false)
           ,1000
           $.ajax
             url: url
@@ -43,8 +46,8 @@ $.onReady ->
                 return_mess(setinterval_1, data.message)
               else
                 return_mess(setinterval_1, data.message, true)
-      else
-        return_mess(setinterval_1, '发送失败！请检查手机号码是否正确！')
+        else
+          return_mess(setinterval_1, '发送失败！请检查手机号码是否正确！')
     # 发送请求
     body.find('#mobile_login_modal .modal-body form').on 'ajax:error', (event,request)->
       return_mess(setinterval_1, '发送失败！请检查网络')
@@ -58,10 +61,11 @@ $.onReady ->
     color = 'text-danger'
     if status
       color = 'text-success'
+    else
+      get_code_dom = body.find('#mobile_login_modal .modal-body .get_code')
+      get_code_dom.text('获取验证码')
+      get_code_dom.attr('pop', false)
+      clearInterval setinterval_1
     error_dom = body.find('#mobile_login_modal .modal-body .title_error')
-    get_code_dom = body.find('#mobile_login_modal .modal-body .get_code')
-    get_code_dom.text('获取验证码')
-    get_code_dom.removeAttr('disabled')
-    clearInterval setinterval_1
-    error_dom.text(text).removeClass('text-success').addClass(color)
+    error_dom.removeClass('text-success').removeClass('text-danger').addClass(color).text(text)
 
