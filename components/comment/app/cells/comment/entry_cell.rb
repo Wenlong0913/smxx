@@ -1,5 +1,6 @@
 class Comment::EntryCell < Comment::BaseCell
+  property :comments
   def show
-    "<div rel='comment-block' data-uuid=" + SecureRandom.uuid + ">" + render + render(view: :new, locals: { path: options[:path]}) + "</div>"
+    render
   end
 end

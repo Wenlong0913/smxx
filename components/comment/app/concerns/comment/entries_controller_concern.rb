@@ -2,7 +2,7 @@ module Comment
   module EntriesControllerConcern
     def comments_index
       @comments = comment__filter(comment__resolve_resource.comments)
-      render json: @comments.as_json(only: [:id, :content, :created_at])             
+      render json: @comments.as_json(only: [:id, :content, :created_at])
     end
 
     def create_comment
