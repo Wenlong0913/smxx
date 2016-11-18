@@ -1,6 +1,6 @@
 h2 Comments
-div class="comment-list"
+ul rel='comment-list'
   - model.comments.each do |entry|
-    p
+    li rel='comment-entry' data-id="#{entry.id}"
       i ##{entry.id}
       = entry.content
