@@ -18,8 +18,8 @@
             .col-xs-9
               input.form-control.input-lg[name="user[code]"type="text"placeholder="验证码"]
             .col-xs-3.text-right
-              button.btn.btn-default.input-lg.get_code[data-url=api_v1_sessions_sms_path] 获取验证码
-          .text-center.text-danger.title_error
+              span.btn.btn-default.input-lg.get_code[data-url=api_v1_sessions_sms_path] 获取验证码
+          .text-center.title_error
           hr
           .login-buttons
             = f.submit '登陆', class: 'btn btn-success btn-block btn-lg', id: 'click_login', data:{href: admin_root_path}
