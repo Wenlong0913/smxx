@@ -45,16 +45,15 @@
               th 浏览次数
               th IP量
           tbody
-            - @visits.each_with_index do |visit, index|
-              - browser = Browser.new(visit.user_agent)
+            - @visits_data.each_with_index do |visit, index|
               tr
                 td = index+1
                 td
-                  a[href="#{visit.url}"] = visit.url
+                  a[href="#{visit[:url]}"] = visit[:url]
                 td
-                  = visit.ip_address
-                td = browser.name
-      = paginate @visits
+                  = visit[:count]
+                td = visit[:ip]
+      / = paginate @visits_data
       .email-footer.clearfix
         | 737 messages
         ul.pagination.pagination-sm.m-t-0.m-b-0.pull-right
