@@ -10,60 +10,99 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161117025600) do
+ActiveRecord::Schema.define(version: 20161120134318) do
 
-  create_table "pages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "audits", force: :cascade do |t|
+    t.integer  "auditable_id"
+    t.string   "auditable_type"
+    t.integer  "associated_id"
+    t.string   "associated_type"
+    t.integer  "user_id"
+    t.string   "user_type"
+    t.string   "username"
+    t.string   "action"
+    t.text     "audited_changes"
+    t.integer  "version",         default: 0
+    t.string   "comment"
+    t.string   "remote_address"
+    t.string   "request_uuid"
+    t.datetime "created_at"
+    t.index ["associated_id", "associated_type"], name: "associated_index", using: :btree
+    t.index ["auditable_id", "auditable_type"], name: "auditable_index", using: :btree
+    t.index ["created_at"], name: "index_audits_on_created_at", using: :btree
+    t.index ["request_uuid"], name: "index_audits_on_request_uuid", using: :btree
+    t.index ["user_id", "user_type"], name: "user_index", using: :btree
+  end
+
+  create_table "features", force: :cascade do |t|
+    t.string   "name"
+    t.string   "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.string   "name"
+    t.string   "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pages", force: :cascade do |t|
     t.integer  "site_id"
     t.string   "title"
     t.string   "short_title"
-    t.text     "description", limit: 65535
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.index ["site_id"], name: "index_pages_on_site_id", using: :btree
   end
 
-  create_table "sites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "sites", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title"
-    t.text     "description", limit: 65535
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
   end
 
-  create_table "theme_configs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "theme_configs", force: :cascade do |t|
     t.integer  "site_id"
     t.integer  "theme_id"
-    t.text     "config",     limit: 65535
-    t.boolean  "active",                   default: false, null: false
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.text     "config"
+    t.boolean  "active",     default: false, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["site_id"], name: "index_theme_configs_on_site_id", using: :btree
     t.index ["theme_id"], name: "index_theme_configs_on_theme_id", using: :btree
   end
 
-  create_table "themes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "themes", force: :cascade do |t|
     t.string   "name"
     t.string   "display_name"
-    t.text     "config",       limit: 65535
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.text     "config"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
-  create_table "tracker_actions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "tracker_actions", force: :cascade do |t|
     t.string   "name"
-    t.string   "controller_path"
+    t.string   "controller_name"
     t.string   "action_name"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
 
-  create_table "tracker_sessions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "tracker_sessions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "tracker_visits", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "tracker_visits", force: :cascade do |t|
     t.integer  "session_id"
     t.integer  "action_id"
     t.integer  "user_id"
@@ -71,18 +110,18 @@ ActiveRecord::Schema.define(version: 20161117025600) do
     t.integer  "resource_id"
     t.string   "url"
     t.string   "referer"
-    t.text     "payload",       limit: 65535
+    t.text     "payload"
     t.string   "user_agent"
     t.string   "ip_address"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.index ["action_id"], name: "index_tracker_visits_on_action_id", using: :btree
     t.index ["resource_type", "resource_id"], name: "index_tracker_visits_on_resource_type_and_resource_id", using: :btree
     t.index ["session_id"], name: "index_tracker_visits_on_session_id", using: :btree
     t.index ["user_id"], name: "index_tracker_visits_on_user_id", using: :btree
   end
 
-  create_table "user_mobiles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "user_mobiles", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "phone_number"
     t.datetime "created_at",   null: false
@@ -90,7 +129,7 @@ ActiveRecord::Schema.define(version: 20161117025600) do
     t.index ["user_id"], name: "index_user_mobiles_on_user_id", using: :btree
   end
 
-  create_table "user_weixins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "user_weixins", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "uid"
     t.string   "name"
@@ -104,7 +143,7 @@ ActiveRecord::Schema.define(version: 20161117025600) do
     t.index ["user_id"], name: "index_user_weixins_on_user_id", using: :btree
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "nickname"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false

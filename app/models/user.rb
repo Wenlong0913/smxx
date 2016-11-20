@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable,
     :omniauthable
+  audited
   has_one :mobile, dependent: :destroy
   has_one :weixin, dependent: :destroy
   attr_accessor :mobile_phone

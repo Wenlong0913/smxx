@@ -25,14 +25,30 @@ RSpec.describe User, type: :model do
   end
 
   it 'is valid with valid attributes' do
-    flag, user = User::Create.(mobile_phone: '13912345678')
+    flag, user = User::Create.(mobile_phone: '13912345678', nickname: 'xiaohui')
     expect(flag).to be(true)
+    expect(user.nickname).to eq('xiaohui')
+    expect(user.mobile.phone_number).to eq('13912345678')
   end
 
   it 'is invalid without mobile_phone' do
     flag, user = User::Create.(password: 'abc1234')
     expect(flag).to be(false)
     expect(user.errors[:mobile_phone]).not_to be_empty
+  end
+
+  it 'is versioned' do
+    flag, user = User::Create.(mobile_phone: '13912345678', nickname: 'xiaohui')
+    expect(user.audits.size).to eq(1)
+    audit = user.audits.last
+    expect(audit.action).to eq('create')
+    expect(audit.auditable).to eq(user)
+    user.nickname = 'wesley'
+    user.save
+    expect(user.audits.size).to eq(2)
+    audit = user.audits.last
+    expect(audit.action).to eq('update')
+    expect(audit.audited_changes).to eq("nickname" => ['xiaohui', 'wesley'])
   end
 
 end

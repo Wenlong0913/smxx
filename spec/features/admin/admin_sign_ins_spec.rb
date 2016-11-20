@@ -12,6 +12,6 @@ RSpec.feature "Admin::SignIns", type: :feature, js: true do
     fill_in 'user[code]', with: '1234'
     find('input[type="submit"]').click
     # page.save_screenshot 'admin_sign_in.png'
-    expect(page).to have_content '你好'
+    expect(page).to have_content '退出系统'
   end
 end

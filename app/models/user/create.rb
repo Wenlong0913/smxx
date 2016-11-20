@@ -2,16 +2,18 @@ class User
   Create =
     lambda do |attributes|
       flag = false
-      user = nil
-      mobile_phone = attributes.delete(:mobile_phone)
+      user = User.new(attributes)
+      mobile_phone = attributes[:mobile_phone]
       if mobile_phone
         mobile = User::Mobile.find_or_initialize_by(phone_number: mobile_phone)
-        mobile.user ||= User.new{|u| u.password =  Devise.friendly_token[0,20]}
-        mobile.user.mobile_phone  = mobile_phone
-        flag = mobile.user.save
-        user = mobile.user
+        if mobile.new_record?
+          user.password ||= Devise.friendly_token[0,20]
+          user.mobile = mobile
+          flag = user.save
+        else
+          user.errors.add :mobile_phone, '手机号已经存在'
+        end
       else
-        user = User.new(attributes)
         flag = user.save
       end
       [flag, user]
