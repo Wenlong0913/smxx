@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :trackers_visits, only: [:index] do
       collection do
          resources :trackers_detailed, only: [:index]
+         resources :page_statistics, only: [:index]
       end
     end
   end

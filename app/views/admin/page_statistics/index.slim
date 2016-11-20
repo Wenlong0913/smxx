@@ -1,4 +1,4 @@
-.row
+.row#page_statistics
   .col-md-12
     / serach
     form.col-xs-2.p-l-0.hidden-xs
@@ -12,33 +12,48 @@
       = link_to admin_trackers_visits_path, class: 'btn btn-sm btn-default' do
         i.fa.fa-circle.fa-fw.m-r-5.text-success
         | 数据总览
-      = link_to admin_trackers_detailed_index_path, class: 'btn btn-sm btn-inverse' do
+      = link_to admin_trackers_detailed_index_path, class: 'btn btn-sm btn-default' do
         i.fa.fa-circle.fa-fw.m-r-5.text-warning
         | 访问明细
-      = link_to admin_page_statistics_path, class: 'btn btn-sm btn-default' do
+      = link_to admin_page_statistics_path, class: 'btn btn-sm btn-inverse' do
         i.fa.fa-fw.m-r-5.fa-circle.text-primary
         | 受访页面
     / content
     .email-content
+      .head.row.p-b-5
+        .col-md-4
+          .input-group[id="default-daterange"]
+            input.form-control[name="default-daterange" placeholder="click to select the date range" type="text"]
+            span.input-group-btn
+              button.btn.btn-default[type="button"]
+                i.fa.fa-calendar
+        ul.col-md-8.zone_time[type='none']
+          li.active
+            a 今天
+          li
+            a 昨天
+          li
+            a 过去７天
+          li
+            a 过去３０天
       .table-responsive
-        table.table.table-email
+        table.table.table-invoice.table-hover
           thead
             tr
               th.email-select #
-              th IP
               th 受访页面
-              th 使用平台
-              th 会话创建时间
+              th 浏览次数
+              th IP量
           tbody
             - @visits.each_with_index do |visit, index|
               - browser = Browser.new(visit.user_agent)
               tr
                 td = index+1
-                td = visit.ip_address
                 td
                   a[href="#{visit.url}"] = visit.url
+                td
+                  = visit.ip_address
                 td = browser.name
-                td = visit.session.created_at.strftime("%Y-%m-%-d %H:%M:%S")
       = paginate @visits
       .email-footer.clearfix
         | 737 messages

@@ -1,6 +1,8 @@
 @media(max-width: 767px)
   .content
     padding: 10px
+  .email-content
+    padding: 5px
 #trackers_visits
   .email-content
     .collect_top
@@ -25,3 +27,24 @@
               .progress
                 margin: 12px 0px 0px 0px
 
+// --------------
+#page_statistics
+  .email-content
+    ul
+      margin: 0px auto
+      padding-left: 10px
+      li
+        display: inline-block
+        height: 35px
+        line-height: 35px
+        margin-right: 10px
+        cursor: pointer
+        &:hover
+          border-bottom: 2px solid #ccc
+        a
+          display: inline-block
+          text-decoration: none
+      .active
+        border-bottom: 2px solid #646464
+        a
+          color: #f59c1a !important

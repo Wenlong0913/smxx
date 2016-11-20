@@ -9,13 +9,13 @@
     / top nav
     .email-btn-row
       = link_to admin_trackers_visits_path, class: 'btn btn-sm btn-inverse' do
-        i.fa.fa-inbox.fa-fw.m-r-5
+        i.fa.fa-circle.fa-fw.m-r-5.text-success
         | 数据总览
       = link_to admin_trackers_detailed_index_path, class: 'btn btn-sm btn-default' do
-        i.fa.fa-inbox.fa-fw.m-r-5
+        i.fa.fa-circle.fa-fw.m-r-5.text-warning
         | 访问明细
-      = link_to admin_trackers_detailed_index_path, class: 'btn btn-sm btn-default' do
-        i.fa.fa-inbox.fa-fw.m-r-5
+      = link_to admin_page_statistics_path, class: 'btn btn-sm btn-default' do
+        i.fa.fa-fw.m-r-5.fa-circle.text-primary
         | 受访页面
     / content
     .email-content
