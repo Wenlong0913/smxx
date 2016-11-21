@@ -23,21 +23,21 @@
         .col-xs-4.p-t-10.p-b-10
           div.h2
             i.fa.fa-magnet.m-r-20.text-danger
-            span 9990
+            span = @collect_visits[:total_browse][0]
           div.h4.text-muted 总浏览量
           div.cut_solid
           div
             | 今天：
-            span.text-primary 5544
+            span.text-primary = @collect_visits[:total_browse][1]
         .col-xs-4.p-t-10.p-b-10
           div.h2
             i.fa.fa-users.m-r-20.text-primary
-            span 9990
+            span = @collect_visits[:session_count][0]
           div.h4.text-muted 总访客量
           div.cut_solid
           div
             | 今天：
-            span.text-primary 5544
+            span.text-primary = @collect_visits[:session_count][1]
         .col-xs-4.p-t-10.p-b-10.border-none
           div.h2
             i.fa.fa-share-alt.m-r-20.text-info[style='font-size: 80%']
@@ -48,7 +48,7 @@
             | 今天：
             span.text-primary 5544
       .chart-content
-        #chart
+        #chart[data-json=@chart_data.to_json]
           svg[width="100%"height="400px"]
     .email-content.m-t-20
       .device-content.row[width="100%"height="400px"]
@@ -80,7 +80,3 @@
                       .span.sr-only 30%
                 .col-xs-3.text-info 30%
         .col-xs-6.right
-/ style
-/   a
-/     background: #f6f6f6
-
