@@ -13,6 +13,7 @@
 
 //= require admin/sessions
 //= require admin/chart
+//= require admin/spread_data
 
 // can't require tree
 // require_tree .

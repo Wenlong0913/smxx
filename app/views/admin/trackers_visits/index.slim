@@ -1,46 +1,31 @@
-.row#trackers_visits
+/ == cell(Tracker::VisitCell, @visits, path: sign_out_path)
+= render 'admin/layouts/tracker_head'
+  / content
+.row[id=controller_name]
   .col-md-12
-    form.col-xs-2.p-l-0.hidden-xs
-      .input-group.m-b-15
-        input.form-control.input-sm.input-white[placeholder="Search Mail"　type="text"]
-        span.input-group-btn
-          button.btn.btn-sm.btn-inverse[type="button"]
-            i.fa.fa-search
-    / top nav
-    .email-btn-row
-      = link_to admin_trackers_visits_path, class: 'btn btn-sm btn-inverse' do
-        i.fa.fa-circle.fa-fw.m-r-5.text-success
-        | 数据总览
-      = link_to admin_trackers_detailed_index_path, class: 'btn btn-sm btn-default' do
-        i.fa.fa-circle.fa-fw.m-r-5.text-warning
-        | 访问明细
-      = link_to admin_page_statistics_path, class: 'btn btn-sm btn-default' do
-        i.fa.fa-fw.m-r-5.fa-circle.text-primary
-        | 受访页面
-    / content
-    .email-content
-      .collect_top.row.text-center.p-b-10
-        .col-xs-4.p-t-10.p-b-10
+    .white-content
+      .collect_top.row.text-center
+        .col-xs-4
           div.h2
-            i.fa.fa-magnet.m-r-20.text-danger
+            i.fa.fa-magnet.text-danger
             span = @collect_visits[:total_browse][0]
           div.h4.text-muted 总浏览量
           div.cut_solid
           div
             | 今天：
             span.text-primary = @collect_visits[:total_browse][1]
-        .col-xs-4.p-t-10.p-b-10
+        .col-xs-4
           div.h2
-            i.fa.fa-users.m-r-20.text-primary
+            i.fa.fa-users.text-primary
             span = @collect_visits[:session_count][0]
           div.h4.text-muted 总访客量
           div.cut_solid
           div
             | 今天：
             span.text-primary = @collect_visits[:session_count][1]
-        .col-xs-4.p-t-10.p-b-10.border-none
+        .col-xs-4.border-none
           div.h2
-            i.fa.fa-share-alt.m-r-20.text-info[style='font-size: 80%']
+            i.fa.fa-share-alt.text-info[style='font-size: 80%']
             span 9990
           div.h4.text-muted 总分享数
           div.cut_solid
@@ -49,12 +34,12 @@
             span.text-primary 5544
       .chart-content
         #chart[data-json=@chart_data.to_json]
-          svg[width="100%"height="400px"]
+          svg[height="400px"]
     .email-content.m-t-20
-      .device-content.row[width="100%"height="400px"]
+      .link_content.row[width="100%"height="400px"]
         .col-md-6.left
           .cont_title.h4.test-left
-            i.fa.fa-chain.text-info.m-r-10
+            i.fa.fa-chain.text-info[style='margin-right: 20px']
             span 链接来源
           .cont_body
             ul[type='none']

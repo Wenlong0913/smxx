@@ -14,7 +14,7 @@ $(window).ready(function() {
       chart.xAxis     //Chart x-axis settings
           .axisLabel('日期 (ms)')
           .tickFormat(function(d) {
-            return d3.time.format('%x')(new Date(parseInt(d+'000')))
+            return d3.time.format('%Y/%m/%d')(new Date(parseInt(d+'000')))
           });
 
       chart.yAxis     //Chart y-axis settings
@@ -26,6 +26,7 @@ $(window).ready(function() {
 
       d3.select('#chart svg')    //Select the <svg> element you want to render the chart in.
           .datum(myData)         //Populate the <svg> element with chart data...
+          .transition().duration(500)
           .call(chart);          //Finally, render the chart!
 
       //Update the chart when window resizes.

@@ -1,25 +1,29 @@
-.row
+/ == cell(Tracker::VisitCell, @visits, path: sign_out_path)
+= render 'admin/layouts/tracker_head'
+  / content
+.row[id=controller_name]
   .col-md-12
-    / serach
-    form.col-xs-2.p-l-0.hidden-xs
-      .input-group.m-b-15
-        input.form-control.input-sm.input-white[placeholder="Search Mail"type="text"]
-        span.input-group-btn
-          button.btn.btn-sm.btn-inverse[type="button"]
-            i.fa.fa-search
-    / top nav
-    .email-btn-row
-      = link_to admin_trackers_visits_path, class: 'btn btn-sm btn-default' do
-        i.fa.fa-circle.fa-fw.m-r-5.text-success
-        | 数据总览
-      = link_to admin_trackers_detailed_index_path, class: 'btn btn-sm btn-inverse' do
-        i.fa.fa-circle.fa-fw.m-r-5.text-warning
-        | 访问明细
-      = link_to admin_page_statistics_path, class: 'btn btn-sm btn-default' do
-        i.fa.fa-fw.m-r-5.fa-circle.text-primary
-        | 受访页面
-    / content
-    .email-content
+    .white-content
+      .head.h5
+        span 访问明细
+      .head-nav.row
+        .col-md-4
+          .input-group[id="default-daterange"]
+            input.form-control[name="default-daterange" placeholder="click to select the date range" type="text"]
+            span.input-group-btn
+              button.btn.btn-default[type="button"]
+                i.fa.fa-calendar
+        ul.col-md-8.zone_time[type='none']
+          li
+            a 全部
+          li.active
+            a 今天
+          li
+            a 昨天
+          li
+            a 过去７天
+          li
+            a 过去３０天
       .table-responsive
         table.table.table-email
           thead
@@ -28,7 +32,7 @@
               th IP
               th 受访页面
               th 使用平台
-              th 会话创建时间
+              th 时间
           tbody
             - @visits.each_with_index do |visit, index|
               - browser = Browser.new(visit.user_agent)
@@ -39,16 +43,17 @@
                   a[href="#{visit.url}"] = visit.url
                 td = browser.name
                 td = visit.session.created_at.strftime("%Y-%m-%-d %H:%M:%S")
-      = paginate @visits
-      .email-footer.clearfix
-        | 737 messages
-        ul.pagination.pagination-sm.m-t-0.m-b-0.pull-right
+      / = paginate @visits_data
+      div.white-footer
+        span.pull-left.small 737 messages
+        ul.pagination.pagination-sm
           li.disabled
-            a[href="javascript:;"]
-              i.fa.fa-angle-double-left
+            a[href="javascript:;"] &laquo;
           li.disabled
-            a[href="javascript:;"]
-              i.fa.fa-angle-left
+            a[href="javascript:;"] 1
           li.disabled
-            a[href="javascript:;"]
-              i.fa.fa-angle-double-right
+            a[href="javascript:;"] 2
+          li.disabled
+            a[href="javascript:;"] 3
+          li.disabled
+            a[href="javascript:;"] &raquo;

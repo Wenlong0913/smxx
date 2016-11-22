@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       collection do
          resources :trackers_detailed, only: [:index]
          resources :page_statistics, only: [:index]
+         resources :spread_data, only: [:index]
       end
     end
   end

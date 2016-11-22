@@ -68,7 +68,7 @@
             th 使用平台
             th 会话创建时间
         tbody
-          - model.each_with_index do |visit, index|
+          /- model.each_with_index do |visit, index|
             - browser = Browser.new(visit.user_agent)
             tr
               td = index+1
