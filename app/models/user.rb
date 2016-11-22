@@ -15,4 +15,9 @@ class User < ApplicationRecord
     false
   end
 
+  def permission?(klass, action)
+    return true if has_role?('admin')
+    !!roles.detect{|r| r.permission?(klass, action)}
+  end
+
 end
