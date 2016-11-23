@@ -1,10 +1,10 @@
-/　访问统计,汇总页面
+/　总览页面
 
 / content
-.row#visit_summary
+.row.summary
   .col-md-12
     .white-content
-      .collect_top.row.text-center
+      .collect-top.row.text-center
         .col-xs-4
           div.h2
             i.fa.fa-magnet.text-danger
@@ -33,10 +33,10 @@
             | 今天：
             span.text-primary 5544
       .chart-content
-        #chart[data-json== options[:chart_data].to_json]
+        #chart[data-json= options[:chart_data].to_json]
           svg[height="400px"]
     .email-content.m-t-20
-      .link_content.row[width="100%"height="400px"]
+      .link-content.row
         .col-md-6.left
           .cont_title.h4.test-left
             i.fa.fa-chain.text-info[style='margin-right: 20px']

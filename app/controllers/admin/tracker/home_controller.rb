@@ -1,4 +1,4 @@
-class Admin::TrackersVisitsController < Admin::BaseController
+class Admin::Tracker::HomeController < Admin::BaseController
 
   def index
     # 汇总

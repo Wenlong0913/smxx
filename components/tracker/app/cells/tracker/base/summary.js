@@ -1,7 +1,7 @@
 $(window).ready(function() {
-  var body = $('body.admin-trackers_visits.index')
+  var tmp = $('.summary')
   /*These lines are all chart setup.  Pick and choose which chart features you want to utilize. */
-  if (body.length > 0) {
+  if (tmp.length > 0) {
     nv.addGraph(function() {
       var chart = nv.models.lineChart().useInteractiveGuideline(true);
                     // .margin({left: 100})  //Adjust chart margins to give the x-axis some breathing room.
@@ -38,7 +38,7 @@ $(window).ready(function() {
    * get data
    */
   function get_data() {
-    data = $('#trackers_visits .chart-content #chart').data('json');
+    data = [[{"x":1479312000,"y":1},{"x":1479398400,"y":2},{"x":1479484800,"y":0},{"x":1479571200,"y":1},{"x":1479657600,"y":1},{"x":1479744000,"y":1},{"x":1479830400,"y":1}],[{"x":1479312000,"y":3},{"x":1479398400,"y":4},{"x":1479484800,"y":0},{"x":1479571200,"y":1},{"x":1479657600,"y":3},{"x":1479744000,"y":2},{"x":1479830400,"y":1}]];
     return [
       {
         values: data[0],      //values - represents the array of {x,y} data points

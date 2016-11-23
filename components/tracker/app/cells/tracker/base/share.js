@@ -1,6 +1,6 @@
 $(window).ready(function(){
-  var body = $('body.admin-spread_data.index')
-  if(body.length > 0){
+  var tmp = $('.share_statistic');
+  if(tmp.length > 0){
     nv.addGraph(function(){
       var chart = nv.models.discreteBarChart()
           .x(function(d) { return d.label })    //Specify the data accessors.
@@ -83,6 +83,4 @@ $(window).ready(function(){
       ;
     };
   }
-
-
-  })
+})

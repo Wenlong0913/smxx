@@ -12,8 +12,6 @@
 //
 
 //= require admin/sessions
-//= require admin/chart
-//= require admin/spread_data
-
+//= require tracker
 // can't require tree
 // require_tree .

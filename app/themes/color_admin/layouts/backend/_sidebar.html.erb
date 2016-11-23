@@ -18,12 +18,13 @@
         <!-- begin sidebar nav -->
         <ul class="nav">
           <li class="nav-header">功能导航</li>
-          <li class="<%= 'active' if controller_name == 'home' %>">
+          <li class="<%= 'active' if controller_path == 'admin/home' %>">
             <%= link_to admin_root_path do %>
               <%= fa_icon 'laptop', text: '首页' %>
             <% end %>
           </li>
-          <li class="has-sub <%='active' if controller_name == 'trackers_visits' %>">
+
+          <li class="has-sub <%='active' if controller_path == 'admin/tracker/home' %>">
             <a href="javascript:;">
               <b class="caret pull-right"></b>
               <i class="fa fa-inbox"></i>
@@ -31,10 +32,10 @@
             </a>
             <ul class="sub-menu">
                 <li class="active">
-                  <%= link_to '访问统计', admin_trackers_visits_path %>
+                  <%= link_to '访问统计', admin_tracker_path %>
                 </li>
                 <li>
-                  <%= link_to '分销统计', admin_spread_data_path %>
+                  <%= link_to '分销统计', admin_tracker_shares_path %>
                 </li>
             </ul>
           </li>
