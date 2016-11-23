@@ -18,16 +18,24 @@
         <!-- begin sidebar nav -->
         <ul class="nav">
           <li class="nav-header">功能导航</li>
-          <li class='active'>
+          <li class="<%= 'active' if controller.class.name == 'Admin::HomeController' %>">
             <%= link_to root_path do %>
               <%= fa_icon 'laptop', text: '首页' %>
             <% end %>
           </li>
-
-
+          <li class="has-sub <%= 'active' if ['Admin::UsersController', 'Admin::RolesController'].include?(controller.class.to_s) %>">
+            <a href="javascript:;">
+              <i class="fa fa-inbox"></i>
+              <span>账户管理</span>
+            </a>
+            <ul class="sub-menu">
+              <li class="<%= 'active' if controller.class.name == 'Admin::UsersController' %>"><%= link_to '用户', admin_users_path %></li>
+              <li class="<%= 'active' if controller.class.name == 'Admin::RolesController' %>"><%= link_to '角色', admin_roles_path %></li>
+            </ul>
+          </li>
 
           <li>
-            <%= link_to '', method: :delete do %>
+            <%= link_to sign_out_path, method: :delete do %>
               <%= fa_icon 'sign-out', text: '退出系统' %>
             <% end %>
           </li>

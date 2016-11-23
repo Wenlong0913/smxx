@@ -1,27 +1,21 @@
 class ApplicationPolicy
   attr_reader :user, :record
 
-  def initialize(context, record)
-    @user = context.user
-    @controller_class = context.controller_class
-    @action_name = context.action_name
+  def initialize(user, record)
+    @user = user
     @record = record
   end
 
-  def has_permission?
-    @user ? @user.permission?(@controller_class, @action_name) : true
-  end
-
   def index?
-    has_permission?
+    user.has_role?(:admin)
   end
 
   def show?
-    has_permission? && scope.where(:id => record.id).exists?
+    user.has_role?(:admin) && scope.where(:id => record.id).exists?
   end
 
   def create?
-    has_permission?
+    user.has_role?(:admin)
   end
 
   def new?
@@ -29,7 +23,7 @@ class ApplicationPolicy
   end
 
   def update?
-    has_permission?
+    user.has_role?(:admin)
   end
 
   def edit?
@@ -37,7 +31,7 @@ class ApplicationPolicy
   end
 
   def destroy?
-    has_permission?
+    user.has_role?(:admin)
   end
 
   def scope
@@ -46,12 +40,10 @@ class ApplicationPolicy
 
   class Scope
     attr_reader :user, :scope
-
     def initialize(user, scope)
       @user = user
       @scope = scope
     end
-
     def resolve
       scope
     end

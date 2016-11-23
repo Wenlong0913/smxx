@@ -11,13 +11,9 @@ class User < ApplicationRecord
   attr_accessor :mobile_phone
   validates_presence_of :mobile_phone
 
+
   def email_required?
     false
-  end
-
-  def permission?(klass, action)
-    return true if has_role?('admin')
-    !!roles.detect{|r| r.permission?(klass, action)}
   end
 
 end
