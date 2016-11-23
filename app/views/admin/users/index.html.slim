@@ -18,5 +18,5 @@ h1.page-header
         tr
           td = user.id
           td = user.mobile.phone_number
-          td = user.roles.map(&:name).join(', ')
+          td = user.roles.pluck(:name).join(', ')
 = paginate @admin_users

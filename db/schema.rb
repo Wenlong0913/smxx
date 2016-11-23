@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161121095216) do
+ActiveRecord::Schema.define(version: 20161121090159) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,20 +37,6 @@ ActiveRecord::Schema.define(version: 20161121095216) do
     t.index ["user_id", "user_type"], name: "user_index", using: :btree
   end
 
-  create_table "features", force: :cascade do |t|
-    t.string   "name"
-    t.string   "type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "items", force: :cascade do |t|
-    t.string   "name"
-    t.string   "type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "pages", force: :cascade do |t|
     t.integer  "site_id"
     t.string   "title"
@@ -59,23 +45,6 @@ ActiveRecord::Schema.define(version: 20161121095216) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["site_id"], name: "index_pages_on_site_id", using: :btree
-  end
-
-  create_table "permissions", force: :cascade do |t|
-    t.string   "name"
-    t.string   "controller_class"
-    t.string   "action_name"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-  end
-
-  create_table "permissions_roles", force: :cascade do |t|
-    t.integer  "role_id"
-    t.integer  "permission_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.index ["permission_id"], name: "index_permissions_roles_on_permission_id", using: :btree
-    t.index ["role_id"], name: "index_permissions_roles_on_role_id", using: :btree
   end
 
   create_table "roles", force: :cascade do |t|
@@ -194,8 +163,6 @@ ActiveRecord::Schema.define(version: 20161121095216) do
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
   end
 
-  add_foreign_key "permissions_roles", "permissions"
-  add_foreign_key "permissions_roles", "roles"
   add_foreign_key "theme_configs", "sites"
   add_foreign_key "theme_configs", "themes"
   add_foreign_key "tracker_visits", "tracker_actions", column: "action_id"
