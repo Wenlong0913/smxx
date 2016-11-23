@@ -33,6 +33,7 @@ PATH
   remote: components/tracker
   specs:
     tracker (0.1.0)
+      browser
       cells (~> 4.1.4)
       cells-rails (~> 0.0.6)
       cells-slim (~> 0.0.5)
@@ -321,7 +322,6 @@ PLATFORMS
 
 DEPENDENCIES
   audited (~> 4.3)
-  browser
   byebug
   coffee-rails (~> 4.2)
   devise
