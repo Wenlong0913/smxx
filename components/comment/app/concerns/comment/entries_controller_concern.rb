@@ -2,7 +2,7 @@ module Comment
   module EntriesControllerConcern
     def comments_index
       @comments = comment__filter(comment__resolve_resource.comments)
-      render json: @comments.as_json(only: [:id, :content, :created_at])
+      render json: @comments.as_json(only: [:id, :content, :created_at], include: [{user: {only: [:name]}}, {replies: {only: [:id, :content], include: {user: {only: [:name]}}}}])
     end
 
     def create_comment
@@ -12,6 +12,20 @@ module Comment
         render json: entry.as_json(only: [:id, :content, :created_at])
       else
         head 403
+      end
+    end
+
+    def create_reply
+      reply_entry = comment__resolve_resource.comments.where(id: params[:reply][:comment_id]).first
+      if reply_entry.blank?
+        head 403
+      else
+        reply = Comment::Entry.new(resource: reply_entry, content: params[:reply][:content])
+        if reply.save
+          render json: reply.as_json(only: [:id, :content, :created_at])
+        else
+          head 403
+        end
       end
     end
 
