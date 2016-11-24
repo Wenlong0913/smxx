@@ -37,20 +37,6 @@ ActiveRecord::Schema.define(version: 20161121090159) do
     t.index ["user_id", "user_type"], name: "user_index", using: :btree
   end
 
-  create_table "features", force: :cascade do |t|
-    t.string   "name"
-    t.string   "type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "items", force: :cascade do |t|
-    t.string   "name"
-    t.string   "type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "pages", force: :cascade do |t|
     t.integer  "site_id"
     t.string   "title"
