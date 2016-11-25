@@ -1,13 +1,7 @@
 class Admin::Tracker::StatisticsController < Admin::BaseController
 
   def show
-    # parms[:times], 接收查看时间区域数组
-    if params[:times]
-      # today = Date.today
-      # Tracker::Visit.where("created_at between ? and ?", today.beginning_of_day, today.end_of_day)
-    else
-      today = Date.today
-    end
+    today = Date.today
     visits = Tracker::Visit.where("created_at between ? and ?", today.beginning_of_day, today.end_of_day)
 
     uniq_visits_url = visits.pluck(:url).uniq
