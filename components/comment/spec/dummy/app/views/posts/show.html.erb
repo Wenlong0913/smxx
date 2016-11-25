@@ -12,7 +12,7 @@
 
 <p>
   <strong>Comments:</strong>
-  <%= render_comments(@post, comment_path: comments_post_path, reply_path: replies_post_path) %></%>
+  <%= render_comments(@post, path: comments_post_path) %></%>
 </p>
 
 <%= link_to 'Edit', edit_post_path(@post) %> |

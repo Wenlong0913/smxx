@@ -1,7 +1,7 @@
 module Comment
   module Helpers
-    def render_comments(resource, comment_path:, reply_path:)
-      cell(Comment::EntryCell, resource, comment_path: comment_path, reply_path: reply_path).()
+    def render_comments(resource, path:)
+      cell(Comment::EntryCell, resource, path: path).()
     end
   end
 end

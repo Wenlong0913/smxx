@@ -1,4 +1,4 @@
-.[rel='comment-block' data-url=options[:comment_path] data-reply-url=options[:reply_path]]
+.[rel='comment-block' data-url=options[:path]]
   h2.title Comments
   span[v-if="error"] 评论加载失败!
   span[v-if="loading"] 正在加载评论...
@@ -6,14 +6,13 @@
     ul
       li[v-for="comment in comments"]
         | {{comment.id}} {{comment.created_at}} {{comment.content}} |
-        a[v-on:click="replyModel(comment, null)"] 回复
-        ul
-          li[v-for="reply in comment.replies"]
-            | {{reply.id}} {{reply.content}} |
-            a[v-on:click="replyModel(comment, reply)"] 回复
+        a[v-on:click="replyModel(comment)"] 回复
+        ul[v-if="comment.parent"]
+          li
+            | {{ comment.parent.id }} {{ comment.parent.created_at }} {{ comment.parent.content }}
         .[v-if="replying && replyTo == comment"]
-          textarea[v-model="replyContent" cols=20 rows=4 rel='reply-block']
-          button[v-on:click="postReply"] Reply 
+          textarea[v-model="content" cols=20 rows=4 rel='reply-block']
+          button[v-on:click="postComment('reply')"] Reply 
     textarea[v-model='content' cols=20 rows=4]
-    button[v-on:click="postComment"] Post
+    button[v-on:click="postComment('comment')"] Post
     span[v-if="posting"] 正在提交评论...

@@ -3,21 +3,22 @@ $(document).ready ->
   processCommentBlock = ()->
     blockEle  = $(this)
     url       = blockEle.data('url')
-    reply_url = blockEle.data('reply-url')
     blockEle.attr 'uuid', "#{new Date().getTime()}-#{Math.random()}"
 
-    postComment = ->
+    postComment = (target) ->
+      if target == 'comment'
+        this.replyTo.id = null
       self = this
       self.posting = true
-      $.post url, 'comment[content]': this.content
+      $.post url, 'comment[content]': this.content, 'comment[parent_id]': this.replyTo.id
         .success (data)->
           self.posting = false
-          self.comments.push data
+          self.replying = false
+          self.comments.unshift data
           self.content = ''
         .error (error)->
           self.posting = false
           alert error
-      loadComments()
 
     loadComments = ->
       $.get url
@@ -27,21 +28,9 @@ $(document).ready ->
       .error (error)->
         app._data.error = true
 
-    postReply = ->
-      $.post reply_url, 'reply[content]': this.replyContent, 'reply[comment_id]': this.replyTo.id
-        .success (data)->
-          this.replying = false
-        .error (error)->
-          alert error
-      loadComments()
-
-    replyModel = (comment_target, reply_target)->
+    replyModel = (comment_target)->
       this.replyTo = comment_target
       this.replying = true
-      if reply_target is null
-        this.replyContent = ''
-      else
-        this.replyContent = '@' + reply_target.id + ':'
 
     app = new Vue
       el: "[rel='comment-block'][uuid='#{blockEle.attr('uuid')}']"
@@ -51,14 +40,14 @@ $(document).ready ->
         posting: false
         loading: true
         replying: false
-        replyTo: null
+        replyTo:
+          id: null
         content: ''
         replyContent: ''
         display: 'block'
       methods:
         postComment: postComment
         replyModel: replyModel
-        postReply: postReply
 
     loadComments()
     
