@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  var tmp = $('.share_statistic');
+  var tmp = $(".tracker .share_statistic");
   if(tmp.length > 0){
     nv.addGraph(function(){
       var chart = nv.models.discreteBarChart()

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var tmp = $('.summary')
+  var tmp = $(".tracker .summary")
   /*These lines are all chart setup.  Pick and choose which chart features you want to utilize. */
   if (tmp.length > 0) {
     nv.addGraph(function() {
