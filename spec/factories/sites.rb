@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: sites
+#
+#  id          :integer          not null, primary key
+#  user_id     :integer
+#  title       :string
+#  description :text
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 FactoryGirl.define do
   factory :site do
     id 1

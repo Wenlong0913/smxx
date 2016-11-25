@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: sites
+#
+#  id          :integer          not null, primary key
+#  user_id     :integer
+#  title       :string
+#  description :text
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 class Site < ApplicationRecord
   belongs_to :user
   has_many :theme_configs

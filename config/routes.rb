@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/', to: 'home#index', as: :root
     get 'sign_in', to: 'sessions#new'
+    resources :roles, only: [:index]
+    resources :users, only: [:index]
+
   end
 
   namespace :agent do

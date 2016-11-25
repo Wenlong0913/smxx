@@ -3,6 +3,28 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = User.new
   end
 
+  ##
+  # User register with mobile number
+  #
+  # Post /sign_up
+  #
+  # params:
+  #   user  - with two attributes :mobile, :code
+  #
+  # = Examples
+  #
+  #   resp = conn.post("/sign_up", {"user" => {"mobile" => '18687878787', "code" => '1234'}})
+  #   resp.body
+  #   => {}
+  #
+  #   resp = conn.post("/sign_up", {"user" => {"mobile" => '18687878787', "code" => '1235'}})
+  #   resp.body
+  #   => {error: '验证码不正确！'}
+  #   
+  #   resp = conn.post("/sign_up", {"user" => {"mobile" => '18688787', "code" => '1234'}})
+  #   resp.body
+  #   => {error: '创建失败了，请检查！'}
+  #   
   def create
     mobile = params[:user][:mobile]
     code = params[:user][:code]

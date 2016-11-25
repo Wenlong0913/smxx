@@ -20,6 +20,9 @@ gem 'coffee-rails', '~> 4.2'
 gem "rolify"
 gem "pundit"
 
+gem 'kaminari', '~> 0.17.0'
+gem 'kaminari-i18n', '~> 0.4.0'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -77,6 +80,13 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'guard-rspec'
+end
+
+group :development, :doc do
+  # https://github.com/lsegal/yard
+  gem 'yard'
+  # https://github.com/ctran/annotate_models
+  gem 'annotate'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
