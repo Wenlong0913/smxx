@@ -4,6 +4,8 @@ module Tracker
     require 'cells'
     require 'cells-rails'
     require 'cells-slim'
+    require 'browser'
+    config.cells.with_assets = ["tracker/base_cell"]
     initializer "tracker.initialize" do
       ActiveSupport.on_load(:action_controller) do
         ActionController::Base.send(:include, Tracker::ActsAsTrackable)

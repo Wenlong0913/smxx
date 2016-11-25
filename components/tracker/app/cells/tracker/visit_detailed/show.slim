@@ -1,0 +1,57 @@
+/ content
+.row.visit_detailed
+  .col-md-12
+    .white-content
+      .head.h5
+        span 访问明细
+      .head-nav.row
+        .col-md-4
+          .input-group[id="default-daterange"]
+            input.form-control[name="default-daterange" placeholder="点击选择时间范围" type="text" readonly]
+            span.input-group-btn
+              button.btn.btn-default[type="button"]
+                i.fa.fa-calendar
+        ul.col-md-8.zone-time[type='none']
+          li
+            a 全部
+          li.active
+            a 今天
+          li
+            a 昨天
+          li
+            a 过去７天
+          li
+            a 过去３０天
+      .table-responsive
+        table.table.table-email
+          thead
+            tr
+              th.email-select #
+              th IP
+              th 受访页面
+              th 使用平台
+              th 时间
+          tbody
+            - model.each_with_index do |visit, index|
+              - browser = Browser.new(visit.user_agent)
+              tr
+                td = index+1
+                td = visit.ip_address
+                td
+                  a[href="#{visit.url}"] = visit.url
+                td = browser.name
+                td = visit.session.created_at.strftime("%Y-%m-%-d %H:%M:%S")
+      / = paginate @visits_data
+      div.white-footer
+        span.pull-left.small 737 messages
+        ul.pagination.pagination-sm
+          li.disabled
+            a[href="javascript:;"] &laquo;
+          li.disabled
+            a[href="javascript:;"] 1
+          li.disabled
+            a[href="javascript:;"] 2
+          li.disabled
+            a[href="javascript:;"] 3
+          li.disabled
+            a[href="javascript:;"] &raquo;

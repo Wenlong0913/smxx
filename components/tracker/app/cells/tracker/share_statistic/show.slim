@@ -1,0 +1,39 @@
+/ content
+.row.share_statistic
+  .col-md-12
+    / TAB NAV
+    ul.nav.nav-tabs.h5
+      li.active[role='presentation']
+        a[href='#pv_content' role='tab' data-toggle='tab']
+          | PV走势
+      li[role='presentation']
+        a[href='#uv_content' role='tab' data-toggle='tab']
+          | UV走势
+      li[role='presentation']
+        a[href='#share_content' role='tab' data-toggle='tab']
+          | 分享走势
+
+    / TAB CONTENT
+    .tab-content
+      .tab-pane.active#pv_content[role='tabpanel']
+        #chart_pv
+          .check_time_btn.text-center
+            .btn-group.m-t-3
+              button.btn.btn-info[type='button'] 7天
+              button.btn.btn-info[type='button'] 30天
+              button.btn.btn-info.active[type='button'] 全部
+          svg[height='300px' width='100%']
+
+      .tab-pane#uv_content[role='tabpanel']
+        #chart_uv
+          svg[height='300px' width='100%']
+      .tab-pane#share_content[role='tabpanel']
+        #chart_share
+          svg[height='300px' width='100%']
+    .panel.panel-default
+      .panel-heading
+        h4 传播层级
+      .panel-body
+        #bar_graph
+          svg[height='300px' width='100%']
+
