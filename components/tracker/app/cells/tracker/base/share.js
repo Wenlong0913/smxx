@@ -1,4 +1,4 @@
-$(window).ready(function(){
+$(document).ready(function(){
   var tmp = $('.share_statistic');
   if(tmp.length > 0){
     nv.addGraph(function(){

@@ -1,4 +1,4 @@
-$(window).ready(function() {
+$(document).ready(function() {
   var tmp = $('.summary')
   /*These lines are all chart setup.  Pick and choose which chart features you want to utilize. */
   if (tmp.length > 0) {
