@@ -19,6 +19,11 @@ Bundler.require(*Rails.groups)
 module Tmf
   class Application < Rails::Application
     require 'settings'
+    generators do |app|
+      require 'rails/generators/rails/scaffold_controller/scaffold_controller_generator'
+      require 'generators/modulize_template_concern'
+      Rails::Generators::ScaffoldControllerGenerator.send :include, Generators::ModulizeTemplateConcern
+    end
     config.generators do |g|
       g.test_framework :rspec
     end
