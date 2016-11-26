@@ -45,6 +45,14 @@ RSpec.describe User, type: :model do
     it { should have_attr_accessor :mobile_phone }
   end
 
+  it { expect(User).to respond_to :find_by_phone_number }
+  it 'find by phone_number' do
+    flag, user = User::Create.(mobile_phone: '13912345678', nickname: 'xiaohui')
+    user2 = User.find_by_phone_number('13912345678')
+    expect(user2).to be_a User
+    expect(user2.id).to eq user2.id
+  end
+
   it 'is valid with valid attributes' do
     flag, user = User::Create.(mobile_phone: '13912345678', nickname: 'xiaohui')
     expect(flag).to be(true)

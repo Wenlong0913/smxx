@@ -30,7 +30,14 @@ class User < ApplicationRecord
   has_one :mobile, dependent: :destroy
   has_one :weixin, dependent: :destroy
   attr_accessor :mobile_phone
-  validates_presence_of :mobile_phone
+  validates_presence_of :mobile_phone, if: ->{ mobile.nil? }
+
+  # Find user by phone number
+  # @param [String] phone_number
+  # @return [User]
+  def self.find_by_phone_number(phone_number)
+    User::Mobile.find_by(phone_number: phone_number).try(:user)
+  end
 
   ##
   # Devise default required email, if you don't want it , need to define this method.

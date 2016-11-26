@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+%w(admin agent user).each do |name|
+  Role.find_or_create_by name: name
+end
+
+User::Create.(mobile_phone: '15328077520')
