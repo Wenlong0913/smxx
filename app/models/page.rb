@@ -13,7 +13,7 @@
 
 class Page < ApplicationRecord
   belongs_to :site
-  has_many :items, dependent: :destroy
+  has_and_belongs_to_many :items, dependent: :destroy, join_table: 'pages_items'
   store_accessor :features, :short_title, :description
 
   validates_presence_of :title

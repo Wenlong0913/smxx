@@ -26,6 +26,8 @@ RSpec.describe Page, type: :model do
   end
 
   it { should belong_to :site }
+  it { should have_and_belong_to_many :items }
+
   it { should validate_presence_of :title }
   it { should validate_presence_of :site }
 
