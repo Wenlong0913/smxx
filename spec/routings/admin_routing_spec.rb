@@ -1,6 +1,46 @@
 require 'rails_helper'
 
-RSpec.describe "routing to admin", :type => :routing do
+RSpec.describe "Routing to Admin,", :type => :routing do
   it { expect(get: '/admin').to route_to('admin/home#index') }
   it { expect(get: '/admin/sign_in').to route_to('admin/sessions#new') }
+
+  describe 'Roles' do
+    it { expect(get: '/admin/roles').to route_to 'admin/roles#index' }
+    it 'support pagination' do
+      expect(get: '/admin/roles/page-1').to route_to 'admin/roles#index'
+    end
+
+    it '显示角色下的所有用户' do
+      expect(get: '/admin/roles/1/users').to route_to 'admin/users#index'
+    end
+    it { expect(get: '/admin/roles/1/users/page-1').to route_to 'admin/users#index' }
+  end
+
+  describe 'Users' do
+    it { expect(get: '/admin/users').to route_to 'admin/users#index' }
+    it 'support pagination' do
+      expect(get: '/admin/users/page-1').to route_to 'admin/users#index'
+    end
+    it { expect(post: '/admin/users').to route_to 'admin/users#new' }
+    it { expect(get: '/admin/users/1').to route_to 'admin/users#show' }
+    it { expect(put: '/admin/users/1').to route_to 'admin/users#edit' }
+    it { expect(delete: '/admin/users/1').to route_to 'admin/users#destroy' }
+  end
+
+  describe 'Tracker' do
+    it { expect(get: '/admin/tracker').to route_to 'admin/tracker/home#index' }
+    it { expect(get: '/admin/tracker/visits/statistics').to route_to 'admin/tracker/statistics#show' }
+    describe 'Visit Details' do
+      it { expect(get: '/admin/tracker/visits/details').to route_to 'admin/tracker/visits/details#index' }
+      it 'support pagination' do
+        expect(get: '/admin/tracker/visits/details/page-1').to route_to 'admin/tracker/visits/details#index'
+      end
+    end
+    describe 'Shares' do
+      it { expect(get: '/admin/tracker/shares').to route_to 'admin/tracker/shares#index' }
+      it 'support pagination' do
+        expect(get: '/admin/tracker/visits/shares/page-1').to route_to 'admin/tracker/shares#index'
+      end
+    end
+  end
 end
