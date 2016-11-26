@@ -10,4 +10,8 @@ class ApplicationController < ActionController::Base
     redirect_to(request.referrer || root_path)
   end
 
+  def current_user
+    @current_user ||= super.try(:decorate)
+  end
+
 end

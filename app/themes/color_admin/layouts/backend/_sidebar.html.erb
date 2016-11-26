@@ -6,11 +6,11 @@
         <ul class="nav">
           <li class="nav-profile">
             <div class="image">
-              <%= image_tag 'logo.png' %>
+              <%= image_tag current_user.headshot %>
             </div>
             <div class="info">
-              用户名
-              <small>权限名称</small>
+              <%= current_user.display_name %>
+              <small><%= current_user.display_role %></small>
             </div>
           </li>
         </ul>

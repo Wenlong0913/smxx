@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for "users", skip: [:sessions, :passwords, :registrations], :controllers => { :omniauth_callbacks => 'users/omniauth_callbacks' }
   devise_scope :user do
     post 'sign_in', to: 'users/sessions#create'
-    post 'sign_out', to: 'users/sessions#destroy'
+    delete 'sign_out', to: 'users/sessions#destroy'
     post 'sign_up', to: 'users/registrations#create'
     get  'sign_up', to: 'users/registrations#new'
   end
