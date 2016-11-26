@@ -13,6 +13,7 @@
 
 class Page < ApplicationRecord
   belongs_to :site
+  has_many :items, dependent: :destroy
   store_accessor :features, :short_title, :description
 
   validates_presence_of :title

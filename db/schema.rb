@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161121090159) do
+ActiveRecord::Schema.define(version: 20161126151252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pgcrypto"
 
   create_table "audits", force: :cascade do |t|
     t.integer  "auditable_id"
@@ -37,13 +38,29 @@ ActiveRecord::Schema.define(version: 20161121090159) do
     t.index ["user_id", "user_type"], name: "user_index", using: :btree
   end
 
+  create_table "item_relations", id: false, force: :cascade do |t|
+    t.integer "master_id"
+    t.integer "slave_id"
+    t.index ["master_id"], name: "index_item_relations_on_master_id", using: :btree
+    t.index ["slave_id"], name: "index_item_relations_on_slave_id", using: :btree
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.integer  "site_id"
+    t.string   "name"
+    t.jsonb    "features"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["site_id"], name: "index_items_on_site_id", using: :btree
+  end
+
   create_table "pages", force: :cascade do |t|
     t.integer  "site_id"
     t.string   "title"
-    t.string   "short_title"
-    t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "type"
+    t.jsonb    "features"
     t.index ["site_id"], name: "index_pages_on_site_id", using: :btree
   end
 
@@ -60,9 +77,9 @@ ActiveRecord::Schema.define(version: 20161121090159) do
   create_table "sites", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title"
-    t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb    "features"
     t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
   end
 
@@ -154,6 +171,7 @@ ActiveRecord::Schema.define(version: 20161121090159) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "username"
+    t.string   "headshot"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
@@ -163,6 +181,7 @@ ActiveRecord::Schema.define(version: 20161121090159) do
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
   end
 
+  add_foreign_key "items", "sites"
   add_foreign_key "theme_configs", "sites"
   add_foreign_key "theme_configs", "themes"
   add_foreign_key "tracker_visits", "tracker_actions", column: "action_id"
