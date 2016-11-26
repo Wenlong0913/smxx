@@ -22,16 +22,6 @@ GIT
       slim
       themeable (~> 1.1.2, >= 1.1.2)
 
-GIT
-  remote: https://github.com/rails/activemodel-serializers-xml
-  revision: 570ee7ed33d60e44ca1f3ccbec3d1fbf61d52cbf
-  specs:
-    activemodel-serializers-xml (1.0.1)
-      activemodel (> 5.x)
-      activerecord (> 5.x)
-      activesupport (> 5.x)
-      builder (~> 3.1)
-
 PATH
   remote: components/sms
   specs:
@@ -152,11 +142,6 @@ GEM
     diff-lcs (1.2.5)
     domain_name (0.5.20161021)
       unf (>= 0.0.5, < 1.0.0)
-    draper (2.1.0)
-      actionpack (>= 3.0)
-      activemodel (>= 3.0)
-      activesupport (>= 3.0)
-      request_store (~> 1.0)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
@@ -308,7 +293,6 @@ GEM
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
     redis (3.3.2)
-    request_store (1.3.1)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
     rest-client (2.0.0)
@@ -436,7 +420,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activemodel-serializers-xml!
   annotate
   audited (~> 4.3)
   bower-rails
@@ -446,7 +429,6 @@ DEPENDENCIES
   database_cleaner
   devise (~> 4.2.0)
   devise-i18n
-  draper (~> 2.1.0)
   factory_girl_rails
   font-awesome-rails (~> 4.7.0)
   guard-bundler

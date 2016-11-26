@@ -16,10 +16,9 @@ h1.page-header
         th 名称
         th 角色
       - @admin_users.each do |user|
-        - user = user.decorate
         tr
           td = user.id
-          td = user.phone_number
+          td = user.mobile.phone_number
           td = user.display_name
           td = user.display_role
 = paginate @admin_users

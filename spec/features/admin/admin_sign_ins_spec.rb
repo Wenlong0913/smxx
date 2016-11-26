@@ -4,6 +4,7 @@ RSpec.feature "Admin::SignIns", type: :feature, js: true do
   let(:user) { create(:user) }
   scenario 'login in with mobile and code' do
     user_mobile = create(:user_mobile, user_id: user.id)
+    user.add_role :admin
     visit admin_sign_in_path
     click_on '手机号登陆'
     fill_in 'user[mobile]', with: user_mobile.phone_number

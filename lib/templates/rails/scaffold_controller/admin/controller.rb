@@ -14,25 +14,30 @@ class <%= controller_class_name %>Controller < Admin::BaseController
 
   # GET <%= route_url %>
   def index
+    authorize <%= strip_module(class_name) %>
     @<%= plural_table_name %> = <%= orm_class.all(strip_module(class_name)) %>
   end
 
   # GET <%= route_url %>/1
   def show
+    authorize @<%= singular_table_name %>
   end
 
   # GET <%= route_url %>/new
   def new
+    authorize <%= strip_module(class_name) %>
     @<%= singular_table_name %> = <%= orm_class.build(strip_module(class_name)) %>
   end
 
   # GET <%= route_url %>/1/edit
   def edit
+    authorize @<%= singular_table_name %>
   end
 
   # POST <%= route_url %>
   def create
-    @<%= singular_table_name %> = <%= orm_class.build(strip_module(class_name), "#{singular_table_name}_params") %>
+    authorize <%= strip_module(class_name) %>
+    @<%= singular_table_name %> = <%= orm_class.build(strip_module(class_name), "permitted_attributes(@#{singular_table_name})") %>
 
     if @<%= orm_instance.save %>
       redirect_to <%= singular_table_name %>_path(@<%= singular_table_name %>), notice: <%= "'#{human_name} 创建成功.'" %>
@@ -43,7 +48,8 @@ class <%= controller_class_name %>Controller < Admin::BaseController
 
   # PATCH/PUT <%= route_url %>/1
   def update
-    if @<%= strip_module(orm_instance.update("#{singular_table_name}_params")) %>
+    authorize @<%= singular_table_name %>
+    if @<%= strip_module(orm_instance.update("permitted_attributes(@#{singular_table_name})")) %>
       redirect_to <%= singular_table_name %>_path(@<%= singular_table_name %>), notice: <%= "'#{human_name} 更新成功.'" %>
     else
       render :edit
@@ -52,6 +58,7 @@ class <%= controller_class_name %>Controller < Admin::BaseController
 
   # DELETE <%= route_url %>/1
   def destroy
+    authorize @<%= singular_table_name %>
     @<%= strip_module(orm_instance.destroy) %>
     redirect_to <%= index_helper %>_url, notice: <%= "'#{human_name} 删除成功.'" %>
   end
@@ -63,12 +70,12 @@ class <%= controller_class_name %>Controller < Admin::BaseController
     end
 
     # Only allow a trusted parameter "white list" through.
-    def <%= "#{singular_table_name}_params" %>
-      <%- if attributes_names.empty? -%>
-      params[:<%= singular_table_name %>]
-      <%- else -%>
-      params.require(:<%= singular_table_name %>).permit(<%= attributes_names.map { |name| ":#{name}" }.join(', ') %>)
-      <%- end -%>
-    end
+    # def <%= "#{singular_table_name}_params" %>
+    #   <%- if attributes_names.empty? -%>
+    #   params[:<%= singular_table_name %>]
+    #   <%- else -%>
+    #   params.require(:<%= singular_table_name %>).permit(policy(@<%= singular_table_name %>).permitted_attributes)
+    #   <%- end -%>
+    # end
 end
 <% end -%>

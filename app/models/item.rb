@@ -6,5 +6,5 @@ class Item < ApplicationRecord
 
   validates_presence_of :name
   validates_presence_of :site
-  validates_uniqueness_of :name, scope: :site
+  validates_uniqueness_of :name, scope: :site_id
 end

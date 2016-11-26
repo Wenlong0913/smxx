@@ -48,8 +48,9 @@ gem 'simple_form', '~> 3.3.1'
 # In Rails 5, active_model/serializers/xml has been extracted into its own gem.
 #   So, a quick solution is to add the activemodel-serializers-xml gem to your Gemfile
 #   https://github.com/drapergem/draper/issues/697
-gem 'draper', '~> 2.1.0'
-gem 'activemodel-serializers-xml', git: 'https://github.com/rails/activemodel-serializers-xml'
+# draper 和 Rails5 存在兼容性问题，不再使用
+# gem 'draper', '~> 2.1.0'
+# gem 'activemodel-serializers-xml', git: 'https://github.com/rails/activemodel-serializers-xml'
 
 # Audited (previously acts_as_audited) is an ORM extension that logs all changes
 #   to your models. Audited can also record who made those changes, save comments
