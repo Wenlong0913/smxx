@@ -21,6 +21,14 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/', to: 'home#index', as: :root
     get 'sign_in', to: 'sessions#new'
+    namespace :tracker do
+      get '/', to: 'home#index'
+      resource :visits, only: [] do
+        resource :statistics, only: [:show]
+        resource :details, only: [:show]
+      end
+      resource :shares, only: [:show]
+    end
   end
 
   namespace :agent do
