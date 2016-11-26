@@ -21,24 +21,27 @@ RSpec.describe Page, type: :model do
     it { expect(described_class::Destroy).to be_a(Proc) }
   end
 
-  describe 'attribtues' do
-    subject { described_class.new.attributes }
-    it { should include('title') }
-    it { should include('short_title') }
-    it { should include('description') }
-    it { should include('created_at') }
-    it { should include('updated_at') }
+  it do
+    expect(Page.attribute_names).to match_array(%w(id site_id type title features updated_at created_at))
   end
 
   it { should belong_to :site }
   it { should validate_presence_of :title }
+  it { should validate_presence_of :site }
+
+  it { should have_attr_accessor :short_title }
+  it { should have_attr_accessor :description }
 
   let(:user) { create(:user) }
   let(:site) { create(:site, user: user) }
-  
+
   subject { build(:page, site: site) }
 
   it 'is valid with valid attribues' do
     expect(subject).to be_valid
+  end
+
+  it 'is invalid with invalid attribues' do
+    expect(build(:page, site: nil)).not_to be_valid
   end
 end

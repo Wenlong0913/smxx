@@ -13,19 +13,15 @@
 require 'rails_helper'
 
 RSpec.describe Site, type: :model do
-  
+
   describe "Create/Update/Destroy" do
     it { expect(described_class::Create).to be_a(Proc) }
     it { expect(described_class::Update).to be_a(Proc) }
     it { expect(described_class::Destroy).to be_a(Proc) }
   end
 
-  describe 'attribtues' do
-    subject { described_class.new.attributes }
-    it { should include('title') }
-    it { should include('description') }
-    it { should include('created_at') }
-    it { should include('updated_at') }
+  it do
+    expect(Site.attribute_names).to match_array(%w(id user_id title features updated_at created_at))
   end
 
   it { should have_many(:theme_configs) }
@@ -33,12 +29,19 @@ RSpec.describe Site, type: :model do
   it { should belong_to :user }
   it { should have_many :pages }
   it { should validate_presence_of :title }
+  it { should validate_presence_of :user }
   it { should validate_uniqueness_of(:title).scoped_to(:user_id) }
+
+  it { should have_attr_accessor :description }
 
   let(:user) { create(:user) }
   subject { build(:site, user: user) }
 
   it 'is valid with valid attribues' do
     expect(subject).to be_valid
+  end
+
+  it 'is invalid with invalid attribues' do
+    expect(Site.new).not_to be_valid
   end
 end

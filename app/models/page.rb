@@ -13,6 +13,8 @@
 
 class Page < ApplicationRecord
   belongs_to :site
+  store_accessor :features, :short_title, :description
 
   validates_presence_of :title
+  validates_presence_of :site
 end
