@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161114083606) do
+ActiveRecord::Schema.define(version: 20161126054341) do
 
   create_table "tracker_actions", force: :cascade do |t|
     t.string   "name"
@@ -23,6 +23,26 @@ ActiveRecord::Schema.define(version: 20161114083606) do
   create_table "tracker_sessions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "tracker_share_codes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "resource_type"
+    t.integer  "resource_id"
+    t.string   "url"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["resource_type", "resource_id"], name: "index_tracker_share_codes_on_resource_type_and_resource_id"
+    t.index ["user_id"], name: "index_tracker_share_codes_on_user_id"
+  end
+
+  create_table "tracker_user_relations", force: :cascade do |t|
+    t.integer  "master_id"
+    t.integer  "slave_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["master_id"], name: "index_tracker_user_relations_on_master_id"
+    t.index ["slave_id"], name: "index_tracker_user_relations_on_slave_id"
   end
 
   create_table "tracker_visits", force: :cascade do |t|
