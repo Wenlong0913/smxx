@@ -7,15 +7,15 @@ class ApplicationPolicy
   end
 
   def index?
-    false
+    user.has_role?(:admin)
   end
 
   def show?
-    scope.where(:id => record.id).exists?
+    user.has_role?(:admin) && scope.where(:id => record.id).exists?
   end
 
   def create?
-    false
+    user.has_role?(:admin)
   end
 
   def new?
@@ -23,7 +23,7 @@ class ApplicationPolicy
   end
 
   def update?
-    false
+    user.has_role?(:admin)
   end
 
   def edit?
@@ -31,7 +31,7 @@ class ApplicationPolicy
   end
 
   def destroy?
-    false
+    user.has_role?(:admin)
   end
 
   def scope
@@ -40,12 +40,10 @@ class ApplicationPolicy
 
   class Scope
     attr_reader :user, :scope
-
     def initialize(user, scope)
       @user = user
       @scope = scope
     end
-
     def resolve
       scope
     end

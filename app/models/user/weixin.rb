@@ -1,7 +1,29 @@
+# == Schema Information
+#
+# Table name: user_weixins
+#
+#  id         :integer          not null, primary key
+#  user_id    :integer
+#  uid        :string
+#  name       :string
+#  headshot   :string
+#  city       :string
+#  province   :string
+#  country    :string
+#  gender     :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class User::Weixin < ApplicationRecord
   belongs_to :user
   validates :uid, presence: true, uniqueness: true
 
+  ##
+  # get weixin_user base infromation
+  # @param [Hash] auth is wexin omniauth request
+  # @return [Object] return User::Weixin instance
+  #
   def self.from_omniauth(auth)
     cond = auth.extra.raw_info.unionid ? \
       where("uid = ? OR unionid = ?", auth.uid, auth.extra.raw_info.unionid) : \
@@ -19,6 +41,12 @@ class User::Weixin < ApplicationRecord
     wx_user
   end
 
+  ##
+  # bind weixin_user with user
+  # @param [String] user is a User instance
+  # @param [Hash] auth is wexin omniauth request
+  # @return [Object] return User::Weixin record
+  #
   def self.connect_user(user, auth)
     weixin_user = from_omniauth(auth)
     weixin_user.user = user

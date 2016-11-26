@@ -23,7 +23,16 @@
               <%= fa_icon 'laptop', text: '首页' %>
             <% end %>
           </li>
-
+          <li class="has-sub <%= 'active' if %w(admin/users admin/roles).include?(controller_path) %>">
+            <a href="javascript:;">
+              <i class="fa fa-inbox"></i>
+              <span>账户管理</span>
+            </a>
+            <ul class="sub-menu">
+              <li class="<%= 'active' if controller_path == 'admin/users' %>"><%= link_to '用户', admin_users_path %></li>
+              <li class="<%= 'active' if controller_path == 'admin/roles' %>"><%= link_to '角色', admin_roles_path %></li>
+            </ul>
+          </li>
           <li class="has-sub <%='active' if controller_path == 'admin/tracker/home' %>">
             <a href="javascript:;">
               <b class="caret pull-right"></b>
@@ -41,7 +50,7 @@
           </li>
 
           <li>
-            <%= link_to '', method: :delete do %>
+            <%= link_to sign_out_path, method: :delete do %>
               <%= fa_icon 'sign-out', text: '退出系统' %>
             <% end %>
           </li>

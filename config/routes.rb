@@ -29,6 +29,8 @@ Rails.application.routes.draw do
       end
       resource :shares, only: [:show]
     end
+    resources :roles, only: [:index]
+    resources :users, only: [:index]
   end
 
   namespace :agent do
