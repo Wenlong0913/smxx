@@ -7,20 +7,20 @@ GIT
 
 GIT
   remote: git@gitlab.tanmer.com:tm-themes/theme_card.git
-  revision: a2efa2a967b591158ab5c0d2b337139473290429
+  revision: 955b64382bd351868834178e6f5081bba024b0fa
   specs:
-    theme_card (0.0.1)
-      rails (~> 5.0.0.1)
-      themeable
+    theme_card (0.0.2)
+      rails (>= 4.2)
+      themeable (~> 1.2.0)
 
 GIT
   remote: git@gitlab.tanmer.com:tm-themes/theme_color_admin.git
-  revision: c4dc7457595ff53f42d6f16629c7e52f4f7883ed
+  revision: ca98de25abfc9f1826881c4df5028c97e2b66f33
   specs:
-    theme_color_admin (0.0.3)
+    theme_color_admin (0.0.4)
       rails (>= 4.2.7)
       slim
-      themeable (~> 1.1.2, >= 1.1.2)
+      themeable (~> 1.2.0)
 
 PATH
   remote: components/sms
@@ -368,9 +368,9 @@ GEM
       activesupport (>= 3)
       rails (>= 3)
     temple (0.7.7)
-    themeable (1.1.4)
+    themeable (1.2.0)
       rails (>= 4.0)
-    thor (0.19.1)
+    thor (0.19.3)
     thread_safe (0.3.5)
     tilt (2.0.5)
     turbolinks (5.0.1)
@@ -462,6 +462,7 @@ DEPENDENCIES
   swagger-docs
   theme_card!
   theme_color_admin!
+  themeable (~> 1.2.0)
   tracker!
   turbolinks (~> 5)
   tzinfo-data

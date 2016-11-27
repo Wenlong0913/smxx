@@ -66,6 +66,7 @@ gem "omniauth-wechat-oauth2", "~> 0.1.0"
 # require components
 gem 'sms', path: 'components/sms'
 gem 'tracker', path: 'components/tracker'
+gem 'themeable', '~> 1.2.0'#, path: '../../gems/themeable'
 gem 'theme_color_admin', git: 'git@gitlab.tanmer.com:tm-themes/theme_color_admin.git'
 gem 'theme_card', git: 'git@gitlab.tanmer.com:tm-themes/theme_card.git'
 

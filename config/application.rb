@@ -25,6 +25,11 @@ module Tmf
       Rails::Generators::ScaffoldControllerGenerator.send :include, Generators::ModulizeTemplateConcern
     end
     config.generators do |g|
+      # Themeable options
+      g.theme_scaffold_mapping = {
+        admin: { theme: 'color_admin', theme_scaffold: 'admin' },
+        agent: { theme: 'card', theme_scaffold: 'admin' }
+      }
       g.test_framework :rspec
     end
     # Settings in config/environments/* take precedence over those specified here.
