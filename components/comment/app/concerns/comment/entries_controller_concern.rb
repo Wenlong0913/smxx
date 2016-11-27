@@ -2,11 +2,10 @@ module Comment
   module EntriesControllerConcern
     def comments_index
       @comments = comment__filter(comment__resolve_resource.comments)
-      render json: comment__entry_json(@comments)
+      render json: comment__entry_json(@comments, 'list')
     end
 
     def create_comment
-      binding.pry
       entry = comment__resolve_resource.comments.new(comment__permitted_params)
       entry.user_id = comment__user_id
       
@@ -20,7 +19,7 @@ module Comment
     private
 
     def comment__filter(query)
-      query.order(created_at: :desc)
+      query.order(created_at: :desc).page(params[:page])
     end
 
     def comment__user_id
@@ -41,8 +40,15 @@ module Comment
       params.require(:comment).permit(:parent_id, :content)
     end
 
-    def comment__entry_json(entry)
-      entry.as_json(only: [:id, :content, :created_at], include: {parent: {only: [:id, :content, :created_at]}} )
+    def comment__entry_json(entry, page = nil)
+      comment_info = {}
+      comment_info[:comment_data] =  entry.as_json(only: [:id, :content, :created_at], include: {parent: {only: [:id, :content, :created_at]}} )
+      unless page.blank?
+        comment_info[:page_data] = {}
+        comment_info[:page_data][:total_pages] = entry.total_pages
+        comment_info[:page_data][:current_page] = entry.current_page
+      end
+      return comment_info
     end
   end
 end
