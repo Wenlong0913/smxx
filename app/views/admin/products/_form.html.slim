@@ -1,0 +1,33 @@
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+        i class="fa fa-times"
+    h4 admin_product
+  .panel-body
+    = form_for @admin_product, html: { class: 'form-horizontal' } do |f|
+      - if @admin_product.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@admin_product.errors.count, "error")} prohibited this admin_product from being saved:"
+          ul
+            - @admin_product.errors.full_messages.each do |message|
+              li = message
+
+      .form-group
+        = f.label :site, class: 'col-md-3 control-label'
+        .col-md-9
+          = f.text_field :site, class: 'form-control'
+      .form-group
+        = f.label :title, class: 'col-md-3 control-label'
+        .col-md-9
+          = f.text_field :title, class: 'form-control'
+      .form-group
+        = f.label :description, class: 'col-md-3 control-label'
+        .col-md-9
+          = f.text_area :description, class: 'form-control'
+      .form-group
+        .col-md-2
+          = f.submit class: 'btn btn-success'
