@@ -27,7 +27,7 @@ RSpec.describe Site, type: :model do
   it { should have_many(:theme_configs) }
   it { should have_one(:active_theme_config) }
   it { should belong_to :user }
-  it { should have_many :pages }
+  it { should have_many :items }
   it { should validate_presence_of :title }
   it { should validate_presence_of :user }
   it { should validate_uniqueness_of(:title).scoped_to(:user_id) }

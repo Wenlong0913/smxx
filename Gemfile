@@ -82,6 +82,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'bower-rails'
   gem 'webmock'
+  gem 'rails-controller-testing'
 end
 
 group :development do

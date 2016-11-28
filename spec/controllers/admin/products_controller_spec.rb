@@ -38,7 +38,7 @@ RSpec.describe Admin::ProductsController, type: :controller do
 
   describe "GET #index" do
     it "assigns all admin_products as @admin_products" do
-      product = Admin::Product.create! valid_attributes
+      product = Product.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(assigns(:admin_products)).to eq([product])
     end
@@ -46,7 +46,7 @@ RSpec.describe Admin::ProductsController, type: :controller do
 
   describe "GET #show" do
     it "assigns the requested admin_product as @admin_product" do
-      product = Admin::Product.create! valid_attributes
+      product = Product.create! valid_attributes
       get :show, params: {id: product.to_param}, session: valid_session
       expect(assigns(:admin_product)).to eq(product)
     end
@@ -55,13 +55,13 @@ RSpec.describe Admin::ProductsController, type: :controller do
   describe "GET #new" do
     it "assigns a new admin_product as @admin_product" do
       get :new, params: {}, session: valid_session
-      expect(assigns(:admin_product)).to be_a_new(Admin::Product)
+      expect(assigns(:admin_product)).to be_a_new(Product)
     end
   end
 
   describe "GET #edit" do
     it "assigns the requested admin_product as @admin_product" do
-      product = Admin::Product.create! valid_attributes
+      product = Product.create! valid_attributes
       get :edit, params: {id: product.to_param}, session: valid_session
       expect(assigns(:admin_product)).to eq(product)
     end
@@ -72,25 +72,25 @@ RSpec.describe Admin::ProductsController, type: :controller do
       it "creates a new Admin::Product" do
         expect {
           post :create, params: {admin_product: valid_attributes}, session: valid_session
-        }.to change(Admin::Product, :count).by(1)
+        }.to change(Product, :count).by(1)
       end
 
       it "assigns a newly created admin_product as @admin_product" do
         post :create, params: {admin_product: valid_attributes}, session: valid_session
-        expect(assigns(:admin_product)).to be_a(Admin::Product)
+        expect(assigns(:admin_product)).to be_a(Product)
         expect(assigns(:admin_product)).to be_persisted
       end
 
       it "redirects to the created admin_product" do
         post :create, params: {admin_product: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(Admin::Product.last)
+        expect(response).to redirect_to(Product.last)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved admin_product as @admin_product" do
         post :create, params: {admin_product: invalid_attributes}, session: valid_session
-        expect(assigns(:admin_product)).to be_a_new(Admin::Product)
+        expect(assigns(:admin_product)).to be_a_new(Product)
       end
 
       it "re-renders the 'new' template" do
@@ -107,20 +107,20 @@ RSpec.describe Admin::ProductsController, type: :controller do
       }
 
       it "updates the requested admin_product" do
-        product = Admin::Product.create! valid_attributes
+        product = Product.create! valid_attributes
         put :update, params: {id: product.to_param, admin_product: new_attributes}, session: valid_session
         product.reload
         skip("Add assertions for updated state")
       end
 
       it "assigns the requested admin_product as @admin_product" do
-        product = Admin::Product.create! valid_attributes
+        product = Product.create! valid_attributes
         put :update, params: {id: product.to_param, admin_product: valid_attributes}, session: valid_session
         expect(assigns(:admin_product)).to eq(product)
       end
 
       it "redirects to the admin_product" do
-        product = Admin::Product.create! valid_attributes
+        product = Product.create! valid_attributes
         put :update, params: {id: product.to_param, admin_product: valid_attributes}, session: valid_session
         expect(response).to redirect_to(product)
       end
@@ -128,13 +128,13 @@ RSpec.describe Admin::ProductsController, type: :controller do
 
     context "with invalid params" do
       it "assigns the admin_product as @admin_product" do
-        product = Admin::Product.create! valid_attributes
+        product = Product.create! valid_attributes
         put :update, params: {id: product.to_param, admin_product: invalid_attributes}, session: valid_session
         expect(assigns(:admin_product)).to eq(product)
       end
 
       it "re-renders the 'edit' template" do
-        product = Admin::Product.create! valid_attributes
+        product = Product.create! valid_attributes
         put :update, params: {id: product.to_param, admin_product: invalid_attributes}, session: valid_session
         expect(response).to render_template("edit")
       end
@@ -143,14 +143,14 @@ RSpec.describe Admin::ProductsController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested admin_product" do
-      product = Admin::Product.create! valid_attributes
+      product = Product.create! valid_attributes
       expect {
         delete :destroy, params: {id: product.to_param}, session: valid_session
-      }.to change(Admin::Product, :count).by(-1)
+      }.to change(Product, :count).by(-1)
     end
 
     it "redirects to the admin_products list" do
-      product = Admin::Product.create! valid_attributes
+      product = Product.create! valid_attributes
       delete :destroy, params: {id: product.to_param}, session: valid_session
       expect(response).to redirect_to(admin_products_url)
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161126194833) do
+ActiveRecord::Schema.define(version: 20161128025003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,24 +51,8 @@ ActiveRecord::Schema.define(version: 20161126194833) do
     t.jsonb    "features"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["site_id"], name: "index_items_on_site_id", using: :btree
-  end
-
-  create_table "pages", force: :cascade do |t|
-    t.integer  "site_id"
-    t.string   "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string   "type"
-    t.jsonb    "features"
-    t.index ["site_id"], name: "index_pages_on_site_id", using: :btree
-  end
-
-  create_table "pages_items", id: false, force: :cascade do |t|
-    t.integer "page_id"
-    t.integer "item_id"
-    t.index ["item_id"], name: "index_pages_items_on_item_id", using: :btree
-    t.index ["page_id"], name: "index_pages_items_on_page_id", using: :btree
+    t.index ["site_id"], name: "index_items_on_site_id", using: :btree
   end
 
   create_table "roles", force: :cascade do |t|
@@ -189,8 +173,6 @@ ActiveRecord::Schema.define(version: 20161126194833) do
   end
 
   add_foreign_key "items", "sites"
-  add_foreign_key "pages_items", "items"
-  add_foreign_key "pages_items", "pages"
   add_foreign_key "theme_configs", "sites"
   add_foreign_key "theme_configs", "themes"
   add_foreign_key "tracker_visits", "tracker_actions", column: "action_id"
