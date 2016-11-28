@@ -42,7 +42,7 @@ class Admin::UsersController < Admin::BaseController
 
   private
   def user_params
-    params.require(:user).permit(:mobile_phone)
+    params.require(:user).permit(:mobile_phone, :nickname)
   end
 
   def set_admin_user

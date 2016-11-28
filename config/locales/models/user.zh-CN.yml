@@ -6,6 +6,7 @@ zh-CN:
     attributes:
       user:
         mobile_phone: 手机号
+        nickname: 别名
     errors:
       models:
         user:

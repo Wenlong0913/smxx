@@ -1,3 +1,4 @@
 = simple_form_for(@admin_user, url: @admin_user.new_record? ? admin_users_path(@admin_user) : admin_user_path(@admin_user)) do |f|
+  = f.input :nickname
   = f.input :mobile_phone
   = f.submit '创建用户', class: 'btn btn-block btn-primary'
