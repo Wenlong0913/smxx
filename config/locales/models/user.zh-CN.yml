@@ -1,0 +1,13 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      user: User
+    attributes:
+      user:
+        mobile_phone: 手机号
+    errors:
+      models:
+        user:
+  helpers:
+    user:

@@ -46,4 +46,8 @@ class User < ApplicationRecord
     false
   end
 
+  def mobile_phone
+    mobile.phone_number if mobile
+  end
+
 end
