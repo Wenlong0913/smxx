@@ -43,7 +43,7 @@ module Comment
     def comment__entry_json(entry, page = nil)
       comment_info = {}
       comment_info[:comment_data] =  entry.as_json(only: [:id, :content, :created_at], include: {parent: {only: [:id, :content, :created_at]}} )
-      unless entry.try(:total_pages).blank?
+      if entry.try(:total_pages)
         comment_info[:page_data] = {}
         comment_info[:page_data][:total_pages] = entry.total_pages
         comment_info[:page_data][:current_page] = entry.current_page

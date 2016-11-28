@@ -4,6 +4,7 @@ module Comment
     belongs_to :user, optional: true
     belongs_to :parent, class_name: 'Comment::Entry'
 
+    validates_presence_of :content
     validate :check_parent_id
 
     def check_parent_id
