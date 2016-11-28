@@ -1,7 +1,7 @@
 module Comment
   module EntriesControllerConcern
     def comments_index
-      @comments = comment__filter(comment__resolve_resource.comments)
+      @comments = comment__filter(comment__resolve_resource.comments.page(params[:page]).per(10))
       render json: comment__entry_json(@comments, 'list')
     end
 
@@ -19,7 +19,7 @@ module Comment
     private
 
     def comment__filter(query)
-      query.order(created_at: :desc).page(params[:page])
+      query.order(created_at: :desc)
     end
 
     def comment__user_id

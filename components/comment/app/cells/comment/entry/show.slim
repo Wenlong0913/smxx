@@ -18,13 +18,7 @@
     span[v-if="posting"] 正在提交评论...
     .[class='page-bar']
       ul
-        li[v-if="showFirst"]
+        li[v-if="currentPage != 1"]
           a[v-on:click="loadComments(currentPage--)"] 上一页
-        li[v-for="pageIndex in pageIndexs" v-bind:class="{ 'active': currentPage == pageIndex }"]
-          a[v-on:click="btnClick(pageIndex)"]
-            | {{ pageIndex }}
-        li[v-if="showLast"]
+        li[v-if="currentPage != pageCount"]
           a[v-on:click="loadComments(currentPage++)"] 下一页
-        li
-          a
-            | 共 {{ allPages }} 页
