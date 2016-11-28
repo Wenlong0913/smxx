@@ -8,9 +8,12 @@ $(document).ready ->
     postComment = (target) ->
       if target == 'comment'
         this.replyTo.id = null
+        content_info = this.content
+      else if target == 'reply'
+        content_info = this.replyContent
       self = this
       self.posting = true
-      $.post url, 'comment[content]': this.content, 'comment[parent_id]': this.replyTo.id
+      $.post url, 'comment[content]': content_info, 'comment[parent_id]': this.replyTo.id
         .success (data)->
           self.posting = false
           self.replying = false

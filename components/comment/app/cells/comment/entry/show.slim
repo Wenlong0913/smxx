@@ -11,7 +11,7 @@
           li
             | {{ comment.parent.id }} {{ comment.parent.created_at }} {{ comment.parent.content }}
         .[v-if="replying && replyTo == comment"]
-          textarea[v-model="content" cols=20 rows=4 rel='reply-block']
+          textarea[v-model="replyContent" cols=20 rows=4 rel='reply-block']
           button[v-on:click="postComment('reply')"] Reply 
     textarea[v-model='content' cols=20 rows=4]
     button[v-on:click="postComment('comment')"] Post
