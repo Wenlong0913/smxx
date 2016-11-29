@@ -8,32 +8,39 @@
         .col-xs-4
           div.h2
             i.fa.fa-magnet.text-danger
-            span = model[:total_browse][0]
+            span
+            | {{ total_browse }}
           div.h4.text-muted 总浏览量
           div.cut_solid
           div
             | 今天：
-            span.text-primary = model[:total_browse][1]
+            span.text-primary
+            | {{ today_browse }}
+
         .col-xs-4
           div.h2
             i.fa.fa-users.text-primary
-            span = model[:session_count][0]
+            span
+            | {{ session_count }}
           div.h4.text-muted 总访客量
           div.cut_solid
           div
             | 今天：
-            span.text-primary = model[:session_count][1]
+            span.text-primary
+            | {{ today_session }}
         .col-xs-4.border-none
           div.h2
             i.fa.fa-share-alt.text-info[style='font-size: 80%']
-            span 9990
+            span
+            | {{ share_count }}
           div.h4.text-muted 总分享数
           div.cut_solid
           div
             | 今天：
-            span.text-primary 5544
+            span.text-primary
+            | {{today_share }}
       .chart-content
-        #chart[data-json= options[:chart_data].to_json]
+        .chart_line
           svg[height="400px"]
     .email-content.m-t-20
       .link-content.row
