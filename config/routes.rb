@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+
+  concern :paginatable do
+    get '(page-:page)', :action => :index, :on => :collection, :as => ''
+  end
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'home#index'
   devise_for "users", skip: [:sessions, :passwords, :registrations], :controllers => { :omniauth_callbacks => 'users/omniauth_callbacks' }
@@ -29,8 +34,10 @@ Rails.application.routes.draw do
       end
       resource :shares, only: [:show]
     end
-    resources :roles, only: [:index]
-    resources :users, only: [:index]
+    resources :roles, only: [:index], :concerns => :paginatable do
+      resources :users, only: [:index], :concerns => :paginatable
+    end
+    resources :users, :concerns => :paginatable
     resources :products
   end
 

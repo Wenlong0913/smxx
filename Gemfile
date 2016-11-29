@@ -58,6 +58,9 @@ gem 'simple_form', '~> 3.3.1'
 gem "audited", "~> 4.3"
 gem "rails-observers", github: 'rails/rails-observers'
 
+gem 'rails-i18n', '~> 5.0.0'
+gem 'rails-i18n-generator'
+
 #weixin
 gem "weixin_rails_middleware", '~> 1.3', '>= 1.3.1'
 gem 'weixin_authorize', '1.6.3'

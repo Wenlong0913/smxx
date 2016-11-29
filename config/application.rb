@@ -41,6 +41,16 @@ module Tmf
       g.test_framework :rspec
       g.scaffold_stylesheet false # don't generate app/assets/stylesheets/scaffolds.scss
     end
+
+    I18n.config.enforce_available_locales = false
+    
+    config.i18n.available_locales = ["zh-CN"]
+    config.i18n.default_locale = "zh-CN".to_sym
+    config.before_configuration do
+      I18n.locale = "zh-CN".to_sym
+      I18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '**', '*.{rb,yml}')]
+      I18n.reload!
+    end
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
