@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161128025003) do
+ActiveRecord::Schema.define(version: 20161129063535) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,10 +115,10 @@ ActiveRecord::Schema.define(version: 20161128025003) do
     t.string   "url"
     t.string   "referer"
     t.text     "payload"
-    t.string   "user_agent"
     t.string   "ip_address"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.jsonb    "user_agent"
     t.index ["action_id"], name: "index_tracker_visits_on_action_id", using: :btree
     t.index ["resource_type", "resource_id"], name: "index_tracker_visits_on_resource_type_and_resource_id", using: :btree
     t.index ["session_id"], name: "index_tracker_visits_on_session_id", using: :btree

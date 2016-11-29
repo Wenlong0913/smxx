@@ -24,5 +24,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'kaminari-i18n'
   s.add_dependency 'browser'
 
-  s.add_development_dependency "sqlite3"
+  s.add_development_dependency "pg"
 end
