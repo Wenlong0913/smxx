@@ -32,9 +32,9 @@ class ProductPolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.has_role? :admin
-      [:site_id, :title, :description]
+      [:site_id, :name, :price, :description]
     else
-      [:title, :description]
+      [:name, :price, :description]
     end
   end
 

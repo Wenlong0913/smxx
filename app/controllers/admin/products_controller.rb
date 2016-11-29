@@ -1,4 +1,3 @@
-
 class Admin::ProductsController < Admin::BaseController
   before_action :set_admin_product, only: [:show, :edit, :update, :destroy]
 
@@ -27,7 +26,7 @@ class Admin::ProductsController < Admin::BaseController
   # POST /admin/products
   def create
     authorize Product
-    @admin_product = Product.new(permitted_attributes(@admin_product))
+    @admin_product = Product.new(permitted_attributes(Product))
 
     if @admin_product.save
       redirect_to admin_product_path(@admin_product), notice: 'Product 创建成功.'
