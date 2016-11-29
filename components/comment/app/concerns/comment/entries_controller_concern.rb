@@ -1,7 +1,7 @@
 module Comment
   module EntriesControllerConcern
     def comments_index
-      @comments = comment__filter(comment__resolve_resource.comments.page(params[:page]))
+      @comments = comment__filter(comment__resolve_resource.comments.page(params[:page]).per(10))
       render json: comment__entry_json(@comments)
     end
 
@@ -42,11 +42,10 @@ module Comment
 
     def comment__entry_json(entry, page = nil)
       comment_info = {}
-      comment_info[:comment_data] =  entry.as_json(only: [:id, :content, :created_at], include: {parent: {only: [:id, :content, :created_at]}} )
+      comment_info[:comments] =  entry.as_json(only: [:id, :content, :created_at], include: {parent: {only: [:id, :content, :created_at]}} )
       if entry.try(:total_pages)
-        comment_info[:page_data] = {}
-        comment_info[:page_data][:total_pages] = entry.total_pages
-        comment_info[:page_data][:current_page] = entry.current_page
+        comment_info[:total_pages] = entry.total_pages
+        comment_info[:current_page] = entry.current_page
       end
       return comment_info
     end

@@ -7,17 +7,17 @@ $(document).ready ->
 
     postComment = (target) ->
       if target == 'comment'
-        this.replyTo.id = null
+        this.replyTo = null
         content_info = this.content
       else if target == 'reply'
         content_info = this.replyContent
       self = this
       self.posting = true
-      $.post url, 'comment[content]': content_info, 'comment[parent_id]': this.replyTo.id
+      $.post url, 'comment[content]': content_info, 'comment[parent_id]': (this.replyTo and this.replyTo.id)
         .success (data)->
           self.posting = false
           self.replying = false
-          self.comments.unshift data.comment_data
+          self.comments.unshift data.comments
           self.content = ''
         .error (error)->
           self.posting = false
@@ -27,9 +27,9 @@ $(document).ready ->
       $.get url, 'page': app._data.currentPage
       .success (data)->
         app._data.loading = false
-        app._data.comments = data.comment_data
-        app._data.pageCount = data.page_data.total_pages
-        app._data.currentPage = data.page_data.current_page
+        app._data.comments = data.comments
+        app._data.pageCount = data.total_pages
+        app._data.currentPage = data.current_page
       .error (error)->
         app._data.error = true
 
@@ -45,11 +45,9 @@ $(document).ready ->
         posting: false
         loading: true
         replying: false
-        replyTo:
-          id: null
+        replyTo: null
         content: ''
         replyContent: ''
-        display: 'block'
         pageCount: null
         currentPage: 1 
       methods:
