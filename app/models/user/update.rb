@@ -7,7 +7,7 @@ class User
       if mobile_phone
         user.mobile.phone_number = mobile_phone
         flag = user.mobile.save
-        user.errors.add :mobile_phone, '手机号不可用' unless flag
+        user.errors.add :mobile_phone, user.mobile.errors.full_messages.join(', ') unless flag
       end
       user.assign_attributes attributes if flag
       [flag && user.save, user]
