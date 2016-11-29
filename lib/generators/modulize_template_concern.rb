@@ -37,7 +37,7 @@ module Generators
           say "choosing #{m_file}", :yellow
           return super(m_file)
         rescue Thor::Error => e
-          say "#{m_file} not found", :red
+          say "#{m_file} not found", :yellow
           folders.pop if e.message =~ /^Could not find /
         end
       end

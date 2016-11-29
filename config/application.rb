@@ -20,6 +20,11 @@ module Tmf
   class Application < Rails::Application
     require 'settings'
     generators do |app|
+
+      require 'rails/generators/base'
+      require 'generators/base_concern'
+      Rails::Generators::Base.send :include, Generators::BaseConcern
+
       require 'rails/generators/rails/scaffold_controller/scaffold_controller_generator'
       require 'generators/modulize_template_concern'
       Rails::Generators::ScaffoldControllerGenerator.send :include, Generators::ModulizeTemplateConcern
@@ -43,7 +48,7 @@ module Tmf
     end
 
     I18n.config.enforce_available_locales = false
-    
+
     config.i18n.available_locales = ["zh-CN"]
     config.i18n.default_locale = "zh-CN".to_sym
     config.before_configuration do
