@@ -26,6 +26,10 @@ module Generators
         end
       end
 
+      def generate_pundit_policy
+        invoke 'pundit:policy'
+      end
+
     end
 
   end
