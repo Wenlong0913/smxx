@@ -8,7 +8,7 @@
         i class="fa fa-times"
     h4 <%= singular_table_name %>
   .panel-body
-    = form_for @<%= singular_table_name %>, html: { class: 'form-horizontal' } do |f|
+    = form_for @<%= singular_table_name %>, url: @<%= singular_table_name %>.new_record? ? <%= index_helper %>_path : <%= singular_table_name %>_path(@<%= singular_table_name %>) , html: { class: 'form-horizontal' } do |f|
       - if @<%= singular_table_name %>.errors.any?
         #error_explanation
           h2 = "#{pluralize(@<%= singular_table_name %>.errors.count, "error")} prohibited this <%= singular_table_name %> from being saved:"
@@ -23,5 +23,5 @@
           = f.<%= attribute.field_type %> :<%= attribute.name %>, class: 'form-control'
 <%- end -%>
       .form-group
-        .col-md-2
+        .col-md-9
           = f.submit class: 'btn btn-success'

@@ -19,6 +19,7 @@ h1
 <% attributes.each do |attribute| -%>
             th <%= attribute.human_name %>
 <% end -%>
+            th
 
         tbody
           - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
@@ -26,6 +27,7 @@ h1
 <% attributes.each do |attribute| -%>
               td = <%= singular_table_name %>.<%= attribute.name %>
 <% end -%>
-              td = link_to '查看', <%= singular_table_name %>
-              td = link_to '编辑', edit_<%= singular_table_name %>_path(<%= singular_table_name %>)
-              td = link_to '删除', <%= singular_table_name %>, data: { confirm: '确定要删除吗?' }, method: :delete
+              td
+                => link_to '查看', <%= singular_table_name %>_path(<%= singular_table_name %>), class: 'btn btn-xs btn-default'
+                => link_to '编辑', edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: 'btn btn-xs btn-default'
+                = link_to '删除', <%= singular_table_name %>_path(<%= singular_table_name %>), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
