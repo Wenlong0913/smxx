@@ -13,13 +13,13 @@ $(document).ready ->
         app1._data.share_count   = visits_count.share_count
         app1._data.today_share   = visits_count.today_share
         linesChart data.chart_data
-        tmp.next('.load_dom').remove()
+        documentLoadAnimation(true)
       ,'json'
       .error ->
         documentLoadAnimation(false, '数据加载失败，请刷新页面')
 
     app1 = new Vue
-      el: '.summary'
+      el: tmp[0]
       data:
         total_browse: '--'
         today_browse: '--'
@@ -39,7 +39,7 @@ $(document).ready ->
           .axisLabel('访问量 (v)')
           .tickFormat(d3.format('.02f'))
         myData = encChartLinesDate data
-        d3.select('#chart svg')
+        d3.select('.tracker .summary .chart_line svg')
           .datum(myData)
           .transition().duration(500)
           .call(chart)
