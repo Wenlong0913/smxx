@@ -32,18 +32,22 @@
               th 使用平台
               th 时间
           tbody
-            - model.each_with_index do |visit, index|
-              - browser = Browser.new(visit.user_agent)
-              tr
-                td = index+1
-                td = visit.ip_address
-                td
-                  a[href="#{visit.url}"] = visit.url
-                td = browser.name
-                td = visit.session.created_at.strftime("%Y-%m-%-d %H:%M:%S")
+            tr[v-for="(visit,index) in visits"]
+              td
+                | {{ index+1 }}
+              td
+                | {{ visit.ip_address }}
+              td
+                a[v-bind:href="visit.url"]
+                  | {{ visit.url }}
+              td
+                | {{ visit.user_agent['name'] }}
+              td
+                | {{ new Date(visit.created_at).toLocaleString() }}
       / = paginate @visits_data
       div.white-footer
-        span.pull-left.small 737 messages
+        span.pull-left.small
+          | {{ size + '条 -- 记录' }}
         ul.pagination.pagination-sm
           li.disabled
             a[href="javascript:;"] &laquo;
