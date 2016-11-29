@@ -34,6 +34,14 @@ class ApplicationPolicy
     user.has_role?(:admin)
   end
 
+  def permitted_attributes_for_create
+    []
+  end
+
+  def permitted_attributes_for_update
+    []
+  end
+
   def scope
     Pundit.policy_scope!(user, record.class)
   end

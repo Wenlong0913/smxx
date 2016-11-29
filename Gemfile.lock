@@ -7,30 +7,20 @@ GIT
 
 GIT
   remote: git@gitlab.tanmer.com:tm-themes/theme_card.git
-  revision: a2efa2a967b591158ab5c0d2b337139473290429
+  revision: 955b64382bd351868834178e6f5081bba024b0fa
   specs:
-    theme_card (0.0.1)
-      rails (~> 5.0.0.1)
-      themeable
+    theme_card (0.0.2)
+      rails (>= 4.2)
+      themeable (~> 1.2.0)
 
 GIT
   remote: git@gitlab.tanmer.com:tm-themes/theme_color_admin.git
-  revision: c4dc7457595ff53f42d6f16629c7e52f4f7883ed
+  revision: ca98de25abfc9f1826881c4df5028c97e2b66f33
   specs:
-    theme_color_admin (0.0.3)
+    theme_color_admin (0.0.4)
       rails (>= 4.2.7)
       slim
-      themeable (~> 1.1.2, >= 1.1.2)
-
-GIT
-  remote: https://github.com/rails/activemodel-serializers-xml
-  revision: 570ee7ed33d60e44ca1f3ccbec3d1fbf61d52cbf
-  specs:
-    activemodel-serializers-xml (1.0.1)
-      activemodel (> 5.x)
-      activerecord (> 5.x)
-      activesupport (> 5.x)
-      builder (~> 3.1)
+      themeable (~> 1.2.0)
 
 PATH
   remote: components/sms
@@ -152,11 +142,6 @@ GEM
     diff-lcs (1.2.5)
     domain_name (0.5.20161021)
       unf (>= 0.0.5, < 1.0.0)
-    draper (2.1.0)
-      actionpack (>= 3.0)
-      activemodel (>= 3.0)
-      activesupport (>= 3.0)
-      request_store (~> 1.0)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
@@ -292,6 +277,10 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 5.0.0.1)
       sprockets-rails (>= 2.0.0)
+    rails-controller-testing (1.0.1)
+      actionpack (~> 5.x)
+      actionview (~> 5.x)
+      activesupport (~> 5.x)
     rails-dom-testing (2.0.1)
       activesupport (>= 4.2.0, < 6.0)
       nokogiri (~> 1.6.0)
@@ -313,7 +302,6 @@ GEM
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
     redis (3.3.2)
-    request_store (1.3.1)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
     rest-client (2.0.0)
@@ -389,9 +377,9 @@ GEM
       activesupport (>= 3)
       rails (>= 3)
     temple (0.7.7)
-    themeable (1.1.4)
+    themeable (1.2.0)
       rails (>= 4.0)
-    thor (0.19.1)
+    thor (0.19.3)
     thread_safe (0.3.5)
     tilt (2.0.5)
     turbolinks (5.0.1)
@@ -441,7 +429,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activemodel-serializers-xml!
   annotate
   audited (~> 4.3)
   bower-rails
@@ -451,7 +438,6 @@ DEPENDENCIES
   database_cleaner
   devise (~> 4.2.0)
   devise-i18n
-  draper (~> 2.1.0)
   factory_girl_rails
   font-awesome-rails (~> 4.7.0)
   guard-bundler
@@ -470,6 +456,7 @@ DEPENDENCIES
   puma (~> 3.0)
   pundit (~> 1.1.0)
   rails (~> 5.0.0, >= 5.0.0.1)
+  rails-controller-testing
   rails-i18n (~> 5.0.0)
   rails-i18n-generator
   rails-observers!
@@ -487,6 +474,7 @@ DEPENDENCIES
   swagger-docs
   theme_card!
   theme_color_admin!
+  themeable (~> 1.2.0)
   tracker!
   turbolinks (~> 5)
   tzinfo-data

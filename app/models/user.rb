@@ -50,4 +50,16 @@ class User < ApplicationRecord
     mobile.phone_number if mobile
   end
 
+  def display_headshot
+    headshot || weixin.try(:headshot) || 'logo.png'
+  end
+
+  def display_name
+    nickname.presence || username.presence || mobile.phone_number
+  end
+
+  def display_role
+    roles.map(&:name).join(', ')
+  end
+
 end

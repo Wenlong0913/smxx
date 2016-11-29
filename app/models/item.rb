@@ -1,10 +1,30 @@
 # 物件：抽象所有的物品，包含多个特征
 class Item < ApplicationRecord
-  belongs_to :site
-  has_and_belongs_to_many :items, join_table: 'item_relations', foreign_key: :master_id, association_foreign_key: :slave_id
   store_accessor :features, :description
+
+  belongs_to :site
+
+  has_many :child_relations, class_name: 'ItemRelation', dependent: :destroy, foreign_key: :master_id
+  has_many :parent_relations, class_name: 'ItemRelation', dependent: :destroy, foreign_key: :slave_id
+
+  has_many :children, through: :child_relations, source: :slave
+  has_many :parents, through: :parent_relations, source: :master
 
   validates_presence_of :name
   validates_presence_of :site
-  validates_uniqueness_of :name, scope: :site
+  validates_uniqueness_of :name, scope: :site_id
+
+  def self.has_deeper_child?(record, child_id)
+    record.children.each do |child|
+      return true if child.id == child_id
+    end
+    record.children.each do |child|
+      return true if has_deeper_child?(child, child_id)
+    end
+    false
+  end
+
+  def has_deeper_child?(child_id)
+    self.class.has_deeper_child?(self, child_id)
+  end
 end

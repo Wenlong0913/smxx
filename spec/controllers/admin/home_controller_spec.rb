@@ -2,6 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Admin::HomeController, type: :controller do
 
+  before do
+    user = create(:user)
+    user.add_role :admin
+    sign_in user
+  end
   describe "GET #index" do
     it "returns http success" do
       get :index

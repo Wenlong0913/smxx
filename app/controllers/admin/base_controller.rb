@@ -1,5 +1,6 @@
 class Admin::BaseController < ApplicationController
   before_action :ensure_admin_user!
+  after_action :verify_authorized
   acts_as_themeable 'color_admin'
 
   private

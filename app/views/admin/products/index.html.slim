@@ -1,0 +1,31 @@
+h1 
+  | admin_products 列表
+  .pull-right
+    = link_to '新建 Product', new_admin_product_path, class: 'btn btn-primary'
+
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+    h4 admin_products 列表
+  .panel-body
+    .table-responsive
+      table.table.table-striped
+        thead
+          tr
+            th Site
+            th Title
+            th Description
+
+        tbody
+          - @admin_products.each do |admin_product|
+            tr
+              td = admin_product.site
+              td = admin_product.title
+              td = admin_product.description
+              td = link_to '查看', admin_product
+              td = link_to '编辑', edit_admin_product_path(admin_product)
+              td = link_to '删除', admin_product, data: { confirm: '确定要删除吗?' }, method: :delete
