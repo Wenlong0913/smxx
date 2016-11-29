@@ -46,9 +46,9 @@ class User < ApplicationRecord
     false
   end
 
-  def mobile_phone
-    mobile.phone_number if mobile
-  end
+  # def mobile_phone
+  #   mobile.phone_number if mobile
+  # end
 
   def display_headshot
     headshot || weixin.try(:headshot) || 'logo.png'
