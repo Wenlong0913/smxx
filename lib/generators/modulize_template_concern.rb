@@ -1,3 +1,10 @@
+# == Usage
+# in config/application.rb
+# generators do |app|
+#   require 'rails/generators/rails/scaffold_controller/scaffold_controller_generator'
+#   require 'generators/mudulize_template_concern'
+#   Rails::Generators::ScaffoldControllerGenerator.send :include, Generators::ModulizeTemplateConcern
+# end
 module Generators
   module ModulizeTemplateConcern
     extend ActiveSupport::Concern

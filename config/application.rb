@@ -23,6 +23,14 @@ module Tmf
       require 'rails/generators/rails/scaffold_controller/scaffold_controller_generator'
       require 'generators/modulize_template_concern'
       Rails::Generators::ScaffoldControllerGenerator.send :include, Generators::ModulizeTemplateConcern
+
+      require 'generators/rspec/model/model_generator'
+      require 'generators/rspec_model_concern'
+      Rspec::Generators::ModelGenerator.send :include, Generators::RspecModelConcern
+
+      require 'rails/generators/rails/model/model_generator'
+      require 'generators/model_concern'
+      Rails::Generators::ModelGenerator.send :include, Generators::ModelConcern
     end
     config.generators do |g|
       # Themeable options
