@@ -39,6 +39,7 @@ module Tmf
         agent: { theme: 'card', theme_scaffold: 'admin' }
       }
       g.test_framework :rspec
+      g.scaffold_stylesheet false # don't generate app/assets/stylesheets/scaffolds.scss
     end
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
