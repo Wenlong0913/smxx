@@ -1,7 +1,7 @@
 $(document).ready ->
   tmp = $ ".tracker .summary"
   if tmp.length > 0
-    load_url = window.location
+    load_url = tmp.data('url')
 
     loadSummary = ->
       $.get load_url, (data)->

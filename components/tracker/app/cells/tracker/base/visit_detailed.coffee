@@ -1,7 +1,7 @@
 $(document).ready ->
   tmp = $ ".tracker .visit_detailed"
   if tmp.length > 0
-    load_url = window.location
+    load_url = tmp.data('url')
     loadDetailed = ->
       $.ajax
         type: 'get'
@@ -9,7 +9,6 @@ $(document).ready ->
         dataType: 'json'
         success: (data)->
           app._data.visits = data
-          app._data.size = data.length
           documentLoadAnimation(true)
         error: ->
           documentLoadAnimation(false, '数据加载失败，请刷新页面')
@@ -17,5 +16,4 @@ $(document).ready ->
       el: tmp[0]
       data:
         visits: []
-        size: 0
     loadDetailed()

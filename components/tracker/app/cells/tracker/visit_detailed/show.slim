@@ -1,5 +1,5 @@
 / content
-.row.visit_detailed
+.row.visit_detailed[data-url=options[:path]]
   .col-md-12
     .white-content
       .head.h5
@@ -41,13 +41,13 @@
                 a[v-bind:href="visit.url"]
                   | {{ visit.url }}
               td
-                | {{ visit.user_agent['name'] }}
+                | {{ visit.user_agent_data['name'] }}
               td
                 | {{ new Date(visit.created_at).toLocaleString() }}
       / = paginate @visits_data
       div.white-footer
         span.pull-left.small
-          | {{ size + '条 -- 记录' }}
+          | {{ visits.length + '条 -- 记录' }}
         ul.pagination.pagination-sm
           li.disabled
             a[href="javascript:;"] &laquo;

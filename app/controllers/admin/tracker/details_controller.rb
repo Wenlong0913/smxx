@@ -5,7 +5,7 @@ class Admin::Tracker::DetailsController < Admin::BaseController
     authorize :'tracker/home', :index?
     respond_to do |format|
       format.html
-      format.json {render json: Tracker::Visit.visits}
+      format.json {render json: Tracker::Visit.visits(page: params[:page])}
       # Tracker::Visit.visits(page: 2) 第二页
     end
   end
