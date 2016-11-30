@@ -22,6 +22,7 @@ module Tracker
         session['tracker.visit.at'] = Time.now.to_i
         session['tracker.visit.url'] = request.original_url
         session['tracker.visit.id'] = tracker_visit.id
+        ChangeUserAgentJob.perform_later tracker_visit.id
       end
     end
 

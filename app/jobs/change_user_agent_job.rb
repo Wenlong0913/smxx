@@ -1,16 +1,15 @@
 class ChangeUserAgentJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
+  def perform(visit_id)
     # Do something later
-    Tracker::Visit.all.each do |f|
-      unless f.user_agent['string'].present?
-        f.update(user_agent: {'string': f.user_agent})
-      end
-      browser = Browser.new(f.user_agent['string'])
-      f.user_agent['name'] = browser.name
-      f.user_agent['platform'] = browser.platform.name
-      f.save
+    visit = Tracker::Visit.find(visit_id)
+    unless visit.user_agent['string'].present?
+      visit.update(user_agent: {'string': visit.user_agent})
     end
+    browser = Browser.new(visit.user_agent['string'])
+    visit.user_agent['name'] = browser.name
+    visit.user_agent['platform'] = browser.platform.name
+    visit.save
   end
 end
