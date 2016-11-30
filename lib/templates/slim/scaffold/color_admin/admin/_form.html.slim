@@ -5,10 +5,9 @@
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-        i class="fa fa-times"
     h4 <%= singular_table_name %>
   .panel-body
-    = simple_form_for @<%= singular_table_name %>, url: @<%= singular_table_name %>.new_record? ? <%= index_helper %>_path : <%= singular_table_name %>_path(@<%= singular_table_name %>), wrapper: :horizontal_form do |f|
+    = simple_form_for @<%= singular_table_name %>, url: @<%= singular_table_name %>.new_record? ? <%= index_helper %>_path : <%= singular_table_name %>_path(@<%= singular_table_name %>) do |f|
       - if @<%= singular_table_name %>.errors.any?
         #error_explanation
           h2 = "#{pluralize(@<%= singular_table_name %>.errors.count, "error")} prohibited this <%= singular_table_name %> from being saved:"
@@ -19,6 +18,4 @@
 <%- attributes.each do |attribute| -%>
       = f.<%= attribute.reference? ? :association : :input %> :<%= attribute.name %>
 <%- end -%>
-      .form-group
-        .col-sm-9.col-sm-offset-3
-          = f.submit class: 'btn btn-success'
+      = f.submit class: 'btn btn-success btn-block'
