@@ -7,7 +7,7 @@ FactoryGirl.define do
     url "MyString"
     referer "MyString"
     payload "MyText"
-    user_agent "MyString"
+    user_agent_data "MyString"
     ip_address "MyString"
   end
 end

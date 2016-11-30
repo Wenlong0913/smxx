@@ -22,6 +22,7 @@ module Tracker
         session['tracker.visit.at'] = Time.now.to_i
         session['tracker.visit.url'] = request.original_url
         session['tracker.visit.id'] = tracker_visit.id
+        ChangeUserAgentJob.perform_later tracker_visit.id
       end
     end
 
@@ -46,7 +47,7 @@ module Tracker
         controller_path: controller.controller_path,
         action_name: controller.action_name)
       tracker_visit.url = request.original_url
-      tracker_visit.user_agent = request.user_agent
+      tracker_visit.user_agent_data = {'user_agent': request.user_agent}
       tracker_visit.ip_address = request.ip
     end
   end
