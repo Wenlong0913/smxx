@@ -23,16 +23,16 @@ class UserPolicy < ApplicationPolicy
   end
 
   def update?
-    edit?
+    user.id != record.id && edit? 
   end
 
   def destroy?
-    show?
+    user.id != record.id && show?
   end
 
   def permitted_attributes_for_create
     if user.has_role? :admin
-      [:mobile_phone, :nickname]
+      [:mobile_phone, :nickname, :role_ids => []]
     else
       [:nickname]
     end
