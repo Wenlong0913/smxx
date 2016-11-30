@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161128025003) do
+ActiveRecord::Schema.define(version: 20161130052560) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,26 @@ ActiveRecord::Schema.define(version: 20161128025003) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tracker_share_codes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "resource_type"
+    t.integer  "resource_id"
+    t.string   "url"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["resource_type", "resource_id"], name: "index_tracker_share_codes_on_resource_type_and_resource_id", using: :btree
+    t.index ["user_id"], name: "index_tracker_share_codes_on_user_id", using: :btree
+  end
+
+  create_table "tracker_user_relations", force: :cascade do |t|
+    t.integer  "master_id"
+    t.integer  "slave_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["master_id"], name: "index_tracker_user_relations_on_master_id", using: :btree
+    t.index ["slave_id"], name: "index_tracker_user_relations_on_slave_id", using: :btree
+  end
+
   create_table "tracker_visits", force: :cascade do |t|
     t.integer  "session_id"
     t.integer  "action_id"
@@ -115,10 +135,10 @@ ActiveRecord::Schema.define(version: 20161128025003) do
     t.string   "url"
     t.string   "referer"
     t.text     "payload"
-    t.string   "user_agent"
     t.string   "ip_address"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.jsonb    "user_agent_data"
     t.index ["action_id"], name: "index_tracker_visits_on_action_id", using: :btree
     t.index ["resource_type", "resource_id"], name: "index_tracker_visits_on_resource_type_and_resource_id", using: :btree
     t.index ["session_id"], name: "index_tracker_visits_on_session_id", using: :btree

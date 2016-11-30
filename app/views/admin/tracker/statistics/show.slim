@@ -1,3 +1,3 @@
 .tracker
   == cell(Tracker::NavTopCell, nil, visit: true)
-  == cell(Tracker::VisitStatisticCell, @visits_data)
+  == cell(Tracker::VisitStatisticCell, nil, path: admin_tracker_visits_statistics_url)

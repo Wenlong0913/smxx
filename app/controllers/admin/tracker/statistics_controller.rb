@@ -1,6 +1,7 @@
 class Admin::Tracker::StatisticsController < Admin::BaseController
 
   def show
+    authorize :'tracker/home', :index?
     today = Date.today
     visits = Tracker::Visit.where("created_at between ? and ?", today.beginning_of_day, today.end_of_day)
 
