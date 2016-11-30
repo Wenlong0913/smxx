@@ -5,10 +5,9 @@
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-        i class="fa fa-times"
     h4 admin_product
   .panel-body
-    = simple_form_for @admin_product, url: @admin_product.new_record? ? admin_products_path : admin_product_path(@admin_product), wrapper: :horizontal_form do |f|
+    = simple_form_for @admin_product, url: @admin_product.new_record? ? admin_products_path : admin_product_path(@admin_product, html: { class: 'form-horizontal' }) do |f|
       - if @admin_product.errors.any?
         #error_explanation
           h2 = "#{pluralize(@admin_product.errors.count, "error")} prohibited this admin_product from being saved:"
@@ -19,6 +18,4 @@
       = f.input :name
       = f.input :price
       = f.input :description
-      .form-group
-        .col-sm-9.col-sm-offset-3
-          = f.submit class: 'btn btn-success'
+      = f.submit class: 'btn btn-success btn-block'
