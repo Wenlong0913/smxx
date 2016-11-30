@@ -41,7 +41,7 @@
                 a[v-bind:href="visit.url"]
                   | {{ visit.url }}
               td
-                | {{ visit.user_agent_data['name'] }}
+                | {{ visit.user_agent_data['browser_name'] }}
               td
                 | {{ new Date(visit.created_at).toLocaleString() }}
       / = paginate @visits_data

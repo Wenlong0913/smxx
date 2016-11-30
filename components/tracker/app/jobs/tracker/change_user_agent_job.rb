@@ -6,7 +6,7 @@ module Tracker
       # Do something later
       visit = Tracker::Visit.find(visit_id)
       browser = Browser.new(visit.user_agent_data['user_agent'])
-      visit.name = browser.name
+      visit.browser_name = browser.name
       visit.platform = browser.platform.name
       visit.save
     end
