@@ -1,4 +1,4 @@
-class Admin::Tracker::DetailsController < Admin::BaseController
+class Admin::Tracker::Visits::DetailsController < Admin::BaseController
 
   # 详细
   def show

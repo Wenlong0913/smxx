@@ -49,13 +49,10 @@
         span.pull-left.small
           | {{ visits.length + '条 -- 记录' }}
         ul.pagination.pagination-sm
-          li.disabled
-            a[href="javascript:;"] &laquo;
-          li.disabled
-            a[href="javascript:;"] 1
-          li.disabled
-            a[href="javascript:;"] 2
-          li.disabled
-            a[href="javascript:;"] 3
-          li.disabled
-            a[href="javascript:;"] &raquo;
+          li[v-bind:class="{ 'disabled': selected_page == 1 }"]
+            a[href="javascript:;"v-on:click="selected_page == 1 ? false : loadDetailed(--selected_page)"] &laquo;
+          li[v-for="n in total_pages"v-bind:class=" n == selected_page ? 'active' : false"]
+            a[href="javascript:;"v-on:click="loadDetailed(n)"]
+              | {{ n }}
+          li[v-bind:class="{ 'disabled': selected_page == total_pages }"]
+            a[href="javascript:;"v-on:click="selected_page == total_pages ? false : loadDetailed(++selected_page)"] &raquo;
