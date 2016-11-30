@@ -4,6 +4,7 @@ module Comment
     require 'cells'
     require 'cells-rails'
     require 'cells-slim'
+    require 'kaminari'
 
     config.cells.with_assets = ["comment/base_cell"]
 

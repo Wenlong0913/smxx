@@ -21,5 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'cells', '~> 4.1.4'
   s.add_dependency "cells-rails", '~> 0.0.6'
   s.add_dependency "cells-slim", '~> 0.0.5'
+  s.add_dependency 'kaminari'
+  s.add_dependency 'kaminari-i18n'
   s.add_development_dependency "sqlite3"
 end
