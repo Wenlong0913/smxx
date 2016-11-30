@@ -19,15 +19,15 @@ class UserPolicy < ApplicationPolicy
   end
 
   def edit?
-    show?
+    !record.has_role?('super_admin') && user.id != record.id
   end
 
   def update?
-    user.id != record.id && edit? 
+    edit?
   end
 
   def destroy?
-    user.id != record.id && show?
+    edit?
   end
 
   def permitted_attributes_for_create

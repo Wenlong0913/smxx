@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-%w(admin agent).each do |name|
+%w(super_admin admin agent).each do |name|
   Role.find_or_create_by name: name
 end
 

@@ -29,11 +29,11 @@ html
         a.btn.btn-icon.btn-circle.btn-success.btn-scroll-to-top.fade[href="javascript:;" data-click="scroll-top"]
           i.fa.fa-angle-up
     / 信息提示ｊｓ
-    / javascript:
+    javascript:
       var flashMessages = #{raw flash.to_json};
       for(i = 0; i < flashMessages.length; i++){
         var k = flashMessages[i][0], v = flashMessages[i][1];
         var name = '提示';
         if(k == 'alert') name = '错误';
-        $.gritter.add(name, v);
+        $.gritter.add({title: name, text: v});
       }
