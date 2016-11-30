@@ -1,5 +1,5 @@
 class Admin::Tracker::Visits::DetailsController < Admin::BaseController
-acts_as_trackable
+
   # 详细
   def show
     authorize :'tracker/home', :index?
