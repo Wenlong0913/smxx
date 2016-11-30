@@ -7,7 +7,8 @@ module Tracker
     validates_presence_of :url
 
     def self.visits(page: 1)
-      Tracker::Visit.all.order(created_at: :desc).page(page)
+      visits = Tracker::Visit.all.order(created_at: :desc).page(page)
+      return {total_pages: visits.total_pages, selected_page: page, visits: visits}
     end
   end
 end
