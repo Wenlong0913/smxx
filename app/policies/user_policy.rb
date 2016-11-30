@@ -19,7 +19,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def edit?
-    !record.has_role?('super_admin') && user.id != record.id
+    !record.has_role?('super_admin') && show?
   end
 
   def update?
@@ -31,7 +31,9 @@ class UserPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    if user.has_role? :admin
+    if user.has_role?(:admin) && user.id == record.id
+      [:mobile_phone, :nickname]
+    elsif user.has_role? :admin
       [:mobile_phone, :nickname, :role_ids => []]
     else
       [:nickname]

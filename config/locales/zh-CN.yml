@@ -1,5 +1,6 @@
 zh-CN:
-  super_admin: '超级管理员'
-  admin: "管理员"
-  agent: '代理商'
-  user: '用户'
+  roles:
+    super_admin: '超级管理员'
+    admin: "管理员"
+    agent: '代理商'
+    user: '用户'

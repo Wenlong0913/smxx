@@ -24,7 +24,7 @@ class Role < ApplicationRecord
   scopify
 
   def role_name
-    I18n.t(name)
+    I18n.t("roles.#{name}")
   end
 
 end
