@@ -15,7 +15,7 @@ class Admin::UsersController < Admin::BaseController
 
   def create
     authorize User
-    flag, @admin_user = User::Create.(permitted_attributes(User))
+    flag, @admin_user = User::Create.(permitted_attributes(User), current_user)
     if flag
       redirect_to admin_users_path, notice: '用户创建成功！'
     else
@@ -29,7 +29,7 @@ class Admin::UsersController < Admin::BaseController
 
   def update
     authorize @admin_user
-    flag, @admin_user =  User::Update.(@admin_user, permitted_attributes(@admin_user))
+    flag, @admin_user =  User::Update.(@admin_user, permitted_attributes(@admin_user), current_user)
     if flag
       redirect_to admin_users_path, notice: '用户更新成功！'
     else
