@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '<%= class_name %>::Create', type: :model do
+RSpec.describe <%= class_name %>::Create, type: :model do
 
   # it 'for name' do
   #   record = create(:<%= file_name %>)

@@ -1,0 +1,8 @@
+Description:
+    Explain the generator
+
+Example:
+    rails g decorator:install
+
+    This will create:
+    app/decorators/application_decorator.rb

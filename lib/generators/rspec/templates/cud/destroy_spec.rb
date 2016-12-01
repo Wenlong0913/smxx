@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '<%= class_name %>::Create', type: :model do
+RSpec.describe <%= class_name %>::Create, type: :model do
   it do
     record = create(:<%= file_name %>)
     true_of_false = <%= class_name %>::Destroy.(record)

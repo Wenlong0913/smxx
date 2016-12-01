@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '<%= class_name %>::Create', type: :model do
+RSpec.describe <%= class_name %>::Create, type: :model do
   it 'with valid attributes' do
     attrs = attributes_for(:<%= file_name %>)
     flag, record = <%= class_name %>::Create.(attrs)
