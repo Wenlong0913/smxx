@@ -30,12 +30,7 @@ RSpec.describe "Routing to Admin,", :type => :routing do
   describe 'Tracker' do
     it { expect(get: '/admin/tracker').to route_to 'admin/tracker/home#index' }
     it { expect(get: '/admin/tracker/visits/statistics').to route_to 'admin/tracker/statistics#show' }
-    describe 'Visit Details' do
-      it { expect(get: '/admin/tracker/visits/details').to route_to 'admin/tracker/visits/details#index' }
-      it 'support pagination' do
-        expect(get: '/admin/tracker/visits/details/page-1').to route_to 'admin/tracker/visits/details#index'
-      end
-    end
+    it { expect(get: '/admin/tracker/visits/details').to route_to 'admin/tracker/visits/details#show' }
     describe 'Shares' do
       it { expect(get: '/admin/tracker/shares').to route_to 'admin/tracker/shares#index' }
       it 'support pagination' do
