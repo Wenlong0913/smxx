@@ -27,7 +27,7 @@ class User
         user.errors.add :mobile_phone, user.mobile.errors.full_messages.join(', ') unless flag
       end
 
-      user.assign_attributes attributes
+      user.assign_attributes attributes if flag
 
       [flag && user.save, user]
     end
