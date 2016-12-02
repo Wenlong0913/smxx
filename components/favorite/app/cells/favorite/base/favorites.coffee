@@ -10,7 +10,7 @@ $(document).ready ->
         .success (data)->
           app._data.isFavorite = data
         .error (error)->
-          app._data.isFavorite = false
+          alert error
       
 
     deleteFavorite = ->
@@ -18,14 +18,14 @@ $(document).ready ->
         .success (data)->
           app._data.isFavorite = data
         .error (error)->
-          app._data.isFavorite = true
+          alert error
 
     loadFavorite = ->
       $.get url
         .success (data)->
           app._data.isFavorite = data
         .error (error)->
-          app._data.error = true
+          alert error
 
     app = new Vue
       el: "[rel='favorite-button'][uuid='#{buttonBlock.attr('uuid')}']"
