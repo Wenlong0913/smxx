@@ -60,8 +60,8 @@ Short description and motivation.
    修改show.slim文件可以自定义显示页面
 
 
-2、插件内容的修改（可以修改你需要显示的那些内容）
-   在插件的components/comment/app/concerns/comment/entries_controller_concern.rb中你可以修改下面的代码返回你想要显示的评论内容
+2、修改评论的JSON返回数据（可以修改你需要显示的哪些内容）
+   在插件的components/comment/app/concerns/comment/entries_controller_concern.rb中有默认的`comment__entry_json`，需要第定义的话，就在对应的controller中添加这个方法去覆盖默认的定义：
 
     def comment__entry_json(entry, page = nil)
       comment_info = {}
