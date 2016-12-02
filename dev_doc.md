@@ -3,8 +3,9 @@
 - [开发配置](#config)
 - [模块介绍](#modules-list)
 - [如何开始工作](#get-started)
-  - [怎么生产一个Model](#how-to-generate-model)
-  - [怎么生产一个Controller](#how-to-generate-controller)
+  - [怎么生成一个Model](#how-to-generate-model)
+  - [怎么生成一个Item](#how-to-generate-item)
+  - [怎么生成一个Controller](#how-to-generate-controller)
   - [View中怎么使用Decorator](#how-to-use-decorator)
 - [测试](#testing)
 
@@ -61,6 +62,36 @@
       Rails::Generators::ModelGenerator.hook_for :decorator, default: 'decorator'
       Rails::Generators::ModelGenerator.hook_for :pundit, default: true, as: 'policy', in: 'pundit'
     end
+
+<a name="how-to-generate-item"></a>
+### 怎么生成一个Item
+项目默认有Item表，是所有物件的基类表，当我们需要定义一个高级的物件时，例如定义一个Album类：
+
+    rails g item Album people description
+      create  app/models/album.rb
+      invoke  cud
+      create    app/models/album/create.rb
+      create    app/models/album/update.rb
+      create    app/models/album/destroy.rb
+      invoke    rspec
+      create      rspec/models/album/create_spec.rb
+      create      rspec/models/album/update_spec.rb
+      create      rspec/models/album/destroy_spec.rb
+      invoke  decorator
+      create    app/decorators/album_decorator.rb
+      invoke    rspec
+      create      spec/decorators/album_spec.rb
+      invoke  rspec
+      create    spec/models/album_spec.rb
+      invoke    factory_girl
+      create      spec/factories/albums.rb
+
+`app/models/album.rb`的内容是这样的：
+
+    class Album < Item
+      store_accessor :features, :people, :description
+    end
+
 
 <a name="how-to-generate-controller"></a>
 ### 怎么生产一个Controller
