@@ -7,6 +7,8 @@
   - [怎么生成一个Item](#how-to-generate-item)
   - [怎么生成一个Controller](#how-to-generate-controller)
   - [View中怎么使用Decorator](#how-to-use-decorator)
+- [Model中的一些用法](#how-to-program-model)
+    - [数据验证]("how-to-program-model-validators")
 - [测试](#testing)
 
 <a name="config"></a>
@@ -151,6 +153,31 @@
       = site.link_button
 
 这里的`decorate`方法是定义在`app/helpers/decorator_helper.rb`。`ApplicationDecorator`是定义在`app/decorators/application_decorator.rb`中，这个文件中可以看到，`SiteDecorator`可以使用`h`调用view helper方法，用`r`调用路由方法。
+
+<a name="how-to-program-model"></a>
+## Model中的一些用法
+
+<a name="how-to-program-model-validators"></a>
+### 数据验证
+
+目前定义了两个自定义验证：
+
+`app/validators/email_validator.rb`
+`app/validators/mobile_phone_validator.rb`
+
+- 验证电子邮件
+
+      class User < ApplicationRecord
+        validates :email, email: true
+      end
+
+- 验证手机号
+
+      class User < ApplicationRecord
+        validates :mobile_phone, mobile_phone: true
+      end
+
+
 
 <a name="testing"></a>
 ## 测试
