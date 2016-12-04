@@ -184,3 +184,16 @@
 
 运行测试代码，因为需要测试feature，需要用到浏览器插件`capybara`和`selenium-webdriver`，
 Mac系统必须执行`brew install geckodriver`安装插件`geckodriver`
+
+在Feature测试中，需要测试用户登录后的效果：  
+参考来源： https://github.com/plataformatec/devise/wiki/How-To:-Test-controllers-with-Rails-3-and-4-(and-RSpec)
+
+    RSpec.feature "Toggles", type: :feature, js: true do
+      before(:each) do
+        create :user, id: 1
+        @request.env["devise.mapping"] = Devise.mappings[:user]
+        sign_in create(:user, id: 1)
+      end
+
+      it { ... }
+    end

@@ -5,4 +5,3 @@ module Favorite
     validates_presence_of :resource, :user
   end
 end
-
