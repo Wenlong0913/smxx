@@ -45,6 +45,13 @@ gem 'swagger-docs'
 gem 'font-awesome-rails', '~> 4.7.0'
 gem 'simple_form', '~> 3.3.1'
 
+gem 'client_side_validations',
+  github: 'DavyJonesLocker/client_side_validations',
+  branch: 'rails5'
+gem 'client_side_validations-simple_form',
+  github: 'DavyJonesLocker/client_side_validations-simple_form',
+  branch: 'rails5'
+
 # In Rails 5, active_model/serializers/xml has been extracted into its own gem.
 #   So, a quick solution is to add the activemodel-serializers-xml gem to your Gemfile
 #   https://github.com/drapergem/draper/issues/697
