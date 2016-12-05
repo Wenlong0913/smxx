@@ -7,6 +7,7 @@ zh-CN:
       user:
         mobile_phone: 手机号
         nickname: 别名
+        role_ids: 角色
     errors:
       models:
         user:

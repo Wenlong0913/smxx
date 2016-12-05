@@ -3,13 +3,14 @@
   /! begin sidebar scrollbar
   div data-height="100%" data-scrollbar="true" 
     /! begin sidebar user
+    - user = decorate(current_user)
     ul.nav
       li.nav-profile
         .image
-          = image_tag current_user.display_headshot
+          = image_tag user.display_headshot
         .info
-          = current_user.display_name
-          small= current_user.display_role
+          = user.display_name
+          small= user.display_role
     /! end sidebar user
     /! begin sidebar nav
     ul.nav

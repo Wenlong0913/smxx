@@ -23,4 +23,8 @@ class Role < ApplicationRecord
 
   scopify
 
+  def role_name
+    I18n.t "roles.#{name}", default: name
+  end
+
 end

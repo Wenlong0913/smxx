@@ -47,20 +47,12 @@ class User < ApplicationRecord
     false
   end
 
-  # def mobile_phone
-  #   mobile.phone_number if mobile
-  # end
-
-  def display_headshot
-    headshot || weixin.try(:headshot) || 'logo.png'
+  def mobile_phone
+    mobile.phone_number if mobile
   end
 
-  def display_name
-    nickname.presence || username.presence || mobile.phone_number
-  end
-
-  def display_role
-    roles.map(&:name).join(', ')
+  def super_admin_or_admin?
+    has_any_role?({name: :admin, resource: :any}, {name: :super_admin, resource: :any})
   end
 
 end

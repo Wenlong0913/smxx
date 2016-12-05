@@ -1,9 +1,19 @@
 class User
   Create =
-    lambda do |attributes|
+    lambda do |attributes, current_user = nil|
       flag = false
       user = User.new(attributes)
       mobile_phone = attributes[:mobile_phone]
+
+      if current_user && user.roles.any?
+        # 超级管理员只能通过程序创建user.add_role('super_admin'), 任何用户都无法创建
+        user.roles.delete(Role.find_by_name('super_admin'))
+        # 只有超级管理员才能创建管理员
+        unless current_user.has_role?(:super_admin)
+          user.roles.delete(Role.find_by_name('admin'))
+        end
+      end
+
       if mobile_phone
         mobile = User::Mobile.find_or_initialize_by(phone_number: mobile_phone)
         if mobile.new_record?
