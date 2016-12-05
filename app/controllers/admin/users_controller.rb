@@ -5,7 +5,7 @@ class Admin::UsersController < Admin::BaseController
     authorize User
     @admin_users = User.all
     @admin_users = @admin_users.joins(:roles).where("roles.id = ?", params[:role_id])if params[:role_id]
-    @admin_users = @admin_users.page params[:page]
+    @admin_users = @admin_users.includes(:roles, :mobile).page params[:page]
   end
 
   def new
