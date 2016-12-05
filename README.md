@@ -1,3 +1,5 @@
+## [开发文档](dev.doc.md)
+
 更多内容：http://gitlab.tanmer.com/tanmer/tmf/wikis/home
 
 ### 私享荟
@@ -80,16 +82,3 @@
 例如二：一些并非购买性质的本地特色餐饮的推荐，特色休闲娱乐场所的推荐，会员自己可以有一个讨论区域。
 
 **非产品页发布（本地推荐,活动)**
-
-
-# 开发配置
-
-    bundle install
-    rails s
-
-# 测试
-
-运行测试代码，因为需要测试feature，需要用到浏览器插件`capybara`和`selenium-webdriver`，
-Mac系统必须执行`brew install geckodriver`安装插件`geckodriver`
-
-

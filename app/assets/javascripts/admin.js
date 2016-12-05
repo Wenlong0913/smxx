@@ -12,5 +12,7 @@
 //
 //= require admin/sessions
 //= require tracker
+//= require rails.validations
+//= require rails.validations.simple_form
 // can't require tree
 // require_tree .

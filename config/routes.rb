@@ -28,11 +28,13 @@ Rails.application.routes.draw do
     get 'sign_in', to: 'sessions#new'
     namespace :tracker do
       get '/', to: 'home#index'
-      resource :visits, only: [] do
+      namespace :visits do
         resource :statistics, only: [:show]
         resource :details, only: [:show]
       end
-      resource :shares, only: [:show]
+      namespace :shares do
+        get '/', to: 'home#show'
+      end
     end
     resources :roles, only: [:index], :concerns => :paginatable do
       resources :users, only: [:index], :concerns => :paginatable
