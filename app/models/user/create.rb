@@ -24,7 +24,8 @@ class User
           user.errors.add :mobile_phone, '手机号已经存在'
         end
       else
-        flag = user.save
+        flag = false
+        user.errors.add :mobile_phone, '手机号必须填写'
       end
       [flag, user]
     end

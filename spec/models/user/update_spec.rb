@@ -4,7 +4,7 @@ RSpec.describe 'User::Update.()', type: :model do
     user = create(:user)
     old_password = user.encrypted_password
     new_password = user.password.reverse
-    flag, user = User::Update.(user, password: new_password)
+    flag, user = User::Update.(user, password: new_password, password_confirmation: new_password)
     expect(flag).to be(true)
     expect(user.encrypted_password).to_not be(old_password)
   end

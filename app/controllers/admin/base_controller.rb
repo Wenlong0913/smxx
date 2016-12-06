@@ -6,6 +6,6 @@ class Admin::BaseController < ApplicationController
   private
 
   def ensure_admin_user!
-    redirect_to admin_sign_in_url unless current_user && current_user.has_role?(:admin)
+    redirect_to admin_sign_in_url unless current_user && current_user.super_admin_or_admin?
   end
 end

@@ -12,6 +12,5 @@
 class User::Mobile < ApplicationRecord
   belongs_to :user
   validates :user, presence: true, uniqueness: true
-  validates :phone_number, presence: true, uniqueness: true, case_sensitive: false
-  validates_format_of :phone_number, with: /\A\d{11}\z/
+  validates :phone_number, presence: true, uniqueness: true, case_sensitive: false, mobile_phone: true
 end

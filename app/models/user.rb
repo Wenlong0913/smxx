@@ -30,8 +30,6 @@ class User < ApplicationRecord
   has_one :mobile, dependent: :destroy
   has_one :weixin, dependent: :destroy
   attr_accessor :mobile_phone
-  validates :mobile_phone, mobile_phone: true, allow_blank: true
-  validates_presence_of :mobile_phone, if: ->{ mobile.nil? }
 
   # Find user by phone number
   # @param [String] phone_number
@@ -45,10 +43,6 @@ class User < ApplicationRecord
   #
   def email_required?
     false
-  end
-
-  def mobile_phone
-    mobile.phone_number if mobile
   end
 
   def super_admin_or_admin?

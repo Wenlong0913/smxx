@@ -1,4 +1,9 @@
 class UserDecorator < ApplicationDecorator
+
+  def mobile_phone
+    super || mobile.try(:phone_number)
+  end
+
   def display_headshot
     headshot || weixin.try(:headshot) || 'logo.png'
   end

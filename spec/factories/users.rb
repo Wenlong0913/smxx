@@ -23,6 +23,39 @@ FactoryGirl.define do
   factory :user do
     nickname "User1"
     password "abcd1234"
-    mobile_phone '15328077520'
+    password_confirmation 'abcd1234'
+    after :create do |user|
+      create :user_mobile, user: user, phone_number: '13800000001'
+    end
+  end
+
+  factory :super_admin, class: 'User' do
+    nickname "SuperAdmin"
+    password "abcd1234"
+    password_confirmation 'abcd1234'
+    after(:create) do |user|
+      user.add_role(:super_admin)
+      create :user_mobile, user: user, phone_number: '13900000001'
+    end
+  end
+
+  factory :admin, class: 'User' do
+    nickname "Admin"
+    password "abcd1234"
+    password_confirmation 'abcd1234'
+    after(:create) do |user|
+      user.add_role(:super_admin)
+      create :user_mobile, user: user, phone_number: '13900000002'
+    end
+  end
+
+  factory :agent, class: 'User' do
+    nickname "Agent"
+    password "abcd1234"
+    password_confirmation 'abcd1234'
+    after(:create) do |user|
+      user.add_role(:super_admin)
+      create :user_mobile, user: user, phone_number: '13900000003'
+    end
   end
 end
