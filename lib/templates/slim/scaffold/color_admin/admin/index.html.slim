@@ -3,31 +3,109 @@ h1
   .pull-right
     = link_to '新建 <%= human_name %>', new_<%= singular_table_name %>_path, class: 'btn btn-primary'
 
-.panel
+.panel.panel-default
   .panel-heading
     .panel-heading-btn
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-    h4 <%= plural_table_name %> 列表
+    h3.panel-title <%= plural_table_name %> 列表
   .panel-body
-    .table-responsive
-      table.table.table-striped
-        thead
+    = form_for :search, url:  <%= singular_table_name %>_path(<%= singular_table_name %>), method: :get do |f|
+      .toolbar.row
+        .col-md-6.m-b-15
+          .input-group.search_all
+            = f.text_field :searching, value: (params[:search][:searching] if params[:search].present?), class: 'form-control', placeholder: 'Search Our Stories...'
+            span.input-group-btn
+              button.btn.btn-inverse[type='submit']
+                i.fa.fa-search
+        .col-md-6.m-b-15
+          .btn-group
+            button.btn.btn-default.dropdown-toggle[type='button'data-toggle='dropdown']
+              | 筛选列名
+              span.caret
+            ul.dropdown-menu#search_column[role='menu']
+              - @column_names.each do |column_name|
+                li
+                  a[href='javascript:;'] = column_name
+          .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
+            button.btn.btn-default[type='submit'name='json'value='json'] json
+            button.btn.btn-default[type='submit'name='xml'value='xml'] xml
+            button.btn.btn-default[type='submit'name='csv'value='csv'] csv
+    .well.form-horizontal.filter_search[class==@filter_colums.length<1?'hidden':'show']
+      - unless @filter_colums.blank?
+        - @filter_colums.each do |column_name|
+          .form-group
+            label.col-xs-1.control-label
+              i.fa.fa-trash-o.m-r-5
+              b = column_name
+            - input_name = "filter["+column_name+"]"
+            .col-xs-5
+              input.form-control[type="text"name==input_name value==params[:filter][column_name]]
+      hr.filters_box
+      button.btn.btn-inverse.p-l-20.p-r-20.pull-center[type='submit'] 搜索
+  - if params[:search].present?
+    .alert.alert-success.m-b-15
+      strong
+        = "查询：' " + params[:search][:searching] + " '"
+      span
+        = " -- " + @admin_tests.size.to_s + "条记录"
+      span.close[data-dismiss="alert"]
+        | ×
+  - elsif params[:filter]
+    .alert.alert-success.m-b-15
+      strong
+        = "查询："
+      span
+        = @admin_tests.size.to_s + "条记录"
+      span.close[data-dismiss="alert"]
+        | ×
+  .table-responsive.row.m-0
+    table.table.table-striped
+      thead
+        tr
+<% attributes.each do |attribute| -%>
+          th <%= attribute.human_name %>
+<% end -%>
+          th
+      tbody
+        - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
           tr
 <% attributes.each do |attribute| -%>
-            th <%= attribute.human_name %>
+            td = <%= singular_table_name %>.<%= attribute.name %>
 <% end -%>
-            th
+            td
+              => link_to '查看', <%= singular_table_name %>_path(<%= singular_table_name %>), class: 'btn btn-xs btn-default'
+              => link_to '编辑', edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: 'btn btn-xs btn-default'
+              = link_to '删除', <%= singular_table_name %>_path(<%= singular_table_name %>), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+javascript:
+  $(document).ready(function(){
+    bindRemoveLabel('.well.filter_search label.control-label');
+    $('.well.filter_search .form-group').length > 0 ? $('.toolbar.row .search_all input, .toolbar.row .search_all button').attr('disabled', 'disabled') : false
+    $('form #search_column li a').on('click', function(){
+      if($('.well.filter_search .form-group').length == 0){
+        $('.well.form-horizontal.filter_search').removeClass('hidden').addClass('show');
+        $('.toolbar.row .search_all input, .toolbar.row .search_all button').attr('disabled', 'disabled');
+      }
+      var column_name = $(this).text();
+      var name = "filter["+ column_name +"]";
+      input_name = "input[name='" + name +"']";
+      if(!$('.well.filter_search').find(input_name).length > 0){
+        $('.well.filter_search hr').before("<div class='form-group'><label class='col-xs-1 control-label'><i class='fa fa-trash-o m-r-5'></i><b>"+ column_name +"</b></label><div class='col-xs-5'><input class='form-control' name='"+ name +"' type='text'></div></div>");
+        $('.well.filter_search .control-label i.fa-trash-o').off();
+        bindRemoveLabel('.well.filter_search label.control-label');
+      }
+    })
 
-        tbody
-          - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
-            tr
-<% attributes.each do |attribute| -%>
-              td = <%= singular_table_name %>.<%= attribute.name %>
-<% end -%>
-              td
-                => link_to '查看', <%= singular_table_name %>_path(<%= singular_table_name %>), class: 'btn btn-xs btn-default'
-                => link_to '编辑', edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: 'btn btn-xs btn-default'
-                = link_to '删除', <%= singular_table_name %>_path(<%= singular_table_name %>), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+    function bindRemoveLabel(dom){
+      $(dom).on('click', function(){
+        $(this).parent('.form-group').remove();
+        if($('.well.filter_search .form-group').length == 0){
+          $('.well.filter_search').addClass('hidden');
+          $('.toolbar.row .search_all input, .toolbar.row .search_all button').removeAttr('disabled');
+        }
+      })
+    }
+
+  })
