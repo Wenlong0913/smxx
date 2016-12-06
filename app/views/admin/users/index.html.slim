@@ -25,6 +25,8 @@ h1.page-header
             td = d_user.mobile_phone
             td = d_user.display_name
             td = d_user.display_role
-            td = link_to '修改', edit_admin_user_path(d_user), class: 'btn btn-xs btn-warning'
-            td = link_to '删除', admin_user_path(d_user), data: {confirm: '你确定吗？'}, method: :delete, class: 'btn btn-xs btn-danger'
+            td
+              => link_to '修改', edit_admin_user_path(d_user), class: 'btn btn-xs btn-warning'
+              => link_to '删除', admin_user_path(d_user), data: {confirm: '你确定吗？'}, method: :delete, class: 'btn btn-xs btn-danger'
+              => link_to '模仿', impersonate_session_path(d_user), method: :post, class: 'btn btn-xs btn-info'
 = paginate @admin_users

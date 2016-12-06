@@ -35,6 +35,10 @@ class UserPolicy < ApplicationPolicy
     true
   end
 
+  def impersonate?
+    user.super_admin_or_admin?
+  end
+
   def permitted_attributes_for_create
     if user.super_admin_or_admin?
       [:mobile_phone, :nickname, :password, :password_confirmation, :role_ids => []]
