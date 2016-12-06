@@ -1,0 +1,33 @@
+h1 
+  | admin_catalogs 列表
+  .pull-right
+    = link_to '新建 Catalog', new_admin_catalog_path, class: 'btn btn-primary'
+
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+    h4 admin_catalogs 列表
+  .panel-body
+    .table-responsive
+      table.table.table-striped
+        thead
+          tr
+            th Parent
+            th Name
+            th Position
+            th
+
+        tbody
+          - @admin_catalogs.each do |admin_catalog|
+            tr
+              td = admin_catalog.parent
+              td = admin_catalog.name
+              td = admin_catalog.position
+              td
+                => link_to '查看', admin_catalog_path(admin_catalog), class: 'btn btn-xs btn-default'
+                => link_to '编辑', edit_admin_catalog_path(admin_catalog), class: 'btn btn-xs btn-default'
+                = link_to '删除', admin_catalog_path(admin_catalog), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
