@@ -1,7 +1,7 @@
 # 物件：抽象所有的物品，包含多个特征
 class Item < ApplicationRecord
   store_accessor :features, :description
-
+  cast_pinyin_for :name
   belongs_to :site
 
   has_many :child_relations, class_name: 'ItemRelation', dependent: :destroy, foreign_key: :master_id
