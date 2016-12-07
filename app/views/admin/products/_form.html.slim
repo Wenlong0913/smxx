@@ -15,6 +15,7 @@
             - @admin_product.errors.full_messages.each do |message|
               li = message
 
+      = f.association :site
       = f.input :name
       = f.input :price
       = f.input :description
