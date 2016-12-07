@@ -1,0 +1,63 @@
+.[rel='image-item-block' data-url=options[:path]]
+  input[type="hidden" name="image_item_resource" value=options[:resource_type]+','+options[:resource_id].to_s ]
+  .image_items[v-for="image_item in image_items"]
+    input[type="hidden" name="image_item_entry" v-bind:value='image_item.id']
+    .slim[  data-ratio="input" 
+            data-button-cancel-label = "取消" 
+            data-button-confirm-label = "确认" 
+            data-label="选择图片" 
+            data-will-save="upload" 
+            v-bind:data-save-initial-image="image_item.is_new" 
+            data-will-remove="imageWillBeRemoved"]
+      input[type="file" name="image_data[]"]
+      img[v-bind:src="image_item.image_data"]
+  a.file[href="javascript:;"]
+    批量添加图片
+    input[type="file" id="file" multiple=true v-on:change="batchProcessImages($event)"]
+
+javascript:
+  function upload(data, ready){
+    var image_data = data.output.image;
+    var ele = this.element;
+    var item = $(ele).parents('.image_items');
+    var url = $("[rel='image-item-block']").data('url');
+    var resource = $("[rel='image-item-block']").find("input[name='image_item_resource']").val();
+    var image_item_entry = $(item).find("input[name='image_item_entry']");
+    $.ajax({
+      url: url, 
+      type: 'POST',
+      dataType: 'json',
+      data: { image_data: image_data, image_item_resource: resource, image_item_entry: image_item_entry.val() }
+    }).done(function(data){
+      image_item_entry.val(data.entry_id);
+      ready(data);
+    }).fail(function(){
+      console.log("An error occurred, the files couldn't be sent!");
+    });
+
+  }
+  //图片删除 
+  function imageWillBeRemoved(slim, remove) {
+    var ele = this.element;
+    var item = $(ele).parents('.image_items');
+    var url = $("[rel='image-item-block']").data('url');
+    var image_item_entry = $(item).find("input[name='image_item_entry']");
+    var resource = $("[rel='image-item-block']").find("input[name='image_item_resource']").val();
+    if(image_item_entry.val() == ""){
+      window.alert("该图片正在上传中，暂无法操作！");
+    }else{
+      if (window.confirm("该图片已上传啦，确定要删除图片吗？")) {
+        $.ajax({
+          url: url, 
+          type: 'POST',
+          dataType: 'json',
+          data: { image_item_entry: image_item_entry.val(), deleted: true, image_item_resource: resource}
+        }).done(function(data){
+          image_item_entry.val('');
+          remove();
+        }).fail(function(){
+          console.log("An error occurred, the files couldn't be sent!");
+        });
+      }    
+    }
+  }
