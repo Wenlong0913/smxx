@@ -18,7 +18,7 @@ module CastPinyinConcern
       before_validation -> do
         self.class.pinyin_mappings.each_pair do |title, title_py|
           v = self.send(title).present? ? Pinyin.t(self.send(title)){ |letters| letters[0].upcase } : nil
-          self.send(title_py, v)
+          self.send("#{title_py}=", v)
         end
       end
     end
