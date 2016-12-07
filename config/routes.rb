@@ -36,6 +36,7 @@ Rails.application.routes.draw do
         get '/', to: 'home#show'
       end
     end
+    resources :catalogs
     resources :roles, only: [:index], :concerns => :paginatable do
       resources :users, only: [:index], :concerns => :paginatable
     end

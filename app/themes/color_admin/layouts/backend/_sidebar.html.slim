@@ -43,6 +43,9 @@
         ul.sub-menu
           li.active
             = link_to '产品列表', admin_products_path
+      li class=("#{'active' if controller_path == 'admin/catalogs'}")
+        = link_to admin_catalogs_path do
+          = fa_icon 'inbox', text: '分类管理'
       li
         = link_to sign_out_path, method: :delete do
           = fa_icon 'sign-out', text: '退出系统'

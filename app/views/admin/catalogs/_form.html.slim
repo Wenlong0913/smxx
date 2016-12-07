@@ -14,8 +14,8 @@
           ul
             - @admin_catalog.errors.full_messages.each do |message|
               li = message
-
-      = f.association :parent
+      = f.input :parent_id do
+        = f.select :parent_id, Catalog.all.map{ |e| [e.name, e.id ] }, include_blank: true
       = f.input :name
       = f.input :position
-      = f.submit class: 'btn btn-success btn-block'
+      = f.submit '更新',class: 'btn btn-success btn-block'

@@ -1,33 +1,80 @@
-h1 
-  | admin_catalogs 列表
+h1.m-t-0
+  | 目录管理
   .pull-right
     = link_to '新建 Catalog', new_admin_catalog_path, class: 'btn btn-primary'
 
-.panel
+.panel.catalogs
   .panel-heading
     .panel-heading-btn
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-    h4 admin_catalogs 列表
-  .panel-body
-    .table-responsive
-      table.table.table-striped
-        thead
-          tr
-            th Parent
-            th Name
-            th Position
-            th
+    ol.breadcrumb.samll
+      li 选择：
+      li
+        span 目录一
+      li
+        span 目录二
+      li.active
+        span 目录三
+  .panel-body.p-t-0
+    .well.table-responsive
+      ol.list-inline
+        / templete
+        li.black-classify[v-for="catalog in catalogs" v-bind:parent-id="catalog.parent_id"]
+          .search
+            .input-group
+              input.form-control[placeholder='searching this list....']
+              span.input-group-addon
+                i.fa.fa-search
+          .list-body.table-responsiev
+            ul.list-unstyled
+              / li templete
+              li[v-for="itm in catalog.record" v-on:mouseenter="mouseEnters($event)" v-on:mouseleave="mouseLeaves($event)" v-bind:id="itm.id" v-bind:class="itm.id == '2' ? 'active': false"]
+                .col-xs-9
+                  | {{itm.name}}
+                .col-xs-3.text-center.text-success.handle.hidden
+                  span
+                    i.fa.fa-edit
+                  span
+                    i.fa.fa-remove
+                  
+          .classify-footer
+            button.btn.btn-link.btn-sm.pull-right 新增
+        / li.black-classify
+        /   .search
+        /     .input-group
+        /       input.form-control
+        /       span.input-group-addon
+        /         i.fa.fa-search
+        /   .list-body
+        / li.black-classify
+        /   .search
+        /     .input-group
+        /       input.form-control
+        /       span.input-group-addon
+        /         i.fa.fa-search
+        /   .list-body
 
-        tbody
-          - @admin_catalogs.each do |admin_catalog|
-            tr
-              td = admin_catalog.parent
-              td = admin_catalog.name
-              td = admin_catalog.position
-              td
-                => link_to '查看', admin_catalog_path(admin_catalog), class: 'btn btn-xs btn-default'
-                => link_to '编辑', edit_admin_catalog_path(admin_catalog), class: 'btn btn-xs btn-default'
-                = link_to '删除', admin_catalog_path(admin_catalog), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+      / .a[style="width:2000px; height: 700px; background: #520649"]
+    / .table-responsive
+    /   table.table.table-striped
+    /     thead
+    /       tr
+    /         th #
+    /         th Parent
+    /         th Name
+    /         th Position
+    /         th
+    /     tbody
+    /       - @admin_catalogs.each_with_index do |admin_catalog, index|
+    /         tr
+    /           td = index
+    /           td = admin_catalog.parent_id && Catalog.find(admin_catalog.parent_id).name
+    /           td = admin_catalog.name
+    /           td = admin_catalog.position
+    /           td
+    /             => link_to '查看', admin_catalog_path(admin_catalog), class: 'btn btn-xs btn-default'
+    /             => link_to '编辑', edit_admin_catalog_path(admin_catalog), class: 'btn btn-xs btn-default'
+    /             = link_to '删除', admin_catalog_path(admin_catalog), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'

@@ -4,7 +4,7 @@ class Admin::CatalogsController < Admin::BaseController
   # GET /admin/catalogs
   def index
     authorize Catalog
-    @admin_catalogs = Catalog.all
+    @admin_catalogs = Catalog.all.order(updated_at: :desc)
   end
 
   # GET /admin/catalogs/1
@@ -26,7 +26,7 @@ class Admin::CatalogsController < Admin::BaseController
   # POST /admin/catalogs
   def create
     authorize Catalog
-    @admin_catalog = Catalog.new(permitted_attributes(Catalog))
+    @admin_catalog = Catalog.new(admin_catalog_params)
 
     if @admin_catalog.save
       redirect_to admin_catalog_path(@admin_catalog), notice: 'Catalog 创建成功.'
@@ -38,7 +38,7 @@ class Admin::CatalogsController < Admin::BaseController
   # PATCH/PUT /admin/catalogs/1
   def update
     authorize @admin_catalog
-    if @admin_catalog.update(permitted_attributes(@admin_catalog))
+    if @admin_catalog.update(admin_catalog_params)
       redirect_to admin_catalog_path(@admin_catalog), notice: 'Catalog 更新成功.'
     else
       render :edit
@@ -59,7 +59,7 @@ class Admin::CatalogsController < Admin::BaseController
     end
 
     # Only allow a trusted parameter "white list" through.
-    # def admin_catalog_params
-    #       #   params.require(:admin_catalog).permit(policy(@admin_catalog).permitted_attributes)
-    #       # end
+    def admin_catalog_params
+      params.require(:catalog).permit(:parent_id, :name, :position)
+    end
 end

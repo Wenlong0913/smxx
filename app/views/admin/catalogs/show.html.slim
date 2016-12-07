@@ -15,7 +15,7 @@ h1
   .panel-body
     dl
       dt: strong Parent
-      dd = @admin_catalog.parent
+      dd = @admin_catalog.parent_id && Catalog.find(@admin_catalog.parent_id).name
       dt: strong Name
       dd = @admin_catalog.name
       dt: strong Position
