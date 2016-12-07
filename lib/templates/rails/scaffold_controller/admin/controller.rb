@@ -11,31 +11,15 @@ class <%= controller_class_name %>Controller < Admin::BaseController
   # GET <%= route_url %>
   def index
     authorize <%= remove_ar_module(class_name) %>
-    @<%= plural_table_name %> = <%= orm_class.all(remove_ar_module(class_name)) %>
-    @column_names  = @<%= plural_table_name %>.attribute_names
-    @filter_colums = params[:filter].present? ? params[:filter].delete_if { |k, v| v.blank? }.keys : []
-    if (params[:search].present? && params[:search][:searching].present?) || !@filter_colums.blank?
-      query      = []
-      conditions = []
-      map_keys = @filter_colums.blank? ? @column_names : @filter_colums
-      map_keys.each do | key |
-        query << key + " like ?"
-        conditions << "%" + (@filter_colums.blank? ? params[:search][:searching] : params[:filter][key]).to_s + "%"
-      end
-      if @filter_colums.blank?
-        conditions.unshift query.join(" or ")
-      else
-        conditions.unshift query.join(" and ")
-      end
-      @<%= plural_table_name %> = @<%= plural_table_name %>.where(conditions)
-    end
+    @filter_colums = %w(id)
+    @<%= plural_table_name %> = build_query_filter(<%= orm_class.all(remove_ar_module(class_name)) %>, only: @filter_colums)
     respond_to do |format|
       if params[:json].present?
-        format.html { send_data(@<%= plural_table_name %>.to_json, filename: Time.new.to_s+".json") }
+        format.html { send_data(@<%= plural_table_name %>.to_json, filename: "<%= plural_table_name %>-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
       elsif params[:xml].present?
-        format.html { send_data(@<%= plural_table_name %>.to_xml, filename: Time.new.to_s+".xml") }
+        format.html { send_data(@<%= plural_table_name %>.to_xml, filename: "<%= plural_table_name %>-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
-        format.html { send_data(file_csv(data: @<%= plural_table_name %>), filename: Time.new.to_s+".csv") }
+        format.html { send_data(@<%= plural_table_name %>.as_csv(only: []), filename: "<%= plural_table_name %>-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end
@@ -88,18 +72,6 @@ class <%= controller_class_name %>Controller < Admin::BaseController
   end
 
   private
-
-    # return csv
-    def file_csv(data:)
-      csv_string = CSV.generate do |csv|
-        csv << data.attribute_names
-        data.each do |f|
-          csv << f.attributes.values
-        end
-      end
-      csv_string
-    end
-
     # Use callbacks to share common setup or constraints between actions.
     def set_<%= singular_table_name %>
       @<%= singular_table_name %> = <%= orm_class.find(remove_ar_module(class_name), "params[:id]") %>
