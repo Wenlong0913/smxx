@@ -1,4 +1,5 @@
 .[rel='image-item-block' data-url=options[:path]]
+  span[v-if="loading"] 图片正在加载中...
   input[type="hidden" name="image_item_resource" value=options[:resource_type]+','+options[:resource_id].to_s ]
   .image_items[v-for="image_item in image_items"]
     input[type="hidden" name="image_item_entry" v-bind:value='image_item.id']
@@ -6,14 +7,17 @@
             data-button-cancel-label = "取消" 
             data-button-confirm-label = "确认" 
             data-label="选择图片" 
-            data-will-save="upload" 
-            v-bind:data-save-initial-image="image_item.is_new" 
-            data-will-remove="imageWillBeRemoved"]
-      input[type="file" name="image_data[]"]
+            data-will-remove="imageWillBeRemoved"
+            data-will-save="upload"
+            v-bind:data-save-initial-image="image_item.is_new"]
+      input[type="file" name="slim[]"]
+      input[type="hidden" name='image_item[image_data]']
       img[v-bind:src="image_item.image_data"]
+    textarea[name="image_item[description]" cols="80" rows="10" placeholder="描述" v-bind:value="image_item.description" v-on:change="uploadDescription($event)"]
   a.file[href="javascript:;"]
     批量添加图片
     input[type="file" id="file" multiple=true v-on:change="batchProcessImages($event)"]
+  span[v-if="show_message"] 正在保存中。。。
 
 javascript:
   function upload(data, ready){
@@ -23,18 +27,19 @@ javascript:
     var url = $("[rel='image-item-block']").data('url');
     var resource = $("[rel='image-item-block']").find("input[name='image_item_resource']").val();
     var image_item_entry = $(item).find("input[name='image_item_entry']");
+    var image_item_data = $(item).find("input[name='image_item[image_data]']");
     $.ajax({
       url: url, 
       type: 'POST',
       dataType: 'json',
-      data: { image_data: image_data, image_item_resource: resource, image_item_entry: image_item_entry.val() }
+      data: { 'image_item[image_data]': image_data, image_item_resource: resource, 'image_item[id]': image_item_entry.val() }
     }).done(function(data){
       image_item_entry.val(data.entry_id);
-      ready(data);
+      image_item_data.val('');
     }).fail(function(){
       console.log("An error occurred, the files couldn't be sent!");
     });
-
+    ready(data);
   }
   //图片删除 
   function imageWillBeRemoved(slim, remove) {
@@ -51,7 +56,7 @@ javascript:
           url: url, 
           type: 'POST',
           dataType: 'json',
-          data: { image_item_entry: image_item_entry.val(), deleted: true, image_item_resource: resource}
+          data: { 'image_item[id]': image_item_entry.val(), deleted: true, image_item_resource: resource}
         }).done(function(data){
           image_item_entry.val('');
           remove();

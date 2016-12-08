@@ -12,6 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require slim.jquery.min
+//= require slim.jquery
 //= require image_items
 //= require_tree .

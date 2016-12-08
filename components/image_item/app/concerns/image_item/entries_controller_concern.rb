@@ -7,7 +7,7 @@ module ImageItem
     end
 
     def process_image_item
-      if params[:image_item_entry].present?
+      if params[:image_item][:id].present?
         if params[:deleted]
           delete_image_item
         else
@@ -54,7 +54,7 @@ module ImageItem
 
 
     def create_image_item
-      entry = ImageItem::Entry.new(image_data: params[:image_data])
+      entry = ImageItem::Entry.new(image_item__permitted_params)
       image_item_resource = get_image_item_resource
       entry.user_id = image_item__user_id
       if entry.save
@@ -66,9 +66,8 @@ module ImageItem
     end
 
     def update_image_item
-      entry = ImageItem::Entry.find(params[:image_item_entry])
-      entry.image_data = params[:image_data]
-      if entry.save
+      entry = ImageItem::Entry.find(params[:image_item][:id])
+      if entry.update(image_item__permitted_params)
         render json: {entry_id: entry.id}
       else
         head 403
@@ -76,7 +75,7 @@ module ImageItem
     end
 
     def delete_image_item
-      entry = ImageItem::Entry.find(params[:image_item_entry])
+      entry = ImageItem::Entry.find(params[:image_item][:id])
       image_item_resource = get_image_item_resource
       image_item_resource.image_items.delete(entry)
       if entry.destroy
@@ -86,13 +85,17 @@ module ImageItem
       end
     end
 
+    def image_item__permitted_params
+      params.require(:image_item).permit(:description, :image_data)
+    end
+
     def get_image_item_resource
       image_item_resource_type, image_item_resource_id =  params[:image_item_resource].split(',')
       image_item_resource_type.constantize.find(image_item_resource_id)
     end
 
     def image_item__entry_json(entry)
-      entry.as_json(only: [:id], methods: :image_data)
+      entry.as_json(only: [:id], methods: [:image_data, :description])
     end
   end
 end
