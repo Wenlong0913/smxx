@@ -42,6 +42,12 @@ GIT
       themeable (~> 1.2.0)
 
 PATH
+  remote: components/decorator
+  specs:
+    decorator (0.1.0)
+      rails (~> 5.0.0, >= 5.0.0.1)
+
+PATH
   remote: components/sms
   specs:
     sms (0.1.0)
@@ -464,6 +470,7 @@ DEPENDENCIES
   client_side_validations-simple_form!
   coffee-rails (~> 4.2)
   database_cleaner
+  decorator!
   devise (~> 4.2.0)
   devise-i18n
   factory_girl_rails

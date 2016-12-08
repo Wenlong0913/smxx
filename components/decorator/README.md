@@ -25,6 +25,10 @@ Or install it yourself as:
 $ gem install decorator
 ```
 
+## Testing
+
+put `require 'decorator/rspec'` in `spec/rails_helper.rb`
+
 ## Contributing
 Contribution directions go here.
 

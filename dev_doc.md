@@ -2,6 +2,7 @@
 
 - [开发配置](#config)
 - [模块介绍](#modules-list)
+  - [Decorator](#module-decorator)
 - [如何开始工作](#get-started)
   - [怎么生成一个Model](#how-to-generate-model)
   - [怎么生成一个Item](#how-to-generate-item)
@@ -22,6 +23,14 @@
 
 1. 评论模块
 2. 统计模块
+
+<a name="module-decorator"></a>
+### Decorator，可以给Model数据添加一些可呈现在前端网页的属性
+
+因为Gem `drapper` 是一个成熟的Decorator,但是他不支持Rails 5，所以我们自己写个组件实现这个功能
+
+所在目录： `components/decorator`
+
 
 <a name="get-started"></a>
 ## 如何开始工作

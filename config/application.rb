@@ -34,7 +34,6 @@ module Tmf
       Rails::Generators::ModelGenerator.send :include, Generators::ModelConcern
 
       Rails::Generators::ModelGenerator.hook_for :cud, default: 'cud'
-      Rails::Generators::ModelGenerator.hook_for :decorator, default: 'decorator'
       Rails::Generators::ModelGenerator.hook_for :pundit, default: true, as: 'policy', in: 'pundit'
     end
     config.generators do |g|
