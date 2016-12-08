@@ -1,11 +1,11 @@
+# csv support
+require 'csv'
 <% if namespaced? -%>
 require_dependency "<%= namespaced_path %>/application_controller"
 
 <% end -%>
 <% module_namespacing do -%>
 class <%= controller_class_name %>Controller < Admin::BaseController
-  # csv support
-  require 'csv'
   before_action :set_<%= singular_table_name %>, only: [:show, :edit, :update, :destroy]
 
   # GET <%= route_url %>
