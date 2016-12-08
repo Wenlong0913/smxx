@@ -1,5 +1,5 @@
 module QueryFilterControllerConcern
-  def build_query_filter(query, options = {})
+  def build_query_filter(collection, options = {})
     options = options.symbolize_keys
     column_names =
       if options[:only]
@@ -11,11 +11,10 @@ module QueryFilterControllerConcern
       end
 
     filters = params[:filters].present? ? params[:filters].select { |k, v| v.present? } : []
-    filters.slice!(*column_names)
+    filters.slice!(*column_names) if filters.present?
 
-    keywords = params[:keywords].presence
-
-    return query if keywords.blank? && filters.blank?
+    keywords = params[:search] && params[:search][:keywords].presence
+    return collection if keywords.blank? && filters.blank?
 
     if filters.any?
       query      = []
@@ -28,23 +27,30 @@ module QueryFilterControllerConcern
 
       conditions.unshift query.join(' AND ')
 
-      query = query.where(conditions)
+      collection = collection.where(conditions)
+
+      begin
+        collection.first
+      rescue ActiveRecord::StatementInvalid
+        collection = []
+      end
     end
 
+    return collection if collection.blank?
     if keywords
       query      = []
       conditions = []
 
-      column_names.each_pair do |k, v|
+      column_names.each do |k|
         query << "#{k} = ?"
-        conditions << v
+        conditions << keywords
       end
 
       conditions.unshift query.join(' OR ')
 
-      query = query.where(conditions)
+      collection = collection.where(conditions)
     end
 
-    query
+    collection
   end
 end
