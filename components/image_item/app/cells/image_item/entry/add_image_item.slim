@@ -28,6 +28,8 @@ javascript:
     var resource = $("[rel='image-item-block']").find("input[name='image_item_resource']").val();
     var image_item_entry = $(item).find("input[name='image_item_entry']");
     var image_item_data = $(item).find("input[name='image_item[image_data]']");
+    var textarea = $(item).find("textarea");
+    textarea.disabled = true;
     $.ajax({
       url: url, 
       type: 'POST',
@@ -36,7 +38,9 @@ javascript:
     }).done(function(data){
       image_item_entry.val(data.entry_id);
       image_item_data.val('');
+      textarea.disabled = false;
     }).fail(function(){
+      textarea.disabled = false;
       console.log("An error occurred, the files couldn't be sent!");
     });
     ready(data);
