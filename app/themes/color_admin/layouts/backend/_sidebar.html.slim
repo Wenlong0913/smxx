@@ -43,6 +43,14 @@
         ul.sub-menu
           li.active
             = link_to '产品列表', admin_products_path
+      li class=("has-sub #{'active' if controller_path == 'admin/sites'}") 
+        a href="javascript:;" 
+          b.caret.pull-right
+          i.fa.fa-inbox
+          span Site管理
+        ul.sub-menu
+          li.active
+            = link_to '列表', admin_sites_path
       li
         = link_to sign_out_path, method: :delete do
           = fa_icon 'sign-out', text: '退出系统'

@@ -21,6 +21,7 @@
 
 FactoryGirl.define do
   factory :user do
+    id 1
     nickname "User1"
     password "abcd1234"
     password_confirmation 'abcd1234'
@@ -30,6 +31,7 @@ FactoryGirl.define do
   end
 
   factory :super_admin, class: 'User' do
+    id 2
     nickname "SuperAdmin"
     password "abcd1234"
     password_confirmation 'abcd1234'
@@ -40,6 +42,7 @@ FactoryGirl.define do
   end
 
   factory :admin, class: 'User' do
+    id 3
     nickname "Admin"
     password "abcd1234"
     password_confirmation 'abcd1234'
@@ -50,6 +53,7 @@ FactoryGirl.define do
   end
 
   factory :agent, class: 'User' do
+    id 4
     nickname "Agent"
     password "abcd1234"
     password_confirmation 'abcd1234'

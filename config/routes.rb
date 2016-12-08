@@ -42,7 +42,8 @@ Rails.application.routes.draw do
       resources :users, only: [:index], :concerns => :paginatable
     end
     resources :users, :concerns => :paginatable
-    resources :products
+    resources :products, :concerns => :paginatable
+    resources :sites, :concerns => :paginatable
   end
 
   namespace :agent do

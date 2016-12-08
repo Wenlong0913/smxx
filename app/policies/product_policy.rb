@@ -31,7 +31,7 @@ class ProductPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    if user.has_role? :admin
+    if user.super_admin_or_admin?
       [:site_id, :name, :price, :description]
     else
       [:name, :price, :description]

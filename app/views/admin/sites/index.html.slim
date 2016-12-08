@@ -1,0 +1,33 @@
+h1 
+  | admin_sites 列表
+  .pull-right
+    = link_to '新建 Site', new_admin_site_path, class: 'btn btn-primary'
+
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+    h4 admin_sites 列表
+  .panel-body
+    .table-responsive
+      table.table.table-striped
+        thead
+          tr
+            th User
+            th Title
+            th Description
+            th
+
+        tbody
+          - @admin_sites.each do |admin_site|
+            tr
+              td = admin_site.user && decorate(admin_site.user).display_name
+              td = admin_site.title
+              td = admin_site.description
+              td
+                => link_to '查看', admin_site_path(admin_site), class: 'btn btn-xs btn-default'
+                => link_to '编辑', edit_admin_site_path(admin_site), class: 'btn btn-xs btn-default'
+                = link_to '删除', admin_site_path(admin_site), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
