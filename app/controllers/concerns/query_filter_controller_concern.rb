@@ -1,20 +1,20 @@
 module QueryFilterControllerConcern
-  def build_query_filter(collection, options = {})
+  def build_query_filter(relation, options = {})
     options = options.symbolize_keys
+    model = relation.model
     column_names =
       if options[:only]
         Array(options[:only])
       elsif options[:except]
-        @admin_trees.attribute_names - Array(options[:except]).map(&:to_s)
+        model.attribute_names - Array(options[:except]).map(&:to_s)
       else
-        @admin_trees.attribute_names
+        model.attribute_names
       end
 
-    filters = params[:filters].present? ? params[:filters].select { |k, v| v.present? } : []
-    filters.slice!(*column_names) if filters.present?
+    filters = params[:filters].present? ? params[:filters].select { |k, v| v.present? } : {}
 
     keywords = params[:search] && params[:search][:keywords].presence
-    return collection if keywords.blank? && filters.blank?
+    return relation if keywords.blank? && filters.blank?
 
     if filters.any?
       query      = []
@@ -22,35 +22,39 @@ module QueryFilterControllerConcern
 
       filters.each_pair do |k, v|
         query << "#{k} = ?"
-        conditions << v
+        v = format_query_filter_value(model, k, v)
+        conditions << v if v
       end
 
       conditions.unshift query.join(' AND ')
-
-      collection = collection.where(conditions)
-
-      begin
-        collection.first
-      rescue ActiveRecord::StatementInvalid
-        collection = []
-      end
+      relation = relation.where(conditions)
     end
 
-    return collection if collection.blank?
     if keywords
       query      = []
       conditions = []
 
       column_names.each do |k|
         query << "#{k} = ?"
-        conditions << keywords
+        v = format_query_filter_value(model, k, keywords)
+        conditions << v if v
       end
 
       conditions.unshift query.join(' OR ')
 
-      collection = collection.where(conditions)
+      relation = relation.where(conditions)
     end
 
-    collection
+    relation
+  end
+  
+  def format_query_filter_value(model, k, v)
+    case model.columns_hash[k.to_s].type
+    when :integer
+      v = nil unless v =~ /[^0-9]/
+    when :datetime
+      v = DateTime.parse(v) rescue nil
+    end
+    v
   end
 end
