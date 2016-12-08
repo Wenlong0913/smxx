@@ -60,6 +60,7 @@ javascript:
         }).done(function(data){
           image_item_entry.val('');
           remove();
+          item.remove();
         }).fail(function(){
           console.log("An error occurred, the files couldn't be sent!");
         });
