@@ -30,6 +30,7 @@ class User < ApplicationRecord
   has_one :mobile, dependent: :destroy
   has_one :weixin, dependent: :destroy
   attr_accessor :mobile_phone
+  validates :mobile_phone, mobile_phone: true, allow_blank: true
 
   # Find user by phone number
   # @param [String] phone_number

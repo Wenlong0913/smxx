@@ -1,35 +1,35 @@
 class Admin::ProductsController < Admin::BaseController
-  before_action :set_admin_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   # GET /admin/products
   def index
     authorize Product
-    @admin_products = Product.all
+    @products = Product.all.page(params[:page])
   end
 
   # GET /admin/products/1
   def show
-    authorize @admin_product
+    authorize @product
   end
 
   # GET /admin/products/new
   def new
     authorize Product
-    @admin_product = Product.new
+    @product = Product.new
   end
 
   # GET /admin/products/1/edit
   def edit
-    authorize @admin_product
+    authorize @product
   end
 
   # POST /admin/products
   def create
     authorize Product
-    @admin_product = Product.new(permitted_attributes(Product))
+    @product = Product.new(permitted_attributes(Product))
 
-    if @admin_product.save
-      redirect_to admin_product_path(@admin_product), notice: 'Product 创建成功.'
+    if @product.save
+      redirect_to admin_product_path(@product), notice: 'Product 创建成功.'
     else
       render :new
     end
@@ -37,9 +37,9 @@ class Admin::ProductsController < Admin::BaseController
 
   # PATCH/PUT /admin/products/1
   def update
-    authorize @admin_product
-    if @admin_product.update(permitted_attributes(@admin_product))
-      redirect_to admin_product_path(@admin_product), notice: 'Product 更新成功.'
+    authorize @product
+    if @product.update(permitted_attributes(@product))
+      redirect_to admin_product_path(@product), notice: 'Product 更新成功.'
     else
       render :edit
     end
@@ -47,15 +47,15 @@ class Admin::ProductsController < Admin::BaseController
 
   # DELETE /admin/products/1
   def destroy
-    authorize @admin_product
-    @admin_product.destroy
+    authorize @product
+    @product.destroy
     redirect_to admin_products_url, notice: 'Product 删除成功.'
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_admin_product
-      @admin_product = Product.find(params[:id])
+    def set_product
+      @product = Product.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

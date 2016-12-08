@@ -1,7 +1,7 @@
 h1 
   | 查看 admin_site
   .pull-right
-    => link_to '编辑', edit_admin_site_path(@admin_site), class: 'btn btn-primary'
+    => link_to '编辑', edit_admin_site_path(@site), class: 'btn btn-primary'
     = link_to '返回', admin_sites_path, class: 'btn btn-primary'
 
 .panel
@@ -15,8 +15,8 @@ h1
   .panel-body
     dl
       dt: strong User
-      dd = decorate(@admin_site.user).display_name
+      dd = decorate(@site.user).display_name
       dt: strong Title
-      dd = @admin_site.title
+      dd = @site.title
       dt: strong Description
-      dd = @admin_site.description
+      dd = @site.description

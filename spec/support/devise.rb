@@ -2,8 +2,6 @@ require 'devise'
 
 RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, :type => :controller
-  config.extend ControllerMacros, :type => :controller
-  # https://github.com/plataformatec/devise/wiki/How-To:-Test-with-Capybara
-  #   login_as(user, :scope => :user)
-  config.include Warden::Test::Helpers, type: :feature
+  config.include ControllerMacros, :type => :controller
+  config.include ControllerMacros, :type => :request
 end

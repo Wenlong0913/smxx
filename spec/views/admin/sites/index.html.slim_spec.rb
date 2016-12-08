@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe "admin/sites/index", type: :view do
   before(:each) do
-    assign(:admin_sites, [
-      Site.create!(
+    assign(:sites, [
+      Site.new(id: 1,
         :user => nil,
         :title => "Title",
         :description => "Description"
       ),
-      Site.create!(
+      Site.new(id: 2,
         :user => nil,
         :title => "Title",
         :description => "Description"

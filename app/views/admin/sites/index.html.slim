@@ -22,12 +22,12 @@ h1
             th
 
         tbody
-          - @admin_sites.each do |admin_site|
+          - @sites.each do |site|
             tr
-              td = admin_site.user && decorate(admin_site.user).display_name
-              td = admin_site.title
-              td = admin_site.description
+              td = site.user && decorate(site.user).display_name
+              td = site.title
+              td = site.description
               td
-                => link_to '查看', admin_site_path(admin_site), class: 'btn btn-xs btn-default'
-                => link_to '编辑', edit_admin_site_path(admin_site), class: 'btn btn-xs btn-default'
-                = link_to '删除', admin_site_path(admin_site), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+                => link_to '查看', admin_site_path(site), class: 'btn btn-xs btn-default'
+                => link_to '编辑', edit_admin_site_path(site), class: 'btn btn-xs btn-default'
+                = link_to '删除', admin_site_path(site), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'

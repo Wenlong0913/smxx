@@ -30,7 +30,7 @@ RSpec.describe Admin::UsersController, type: :controller do
     attributes_for(:user).merge(mobile_phone: '13900000000')
   }
   let(:invalid_attributes) {
-    attributes_for(:user)
+    attributes_for(:user).merge(mobile_phone: '139')
   }
 
   login_admin

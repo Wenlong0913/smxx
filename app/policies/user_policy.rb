@@ -5,6 +5,10 @@ class UserPolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    user.super_admin_or_admin?
+  end
+
   def show?
     user.super_admin_or_admin? || user.id == record.id
   end

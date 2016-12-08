@@ -1,35 +1,35 @@
 class Admin::SitesController < Admin::BaseController
-  before_action :set_admin_site, only: [:show, :edit, :update, :destroy]
+  before_action :set_site, only: [:show, :edit, :update, :destroy]
 
   # GET /admin/sites
   def index
     authorize Site
-    @admin_sites = Site.includes(:user).all
+    @sites = Site.all.page(params[:page])
   end
 
   # GET /admin/sites/1
   def show
-    authorize @admin_site
+    authorize @site
   end
 
   # GET /admin/sites/new
   def new
     authorize Site
-    @admin_site = Site.new
+    @site = Site.new
   end
 
   # GET /admin/sites/1/edit
   def edit
-    authorize @admin_site
+    authorize @site
   end
 
   # POST /admin/sites
   def create
     authorize Site
-    @admin_site = Site.new(permitted_attributes(Site))
+    @site = Site.new(permitted_attributes(Site))
 
-    if @admin_site.save
-      redirect_to admin_site_path(@admin_site), notice: 'Site 创建成功.'
+    if @site.save
+      redirect_to admin_site_path(@site), notice: 'Site 创建成功.'
     else
       render :new
     end
@@ -37,9 +37,9 @@ class Admin::SitesController < Admin::BaseController
 
   # PATCH/PUT /admin/sites/1
   def update
-    authorize @admin_site
-    if @admin_site.update(permitted_attributes(@admin_site))
-      redirect_to admin_site_path(@admin_site), notice: 'Site 更新成功.'
+    authorize @site
+    if @site.update(permitted_attributes(@site))
+      redirect_to admin_site_path(@site), notice: 'Site 更新成功.'
     else
       render :edit
     end
@@ -47,15 +47,15 @@ class Admin::SitesController < Admin::BaseController
 
   # DELETE /admin/sites/1
   def destroy
-    authorize @admin_site
-    @admin_site.destroy
+    authorize @site
+    @site.destroy
     redirect_to admin_sites_url, notice: 'Site 删除成功.'
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_admin_site
-      @admin_site = Site.find(params[:id])
+    def set_site
+      @site = Site.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

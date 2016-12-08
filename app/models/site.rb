@@ -17,6 +17,6 @@ class Site < ApplicationRecord
   has_many :items, dependent: :destroy
   store_accessor :features, :description
 
-  validates_presence_of :title, :user
+  validates_presence_of :title, :user_id
   validates_uniqueness_of :title, scope: :user_id
 end

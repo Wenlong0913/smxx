@@ -5,21 +5,25 @@ class ProductPolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    user.super_admin_or_admin? || user.has_role?(:agent)
+  end
+
   def show?
-    return true if user.has_role? :admin
+    return true if user.super_admin_or_admin?
     user.has_role?(:agent) && record.site.try(:user_id) == user.id
   end
 
   def new?
-    show?
+    user.super_admin_or_admin? || user.has_role?(:agent)
   end
 
   def create?
-    new?
+    user.super_admin_or_admin? || (user.has_role?(:agent) && record.site.try(:user_id) == user.id)
   end
 
   def edit?
-    show?
+    create?
   end
 
   def update?
@@ -27,7 +31,7 @@ class ProductPolicy < ApplicationPolicy
   end
 
   def destroy?
-    show?
+    create?
   end
 
   def permitted_attributes_for_create

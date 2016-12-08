@@ -25,13 +25,13 @@ require 'rails_helper'
 <% module_namespacing do -%>
 RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:controller) %> do
   # This should return the minimal set of attributes required to create a valid
-  # <%= remove_ar_module(class_name) %>. As you add validations to <%= remove_ar_module(class_name) %>, be sure to
+  # <%= model_class_name %>. As you add validations to <%= model_class_name %>, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    attributes_for(:<%= file_name %>)
+    attributes_for(:<%= model_var_name %>)
   }
   let(:invalid_attributes) {
-    attributes_for(:<%= file_name %>)
+    attributes_for(:<%= model_var_name %>)
   }
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -44,11 +44,11 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% unless options[:singleton] -%>
   describe "GET #index" do
     it "returns a success response" do
-      <%= file_name %> = create(:<%= file_name %>)
+      <%= model_var_name %> = create(:<%= model_var_name %>)
 <% if RUBY_VERSION < '1.9.3' -%>
-      get :index, {}
+      get :index
 <% else -%>
-      get :index, params: {}
+      get :index
 <% end -%>
       expect(response).to be_success
     end
@@ -57,11 +57,11 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% end -%>
   describe "GET #show" do
     it "returns a success response" do
-      <%= file_name %> = create(:<%= file_name %>)
+      <%= model_var_name %> = create(:<%= model_var_name %>)
 <% if RUBY_VERSION < '1.9.3' -%>
-      get :show, {:id => <%= file_name %>.to_param}
+      get :show, {:id => <%= model_var_name %>.to_param}
 <% else -%>
-      get :show, params: {id: <%= file_name %>.to_param}
+      get :show, params: {id: <%= model_var_name %>.to_param}
 <% end -%>
       expect(response).to be_success
     end
@@ -79,11 +79,11 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
   end
   describe "GET #edit" do
     it "returns a success response" do
-      <%= file_name %> = create(:<%= file_name %>)
+      <%= model_var_name %> = create(:<%= model_var_name %>)
 <% if RUBY_VERSION < '1.9.3' -%>
-      get :edit, {:id => <%= file_name %>.to_param}
+      get :edit, {:id => <%= model_var_name %>.to_param}
 <% else -%>
-      get :edit, params: {id: <%= file_name %>.to_param}
+      get :edit, params: {id: <%= model_var_name %>.to_param}
 <% end -%>
       expect(response).to be_success
     end
@@ -91,32 +91,32 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 
   describe "POST #create" do
     context "with valid params" do
-      it "creates a new <%= remove_ar_module(class_name) %>" do
+      it "creates a new <%= model_class_name %>" do
         expect {
 <% if RUBY_VERSION < '1.9.3' -%>
-          post :create, {:<%= remove_ar_module(class_name).underscore.gsub('/', '_') %> => valid_attributes}
+          post :create, {:<%= model_var_name %> => valid_attributes}
 <% else -%>
-          post :create, params: {<%= remove_ar_module(class_name).underscore.gsub('/', '_') %>: valid_attributes}
+          post :create, params: {<%= model_var_name %>: valid_attributes}
 <% end -%>
-        }.to change(<%= remove_ar_module(class_name) %>, :count).by(1)
+        }.to change(<%= model_class_name %>, :count).by(1)
       end
 
       it "redirects to the created <%= ns_file_name %>" do
 <% if RUBY_VERSION < '1.9.3' -%>
-        post :create, {:<%= remove_ar_module(class_name).underscore.gsub('/', '_') %> => valid_attributes}
+        post :create, {:<%= model_var_name %> => valid_attributes}
 <% else -%>
-        post :create, params: {<%= remove_ar_module(class_name).underscore.gsub('/', '_') %>: valid_attributes}
+        post :create, params: {<%= model_var_name %>: valid_attributes}
 <% end -%>
-        expect(response).to redirect_to(<%= singular_table_name %>_url(<%= remove_ar_module(class_name) %>.last))
+        expect(response).to redirect_to(<%= singular_table_name %>_url(<%= model_class_name %>.last))
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
 <% if RUBY_VERSION < '1.9.3' -%>
-        post :create, {:<%= remove_ar_module(class_name).underscore.gsub('/', '_') %> => invalid_attributes}
+        post :create, {:<%= model_var_name %> => invalid_attributes}
 <% else -%>
-        post :create, params: {<%= remove_ar_module(class_name).underscore.gsub('/', '_') %>: invalid_attributes}
+        post :create, params: {<%= model_var_name %>: invalid_attributes}
 <% end -%>
         expect(response).to be_success
       end
@@ -128,32 +128,32 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
         skip("Add a hash of attributes valid for your model")
       }
       it "updates the requested <%= ns_file_name %>" do
-        <%= file_name %> = create(:<%= file_name %>)
+        <%= model_var_name %> = create(:<%= model_var_name %>)
 <% if RUBY_VERSION < '1.9.3' -%>
-        put :update, {:id => <%= file_name %>.to_param, :<%= remove_ar_module(class_name).underscore.gsub('/', '_') %> => new_attributes}
+        put :update, {:id => <%= model_var_name %>.to_param, :<%= model_var_name %> => new_attributes}
 <% else -%>
-        put :update, params: {id: <%= file_name %>.to_param, <%= remove_ar_module(class_name).underscore.gsub('/', '_') %>: new_attributes}
+        put :update, params: {id: <%= model_var_name %>.to_param, <%= model_var_name %>: new_attributes}
 <% end -%>
-        <%= file_name %>.reload
+        <%= model_var_name %>.reload
         skip("Add assertions for updated state")
       end
       it "redirects to the <%= ns_file_name %>" do
-        <%= file_name %> = create(:<%= file_name %>)
+        <%= model_var_name %> = create(:<%= model_var_name %>)
 <% if RUBY_VERSION < '1.9.3' -%>
-        put :update, {:id => <%= file_name %>.to_param, :<%= remove_ar_module(class_name).underscore.gsub('/', '_') %> => valid_attributes}
+        put :update, {:id => <%= model_var_name %>.to_param, :<%= model_var_name %> => valid_attributes}
 <% else -%>
-        put :update, params: {id: <%= file_name %>.to_param, <%= remove_ar_module(class_name).underscore.gsub('/', '_') %>: valid_attributes}
+        put :update, params: {id: <%= model_var_name %>.to_param, <%= model_var_name %>: valid_attributes}
 <% end -%>
-        expect(response).to redirect_to(<%= singular_table_name %>_url(<%= file_name %>))
+        expect(response).to redirect_to(<%= singular_table_name %>_url(<%= model_var_name %>))
       end
     end
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        <%= file_name %> = create(:<%= file_name %>)
+        <%= model_var_name %> = create(:<%= model_var_name %>)
 <% if RUBY_VERSION < '1.9.3' -%>
-        put :update, {:id => <%= file_name %>.to_param, :<%= remove_ar_module(class_name).underscore.gsub('/', '_') %> => invalid_attributes}
+        put :update, {:id => <%= model_var_name %>.to_param, :<%= model_var_name %> => invalid_attributes}
 <% else -%>
-        put :update, params: {id: <%= file_name %>.to_param, <%= remove_ar_module(class_name).underscore.gsub('/', '_') %>: invalid_attributes}
+        put :update, params: {id: <%= model_var_name %>.to_param, <%= model_var_name %>: invalid_attributes}
 <% end -%>
         expect(response).to be_success
       end
@@ -162,21 +162,21 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 
   describe "DELETE #destroy" do
     it "destroys the requested <%= ns_file_name %>" do
-      <%= file_name %> = create(:<%= file_name %>)
+      <%= model_var_name %> = create(:<%= model_var_name %>)
       expect {
 <% if RUBY_VERSION < '1.9.3' -%>
-        delete :destroy, {:id => <%= file_name %>.to_param}
+        delete :destroy, {:id => <%= model_var_name %>.to_param}
 <% else -%>
-        delete :destroy, params: {id: <%= file_name %>.to_param}
+        delete :destroy, params: {id: <%= model_var_name %>.to_param}
 <% end -%>
-      }.to change(<%= remove_ar_module(class_name) %>, :count).by(-1)
+      }.to change(<%= model_class_name %>, :count).by(-1)
     end
     it "redirects to the <%= table_name %> list" do
-      <%= file_name %> = create(:<%= file_name %>)
+      <%= model_var_name %> = create(:<%= model_var_name %>)
 <% if RUBY_VERSION < '1.9.3' -%>
-      delete :destroy, {:id => <%= file_name %>.to_param}
+      delete :destroy, {:id => <%= model_var_name %>.to_param}
 <% else -%>
-      delete :destroy, params: {id: <%= file_name %>.to_param}
+      delete :destroy, params: {id: <%= model_var_name %>.to_param}
 <% end -%>
       expect(response).to redirect_to(<%= index_helper %>_url)
     end
