@@ -1,3 +1,5 @@
+# csv support
+require 'csv'
 <% if namespaced? -%>
 require_dependency "<%= namespaced_path %>/application_controller"
 
@@ -9,7 +11,20 @@ class <%= controller_class_name %>Controller < Admin::BaseController
   # GET <%= route_url %>
   def index
     authorize <%= model_class_name %>
-    @<%= plural_model_var_name %> = <%= orm_class.all(model_class_name) %>.page(params[:page])
+    @filter_colums = %w(id)
+    @<%= plural_model_var_name %> = build_query_filter(<%= orm_class.all(model_class_name) %>, only: @filter_colums).page(params[:page])
+    respond_to do |format|
+      if params[:json].present?
+        format.html { send_data(@<%= plural_model_var_name %>.to_json, filename: "<%= plural_model_var_name %>-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
+      elsif params[:xml].present?
+        format.html { send_data(@<%= plural_model_var_name %>.to_xml, filename: "<%= plural_model_var_name %>-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
+      elsif params[:csv].present?
+        # as_csv =>  () | only: [] | except: []
+        format.html { send_data(@<%= plural_model_var_name %>.as_csv(only: []), filename: "<%= plural_model_var_name %>-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+      else
+        format.html
+      end
+    end
   end
 
   # GET <%= route_url %>/1
