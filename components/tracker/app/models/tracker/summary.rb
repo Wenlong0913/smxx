@@ -23,12 +23,12 @@ module Tracker
         visit_data = visits.where("created_at between ? and ?", (today-i.day).beginning_of_day, (today-i.day).end_of_day)
         chart_data[0].push({
           x: (today-i.day).to_time.to_i,
-          y: visit_data.present? ? visit_data.pluck(:ip_address).uniq.size : 0
+          y: visit_data.present? ? visit_data.select(:ip_address).distinct.count : 0
         })
         # sessions_data = visit_data.pluck(:session_id).uniq()
         chart_data[1].push({
           x: (today-i.day).to_time.to_i,
-          y: visit_data.select(:session_id).distinct.count
+          y: visit_data.present? ? visit_data.select(:session_id).distinct.count : 0  
         })
       end
       visits_data[:chart_data] = chart_data
