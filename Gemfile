@@ -33,7 +33,7 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
+gem 'high_voltage', '~> 3.0.0'
 gem "rolify", '~> 5.1.0'
 gem "pundit", '~> 1.1.0'
 gem 'slim-rails', '~> 3.1.1'

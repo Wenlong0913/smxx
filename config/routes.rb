@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    get "/static_pages/*id" => 'static_pages#show', as: :page, format: false
     get '/', to: 'home#index', as: :root
     get 'sign_in', to: 'sessions#new'
     namespace :tracker do
