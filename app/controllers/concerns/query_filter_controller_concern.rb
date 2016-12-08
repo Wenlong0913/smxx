@@ -21,9 +21,11 @@ module QueryFilterControllerConcern
       conditions = []
 
       filters.each_pair do |k, v|
-        query << "#{k} = ?"
         v = format_query_filter_value(model, k, v)
-        conditions << v if v
+        if v
+          query << "#{k} = ?"
+          conditions << v
+        end
       end
 
       conditions.unshift query.join(' AND ')
@@ -35,9 +37,11 @@ module QueryFilterControllerConcern
       conditions = []
 
       column_names.each do |k|
-        query << "#{k} = ?"
         v = format_query_filter_value(model, k, keywords)
-        conditions << v if v
+        if v
+          query << "#{k} = ?"
+          conditions << v
+        end
       end
 
       conditions.unshift query.join(' OR ')
@@ -47,11 +51,11 @@ module QueryFilterControllerConcern
 
     relation
   end
-  
+
   def format_query_filter_value(model, k, v)
     case model.columns_hash[k.to_s].type
     when :integer
-      v = nil unless v =~ /[^0-9]/
+      v = nil if v =~ /[^0-9]/
     when :datetime
       v = DateTime.parse(v) rescue nil
     end
