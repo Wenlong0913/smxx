@@ -45,6 +45,7 @@ $(document).ready ->
         $.post url, 'image_item[id]': image_item_id, 'image_item[description]': textarea.value
         .success (data)->
           app._data.error = false
+          app._data.show_message = false
         .error (error)->
           app._data.error = true
 
