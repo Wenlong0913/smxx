@@ -1,0 +1,26 @@
+
+
+<%= render file: 'public/templetes/default/_header.html' %>
+
+<!--=== Breadcrumbs ===-->
+<!--=== End Breadcrumbs ===-->
+
+<!--=== Content Part ===-->
+<div class="container">
+	<div class="row blog-page blog-item">
+        <!-- Left Sidebar -->
+    	<div class="col-md-9 md-margin-bottom-60">
+            <!--Blog Post-->
+            <div class="blog-content">
+               <h2><%= @page.title %></h2>
+               <hr/>
+               <%= raw @page.content %>
+            </div>
+        </div>
+    </div><!--/row-->
+</div><!--/container-->
+
+<%= render file: 'public/templetes/default/_baidu_share' %>
+
+<!--=== End Content Part ===-->
+<%= render file: 'public/templetes/default/_footer' %>

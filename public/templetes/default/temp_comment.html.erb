@@ -1,0 +1,31 @@
+
+<!-- MAIN WRAPPER -->
+<div class="body-wrap body-boxed">
+
+  <div id="st-container" class="st-container">
+    <%= render file: 'public/templetes/tanmer/_nav.html' %>
+    <div class="st-pusher">
+      <div class="st-content">
+        <div class="st-content-inner">
+          <!-- HEADER -->
+          <%= render file: 'public/templetes/tanmer/_header.html' %>
+
+          <!-- BREADCRUMB -->
+          <%= render file: 'public/templetes/tanmer/_breadcrumb.html' %>
+
+          <!-- SECTION -->
+          <section class="sct-color-white slice">
+            <div class="container">
+              <%= yield(:comment) %>
+            </div>
+          </section>
+
+          <!-- FOOTER -->
+          <%= render file: 'public/templetes/tanmer/_footer.html' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END: st-pusher -->
+</div>
+<!-- END: body-wrap -->

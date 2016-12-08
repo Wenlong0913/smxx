@@ -1,5 +1,19 @@
 Rails.application.routes.draw do
 
+  # For CMS Backend
+  namespace :cms do
+    resources :sites do
+      resources :channels do
+        resources :pages
+      end
+    end
+  end
+  # For CMS frontend
+  match '/cms_:site/search(/:search(/page/:page))', to: "cms#search", via: :get, as: 'search'
+  #match '/tag/:tag(/page/:page)', to: "cms#tag", as: 'tag', via: :get
+  match '/cms_:site(/:channel(/:id))', to: "cms#index", via: :get
+  match '/cms_:site/:channel(/page/:page)', to: "cms#index", via: :get
+
   concern :paginatable do
     get '(page-:page)', :action => :index, :on => :collection, :as => ''
   end

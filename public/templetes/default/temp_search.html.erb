@@ -1,0 +1,71 @@
+      <%= render file: 'public/templetes/unify/_header.html' %>
+<!--=== Breadcrumbs ===-->
+<div class="breadcrumbs margin-bottom-40">
+    <div class="container">
+        <h1 class="pull-left">一共找到<%= @pages.size %>条记录...</h1>
+        <ul class="pull-right breadcrumb">
+            <li><a href="/">首页</a></li>
+            <li class="active">站内搜索</li>
+        </ul>
+    </div>
+</div><!--/breadcrumbs-->
+<!--=== End Breadcrumbs ===-->
+
+<!--=== Content Part ===-->
+<div class="container">   
+  <!-- Funny Boxes -->
+  <div class="search-page">
+
+      <!--Search Block-->
+      <% get_slice_pages(@pages, 2).each do |pages| %>
+      <div class="row">
+        <% pages.each do |page| %>
+          <div class="col-md-6">
+              <div class="search-blocks search-blocks-colored search-blocks-<%= ['grey', 'blue', 'sea', 'red'][rand(4)]%>">
+                  <div class="row">
+                      <div class="col-md-4 search-img">
+                          <img class="img-responsive" src="<%= page.image_path %>" alt="<%= page.title %>">
+                          <ul class="list-unstyled">
+                             <li><i class="icon-briefcase"></i><%= page.format_date %></li>
+                             <li><i class="icon-comments"></i> <%= link_to page.channel.title, get_url(page.channel) %>&nbsp;&nbsp;
+<% page.tag_list.each do |tag| %> 
+<%= link_to tag, tag_path(tag) %>
+<% end %> 
+                            </li>
+                          </ul>
+                      </div>
+                      <div class="col-md-8">
+                          <h2><a target="_blank" href="<%= get_url(page) %>"><%= page.title %></a></h2>
+                          <ul class="list-unstyled search-rating">
+                             <li><i class="icon-star"></i></li>
+                             <li><i class="icon-star"></i></li>
+                             <li><i class="icon-star"></i></li>
+                             <li><i class="icon-star"></i></li>
+                             <li><i class="icon-star"></i></li>
+                          </ul>
+                          <p><%= get_short_content(page.content, 100) %>.</p>
+                          <a target="_blank" href="<%= get_url(page) %>" target="_blank" class="btn-u btn-u-red">阅读更多</a>
+                      </div>
+                  </div>                            
+              </div>
+          </div>
+        <% end %>
+      </div>
+      <% end %>
+  </div>
+  <%= will_paginate @pages %>
+</div>
+<!--=== Content Part end===-->
+<%= render file: 'public/templetes/unify/_footer.html' %>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

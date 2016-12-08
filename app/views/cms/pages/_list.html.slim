@@ -1,0 +1,14 @@
+ul.media-list.media-list-with-divider
+  - @cms_pages.each do |cms_page|
+    li.media.media-sm
+      a.media-left href="javascript:;"
+        img.media-object alt="" src= cms_page.show_image /
+      .media-body
+        h4.media-heading
+          = cms_page.title
+        p
+          = cms_page.description
+        p
+          = link_to '编辑', edit_cms_site_channel_page_path(@cms_site, @cms_channel, cms_page), class: 'btn btn-sm btn-primary m-r-5'
+          = link_to '删除', cms_site_channel_page_path(@cms_site, @cms_channel, cms_page), method: :delete, data: { confirm: '删除以后无法恢复，请确认要删除?' }, class: 'btn btn-sm btn-danger btn-default m-r-5'
+          = link_to '预览', cms_site_channel_page_path(@cms_site, @cms_channel, cms_page), class: 'btn btn-sm btn-default'

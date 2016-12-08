@@ -16,3 +16,10 @@ _, user = User::Create.(mobile_phone: '15328077522', nickname: '用户', passwor
 
 admin.add_role :admin
 agent.add_role :agent
+
+
+# init Cms
+# visit: http://localhost:3000/cms_1/
+cms_site = Cms::Site.create!(name: 'web', template: 'default', description: 'CMS官网')
+cms_channel = Cms::Channel.create!(site_id: cms_site.reload.id, title: '新闻列表', short_title: 'news', tmp_index: 'temp_article_list.html.erb', tmp_detail: 'temp_detail.html.erb')
+cms_page = Cms::Page.create!(channel_id: cms_channel.reload.id, title: '第一条新闻', short_title: 'one', content: '这是内容部分！')
