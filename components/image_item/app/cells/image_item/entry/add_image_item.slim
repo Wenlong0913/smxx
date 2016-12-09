@@ -3,7 +3,7 @@
   input[type="hidden" name="image_item_resource" value=options[:resource_type]+','+options[:resource_id].to_s ]
   .image_items[v-for="image_item in image_items"]
     input[type="hidden" name="image_item_entry" v-bind:value='image_item.id']
-    .slim[v-bind:class="[image_item.is_new ? newClass : '', oldClass]"]
+    .slim[v-bind:class="[image_item.is_new ? newClass : oldClass]"]
       input[type="file" name="slim[]"]
       input[type="hidden" name='image_item[image_data]']
       img[v-bind:src="image_item.image_data"]

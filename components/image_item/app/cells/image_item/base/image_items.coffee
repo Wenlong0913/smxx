@@ -7,14 +7,14 @@ $(document).ready ->
     blockEle.attr 'uuid', "#{new Date().getTime()}-#{Math.random()}"
 
     getObjectURL = (file) ->
-      url = null
+      image_url = null
       if window.createObjectURL != undefined
-        url = window.createObjectURL file
+        image_url = window.createObjectURL file
       else if window.URL != undefined
-        url = window.URL.createObjectURL file 
+        image_url = window.URL.createObjectURL file 
       else if window.webkitURL != undefined
-        url = window.webkitURL.createObjectURL file
-      url
+        image_url = window.webkitURL.createObjectURL file
+      image_url
 
     parseSlim = (class_name, flag)->
       $('.'+class_name).slim({
@@ -24,20 +24,23 @@ $(document).ready ->
         buttonCancelLabel: '取消',
         saveInitialImage: flag,
         willSave: (data, ready) ->
+          app._data.show_message = true
           image_data = data.output.image
           ele = this.element
           item = $(ele).parents('.image_items')
           image_item_entry = $(item).find("input[name='image_item_entry']")
           image_item_data = $(item).find("input[name='image_item[image_data]']")
           $.ajax({
-            url: url, 
+            url: url,
             type: 'POST',
             dataType: 'json',
             data: { 'image_item[image_data]': image_data, image_item_resource: image_item_resource, 'image_item[id]': image_item_entry.val() }
           }).done( (data)->
             image_item_entry.val(data.entry_id)
             image_item_data.val('')
+            app._data.show_message = false
           ).fail( ()->
+            app._data.show_message = false
             console.log("An error occurred, the files couldn't be sent!")
           )
           ready(data)

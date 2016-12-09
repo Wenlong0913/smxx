@@ -9,10 +9,12 @@ Short description and motivation.
         has_many_image_items
     end
 
-在你的controller文件中, 加入下面3种的任何一种的内容:
-
+在你的controller文件中, 加入下面语句
+    after_action only: [:create] do
+      move_image_data_to_resource(@product, 2)
+    end
+和如下3种的任何一种的内容:
     acts_as_imageable resource: Product
-    
 或者
     
     acts_as_imageable resource: :get_resource_of_comments

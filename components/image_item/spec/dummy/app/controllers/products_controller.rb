@@ -1,7 +1,9 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   acts_as_imageable resource: -> { Product.find(params[:id]) }
-
+  after_action only: [:create] do
+    move_image_data_to_resource(@product, 2)
+  end
   # GET /products
   def index
     @products = Product.all
@@ -23,7 +25,7 @@ class ProductsController < ApplicationController
   # POST /products
   def create
     @product = Product.new(product_params)
-    if @product.save && move_image_data_to_resource(@product, 2)
+    if @product.save
       redirect_to @product, notice: 'Product was successfully created.'
     else
       render :new
@@ -46,13 +48,13 @@ class ProductsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_product
+    @product = Product.find(params[:id])
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def product_params
-      params.require(:product).permit(:name, :title)
-    end
+  # Only allow a trusted parameter "white list" through.
+  def product_params
+    params.require(:product).permit(:name, :title)
+  end
 end
