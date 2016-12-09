@@ -12,7 +12,8 @@ module Decorator
 
     generators do |app|
       require 'rails/generators/rails/model/model_generator'
-      Rails::Generators::ModelGenerator.hook_for :decorator, default: 'decorator', as: 'model'
+      require 'rails/generators/decorator/decorator_generator'
+      Rails::Generators::ModelGenerator.hook_for :decorator, default: true
     end
   end
 end

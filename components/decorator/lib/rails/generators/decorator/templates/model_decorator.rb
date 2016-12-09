@@ -1,4 +1,4 @@
-class <%= class_name %>Decorator < ApplicationDecorator
+class <%= class_name %>Decorator < Decorator::Base
 
   # def display_name
   #   h.content_tag :span, class: 'title' do
