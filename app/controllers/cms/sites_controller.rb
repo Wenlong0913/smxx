@@ -12,7 +12,7 @@ class Cms::SitesController < Admin::BaseController
 
   def show
     authorize @cms_site
-    @cms_channels = @cms_site.channels.all
+    @cms_channels = @cms_site.channels.where("parent_id is null")
     respond_to do |format|
       format.html
       format.json { render json: @cms_site }

@@ -5,7 +5,6 @@
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-    h4 cms_channel
   .panel-body
     = simple_form_for [@cms_site, @cms_channel], url: @cms_channel.new_record? ? cms_site_channels_path : cms_site_channel_path(@cms_site, @cms_channel), validate: true do |f|
       - if @cms_channel.errors.any?
@@ -16,7 +15,7 @@
               li = message
 
       = f.association :site, selected: @cms_site.id, for: :cms_site_id
-      = f.input :parent_id, collection: Cms::Channel.all.map { |r| [r.children.any? ? "|-#{r.title}" : "|------#{r.title}   ", r.id, { class: r.id }] }, include_blank: true
+      = f.input :parent_id, collection: @cms_site.channels.select{|c| c != @cms_channel}.map { |r| [r.children.any? ? "|-#{r.title}" : "|------#{r.title}   ", r.id, { class: r.id }] }, include_blank: true
       = f.input :title
       = f.input :short_title
       = f.input :properties
@@ -25,5 +24,5 @@
       = f.input :keywords
       = f.input :description
       = f.input :image_path
-      = f.input :content
+      = f.input :content, as: :ckeditor, input_html: { ckeditor: {toolbar: 'custom', height: '600px'}}
       = f.submit class: 'btn btn-success btn-block'

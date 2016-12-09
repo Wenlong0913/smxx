@@ -10,7 +10,7 @@ h1
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-    h4 站点列表
+    h4 CMS站点列表
   .panel-body
     .row
       - @cms_sites.each do |cms_site|
@@ -24,4 +24,9 @@ h1
             .stats-link
               = link_to cms_site_path(cms_site) do
                 = cms_site.description
+                | &nbsp;&nbsp;
+                i.fa.fa-arrow-circle-o-right
+            .stats-link
+              = link_to get_url(cms_site), target: '_blank' do
+                | 前台预览&nbsp;&nbsp;
                 i.fa.fa-arrow-circle-o-right

@@ -54,6 +54,12 @@ gem 'client_side_validations-simple_form',
 
 gem 'pretender' # 模仿另一个用户登录
 
+gem 'ckeditor', github: 'galetahub/ckeditor'
+
+#File upload
+gem 'paperclip'
+gem 'paperclip-qiniu'
+
 # In Rails 5, active_model/serializers/xml has been extracted into its own gem.
 #   So, a quick solution is to add the activemodel-serializers-xml gem to your Gemfile
 #   https://github.com/drapergem/draper/issues/697
