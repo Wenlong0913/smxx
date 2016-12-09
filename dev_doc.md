@@ -166,6 +166,16 @@
 <a name="how-to-program-model"></a>
 ## Model中的一些用法
 
+在`app/models/concerns`目录，有一些对Model的扩展方法：
+
+- `cast_pinyin_for(*attrs)`
+
+    把一个字段转换为拼音首字母，然后存到字段`xxx_py`中
+
+- `User.all.as_csv(only: [:id, :name])`
+
+    把一个查询导出为csv
+
 <a name="how-to-program-model-validators"></a>
 ### 数据验证
 
@@ -194,15 +204,16 @@
 运行测试代码，因为需要测试feature，需要用到浏览器插件`capybara`和`selenium-webdriver`，
 Mac系统必须执行`brew install geckodriver`安装插件`geckodriver`
 
-在Feature测试中，需要测试用户登录后的效果：  
-参考来源： https://github.com/plataformatec/devise/wiki/How-To:-Test-controllers-with-Rails-3-and-4-(and-RSpec)
+在feature, controller, request测试中，需要测试用户登录后的效果：
+`spec/support/controller_macros.rb`中有三种用户登录
+
+- login_user
+- login_admin
+- login_agent
+
+如果需要登录一个制定用户，用`login_user(User.find(1))`，使用方法如：
 
     RSpec.feature "Toggles", type: :feature, js: true do
-      before(:each) do
-        create :user, id: 1
-        @request.env["devise.mapping"] = Devise.mappings[:user]
-        sign_in create(:user, id: 1)
-      end
-
+      login_user
       it { ... }
     end
