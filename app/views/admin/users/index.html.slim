@@ -21,7 +21,7 @@ h1.page-header
       - @admin_users.each do |user|
         - decorate(user) do |d_user|
           tr
-            td = d_user.id
+            td = link_to d_user.id, admin_user_path(d_user)
             td = d_user.mobile_phone
             td = d_user.display_name
             td = d_user.display_role
