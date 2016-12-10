@@ -1,4 +1,4 @@
-<% title \
+<% meta_title \
   [ @page.try(:title),
     @channel.title,
   ].join(' | ').sub(/^\s*\|/, '').strip %>
@@ -8,4 +8,4 @@
 <% meta_description \
   @page.nil? ? @channel.description : @page.description %>
 
-<% content @page.present? ? @page.content : @channel.content %>
+<% cms_content @page.present? ? @page.content : @channel.content %>

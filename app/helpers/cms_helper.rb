@@ -1,5 +1,5 @@
 module CmsHelper
-  def title(page_title)
+  def meta_title(page_title)
     content_for(:title){ page_title}
   end
   def meta_keywords(meta_keywords)
@@ -8,7 +8,7 @@ module CmsHelper
   def meta_description(meta_description)
     content_for(:meta_description){ meta_description}
   end
-  def content(item_content)
+  def cms_content(item_content)
     content_for(:content){ raw item_content }
   end
 

@@ -1,9 +1,6 @@
 class CmsController < ApplicationController
   layout 'cms'
   before_action :set_site
-  before_action :set_template
-
-  respond_to :html, :json, :js
 
   #{"controller"=>"welcome", "action"=>"index", "channel"=>"fw", "id"=>"2", "tag" => "tagkey"}
   #params
@@ -15,8 +12,6 @@ class CmsController < ApplicationController
   # 1. a URL query must has channel except root
   # 2. If has page, the channel is page.channel, not care the params
   def index
-
-    #page first, then channel ?
     if params[:id]
       @page = Cms::Page.find_by(id: params[:id])
     end
@@ -29,7 +24,7 @@ class CmsController < ApplicationController
 
     #root index.html has no params
     @channel ||= Cms::Channel.first
-    
+
     not_found if @channel.nil?
     not_found if params[:id] && @page.nil?
 
@@ -39,7 +34,6 @@ class CmsController < ApplicationController
     elsif params[:tag]
       @pages = Cms::Page.tagged_with(params[:tag]).order("updated_at DESC").page(params[:page])
     else
-      #@pages = @channel.pages.order("updated_at DESC").page(params[:page])
       @pages = Cms::Page.joins(:channel).where(["cms_channels.id = ? OR cms_channels.parent_id = ?", @channel.id, @channel.id]).order("cms_pages.updated_at DESC").page(params[:page])
     end
 
@@ -49,13 +43,6 @@ class CmsController < ApplicationController
         redirect_to "/cms_#{@site.id}/#{@channel.short_title}/#{@page.id}" and return
       end
     end
-
-    #respond_with @page || @channel
-    respond_to do |format|
-      format.html
-      format.js
-    end
-
   end
 
   def search
@@ -72,13 +59,4 @@ class CmsController < ApplicationController
     def set_site
       @site = Cms::Site.find(params[:site])
     end
-    #this method initlize global templete path.
-    def set_template
-      @templete = @site.template
-      @templete ||= 'default'
-      @base_dir = "#{Rails.root}/public/templetes/#{@templete}/"
-      Dir.chdir(@base_dir)
-      @temp_list = Dir.glob("[^_]*.html|.erb").sort
-    end
-
 end

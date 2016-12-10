@@ -14,12 +14,16 @@
             - @cms_page.errors.full_messages.each do |message|
               li = message
 
-      = f.association :channel, selected: @cms_channel.id
-      = f.input :title
-      = f.input :short_title
-      = f.input :properties
-      = f.input :keywords
-      = f.input :description
-      = f.input :image_path
+      = f.association :channel, selected: @cms_channel.id, label: '所属栏目'
+      .row
+        .col-md-6
+          = f.input :title, placeholder: '美好切题的标题能使文章的关注度大放异彩'
+          - unless @cms_page.new_record?
+            = f.input :short_title, label: '名称简写(不填则程序自动生成)', placeholder: '请用全英文，用于生成可读的URL链接'
+          = f.input :image_path, placeholder: '网页预览图片路径，如产品图片等'
+        .col-md-6
+          = f.input :keywords, placeholder: '关键词用逗号隔开'
+          = f.input :description, placeholder: '文章摘要，用于SEO描述'
+
       = f.input :content, as: :ckeditor, input_html: { ckeditor: {toolbar: 'custom', height: '600px'}}
       = f.submit class: 'btn btn-success btn-block'

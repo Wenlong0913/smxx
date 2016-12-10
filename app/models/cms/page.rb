@@ -1,10 +1,10 @@
 class Cms::Page < ApplicationRecord
   belongs_to :channel
   default_scope {order('updated_at DESC')}
-
+  before_create :create_unique_short_title
   validates :channel, :title, :content, presence: true
-  validates :short_title, format: { with: /\A[a-zA-Z0-9-]+\z/,
-    message: "名称简写只能包括字母数字和横线" }
+  # validates :short_title, format: { with: /\A[a-zA-Z0-9-]+\z/,
+  #   message: "名称简写只能包括字母数字和横线" }
   validates_uniqueness_of :short_title
 
   def format_date
@@ -48,6 +48,16 @@ class Cms::Page < ApplicationRecord
     else
       all
     end
+  end
+
+  private
+  def create_unique_short_title
+    short_title = Pinyin.t(title).gsub(/(-|\s+)/, '-').gsub(/[^\w-]/, '')
+    short_title = short_title.to_s.squeeze('-')[0..10].gsub(/\W+$/, '')
+    while Cms::Page.joins(:channel).where("cms_channels.site_id = ? AND cms_pages.short_title = ?", channel.site_id, short_title).any? do
+      short_title += (1..100).to_a.sample
+    end
+    self.short_title = short_title
   end
 
 end

@@ -1,6 +1,5 @@
 class Cms::ChannelsController < Admin::BaseController
   before_action :set_cms_site
-  before_action :set_template
   before_action :set_cms_channel, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -80,14 +79,6 @@ class Cms::ChannelsController < Admin::BaseController
       @cms_channel = Cms::Channel.find(params[:id])
     end
 
-    #this method initlize global templete path.
-    def set_template
-      @templete = @cms_site.template
-      @templete ||= 'default'
-      @base_dir = "#{Rails.root}/public/templetes/#{@templete}/"
-      Dir.chdir(@base_dir)
-      @temp_list = Dir.glob("[^_]*.erb").sort
-    end
     # Only allow a trusted parameter "white list" through.
     # def cms_channel_params
     #       #   params.require(:cms_channel).permit(:site_id, :parent_id, :title, :short_title, :properties, :tmp_index, :tmp_detail, :keywords, :description, :image_path, :content)

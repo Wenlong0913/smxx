@@ -1,6 +1,6 @@
 .row
   - @cms_channels.each do |cms_channel|
-    - color = rand_bg_color
+    - color = bg_colors.sample
     .col-md-3.col-sm-6
       div class=("widget widget-stats bg-#{color}")
         .stats-icon
