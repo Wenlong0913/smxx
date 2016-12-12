@@ -1,0 +1,39 @@
+<!-- site loader -->
+<div class="site-loader">
+  <span></span>
+  <p><%= @site.name %></p> <!-- site loader text -->
+</div>
+<!-- site loader -->
+
+<!-- site bg -->
+<div class="site-bg">
+  <div class="site-bg__img"></div>
+  <div class="site-bg__video"></div>
+  <div class="site-bg__overlay"></div>
+  <div class="site-bg__effect layer" data-depth=".30"></div>       <!-- parallax data, try edit to other number :) -->
+  <canvas class="site-bg__canvas layer" data-depth=".30"></canvas> <!-- parallax data, try edit to other number :) -->
+</div>
+<!-- /site bg -->
+
+<!-- site nav -->
+<nav class="site-nav">
+<div class="site-nav__table">
+  <div class="site-nav__cell">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="site-nav__inner">
+            <!-- menu -->
+            <ul class="site-nav__menu">
+              <% @site.channels.order("id ASC").each do |channel| %>
+                <li><a href="<%= get_url(channel)%>"><%= channel.title %></a></li>
+              <% end %>
+            </ul>
+            <!-- /menu -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</nav>

@@ -55,7 +55,7 @@ class Cms::Page < ApplicationRecord
     short_title = Pinyin.t(title).gsub(/(-|\s+)/, '-').gsub(/[^\w-]/, '')
     short_title = short_title.to_s.squeeze('-')[0..10].gsub(/\W+$/, '')
     while Cms::Page.joins(:channel).where("cms_channels.site_id = ? AND cms_pages.short_title = ?", channel.site_id, short_title).any? do
-      short_title += (1..100).to_a.sample
+      short_title += (1..100).to_a.sample.to_s
     end
     self.short_title = short_title
   end
