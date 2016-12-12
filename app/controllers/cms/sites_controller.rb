@@ -1,4 +1,5 @@
 class Cms::SitesController < Admin::BaseController
+  helper Cms::ApplicationHelper
   before_action :set_cms_site, only: [:show, :edit, :update, :destroy]
 
   def index

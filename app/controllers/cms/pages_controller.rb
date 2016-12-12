@@ -1,10 +1,10 @@
 class Cms::PagesController < Admin::BaseController
-before_action :set_cms_site_and_channel
+  helper Cms::ApplicationHelper
+  before_action :set_cms_site_and_channel
   before_action :set_cms_page, only: [:show, :edit, :update, :destroy]
 
   def index
-    authorize Cms::Page
-    @cms_pages = Cms::Page.all
+    @cms_pages = @cms_channel.pages
     respond_to do |format|
       format.html
       format.json { render json: @cms_pages }
@@ -20,8 +20,8 @@ before_action :set_cms_site_and_channel
   end
 
   def new
-    authorize Cms::Page
-    @cms_page = Cms::Page.new
+    @cms_page = @cms_channel.pages.new
+    authorize @cms_page
   end
 
   def edit
@@ -29,8 +29,8 @@ before_action :set_cms_site_and_channel
   end
 
   def create
-    authorize Cms::Page
-    @cms_page = Cms::Page.new(permitted_attributes(Cms::Page))
+    @cms_page = @cms_channel.pages.new(permitted_attributes(@cms_channel.pages))
+    authorize @cms_page
 
     respond_to do |format|
       format.html do
@@ -76,7 +76,7 @@ before_action :set_cms_site_and_channel
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_cms_page
-      @cms_page = Cms::Page.find(params[:id])
+      @cms_page = @cms_channel.pages.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

@@ -38,12 +38,6 @@ ActiveRecord::Schema.define(version: 20161209093236) do
     t.index ["user_id", "user_type"], name: "user_index", using: :btree
   end
 
-  create_table "babies", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",               null: false
     t.string   "data_content_type"

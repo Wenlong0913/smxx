@@ -1,10 +1,11 @@
 class Cms::ChannelsController < Admin::BaseController
+  helper Cms::ApplicationHelper
   before_action :set_cms_site
   before_action :set_cms_channel, only: [:show, :edit, :update, :destroy]
 
   def index
-    authorize Cms::Channel
-    @cms_channels = Cms::Channel.all
+    @cms_channels = @cms_site.channels
+    authorize @cms_channels
     respond_to do |format|
       format.html
       format.json { render json: @cms_channels }
@@ -21,7 +22,7 @@ class Cms::ChannelsController < Admin::BaseController
   end
 
   def new
-    authorize Cms::Channel
+    authorize @cms_site.channels
     @cms_channel = Cms::Channel.new
   end
 
@@ -30,9 +31,8 @@ class Cms::ChannelsController < Admin::BaseController
   end
 
   def create
-    authorize Cms::Channel
-    @cms_channel = @cms_site.channels.new(permitted_attributes(Cms::Channel))
-
+    @cms_channel = @cms_site.channels.new(permitted_attributes(@cms_site.channels))
+    authorize @cms_channel
     respond_to do |format|
       format.html do
         if @cms_channel.save
@@ -76,7 +76,7 @@ class Cms::ChannelsController < Admin::BaseController
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_cms_channel
-      @cms_channel = Cms::Channel.find(params[:id])
+      @cms_channel = @cms_site.channels.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
