@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161207123923) do
+ActiveRecord::Schema.define(version: 20161209093236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,63 @@ ActiveRecord::Schema.define(version: 20161207123923) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "ckeditor_assets", force: :cascade do |t|
+    t.string   "data_file_name",               null: false
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.string   "data_fingerprint"
+    t.string   "type",              limit: 30
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["type"], name: "index_ckeditor_assets_on_type", using: :btree
+  end
+
+  create_table "cms_channels", force: :cascade do |t|
+    t.integer  "site_id",     null: false
+    t.integer  "parent_id"
+    t.string   "title",       null: false
+    t.string   "short_title", null: false
+    t.string   "properties"
+    t.string   "tmp_index",   null: false
+    t.string   "tmp_detail",  null: false
+    t.string   "keywords"
+    t.string   "description"
+    t.string   "image_path"
+    t.text     "content"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["short_title"], name: "index_cms_channels_on_short_title", using: :btree
+    t.index ["site_id"], name: "index_cms_channels_on_site_id", using: :btree
+  end
+
+  create_table "cms_pages", force: :cascade do |t|
+    t.integer  "channel_id",  null: false
+    t.string   "title",       null: false
+    t.string   "short_title", null: false
+    t.string   "properties"
+    t.string   "keywords"
+    t.string   "description"
+    t.string   "image_path"
+    t.text     "content"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["channel_id"], name: "index_cms_pages_on_channel_id", using: :btree
+    t.index ["short_title"], name: "index_cms_pages_on_short_title", using: :btree
+  end
+
+  create_table "cms_sites", force: :cascade do |t|
+    t.string   "name",                        null: false
+    t.string   "template",                    null: false
+    t.string   "domain"
+    t.string   "description"
+    t.jsonb    "features"
+    t.boolean  "is_published", default: true
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "item_relations", id: false, force: :cascade do |t|

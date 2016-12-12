@@ -1,0 +1,20 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      cms/page: 页面
+    attributes:
+      cms/page:
+        channel: 栏目
+        title: 标题
+        short_title: 标题简写
+        properties: 选项
+        keywords: 关键词
+        description: 描述
+        image_path: 图片
+        content: 内容
+    errors:
+      models:
+        page:
+  helpers:
+    page:

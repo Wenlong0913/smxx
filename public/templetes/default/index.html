@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie ie9 no-js" lang="en"><![endif]-->
+<!--[if gt IE 9 | !IE]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>WEBSITE_TITLE</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!--[[head start]]-->
+  <link rel='stylesheet' href='assets/css/bootstrap.min.css'>       <!-- bootstrap -->
+  <link rel='stylesheet' href='assets/css/vendor.css'>              <!-- plugin -->
+  <link rel='stylesheet' href='assets/css/theme_black_brown.css'>   <!-- main style -->
+  <link rel='stylesheet' href='assets/css/custom.css'>              <!-- custom style -->
+  <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+  <!--[if lte IE 9]><!-->
+  <script src='assets/js/vendor/html5shiv.min.js'></script>
+  <!--<![endif]-->
+  <!--[[head end]]-->
+</head>
+
+<!-- to edit the animation, please read documentation <animation> section -->
+
+<body>
+
+  <!-- site loader -->
+  <div class="site-loader">
+    <span></span>
+    <p>DANA</p> <!-- site loader text -->
+  </div>
+  <!-- site loader -->
+
+  <!-- site bg -->
+  <div class="site-bg">
+    <div class="site-bg__img"></div>
+    <div class="site-bg__video"></div>
+    <div class="site-bg__overlay"></div>
+    <div class="site-bg__effect layer" data-depth=".30"></div>       <!-- parallax data, try edit to other number :) -->
+    <canvas class="site-bg__canvas layer" data-depth=".30"></canvas> <!-- parallax data, try edit to other number :) -->
+  </div>
+  <!-- /site bg -->
+
+  <!-- site nav -->
+  <nav class="site-nav">
+    <div class="site-nav__table">
+      <div class="site-nav__cell">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="site-nav__inner">
+                <!-- menu -->
+                <ul class="site-nav__menu">
+                  <li><a href="#home">Home</a></li>
+                  <li><a href="#about">About</a></li>
+                  <li><a href="#service">Services</a></li>
+                  <li><a href="#contact">Contact</a></li>
+                </ul>
+                <!-- /menu -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </nav>
+  <!-- /site nav -->
+
+  <!-- site wrap -->
+  <div class="site-wrap">
+    <!--[[header start]]-->
+    <!-- site header -->
+    <header class="site-header">
+      <div class="container">
+        <!-- site header logo -->
+        <div class="site-header__logo">
+          <a href="#">
+            <img src="assets/img/site-header-logo.png" alt="logo">
+          </a>
+        </div>
+        <!-- site header logo -->
+
+        <!-- site header icon -->
+        <ul class="site-header__icon">
+          <!-- audio icon -->
+          <li class="site-header__icon__audio">
+            <a href="#">
+              <i class="audio-bar">
+                <span class="audio-bar__item"></span>
+                <span class="audio-bar__item"></span>
+                <span class="audio-bar__item"></span>
+                <span class="audio-bar__item"></span>
+              </i>
+            </a>
+          </li>
+          <!-- /audio icon -->
+
+          <!-- menu icon -->
+          <li class="site-header__icon__nav">
+            <a href="#">
+              <i class="ion-android-menu"></i>
+            </a>
+          </li>
+          <!-- /menu icon -->
+        </ul>
+        <!-- /site header icon -->
+      </div>
+    </header>
+    <!-- /site header -->
+    <!--[[header end]]-->
+
+    <!--[[main start]]-->
+    <!-- site main -->
+    <main class="site-main">
+      <!-- home -->
+      <div id="home" class="section is-active">
+        <div class="section__table">
+          <div class="section__cell">
+            <div class="container-fluid max-width">
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="overflow-hidden">
+                    <div class="animation-item"
+                    data-animation-in="fadeInUp2"
+                    data-animation-in-delay="300"
+                    data-animation-out="fadeOutDown2"
+                    data-animation-out-delay="700">
+                      <h1 class="section__title">
+                        Design <span class="color">Agency</span>
+                      </h1>
+                      <p class="section__caption">We're under construction</p>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden">
+                    <div class="animation-item"
+                    data-animation-in="fadeInDown"
+                    data-animation-in-delay="900"
+                    data-animation-out="fadeOutDown"
+                    data-animation-out-delay="300">
+                      <!-- countdown -->
+                      <div class="row" id="countdown_dashboard">
+                        <div class="col-xs-3 dash days_dash"> <!-- color class -->
+                          <div class="digit">0</div> <!-- remove this line for double figures -->
+                          <div class="digit">0</div>
+                          <div class="digit">0</div>
+                          <span class="dash_title">days</span>
+                        </div>
+
+                        <div class="col-xs-3 dash hours_dash">
+                          <div class="digit">0</div>
+                          <div class="digit">0</div>
+                          <span class="dash_title">hours</span>
+                        </div>
+
+                        <div class="col-xs-3 dash minutes_dash">
+                          <div class="digit">0</div>
+                          <div class="digit">0</div>
+                          <span class="dash_title">minutes</span>
+                        </div>
+
+                        <div class="col-xs-3 dash seconds_dash">
+                          <div class="digit">0</div>
+                          <div class="digit">0</div>
+                          <span class="dash_title">seconds</span>
+                        </div>
+                      </div>
+                      <!-- /countdown -->
+                    </div>
+                  </div>
+                  <div class="overflow-hidden">
+                    <div class="animation-item"
+                    data-animation-in="fadeInUp2"
+                    data-animation-in-delay="1100"
+                    data-animation-out="fadeOutDown2"
+                    data-animation-out-delay="100">
+                      <div class="btn-wrap">
+                        <a class="btn btn-theme _icon _circle" href="#newsletter">
+                          <i class="ion-android-mail"></i>
+                          Newsletter
+                        </a>
+                        <a class="btn btn-base _icon _circle" href="#about" data-link="section"> <!-- link to section, edit the [href] and add [data-link="section"] -->
+                          <i class="ion-android-hangout"></i>
+                          More Info
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- newsletter -->
+        <div id="newsletter" class="mfp-hide">
+          <div class="newsletter-overlay"></div>
+          <form class="form-theme" id="formNewsletter">
+            <h3 class="form-title">Subscribe to our <span class="color">newsletter</span></h3> <!-- title -->
+            <p class="form-subtitle">We won't share your information.</p> <!-- subtitle -->
+            <div class="hr"></div> <!-- line -->
+            <p class="form-caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <b>Aliquam in scelerisque nisi</b>, a convallis nibh.</p> <!-- caption -->
+            <div class="form-group required">
+              <label class="form-label" for="newsletterEmail">Your Email</label> <!-- label -->
+              <input class="form-control" id="newsletterEmail" type="text" name="email"> <!-- input -->
+            </div>
+            <button class="btn btn-theme btn-block _circle" type="submit">
+              Subscribe
+            </button> <!-- button -->
+            <div class="form-notify"></div> <!-- notify -->
+          </form>
+        </div>
+        <!-- /newsletter -->
+      </div>
+      <!-- /home -->
+      <!--[[main end]]-->
+
+      <!-- about -->
+      <div id="about" class="section">
+        <div class="section__table">
+          <div class="section__cell">
+            <div class="container">
+              <!-- section heading -->
+              <div class="section__heading row">
+                <div class="col-xs-12 col-md-5">
+                  <div class="overflow-hidden">
+                    <div class="animation-item"
+                    data-animation-in="fadeInUp2"
+                    data-animation-in-delay="300"
+                    data-animation-out="fadeOutDown2"
+                    data-animation-out-delay="600">
+                      <h2 class="section__title">
+                       Who <span class="color">we</span> are
+                      </h2>
+                      <div class="hr"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6 col-md-offset-1">
+                  <div class="overflow-hidden">
+                    <div class="animation-item"
+                      data-animation-in="fadeInUp2"
+                      data-animation-in-delay="300"
+                      data-animation-out="fadeOutDown2"
+                      data-animation-out-delay="400">
+                      <p class="section__caption">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in scelerisque nisi, a convallis nibh. Etiam posuere faucibus.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /section heading -->
+
+              <!-- section content -->
+              <div class="section__content row">
+                <div class="col-xs-12 col-md-5">
+                  <div class="overflow-hidden">
+                    <div class="animation-item"
+                      data-animation-in="fadeInLeft"
+                      data-animation-in-delay="900"
+                      data-animation-out="fadeOutLeft"
+                      data-animation-out-delay="100">
+                      <div class="about__item">
+                        <i class="ion-android-notifications-none"></i>
+                        <h3>The DANA story</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in scelerisque.</p>
+                      </div>
+                      <div class="about__item">
+                        <i class="ion-android-bulb"></i>
+                        <h3>Why choose us?</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in scelerisque.</p>
+                      </div>
+                      <div class="about__item">
+                        <i class="ion-scissors"></i>
+                        <h3>DANA Since 2010</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in scelerisque.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6 col-md-offset-1">
+                  <div class="overflow-hidden">
+                    <div class="animation-item"
+                      data-animation-in="fadeInRight"
+                      data-animation-in-delay="900"
+                      data-animation-out="fadeOutRight"
+                      data-animation-out-delay="100">
+                      <p>Quisque sapien metus, ornare ac suscipit eget, vehicula a ipsum. Fusce vel lorem et urna volutpat varius quis eget orci. Maecenas pretium tristique dui et laoreet. Praesent elementum venenatis nibh, sit amet venenatis sapien rutrum sit amet. Donec mattis pulvinar facilisis. Proin in erat lacinia, tempor dolor et, pharetra.</p>
+                      <p>Phasellus fermentum turpis eget ex tincidunt pulvinar. Donec sed nisl risus. Proin in nulla sagittis, sagittis lorem quis.</p>
+                      <a class="btn btn-theme _icon _circle" href="#service" data-link="section">
+                        <i class="ion-android-share"></i>
+                        Our services
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /section content -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /about -->
+
+      <!-- service -->
+      <div id="service" class="section">
+        <div class="section__table">
+          <div class="section__cell">
+            <div class="container">
+              <!-- section heading -->
+              <div class="section__heading row">
+                <div class="col-xs-12 col-sm-5">
+                  <div class="overflow-hidden">
+                    <div class="animation-item"
+                      data-animation-in="fadeInUp2"
+                      data-animation-in-delay="300"
+                      data-animation-out="fadeOutDown2"
+                      data-animation-out-delay="600">
+                      <h2 class="section__title">
+                       What <span class="color">we</span> do
+                      </h2>
+                      <div class="hr"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-sm-offset-1">
+                  <div class="overflow-hidden">
+                    <div class="animation-item"
+                      data-animation-in="fadeInUp2"
+                      data-animation-in-delay="300"
+                      data-animation-out="fadeOutDown2"
+                      data-animation-out-delay="400">
+                      <p class="section__caption">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in scelerisque nisi, a convallis nibh. Etiam posuere faucibus.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /section heading -->
+
+              <!-- section content -->
+              <div class="service section__content row">
+                <div class="col-xs-12">
+                  <div id="serviceCarousel" class="owl-carousel overflow-hidden">
+                    <!-- service item -->
+                    <div class="service__item"
+                      data-animation-in="fadeInUp"
+                      data-animation-in-delay="600"
+                      data-animation-out="fadeOutDown"
+                      data-animation-out-delay="100">
+                      <div class="service__item__icon">
+                        <i class="ion-clock"></i>
+                      </div>
+                      <h3 class="service__item-title">Web Development</h3>
+                      <div class="hr"></div>
+                      <p>Phasellus fermentum turpis eget ex tincidunt pulvinar. Donec sed nisl risus. Proin in nulla sagittis lorem. Consequat arcu. Nam eget nisl ut arcu egestas venenatis.</p>
+                    </div>
+                    <!-- /service item -->
+                    <!-- service item -->
+                    <div class="service__item"
+                      data-animation-in="fadeInUp"
+                      data-animation-in-delay="700"
+                      data-animation-out="fadeOutDown"
+                      data-animation-out-delay="200">
+                      <div class="service__item__icon">
+                        <i class="ion-clipboard"></i>
+                      </div>
+                      <h3 class="service__item-title">Graphic Design</h3>
+                      <div class="hr"></div>
+                      <p>Phasellus fermentum turpis eget ex tincidunt pulvinar. Donec sed nisl risus. Proin in nulla sagittis lorem. Consequat arcu. Nam eget nisl ut arcu egestas venenatis.</p>
+                    </div>
+                    <!-- /service item -->
+                    <!-- service item -->
+                    <div class="service__item"
+                      data-animation-in="fadeInUp"
+                      data-animation-in-delay="800"
+                      data-animation-out="fadeOutDown"
+                      data-animation-out-delay="300">
+                      <div class="service__item__icon">
+                        <i class="ion-soup-can-outline"></i>
+                      </div>
+                      <h3 class="service__item-title">Branding</h3>
+                      <div class="hr"></div>
+                      <p>Phasellus fermentum turpis eget ex tincidunt pulvinar. Donec sed nisl risus. Proin in nulla sagittis lorem. Consequat arcu. Nam eget nisl ut arcu egestas venenatis.</p>
+                    </div>
+                    <!-- /service item -->
+                    <!-- service item -->
+                    <div class="service__item"
+                      data-animation-in="fadeInUp"
+                      data-animation-in-delay="900"
+                      data-animation-out="fadeOutDown"
+                      data-animation-out-delay="400">
+                      <div class="service__item__icon">
+                        <i class="ion-radio-waves"></i>
+                      </div>
+                      <h3 class="service__item-title">Marketing</h3>
+                      <div class="hr"></div>
+                      <p>Phasellus fermentum turpis eget ex tincidunt pulvinar. Donec sed nisl risus. Proin in nulla sagittis lorem. Consequat arcu. Nam eget nisl ut arcu egestas venenatis.</p>
+                    </div>
+                    <!-- /service item -->
+                  </div>
+                  <!-- carousel control -->
+                  <div class="service__carousel-control"
+                    data-animation-in="fadeInUp"
+                    data-animation-in-delay="900"
+                    data-animation-out="fadeOutDown"
+                    data-animation-out-delay="100">
+                  </div>
+                  <!-- /carousel control -->
+                </div>
+              </div>
+              <!-- /section content -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /service -->
+
+      <!-- contact -->
+      <div id="contact" class="section">
+        <div class="section__table">
+          <div class="section__cell">
+            <div class="container">
+              <!-- section heading -->
+              <div class="section__heading row">
+                <div class="col-xs-12 col-sm-5">
+                  <div class="overflow-hidden">
+                    <div class="animation-item"
+                      data-animation-in="fadeInUp2"
+                      data-animation-in-delay="300"
+                      data-animation-out="fadeOutDown2"
+                      data-animation-out-delay="600">
+                      <h2 class="section__title">
+                       Get <span class="color">in</span> touch
+                      </h2>
+                      <div class="hr"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-sm-offset-1">
+                  <div class="overflow-hidden">
+                    <div class="animation-item"
+                      data-animation-in="fadeInUp2"
+                      data-animation-in-delay="300"
+                      data-animation-out="fadeOutDown2"
+                      data-animation-out-delay="400">
+                      <p class="section__caption">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in scelerisque nisi, a convallis nibh. Etiam posuere faucibus.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /section heading -->
+
+              <!-- section content -->
+              <div class="section__content row">
+                <div class="col-xs-12 col-sm-5 col-md-4">
+                  <!-- contact info -->
+                  <div class="contact-info overflow-hidden">
+                    <div class="animation-item"
+                    data-animation-in="fadeInLeft"
+                    data-animation-in-delay="700"
+                    data-animation-out="fadeOutLeft"
+                    data-animation-out-delay="100">
+                      <div class="contact-info__item">
+                        <i class="ion-ipad"></i>
+                        <h3>Phone number</h3>
+                        <p>(Tel) 123-456-7890</p>
+                      </div>
+                      <div class="contact-info__item">
+                        <i class="ion-paper-airplane"></i>
+                        <h3>Email address</h3>
+                        <p>Email 1: email_1@example.com</p>
+                      </div>
+                      <div class="contact-info__item">
+                        <i class="ion-map"></i>
+                        <h3>Location</h3>
+                          <p>
+                            631 Main Street Cottage, Long Branch, P.O Box 55016
+                          </p>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /contact info -->
+                </div>
+                <div class="col-xs-12 col-sm-6 col-sm-offset-1 col-md-offset-2">
+                  <!-- contact form -->
+                  <div class="overflow-hidden">
+                    <div class="animation-item"
+                    data-animation-in="fadeInRight"
+                    data-animation-in-delay="700"
+                    data-animation-out="fadeOutRight"
+                    data-animation-out-delay="100">
+                      <form class="form-theme" id="formContact" novalidate="novalidate">
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="form-group required">
+                              <label class="form-label" for="contactName">Name</label>
+                              <input class="form-control" id="contactName" type="text" name="name">
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group required">
+                              <label class="form-label" for="contactEmail">Email</label>
+                              <input class="form-control" id="contactEmail" type="text" name="email">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group required">
+                          <label class="form-label" for="contactMessage">Message</label>
+                          <textarea class="form-control" id="contactMessage" rows="4" name="message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-theme _circle _icon">
+                          <i class="ion-forward"></i>
+                          Send Message
+                        </button>
+                        <div class="form-notify"></div>
+                      </form>
+                    </div>
+                  </div>
+                  <!-- contact form -->
+                </div>
+              </div>
+              <!-- /section content -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /portfolio-->
+    </main>
+    <!-- /site main -->
+    <!--[[main end]]-->
+    <!--[[footer start]]-->
+    <!-- site footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="site-footer__inner">
+              <!-- copyright -->
+              <p class="site-footer__copyright">
+                2015 @ <a href="#" target="_blank">Bonefishcode</a> | All rights Reserved.
+              </p>
+              <!-- /copyright -->
+              <!-- social -->
+              <ul class="site-footer__social">
+                <li><a href="https://www.facebook.com/" target="_blank">Facebook</a></li>
+                <li><a href="https://twitter.com/" target="_blank">Twitter</a></li>
+                <li><a href="https://instagram.com/" target="_blank">Instagram</a></li>
+                <li><a href="https://www.linkedin.com/" target="_blank">LinkedIn</a></li>
+                <li><a href="https://www.pinterest.com/" target="_blank">Pinterest</a></li>
+              </ul>
+              <!-- /social -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- /site footer -->
+    <!--[[footer end]]-->
+  </div>
+  <!-- /site wrap -->
+
+
+  <!--[[foot start]]-->
+  <!-- script -->
+  <script src="assets/js/vendor/jquery-2.1.4.min.js"></script>
+  <script src='assets/js/vendor/bootstrap.min.js'></script>
+  <script src='assets/js/vendor/plugin.js'></script>
+  <script src='assets/js/variable.js'></script>
+  <script src='assets/js/main.js'></script>
+  <!-- /script -->
+  <!--[[foot end]]-->
+</body>
+</html>

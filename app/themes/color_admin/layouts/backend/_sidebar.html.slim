@@ -43,8 +43,8 @@
         ul.sub-menu
           li.active
             = link_to '产品列表', admin_products_path
-      li class=("has-sub #{'active' if controller_path == 'admin/sites'}") 
-        a href="javascript:;" 
+      li class=("has-sub #{'active' if controller_path == 'admin/sites'}")
+        a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
           span Site管理
@@ -54,6 +54,8 @@
       li
         = link_to admin_page_path('home') do
           = fa_icon 'leaf', text: '开发手册'
+        = link_to cms_sites_path do
+          = fa_icon 'file-text', text: 'CMS系统'
       li
         = link_to sign_out_path, method: :delete do
           = fa_icon 'sign-out', text: '退出系统'
