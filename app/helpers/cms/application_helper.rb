@@ -36,15 +36,16 @@ module Cms::ApplicationHelper
   end
 
   #use for Frontpage: get production frontpage path
-  def get_url(obj)
-    if obj.class == Cms::Page
-      "/cms_#{obj.channel.site.id}/#{obj.channel.short_title}/#{obj.id}"
-    elsif obj.class == Cms::Channel
-      "/cms_#{obj.site.id}/#{obj.short_title}"
-    elsif obj.class == Cms::Site
-      "/cms_#{obj.id}/"
+  def get_cms_url(obj, params = {})
+    case obj
+    when Cms::Page
+      cms_frontend_page_path(obj.site.beauty_url, obj.channel.beauty_url, obj.beauty_url, params)
+    when Cms::Channel
+      cms_frontend_channel_path(obj.site.beauty_url, obj.beauty_url, params)
+    when Cms::Site
+      cms_frontend_root_path(obj.beauty_url, params)
     else
-      "/"
+      root_path(params)
     end
   end
 

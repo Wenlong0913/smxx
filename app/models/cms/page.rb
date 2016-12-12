@@ -1,11 +1,24 @@
 class Cms::Page < ApplicationRecord
   belongs_to :channel
+  has_one :site, through: :channel
   default_scope {order('updated_at DESC')}
-  before_create :create_unique_short_title
+  before_validation :create_unique_short_title
   validates :channel, :title, :content, presence: true
   # validates :short_title, format: { with: /\A[a-zA-Z0-9-]+\z/,
   #   message: "名称简写只能包括字母数字和横线" }
   validates_uniqueness_of :short_title
+
+  #最近新闻
+  #eg: Cms::Page.recent(12, :rand => true)
+  #    Cms::Page.recent(10, :channel => 'product-bed')
+  scope :recent, ->(count = 10, options = {}) {
+    assoc = reorder("updated_at DESC").limit(count)
+    if options[:channel].present?
+      assoc = assoc.joins(:channel).where(cms_channels: { short_title: options[:channel] })
+    end
+    assoc
+  }
+  scope :search, ->(q) { where('title LIKE ?', "%#{q}%") }
 
   def format_date
     self.updated_at.strftime("%Y-%m-%d") unless self.updated_at.nil?
@@ -23,41 +36,32 @@ class Cms::Page < ApplicationRecord
     image_path.blank? ? 'http://placehold.it/250x150' : image_path
   end
 
-  #最近新闻
-  #eg: Cms::Page.recent(12, :rand => true)
-  #    Cms::Page.recent(10, :channel => 'product-bed', :properties => '1')
-  def self.recent(count = 10, options = {})
-    queries     = []
-    conditions  = []
-    if options[:channel].present?
-      queries     << 'cms_channels.short_title in (?)'
-      conditions  << options[:channel]
-    end
-    # if options[:properties].present?
-    #   queries     << 'admin_pages.properties regexp ?'
-    #   conditions  << options[:properties]
-    # end
-    conditions.unshift(queries.join(' AND '))
-    return Cms::Page.joins(:channel).where(conditions).order("updated_at DESC").limit(count)
+  def to_param
+    "#{id}-#{short_title.parameterize}"
   end
 
-  #搜索
-  def self.search(search)
-    if search
-      where('title LIKE ?', "%#{search}%")
-    else
-      all
-    end
+  def beauty_url
+    @beauty_url = true
+    self
+  end
+
+  def to_param
+    @beauty_url ? "#{id}-#{short_title.parameterize}" : id.to_s
   end
 
   private
   def create_unique_short_title
-    short_title = Pinyin.t(title).gsub(/(-|\s+)/, '-').gsub(/[^\w-]/, '')
-    short_title = short_title.to_s.squeeze('-')[0..10].gsub(/\W+$/, '')
-    while Cms::Page.joins(:channel).where("cms_channels.site_id = ? AND cms_pages.short_title = ?", channel.site_id, short_title).any? do
-      short_title += (1..100).to_a.sample.to_s
+    return if short_title.present?
+    s_title = Pinyin.t(title).parameterize[0..50]
+    suffix = nil
+    loop do
+      self.short_title = "#{s_title}#{suffix}"
+      query = channel.pages.where(short_title: short_title)
+      query = query.where("id != ?", id) if self.persisted?
+      break unless query.exists?
+      suffix ||= '-'
+      suffix += ('a'..'z').to_a.sample
     end
-    self.short_title = short_title
   end
 
 end

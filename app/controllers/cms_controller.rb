@@ -1,60 +1,46 @@
 class CmsController < ApplicationController
   layout 'cms'
   helper Cms::ApplicationHelper
+  include Cms::ApplicationHelper
   before_action :set_site
 
-  #{"controller"=>"welcome", "action"=>"index", "channel"=>"fw", "id"=>"2", "tag" => "tagkey"}
-  #params
-  # :channel => channel.short_title
-  # :id      => page.id
-  # :tag     => tag
-  # :title => 自定义标题
-  #rules:
-  # 1. a URL query must has channel except root
-  # 2. If has page, the channel is page.channel, not care the params
   def index
-    if params[:id]
-      @page = Cms::Page.find_by(id: params[:id])
-    end
-    @channel = @page.channel if @page
+    @channel = @site.channels.first
+  end
 
-    #short_title use for frontpage cache
-    @channel ||= Cms::Channel.find_by(short_title: params[:channel])
-    #channel id is not cached, use to previous
-    @channel ||= Cms::Channel.find_by(id: params[:channel])
-
-    #root index.html has no params
-    @channel ||= Cms::Channel.first
-
-    not_found if @channel.nil?
-    not_found if params[:id] && @page.nil?
-
-    if params[:search]
-      @pages = Cms::Page.search(params[:search]).order("updated_at DESC").page(params[:page])
-    #tag
-    elsif params[:tag]
-      @pages = Cms::Page.tagged_with(params[:tag]).order("updated_at DESC").page(params[:page])
+  def channel
+    @channel ||= @site.channels.find_by(short_title: params[:channel])
+    @channel ||= @site.channels.find_by(id: params[:channel])
+    @channel || not_found
+    @channel
+    @pages = @channel.pages.page(params[:page])
+    if request.path != good_path=get_cms_url(@channel, page: params[:page])
+      redirect_to good_path
     else
-      @pages = Cms::Page.joins(:channel).where(["cms_channels.id = ? OR cms_channels.parent_id = ?", @channel.id, @channel.id]).order("cms_pages.updated_at DESC").page(params[:page])
+      render :index
     end
+  end
 
-    #统一访问路径，使URL呈唯一性
-    if @page
-      if request.path != "/cms_#{@site.id}/#{@channel.short_title}/#{@page.id}"
-        redirect_to "/cms_#{@site.id}/#{@channel.short_title}/#{@page.id}" and return
-      end
+  def page
+    @page = @site.pages.find(params[:id])
+    @channel = @page.channel
+    if @page && request.path != good_path=get_cms_url(@page)
+      redirect_to good_path
+    else
+      render :index
     end
   end
 
   def search
-    @pages = Cms::Page.search(params[:search]).order("updated_at DESC").page(params[:page])
-    @channel ||= Cms::Channel.first
-
-    #pretty URL
     if params[:utf8]
-      redirect_to URI.escape "/cms_#{@site.id}/search/#{params[:search]}"
+      redirect_to cms_frontend_search_path(site: @site, q: URI.escape(params[:q]))
+    else
+      @pages = @site.pages.search(params[:q]).order("updated_at DESC").page(params[:page])
+      @channel ||= @site.channels.first
     end
   end
+
+  private
 
   private
     def set_site

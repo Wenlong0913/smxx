@@ -11,4 +11,13 @@ class Cms::Channel < ApplicationRecord
   validates_uniqueness_of :short_title
   validates :short_title, format: { with: /\A[a-zA-Z0-9-]+\z/,
     message: "名称简写只能包括字母数字和横线" }
+
+  def beauty_url
+    @beauty_url = true
+    self
+  end
+
+  def to_param
+    @beauty_url ? "#{short_title.parameterize}" : id.to_s
+  end
 end
