@@ -1,0 +1,51 @@
+<%= render file: 'public/templetes/default/_nav' %>
+
+<!-- site wrap -->
+<div class="site-wrap">
+  <%= render file: 'public/templetes/default/_header.html' %>
+
+  <!--[[main start]]-->
+  <!-- site main -->
+  <main class="site-main">
+    <!-- home -->
+    <div id="home" class="section is-active">
+      <div class="section__table">
+        <div class="section__cell">
+          <div class="container-fluid max-width">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="overflow-hidden">
+                  <div class="animation-item"
+                  data-animation-in="fadeInUp2"
+                  data-animation-in-delay="300"
+                  data-animation-out="fadeOutDown2"
+                  data-animation-out-delay="700">
+                    <h1 class="section__title">
+                      <%= @page.title %>
+                    </h1>
+                    <p class="section__caption"><%= @page.description %></p>
+                  </div>
+                </div>
+                <div class="overflow-hidden">
+                  <div class="animation-item"
+                  data-animation-in="fadeInDown"
+                  data-animation-in-delay="900"
+                  data-animation-out="fadeOutDown"
+                  data-animation-out-delay="300">
+                    <%= raw @page.content %>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /home -->
+  </main>
+  <!-- /site main -->
+  <%= render file: 'public/templetes/default/_footer.html' %>
+</div>
+<!-- /site wrap -->

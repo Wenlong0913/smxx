@@ -1,9 +1,15 @@
 class ApplicationController < ActionController::Base
+  helper FontAwesome::Rails::IconHelper
   include Pundit
   include QueryFilterControllerConcern
   protect_from_forgery with: :exception
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   impersonates :user
+
+  #render 404 error
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
+  end
 
   private
   def user_not_authorized

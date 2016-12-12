@@ -7,31 +7,32 @@ class ApplicationPolicy
   end
 
   def index?
-    user.has_role?(:admin)
+    user.super_admin_or_admin?
+    # record.is_a?(ActiveRecord::Associations::HasManyAssociation) && record.proxy_association.owner
   end
 
   def show?
-    user.has_role?(:admin) && scope.where(:id => record.id).exists?
+    user.super_admin_or_admin? && scope.where(:id => record.id).exists?
   end
 
   def create?
-    user.has_role?(:admin)
+    user.super_admin_or_admin?
   end
 
   def new?
-    create?
+    user.super_admin_or_admin?
   end
 
   def update?
-    user.has_role?(:admin)
+    user.super_admin_or_admin?
   end
 
   def edit?
-    update?
+    user.super_admin_or_admin?
   end
 
   def destroy?
-    user.has_role?(:admin)
+    user.super_admin_or_admin?
   end
 
   def permitted_attributes_for_create

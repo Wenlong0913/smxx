@@ -54,6 +54,12 @@ gem 'client_side_validations-simple_form',
 
 gem 'pretender' # 模仿另一个用户登录
 
+gem 'ckeditor', '~> 4.2'
+
+#File upload
+gem 'paperclip'
+gem 'paperclip-qiniu'
+
 # In Rails 5, active_model/serializers/xml has been extracted into its own gem.
 #   So, a quick solution is to add the activemodel-serializers-xml gem to your Gemfile
 #   https://github.com/drapergem/draper/issues/697
@@ -71,6 +77,8 @@ gem 'rails-i18n', '~> 5.0.0'
 gem 'rails-i18n-generator'
 
 gem 'chinese_pinyin'
+#used in CMS: public/templetes/generate_templetes.rb
+gem 'iconv', '~> 1.0', '>= 1.0.4'
 
 #weixin
 gem "weixin_rails_middleware", '~> 1.3', '>= 1.3.1'

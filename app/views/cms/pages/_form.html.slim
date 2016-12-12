@@ -1,0 +1,29 @@
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+  .panel-body
+    = simple_form_for [@cms_site, @cms_channel, @cms_page], url: @cms_page.new_record? ? cms_site_channel_pages_path(@cms_site, @cms_channel) : cms_site_channel_page_path(@cms_site, @cms_channel, @cms_page), validate: true do |f|
+      - if @cms_page.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@cms_page.errors.count, "error")} prohibited this cms_page from being saved:"
+          ul
+            - @cms_page.errors.full_messages.each do |message|
+              li = message
+
+      = f.association :channel, selected: @cms_channel.id, label: '所属栏目'
+      .row
+        .col-md-6
+          = f.input :title, placeholder: '美好切题的标题能使文章的关注度大放异彩'
+          - unless @cms_page.new_record?
+            = f.input :short_title, label: '名称简写(不填则程序自动生成)', placeholder: '请用全英文，用于生成可读的URL链接'
+          = f.input :image_path, placeholder: '网页预览图片路径，如产品图片等'
+        .col-md-6
+          = f.input :keywords, placeholder: '关键词用逗号隔开'
+          = f.input :description, placeholder: '文章摘要，用于SEO描述'
+
+      = f.input :content, as: :ckeditor, input_html: { ckeditor: {toolbar: 'custom', height: '600px'}}
+      = f.submit class: 'btn btn-success btn-block'

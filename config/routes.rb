@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
-
   concern :paginatable do
     get '(page-:page)', :action => :index, :on => :collection, :as => ''
   end
+
+  Dir[Rails.root.join('config/routes/**/*_route.rb')].each { |f| require_dependency f }
+  extend CmsFrontendRoute
+  extend CmsBackendRoute
+
+  mount Ckeditor::Engine => '/ckeditor'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'home#index'

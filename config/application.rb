@@ -19,6 +19,7 @@ Bundler.require(*Rails.groups)
 module Tmf
   class Application < Rails::Application
     require 'settings'
+    config.action_controller.include_all_helpers = false
     generators do |app|
 
       require 'rails/generators/base'
