@@ -145,6 +145,13 @@ GEM
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     chinese_pinyin (1.0.1)
+    ckeditor (4.2.0)
+      cocaine
+      orm_adapter (~> 0.5.0)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.8)
+      climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.1)
     coffee-rails (4.2.1)
       coffee-script (>= 2.2.0)
@@ -219,6 +226,7 @@ GEM
       domain_name (~> 0.5)
     http_parser.rb (0.6.0)
     i18n (0.7.0)
+    iconv (1.0.4)
     jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -279,6 +287,15 @@ GEM
       omniauth (~> 1.0)
       omniauth-oauth2 (~> 1.0)
     orm_adapter (0.5.0)
+    paperclip (5.1.0)
+      activemodel (>= 4.2.0)
+      activesupport (>= 4.2.0)
+      cocaine (~> 0.5.5)
+      mime-types
+      mimemagic (~> 0.3.0)
+    paperclip-qiniu (0.0.2)
+      paperclip
+      qiniu-rs
     pg (0.19.0)
     pretender (0.2.1)
       actionpack
@@ -292,6 +309,10 @@ GEM
     puma (3.6.2)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
+    qiniu-rs (1.1.0)
+      json
+      mime-types
+      rest-client
     rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -466,6 +487,7 @@ DEPENDENCIES
   byebug
   capybara
   chinese_pinyin
+  ckeditor (~> 4.2)
   client_side_validations!
   client_side_validations-simple_form!
   coffee-rails (~> 4.2)
@@ -479,6 +501,7 @@ DEPENDENCIES
   guard-livereload
   guard-rails
   guard-rspec
+  iconv (~> 1.0, >= 1.0.4)
   jbuilder (~> 2.5)
   jquery-rails
   jwt (~> 1.5.6)
@@ -486,6 +509,8 @@ DEPENDENCIES
   kaminari-i18n (~> 0.4.0)
   listen (~> 3.0.5)
   omniauth-wechat-oauth2 (~> 0.1.0)
+  paperclip
+  paperclip-qiniu
   pg (~> 0.18)
   pretender
   pry-rails

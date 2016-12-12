@@ -54,7 +54,7 @@ gem 'client_side_validations-simple_form',
 
 gem 'pretender' # 模仿另一个用户登录
 
-gem 'ckeditor', github: 'galetahub/ckeditor'
+gem 'ckeditor', '~> 4.2'
 
 #File upload
 gem 'paperclip'

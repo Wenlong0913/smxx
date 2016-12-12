@@ -31,7 +31,7 @@ class Cms::ChannelsController < Admin::BaseController
 
   def create
     authorize Cms::Channel
-    @cms_channel = Cms::Channel.new(permitted_attributes(Cms::Channel))
+    @cms_channel = @cms_site.channels.new(permitted_attributes(Cms::Channel))
 
     respond_to do |format|
       format.html do

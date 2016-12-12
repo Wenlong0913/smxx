@@ -1,5 +1,6 @@
 class CmsController < ApplicationController
   layout 'cms'
+  helper Cms::ApplicationHelper
   before_action :set_site
 
   #{"controller"=>"welcome", "action"=>"index", "channel"=>"fw", "id"=>"2", "tag" => "tagkey"}

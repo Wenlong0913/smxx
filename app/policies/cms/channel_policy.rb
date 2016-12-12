@@ -6,8 +6,8 @@ class Cms::ChannelPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    if user.has_role? :admin
-      [:site_id, :parent_id, :title, :short_title, :properties, :tmp_index, :tmp_detail, :keywords, :description, :image_path, :content]
+    if user.super_admin_or_admin?
+      [:parent_id, :title, :short_title, :properties, :tmp_index, :tmp_detail, :keywords, :description, :image_path, :content]
     else
       []
     end
