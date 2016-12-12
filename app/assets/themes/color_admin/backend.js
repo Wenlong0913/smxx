@@ -10,9 +10,13 @@
 //= require color_admin/plugins/jquery-cookie/jquery.cookie
 //= require color_admin/plugins/d3/d3
 //= require color_admin/plugins/nvd3/build/nv.d3
+//= require vue/dist/vue
 //= require color_admin/js/apps
 //= require admin
 $(document).ready(function() {
+  $('.vue-container').each(function(index, ele){
+    new Vue({ el: ele})
+  });
   App.init();
 });
 

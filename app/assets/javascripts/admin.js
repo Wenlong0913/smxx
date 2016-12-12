@@ -12,5 +12,7 @@
 //
 //= require admin/sessions
 //= require tracker
+//= require slim.jquery.min
+//= require vue/upload_image_item
 // can't require tree
 // require_tree .
