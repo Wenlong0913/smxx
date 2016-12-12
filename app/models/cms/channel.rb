@@ -12,12 +12,20 @@ class Cms::Channel < ApplicationRecord
   validates :short_title, format: { with: /\A[a-zA-Z0-9-]+\z/,
     message: "名称简写只能包括字母数字和横线" }
 
+  before_validation :sanitize_short_title
+
   def beauty_url
     @beauty_url = true
     self
   end
 
   def to_param
-    @beauty_url ? "#{short_title.parameterize}" : id.to_s
+    @beauty_url ? short_title : id.to_s
+  end
+
+  private
+
+  def sanitize_short_title
+    self.short_title = short_title.parameterize unless short_title.nil?
   end
 end

@@ -2,6 +2,7 @@ class Cms::Page < ApplicationRecord
   belongs_to :channel
   has_one :site, through: :channel
   default_scope {order('updated_at DESC')}
+  before_validation :sanitize_short_title
   before_validation :create_unique_short_title
   validates :channel, :title, :content, presence: true
   # validates :short_title, format: { with: /\A[a-zA-Z0-9-]+\z/,
@@ -46,10 +47,15 @@ class Cms::Page < ApplicationRecord
   end
 
   def to_param
-    @beauty_url ? "#{id}-#{short_title.parameterize}" : id.to_s
+    @beauty_url ? "#{id}-#{short_title}" : id.to_s
   end
 
   private
+
+  def sanitize_short_title
+    self.short_title = short_title.parameterize unless short_title.nil?
+  end
+
   def create_unique_short_title
     return if short_title.present?
     s_title = Pinyin.t(title).parameterize[0..50]
