@@ -4,7 +4,7 @@ before_action :set_cms_site_and_channel
 
   def index
     authorize Cms::Page
-    @cms_pages = Cms::Page.all
+    @cms_pages = @cms_channel.pages.page(params[:page])
     respond_to do |format|
       format.html
       format.json { render json: @cms_pages }
@@ -30,7 +30,7 @@ before_action :set_cms_site_and_channel
 
   def create
     authorize Cms::Page
-    @cms_page = Cms::Page.new(permitted_attributes(Cms::Page))
+    @cms_page = @cms_channel.pages.new(permitted_attributes(Cms::Page))
 
     respond_to do |format|
       format.html do

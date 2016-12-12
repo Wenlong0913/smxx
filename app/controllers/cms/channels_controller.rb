@@ -4,7 +4,7 @@ class Cms::ChannelsController < Admin::BaseController
 
   def index
     authorize Cms::Channel
-    @cms_channels = Cms::Channel.all
+    @cms_channels = @site.channels.page(params[:page])
     respond_to do |format|
       format.html
       format.json { render json: @cms_channels }
