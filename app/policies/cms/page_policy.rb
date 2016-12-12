@@ -6,7 +6,7 @@ class Cms::PagePolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    if user.has_role? :admin
+    if user.super_admin_or_admin?
       [:channel_id, :title, :short_title, :properties, :keywords, :description, :image_path, :content]
     else
       []
