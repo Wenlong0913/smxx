@@ -1,5 +1,5 @@
-class Cms::PagesController < Admin::BaseController
-before_action :set_cms_site_and_channel
+class Cms::PagesController < Cms::BaseController
+  before_action :set_cms_site_and_channel
   before_action :set_cms_page, only: [:show, :edit, :update, :destroy]
 
   def index

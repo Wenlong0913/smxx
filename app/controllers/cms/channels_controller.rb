@@ -1,4 +1,4 @@
-class Cms::ChannelsController < Admin::BaseController
+class Cms::ChannelsController < Cms::BaseController
   before_action :set_cms_site
   before_action :set_cms_channel, only: [:show, :edit, :update, :destroy]
 
