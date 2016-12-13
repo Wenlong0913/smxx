@@ -9,7 +9,7 @@ RSpec.describe ImageItem, type: :model do
   end
 
   it do
-    expect(described_class.attribute_names).to match_array(%w(id  updated_at created_at))
+    expect(described_class.attribute_names).to match_array(%w(id owner name file_size width height data updated_at created_at))
   end
 
   # it { should have_many(:xxx) }

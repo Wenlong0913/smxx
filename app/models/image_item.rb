@@ -1,3 +1,4 @@
-class ImageItem < Item  
-  store_accessor :features, :description, :image_url, :image_data
+class ImageItem < ApplicationRecord
+  belongs_to :owner, polymorphic: true
+  validates_presence_of :owner, :data
 end

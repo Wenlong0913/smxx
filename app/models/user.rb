@@ -29,6 +29,7 @@ class User < ApplicationRecord
   audited
   has_one :mobile, dependent: :destroy
   has_one :weixin, dependent: :destroy
+  has_many :image_items, dependent: :destroy, as: :owner
   attr_accessor :mobile_phone
   validates_presence_of :mobile_phone, if: ->{ mobile.nil? }
 

@@ -17,6 +17,12 @@ class ImageItemsController < ApplicationController
 
   def create
     data = image_item_params
+    if params[:site_id]
+      @site = Site.find(@site)
+      authorize @site, :edit
+    else
+      authorize ImageItem
+    end
     flag, @image_item =
       if data[:id]
         ImageItem::Update.(data[:id], data, current_user)
@@ -28,6 +34,10 @@ class ImageItemsController < ApplicationController
     else
       head 403
     end
+  end
+
+  def destroy
+    raise '需要实现这个功能'
   end
 
   private
