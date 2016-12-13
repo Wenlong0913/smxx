@@ -4,7 +4,20 @@ class Admin::CatalogsController < Admin::BaseController
   # GET /admin/catalogs
   def index
     authorize Catalog
-    @admin_catalogs = Catalog.all.order(updated_at: :desc)
+    @admin_catalogs =
+      if params[:id].present?
+        Catalog.where(id: params[:id]).first.try{children}
+      elsif params[:status].present?
+        Catalog.all
+      else
+        Catalog.roots
+      end
+    array = {parent_id: params[:id]}
+    array[:record] = @admin_catalogs.order(updated_at: :desc).map{|catalog| {id: catalog.id, name: catalog.name}}
+    respond_to do |format|
+      format.html
+      format.json {render json: array}
+    end
   end
 
   # GET /admin/catalogs/1
@@ -27,21 +40,21 @@ class Admin::CatalogsController < Admin::BaseController
   def create
     authorize Catalog
     @admin_catalog = Catalog.new(admin_catalog_params)
-
     if @admin_catalog.save
-      redirect_to admin_catalog_path(@admin_catalog), notice: 'Catalog 创建成功.'
+      render json: {status: 'Catalog 创建成功.'}
     else
-      render :new
+      render json: {status: 'Catalog 创建失败.'}
     end
   end
 
   # PATCH/PUT /admin/catalogs/1
   def update
     authorize @admin_catalog
+    binding.pry
     if @admin_catalog.update(admin_catalog_params)
-      redirect_to admin_catalog_path(@admin_catalog), notice: 'Catalog 更新成功.'
+      render json: {status: 'Catalog 更新成功.'}
     else
-      render :edit
+      render json: {status: 'Catalog 更新失败.'}
     end
   end
 
@@ -49,7 +62,7 @@ class Admin::CatalogsController < Admin::BaseController
   def destroy
     authorize @admin_catalog
     @admin_catalog.destroy
-    redirect_to admin_catalogs_url, notice: 'Catalog 删除成功.'
+    render js: "$.gritter.add({title: '提示', text: 'Catalog 删除成功.'});"
   end
 
   private
@@ -60,6 +73,6 @@ class Admin::CatalogsController < Admin::BaseController
 
     # Only allow a trusted parameter "white list" through.
     def admin_catalog_params
-      params.require(:catalog).permit(:parent_id, :name, :position)
+      params.permit(:parent_id, :name, :position)
     end
 end

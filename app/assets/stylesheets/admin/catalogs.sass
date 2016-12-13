@@ -13,6 +13,7 @@ body.admin-catalogs.index
         margin-right: 10px
         background: #fff
         padding: 0px
+        box-shadow: 0px 0px 5px 0px #c0c7c9
         .search
           border: 1px solid #ccc
           .input-group-addon
@@ -27,9 +28,19 @@ body.admin-catalogs.index
           border: 1px solid #ccc
           border-top: none
           overflow: auto
+          position: relative
+          .loading-animation
+            width: 80px
+            height: 80px
+            position: absolute
+            left: 110px
+            top: 120px
+            color: #868686
+            i.fa-spinner
+              animation: rotation 1s linear infinite
           ul.list-unstyled
             .active
-              background: #cecece
+              background: #d7dde0
             li
               height: 35px
               line-height: 35px
@@ -58,5 +69,12 @@ body.admin-catalogs.index
           line-height: 30px
           border: 1px solid #ccc
           border-top: none
+          .btn-link
+            cursor: pointer
           // span
           //   padding: 0 10px
+  // .modal
+  span.select2
+    width: 100% !important
+    // .select2-selection__rendered
+        // padding-left: 0px !important
