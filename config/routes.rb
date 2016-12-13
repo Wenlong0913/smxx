@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
-  post 'image_items', to: 'image_items#create'
+  # image upload
+  resources :image_items, only: [:index, :create]
 
   concern :paginatable do
     get '(page-:page)', :action => :index, :on => :collection, :as => ''

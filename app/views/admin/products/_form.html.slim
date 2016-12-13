@@ -6,7 +6,7 @@
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
     h4 admin_product
-  .panel-body.vue-container
+  .panel-body[rel='vue']
     = simple_form_for @admin_product, url: @admin_product.new_record? ? admin_products_path : admin_product_path(@admin_product) do |f|
       - if @admin_product.errors.any?
         #error_explanation
@@ -19,5 +19,5 @@
       = f.input :price
       = f.input :description
       .form-group
-        image-upload[auto-upload="true" name="products[image_items][]" server="#{upload_image_items_path}"]
+        image-upload[auto-upload="true" name="products[image_items][]" server="#{image_items_path}"]
       = f.submit class: 'btn btn-success btn-block'

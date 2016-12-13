@@ -1,6 +1,6 @@
 /*
+*= require slim-image-cropper/slim
 *= require admin/sessions
 *= require tracker
-*= require slim.min
 *= require_self
 */
