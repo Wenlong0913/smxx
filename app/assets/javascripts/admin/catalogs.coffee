@@ -121,6 +121,7 @@ $(document).ready ->
           setScrollWidth()
           removeData($(event.target).parents('li.column'))
         openModal: (caseStatus, editId, parentId, name)->
+          self = this
           getCatalogList()
           if caseStatus == 'new'
             this.modalFormStatus.title = "创建目录"
@@ -133,9 +134,9 @@ $(document).ready ->
             this.modalFormStatus.url = url+"/"+editId
             this.modalFormStatus.value.name = name
           this.modalFormStatus.message = ''
-          this.modalFormStatus.value.parent_id = parentId
-          console.log this.modalFormStatus.title
-          console.log this.modalFormStatus.url
+          setTimeout ->
+            self.modalFormStatus.value.parent_id = parentId
+          ,500
         toUpdate: ->
           app._data.modalFormStatus.updateStatus = true
           app._data.modalFormStatus.message = '信息保存中'

@@ -1,1 +1,0 @@
-json.partial! "admin_catalogs/admin_catalog", admin_catalog: @admin_catalog

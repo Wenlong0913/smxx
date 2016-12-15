@@ -1,5 +1,5 @@
 class Admin::CatalogsController < Admin::BaseController
-  before_action :set_admin_catalog, only: [:show, :edit, :update, :destroy]
+  before_action :set_admin_catalog, only: [:edit, :update, :destroy]
 
   # GET /admin/catalogs
   def index

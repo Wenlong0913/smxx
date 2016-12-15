@@ -1,7 +1,5 @@
 h1.m-t-0
   | 目录管理
-  .pull-right
-    = link_to '新建 Catalog', new_admin_catalog_path, class: 'btn btn-primary'
 .panel.catalogs[data-url==admin_catalogs_url]
   .panel-heading
     .panel-heading-btn
@@ -18,7 +16,7 @@ h1.m-t-0
     .well.well-sm.table-responsive
       ol.list-inline
         / templete
-        li.black-classify[v-for="catalog,catalogsIndex in catalogs" v-bind:data-parent-id="catalog.parent_id"]
+        li.black-classify[v-for="catalog,catalogsIndex in catalogs"]
           .search
             .input-group
               input.form-control[placeholder='searching this list....' v-model= "catalog.searchText"]
@@ -72,8 +70,6 @@ h1.m-t-0
               label.col-sm-2.control-label 名称
               .col-sm-10
                 input.form-control[type="text" placeholder="输入名称" v-model= "modalFormStatus.value.name"]
-            .form-grop
-              | parent_id: {{ modalFormStatus.value.parent_id }} name: {{ modalFormStatus.value.name }}
             .return_mess.text-right[v-bind:class=" modalFormStatus.updateStatus ? 'text-success' : 'text-danger'"]
               | {{ modalFormStatus.message}}
         .modal-footer
