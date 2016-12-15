@@ -10,6 +10,8 @@ html
       script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = javascript_include_tag *webpack_asset_paths('application')
     = csrf_meta_tags
   body[class=[controller_path.parameterize, action_name]]
-    = yield
+    div[rel="vue-app"]
+      = yield
