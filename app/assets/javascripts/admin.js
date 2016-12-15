@@ -11,7 +11,6 @@
 // about supported directives.
 //
 //= require admin/sessions
-//= require admin/vue-select2
 //= require admin/catalogs
 //= require tracker
 //= require rails.validations

@@ -78,18 +78,19 @@ $(document).ready ->
             name: ''
         catalogs:[
           {
-            record: [], parent_id: '',
+            record: []
+            parent_id: ''
+            searchText: ''
             loadingStatus:
               loading: true
               failed: false
               message: '数据加载中..'
           }
         ]
-      # mounted: ->
-      #   body.find('.modal').on "select2:select", ->
-      #     selectedId = $(".modal .select2").val()
-      #     app._data.modalFormStatus.value.parent_id = selectedId
       methods:
+        filterCatalog: (v)->
+          v.record.filter (i)->
+            i.name.indexOf(v.searchText) != -1
         mouseEnters: (event)->
           $(event.target).find('.col-xs-3').removeClass('hidden').addClass('show')
         mouseLeaves: (event)->
@@ -102,11 +103,12 @@ $(document).ready ->
           this.breadcrumb[index] = $(event.target).text()
           this.breadcrumb.splice(index+1, this.breadcrumb.length-1)
           if this.catalogs.length == index+1
-            this.catalogs.push({record: [], parent_id: '', alertTitle:[true, false, '数据加载中..']})
+            this.catalogs.push({record: [], parent_id: '', searchText: '', alertTitle:[true, false, '数据加载中..']})
           else if this.catalogs.length > index+1
             this.catalogs.splice(index+2, this.catalogs.length-1)
             this.catalogs[index+1].record = []
             this.catalogs[index+1].parent_id = ''
+            this.catalogs[index+1].searchText = ''
           this.catalogs[index+1].loadingStatus =
             loading: true
             failed: false
@@ -137,8 +139,7 @@ $(document).ready ->
         toUpdate: ->
           app._data.modalFormStatus.updateStatus = true
           app._data.modalFormStatus.message = '信息保存中'
-          selectedId = $('.modal .catalogsList select').val()
-          this.modalFormStatus.value.parent_id = selectedId
+          selectedId = this.modalFormStatus.value.parent_id
           $.ajax
             url: this.modalFormStatus.url
             type: this.modalFormStatus.type

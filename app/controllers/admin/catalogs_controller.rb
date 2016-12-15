@@ -50,7 +50,6 @@ class Admin::CatalogsController < Admin::BaseController
   # PATCH/PUT /admin/catalogs/1
   def update
     authorize @admin_catalog
-    binding.pry
     if @admin_catalog.update(admin_catalog_params)
       render json: {status: 'Catalog 更新成功.'}
     else

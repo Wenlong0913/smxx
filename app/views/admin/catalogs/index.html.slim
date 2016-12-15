@@ -2,7 +2,6 @@ h1.m-t-0
   | 目录管理
   .pull-right
     = link_to '新建 Catalog', new_admin_catalog_path, class: 'btn btn-primary'
-
 .panel.catalogs[data-url==admin_catalogs_url]
   .panel-heading
     .panel-heading-btn
@@ -22,14 +21,14 @@ h1.m-t-0
         li.black-classify[v-for="catalog,catalogsIndex in catalogs" v-bind:data-parent-id="catalog.parent_id"]
           .search
             .input-group
-              input.form-control[placeholder='searching this list....']
+              input.form-control[placeholder='searching this list....' v-model= "catalog.searchText"]
               span.input-group-addon
                 i.fa.fa-search
           .list-body.table-responsiev
             ul.list-unstyled
               / li templete
               transition-group[name='transition-list']
-                li.column[v-for="itm in catalog.record" v-bind:key="itm.id" v-bind:data-id="itm.id" v-on:mouseenter="mouseEnters($event)" v-on:mouseleave="mouseLeaves($event)"]
+                li.column[v-for="itm in filterCatalog(catalog)" v-bind:key="itm.id" v-bind:data-id="itm.id" v-on:mouseenter="mouseEnters($event)" v-on:mouseleave="mouseLeaves($event)"]
                   .col-xs-9[v-on:click="clickReplace($event)"]
                     i.fa.fa-circle.text-info.m-r-10.small
                     | {{itm.name}}
@@ -66,12 +65,9 @@ h1.m-t-0
             .form-group
               label.col-sm-2.control-label 上级目录
               .col-sm-10.catalogsList
-                select2[:options="catalogsAll"]
-                  option[value=''] &nbsp;
-                / select[ v-model="modalFormStatus.value.parent_id" width="100%"]
-                /   option[v-bind:value="catalog.id"]
-                /     | &nbsp;
-                    / | {{ catalog.name }}
+                select.form-control[v-model="modalFormStatus.value.parent_id"]
+                  option[v-for="option in catalogsAll" v-bind:value="option.id"]
+                    | {{ option.text }}
             .form-group
               label.col-sm-2.control-label 名称
               .col-sm-10
@@ -83,25 +79,3 @@ h1.m-t-0
         .modal-footer
           button.btn.btn-default[type="button" class="" data-dismiss="modal"] 取消
           button.btn.btn-primary[type="button" v-on:click="toUpdate()"] 更新
-
-
-    / .table-responsive
-    /   table.table.table-striped
-    /     thead
-    /       tr
-    /         th #
-    /         th Parent
-    /         th Name
-    /         th Position
-    /         th
-    /     tbody
-    /       - @admin_catalogs.each_with_index do |admin_catalog, index|
-    /         tr
-    /           td = index
-    /           td = admin_catalog.parent_id && Catalog.find(admin_catalog.parent_id).name
-    /           td = admin_catalog.name
-    /           td = admin_catalog.position
-    /           td
-    /             => link_to '查看', admin_catalog_path(admin_catalog), class: 'btn btn-xs btn-default'
-    /             => link_to '编辑', edit_admin_catalog_path(admin_catalog), class: 'btn btn-xs btn-default'
-    /             = link_to '删除', admin_catalog_path(admin_catalog), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'

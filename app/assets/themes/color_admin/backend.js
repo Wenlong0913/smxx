@@ -11,11 +11,7 @@
 //= require color_admin/plugins/d3/d3
 //= require color_admin/plugins/nvd3/build/nv.d3
 //= require color_admin/js/apps
-//= require select2
-//= require select2_locale_zh-CN
-//= require vue
 //= require admin
 $(document).ready(function() {
   App.init();
-  $.fn.modal.Constructor.prototype.enforceFocus = function () { }
 });
