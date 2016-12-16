@@ -11,6 +11,7 @@ html
     = javascript_include_tag *webpack_asset_paths('application')
     = stylesheet_link_tag    'color_admin/application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'color_admin/application', 'data-turbolinks-track' => true
+    = javascript_include_tag *webpack_asset_paths('application')
     = content_for(:head)
     = render 'layouts/backend/head'
     = csrf_meta_tags
