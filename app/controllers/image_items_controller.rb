@@ -12,13 +12,14 @@ class ImageItemsController < ApplicationController
         # current_user.image_items
         ImageItem.all
       end
-    if params[:tag_id]
-      @image_items = assoc.where(id: params[:tag_id]) 
+    if params[:tag]
+      @image_items = assoc.joins(:image_item_tags).where(image_item_tags: {name: params[:tag]}) 
     else
       @image_items = assoc
     end
-    # @image_items = assoc.page(params[:page]).order(updated_at: :desc)
-    render json: @image_items
+    @image_item_tags = ImageItemTag.select(:name).distinct.pluck(:name)
+    @image_items = @image_items.page(params[:page]).order(updated_at: :desc)
+    render json: {image_items: @image_items, tags: @image_item_tags}
   end
 
   def create

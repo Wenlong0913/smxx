@@ -5,33 +5,37 @@
           <a class="btn btn-default btn-xs active" @click="load_images()">
               所有
           </a>
-          <a v-for="tag in tagList"  class="btn btn-default btn-xs" @click="selected_tag(tag.id)">
-              {{tag.name}}
+          <a v-for="tag in tagList"  class="btn btn-default btn-xs" @click="selected_tag(tag)">
+              {{tag}}
           </a>
       </span>
     </div>
     <div id="gallery" class="gallery">
       <div class="row">
-        <div class="image col-sm-6 col-md-4" v-for="image in imageList">
-            <div class="image-inner">
-                <a :href="image.data.image" data-lightbox="gallery-group-1">
-                    <img :src="image.data.image" alt="" />
-                </a>
-                <p class="image-caption">
-                    {{image.name}}
-                </p>
-            </div>
-            <div class="image-info">
-                <h5 class="title">Lorem ipsum dolor sit amet</h5>
-                <div class="pull-right">
-                    <small>by</small> <a href="javascript:;">Sean Ngu</a>
-                </div>
-                <div class="desc">
-                    Nunc velit urna, aliquam at interdum sit amet, lacinia sit amet ligula. Quisque et erat eros. Aenean auctor metus in tortor placerat, non luctus justo blandit.
-                </div>
-                <p><button type="button" class="btn btn-primary btn-xs" :disabled="selectedList.indexOf(image.id) != -1" v-on:click="choose_image(image)">选择</button><button type="button" class="btn btn-danger btn-xs pull-right" v-on:click="delete_image(image.id)">删除</button></p>
-            </div>
-        </div>
+          <div class="image col-sm-6 col-md-4" v-for="image in imageList">
+              <div class="image-inner">
+                  <a href="javascript:;" data-lightbox="gallery-group-1">
+                      <img :src="image.data.image" alt="" />
+                  </a>
+                  <p class="image-caption">
+                      {{image.name}}
+                  </p>
+              </div>
+              <div class="image-info">
+                  <h5 class="title">Lorem ipsum dolor sit amet</h5>
+                  <div class="pull-right">
+                      <small>by</small> <a href="javascript:;">Sean Ngu</a>
+                  </div>
+                  <div class="desc">
+                      Nunc velit urna, aliquam at interdum sit amet, lacinia sit amet ligula. Quisque et erat eros. Aenean auctor metus in tortor placerat, non luctus justo blandit.
+                  </div>
+                  <p>
+                    <button type="button" class="btn btn-primary btn-xs" :disabled="selectedList.indexOf(image.id) != -1" @click="choose_image(image)">选择</button>
+                    <button type="button" class="btn btn-warning btn-xs">编辑</button>
+                    <button type="button" class="btn btn-danger btn-xs pull-right" v-on:click="delete_image(image.id)">删除</button>
+                  </p>
+              </div>
+          </div>
       </div>
     </div>
   </div>  
@@ -39,12 +43,11 @@
 
 <script>
   export default {
-    props: ['server', 'deleteServer'],
+    props: ['server', 'deleteServer', 'selectedList'],
     data () {
       return {
         imageList: [],
-        selectedList: [],
-        tagList: [{id: 1, name: '风景'}, {id: 2, name: '背景'}, {id: 3, name: '封面'}, {id: 4, name: '人物'}]        
+        tagList: []
       }
     },
     mounted() {
@@ -54,27 +57,28 @@
       load_images() {
         var vm = this
         vm.$http.get(vm.server).then((data) => {
-          vm.imageList = data.body;
+          vm.imageList = data.body.image_items;
+          vm.tagList = data.body.tags;
         }, (response) => {
             // error callback
         });
       },
-      selected_tag(id) {
+      selected_tag(name) {
         var vm = this
-        vm.$http.get(vm.server, {params: {tag_id: id}}).then((data) => {
-          vm.imageList = data.body
+        vm.$http.get(vm.server, {params: {tag: name}}).then((data) => {
+          vm.imageList = data.body.image_items;
         }, (response) => {
             // error callback
         });
       },
       choose_image(image) {
-        this.selectedList.push(image.id);
+        this.$emit('selected', image);
       },
       delete_image(id) {
         var vm = this;
         if(window.confirm('确定要删除吗?')){
           vm.$http.delete(this.deleteServer+'/'+id).then((data) => {
-            image_index = vm.get_image_index(id);
+            var image_index = vm.get_image_index(id);
             if(image_index != -1){
               vm.imageList.splice(image_index, 1)  
             }
@@ -96,6 +100,7 @@
 </script>
 
 <style scoped>
+
   .gallery {
       margin: 0 -10px;
   }
