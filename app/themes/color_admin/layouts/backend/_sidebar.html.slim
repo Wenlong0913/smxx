@@ -1,31 +1,32 @@
 /! begin #sidebar
 #sidebar.sidebar
   /! begin sidebar scrollbar
-  div data-height="100%" data-scrollbar="true" 
+  div data-height="100%" data-scrollbar="true"
     /! begin sidebar user
+    - user = decorate(current_user)
     ul.nav
       li.nav-profile
         .image
-          = image_tag current_user.display_headshot
+          = image_tag user.display_headshot
         .info
-          = current_user.display_name
-          small= current_user.display_role
+          = user.display_name
+          small= user.display_role
     /! end sidebar user
     /! begin sidebar nav
     ul.nav
       li.nav-header 功能导航
-      li class=("#{'active' if controller_path == 'admin/home'}") 
+      li class=("#{'active' if controller_path == 'admin/home'}")
         = link_to admin_root_path do
-          = fa_icon 'laptop', text: '首页'
-      li class=("has-sub #{'active' if %w(admin/users admin/roles).include?(controller_path)}") 
-        a href="javascript:;" 
+          i.fa.fa_icon 'laptop', text: '首页'
+      li class=("has-sub #{'active' if %w(admin/users admin/roles).include?(controller_path)}")
+        a href="javascript:;"
           i.fa.fa-inbox
           span 账户管理
         ul.sub-menu
           li class=("#{'active' if controller_path == 'admin/users'}") = link_to '用户', admin_users_path
           li class=("#{'active' if controller_path == 'admin/roles'}") = link_to '角色', admin_roles_path
-      li class=("has-sub #{'active' if controller_path == 'admin/tracker/home'}") 
-        a href="javascript:;" 
+      li class=("has-sub #{'active' if controller_path == 'admin/tracker/home'}")
+        a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
           span 站点统计
@@ -34,20 +35,36 @@
             = link_to '访问统计', admin_tracker_path
           li
             = link_to '分销统计', admin_tracker_shares_path
-      li class=("has-sub #{'active' if controller_path == 'admin/products'}") 
-        a href="javascript:;" 
+      li class=("has-sub #{'active' if controller_path == 'admin/products'}")
+        a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
           span 产品管理
         ul.sub-menu
           li.active
             = link_to '产品列表', admin_products_path
+      li class=("has-sub #{'active' if controller_path == 'admin/sites'}")
+        a href="javascript:;"
+          b.caret.pull-right
+          i.fa.fa-inbox
+          span Site管理
+        ul.sub-menu
+          li.active
+            = link_to '列表', admin_sites_path
+      li class=("#{'active' if controller_path == 'admin/catalogs'}")
+        = link_to admin_catalogs_path do
+          = fa_icon 'inbox', text: '分类管理'
+      li
+        = link_to admin_page_path('home') do
+          = fa_icon 'leaf', text: '开发手册'
+        = link_to cms_sites_path do
+          = fa_icon 'file-text', text: 'CMS系统'
       li
         = link_to sign_out_path, method: :delete do
           = fa_icon 'sign-out', text: '退出系统'
       /! begin sidebar minify button
       li
-        a.sidebar-minify-btn data-click="sidebar-minify" href="javascript:;" 
+        a.sidebar-minify-btn data-click="sidebar-minify" href="javascript:;"
           i.fa.fa-angle-double-left
       /! end sidebar minify button
     /! end sidebar nav

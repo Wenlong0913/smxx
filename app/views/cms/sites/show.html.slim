@@ -1,0 +1,28 @@
+h1
+  | 站点：
+  = @cms_site.name
+  .pull-right
+    => link_to '编辑站点', edit_cms_site_path(@cms_site), class: 'btn btn-primary'
+    => link_to '添加栏目', new_cms_site_channel_path(@cms_site), class: 'btn btn-success'
+    => link_to '前台预览', get_cms_url(@cms_site), class: 'btn btn-info', target: '_blank'
+    => link_to '删除', cms_site_path(@cms_site), method: :delete, data: { confirm: '谨慎！删除以后无法恢复，将删除站点下的所有内容，请确认要删除?' }, class: 'btn btn-danger'
+    => link_to '返回', cms_sites_path, class: 'btn btn-default'
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+    h4
+      | 模板：
+      = @cms_site.template
+      | &nbsp;&nbsp;&nbsp;&nbsp;域名：
+      = @cms_site.domain
+    p
+      | 前台地址：
+      = link_to get_cms_url(@cms_site), get_cms_url(@cms_site), target: '_blank'
+    p
+      = @cms_site.description
+  .panel-body
+    = render 'cms/channels/list'

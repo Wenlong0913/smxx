@@ -1,12 +1,11 @@
 module Favorite
   module EntriesControllerConcern
     def show_favorite
-      is_favorite = favorite__resolve_resource.favorites.exists?(user_id: favorite__user_id)
-      render json: is_favorite
+      render json: favorite__resolve_resource.favorites.tagged_by?(favorite__user)
     end
 
     def create_favorite
-      entry = favorite__resolve_resource.favorites.find_or_create_by(user_id: favorite__user_id)
+      entry = favorite__resolve_resource.favorites.tag_by!(favorite__user)
       if entry.save
         render json: true
       else
@@ -15,14 +14,14 @@ module Favorite
     end
 
     def delete_favorite
-      entry = favorite__resolve_resource.favorites.where(user_id: favorite__user_id).destroy_all
+      entry = favorite__resolve_resource.favorites.untag_by!(favorite__user)
       render json: false
     end
 
     private
 
-    def favorite__user_id
-      defined?(current_user) && current_user && current_user.id
+    def favorite__user
+      defined?(current_user) && current_user
     end
 
     def favorite__resolve_resource

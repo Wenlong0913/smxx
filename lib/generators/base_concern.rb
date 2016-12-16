@@ -7,13 +7,21 @@
 # end
 module Generators
   module BaseConcern
-    def remove_ar_module(class_name, origin_class_name = class_name)
-      klass = class_name.constantize rescue Object
-      return class_name if klass < ActiveRecord::Base
-      folders = class_name.split('::')
+    def model_class_name(name: class_name, origin: class_name)
+      klass = name.constantize rescue Object
+      return name if klass < ActiveRecord::Base
+      folders = name.split('::')
       folders.shift
-      return origin_class_name if folders.size == 0
-      remove_ar_module(folders.join('::'), origin_class_name)
+      return origin if folders.size == 0
+      model_class_name(name: folders.join('::'), origin: origin)
+    end
+
+    def model_var_name
+      model_class_name.underscore.gsub('/', '_')
+    end
+
+    def plural_model_var_name
+      model_var_name.pluralize
     end
   end
 end

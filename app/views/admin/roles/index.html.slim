@@ -17,6 +17,6 @@ h1.page-header
       - @admin_roles.each do |role|
         tr
           td = role.id
-          td = role.name
+          td = role.role_name
           th = link_to '用户列表', admin_role_users_path(role_id: role.id)
 = paginate @admin_roles

@@ -1,8 +1,8 @@
 h1 
   | 查看 admin_product
   .pull-right
-    => link_to '编辑', edit_admin_product_path(@admin_product), class: 'btn btn-primary'
-    = link_to '返回', admin_products_path, class: 'btn btn-primary', class: 'btn btn-primary'
+    => link_to '编辑', edit_admin_product_path(@product), class: 'btn btn-primary'
+    = link_to '返回', admin_products_path, class: 'btn btn-primary'
 
 .panel
   .panel-heading
@@ -14,9 +14,11 @@ h1
     h4 查看 admin_product
   .panel-body
     dl
+      dt: strong Site
+      dd = @product.site
       dt: strong Name
-      dd = @admin_product.name
+      dd = @product.name
       dt: strong Price
-      dd = @admin_product.price
+      dd = @product.price
       dt: strong Description
-      dd = @admin_product.description
+      dd = @product.description

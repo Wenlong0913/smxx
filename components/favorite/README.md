@@ -12,17 +12,17 @@ Short description and motivation.
 在你的controller文件中, 加入下面3种的任何一种的内容:
 
     acts_as_favoriteable resource: Product
-    
+
 或者
-    
+
     acts_as_favoriteable resource: :get_resource_of_favorites
 
     def get_resource_of_favorites
       Product.find(params[:id])
     end
-    
+
 或者
-    
+
     acts_as_favoriteable resource: -> { Product.find(params[:id]) }
 
 在你的routes文件中, 加入下面的内容，配置路由:
@@ -59,6 +59,25 @@ Short description and motivation.
    复制components/favorite/app/cells/favorite/entry/show.slim在Rails项目app/cells/favorite/entry/show.slim
    修改show.slim文件可以自定义显示页面
 
+## 如何在自己的代码中收藏或取消收藏
+
+使用这个插件之后，可以通过`User.find(1).favorites`获取用户所有的收藏记录，也可以通过`Product.find(1).favorites`获取产品被谁收藏了。
+
+取消或收藏一个资源，针对用户，方法如下：
+
+    user = User.find(1)
+    product = Product.find(1)
+    user.favorites.tag_to! product # 收藏
+    user.favorites.untag_to! product # 取消收藏
+    user.favorites.tagged_to? product # 查询资源是否被用户收藏
+
+取消或收藏一个资源，针对资源，方法如下：
+
+    user = User.find(1)
+    product = Product.find(1)
+    product.favorites.tag_by! user # 收藏
+    product.favorites.untag_to! user # 取消收藏
+    product.favorites.tagged_by? user # 查询资源是否被用户收藏
 
 # 测试
 

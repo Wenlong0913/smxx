@@ -17,6 +17,17 @@ module Favorite
       end
       ActiveSupport.on_load(:active_record) do
         ActiveRecord::Base.send :include, Favorite::HasManyFavorites
+        User.has_many :favorites, class_name: 'Favorite::Entry', dependent: :destroy do
+          def tag_to!(resource)
+            find_or_create_by(resource: resource)
+          end
+          def untag_to!(resource)
+            where(resource: resource).destroy_all
+          end
+          def tagged_to?(resource)
+            where(resource: resource).exists?
+          end
+        end
       end
     end
   end

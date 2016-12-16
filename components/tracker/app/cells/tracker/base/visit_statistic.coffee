@@ -8,7 +8,6 @@ $(document).ready ->
         url: load_url
         dataType: 'json'
         success: (data)->
-          console.log data
           app._data.visitStatistic = data
           documentLoadAnimation(true)
         error: ->

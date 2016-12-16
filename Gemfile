@@ -33,7 +33,7 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
+gem 'high_voltage', '~> 3.0.0'
 gem "rolify", '~> 5.1.0'
 gem "pundit", '~> 1.1.0'
 gem 'slim-rails', '~> 3.1.1'
@@ -44,6 +44,21 @@ gem 'settingslogic', '~> 2.0.9'
 gem 'swagger-docs'
 gem 'font-awesome-rails', '~> 4.7.0'
 gem 'simple_form', '~> 3.3.1'
+
+gem 'client_side_validations',
+  github: 'DavyJonesLocker/client_side_validations',
+  branch: 'rails5'
+gem 'client_side_validations-simple_form',
+  github: 'DavyJonesLocker/client_side_validations-simple_form',
+  branch: 'rails5'
+
+gem 'pretender' # 模仿另一个用户登录
+
+gem 'ckeditor', '~> 4.2'
+
+#File upload
+gem 'paperclip'
+gem 'paperclip-qiniu'
 
 # In Rails 5, active_model/serializers/xml has been extracted into its own gem.
 #   So, a quick solution is to add the activemodel-serializers-xml gem to your Gemfile
@@ -61,6 +76,10 @@ gem "rails-observers", github: 'rails/rails-observers'
 gem 'rails-i18n', '~> 5.0.0'
 gem 'rails-i18n-generator'
 
+gem 'chinese_pinyin'
+#used in CMS: public/templetes/generate_templetes.rb
+gem 'iconv', '~> 1.0', '>= 1.0.4'
+
 #weixin
 gem "weixin_rails_middleware", '~> 1.3', '>= 1.3.1'
 gem 'weixin_authorize', '1.6.3'
@@ -69,9 +88,13 @@ gem "omniauth-wechat-oauth2", "~> 0.1.0"
 # require components
 gem 'sms', path: 'components/sms'
 gem 'tracker', path: 'components/tracker'
+gem 'decorator', path: 'components/decorator'
+
 gem 'themeable', '~> 1.2.0'#, path: '../../gems/themeable'
 gem 'theme_color_admin', git: 'git@gitlab.tanmer.com:tm-themes/theme_color_admin.git'
 gem 'theme_card', git: 'git@gitlab.tanmer.com:tm-themes/theme_card.git'
+gem 'closure_tree'
+gem 'select2-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -110,3 +133,7 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'activemodel-serializers-xml'
+gem 'vuejs-webpack-rails'
+
+gem 'foreman'

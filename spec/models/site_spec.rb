@@ -30,7 +30,7 @@ RSpec.describe Site, type: :model do
   it { should have_many :items }
   it { should have_many :image_items }
   it { should validate_presence_of :title }
-  it { should validate_presence_of :user }
+  it { should validate_presence_of :user_id }
   it { should validate_uniqueness_of(:title).scoped_to(:user_id) }
 
   it { should have_attr_accessor :description }

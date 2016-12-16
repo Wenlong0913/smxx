@@ -7,10 +7,18 @@ Rails.application.routes.draw do
     get '(page-:page)', :action => :index, :on => :collection, :as => ''
   end
 
+  Dir[Rails.root.join('config/routes/**/*_route.rb')].each { |f| require_dependency f }
+  extend CmsFrontendRoute
+  extend CmsBackendRoute
+
+  mount Ckeditor::Engine => '/ckeditor'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'home#index'
   devise_for "users", skip: [:sessions, :passwords, :registrations], :controllers => { :omniauth_callbacks => 'users/omniauth_callbacks' }
   devise_scope :user do
+    post '/sessions/:id/impersonate', to: 'users/sessions#impersonate', as: :impersonate_session
+    post '/sessions/stop_impersonating', to: 'users/sessions#stop_impersonating', as: :stop_impersonating_sessions
     post 'sign_in', to: 'users/sessions#create'
     delete 'sign_out', to: 'users/sessions#destroy'
     post 'sign_up', to: 'users/registrations#create'
@@ -27,6 +35,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    get "/static_pages/*id" => 'static_pages#show', as: :page, format: false
     get '/', to: 'home#index', as: :root
     get 'sign_in', to: 'sessions#new'
     namespace :tracker do
@@ -39,11 +48,13 @@ Rails.application.routes.draw do
         get '/', to: 'home#show'
       end
     end
+    resources :catalogs
     resources :roles, only: [:index], :concerns => :paginatable do
       resources :users, only: [:index], :concerns => :paginatable
     end
     resources :users, :concerns => :paginatable
-    resources :products
+    resources :products, :concerns => :paginatable
+    resources :sites, :concerns => :paginatable
   end
 
   namespace :agent do

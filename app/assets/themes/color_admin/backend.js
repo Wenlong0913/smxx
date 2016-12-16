@@ -1,4 +1,4 @@
-//= require color_admin/plugins/jquery/jquery-1.9.1
+//= require jquery
 //= require jquery_ujs
 //= require turbolinks
 //= require turbolinks-jquery
@@ -12,3 +12,6 @@
 //= require color_admin/plugins/nvd3/build/nv.d3
 //= require color_admin/js/apps
 //= require admin
+$(document).ready(function() {
+  App.init();
+});

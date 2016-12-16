@@ -2,11 +2,14 @@
 
 - [开发配置](#config)
 - [模块介绍](#modules-list)
+  - [Decorator](#module-decorator)
 - [如何开始工作](#get-started)
   - [怎么生成一个Model](#how-to-generate-model)
   - [怎么生成一个Item](#how-to-generate-item)
   - [怎么生成一个Controller](#how-to-generate-controller)
   - [View中怎么使用Decorator](#how-to-use-decorator)
+- [Model中的一些用法](#how-to-program-model)
+    - [数据验证]("how-to-program-model-validators")
 - [测试](#testing)
 
 <a name="config"></a>
@@ -20,6 +23,14 @@
 
 1. 评论模块
 2. 统计模块
+
+<a name="module-decorator"></a>
+### Decorator，可以给Model数据添加一些可呈现在前端网页的属性
+
+因为Gem `drapper` 是一个成熟的Decorator,但是他不支持Rails 5，所以我们自己写个组件实现这个功能
+
+所在目录： `components/decorator`
+
 
 <a name="get-started"></a>
 ## 如何开始工作
@@ -152,8 +163,57 @@
 
 这里的`decorate`方法是定义在`app/helpers/decorator_helper.rb`。`ApplicationDecorator`是定义在`app/decorators/application_decorator.rb`中，这个文件中可以看到，`SiteDecorator`可以使用`h`调用view helper方法，用`r`调用路由方法。
 
+<a name="how-to-program-model"></a>
+## Model中的一些用法
+
+在`app/models/concerns`目录，有一些对Model的扩展方法：
+
+- `cast_pinyin_for(*attrs)`
+
+    把一个字段转换为拼音首字母，然后存到字段`xxx_py`中
+
+- `User.all.as_csv(only: [:id, :name])`
+
+    把一个查询导出为csv
+
+<a name="how-to-program-model-validators"></a>
+### 数据验证
+
+目前定义了两个自定义验证：
+
+`app/validators/email_validator.rb`
+`app/validators/mobile_phone_validator.rb`
+
+- 验证电子邮件
+
+      class User < ApplicationRecord
+        validates :email, email: true
+      end
+
+- 验证手机号
+
+      class User < ApplicationRecord
+        validates :mobile_phone, mobile_phone: true
+      end
+
+
+
 <a name="testing"></a>
 ## 测试
 
 运行测试代码，因为需要测试feature，需要用到浏览器插件`capybara`和`selenium-webdriver`，
 Mac系统必须执行`brew install geckodriver`安装插件`geckodriver`
+
+在feature, controller, request测试中，需要测试用户登录后的效果：
+`spec/support/controller_macros.rb`中有三种用户登录
+
+- login_user
+- login_admin
+- login_agent
+
+如果需要登录一个制定用户，用`login_user(User.find(1))`，使用方法如：
+
+    RSpec.feature "Toggles", type: :feature, js: true do
+      login_user
+      it { ... }
+    end

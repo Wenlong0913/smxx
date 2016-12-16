@@ -1,13 +1,11 @@
 require 'rails_helper'
 
 RSpec.feature "Admin::SignIns", type: :feature, js: true do
-  let(:user) { create(:user) }
+  let(:user) { create(:admin) }
   scenario 'login in with mobile and code' do
-    user_mobile = create(:user_mobile, user_id: user.id)
-    user.add_role :admin
     visit admin_sign_in_path
     click_on '手机号登陆'
-    fill_in 'user[mobile]', with: user_mobile.phone_number
+    fill_in 'user[mobile]', with: user.mobile.phone_number
     find('.get_code').click
     expect(page).to have_content '验证码发送成功'
     fill_in 'user[code]', with: '1234'

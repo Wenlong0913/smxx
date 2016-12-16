@@ -42,11 +42,6 @@ RSpec.describe User, type: :model do
     it { should include('updated_at') }
   end
 
-  describe 'instance' do
-    subject { User.new }
-    it { should have_attr_accessor :mobile_phone }
-  end
-
   it { expect(User).to respond_to :find_by_phone_number }
   it 'find by phone_number' do
     flag, user = User::Create.(mobile_phone: '13912345678', nickname: 'xiaohui')

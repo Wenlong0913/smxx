@@ -1,8 +1,8 @@
 h1 
   | 查看 <%= singular_table_name %>
   .pull-right
-    => link_to '编辑', edit_<%= singular_table_name %>_path(@<%= singular_table_name %>), class: 'btn btn-primary'
-    = link_to '返回', <%= index_helper %>_path, class: 'btn btn-primary', class: 'btn btn-primary'
+    => link_to '编辑', edit_<%= singular_table_name %>_path(@<%= model_var_name %>), class: 'btn btn-primary'
+    = link_to '返回', <%= index_helper %>_path, class: 'btn btn-primary'
 
 .panel
   .panel-heading
@@ -16,5 +16,5 @@ h1
     dl
     <%- attributes.each do |attribute| -%>
       dt: strong <%= attribute.human_name %>
-      dd = @<%= singular_table_name %>.<%= attribute.name %>
+      dd = @<%= model_var_name %>.<%= attribute.name %>
     <%- end -%>

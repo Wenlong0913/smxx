@@ -5,13 +5,16 @@ class UserPolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    user.super_admin_or_admin?
+  end
+
   def show?
-    return true if user.has_role? :admin
-    user.has_role?(:agent) && record.site.try(:user_id) == user.id
+    user.super_admin_or_admin? || user.id == record.id
   end
 
   def new?
-    show?
+    user.super_admin_or_admin?
   end
 
   def create?
@@ -19,7 +22,10 @@ class UserPolicy < ApplicationPolicy
   end
 
   def edit?
-    show?
+    return true if user.id == record.id # 自己当然能够修改自己的信息
+    return false unless user.super_admin_or_admin? # 只有管理员和超级管理员能编辑
+    return false if user.has_role?(:admin, :any) && record.super_admin_or_admin? # 管理员不能修改另外一个管理员的信息，当然，更不能修改超级管理员的信息
+    true
   end
 
   def update?
@@ -27,19 +33,32 @@ class UserPolicy < ApplicationPolicy
   end
 
   def destroy?
-    show?
+    return false if user.id == record.id # 自己不能删除自己的信息
+    return false unless user.super_admin_or_admin? # 只有管理员和超级管理员能删除
+    return false if user.has_role?(:admin, :any) && record.super_admin_or_admin? # 管理员不能删除另外一个管理员的信息，当然，更不能删除超级管理员的信息
+    true
+  end
+
+  def impersonate?
+    user.super_admin_or_admin?
   end
 
   def permitted_attributes_for_create
-    if user.has_role? :admin
-      [:mobile_phone, :nickname]
+    if user.super_admin_or_admin?
+      [:mobile_phone, :nickname, :password, :password_confirmation, :role_ids => []]
     else
-      [:nickname]
+      []
     end
   end
 
   def permitted_attributes_for_update
-    permitted_attributes_for_create
+    if user.super_admin_or_admin?
+      [:mobile_phone, :nickname, :password, :password_confirmation, :role_ids => []]
+    elsif user.id == record.id
+      [:nickname]
+    else
+      []
+    end
   end
 
 end

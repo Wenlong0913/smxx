@@ -1,0 +1,21 @@
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+    h4 admin_site
+  .panel-body
+    = simple_form_for decorate(@site), url: @site.new_record? ? admin_sites_path : admin_site_path(@site), validate: true do |f|
+      - if @site.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@site.errors.count, "error")} prohibited this admin_site from being saved:"
+          ul
+            - @site.errors.full_messages.each do |message|
+              li = message
+
+      = f.input :user_id, collection: User.all.decorate, label_method: :display_name
+      = f.input :title
+      = f.input :description
+      = f.submit class: 'btn btn-success btn-block'

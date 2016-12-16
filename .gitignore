@@ -1,3 +1,9 @@
 log/*.log
 tmp/*
 .DS_Store
+
+config/database.yml
+db/schema.rb
+# Added by webpack-rails
+/node_modules
+/public/webpack

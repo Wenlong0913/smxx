@@ -1,0 +1,48 @@
+.row
+  - @cms_channels.each do |cms_channel|
+    - color = bg_colors.sample
+    .col-md-3.col-sm-6
+      div class=("widget widget-stats bg-#{color}")
+        .stats-icon
+          i.fa.fa-folder
+        .stats-info
+          h4 =cms_channel.short_title
+          p =cms_channel.title
+        .stats-link
+          .row
+            .col-md-6
+              = link_to cms_site_channel_path(@cms_site, cms_channel) do
+                | 页面管理 &nbsp;&nbsp;
+                i.fa.fa-arrow-circle-o-right
+            .col-md-6
+              = link_to get_url(cms_channel), target: '_blank' do
+                | 前台预览 &nbsp;&nbsp;
+                i.fa.fa-arrow-circle-o-right
+
+      .row
+        - while cms_channel.children.any? do
+          - cms_channel = cms_channel.children.first
+          .col-md-12.col-sm-12
+            div class=("widget widget-stats bg-#{color}")
+              .stats-icon
+                i.fa.fa-folder-o
+              .stats-info
+                h4
+                  | 父级：
+                  = cms_channel.parent.title
+
+                p
+                  =cms_channel.title
+                  small.pull-right
+                    =cms_channel.short_title
+
+              .stats-link
+                .row
+                  .col-md-6
+                    = link_to cms_site_channel_path(@cms_site, cms_channel) do
+                      | 页面管理 &nbsp;&nbsp;
+                      i.fa.fa-arrow-circle-o-right
+                  .col-md-6
+                    = link_to get_url(cms_channel), target: '_blank' do
+                      | 前台预览 &nbsp;&nbsp;
+                      i.fa.fa-arrow-circle-o-right

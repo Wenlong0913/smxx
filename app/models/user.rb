@@ -31,7 +31,7 @@ class User < ApplicationRecord
   has_one :weixin, dependent: :destroy
   has_many :image_items, dependent: :destroy, as: :owner
   attr_accessor :mobile_phone
-  validates_presence_of :mobile_phone, if: ->{ mobile.nil? }
+  validates :mobile_phone, mobile_phone: true, allow_blank: true
 
   # Find user by phone number
   # @param [String] phone_number
@@ -47,20 +47,8 @@ class User < ApplicationRecord
     false
   end
 
-  # def mobile_phone
-  #   mobile.phone_number if mobile
-  # end
-
-  def display_headshot
-    headshot || weixin.try(:headshot) || 'logo.png'
-  end
-
-  def display_name
-    nickname.presence || username.presence || mobile.phone_number
-  end
-
-  def display_role
-    roles.map(&:name).join(', ')
+  def super_admin_or_admin?
+    has_any_role?({name: :admin, resource: :any}, {name: :super_admin, resource: :any})
   end
 
 end

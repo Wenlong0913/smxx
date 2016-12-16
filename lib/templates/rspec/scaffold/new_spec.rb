@@ -3,7 +3,7 @@ require 'rails_helper'
 <% output_attributes = attributes.reject{|attribute| [:datetime, :timestamp, :time, :date].index(attribute.type) } -%>
 RSpec.describe "<%= ns_table_name %>/new", <%= type_metatag(:view) %> do
   before(:each) do
-    assign(:<%= ns_file_name %>, <%= remove_ar_module(class_name) %>.new(<%= '))' if output_attributes.empty? %>
+    assign(:<%= model_var_name %>, <%= model_class_name %>.new(<%= '))' if output_attributes.empty? %>
 <% output_attributes.each_with_index do |attribute, attribute_index| -%>
       :<%= attribute.name %> => <%= attribute.default.inspect %><%= attribute_index == output_attributes.length - 1 ? '' : ','%>
 <% end -%>
@@ -13,7 +13,7 @@ RSpec.describe "<%= ns_table_name %>/new", <%= type_metatag(:view) %> do
     assert_select "form[action=?][method=?]", <%= index_helper %>_path, "post" do
 <% for attribute in output_attributes -%>
       <%- name = attribute.respond_to?(:column_name) ? attribute.column_name : attribute.name %>
-      assert_select "<%= attribute.input_type -%>#<%= ns_file_name %>_<%= name %>[name=?]", "<%= ns_file_name %>[<%= name %>]"
+      assert_select "<%= attribute.input_type -%>#<%= model_var_name %>_<%= name %>[name=?]", "<%= model_var_name %>[<%= name %>]"
 <% end -%>
     end
   end

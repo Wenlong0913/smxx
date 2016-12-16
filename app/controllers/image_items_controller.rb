@@ -65,7 +65,7 @@ class ImageItemsController < ApplicationController
         hash_params[:id] = json_image_data['server']
         # hash_params[:user_id] = current_user.id
         # hash_params[:site_id] = params[:site_id]
-        hash_params[:owner] = Site.first
+        hash_params[:owner] = current_user
         return hash_params
       end
     end

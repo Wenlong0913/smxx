@@ -1,7 +1,8 @@
 RSpec.configure do |config|
+  # config.use_transactional_fixtures = false
 
   config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.strategy = :truncation
   end
 
   config.before(:each, type: :feature) do |example|

@@ -4,68 +4,68 @@ require_dependency "<%= namespaced_path %>/application_controller"
 <% end -%>
 <% module_namespacing do -%>
 class <%= controller_class_name %>Controller < <%= controller_class_name.split('::').size > 1 ? "#{controller_class_name.split('::')[0]}::BaseController" : 'ApplicationController' %>
-  before_action :set_<%= singular_table_name %>, only: [:show, :edit, :update, :destroy]
+  before_action :set_<%= model_var_name %>, only: [:show, :edit, :update, :destroy]
 
   def index
-    authorize <%= remove_ar_module(class_name) %>
-    @<%= plural_table_name %> = <%= orm_class.all(remove_ar_module(class_name)) %>
+    authorize <%= model_class_name %>
+    @<%= plural_model_var_name %> = <%= model_class_name %>.all.page(params[:page])
     respond_to do |format|
       format.html
-      format.json { render json: @<%= plural_table_name %> }
+      format.json { render json: @<%= plural_model_var_name %> }
     end
   end
 
   def show
-    authorize @<%= singular_table_name %>
+    authorize @<%= model_var_name %>
     respond_to do |format|
       format.html
-      format.json { render json: @<%= singular_table_name %> }
+      format.json { render json: @<%= model_var_name %> }
     end
   end
 
   def new
-    authorize <%= remove_ar_module(class_name) %>
-    @<%= singular_table_name %> = <%= orm_class.build(remove_ar_module(class_name)) %>
+    authorize <%= model_class_name %>
+    @<%= model_var_name %> = <%= model_class_name %>.new(<%= model_var_name %>_params)
   end
 
   def edit
-    authorize @<%= singular_table_name %>
+    authorize @<%= model_var_name %>
   end
 
   def create
-    authorize <%= remove_ar_module(class_name) %>
-    @<%= singular_table_name %> = <%= orm_class.build(remove_ar_module(class_name), "permitted_attributes(#{remove_ar_module(class_name)})") %>
+    authorize <%= model_class_name %>
+    @<%= model_var_name %> = <%= model_class_name %>.new(permitted_attributes(<%= model_class_name %>)))
 
     respond_to do |format|
       format.html do
-        if @<%= orm_instance.save %>
-          redirect_to <%= singular_table_name %>_path(@<%= singular_table_name %>), notice: <%= "'#{human_name} 创建成功.'" %>
+        if @<%= model_var_name %>.save
+          redirect_to <%= singular_table_name %>_path(@<%= model_var_name %>), notice: <%= "'#{human_name} 创建成功.'" %>
         else
           render :new
         end
       end
-      format.json { render json: @<%= singular_table_name %> }
+      format.json { render json: @<%= model_var_name %> }
     end
 
   end
 
   def update
-    authorize @<%= singular_table_name %>
+    authorize @<%= model_var_name %>
     respond_to do |format|
       format.html do
-        if @<%= remove_ar_module(orm_instance.update("permitted_attributes(@#{singular_table_name})")) %>
-          redirect_to <%= singular_table_name %>_path(@<%= singular_table_name %>), notice: <%= "'#{human_name} 更新成功.'" %>
+        if @<%= model_var_name %>.update(permitted_attributes(@<%= model_var_name %>))
+          redirect_to <%= singular_table_name %>_path(@<%= model_var_name %>), notice: <%= "'#{human_name} 更新成功.'" %>
         else
           render :edit
         end
       end
-      format.json { render json: @<%= singular_table_name %> }
+      format.json { render json: @<%= model_var_name %> }
     end
   end
 
   def destroy
-    authorize @<%= singular_table_name %>
-    @<%= remove_ar_module(orm_instance.destroy) %>
+    authorize @<%= model_var_name %>
+    @<%= model_var_name %>.destroy
     respond_to do |format|
       format.html { redirect_to <%= index_helper %>_url, notice: <%= "'#{human_name} 删除成功.'" %> }
       format.json { head 200 }
@@ -75,17 +75,17 @@ class <%= controller_class_name %>Controller < <%= controller_class_name.split('
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_<%= singular_table_name %>
-      @<%= singular_table_name %> = <%= orm_class.find(remove_ar_module(class_name), "params[:id]") %>
+    def set_<%= model_var_name %>
+      @<%= model_var_name %> = <%= model_class_name %>.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
-    # def <%= "#{singular_table_name}_params" %>
-    #   <%- if attributes_names.empty? -%>
-    #   params[:<%= singular_table_name %>]
-    #   <%- else -%>
-    #   params.require(:<%= singular_table_name %>).permit(<%= attributes_names.map { |name| ":#{name}" }.join(', ') %>)
-    #   <%- end -%>
-    # end
+    def <%= "#{model_var_name}_params" %>
+      <%- if attributes_names.empty? -%>
+      params[:<%= model_var_name %>]
+      <%- else -%>
+      params.require(:<%= model_var_name %>).permit(<%= attributes_names.map { |name| ":#{name}" }.join(', ') %>)
+      <%- end -%>
+    end
 end
 <% end -%>

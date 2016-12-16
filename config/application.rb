@@ -19,6 +19,7 @@ Bundler.require(*Rails.groups)
 module Tmf
   class Application < Rails::Application
     require 'settings'
+    config.action_controller.include_all_helpers = false
     generators do |app|
 
       require 'rails/generators/base'
@@ -30,11 +31,8 @@ module Tmf
       Rails::Generators::ScaffoldControllerGenerator.send :include, Generators::ModulizeTemplateConcern
 
       require 'rails/generators/rails/model/model_generator'
-      require 'generators/model_concern'
-      Rails::Generators::ModelGenerator.send :include, Generators::ModelConcern
-
-      Rails::Generators::ModelGenerator.hook_for :cud, default: 'cud'
-      Rails::Generators::ModelGenerator.hook_for :decorator, default: 'decorator'
+      Rails::Generators::ModelGenerator.hook_for :cud, default: true
+      Rails::Generators::ModelGenerator.hook_for :audited, default: true, as: 'model'
       Rails::Generators::ModelGenerator.hook_for :pundit, default: true, as: 'policy', in: 'pundit'
     end
     config.generators do |g|

@@ -1,6 +1,6 @@
-source 'https://gems.ruby-china.org'
+source 'https://rubygems.org'
 
-# Declare your gem's dependencies in favorite.gemspec.
+# Declare your gem's dependencies in comment.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
 gemspec
@@ -24,4 +24,5 @@ gem 'capybara'
 gem 'selenium-webdriver'
 gem 'database_cleaner'
 gem 'shoulda'
+gem 'rack_session_access'
 gem 'pry'
