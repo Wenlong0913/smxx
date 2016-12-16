@@ -9,10 +9,16 @@
           h4 =cms_channel.short_title
           p =cms_channel.title
         .stats-link
-          = link_to cms_site_channel_path(@cms_site, cms_channel) do
-            = cms_channel.pages.count
-            | 个页面 &nbsp;&nbsp;
-            i.fa.fa-arrow-circle-o-right
+          .row
+            .col-md-6
+              = link_to cms_site_channel_path(@cms_site, cms_channel) do
+                | 页面管理 &nbsp;&nbsp;
+                i.fa.fa-arrow-circle-o-right
+            .col-md-6
+              = link_to get_url(cms_channel), target: '_blank' do
+                | 前台预览 &nbsp;&nbsp;
+                i.fa.fa-arrow-circle-o-right
+
       .row
         - while cms_channel.children.any? do
           - cms_channel = cms_channel.children.first
@@ -31,7 +37,12 @@
                     =cms_channel.short_title
 
               .stats-link
-                = link_to cms_site_channel_path(@cms_site, cms_channel) do
-                  = cms_channel.pages.count
-                  | 个页面 &nbsp;&nbsp;
-                  i.fa.fa-arrow-circle-o-right
+                .row
+                  .col-md-6
+                    = link_to cms_site_channel_path(@cms_site, cms_channel) do
+                      | 页面管理 &nbsp;&nbsp;
+                      i.fa.fa-arrow-circle-o-right
+                  .col-md-6
+                    = link_to get_url(cms_channel), target: '_blank' do
+                      | 前台预览 &nbsp;&nbsp;
+                      i.fa.fa-arrow-circle-o-right

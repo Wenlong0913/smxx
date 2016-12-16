@@ -21,12 +21,14 @@ h1
             .stats-info
               h4 =cms_site.template
               p =cms_site.name
+              small = cms_site.description
             .stats-link
-              = link_to cms_site_path(cms_site) do
-                = cms_site.description
-                | &nbsp;&nbsp;
-                i.fa.fa-arrow-circle-o-right
-            .stats-link
-              = link_to get_cms_url(cms_site), target: '_blank' do
-                | 前台预览&nbsp;&nbsp;
-                i.fa.fa-arrow-circle-o-right
+              .row
+                .col-md-6
+                  = link_to cms_site_path(cms_site) do
+                    | 栏目列表 &nbsp;&nbsp;
+                    i.fa.fa-arrow-circle-o-right
+                .col-md-6
+                  = link_to get_url(cms_site), target: '_blank' do
+                    | 前台预览 &nbsp;&nbsp;
+                    i.fa.fa-arrow-circle-o-right

@@ -34,7 +34,7 @@ class Cms::Page < ApplicationRecord
   end
 
   def show_image
-    image_path.blank? ? 'http://placehold.it/250x150' : image_path
+    image_path.blank? ? 'http://pic.wedxt.com/placeholder-300x225.jpg' : image_path
   end
 
   def to_param

@@ -1,10 +1,10 @@
-class Cms::PagesController < Admin::BaseController
-  helper Cms::ApplicationHelper
+class Cms::PagesController < Cms::BaseController
   before_action :set_cms_site_and_channel
   before_action :set_cms_page, only: [:show, :edit, :update, :destroy]
 
   def index
-    @cms_pages = @cms_channel.pages
+    @cms_pages = @cms_channel.pages.page(params[:page])
+    authorize @cms_pages
     respond_to do |format|
       format.html
       format.json { render json: @cms_pages }
