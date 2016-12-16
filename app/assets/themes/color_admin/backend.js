@@ -2,7 +2,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require turbolinks-jquery
-//= require vue/dist/vue
 //= require color_admin/plugins/jquery/jquery-migrate-1.1.0
 //= require color_admin/plugins/gritter/js/jquery.gritter
 //= require color_admin/plugins/jquery-ui/ui/jquery-ui
