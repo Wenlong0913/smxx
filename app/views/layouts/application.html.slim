@@ -14,4 +14,5 @@ html
     = csrf_meta_tags
   body[class=[controller_path.parameterize, action_name]]
     div[rel="vue-app"]
+      loading[v-show='loading']
       = yield

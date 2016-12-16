@@ -18,5 +18,14 @@
 // require_tree .
 
 $(function(){
-  new Vue({ el: '[rel="vue-app"]' });
+  var vueApp = new Vue({
+    el: '[rel="vue-app"]',
+    data: {
+      loading: true
+    }
+  });
+
+  setTimeout(function() {
+    vueApp.loading = false;
+  }, 1000)
 })
