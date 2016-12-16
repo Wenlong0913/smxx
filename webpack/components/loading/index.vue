@@ -1,5 +1,5 @@
 <template>
-  <div id="loading" v-if="show">
+  <div id="loading">
     <div class="center-animation">
       <div class="circle-parent">
         <div class="line"></div>
@@ -18,24 +18,8 @@
 <script>
   export default({
     props: {
-      show: { type: Boolean, default: false },
       imageUrl: { type: String, default: 'http://cn.vuejs.org/images/logo.png' }
-    },
-    data(){
-      return {
-        // shows: true
-      }
-    },
-    mounted(){
-      // alert()
-      // this.show
-    },
-    methods:{
-      alert: function(){
-        alert(88)
-      }
     }
-
   })
 </script>
 
