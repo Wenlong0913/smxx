@@ -38,35 +38,6 @@ ActiveRecord::Schema.define(version: 20161216024445) do
     t.index ["user_id", "user_type"], name: "user_index", using: :btree
   end
 
-  create_table "image_item_relations", force: :cascade do |t|
-    t.integer  "image_item_id"
-    t.string   "relation_type"
-    t.integer  "relation_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.index ["image_item_id"], name: "index_image_item_relations_on_image_item_id", using: :btree
-    t.index ["relation_type", "relation_id"], name: "index_image_item_relations_on_relation_type_and_relation_id", using: :btree
-  end
-
-  create_table "image_item_tags", force: :cascade do |t|
-    t.integer  "image_item_id"
-    t.string   "name"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.index ["image_item_id"], name: "index_image_item_tags_on_image_item_id", using: :btree
-  end
-
-  create_table "image_items", force: :cascade do |t|
-    t.string   "owner_type"
-    t.integer  "owner_id"
-    t.string   "name"
-    t.integer  "file_size"
-    t.integer  "width"
-    t.integer  "height"
-    t.jsonb    "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["owner_type", "owner_id"], name: "index_image_items_on_owner_type_and_owner_id", using: :btree
   create_table "catalog_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id",   null: false
     t.integer "descendant_id", null: false
@@ -139,6 +110,37 @@ ActiveRecord::Schema.define(version: 20161216024445) do
     t.boolean  "is_published", default: true
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+  end
+
+  create_table "image_item_relations", force: :cascade do |t|
+    t.integer  "image_item_id"
+    t.string   "relation_type"
+    t.integer  "relation_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["image_item_id"], name: "index_image_item_relations_on_image_item_id", using: :btree
+    t.index ["relation_type", "relation_id"], name: "index_image_item_relations_on_relation_type_and_relation_id", using: :btree
+  end
+
+  create_table "image_item_tags", force: :cascade do |t|
+    t.integer  "image_item_id"
+    t.string   "name"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["image_item_id"], name: "index_image_item_tags_on_image_item_id", using: :btree
+  end
+
+  create_table "image_items", force: :cascade do |t|
+    t.string   "owner_type"
+    t.integer  "owner_id"
+    t.string   "name"
+    t.integer  "file_size"
+    t.integer  "width"
+    t.integer  "height"
+    t.jsonb    "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_type", "owner_id"], name: "index_image_items_on_owner_type_and_owner_id", using: :btree
   end
 
   create_table "item_relations", id: false, force: :cascade do |t|
