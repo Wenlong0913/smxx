@@ -38,6 +38,23 @@ ActiveRecord::Schema.define(version: 20161209093236) do
     t.index ["user_id", "user_type"], name: "user_index", using: :btree
   end
 
+  create_table "catalog_hierarchies", id: false, force: :cascade do |t|
+    t.integer "ancestor_id",   null: false
+    t.integer "descendant_id", null: false
+    t.integer "generations",   null: false
+    t.index ["ancestor_id", "descendant_id", "generations"], name: "catalog_anc_desc_idx", unique: true, using: :btree
+    t.index ["descendant_id"], name: "catalog_desc_idx", using: :btree
+  end
+
+  create_table "catalogs", force: :cascade do |t|
+    t.integer  "parent_id"
+    t.string   "name"
+    t.integer  "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["parent_id"], name: "index_catalogs_on_parent_id", using: :btree
+  end
+
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",               null: false
     t.string   "data_content_type"

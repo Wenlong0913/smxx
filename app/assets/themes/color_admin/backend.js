@@ -1,4 +1,4 @@
-//= require color_admin/plugins/jquery/jquery-1.9.1
+//= require jquery
 //= require jquery_ujs
 //= require turbolinks
 //= require turbolinks-jquery

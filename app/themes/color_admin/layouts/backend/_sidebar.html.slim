@@ -51,6 +51,9 @@
         ul.sub-menu
           li.active
             = link_to '列表', admin_sites_path
+      li class=("#{'active' if controller_path == 'admin/catalogs'}")
+        = link_to admin_catalogs_path do
+          = fa_icon 'inbox', text: '分类管理'
       li
         = link_to admin_page_path('home') do
           = fa_icon 'leaf', text: '开发手册'
