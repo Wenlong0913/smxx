@@ -1,5 +1,5 @@
 <template>
-  <div id="loading">
+  <div class="loading">
     <div class="center-animation">
       <div class="circle-parent">
         <div class="line"></div>
@@ -7,8 +7,8 @@
         <div class="circle circle-right"></div>
       </div>
       <div class="logo-img">
-        <img v-bind:src="imageUrl" >
-        <span>Loading</span>
+        <img :src="imageUrl" >
+        <span>{{message}}</span>
       </div>
     </div>
 
@@ -18,13 +18,14 @@
 <script>
   export default({
     props: {
-      imageUrl: { type: String, default: 'http://cn.vuejs.org/images/logo.png' }
+      imageUrl: { type: String, default: 'http://cn.vuejs.org/images/logo.png' },
+      message: { type: String, default: '加载中...' }
     }
   })
 </script>
 
 <style scoped>
-  #loading{
+  .loading{
     background: rgba(62, 126, 134, 1);
     width: 100%;
     height: 100%;
