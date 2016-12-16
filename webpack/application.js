@@ -1,3 +1,10 @@
-console.log("Hello world!");
-var Vue = require('vue');
+require('./concerns');
+require('./components');
 
+// in Rails, put below code to app/assets/javascripts/application.js
+
+// $(function(){
+//   new Vue({
+//     el: '#app'
+//   });
+// })
