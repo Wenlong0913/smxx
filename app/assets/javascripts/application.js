@@ -16,3 +16,7 @@
 //= require turbolinks-jquery
 // can't require tree
 // require_tree .
+
+$(function(){
+  new Vue({ el: '[rel="vue-app"]' });
+})
