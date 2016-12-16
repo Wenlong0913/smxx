@@ -1,5 +1,3 @@
-#= require vue/dist/vue
-#= require vue/image-upload
 #= require admin/sessions
 #= require tracker
 # can't require tree

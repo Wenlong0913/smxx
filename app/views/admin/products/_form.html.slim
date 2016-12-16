@@ -21,3 +21,4 @@
       .form-group
         image-upload[auto-upload="true" name="products[image_items][]" server="#{image_items_path}"]
       = f.submit class: 'btn btn-success btn-block'
+      image-album[server="#{image_items_path}" delete-server="#{image_items_path}"]
