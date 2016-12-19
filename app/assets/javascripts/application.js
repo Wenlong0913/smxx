@@ -14,18 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require turbolinks-jquery
+//= require vue.setup
 // can't require tree
 // require_tree .
-
-$(function(){
-  var vueApp = new Vue({
-    el: '[rel="vue-app"]',
-    data: {
-      loading: true
-    }
-  });
-
-  setTimeout(function() {
-    vueApp.loading = false;
-  }, 1000)
-})

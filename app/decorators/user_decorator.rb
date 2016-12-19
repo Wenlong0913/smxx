@@ -1,4 +1,4 @@
-class UserDecorator < Decorator::Base
+class UserDecorator < ApplicationDecorator
 
   def mobile_phone
     super || mobile.try(:phone_number)

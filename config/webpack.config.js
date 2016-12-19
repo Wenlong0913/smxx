@@ -17,7 +17,8 @@ var production = process.env.NODE_ENV === 'production';
 var config = {
   entry: {
     // Sources are expected to live in $app_root/webpack
-    'application': './webpack/application.js'
+    'application': './webpack/application.js',
+    'mobile': './webpack/mobile.js',
   },
 
   output: {
@@ -36,6 +37,9 @@ var config = {
   },
 
   plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor' // Specify the common bundle's name.
+    }),
     // must match config.webpack.manifest_filename
     new StatsPlugin('manifest.json', {
       // We only need assetsByChunkName

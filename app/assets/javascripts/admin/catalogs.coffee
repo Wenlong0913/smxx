@@ -1,4 +1,16 @@
-$(document).ready ->
+$(document).ready ()->
+  pages = $('body.admin-catalogs.index')
+  if pages.length > 0
+    container = pages.find('catalog-list')
+    new Vue
+      el: container[0]
+      data:
+        catalogOptions:
+          url: container.data('url')
+
+# TODO: convert above code
+
+() ->
   body = $('body.admin-catalogs.index')
   if body.length > 0
     url = body.find('.catalogs').data('url')

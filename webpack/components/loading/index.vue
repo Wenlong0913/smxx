@@ -1,29 +1,44 @@
 <template>
-  <div class="loading">
-    <div class="center-animation">
-      <div class="circle-parent">
-        <div class="line"></div>
-        <div class="circle circle-left"></div>
-        <div class="circle circle-right"></div>
+  <transition name="fade">
+    <div class="loading" v-if="loading">
+      <div class="center-animation">
+        <div class="circle-parent">
+          <div class="line"></div>
+          <div class="circle circle-left"></div>
+          <div class="circle circle-right"></div>
+        </div>
+        <div class="logo-img">
+          <img :src="imageUrl" >
+        </div>
       </div>
-      <div class="logo-img">
-        <img :src="imageUrl" >
-      </div>
+      <span class="message">{{message}}</span>
     </div>
-    <span class="message">{{message}}</span>
-  </div>
+  </transition>
 </template>
 
 <script>
+  var logoImage = require('./assets/logo.png');
   export default({
     props: {
-      imageUrl: { type: String, default: 'http://cn.vuejs.org/images/logo.png' },
-      message: { type: String, default: '...LOAdING...' }
+      imageUrl: { type: String, default: logoImage },
+      message: { type: String, default: '' }
+    },
+    computed: {
+      loading () {
+        return this.$store.state.loading;
+      }
     }
   })
 </script>
 
 <style scoped>
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .3s
+  }
+  .fade-enter, .fade-leave-active {
+    opacity: 0
+  }
+
   .loading{
     background: rgba(0, 0, 0, 0.7);
     width: 100%;
