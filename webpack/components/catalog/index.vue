@@ -1,8 +1,10 @@
 <template>
-  <div class="well well-sm table-responsive">
-    <ol class="list-inline">
-      <li v-for="(catalogs, depth) in catalogGroups" is='catalog' :depth="depth" :catalogs="catalogs" @choosed="choosed"></li>
-    </ul>
+  <div class="cc">
+    <table class="table table-stripped">
+      <tr>
+        <td v-for="(catalogs, depth) in catalogGroups" is='catalog' :depth="depth" :catalogs="catalogs" @choosed="choosed"></td>
+      </tr>
+    </table>
   </div>
 </template>
 <script>
@@ -44,3 +46,17 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.cc {
+  overflow-x: auto;
+}
+td {
+  min-width: 400px;
+  max-width: 400px;
+  min-height: 200px;
+  height: 200px;
+  position: relative;
+  align: top;
+}
+</style>
