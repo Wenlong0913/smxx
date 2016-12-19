@@ -1,4 +1,4 @@
-h1 
+h1.page-header
   | <%= plural_table_name %> 列表
   .pull-right
     = link_to '新建 <%= human_name %>', new_<%= singular_table_name %>_path, class: 'btn btn-primary'
@@ -50,27 +50,27 @@ h1
         strong
           = "查询："
         span
-          = @admin_tests.size.to_s + "条记录"
+          = @<%= plural_model_var_name %>.size.to_s + "条记录"
         span.close[data-dismiss="alert"]
           | ×
-  .table-responsive.row.m-0
-    table.table.table-striped
-      thead
-        tr
-<% attributes.each do |attribute| -%>
-          th <%= attribute.human_name %>
-<% end -%>
-          th
-      tbody
-        - @<%= plural_model_var_name %>.each do |<%= model_var_name %>|
+    .table-responsive.row.m-0
+      table.table.table-striped.table-bordered
+        thead
           tr
 <% attributes.each do |attribute| -%>
-            td = <%= model_var_name %>.<%= attribute.name %>
+            th <%= attribute.human_name %>
 <% end -%>
-            td
-              => link_to '查看', <%= singular_table_name %>_path(<%= model_var_name %>), class: 'btn btn-xs btn-default'
-              => link_to '编辑', edit_<%= singular_table_name %>_path(<%= model_var_name %>), class: 'btn btn-xs btn-default'
-              = link_to '删除', <%= singular_table_name %>_path(<%= model_var_name %>), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+            th
+        tbody
+          - @<%= plural_model_var_name %>.each do |<%= model_var_name %>|
+            tr
+<% attributes.each do |attribute| -%>
+              td = <%= model_var_name %>.<%= attribute.name %>
+<% end -%>
+              td
+                => link_to '查看', <%= singular_table_name %>_path(<%= model_var_name %>), class: 'btn btn-xs btn-default'
+                => link_to '编辑', edit_<%= singular_table_name %>_path(<%= model_var_name %>), class: 'btn btn-xs btn-default'
+                = link_to '删除', <%= singular_table_name %>_path(<%= model_var_name %>), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
 javascript:
   $(document).ready(function(){
     bindRemoveLabel('.well.filter_search label.control-label');
