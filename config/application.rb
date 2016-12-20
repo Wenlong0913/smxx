@@ -39,7 +39,7 @@ module Tmf
       # Themeable options
       g.theme_scaffold_mapping = {
         admin: { theme: 'color_admin', theme_scaffold: 'admin' },
-        agent: { theme: 'card', theme_scaffold: 'admin' }
+        agent: { theme: 'color_admin', theme_scaffold: 'agent' }
       }
       g.test_framework :rspec
       g.scaffold_stylesheet false # don't generate app/assets/stylesheets/scaffolds.scss
