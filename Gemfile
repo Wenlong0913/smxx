@@ -46,12 +46,12 @@ gem 'font-awesome-rails', '~> 4.7.0'
 gem 'simple_form', '~> 3.3.1'
 gem 'active_model_serializers'
 
-gem 'client_side_validations',
-  github: 'DavyJonesLocker/client_side_validations',
-  branch: 'rails5'
-gem 'client_side_validations-simple_form',
-  github: 'DavyJonesLocker/client_side_validations-simple_form',
-  branch: 'rails5'
+# gem 'client_side_validations',
+#   github: 'DavyJonesLocker/client_side_validations',
+#   branch: 'rails5'
+# gem 'client_side_validations-simple_form',
+#   github: 'DavyJonesLocker/client_side_validations-simple_form',
+#   branch: 'rails5'
 
 gem 'pretender' # 模仿另一个用户登录
 
