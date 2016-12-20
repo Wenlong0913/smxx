@@ -1,11 +1,39 @@
 <template>
-  <div class="cc">
+  <div class="panel panel-default">
+    <!-- panel head -->
+    <div class="panel-heading">
+      <div class="panel-heading-btn">
+        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand">
+          <i class="fa fa-expand"></i>
+        </a>
+        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse">
+          <i class="fa fa-minus"></i>
+        </a>
+      </div>
+      <ol class="breadcrumb samll">
+        <li>strong</li>
+        <li>Lorem ipsum...</li>
+      </ol>
+    </div>
+    <!-- panel body -->
+    <div class="panel-body">
+      <div class="well well-sm table-responsive">
+        <ol class="list-inline">
+          <li class="black-classify" v-for="(catalogs, depth) in catalogGroups" is='catalog' :depth="depth" :catalogs="catalogs" @choosed="choosed"></li>
+        </ol>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- <div class="cc">
     <table class="table table-stripped">
       <tr>
         <td v-for="(catalogs, depth) in catalogGroups" is='catalog' :depth="depth" :catalogs="catalogs" @choosed="choosed"></td>
       </tr>
     </table>
-  </div>
+  </div> -->
 </template>
 <script>
 import Catalog from './list'
@@ -48,7 +76,7 @@ export default {
 </script>
 
 <style scoped>
-.cc {
+/*.cc {
   overflow-x: auto;
 }
 td {
@@ -58,5 +86,22 @@ td {
   height: 200px;
   position: relative;
   align: top;
+}*/
+.well{
+  background: #efefef;
+  min-width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.well ol.list-inline{
+  margin: 0px
+}
+.well ol li.black-classify{
+  height: 420px;
+  width: 300px;
+  margin-right: 10px;
+  background: #fff;
+  padding: 0px;
+  box-shadow: 0px 0px 5px 0px #c0c7c9;
 }
 </style>
