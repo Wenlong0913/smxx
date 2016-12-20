@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  # image upload
+  resources :image_items, only: [:index, :create, :destroy]
+
   concern :paginatable do
     get '(page-:page)', :action => :index, :on => :collection, :as => ''
   end

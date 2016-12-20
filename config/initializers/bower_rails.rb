@@ -19,4 +19,4 @@ BowerRails.configure do |bower_rails|
 
   # Change the default directory name
   # bower_rails.bower_components_directory = 'bower_components'
-end
+end if Rails.env.development?

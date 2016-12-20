@@ -1,2 +1,2 @@
-class SiteDecorator < Decorator::Base
+class SiteDecorator < ApplicationDecorator
 end

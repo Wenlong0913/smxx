@@ -3,6 +3,7 @@
 - [开发配置](#config)
 - [模块介绍](#modules-list)
   - [Decorator](#module-decorator)
+  - [Loading](#module-loading)
 - [如何开始工作](#get-started)
   - [怎么生成一个Model](#how-to-generate-model)
   - [怎么生成一个Item](#how-to-generate-item)
@@ -31,6 +32,12 @@
 
 所在目录： `components/decorator`
 
+<a name="module-loading"></a>
+### Loading数据加载效果
+
+<loading v-show="loading"/>
+
+控制显示与否，设置loading值就可以了
 
 <a name="get-started"></a>
 ## 如何开始工作

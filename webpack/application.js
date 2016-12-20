@@ -1,3 +1,5 @@
+require('vue')
+require('vuex')
 require('./concerns');
 require('./components');
 

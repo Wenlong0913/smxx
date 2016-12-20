@@ -1,5 +1,6 @@
 source "https://gems.ruby-china.org"
 
+ruby 2.3
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
@@ -44,13 +45,14 @@ gem 'settingslogic', '~> 2.0.9'
 gem 'swagger-docs'
 gem 'font-awesome-rails', '~> 4.7.0'
 gem 'simple_form', '~> 3.3.1'
+gem 'active_model_serializers'
 
-gem 'client_side_validations',
-  github: 'DavyJonesLocker/client_side_validations',
-  branch: 'rails5'
-gem 'client_side_validations-simple_form',
-  github: 'DavyJonesLocker/client_side_validations-simple_form',
-  branch: 'rails5'
+# gem 'client_side_validations',
+#   github: 'DavyJonesLocker/client_side_validations',
+#   branch: 'rails5'
+# gem 'client_side_validations-simple_form',
+#   github: 'DavyJonesLocker/client_side_validations-simple_form',
+#   branch: 'rails5'
 
 gem 'pretender' # 模仿另一个用户登录
 
@@ -92,7 +94,7 @@ gem 'decorator', path: 'components/decorator'
 
 gem 'themeable', '~> 1.2.0'#, path: '../../gems/themeable'
 gem 'theme_color_admin', git: 'git@gitlab.tanmer.com:tm-themes/theme_color_admin.git'
-gem 'theme_card', git: 'git@gitlab.tanmer.com:tm-themes/theme_card.git'
+# gem 'theme_card', git: 'git@gitlab.tanmer.com:tm-themes/theme_card.git'
 gem 'closure_tree'
 gem 'select2-rails'
 
@@ -130,6 +132,15 @@ group :development, :doc do
   # https://github.com/ctran/annotate_models
   gem 'annotate'
 end
+
+group :deployment do
+  gem 'capistrano', '~> 3.7.1'
+  gem 'capistrano-rvm'
+  gem 'capistrano-passenger'
+  gem 'capistrano-rails'
+end
+
+gem 'colorize', group: [:development, :test, :deployment]
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

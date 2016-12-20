@@ -81,5 +81,3 @@ test:
 production:
   <<: *default
   database: tmf_production
-  username: tmf
-  password: <%= ENV['RAILS_POSTGRESQL_DATABASE_PASSWORD'] %>

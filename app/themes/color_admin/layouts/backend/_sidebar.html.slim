@@ -17,7 +17,7 @@
       li.nav-header 功能导航
       li class=("#{'active' if controller_path == 'admin/home'}")
         = link_to admin_root_path do
-          i.fa.fa_icon 'laptop', text: '首页'
+          = fa_icon 'laptop', text: '首页'
       li class=("has-sub #{'active' if %w(admin/users admin/roles).include?(controller_path)}")
         a href="javascript:;"
           i.fa.fa-inbox

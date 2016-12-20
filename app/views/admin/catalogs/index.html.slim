@@ -1,78 +1,98 @@
-h1.m-t-0
-  | 目录管理
-.panel.catalogs[data-url==admin_catalogs_url]
-  .panel-heading
-    .panel-heading-btn
-      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
-        i class="fa fa-expand"
-      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
-        i class="fa fa-minus"
-    ol.breadcrumb.samll
-      li 选择：
-      li.strong[v-for="(value, index) in breadcrumb" v-bind:class="index+1 == breadcrumb.length ? 'active' : false"]
-        span
-          | {{ value }}
-  .panel-body.p-t-0
-    .well.well-sm.table-responsive
-      ol.list-inline
-        / templete
-        vue-loading[:show='true' image-url='http://img2.3lian.com/img2007/23/08/043.jpg']
-        li.black-classify[v-for="catalog,catalogsIndex in catalogs"]
-          .search
-            .input-group
-              input.form-control[placeholder='searching this list....' v-model= "catalog.searchText"]
-              span.input-group-addon
-                i.fa.fa-search
-          .list-body.table-responsiev
-            ul.list-unstyled
-              / li templete
-              transition-group[name='transition-list']
-                li.column[v-for="itm in filterCatalog(catalog)" v-bind:key="itm.id" v-bind:data-id="itm.id" v-on:mouseenter="mouseEnters($event)" v-on:mouseleave="mouseLeaves($event)"]
-                  .col-xs-9[v-on:click="clickReplace($event)"]
-                    i.fa.fa-circle.text-info.m-r-10.small
-                    | {{itm.name}}
-                  .col-xs-3.text-center.text-success.handle.hidden
-                    span[data-toggle="modal" data-target=".modal-form" v-on:click="openModal('edit', itm.id, catalog.parent_id, itm.name)"]
-                      i.fa.fa-edit
-                    span[v-on:click="removeData($event, catalogsIndex, itm.id)"]
-                      i.fa.fa-remove
-            .loading-animation.text-center[v-show="catalog.loadingStatus.loading"]
-              i.fa.fa-meh-o.fa-2x[v-if="catalog.loadingStatus.failed"]
-              i.fa.fa-spinner.fa-2x[v-else]
-              .text-info
-                | {{ catalog.loadingStatus.message }}
-          .classify-footer
-            span.btn-link.btn-sm.pull-right[data-toggle="modal" data-target=".modal-form" v-on:click="openModal('new', '', catalog.parent_id)"]
-              i.fa.fa-plus-square.m-r-5
-              | 新增
+div
+  h1.page-header
+    | 目录管理
+  catalog-list[data-url=admin_catalogs_path]
 
-  .panel-footer.text-right
-    small
-      | * 删除操作，将删除下级所有子级
-  / model
-  .modal.fade.modal-form[tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"]
-    .modal-dialog
-      .modal-content
-        .modal-header
-          button.close[type="button" data-dismiss="modal"]
-            span[aria-hidden="true"] &times;
-            span.sr-only Close
-          h4.modal-title.modalLabel
-            | {{ modalFormStatus.title }}
-        .modal-body
-          form.form-horizontal[role="form"]
-            .form-group
-              label.col-sm-2.control-label 上级目录
-              .col-sm-10.catalogsList
-                select.form-control[v-model="modalFormStatus.value.parent_id"]
-                  option[v-for="option in catalogsAll" v-bind:value="option.id"]
-                    | {{ option.text }}
-            .form-group
-              label.col-sm-2.control-label 名称
-              .col-sm-10
-                input.form-control[type="text" placeholder="输入名称" v-model= "modalFormStatus.value.name"]
-            .return_mess.text-right[v-bind:class=" modalFormStatus.updateStatus ? 'text-success' : 'text-danger'"]
-              | {{ modalFormStatus.message}}
-        .modal-footer
-          button.btn.btn-default[type="button" class="" data-dismiss="modal"] 取消
-          button.btn.btn-primary[type="button" v-on:click="toUpdate()"] 更新
+  / .panel.panel-default
+  /   .panel-heading
+  /     .panel-heading-btn
+  /       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+  /         i class="fa fa-expand"
+  /       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+  /         i class="fa fa-minus"
+  /     ol.breadcrumb.samll
+  /       li strong
+  /       li Lorem ipsum...
+  /       catalog-list[data-url=admin_catalogs_path]
+  /   .panel-body.p-t-0
+  /   .panel-footer.text-right
+  /     small
+  /       | * 删除操作，将删除下级所有子级
+
+
+
+  /.panel.catalogs[data-url==admin_catalogs_url]
+    .panel-heading
+      .panel-heading-btn
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+          i class="fa fa-expand"
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+          i class="fa fa-minus"
+      ol.breadcrumb.samll
+        / li 选择：
+        / li.strong[v-for="(value, index) in breadcrumb" v-bind:class="index+1 == breadcrumb.length ? 'active' : false"]
+        /   span
+        /     | {{ value }}
+    .panel-body.p-t-0
+      .well.well-sm.table-responsive
+        ol.list-inline
+          / templete
+          li.black-classify[v-for="catalog,catalogsIndex in catalogs"]
+            .search
+              .input-group
+                input.form-control[placeholder='searching this list....' v-model= "catalog.searchText"]
+                span.input-group-addon
+                  i.fa.fa-search
+            .list-body.table-responsiev
+              ul.list-unstyled
+                / li templete
+                transition-group[name='transition-list']
+                  li.column[v-for="itm in filterCatalog(catalog)" v-bind:key="itm.id" v-bind:data-id="itm.id" v-on:mouseenter="mouseEnters($event)" v-on:mouseleave="mouseLeaves($event)"]
+                    .col-xs-9[v-on:click="clickReplace($event)"]
+                      i.fa.fa-circle.text-info.m-r-10.small
+                      | {{itm.name}}
+                    .col-xs-3.text-center.text-success.handle.hidden
+                      span[data-toggle="modal" data-target=".modal-form" v-on:click="openModal('edit', itm.id, catalog.parent_id, itm.name)"]
+                        i.fa.fa-edit
+                      span[v-on:click="removeData($event, catalogsIndex, itm.id)"]
+                        i.fa.fa-remove
+              .loading-animation.text-center[v-show="catalog.loadingStatus.loading"]
+                i.fa.fa-meh-o.fa-2x[v-if="catalog.loadingStatus.failed"]
+                i.fa.fa-spinner.fa-2x[v-else]
+                .text-info
+                  | {{ catalog.loadingStatus.message }}
+            .classify-footer
+              span.btn-link.btn-sm.pull-right[data-toggle="modal" data-target=".modal-form" v-on:click="openModal('new', '', catalog.parent_id)"]
+                i.fa.fa-plus-square.m-r-5
+                | 新增
+
+    .panel-footer.text-right
+      small
+        | * 删除操作，将删除下级所有子级
+    / model
+    .modal.fade.modal-form[tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"]
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close[type="button" data-dismiss="modal"]
+              span[aria-hidden="true"] &times;
+              span.sr-only Close
+            h4.modal-title.modalLabel
+              | {{ modalFormStatus.title }}
+          .modal-body
+            form.form-horizontal[role="form"]
+              .form-group
+                label.col-sm-2.control-label 上级目录
+                .col-sm-10.catalogsList
+                  select.form-control[v-model="modalFormStatus.value.parent_id"]
+                    option[v-for="option in catalogsAll" v-bind:value="option.id"]
+                      | {{ option.text }}
+              .form-group
+                label.col-sm-2.control-label 名称
+                .col-sm-10
+                  input.form-control[type="text" placeholder="输入名称" v-model= "modalFormStatus.value.name"]
+              .return_mess.text-right[v-bind:class=" modalFormStatus.updateStatus ? 'text-success' : 'text-danger'"]
+                | {{ modalFormStatus.message}}
+          .modal-footer
+            button.btn.btn-default[type="button" class="" data-dismiss="modal"] 取消
+            button.btn.btn-primary[type="button" v-on:click="toUpdate()"] 更新
