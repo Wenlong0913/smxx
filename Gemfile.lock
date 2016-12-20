@@ -25,14 +25,6 @@ GIT
       activemodel (>= 4.0, < 5.1)
 
 GIT
-  remote: git@gitlab.tanmer.com:tm-themes/theme_card.git
-  revision: 955b64382bd351868834178e6f5081bba024b0fa
-  specs:
-    theme_card (0.0.2)
-      rails (>= 4.2)
-      themeable (~> 1.2.0)
-
-GIT
   remote: git@gitlab.tanmer.com:tm-themes/theme_color_admin.git
   revision: ca98de25abfc9f1826881c4df5028c97e2b66f33
   specs:
@@ -600,7 +592,6 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   swagger-docs
-  theme_card!
   theme_color_admin!
   themeable (~> 1.2.0)
   tracker!
