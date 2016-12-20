@@ -1,17 +1,26 @@
 div
-  h1.m-t-0
+  h1.page-header
     | 目录管理
-  .panel-heading
-    .panel-heading-btn
-      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
-        i class="fa fa-expand"
-      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
-        i class="fa fa-minus"
-    ol.breadcrumb.samll
-  
-  .panel-body.p-t-0
-    catalog-list[data-url=admin_catalogs_path]
-    
+  catalog-list[data-url=admin_catalogs_path]
+
+  / .panel.panel-default
+  /   .panel-heading
+  /     .panel-heading-btn
+  /       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+  /         i class="fa fa-expand"
+  /       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+  /         i class="fa fa-minus"
+  /     ol.breadcrumb.samll
+  /       li strong
+  /       li Lorem ipsum...
+  /       catalog-list[data-url=admin_catalogs_path]
+  /   .panel-body.p-t-0
+  /   .panel-footer.text-right
+  /     small
+  /       | * 删除操作，将删除下级所有子级
+
+
+
   /.panel.catalogs[data-url==admin_catalogs_url]
     .panel-heading
       .panel-heading-btn
