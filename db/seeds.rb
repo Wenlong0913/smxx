@@ -28,3 +28,17 @@ content = ''
 5.times do
   cms_page = Cms::Page.create!(channel_id: cms_channel.reload.id, title: '这是新闻标题', description: '这里是页面的描述', content: content)
 end
+
+names = %w(日用品
+生鲜食品
+海外商品
+旅游
+运功
+娱乐
+电子
+电器
+)
+
+names.each do |name|
+  Catalog.find_or_create_by(name: name)
+end
