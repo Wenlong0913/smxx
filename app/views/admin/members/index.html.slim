@@ -10,9 +10,13 @@ h1.page-header
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-    h3.panel-title 会员 列表
   .panel-body
     = form_for :search, url:  admin_site_members_path, method: :get do |f|
+      .toolbar.row
+        .col-md-12
+          p
+            |支持SIMILAR TO查询语法, %代表匹配所有，_代表匹配一个字符
+            a<[href="https://www.postgresql.org/docs/current/static/functions-matching.html" target="_blank"]查看详情说明
       .toolbar.row
         .col-md-6.m-b-15
           .input-group.search_all
