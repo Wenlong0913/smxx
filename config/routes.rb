@@ -54,7 +54,9 @@ Rails.application.routes.draw do
     end
     resources :users, :concerns => :paginatable
     resources :products, :concerns => :paginatable
-    resources :sites, :concerns => :paginatable
+    resources :sites, :concerns => :paginatable do
+      resources :members
+    end
   end
 
   namespace :agent do

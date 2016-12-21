@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161216024445) do
+ActiveRecord::Schema.define(version: 20161221062959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -161,6 +161,20 @@ ActiveRecord::Schema.define(version: 20161216024445) do
     t.index ["site_id"], name: "index_items_on_site_id", using: :btree
   end
 
+  create_table "members", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "site_id"
+    t.string   "name"
+    t.integer  "gender"
+    t.date     "birth"
+    t.string   "qq"
+    t.string   "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["site_id"], name: "index_members_on_site_id", using: :btree
+    t.index ["user_id"], name: "index_members_on_user_id", using: :btree
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string   "name"
     t.string   "resource_type"
@@ -301,6 +315,8 @@ ActiveRecord::Schema.define(version: 20161216024445) do
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
   add_foreign_key "items", "sites"
+  add_foreign_key "members", "sites"
+  add_foreign_key "members", "users"
   add_foreign_key "theme_configs", "sites"
   add_foreign_key "theme_configs", "themes"
   add_foreign_key "tracker_visits", "tracker_actions", column: "action_id"

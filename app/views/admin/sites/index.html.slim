@@ -16,9 +16,10 @@ h1
       table.table.table-striped
         thead
           tr
-            th User
-            th Title
-            th Description
+            th 用户名
+            th 标题
+            th 描述
+            th 会员
             th
 
         tbody
@@ -27,6 +28,7 @@ h1
               td = site.user && decorate(site.user).display_name
               td = site.title
               td = site.description
+              td = link_to '会员管理', admin_site_members_path(site)
               td
                 => link_to '查看', admin_site_path(site), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_site_path(site), class: 'btn btn-xs btn-default'
