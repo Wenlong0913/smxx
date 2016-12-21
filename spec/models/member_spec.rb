@@ -9,13 +9,15 @@ RSpec.describe Member, type: :model do
   end
 
   it do
-    expect(described_class.attribute_names).to match_array(%w(id user site name gender birth qq email updated_at created_at))
+    expect(described_class.attribute_names).to match_array(%w(id user_id site_id name gender birth qq email updated_at created_at))
   end
 
   # it { should have_many(:xxx) }
-  # it { should belong_to :xxx }
-  # it { should validate_presence_of :xxx }
-  # it { should validate_uniqueness_of(:a).scoped_to(:b) }
+  it { should belong_to :site }
+  it { should belong_to :user }
+  it { should validate_presence_of :user }
+  it { should validate_presence_of :site }
+  it { should validate_uniqueness_of(:user_id).scoped_to(:site_id) }
   # it { should have_attr_accessor :xxx }
 
   describe "Instance" do

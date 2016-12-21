@@ -16,7 +16,7 @@
               li = message
       = f.input :user_id, collection: User.all.decorate, label_method: :display_name
       = f.input :name
-      = f.input :gender, collection: Member.gender, as: :radio_buttons
+      = f.input :gender, collection: enum_options_for_select(Member, :gender), as: :radio_buttons
       = f.input :birth, start_year: Date.today.year - 70,
                               end_year: Date.today.year
       = f.input :qq

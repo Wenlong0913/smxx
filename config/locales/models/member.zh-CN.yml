@@ -9,11 +9,15 @@ zh-CN:
         site: 站点
         name: 会员名称
         gender: 性别
+        genders:
+          male: 男
+          female: 女
+          secret: 保密
         birth: 生日
-        qq: QQ
+        qq: QQ号
         email: 邮箱
     errors:
       models:
-        member: 
+        member:
   helpers:
-    member: 
+    member:

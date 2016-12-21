@@ -1,14 +1,7 @@
-class MemberDecorator < Decorator::Base
+class MemberDecorator < ApplicationDecorator
 
   def display_gender
-    case gender
-    when 'male'
-      '男'
-    when 'female'
-      '女'
-    when 'secret'
-      '保密'
-    end
+    enum_l(object, :gender)
   end
   # def display_name
   #   h.content_tag :span, class: 'title' do

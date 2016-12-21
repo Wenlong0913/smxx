@@ -32,6 +32,7 @@ RSpec.describe User, type: :model do
   it { should have_one :weixin }
   it { should have_many :audits }
   it { should have_many :image_items }
+  it { should have_many :members }
 
   describe 'attribtues' do
     subject { described_class.new.attributes }

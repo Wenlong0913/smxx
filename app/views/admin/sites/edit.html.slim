@@ -1,5 +1,5 @@
 h1 
-  | 编辑 admin_site
+  | 编辑#{Site.model_name.human}
   .pull-right
     => link_to '查看', admin_site_path(@site), class: 'btn btn-primary'
     = link_to '返回', admin_sites_path, class: 'btn btn-primary'

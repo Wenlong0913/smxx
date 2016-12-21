@@ -1,14 +1,14 @@
 # csv support
 require 'csv'
 class Admin::MembersController < Admin::BaseController
+  before_action :set_site
   before_action :set_member, only: [:show, :edit, :update, :destroy]
-  before_action :set_site, only:[:index, :new, :create, :destroy, :update, :show, :edit]
 
   # GET /admin/members
   def index
-    authorize Member
+    authorize @site.members
     @filter_colums = %w(id name qq email)
-    @members = build_query_filter(Member.all, only: @filter_colums).page(params[:page])
+    @members = build_query_filter(@site.members.all, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@members.to_json, filename: "members-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
@@ -30,7 +30,7 @@ class Admin::MembersController < Admin::BaseController
 
   # GET /admin/members/new
   def new
-    authorize Member
+    authorize @site.members
     @member = @site.members.new
   end
 
@@ -41,10 +41,9 @@ class Admin::MembersController < Admin::BaseController
 
   # POST /admin/members
   def create
-    authorize Member
-    @member = @site.members.new(permitted_attributes(Member))
-
-    if @member.save
+    authorize @site.members
+    flag, @member = Member::Create.(permitted_attributes(@site.members).merge(site_id: @site.id))
+    if flag
       redirect_to admin_site_member_path(@site, @member), notice: 'Member 创建成功.'
     else
       render :new
@@ -54,7 +53,8 @@ class Admin::MembersController < Admin::BaseController
   # PATCH/PUT /admin/members/1
   def update
     authorize @member
-    if @member.update(permitted_attributes(@member))
+    flag, @member = Member::Update.(@member, (permitted_attributes(@member)))
+    if flag
       redirect_to admin_site_member_path(@site, @member), notice: 'Member 更新成功.'
     else
       render :edit
@@ -64,14 +64,14 @@ class Admin::MembersController < Admin::BaseController
   # DELETE /admin/members/1
   def destroy
     authorize @member
-    @member.destroy
+    Member::Destroy.(@member)
     redirect_to admin_site_members_url(@site), notice: 'Member 删除成功.'
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_member
-      @member = Member.find(params[:id])
+      @member = @site.members.find(params[:id])
     end
 
     def set_site

@@ -55,7 +55,7 @@ Rails.application.routes.draw do
     resources :users, :concerns => :paginatable
     resources :products, :concerns => :paginatable
     resources :sites, :concerns => :paginatable do
-      resources :members
+      resources :members, :concerns => :paginatable
     end
   end
 
