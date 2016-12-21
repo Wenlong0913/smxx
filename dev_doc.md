@@ -9,6 +9,7 @@
   - [怎么生成一个Item](#how-to-generate-item)
   - [怎么生成一个Controller](#how-to-generate-controller)
   - [View中怎么使用Decorator](#how-to-use-decorator)
+  - [View中获得Enum字段的中文列表](#how-to-get-enum-i18n-from-view)
 - [Model中的一些用法](#how-to-program-model)
     - [数据验证]("how-to-program-model-validators")
 - [测试](#testing)
@@ -170,6 +171,34 @@
 
 这里的`decorate`方法是定义在`app/helpers/decorator_helper.rb`。`ApplicationDecorator`是定义在`app/decorators/application_decorator.rb`中，这个文件中可以看到，`SiteDecorator`可以使用`h`调用view helper方法，用`r`调用路由方法。
 
+<a name="how-to-get-enum-i18n-from-view"></a>
+### View中获得Enum字段的中文列表
+
+我们在`app/helpers/enum_i18n_helper.rb`中提供了两个方法，方便获取enum字段的i18n翻译：
+
+- `enum_l(user, :approval_state)`获取实例的`approval_state`翻译
+- `enum_options_for_select(User, :approval_state)`获取`approval_state`的所有翻译列表，提供给select显示
+
+    # app/model/user.rb
+    class User < ActiveRecord::Base
+      enum approval_state: { unprocessed: 0, approved: 1, declined: 2 }
+    end
+    # config/locales/activerecord.en.yml
+    en:
+      activerecord:
+        attributes:
+          user:
+            approval_states:
+              unprocessed: "Unprocessed"
+              approved: "Approved"
+              declined: "Declined"
+    # in view
+    <%= enum_l(user, :approval_state) %>
+    <div class="form-group">
+       <%= f.label :approval_state %>
+       <%= f.select :approval_state, enum_options_for_select(User, :approval_state) %>
+     </div>
+
 <a name="how-to-program-model"></a>
 ## Model中的一些用法
 
@@ -203,7 +232,11 @@
         validates :mobile_phone, mobile_phone: true
       end
 
+- 验证QQ号
 
+      class User < ApplicationRecord
+        validates :qq_number, qq: true
+      end
 
 <a name="testing"></a>
 ## 测试

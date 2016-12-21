@@ -1,0 +1,29 @@
+h1 
+  | 查看会员
+  .pull-right
+    => link_to '编辑', edit_admin_site_member_path(@site, @member), class: 'btn btn-primary'
+    = link_to '返回', admin_site_members_path(@site), class: 'btn btn-primary'
+
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+    h4 查看 admin_member
+  .panel-body
+    dl
+      dt: strong 用户名
+      dd = @member.user && decorate(@member.user).display_name
+      dt: strong 会员名称
+      dd = @member.name
+      dt: strong 性别 
+      dd = decorate(@member).display_gender
+      dt: strong 生日
+      dd = @member.birth
+      dt: strong QQ
+      dd = @member.qq
+      dt: strong 邮箱
+      dd = @member.email
+

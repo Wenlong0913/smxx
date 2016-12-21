@@ -1,0 +1,15 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      site: 代理商
+    attributes:
+      site:
+        user: 所有者
+        title: 标题
+        description: 备注
+    errors:
+      models:
+        site:
+  helpers:
+    site:

@@ -1,0 +1,23 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      member: 会员
+    attributes:
+      member:
+        user: 用户
+        site: 站点
+        name: 会员名称
+        gender: 性别
+        genders:
+          male: 男
+          female: 女
+          secret: 保密
+        birth: 生日
+        qq: QQ号
+        email: 邮箱
+    errors:
+      models:
+        member:
+  helpers:
+    member:

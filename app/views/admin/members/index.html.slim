@@ -1,7 +1,7 @@
 h1.page-header
-  | #{<%= model_class_name %>.model_name.human}列表
+  | #{@site.title}的会员列表
   .pull-right
-    = link_to "新建#{<%= model_class_name %>.model_name.human}", new_<%= singular_table_name %>_path, class: 'btn btn-primary'
+    = link_to '新建会员', new_admin_site_member_path(@site), class: 'btn btn-primary'
 
 .panel.panel-default
   .panel-heading
@@ -11,7 +11,7 @@ h1.page-header
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
   .panel-body
-    = form_for :search, url:  <%= table_name %>_path, method: :get do |f|
+    = form_for :search, url:  admin_site_members_path, method: :get do |f|
       .toolbar.row
         .col-md-12
           p
@@ -54,28 +54,33 @@ h1.page-header
         strong
           = "查询："
         span
-          = @<%= plural_model_var_name %>.size.to_s + "条记录"
+          = @members.size.to_s + "条记录"
         span.close[data-dismiss="alert"]
           | ×
     .table-responsive.row.m-0
       table.table.table-striped.table-bordered
         thead
           tr
-<% attributes.each do |attribute| -%>
-            th = <%= model_class_name %>.human_attribute_name(:<%= attribute.name %>)
-<% end -%>
-            th
+            th 用户名
+            th 会员名称
+            th 性别
+            th 生日
+            th QQ
+            th 邮箱
+            th 操作
         tbody
-          - @<%= plural_model_var_name %>.each do |<%= model_var_name %>|
+          - @members.each do |member|
             tr
-<% attributes.each do |attribute| -%>
-              td = <%= model_var_name %>.<%= attribute.name %>
-<% end -%>
+              td = member.user && decorate(member.user).display_name
+              td = member.name
+              td = decorate(member).display_gender
+              td = member.birth
+              td = member.qq
+              td = member.email
               td
-                => link_to '查看', <%= singular_table_name %>_path(<%= model_var_name %>), class: 'btn btn-xs btn-default'
-                => link_to '编辑', edit_<%= singular_table_name %>_path(<%= model_var_name %>), class: 'btn btn-xs btn-default'
-                = link_to '删除', <%= singular_table_name %>_path(<%= model_var_name %>), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
-/ TODO: move this code to application.js
+                => link_to '查看', admin_site_member_path(@site,member), class: 'btn btn-xs btn-default'
+                => link_to '编辑', edit_admin_site_member_path(@site,member), class: 'btn btn-xs btn-default'
+                = link_to '删除', admin_site_member_path(@site,member), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
 javascript:
   $(document).ready(function(){
     bindRemoveLabel('.well.filter_search label.control-label');

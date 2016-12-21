@@ -1,7 +1,7 @@
 h1 
-  | admin_sites 列表
+  | #{Site.model_name.human}列表
   .pull-right
-    = link_to '新建 Site', new_admin_site_path, class: 'btn btn-primary'
+    = link_to "新建#{Site.model_name.human}", new_admin_site_path, class: 'btn btn-primary'
 
 .panel
   .panel-heading
@@ -10,15 +10,14 @@ h1
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-    h4 admin_sites 列表
   .panel-body
     .table-responsive
       table.table.table-striped
         thead
           tr
-            th User
-            th Title
-            th Description
+            th 用户名
+            th 标题
+            th 描述
             th
 
         tbody
@@ -30,4 +29,5 @@ h1
               td
                 => link_to '查看', admin_site_path(site), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_site_path(site), class: 'btn btn-xs btn-default'
-                = link_to '删除', admin_site_path(site), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+                => link_to '删除', admin_site_path(site), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+                = link_to '会员管理', admin_site_members_path(site), class: 'btn btn-xs btn-default'

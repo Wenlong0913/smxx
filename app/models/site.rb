@@ -16,6 +16,7 @@ class Site < ApplicationRecord
   has_one :active_theme_config, -> { where(active: true) }, class_name: 'ThemeConfig'
   has_many :items, dependent: :destroy
   has_many :image_items, dependent: :destroy, as: :owner
+  has_many :members, dependent: :destroy
   store_accessor :features, :description
 
   validates_presence_of :title, :user_id

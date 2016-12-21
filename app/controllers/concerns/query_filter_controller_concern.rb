@@ -39,7 +39,7 @@ module QueryFilterControllerConcern
       column_names.each do |k|
         v = format_query_filter_value(model, k, keywords)
         if v
-          query << "#{k} = ?"
+          query << "#{k} SIMILAR TO ?"
           conditions << v
         end
       end
