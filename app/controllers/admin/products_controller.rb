@@ -1,10 +1,25 @@
+# csv support
+require 'csv'
 class Admin::ProductsController < Admin::BaseController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   # GET /admin/products
   def index
     authorize Product
-    @products = Product.all.page(params[:page])
+    @filter_colums = %w(id)
+    @products = build_query_filter(Product.all, only: @filter_colums).page(params[:page])
+    respond_to do |format|
+      if params[:json].present?
+        format.html { send_data(@products.to_json, filename: "products-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
+      elsif params[:xml].present?
+        format.html { send_data(@products.to_xml, filename: "products-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
+      elsif params[:csv].present?
+        # as_csv =>  () | only: [] | except: []
+        format.html { send_data(@products.as_csv(only: []), filename: "products-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+      else
+        format.html
+      end
+    end
   end
 
   # GET /admin/products/1

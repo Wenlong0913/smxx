@@ -1,27 +1,66 @@
-h1 
-  | admin_products 列表
+h1.page-header
+  | #{Product.model_name.human}列表
   .pull-right
-    = link_to '新建 Product', new_admin_product_path, class: 'btn btn-primary'
+    = link_to "新建#{Product.model_name.human}", new_admin_product_path, class: 'btn btn-primary'
 
-.panel
+.panel.panel-default
   .panel-heading
     .panel-heading-btn
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-    h4 admin_products 列表
   .panel-body
-    .table-responsive
-      table.table.table-striped
+    = form_for :search, url:  admin_products_path, method: :get do |f|
+      .toolbar.row
+        .col-md-6.m-b-15
+          .input-group.search_all
+            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '搜索...'
+            span.input-group-btn
+              button.btn.btn-inverse[type='submit']
+                i.fa.fa-search
+        .col-md-6.m-b-15
+          .btn-group
+            button.btn.btn-default.dropdown-toggle[type='button'data-toggle='dropdown']
+              | 筛选列名
+              span.caret
+            ul.dropdown-menu#search_column[role='menu']
+              - @filter_colums.each do |filter_colum|
+                li
+                  a[href='javascript:;'] = filter_colum
+          .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
+            button.btn.btn-default[type='submit'name='json'value='json'] json
+            button.btn.btn-default[type='submit'name='xml'value='xml'] xml
+            button.btn.btn-default[type='submit'name='csv'value='csv'] csv
+      .well.form-horizontal.filter_search[class==params[:filters]?'show':'hidden']
+        - if params[:filters] && !params[:filters].keys.blank?
+          - params[:filters].keys.each do |key|
+            .form-group
+              label.col-xs-1.control-label
+                i.fa.fa-trash-o.m-r-5
+                b = key
+              - input_name = "filters["+key+"]"
+              .col-xs-5
+                input.form-control[type="text"name==input_name value==params[:filters][key]]
+        hr.filters_box
+        button.btn.btn-inverse.p-l-20.p-r-20.pull-center[type='submit'] 搜索
+    - if params[:search]
+      .alert.alert-success.m-b-15
+        strong
+          = "查询："
+        span
+          = @products.size.to_s + "条记录"
+        span.close[data-dismiss="alert"]
+          | ×
+    .table-responsive.row.m-0
+      table.table.table-striped.table-bordered
         thead
           tr
-            th Site
-            th Name
-            th Price
-            th Description
+            th = Product.human_attribute_name(:site)
+            th = Product.human_attribute_name(:name)
+            th = Product.human_attribute_name(:price)
+            th = Product.human_attribute_name(:description)
             th
-
         tbody
           - @products.each do |product|
             tr
@@ -33,3 +72,31 @@ h1
                 => link_to '查看', admin_product_path(product), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_product_path(product), class: 'btn btn-xs btn-default'
                 = link_to '删除', admin_product_path(product), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+/ TODO: move this code to application.js
+javascript:
+  $(document).ready(function(){
+    bindRemoveLabel('.well.filter_search label.control-label');
+    $('form #search_column li a').on('click', function(){
+      if($('.well.filter_search .form-group').length == 0){
+        $('.well.form-horizontal.filter_search').removeClass('hidden').addClass('show');
+      }
+      var column_name = $(this).text();
+      var name = "filters["+ column_name +"]";
+      input_name = "input[name='" + name +"']";
+      if(!$('.well.filter_search').find(input_name).length > 0){
+        $('.well.filter_search hr').before("<div class='form-group'><label class='col-xs-1 control-label'><i class='fa fa-trash-o m-r-5'></i><b>"+ column_name +"</b></label><div class='col-xs-5'><input class='form-control' name='"+ name +"' type='text'></div></div>");
+        $('.well.filter_search .control-label i.fa-trash-o').off();
+        bindRemoveLabel('.well.filter_search label.control-label');
+      }
+    })
+
+    function bindRemoveLabel(dom){
+      $(dom).on('click', function(){
+        $(this).parent('.form-group').remove();
+        if($('.well.filter_search .form-group').length == 0){
+          $('.well.filter_search').addClass('hidden');
+        }
+      })
+    }
+
+  })

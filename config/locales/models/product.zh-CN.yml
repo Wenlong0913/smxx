@@ -1,0 +1,16 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      product: 产品
+    attributes:
+      product:
+        site: 代理商
+        name: 产品名称
+        price: 价格
+        description: 介绍
+    errors:
+      models:
+        product:
+  helpers:
+    product:
