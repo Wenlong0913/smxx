@@ -94,7 +94,9 @@ td {
   overflow-y: hidden;
 }
 .well ol.list-inline{
-  margin: 0px
+  margin: 0px;
+  white-space: nowrap;
+  display: inline-block;
 }
 .well ol li.black-classify{
   height: 420px;
