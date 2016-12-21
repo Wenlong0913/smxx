@@ -16,7 +16,7 @@ h1
       .toolbar.row
         .col-md-6.m-b-15
           .input-group.search_all
-            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: 'Search Our Stories...'
+            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '查询关键字...'
             span.input-group-btn
               button.btn.btn-inverse[type='submit']
                 i.fa.fa-search
