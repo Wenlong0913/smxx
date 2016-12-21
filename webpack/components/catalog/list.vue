@@ -11,11 +11,11 @@
     <div class="list-body table-responsiev">
       <ul class="list-unstyled">
         <transition-group name="transition-list">
-          <li class="column" :data-id="catalog.id" :key="catalog.id" v-for="catalog in catalogs" v-on:mouseenter="mouseEnters($event)" v-on:mouseleave="mouseLeaves($event)">
+          <li class="column" :data-id="catalog.id" :key="catalog.id" v-for="catalog in catalogs" v-on:mouseenter="mouseEnters(catalog)" v-on:mouseleave="mouseLeaves(catalog)">
             <div class="col-xs-9" @click="choosed(catalog)">
               <i class="fa fa-circle text-info m-r-10 small"></i>{{catalog.name}}
             </div>
-            <div class="col-xs-3 text-center text-success handle hidden">
+            <div class="col-xs-3 text-center text-success handle" v-show="catalog.showActions">
               <span data-target=".modal-form" data-toggle="modal" @click="openModal('edit', catalog)">
                 <i class="fa fa-edit"></i>
               </span>
@@ -29,34 +29,61 @@
     </div>
     <!-- li footer -->
     <div class="classify-footer">
-      <span class="btn-link btn-sm pull-right" data-target=".modal-form" data-toggle="modal" @click="openModal('new', catalog)">
+      <span class="btn-link btn-sm pull-right" @click="openModal('new', '')">
         <i class="fa fa-plus-square m-r-5"></i>新增
       </span>
     </div>
+    <catalog-form v-model="showModal" :title="formStatusTitle" v-if="showModal" :model="newCatalogModel" @submit="addCatalog"></catalog-form>
   </li>
 </template>
 <script>
+import CatalogForm from './form'
 export default {
   props: {
     catalogs: { type: Array, required: true },
     depth: { type: Number, required: true, default: 0}
   },
+  data () {
+    return {
+      showModal : false,
+      newCatalogModel: {},
+      formStatusTitle: '',
+      showActionButton: false
+    }
+  },
+  components: { CatalogForm },
   methods: {
     choosed (catalog) {
       this.$emit('choosed', catalog, this.depth);
     },
-    mouseEnters (e) {
-
+    mouseEnters (catalog) {
+      catalog.showActions = true
     },
-    mouseLeaves (e) {
-
+    mouseLeaves (catalog) {
+      catalog.showActions = false
     },
     openModal (action, catalog) {
-
+      this.showModal = true;
+      this.formStatusTitle = action
+      this.newCatalogModel = Object.assign({}, catalog)
     },
     removeData (catalog) {
 
+    },
+    addCatalog (catalog) {
+      console.log(catalog);
+      var _this = this;
+      setTimeout(function () {
+        _this.showModal = false;
+      }, 1000);
     }
+  }
+  ,
+  mounted () {
+    var _this = this;
+    this.catalogs.forEach(function(catalog){
+      _this.$set(catalog, 'showActions', false)
+    })
   }
 }
 </script>
@@ -126,7 +153,7 @@ export default {
 .black-classify .list-body ul.list-unstyled li .col-xs-3 i{
   margin: 0px 10px;
 }
-.black-classify .list-body ul.list-unstyled li .col-xs-3 i:hover{
+.black-classify .list-body ul.list-unstyled li .col-xs-3 span:hover{
   color: red;
 }
 .black-classify .classify-footer{
