@@ -51,7 +51,7 @@ export default {
   },
   data () {
     return {
-      options: {formStatus: 'formStatus /new', responseMessage: 'responseMessage /..', parent_id: 'parent_id /0', index: 'index/ 0', addChildren: false},
+      options: {formStatus: '', responseMessage: '', parent_id: '', index:'', addChildren: false},
       showModal : false,
       newCatalogModel: {},
       showActionButton: false,
