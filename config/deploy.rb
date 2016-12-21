@@ -14,18 +14,30 @@ end
 
 set :application, "tmf"
 set :repo_url, "git@gitlab.tanmer.com:tanmer/tmf.git"
-ask :project_name
 set :rvm_ruby_version, '2.3'
 
-# Default branch is :master
-ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+before 'deploy:check', 'deploy:check:project_and_branch'
+after 'deploy:assets:precompile', 'webpack:default'
 
-quit("project_name 必须填写") if fetch(:project_name).to_s.strip.empty?
-branch_prefix = "#{fetch(:project_name)}-"
-quit("branch名称必须以#{branch_prefix}开头，否者不允许部署!") unless fetch(:branch).start_with?(branch_prefix)
+# before 'deploy:check', :check_project_and_branch do
+#   ask :project_name
+#   # Default branch is :master
+#   ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+#   quit("project_name 必须填写") if fetch(:project_name).to_s.strip.empty?
+#   branch_prefix = "#{fetch(:project_name)}-"
+#   quit("branch名称必须以#{branch_prefix}开头，否者不允许部署!") unless fetch(:branch).start_with?(branch_prefix)
+#   set :deploy_to, "/data/www/#{fetch(:project_name)}"
+# end
+#
+# after 'deploy:assets:precompile', :compile_webpack do
+#   invoke 'webpack:install'
+#   invoke 'webpack:precompile'
+# end
+
+# before 'deploy:check:directories', :check_project_and_branch
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/data/www/#{fetch(:project_name)}"
+
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
@@ -38,10 +50,10 @@ set :deploy_to, "/data/www/#{fetch(:project_name)}"
 # set :pty, true
 
 # Default value for :linked_files is []
-# append :linked_files, "config/database.yml", "config/secrets.yml"
+append :linked_files, "config/database.yml", "config/secrets.yml", "config/settings.yml"
 
 # Default value for linked_dirs is []
-# append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/assets", 'node_modules'
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
