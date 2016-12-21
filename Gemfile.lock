@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: git@gitlab.tanmer.com:tm-themes/theme_color_admin.git
-  revision: ca98de25abfc9f1826881c4df5028c97e2b66f33
+  revision: 8d4fa59abc0e17713ef3d1320520ac0e462b04d5
   specs:
     theme_color_admin (0.0.4)
       rails (>= 4.2.7)
@@ -167,7 +167,7 @@ GEM
       execjs
     coffee-script-source (1.11.1)
     colorize (0.8.1)
-    concurrent-ruby (1.0.2)
+    concurrent-ruby (1.0.3)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     database_cleaner (1.5.3)
@@ -435,7 +435,7 @@ GEM
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
-    sprockets (3.7.0)
+    sprockets (3.7.1)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (3.2.0)
