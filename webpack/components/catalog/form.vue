@@ -9,7 +9,7 @@
             <span aria-hidden="true">&times;</span>
             <span class="sr-only">关闭</span>
           </button>
-          <h4 class="modal-title modalLabel">{{title}}</h4>
+          <h4 class="modal-title modalLabel">{{ options.formStatus == 'new' ? '新建目录' : '修改' }}</h4>
         </div>
         <!-- modal body -->
         <div class="modal-body">
@@ -21,8 +21,8 @@
               </div>
             </div>
             <!-- 状态提示信息 -->
-            <div class="return_messages text-right text-success">
-              状态提示信息
+            <div class="return_messages text-right" :class="options.responseMessage.status ? 'text-success' : 'text-danger' ">
+              {{ options.responseMessage.text}}
             </div>
           </div>
         </div>
@@ -38,9 +38,9 @@
 <script>
 export default{
   props: {
+    options: { type: Object, required: true },
     value: { type: Boolean, default: true },
-    model: { type: Object, required: true },
-    title: {}
+    model: { type: Object, required: true }
   },
   data() {
     return{
@@ -51,7 +51,13 @@ export default{
       this.$emit('input', false)
     },
     submit () {
-      this.$emit('submit', this.model)
+      this.model.parent_id = this.options.parent_id;
+      var model = {catalog: this.model, options: this.options };
+      if (this.options.formStatus=='new') {
+        this.$emit('addSubmit', model)
+      }else if (this.options.formStatus=='edit') {
+        this.$emit('editSubmit', model)
+      }
     }
   }
 }
