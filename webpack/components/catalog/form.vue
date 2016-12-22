@@ -24,6 +24,9 @@
             <div class="return_messages text-right" :class="options.responseMessage.status ? 'text-success' : 'text-danger' ">
               {{ options.responseMessage.text}}
             </div>
+            <div class="small text-right warn">
+              <span>* 目录名称不可重复</span>
+            </div>
           </div>
         </div>
         <!-- modal footer -->
@@ -73,5 +76,10 @@ export default{
   left: 0;
   z-index: 1050;
   overflow: hidden;
+}
+.catalog-modal .warn{
+  position: absolute;
+  bottom: -15px;
+  right: 15px;
 }
 </style>
