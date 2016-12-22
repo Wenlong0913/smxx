@@ -12,10 +12,28 @@ h1
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
   .panel-body
-    dl
-      dt: strong User
-      dd = decorate(@site.user).display_name
-      dt: strong Title
-      dd = @site.title
-      dt: strong Description
-      dd = @site.description
+    .profile-container
+      .profile-info
+        .table-responsive
+          table.table.table-profile
+            tr
+              td.field 用户名
+              td
+                a
+                  =decorate(@site.user).display_name
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 名称
+              td
+                a
+                  = @site.title
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 描述
+              td
+                a
+                  = @site.description
+            tr.divider
+              td[colspan='2']
