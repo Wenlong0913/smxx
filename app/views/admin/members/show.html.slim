@@ -11,19 +11,51 @@ h1
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-    h4 查看 admin_member
+    h4 #{@site.title} 会员
   .panel-body
-    dl
-      dt: strong 用户名
-      dd = @member.user && decorate(@member.user).display_name
-      dt: strong 会员名称
-      dd = @member.name
-      dt: strong 性别 
-      dd = decorate(@member).display_gender
-      dt: strong 生日
-      dd = @member.birth
-      dt: strong QQ
-      dd = @member.qq
-      dt: strong 邮箱
-      dd = @member.email
-
+    .profile-container
+      .profile-info
+        .table-responsive
+          table.table.table-profile
+            tr
+              td.field 用户名
+              td
+                a
+                  =@member.user && decorate(@member.user).display_name
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 会员名称
+              td
+                a
+                  = @member.name
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 性别
+              td
+                a
+                  = decorate(@member).display_gender
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 生日
+              td
+                a
+                  = @member.birth
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field QQ号
+              td
+                a
+                  = @member.qq
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 邮箱
+              td
+                a
+                  = @member.email
+            tr.divider
+              td[colspan='2']

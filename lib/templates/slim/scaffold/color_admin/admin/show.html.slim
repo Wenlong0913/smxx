@@ -13,8 +13,17 @@ h1
         i class="fa fa-minus"
     h4 查看 <%= singular_table_name %>
   .panel-body
-    dl
-    <%- attributes.each do |attribute| -%>
-      dt: strong <%= attribute.human_name %>
-      dd = @<%= model_var_name %>.<%= attribute.name %>
-    <%- end -%>
+    .profile-container
+      .profile-info
+        .table-responsive
+          table.table.table-profile
+          <%- attributes.each do |attribute| -%>
+            tr
+              td.field
+                | <%= attribute.human_name %>
+              td
+                a
+                  = @<%= model_var_name %>.<%= attribute.name %>
+            tr.divider
+              td[colspan='2']
+          <%- end -%>

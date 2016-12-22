@@ -64,7 +64,7 @@ h1.page-header
         tbody
           - @products.each do |product|
             tr
-              td = product.site
+              td = product.site.title
               td = product.name
               td = product.price
               td = product.description
