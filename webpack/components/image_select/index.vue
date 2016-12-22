@@ -54,11 +54,14 @@
     },
     mounted (){
       var vm = this;
-      vm.$http.get(vm.server + '?ids=' + vm.selectedIds).then((data) => {
-        vm.imageList = data.body.image_items;
-      }, (response) => {
-          // error callback
-      });      
+      if(vm.selectedIds){
+        vm.$http.get(vm.server + '?ids=' + vm.selectedIds).then((data) => {
+          vm.imageList = data.body.image_items;
+        }, (response) => {
+            // error callback
+        });         
+      }
+     
     },
     methods: {
       selected_images(image){

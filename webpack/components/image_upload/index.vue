@@ -1,14 +1,17 @@
 <template>
-  <input type="file" :name="name"/>
+    <div>
+      <input type="file" :name="name"/>
+      <img :src="imageUrl" alt="">  
+    </div>   
 </template>
 
 <script>
   import Slim from './slim.commonjs'
   export default {
-    props: ['name', 'autoUpload', 'server'],
+    props: ['name', 'autoUpload', 'server', "imageUrl"],
     mounted (){
       var vm = this;
-      new Slim(vm.$el, {
+      var slim = new Slim(vm.$el, {
         service:  vm.server || '/image_items',
         push: vm.autoUpload,
         label: '选择图片',
