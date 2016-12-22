@@ -8,8 +8,12 @@ class ApplicationController < ActionController::Base
   impersonates :user
 
   #render 404 error
-  def not_found
+  def not_found!
     raise ActionController::RoutingError.new('Not Found')
+  end
+
+  def json_update_failed!
+    head 406
   end
 
   private
