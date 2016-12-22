@@ -1,6 +1,6 @@
 namespace :webpack do
 
-  after 'deploy:assets:precompile', 'webpack'
+  after 'deploy:assets:precompile', 'webpack:defaults'
 
   task :defaults => ['install', 'precompile'] do
   end
