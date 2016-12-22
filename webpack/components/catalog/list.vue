@@ -103,7 +103,7 @@ export default {
           this.$emit("removeCatalog", {depth: this.depth, catalogIndex: index, catalog: catalog});
         }
         var errorHandler = function(response){
-          alert('error');
+          alert('删除失败！');
         }
         this.$http.delete(deleteUrl).then(successHandler, errorHandler);
       }
@@ -114,29 +114,32 @@ export default {
       var successHandler = function(response){
         var reCatalog = response.body;
         if (this.options.addChildren) {// 分为内部添加按钮 和 底部添加按钮
-          this.catalogs[options.index].children.push(reCatalog)
+          this.catalogs[options.index].children.push(reCatalog);
+          this.choosed(this.catalogs[options.index])
         }else {
           this.catalogs.push(reCatalog)
         }
         this.options.responseMessage = {status: true, text: '添加成功'};
+        var _this = this;
+        setTimeout(function () {
+          _this.showModal = false;
+        }, 1000);
       }
       var errorHandler = function(response){
-        this.responseMessage = {status: false, text: '添加失败，出错了......'}
+        this.options.responseMessage = {status: false, text: '添加失败，出错了......'}
       }
-      console.log(catalog);
       this.$http.post(addUrl, catalog).then(successHandler, errorHandler);
-      // var _this = this;
-      // setTimeout(function () {
-      //   _this.showModal = false;
-      // }, 1000);
     },
     editCatalog (obj) {
-
       var catalog = obj.catalog, options = obj.options;
       const editUrl = this.dataUrl+"/"+catalog.id;
       var successHandler = function(response){
         options.responseMessage = {status: true, text: '修改成功'}
         this.catalogs[options.index].name= catalog.name
+        var _this = this;
+        setTimeout(function () {
+          _this.showModal = false;
+        }, 1000);
       }
       var errorHandler = function(response){
         options.responseMessage = {status: false, text: '出错了......'}
