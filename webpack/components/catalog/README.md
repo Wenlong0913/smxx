@@ -45,32 +45,36 @@
     end
   end
 
+  # POST /admin/catalogs
   def create
-    @admin_catalog = Catalog.new(admin_catalog_params)
-    if @admin_catalog.save
+    authorize Catalog
+    flag, @admin_catalog = Catalog::Create.(admin_catalog_params)
+    if flag
       render json: @admin_catalog
     else
-      head 403
+      json_update_failed!
     end
   end
 
+  # PATCH/PUT /admin/catalogs/1
   def update
     authorize @admin_catalog
-    if @admin_catalog.update(admin_catalog_params)
-      render json: {status: 'Catalog 更新成功.'}
+    flag, @admin_catalog = Catalog::Update.(@admin_catalog, admin_catalog_params)
+    if flag
+      head :ok
     else
-      render json: {status: 'Catalog 更新失败.'}
+      json_update_failed!
     end
   end
 
+  # DELETE /admin/catalogs/1
   def destroy
     authorize @admin_catalog
-    @admin_catalog.destroy
-    render json: {status: 'Catalog 删除成功.'}
+    Catalog::Destroy.(@admin_catalog)
+    head :ok
   end
 
   private
-
     # Use callbacks to share common setup or constraints between actions.
     def set_admin_catalog
       @admin_catalog = Catalog.find(params[:id])

@@ -18,7 +18,7 @@
     <div class="panel-body">
       <div class="well well-sm table-responsive">
         <ol class="list-inline">
-          <li class="black-classify" v-for="(arr, depth) in catalogGroups" is='catalog' :depth="depth" :parent_id="arr[0]" :catalogs="arr[1]" @choosed="choosed"  :breadcrumb="breadcrumb" :dataUrl="dataUrl" @removeCatalog="removeCatalogGroupsDate" ></li>
+          <li class="black-classify" v-for="(arr, depth) in catalogGroups" is='catalog' :depth="depth" :parent_id="arr[0]" :catalogs="arr[1]" @choosed="choosed"  :breadcrumb="breadcrumb" :dataUrl="dataUrl" @removeCatalog="removeCatalogGroupsData" ></li>
         </ol>
       </div>
     </div>
@@ -59,7 +59,7 @@ export default {
         }
       }
     },
-    removeCatalogGroupsDate (obj) {
+    removeCatalogGroupsData (obj) {
       var depth = parseInt(obj.depth), index = parseInt(obj.catalogIndex)
       if (this.catalogGroups.length > depth) {
         this.catalogGroups[depth][1].splice(index, 1)
