@@ -11,7 +11,7 @@ class CmsController < ApplicationController
   def channel
     @channel ||= @site.channels.find_by(short_title: params[:channel])
     @channel ||= @site.channels.find_by(id: params[:channel])
-    @channel || not_found
+    @channel || not_found!
     @channel
     @pages = @channel.pages.page(params[:page])
     if request.path != good_path=get_cms_url(@channel, page: params[:page])
