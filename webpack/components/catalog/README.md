@@ -19,8 +19,7 @@
     ``` -->
     js 文件中:
     ```
-    var container = pages.find('catalog-list');
-    new Vue({el: container[0]});
+    new Vue({el: 'catalog-list'});
     ```
 
 
