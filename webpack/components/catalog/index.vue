@@ -70,10 +70,11 @@ export default {
       }
     },
     removeCatalogGroupsDate (obj) {
-      if (this.catalogGroups.length > obj.depth) {
-        if (this.catalogGroups[obj.depth+1][0] == obj.catalog.id) {
-          this.catalogGroups.splice(obj.depth)[1].splice(obj.index, 1)
-          this.catalogGroups.splice(obj.depth + 1)
+      var depth = parseInt(obj.depth), index = parseInt(obj.catalogIndex)
+      if (this.catalogGroups.length > depth) {
+        this.catalogGroups[depth][1].splice(index, 1)
+        if (this.catalogGroups[depth+1][0] == obj.catalog.id) {
+          this.catalogGroups.splice(depth + 1)
         }
       }
     }
