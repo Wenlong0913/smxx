@@ -148,12 +148,6 @@ export default {
 </script>
 
 <style scoped>
-/*.cl {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-}*/
-
 .black-classify .search{
   border: 1px solid #ccc;
 }

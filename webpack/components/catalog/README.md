@@ -1,9 +1,41 @@
-class Admin::CatalogsController < Admin::BaseController
-  before_action :set_admin_catalog, only: [:edit, :update, :destroy]
+## 横向展示目录组件
+### 1. 需要
 
-  # GET /admin/catalogs
+  1. routes
+  ```
+  resources :catalogs
+  ```
+  2. 需要gem
+  ```
+  gem 'closure_tree'
+  ```
+  3. create catalog_table
+
+### 2. 引入组件
+    <!-- 在 webpack/appliction
+
+    ```
+    Vue.component ('catalogList', require('components/catalog'))
+    ``` -->
+    js 文件中:
+    ```
+    var container = pages.find('catalog-list');
+    new Vue({el: container[0]});
+    ```
+
+
+### 3. veiw
+
+  > data-url :传入index url
+
+  ```
+  <catalog-list data-url=admin_catalogs_path></catalog-list>
+  ```
+
+### 4. controller
+
+```
   def index
-    authorize Catalog
     respond_to do |format|
       format.html
       format.json do
@@ -13,25 +45,7 @@ class Admin::CatalogsController < Admin::BaseController
     end
   end
 
-  # GET /admin/catalogs/1
-  def show
-    authorize @admin_catalog
-  end
-
-  # GET /admin/catalogs/new
-  def new
-    authorize Catalog
-    @admin_catalog = Catalog.new
-  end
-
-  # GET /admin/catalogs/1/edit
-  def edit
-    authorize @admin_catalog
-  end
-
-  # POST /admin/catalogs
   def create
-    authorize Catalog
     @admin_catalog = Catalog.new(admin_catalog_params)
     if @admin_catalog.save
       render json: @admin_catalog
@@ -40,7 +54,6 @@ class Admin::CatalogsController < Admin::BaseController
     end
   end
 
-  # PATCH/PUT /admin/catalogs/1
   def update
     authorize @admin_catalog
     if @admin_catalog.update(admin_catalog_params)
@@ -50,7 +63,6 @@ class Admin::CatalogsController < Admin::BaseController
     end
   end
 
-  # DELETE /admin/catalogs/1
   def destroy
     authorize @admin_catalog
     @admin_catalog.destroy
@@ -58,6 +70,7 @@ class Admin::CatalogsController < Admin::BaseController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_admin_catalog
       @admin_catalog = Catalog.find(params[:id])
@@ -67,4 +80,24 @@ class Admin::CatalogsController < Admin::BaseController
     def admin_catalog_params
       params.permit(:parent_id, :name, :position)
     end
-end
+```
+
+### 5. 序列化返回json
+
+  create: serializers/catalog_serializer
+
+  ```
+  attributes :id, :name, :children
+  has_many :children
+
+  def children
+    object.children.map{|c| CatalogSerializer.new(c).as_json }
+  end
+  ```
+
+### 6. models
+
+  ```
+  has_closure_tree dependent: :destroy #关联删除下级目录
+  belongs_to :parent
+  ```

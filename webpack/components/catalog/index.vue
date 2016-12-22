@@ -22,17 +22,7 @@
         </ol>
       </div>
     </div>
-
   </div>
-
-
-  <!-- <div class="cc">
-    <table class="table table-stripped">
-      <tr>
-        <td v-for="(catalogs, depth) in catalogGroups" is='catalog' :depth="depth" :catalogs="catalogs" @choosed="choosed"></td>
-      </tr>
-    </table>
-  </div> -->
 </template>
 <script>
 import Catalog from './list'
@@ -86,17 +76,6 @@ export default {
 </script>
 
 <style scoped>
-/*.cc {
-  overflow-x: auto;
-}
-td {
-  min-width: 400px;
-  max-width: 400px;
-  min-height: 200px;
-  height: 200px;
-  position: relative;
-  align: top;
-}*/
 .well{
   background: #efefef;
   min-width: 100%;
