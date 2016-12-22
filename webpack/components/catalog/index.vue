@@ -17,15 +17,18 @@
     <!-- panel body -->
     <div class="panel-body">
       <div class="well well-sm table-responsive">
-        <ol class="list-inline">
-          <li class="black-classify" v-for="(arr, depth) in catalogGroups" is='catalog' :depth="depth" :parent_id="arr[0]" :catalogs="arr[1]" @choosed="choosed"  :breadcrumb="breadcrumb" :dataUrl="dataUrl" @removeCatalog="removeCatalogGroupsData"></li>
-        </ol>
+        <!-- <ol class="list-inline"> -->
+          <transition-group name="bounce" tag="ol" class="list-inline">
+            <li class="black-classify" :key="depth" v-for="(arr, depth) in catalogGroups" is='catalog' :depth="depth" :parent_id="arr[0]" :catalogs="arr[1]" @choosed="choosed"  :breadcrumb="breadcrumb" :dataUrl="dataUrl" @removeCatalog="removeCatalogGroupsData"></li>
+          </transition-group>
+        <!-- </ol> -->
       </div>
     </div>
   </div>
 </template>
 <script>
 import Catalog from './list'
+import 'transitions/bounce';
 export default {
   props: {
     dataUrl: { required: true, type: String }

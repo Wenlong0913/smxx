@@ -4,6 +4,7 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.2",
+    "sass-loader": "^4.1.1",
     "stats-webpack-plugin": "^0.2.1",
     "vue": "^2.1.6",
     "vue-resource": "^1.0.3",
