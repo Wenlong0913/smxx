@@ -97,6 +97,7 @@ gem 'theme_color_admin', git: 'git@gitlab.tanmer.com:tm-themes/theme_color_admin
 # gem 'theme_card', git: 'git@gitlab.tanmer.com:tm-themes/theme_card.git'
 gem 'closure_tree'
 gem 'select2-rails'
+gem 'sidekiq'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -138,6 +139,7 @@ group :deployment do
   gem 'capistrano-rvm'
   gem 'capistrano-passenger'
   gem 'capistrano-rails'
+  gem 'capistrano-sidekiq'
 end
 
 gem 'colorize', group: [:development, :test, :deployment]
