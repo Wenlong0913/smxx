@@ -7,7 +7,7 @@
         i class="fa fa-minus"
     h4 admin_product
   .panel-body
-    = simple_form_for @product, url: @product.new_record? ? admin_products_path : admin_product_path(@product), validate: true do |f|
+    = simple_form_for @product, url: @product.new_record? ? admin_products_path : admin_product_path(@product) do |f|
       - if @product.errors.any?
         #error_explanation
           h2 = "#{pluralize(@product.errors.count, "error")} prohibited this product from being saved:"
@@ -16,10 +16,12 @@
               li = message
 
       = f.association :site
+      - catalogList = Catalog.where(name: '产品分类').first.try{children.map{ |x| [x.name, x.id]}}
+      = f.association :catalog, collection: catalogList, include_blank: true, input_html: { class: 'select2', data: { placeholder: '选择' }}
       = f.input :name
       = f.input :price
       = f.input :description
       .form-group
-        image-select[server="#{image_items_path}" name="products[image_items][]"]
-        image-upload[auto-upload="true" name="products[image_items][]" server="#{image_items_path}"]
+        image-select[server="#{image_items_path}" name="product[image_item_ids][]" selected-ids="#{@product.image_item_ids.join(', ')}"]
+        image-upload[auto-upload="true" name="product[image_item_ids][]" server="#{image_items_path}"]
       = f.submit class: 'btn btn-success btn-block'

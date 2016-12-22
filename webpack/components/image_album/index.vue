@@ -12,7 +12,8 @@
     </div>
     <div id="gallery" class="gallery">
       <div class="row">
-          <div class="image col-sm-6 col-md-4" v-for="image in imageList">
+        <transition-group name="list" tag="div">
+          <div class="image col-sm-6 col-md-4" v-for="image in imageList" v-bind:key="image.id">
               <div class="image-inner">
                   <a href="javascript:;" data-lightbox="gallery-group-1">
                       <img :src="image.data.image" alt="" />
@@ -36,8 +37,9 @@
                   </p>
               </div>
           </div>
+        </transition-group>
       </div>
-    </div>
+    </div>  
   </div>  
 </template>
 
@@ -187,6 +189,14 @@
   }
   .gallery .rating span.star.active:before {
       color: #FF8500;
+  }
+
+  .list-enter-active, .list-leave-active {
+    transition: all 0.5s;
+  }
+  .list-enter, .list-leave-active {
+    opacity: 0;
+    transform: translateY(30px);
   }
 
 </style>

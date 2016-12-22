@@ -6,6 +6,7 @@ zh-CN:
     attributes:
       product:
         site: 代理商
+        catalog: 产品分类
         name: 产品名称
         price: 价格
         description: 介绍

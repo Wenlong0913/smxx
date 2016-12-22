@@ -14,6 +14,7 @@ class Item < ApplicationRecord
   validates_presence_of :site
   validates_uniqueness_of :name, scope: :site_id
 
+
   def self.has_deeper_child?(record, child_id)
     record.children.each do |child|
       return true if child.id == child_id

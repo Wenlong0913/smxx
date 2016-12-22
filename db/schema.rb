@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161221062959) do
+ActiveRecord::Schema.define(version: 20161222080634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(version: 20161221062959) do
     t.datetime "updated_at", null: false
     t.string   "type"
     t.string   "name_py"
+    t.integer  "catalog_id"
     t.index ["site_id"], name: "index_items_on_site_id", using: :btree
   end
 
@@ -192,6 +193,14 @@ ActiveRecord::Schema.define(version: 20161221062959) do
     t.datetime "updated_at", null: false
     t.jsonb    "features"
     t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
+  end
+
+  create_table "tests", force: :cascade do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.integer  "gender"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "theme_configs", force: :cascade do |t|

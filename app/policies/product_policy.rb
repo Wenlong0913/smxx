@@ -36,9 +36,9 @@ class ProductPolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.super_admin_or_admin?
-      [:site_id, :name, :price, :description]
+      [:site_id, :name, :price, :description, :catalog_id, :image_item_ids => []]
     else
-      [:name, :price, :description]
+      [:name, :price, :description, :catalog_id,  :image_item_ids => []]
     end
   end
 

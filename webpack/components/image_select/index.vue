@@ -35,7 +35,7 @@
 
 <script>
   export default {
-    props: ['server', 'name'],
+    props: ['server', 'name', 'selectedIds'],
     data(){
       return {
         showModal: false,
@@ -51,6 +51,14 @@
         })
         // return [1,2,3];
       }
+    },
+    mounted (){
+      var vm = this;
+      vm.$http.get(vm.server + '?ids=' + vm.selectedIds).then((data) => {
+        vm.imageList = data.body.image_items;
+      }, (response) => {
+          // error callback
+      });      
     },
     methods: {
       selected_images(image){

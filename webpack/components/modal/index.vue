@@ -10,7 +10,7 @@
             </slot>
           </div>
 
-          <div class="modal-body">
+          <div class="modal-body table-responsive">
             <slot name="body">
               default body
             </slot>
@@ -69,6 +69,7 @@
 
   .modal-body {
     margin: 20px 0;
+    height: 300px;
   }
 
   .modal-default-button {
