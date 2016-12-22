@@ -1,10 +1,12 @@
 namespace :webpack do
 
-  task :default => ['install', 'precompile'] do
+  after 'deploy:assets:precompile', 'webpack'
+
+  task :defaults => ['install', 'precompile'] do
   end
 
   desc "Install npm packages for webpack"
-  task :install => 'deploy:check:project_and_branch' do
+  task :install do
     on roles(:assets) do |h|
       within release_path do
         execute :npm, :install
@@ -13,7 +15,7 @@ namespace :webpack do
   end
 
   desc "Compile assets for webpack"
-  task :precompile => ['deploy:check:project_and_branch'] do
+  task :precompile do
     on roles(:assets) do |h|
       within release_path do
         with rails_env: fetch(:stage) do
