@@ -127,6 +127,7 @@ export default {
         // }, 1000);
       }
       var errorHandler = function(response){
+        console.log(response)
         this.options.responseMessage = {status: false, text: '添加失败，出错了......'}
       }
       this.$http.post(addUrl, catalog).then(successHandler, errorHandler);
