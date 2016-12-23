@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'closure_tree/test/matcher'
 
 RSpec.describe Catalog, type: :model do
 
@@ -9,12 +10,14 @@ RSpec.describe Catalog, type: :model do
   end
 
   it do
-    expect(described_class.attribute_names).to match_array(%w(id parent name position updated_at created_at))
+    expect(described_class.attribute_names).to match_array(%w(id parent_id name position updated_at created_at))
   end
 
   # it { should have_many(:xxx) }
   # it { should belong_to :xxx }
-  # it { should validate_presence_of :xxx }
+  it { should validate_presence_of :name }
+  it { should validate_uniqueness_of(:name) }
+  it { should be_a_closure_tree }
   # it { should validate_uniqueness_of(:a).scoped_to(:b) }
   # it { should have_attr_accessor :xxx }
 

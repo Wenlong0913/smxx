@@ -10,7 +10,7 @@
     <!-- list body -->
     <div class="list-body table-responsiev">
       <ul class="list-unstyled">
-        <transition-group name="transition-list">
+        <transition-group name="fade">
           <li class="column" :data-id="catalog.id" :key="catalog.id" v-for="(catalog, index) in filterCatalog(catalogs)" v-on:mouseenter="mouseEnters(catalog)" v-on:mouseleave="mouseLeaves(catalog)" v-show="catalog.filterShow" v-bind:class="catalog.selected ? 'active' : ''">
             <div class="col-xs-9" @click="choosed(catalog)">
               <i class="fa fa-circle text-info m-r-10 small"></i>{{catalog.name}}
@@ -41,6 +41,7 @@
 </template>
 <script>
 import CatalogForm from './form'
+import 'transitions/fade';
 export default {
   props: {
     breadcrumb: { type: Array, required: true },
@@ -121,11 +122,12 @@ export default {
         }
         this.options.responseMessage = {status: true, text: '添加成功'};
         var _this = this;
-        setTimeout(function () {
+        // setTimeout(function () {
           _this.showModal = false;
-        }, 1000);
+        // }, 1000);
       }
       var errorHandler = function(response){
+        console.log(response)
         this.options.responseMessage = {status: false, text: '添加失败，出错了......'}
       }
       this.$http.post(addUrl, catalog).then(successHandler, errorHandler);
@@ -137,9 +139,9 @@ export default {
         options.responseMessage = {status: true, text: '修改成功'}
         this.catalogs[options.index].name= catalog.name
         var _this = this;
-        setTimeout(function () {
+        // setTimeout(function () {
           _this.showModal = false;
-        }, 1000);
+        // }, 1000);
       }
       var errorHandler = function(response){
         options.responseMessage = {status: false, text: '出错了......'}

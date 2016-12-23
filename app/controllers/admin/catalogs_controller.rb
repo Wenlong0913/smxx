@@ -36,7 +36,7 @@ class Admin::CatalogsController < Admin::BaseController
     if flag
       render json: @admin_catalog
     else
-      json_update_failed!
+      render json: @admin_catalog.errors, status: :failed
     end
   end
 
@@ -47,7 +47,7 @@ class Admin::CatalogsController < Admin::BaseController
     if flag
       head :ok
     else
-      json_update_failed!
+      render json: @admin_catalog.errors.as_json, status: :failed
     end
   end
 

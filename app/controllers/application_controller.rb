@@ -12,10 +12,6 @@ class ApplicationController < ActionController::Base
     raise ActionController::RoutingError.new('Not Found')
   end
 
-  def json_update_failed!
-    head 406
-  end
-
   private
   def user_not_authorized
     flash[:alert] = "没有访问权限"

@@ -1,7 +1,7 @@
 var utils = require('./webpack.utils')
 var config = {
   resolve: {
-    extensions: ['', '.js', '.coffee', '.vue', '.json'],
+    extensions: ['', '.js', '.coffee', '.vue', '.json', '.css', '.scss', '.sass'],
     alias: {
       vue: 'vue/dist/vue'
     }
@@ -24,7 +24,9 @@ var config = {
           limit: 10000,
           name: utils.assetsPath('[name].[hash:7].[ext]')
         }
-      }
+      },
+      { test: /\.coffee$/, loader: "coffee-loader" },
+      { test: /\.(scss|sass)$/, loader: "style!css!sass" },
     ]
   },
   vue: {
