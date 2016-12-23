@@ -23,7 +23,9 @@
       = f.input :description
       .form-group
         image-select[server="#{image_items_path}" name="product[image_item_ids][]" selected-ids="#{@product.image_item_ids.join(', ')}"]
-        image-upload[auto-upload="true" name="product[image_item_ids][]" server="#{image_items_path}"]
+        / .row
+        /   .col-md-4
+        /     image-upload[auto-upload="true" name="product[image_item_ids][]" server="#{image_items_path}"]
       .form-group
         multi-image-upload[auto-upload="true" name="product[image_item_ids][]" server="#{image_items_path}"]
       = f.submit class: 'btn btn-success btn-block'
