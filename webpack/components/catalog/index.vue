@@ -1,17 +1,25 @@
 <template>
-  <div class="panel panel-default">
+  <div class="panel panel-default" v-if="catalogPanelShow" v-bind:class="{ 'catalog-fixed': catalogFixed }">
     <!-- panel head -->
     <div class="panel-heading">
       <div class="panel-heading-btn">
-        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand">
-          <i class="fa fa-expand"></i>
-        </a>
-        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse">
-          <i class="fa fa-minus"></i>
-        </a>
+        <div v-if="catalogFixed" >
+          <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" @click="closePanel">
+            <i class="fa fa-close"></i>
+          </a>
+        </div>
+        <div v-else >
+          <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand">
+            <i class="fa fa-expand"></i>
+          </a>
+          <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse">
+            <i class="fa fa-minus"></i>
+          </a>
+        </div>
       </div>
       <ol class="breadcrumb samll">
-        <li v-for="value in breadcrumb">{{ value }}</li>
+        <li>选择：</li>
+        <li v-for="value in breadcrumb">{{ value.name }}</li>
       </ol>
     </div>
     <!-- panel body -->
@@ -19,10 +27,15 @@
       <div class="well well-sm table-responsive">
         <!-- <ol class="list-inline"> -->
           <transition-group name="bounce" tag="ol" class="list-inline">
-            <li class="black-classify" :key="depth" v-for="(arr, depth) in catalogGroups" is='catalog' :depth="depth" :parent_id="arr[0]" :catalogs="arr[1]" @choosed="choosed"  :breadcrumb="breadcrumb" :dataUrl="dataUrl" @removeCatalog="removeCatalogGroupsData"></li>
+            <li class="black-classify" :key="depth" v-for="(arr, depth) in catalogGroups" is='catalog' :depth="depth" :parent_id="arr[0]" :catalogs="arr[1]" @choosed="choosed"  :breadcrumb="breadcrumb" :dataUrl="dataUrl" @removeCatalog="removeCatalogGroupsData" :catalogFixed="catalogFixed"></li>
           </transition-group>
         <!-- </ol> -->
       </div>
+    </div>
+    <!-- panel footer -->
+    <div class="panel-footer text-right" v-if="catalogFixed">
+      <button type="button" class="btn btn-default" @click="closePanel">取消</button>
+      <button type="button" class="btn btn-primary" v-on:click="returnBreadcrumb">确定</button>
     </div>
   </div>
 </template>
@@ -31,13 +44,15 @@ import Catalog from './list'
 import 'transitions/bounce';
 export default {
   props: {
-    dataUrl: { required: true, type: String }
+    dataUrl: { required: true, type: String },
+    catalogFixed: { type: Boolean, default: false},
+    catalogPanelShow: { type: Boolean, default: true },
   },
   components: { Catalog },
   data () {
     return {
       catalogGroups: [],
-      breadcrumb: ['选择：']
+      breadcrumb: [],
     }
   },
   methods: {
@@ -70,6 +85,13 @@ export default {
           this.catalogGroups.splice(depth + 1)
         }
       }
+    },
+    closePanel () {
+      this.$emit('input', false);
+    },
+    returnBreadcrumb () {
+      this.$emit('selected_array', this.breadcrumb);
+      this.$emit('input', false);
     }
   },
   mounted () {
@@ -79,11 +101,20 @@ export default {
 </script>
 
 <style scoped>
+.catalog-fixed{
+  position: fixed;
+  width: 80%;
+  left: 10vw;
+  top: 5vh;
+  z-index: 10000;
+  box-shadow: 0px 0px 5px 0px #ccc;
+}
 .well{
   background: #efefef;
   min-width: 100%;
   overflow-x: scroll;
   overflow-y: hidden;
+  margin-bottom: 0px;
 }
 .well ol.list-inline{
   margin: 0px;
@@ -91,7 +122,6 @@ export default {
   display: inline-block;
 }
 .well ol li.black-classify{
-  height: 420px;
   width: 300px;
   margin-right: 10px;
   background: #fff;

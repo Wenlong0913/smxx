@@ -72,9 +72,8 @@ export default{
 
 <style scoped>
 .catalog-modal{
-  overflow: hidden;
   position: fixed;
-  top: 10vh;
+  top: 30vh;
   right: 0;
   bottom: 0;
   left: 0;

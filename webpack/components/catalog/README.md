@@ -5,31 +5,51 @@
   ```
   resources :catalogs
   ```
-  2. 需要gem
+  2. gem
   ```
   gem 'closure_tree'
   ```
   3. create catalog_table
 
 ### 2. 引入组件
+
     <!-- 在 webpack/appliction
 
     ```
     Vue.component ('catalogList', require('components/catalog'))
     ``` -->
-    js 文件中:
-    ```
-    new Vue({el: 'catalog-list'});
-    ```
 
+js 文件中:
+
+
+```
+new Vue({el: 'catalog-list'});
+```
 
 ### 3. veiw
-
+- 包含 C U R D
   > data-url :传入index url
 
   ```
   <catalog-list data-url=admin_catalogs_path></catalog-list>
   ```
+
+- 选择目录使用，不包含 C U D
+
+  - 传入属性标志组件作为选择目录使用
+    ```
+    :catalog-fixed='true' // type: Boolean
+    ```
+  - 组件是否显示
+    ```
+    v-model='catalogPanelShow'
+    v-if='catalogPanelShow' // type: Boolean, default: true
+
+    ```
+  - 组件内部将返回选择的目录数组
+    ```
+    v-on:selected_array = "ReceivingMethod" // selected_array: return array
+    ```
 
 ### 4. controller
 
