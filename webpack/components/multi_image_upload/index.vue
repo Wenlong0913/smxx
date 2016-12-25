@@ -3,7 +3,6 @@
     <a href="javascript:;" class="file">批量添加图片
       <input type="file" multiple @change="selectImages($event)">
     </a>
-    <p class="text-info">添加后的图片需要编辑后才会自动上传</p>
     <div class="row">
         <image-upload v-for="image in images" 
                       :auto-upload="autoUpload" 
