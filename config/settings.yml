@@ -1,9 +1,10 @@
 default: &default
   site:
-    name: tmf
+    name: 私享荟
     host: http://localhost:5000
     copyright: © TMF All Right Reserved 2015
     description: 私享荟一个网络购物平台
+    slogan: 与您的朋友一起享受生活
   email:
     sender: sender@tmf.com
   weixin:
