@@ -15,7 +15,6 @@
             <div v-bind:class="[catalogFixed ? 'col-xs-12' : 'col-xs-9']" @click="choosed(catalog)">
               <i class="fa fa-circle text-info m-r-10 small"></i>{{catalog.name}}
             </div>
-            <!-- 为什么这里变成 v-if后，绑定calss选中active 就不更新页面了？，但是数据都改变了 -->
             <div class="col-xs-3 text-center text-success handle" v-show="!catalogFixed">
               <span v-show="catalog.showActions">
                 <span class="icon" data-target=".modal-form" data-toggle="modal" @click="openModal('new', index, {}, catalog.id)">
