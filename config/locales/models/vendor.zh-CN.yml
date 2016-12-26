@@ -1,0 +1,12 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      vendor: 供应商
+    attributes:
+      vendor: {}
+    errors:
+      models:
+        vendor: 
+  helpers:
+    vendor: 
