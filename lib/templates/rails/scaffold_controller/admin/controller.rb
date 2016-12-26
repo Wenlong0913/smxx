@@ -49,7 +49,7 @@ class <%= controller_class_name %>Controller < Admin::BaseController
     @<%= model_var_name %> = <%= orm_class.build(model_class_name, "permitted_attributes(#{model_class_name})") %>
 
     if @<%= model_var_name %>.save
-      redirect_to <%= singular_table_name %>_path(@<%= model_var_name %>), notice: <%= "'#{human_name} 创建成功.'" %>
+      redirect_to <%= singular_table_name %>_path(@<%= model_var_name %>), notice: "#{<%= model_class_name %>.model_name.human} 创建成功."
     else
       render :new
     end
@@ -59,7 +59,7 @@ class <%= controller_class_name %>Controller < Admin::BaseController
   def update
     authorize @<%= model_var_name %>
     if @<%= model_var_name %>.update(permitted_attributes(@<%= model_var_name %>))
-      redirect_to <%= singular_table_name %>_path(@<%= model_var_name %>), notice: <%= "'#{human_name} 更新成功.'" %>
+      redirect_to <%= singular_table_name %>_path(@<%= model_var_name %>), notice: "#{<%= model_class_name %>.model_name.human} 更新成功."
     else
       render :edit
     end
@@ -69,7 +69,7 @@ class <%= controller_class_name %>Controller < Admin::BaseController
   def destroy
     authorize @<%= model_var_name %>
     @<%= model_var_name %>.destroy
-    redirect_to <%= index_helper %>_url, notice: <%= "'#{human_name} 删除成功.'" %>
+    redirect_to <%= index_helper %>_url, notice: "#{<%= model_class_name %>.model_name.human} 删除成功."
   end
 
   private

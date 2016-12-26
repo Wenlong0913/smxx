@@ -16,6 +16,7 @@ module ApplicationHelper
       flag = false if _args && !_args.split('&').all? { |arg| k, v = arg.split('='); params[k].to_s == v.to_s }
       flag = false if _action && action_name != _action
       flag = false if _controller != controller_path
+      flag = true if path == request.fullpath
       flag
     end
   end

@@ -17,6 +17,7 @@ _, user = User::Create.(mobile_phone: '15328077522', nickname: '用户', passwor
 admin.add_role :admin
 agent.add_role :agent
 
+Site.create(id: 1, title: '本公司', user: admin)
 
 # init Cms
 # visit: http://localhost:3000/cms_1/
