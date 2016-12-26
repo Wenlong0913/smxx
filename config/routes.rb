@@ -51,8 +51,9 @@ Rails.application.routes.draw do
     end
 
     resources :catalogs
-    catalog_resources_for MaterialCatalog
-    resources :materials
+    catalog_resources_for MaterialCatalog # 物料分类管理
+    resources :materials # 物料管理
+    resources :vendors # 供应商管理
 
     resources :roles, only: [:index], :concerns => :paginatable do
       resources :users, only: [:index], :concerns => :paginatable
