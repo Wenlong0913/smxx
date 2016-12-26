@@ -19,7 +19,7 @@ h1
           <%- attributes.each do |attribute| -%>
             tr
               td.field
-                | <%= model_class_name %>.human_attribute_name(:<%= attribute.name %>)
+                | #{<%= model_class_name %>.human_attribute_name(:<%= attribute.name %>)}
               td
                 a
                   = @<%= model_var_name %>.<%= attribute.name %>
