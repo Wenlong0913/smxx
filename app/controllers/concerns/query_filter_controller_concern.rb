@@ -39,7 +39,11 @@ module QueryFilterControllerConcern
       column_names.each do |k|
         v = format_query_filter_value(model, k, keywords)
         if v
-          query << "#{k} SIMILAR TO ?"
+          if v.is_a?(String)
+            query << "#{k} SIMILAR TO ?"
+          else
+            query << "#{k} = ?"
+          end
           conditions << v
         end
       end
@@ -55,7 +59,7 @@ module QueryFilterControllerConcern
   def format_query_filter_value(model, k, v)
     case model.columns_hash[k.to_s].type
     when :integer
-      v = nil if v =~ /[^0-9]/
+      v = v =~ /[^0-9]/ ? nil : v.to_i
     when :datetime
       v = DateTime.parse(v) rescue nil
     end
