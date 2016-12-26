@@ -59,8 +59,16 @@
         ul.sub-menu
           li[class= ('active' if page?('admin/catalogs#index?klass='))]
             = link_to '所有分类', admin_catalogs_path
-          li[class= ('active' if page?('admin/catalogs#index?klass=MaterialCatalog'))]
+      li class=("has-sub #{'active' if page?('admin/materials', admin_material_catalogs_path)}")
+        a href="javascript:;"
+          b.caret.pull-right
+          i.fa.fa-inbox
+          span 物料管理
+        ul.sub-menu
+          li[class= ('active' if page?('admin/catalogs#index?klass=MaterialCatalo'))]
             = link_to '物料分类', admin_material_catalogs_path
+          li[class= ('active' if page?('admin/materials#index'))]
+            = link_to '物料列表', admin_materials_path
       li class=("has-sub #{'active' if page?('admin/static_pages')}")
         a href="javascript:;"
           b.caret.pull-right

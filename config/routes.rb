@@ -52,6 +52,7 @@ Rails.application.routes.draw do
 
     resources :catalogs
     catalog_resources_for MaterialCatalog
+    resources :materials
 
     resources :roles, only: [:index], :concerns => :paginatable do
       resources :users, only: [:index], :concerns => :paginatable
