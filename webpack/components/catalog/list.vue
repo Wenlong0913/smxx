@@ -12,10 +12,10 @@
       <ul class="list-unstyled">
         <transition-group name="fade">
           <li class="column" v-for="(catalog, index) in filterCatalog(catalogs)" :data-id="catalog.id" :key="catalog.id"  v-on:mouseenter="mouseEnters(catalog)" v-on:mouseleave="mouseLeaves(catalog)" v-show="catalog.filterShow" v-bind:class="{'active': catalog.selected}">
-            <div v-bind:class="[catalogFixed ? 'col-xs-12' : 'col-xs-9']" @click="choosed(catalog)">
+            <div v-bind:class="[editable ? 'col-xs-9' : 'col-xs-12']" @click="choosed(catalog)">
               <i class="fa fa-circle text-info m-r-10 small"></i>{{catalog.name}}
             </div>
-            <div class="col-xs-3 text-center text-success handle" v-show="!catalogFixed">
+            <div class="col-xs-3 text-center text-success handle" v-show="editable">
               <span v-show="catalog.showActions">
                 <span class="icon" data-target=".modal-form" data-toggle="modal" @click="openModal('new', index, {}, catalog.id)">
                   <i class="fa fa-plus"></i>
@@ -33,7 +33,7 @@
       </ul>
     </div>
     <!-- li footer -->
-    <div class="classify-footer" v-if="!catalogFixed">
+    <div class="classify-footer" v-if="editable">
       <span class="btn-link btn-sm pull-right" @click="openModal('new', depth, {})">
         <i class="fa fa-plus-square m-r-5"></i>新增
       </span>
@@ -46,7 +46,7 @@ import CatalogForm from './form'
 import 'transitions/fade';
 export default {
   props: {
-    catalogFixed: { type: Boolean},
+    editable: { type: Boolean},
     breadcrumb: { type: Array, required: true },
     parent_id: { type: Number },
     catalogs: { type: Array, required: true },

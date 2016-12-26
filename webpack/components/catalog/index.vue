@@ -1,41 +1,19 @@
 <template>
-  <div class="panel panel-default" v-if="catalogPanelShow" v-bind:class="{ 'catalog-fixed': catalogFixed }">
-    <!-- panel head -->
-    <div class="panel-heading">
-      <div class="panel-heading-btn">
-        <div v-if="catalogFixed" >
-          <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" @click="closePanel">
-            <i class="fa fa-close"></i>
-          </a>
-        </div>
-        <div v-else >
-          <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse">
-            <i class="fa fa-minus"></i>
-          </a>
-        </div>
-      </div>
-      <ol class="breadcrumb samll">
-        <li>选择：</li>
-        <li v-for="value in breadcrumb">{{ value.name }}</li>
-      </ol>
+  <div class="">
+    <ol class="breadcrumb samll">
+      <li>选择：</li>
+      <li v-for="value in breadcrumb">{{ value.name }}</li>
+    </ol>
+    <div class="well well-sm table-responsive">
+      <!-- <ol class="list-inline"> -->
+        <transition-group name="bounce" tag="ol" class="list-inline">
+          <li class="black-classify" :key="depth" v-for="(arr, depth) in catalogGroups" is='catalog' :depth="depth" :parent_id="arr[0]" :catalogs="arr[1]" @choosed="choosed"  :breadcrumb="breadcrumb" :dataUrl="dataUrl" @removeCatalog="removeCatalogGroupsData" :editable="editable"></li>
+        </transition-group>
+      <!-- </ol> -->
     </div>
-    <!-- panel body -->
-    <div class="panel-body">
-      <div class="well well-sm table-responsive">
-        <!-- <ol class="list-inline"> -->
-          <transition-group name="bounce" tag="ol" class="list-inline">
-            <li class="black-classify" :key="depth" v-for="(arr, depth) in catalogGroups" is='catalog' :depth="depth" :parent_id="arr[0]" :catalogs="arr[1]" @choosed="choosed"  :breadcrumb="breadcrumb" :dataUrl="dataUrl" @removeCatalog="removeCatalogGroupsData" :catalogFixed="catalogFixed"></li>
-          </transition-group>
-        <!-- </ol> -->
-      </div>
-    </div>
-    <!-- panel footer -->
-    <div class="panel-footer text-right" v-if="catalogFixed">
+    <div class="panel-footer text-right" v-if="showConfirmButtons">
       <button type="button" class="btn btn-default" @click="closePanel">取消</button>
-      <button type="button" class="btn btn-primary" v-on:click="returnBreadcrumb">确定</button>
+      <button type="button" class="btn btn-primary" @click="onSelected">确定</button>
     </div>
   </div>
 </template>
@@ -45,8 +23,11 @@ import 'transitions/bounce';
 export default {
   props: {
     dataUrl: { required: true, type: String },
-    catalogFixed: { type: Boolean, default: false},
-    catalogPanelShow: { type: Boolean, default: true },
+    editable: { type: Boolean, default: true },
+    showConfirmButtons: { type: Boolean, default: false },
+    default: { type: Array, default: function(){
+      return [];
+    }}
   },
   components: { Catalog },
   data () {
@@ -59,6 +40,9 @@ export default {
     loadData () {
       var successHandler = function(response){
         this.catalogGroups.push([null, response.body]);
+        if ( this.showConfirmButtons && this.default.length > 0){
+          this.defaultSelected(this.default)
+        }
       }
       var errorHandler = function(response){
         alert('falied')
@@ -87,11 +71,27 @@ export default {
       }
     },
     closePanel () {
-      this.$emit('input', false);
+      this.$emit('closed', false);
     },
-    returnBreadcrumb () {
-      this.$emit('selected_array', this.breadcrumb);
-      this.$emit('input', false);
+    onSelected () {
+      this.$emit('selected', this.breadcrumb);
+      this.$emit('closed', false);
+    },
+    defaultSelected(selectedArray){
+      this.catalogGroups.splice(1);
+      this.breadcrumb = [];
+      this.recursive(this.catalogGroups[0][1], selectedArray, 0)
+    },
+    recursive(catalogGroups, selectedArray, i){
+      var _this = this;
+      catalogGroups.forEach(function(value){
+        if(value.id == selectedArray[i]){
+          _this.breadcrumb.push(value)
+          value.selected = true;
+          _this.choosed(value, i)
+          _this.recursive(value.children, selectedArray, ++i)
+        }
+      })
     }
   },
   mounted () {
@@ -101,14 +101,14 @@ export default {
 </script>
 
 <style scoped>
-.catalog-fixed{
+/*.catalog-fixed{
   position: fixed;
   width: 80%;
   left: 10vw;
   top: 5vh;
   z-index: 10000;
   box-shadow: 0px 0px 5px 0px #ccc;
-}
+}*/
 .well{
   background: #efefef;
   min-width: 100%;
