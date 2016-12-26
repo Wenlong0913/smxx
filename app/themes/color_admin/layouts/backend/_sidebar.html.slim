@@ -57,8 +57,10 @@
           i.fa.fa-inbox
           span 分类管理
         ul.sub-menu
-          li[class= ('active' if page?('admin/catalogs#index'))]
-            = link_to '物料分类', admin_catalogs_path
+          li[class= ('active' if page?('admin/catalogs#index?klass='))]
+            = link_to '所有分类', admin_catalogs_path
+          li[class= ('active' if page?('admin/catalogs#index?klass=MaterialCatalog'))]
+            = link_to '物料分类', admin_material_catalogs_path
       li class=("has-sub #{'active' if page?('admin/static_pages')}")
         a href="javascript:;"
           b.caret.pull-right
