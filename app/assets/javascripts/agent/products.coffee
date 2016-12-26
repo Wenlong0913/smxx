@@ -4,3 +4,6 @@ $(document).ready ->
     body.find('.checkout-header .step').on 'click', ->
       body.find('.checkout-header .step').removeClass('active')
       $(this).addClass('active')
+
+    new Vue
+      el: '.tab-content'
