@@ -24,7 +24,6 @@
         buttonConfirmLabel: '确定',
         buttonCancelLabel: '取消',
         didRemove: function(data){
-          vm.$el.remove();
           vm.$emit('remove');
         }
       }); 

@@ -13,28 +13,14 @@
     <div id="gallery" class="gallery">
       <div class="row">
         <transition-group name="list" tag="div">
-          <div class="image col-sm-6 col-md-4" v-for="image in imageList" v-bind:key="image.id">
+          <div class="image col-sm-6 col-md-4" v-for="image in imageList" :key="image.id">
               <div class="image-inner">
-                  <a href="javascript:;" data-lightbox="gallery-group-1">
-                      <img :src="image.data.image" alt="" />
-                  </a>
-                  <p class="image-caption">
-                      {{image.name}}
-                  </p>
+                  <img :src="image.image_url" alt="" @click="choose_image(image)"/>                      
+                  <span class="glyphicon glyphicon-ok selected" v-show="selectedList.indexOf(image.id) != -1"></span>
+                  <span class="glyphicon glyphicon-remove remove" @click="delete_image(image.id)"></span>
               </div>
               <div class="image-info">
-                  <h5 class="title">Lorem ipsum dolor sit amet</h5>
-                  <div class="pull-right">
-                      <small>by</small> <a href="javascript:;">Sean Ngu</a>
-                  </div>
-                  <div class="desc">
-                      Nunc velit urna, aliquam at interdum sit amet, lacinia sit amet ligula. Quisque et erat eros. Aenean auctor metus in tortor placerat, non luctus justo blandit.
-                  </div>
-                  <p>
-                    <button type="button" class="btn btn-primary btn-xs" :disabled="selectedList.indexOf(image.id) != -1" @click="choose_image(image)">选择</button>
-                    <button type="button" class="btn btn-warning btn-xs">编辑</button>
-                    <button type="button" class="btn btn-danger btn-xs pull-right" v-on:click="delete_image(image.id)">删除</button>
-                  </p>
+                 
               </div>
           </div>
         </transition-group>
@@ -134,6 +120,32 @@
       -moz-border-radius: 3px 3px 0 0;
       border-radius: 3px 3px 0 0;
   }
+  
+  .gallery .image-inner .selected{
+    position: absolute;
+    top: 90%;
+    right: 0px;
+    color: green;
+    height: 20px;
+    width: 20px;    
+    padding: 4px 2px;
+    font-size: 14px;
+    background-color: rgba(255,255,255,0.15);
+    border-radius: 10px;
+  }
+
+  .gallery .image-inner .remove{
+    position: absolute;
+    right: 0px;
+    color: #a94442;
+    height: 20px;
+    width: 20px;    
+    padding: 4px 2px;
+    font-size: 14px;
+    background-color: rgba(255,255,255,0.15);
+    border-radius: 10px;
+  }
+
   .gallery .image a {
       -webkit-transition: all .2s linear;
       -moz-transition: all .2s linear;

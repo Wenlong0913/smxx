@@ -6,19 +6,18 @@
         <input type="file" multiple @change="selectImages($event)">
       </button>
     </div>
-    <div id="gallery" class="gallery">
       <div class="row">
-          <div class="col-sm-6 col-md-3" v-for="(image, index) in imageList">
+          <div class="col-sm-6 col-md-3 image" v-for="(image, index) in imageList">
             <image-upload :auto-upload="true" 
                           :name="name" 
                           :server="server" 
                           :id="image.id"
-                          :image-url="image.data.image"
+                          :image-url="image.image_url"
                           :init-save="image.init_save" 
-                          @remove="removeImage(index)">
+                          @remove="delete_image(image)"
+                          :key="image.image_url">
             </image-upload>
           </div>
-      </div>
     </div>
 
     <!-- use the modal component, pass in the prop -->
@@ -66,18 +65,24 @@
     },
     methods: {
       selected_images(image){
-        this.imageList.push(image);
+        if(this.imageListIds.indexOf(image.id) >= 0){
+          this.delete_image(image);
+        }else{
+          this.imageList.push(image);  
+        }
       },
       delete_image(image){
-        this.imageList.splice(this.imageList.indexOf(image),1)
+        var image_index = this.get_image_index(image.id);
+        if(image_index >= 0){
+          this.imageList.splice(image_index,1)
+        }
       },
       selectImages(event){
         var vm = this;
         var files = event.target.files;
         for(var i=0; i<files.length; i++){
           var obj = {};
-          obj.data={}
-          obj.data.image = vm.getObjectURL(files[i]);
+          obj.image_url = vm.getObjectURL(files[i]);
           obj.init_save = true;
           vm.imageList.push(obj);
         }
@@ -93,8 +98,13 @@
         }
         return url ;
       },
-      removeImage(index){
-        // this.imageList.splice(index, 1);
+      get_image_index(id) {
+        var vm = this;
+        for(var i = 0; i< vm.imageList.length; i++)
+          if(vm.imageList[i].id == id){
+            return i;
+          }
+        return -1;
       }
     }
   }
@@ -127,4 +137,12 @@
       color: #fff;
       text-decoration: none;
   }
+  .image{
+      height: 300px;
+      display: block;
+      margin-right: -10px;
+      overflow: hidden;
+      padding: 10px;
+  }
+
 </style>
