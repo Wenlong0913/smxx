@@ -1,4 +1,6 @@
 class Vendor < Item
+  store_accessor :features, :contact_name, :phone_number
+
   audited
 
   # 供应商只能够属于公司

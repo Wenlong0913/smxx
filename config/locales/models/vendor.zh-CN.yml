@@ -4,9 +4,13 @@ zh-CN:
     models:
       vendor: 供应商
     attributes:
-      vendor: {}
+      vendor:
+        name: 商家
+        contact_name: 联系人
+        phone_number: 联系电话
+        description: 备注
     errors:
       models:
-        vendor: 
+        vendor:
   helpers:
-    vendor: 
+    vendor:
