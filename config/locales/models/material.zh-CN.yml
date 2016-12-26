@@ -1,0 +1,12 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      material: 物料
+    attributes:
+      material: {}
+    errors:
+      models:
+        material: 
+  helpers:
+    material: 
