@@ -11,6 +11,7 @@
 #
 
 class Site < ApplicationRecord
+  MAIN_ID = 1
   belongs_to :user
   has_many :theme_configs
   has_one :active_theme_config, -> { where(active: true) }, class_name: 'ThemeConfig'
@@ -20,5 +21,5 @@ class Site < ApplicationRecord
   store_accessor :features, :description
 
   validates_presence_of :title, :user_id
-  validates_uniqueness_of :title, scope: :user_id
+  validates_uniqueness_of :title, scope: [:type, :user_id]
 end
