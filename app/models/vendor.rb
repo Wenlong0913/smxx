@@ -1,3 +1,12 @@
-class Vendor < Site
+class Vendor < Item
   audited
+
+  # 供应商只能够属于公司
+  after_initialize do
+    self.site_id = Site::MAIN_ID
+  end
+
+  before_validation do
+    self.site_id = Site::MAIN_ID
+  end
 end

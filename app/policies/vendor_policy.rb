@@ -7,7 +7,7 @@ class VendorPolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.super_admin_or_admin?
-      [:title, :description]
+      [:name, :description]
     else
       []
     end

@@ -20,6 +20,7 @@
 #
 
 class User < ApplicationRecord
+  MAIN_ID = 1
   rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
