@@ -41,7 +41,7 @@ new Vue({el: 'catalog-list'});
   ```
   // 使用定义 catalogPanelShow(或者其他名称) 控制组件是否显示，并处理组件穿出来的关闭消息
   v-if='catalogPanelShow' // type: Boolean, default: true ，此处不要使用 v-show
-  @closed="catalogPanelShow=false"
+  @closed="catalogPanelShow=false" // 接收组件中close消息
 
   ```
 - 组件内部将返回选择的目录数组

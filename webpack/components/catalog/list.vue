@@ -12,7 +12,7 @@
       <ul class="list-unstyled">
         <transition-group name="fade">
           <li class="column" v-for="(catalog, index) in filterCatalog(catalogs)" :data-id="catalog.id" :key="catalog.id"  v-on:mouseenter="mouseEnters(catalog)" v-on:mouseleave="mouseLeaves(catalog)" v-show="catalog.filterShow" v-bind:class="{'active': catalog.selected}">
-            <div v-bind:class="[editable ? 'col-xs-9' : 'col-xs-12']" @click="choosed(catalog)">
+            <div v-bind:class="[editable ? 'col-xs-9' : 'col-xs-12']" @click="selected(catalog)">
               <i class="fa fa-circle text-info m-r-10 small"></i>{{catalog.name}}
             </div>
             <div class="col-xs-3 text-center text-success handle" v-show="editable">
@@ -75,8 +75,8 @@ export default {
         return catalog
       })
     },
-    choosed (catalog) {
-      this.$emit('choosed', catalog, this.depth);
+    selected (catalog) {
+      this.$emit('selected', catalog, this.depth);
       this.catalogs.forEach(function(value){
         value.selected = false;
         value.children.forEach(function(value){
@@ -121,7 +121,7 @@ export default {
         var reCatalog = response.body;
         if (this.options.addChildren) {// 分为内部添加按钮 和 底部添加按钮
           this.catalogs[options.index].children.push(reCatalog);
-          this.choosed(this.catalogs[options.index])
+          this.selected(this.catalogs[options.index])
         }else {
           this.catalogs.push(reCatalog)
         }

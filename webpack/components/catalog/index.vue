@@ -7,7 +7,7 @@
     <div class="well well-sm table-responsive">
       <!-- <ol class="list-inline"> -->
         <transition-group name="bounce" tag="ol" class="list-inline">
-          <li class="black-classify" :key="depth" v-for="(arr, depth) in catalogGroups" is='catalog' :depth="depth" :parent_id="arr[0]" :catalogs="arr[1]" @choosed="choosed"  :breadcrumb="breadcrumb" :dataUrl="dataUrl" @removeCatalog="removeCatalogGroupsData" :editable="editable"></li>
+          <catalog class="black-classify" :key="depth" v-for="(arr, depth) in catalogGroups" :depth="depth" :parent_id="arr[0]" :catalogs="arr[1]" @selected="selected"  :breadcrumb="breadcrumb" :dataUrl="dataUrl" @removeCatalog="removeCatalogGroupsData" :editable="editable"></catalog>
         </transition-group>
       <!-- </ol> -->
     </div>
@@ -49,7 +49,7 @@ export default {
       }
       this.$http.get(this.dataUrl).then(successHandler, errorHandler);
     },
-    choosed (catalog, depth) {
+    selected (catalog, depth) {
       var shouldPush = true;
       if(this.catalogGroups[depth + 1] && this.catalogGroups[depth + 1] == catalog.children){
         shouldPush = false
@@ -71,11 +71,10 @@ export default {
       }
     },
     closePanel () {
-      this.$emit('closed', false);
+      this.$emit('closed');
     },
     onSelected () {
       this.$emit('selected', this.breadcrumb);
-      this.$emit('closed', false);
     },
     defaultSelected(selectedArray){
       this.catalogGroups.splice(1);
@@ -88,7 +87,7 @@ export default {
         if(value.id == selectedArray[i]){
           _this.breadcrumb.push(value)
           value.selected = true;
-          _this.choosed(value, i)
+          _this.selected(value, i)
           _this.recursive(value.children, selectedArray, ++i)
         }
       })
