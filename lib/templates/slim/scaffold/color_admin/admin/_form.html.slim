@@ -5,7 +5,6 @@
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-    h4 <%= singular_table_name %>
   .panel-body
     = simple_form_for @<%= model_var_name %>, url: @<%= model_var_name %>.new_record? ? <%= index_helper %>_path : <%= singular_table_name %>_path(@<%= model_var_name %>), validate: true do |f|
       - if @<%= model_var_name %>.errors.any?
