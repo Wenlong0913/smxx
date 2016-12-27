@@ -20,12 +20,13 @@
           = fa_icon 'laptop', text: '首页'
       li class=("has-sub #{'active' if page?('admin/users', 'admin/roles')}")
         a href="javascript:;"
+          b.caret.pull-right
           i.fa.fa-inbox
           span 账户管理
         ul.sub-menu
           li class=("#{'active' if page?('admin/users')}") = link_to '用户', admin_users_path
           li class=("#{'active' if page?('admin/roles')}") = link_to '角色', admin_roles_path
-      li class=("has-sub #{'active' if page?('admin/tracker/home', 'admin/tracker/shares/home')}")
+      /li class=("has-sub #{'active' if page?('admin/tracker/home', 'admin/tracker/shares/home')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
@@ -43,15 +44,15 @@
         ul.sub-menu
           li[class=('active' if page?('admin/products#index'))]
             = link_to '产品列表', admin_products_path
-      li class=("has-sub #{'active' if page?('admin/sites')}")
+      /li class=("has-sub #{'active' if page?('admin/sites')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
-          span Site管理
+          span 代理商管理
         ul.sub-menu
-          li[class=('active' if page?('admin/products#index'))]
+          li[class=('active' if page?('admin/catalogs#index'))]
             = link_to '列表', admin_sites_path
-      li class=("has-sub #{'active' if page?('admin/catalogs')}")
+      /li class=("has-sub #{'active' if page?('admin/catalogs')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
@@ -65,12 +66,12 @@
           i.fa.fa-inbox
           span 物料管理
         ul.sub-menu
-          li[class= ('active' if page?('admin/catalogs#index?klass=MaterialCatalo'))]
-            = link_to '物料分类', admin_material_catalogs_path
           li[class= ('active' if page?('admin/materials#index'))]
             = link_to '物料列表', admin_materials_path
-            li[class= ('active' if page?('admin/vendors#index'))]
-              = link_to '供应商', admin_vendors_path
+          li[class= ('active' if page?(admin_material_catalogs_path))]
+            = link_to '物料分类', admin_material_catalogs_path
+          li[class= ('active' if page?('admin/vendors#index'))]
+            = link_to '供应商', admin_vendors_path
       li class=("has-sub #{'active' if page?('admin/static_pages')}")
         a href="javascript:;"
           b.caret.pull-right

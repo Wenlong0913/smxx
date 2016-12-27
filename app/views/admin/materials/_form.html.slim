@@ -5,7 +5,7 @@
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-  .panel-body
+  .panel-body[rel='vue']
     = simple_form_for @material, url: @material.new_record? ? admin_materials_path : admin_material_path(@material), validate: true do |f|
       - if @material.errors.any?
         #error_explanation
@@ -14,6 +14,11 @@
             - @material.errors.full_messages.each do |message|
               li = message
 
+      = f.input :catalog do
+        catalog-list
       = f.input :name
       = f.input :name_py
+      = f.input :images do
+        image-select
+        image-upload[server=image_items_path]
       = f.submit class: 'btn btn-success btn-block'

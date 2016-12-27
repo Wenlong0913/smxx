@@ -19,6 +19,11 @@ agent.add_role :agent
 
 Site.create(id: 1, title: '本公司', user: admin)
 
+# 德格角色
+%w(product_manager factory_manager).each do |name|
+  Role.find_or_create_by name: name
+end
+
 # init Cms
 # visit: http://localhost:3000/cms_1/
 cms_site = Cms::Site.create!(name: '企业官网', template: 'default', description: '这是用CMS搭建的官网')

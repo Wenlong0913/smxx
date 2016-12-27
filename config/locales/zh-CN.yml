@@ -4,3 +4,5 @@ zh-CN:
     admin: "管理员"
     agent: '代理商'
     user: '用户'
+    product_manager: '产品经理'
+    factory_manager: '厂长'
