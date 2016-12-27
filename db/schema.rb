@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161226074707) do
+ActiveRecord::Schema.define(version: 20161227094759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -176,6 +176,17 @@ ActiveRecord::Schema.define(version: 20161226074707) do
     t.index ["user_id"], name: "index_members_on_user_id", using: :btree
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.string   "code"
+    t.integer  "user_id"
+    t.integer  "site_id"
+    t.integer  "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["site_id"], name: "index_orders_on_site_id", using: :btree
+    t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string   "name"
     t.string   "resource_type"
@@ -319,6 +330,8 @@ ActiveRecord::Schema.define(version: 20161226074707) do
   add_foreign_key "items", "sites"
   add_foreign_key "members", "sites"
   add_foreign_key "members", "users"
+  add_foreign_key "orders", "sites"
+  add_foreign_key "orders", "users"
   add_foreign_key "theme_configs", "sites"
   add_foreign_key "theme_configs", "themes"
   add_foreign_key "tracker_visits", "tracker_actions", column: "action_id"

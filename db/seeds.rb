@@ -10,14 +10,18 @@
   Role.find_or_create_by name: name
 end
 
-_, admin = User::Create.(id: 1, mobile_phone: '15328077520', nickname: '管理员', password: 'abcd1234')
+_, admin = User::Create.(mobile_phone: '15328077520', nickname: '管理员', password: 'abcd1234')
+
+raise "创建的第一个用户ID不等于1!!!" unless admin.id == 1
+
 _, agent = User::Create.(mobile_phone: '15328077521', nickname: '商家', password: 'abcd1234')
-_, user = User::Create.(mobile_phone: '15328077522', nickname: '用户', password: 'abcd1234')
+_, user = User::Create.(mobile_phone: '18080810818', nickname: '用户', password: 'abcd1234')
 
 admin.add_role :admin
 agent.add_role :agent
 
-Site.create(id: 1, title: '本公司', user: admin)
+site = Site.create(title: '本公司', user: admin)
+raise "创建的第一个代理商ID不等于1!!!" unless site.id == 1
 
 # 德格角色
 %w(product_manager factory_manager).each do |name|

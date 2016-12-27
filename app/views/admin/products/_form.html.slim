@@ -5,7 +5,6 @@
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-    h4 admin_product
   .panel-body
     = simple_form_for @product, url: @product.new_record? ? admin_products_path : admin_product_path(@product), validate: true do |f|
       - if @product.errors.any?
@@ -18,7 +17,7 @@
       = f.association :site
       = f.input :name
       = f.input :price
-      = f.input :description
+      = f.input :description, as: :text
       .form-group
         image-select[server="#{image_items_path}" name="products[image_items][]"]
         image-upload[auto-upload="true" name="products[image_items][]" server="#{image_items_path}"]
