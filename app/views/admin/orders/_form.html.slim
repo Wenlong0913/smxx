@@ -1,0 +1,20 @@
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+  .panel-body
+    = simple_form_for @order, url: @order.new_record? ? admin_orders_path : admin_order_path(@order), validate: true do |f|
+      - if @order.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@order.errors.count, "error")} prohibited this order from being saved:"
+          ul
+            - @order.errors.full_messages.each do |message|
+              li = message
+
+      = f.association :user
+      = f.association :site
+      = f.input :price
+      = f.submit class: 'btn btn-success btn-block'

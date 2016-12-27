@@ -61,6 +61,7 @@ Rails.application.routes.draw do
     resources :sites, :concerns => :paginatable do
       resources :members, :concerns => :paginatable
     end
+    resources :orders, :concerns => :paginatable
   end
 
   namespace :agent do
