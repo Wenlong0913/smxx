@@ -1,18 +1,18 @@
 <template>
   <div>
     <input type="file" :name="name"/>
-    <input type="hidden" :name="name" :value="id">
-    <img :src="imageUrl" v-if="!initSave">
+    <input type="hidden" :name="name" :value="value">
+    <img :src="imageUrl" v-if="value">
   </div>
 </template>
 
 <script>
   import Slim from './slim.commonjs'
   export default {
-    props: ['name', 'autoUpload', 'server', 'imageUrl', 'initSave', 'id'],
+    props: ['name', 'autoUpload', 'server', 'imageUrl', 'value'],
     data () {
       return {
-         cropper: null
+         cropper: null,
       }
     },
     mounted (){
@@ -25,9 +25,12 @@
         buttonCancelLabel: '取消',
         didRemove: function(data){
           vm.$emit('remove');
+        },
+        didUpload: function(error, data, response){
+          vm.$emit('input', response);
         }
       }); 
-      if(vm.imageUrl && vm.initSave) this.cropper.load(vm.imageUrl)
+      if(vm.imageUrl && !vm.value) this.cropper.load(vm.imageUrl)
     }    
   }
 </script>

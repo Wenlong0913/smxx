@@ -11,7 +11,7 @@
             <image-upload :auto-upload="true" 
                           :name="name" 
                           :server="server" 
-                          :id="image.id"
+                          v-model="image.id"
                           :image-url="image.image_url"
                           :init-save="image.init_save" 
                           @remove="delete_image(image)"
