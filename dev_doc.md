@@ -10,6 +10,7 @@
   - [怎么生成一个Controller](#how-to-generate-controller)
   - [View中怎么使用Decorator](#how-to-use-decorator)
   - [View中获得Enum字段的中文列表](#how-to-get-enum-i18n-from-view)
+- [Helper中的一些方法](#helper-methods)
 - [Model中的一些用法](#how-to-program-model)
     - [数据验证]("how-to-program-model-validators")
 - [测试](#testing)
@@ -198,6 +199,18 @@
        <%= f.label :approval_state %>
        <%= f.select :approval_state, enum_options_for_select(User, :approval_state) %>
      </div>
+
+
+<a name="helper-methods"></a>
+## Helper中的一些方法
+
+- ApplicationHelper
+
+    `page?(*paths)`判断是否当前页
+
+      `page?('admin/products')` => check controller path is 'admin/products'  
+      `page?('admin/products#index')` => check controller path is 'admin/products' and action_name is 'index'  
+      `page?('admin/products#show?id=1')` => check controller_path is 'admin/products', action_name is 'show' and id is 1  
 
 <a name="how-to-program-model"></a>
 ## Model中的一些用法

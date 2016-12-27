@@ -1,5 +1,5 @@
 h1 
-  | 查看 <%= singular_table_name %>
+  | 查看#{<%= model_class_name %>.model_name.human}
   .pull-right
     => link_to '编辑', edit_<%= singular_table_name %>_path(@<%= model_var_name %>), class: 'btn btn-primary'
     = link_to '返回', <%= index_helper %>_path, class: 'btn btn-primary'
@@ -11,7 +11,6 @@ h1
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-    h4 查看 <%= singular_table_name %>
   .panel-body
     .profile-container
       .profile-info
@@ -20,7 +19,7 @@ h1
           <%- attributes.each do |attribute| -%>
             tr
               td.field
-                | <%= attribute.human_name %>
+                | #{<%= model_class_name %>.human_attribute_name(:<%= attribute.name %>)}
               td
                 a
                   = @<%= model_var_name %>.<%= attribute.name %>

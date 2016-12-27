@@ -5,30 +5,50 @@
   ```
   resources :catalogs
   ```
-  2. 需要gem
+  2. gem
   ```
   gem 'closure_tree'
   ```
   3. create catalog_table
 
 ### 2. 引入组件
+
     <!-- 在 webpack/appliction
 
     ```
     Vue.component ('catalogList', require('components/catalog'))
     ``` -->
-    js 文件中:
-    ```
-    new Vue({el: 'catalog-list'});
-    ```
 
+js 文件中:
+
+
+```
+new Vue({el: 'catalog-list'});
+```
 
 ### 3. veiw
+- 包含 C U R D
+  ```
+  // data-url :传入index url 必须传入
+  <catalog-list data-url=admin_catalogs_path></catalog-list>
+  ```
 
-  > data-url :传入index url
+- 是否可以编辑，创建，删除
+  ```
+  editable='false' // type: Boolean, default: true 默认true为可以编辑
+  ```
+- 组件是否显示
+  ```
+  // 使用定义 catalogPanelShow(或者其他名称) 控制组件是否显示，并处理组件穿出来的关闭消息
+  v-if='catalogPanelShow' // type: Boolean, default: true ，此处不要使用 v-show
+  @closed="catalogPanelShow=false" // 接收组件中close消息
 
   ```
-  <catalog-list data-url=admin_catalogs_path></catalog-list>
+- 组件内部将返回选择的目录数组
+  ```
+  :showConfirmButtons = "true" // type: Boolean 默认不显示底部确认按钮
+  :default = "[]" // 传入默认选中值, 选中id
+  @selected = "ReceivingMethod" // 接收选中值数组 selected(){}: return array
   ```
 
 ### 4. controller

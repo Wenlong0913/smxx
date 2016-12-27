@@ -32,7 +32,7 @@ h1.page-header
             ul.dropdown-menu#search_column[role='menu']
               - @filter_colums.each do |filter_colum|
                 li
-                  a[href='javascript:;'] = filter_colum
+                  a[href='javascript:;' data-key=filter_colum] = filter_colum
           .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
             button.btn.btn-default[type='submit'name='json'value='json'] json
             button.btn.btn-default[type='submit'name='xml'value='xml'] xml
@@ -84,7 +84,8 @@ javascript:
         $('.well.form-horizontal.filter_search').removeClass('hidden').addClass('show');
       }
       var column_name = $(this).text();
-      var name = "filters["+ column_name +"]";
+      var column_key = $(this).data('key');
+      var name = "filters["+ column_key +"]";
       input_name = "input[name='" + name +"']";
       if(!$('.well.filter_search').find(input_name).length > 0){
         $('.well.filter_search hr').before("<div class='form-group'><label class='col-xs-1 control-label'><i class='fa fa-trash-o m-r-5'></i><b>"+ column_name +"</b></label><div class='col-xs-5'><input class='form-control' name='"+ name +"' type='text'></div></div>");
