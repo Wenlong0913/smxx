@@ -1,7 +1,7 @@
 default: &default
   site:
     name: tmf
-    host: localhost
+    host: localhost:5000
     copyright: © TMF All Right Reserved 2015
     description: 私享荟一个网络购物平台
   email:
@@ -18,6 +18,21 @@ default: &default
       api_key: c97380fa188341572c1bcdadf383dfc2
   mobile:
     auth_token_template: "【私享荟】您的验证码是#code#。如非本人操作，请忽略本短信。"
+
+  qiniu: &qiniu_credentials
+    access_key: HXrvQOeDfAizpMzdanxSMiotX60zWuDXAseybFcx
+    secret_key: n886ogK5IGUwYx-M4m-NLSaP0-OTGD2_eCCsqId_
+
+  paperclip:
+    enable: true
+    options:
+      storage: :qiniu
+      qiniu_credentials:
+        <<: *qiniu_credentials
+      bucket: tmf
+      use_timestamp: false
+      qiniu_host: ocwr8qu9g.bkt.clouddn.com
+
 development:
   <<: *default
 production:
