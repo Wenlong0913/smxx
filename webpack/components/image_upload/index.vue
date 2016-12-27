@@ -9,7 +9,14 @@
 <script>
   import Slim from './slim.commonjs'
   export default {
-    props: ['name', 'autoUpload', 'server', 'imageUrl', 'value'],
+    // props: ['name', 'autoUpload', 'server', 'imageUrl', 'value'],
+    props: {
+      name: {type: String, required: true},
+      autoUpload: {type: Boolean, default: true},
+      server: {type: String, required: true},
+      value: {type: Number},
+      imageUrl: {type: String}
+    },
     data () {
       return {
          cropper: null,

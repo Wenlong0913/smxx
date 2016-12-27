@@ -14,7 +14,7 @@
                           v-model="image.id"
                           :image-url="image.image_url"
                           :init-save="image.init_save" 
-                          @remove="delete_image(image)"
+                          @remove="delete_image(image.id)"
                           :key="image.image_url">
             </image-upload>
           </div>
@@ -27,7 +27,7 @@
       </h3>
 
       <div slot="body">
-        <image-album :server="server" :delete-server="server" @selected="selected_images" :selected-list="imageListIds"></image-album>
+        <image-album :server="server" @delete="delete_image" @selected="selected_images" :selected-list="imageListIds"></image-album>
       </div>
     </modal>
   </div>
@@ -35,7 +35,12 @@
 
 <script>
   export default {
-    props: ['server', 'name', 'selectedIds'],
+    // props: ['server', 'name', 'selectedIds'],
+    props: {
+      server: {type: String, required: true},
+      name: {type: String, required: true},
+      selectedIds: {type: String}
+    },
     data(){
       return {
         showModal: false,
@@ -66,13 +71,13 @@
     methods: {
       selected_images(image){
         if(this.imageListIds.indexOf(image.id) >= 0){
-          this.delete_image(image);
+          this.delete_image(image.id);
         }else{
           this.imageList.push(image);  
         }
       },
-      delete_image(image){
-        var image_index = this.get_image_index(image.id);
+      delete_image(id){
+        var image_index = this.get_image_index(id);
         if(image_index >= 0){
           this.imageList.splice(image_index,1)
         }

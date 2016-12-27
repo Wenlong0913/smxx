@@ -31,7 +31,11 @@
 
 <script>
   export default {
-    props: ['server', 'deleteServer', 'selectedList'],
+    // props: ['server', 'deleteServer', 'selectedList'],
+    props: {
+      server: {type: String, required: true},
+      selectedList: {type: Array}
+    },
     data () {
       return {
         imageList: [],
@@ -65,11 +69,12 @@
       delete_image(id) {
         var vm = this;
         if(window.confirm('确定要删除吗?')){
-          vm.$http.delete(this.deleteServer+'/'+id).then((data) => {
+          vm.$http.delete(this.server+'/'+id).then((data) => {
             var image_index = vm.get_image_index(id);
             if(image_index != -1){
               vm.imageList.splice(image_index, 1)  
             }
+            vm.$emit('delete', id);
           }, (response) => {
               // error callback
           });     
