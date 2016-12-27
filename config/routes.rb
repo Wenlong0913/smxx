@@ -66,6 +66,7 @@ Rails.application.routes.draw do
   namespace :agent do
     get '/', to: 'home#index', as: :root
     get 'sign_in', to: 'sessions#new'
+    resources 'products'
   end
 
 

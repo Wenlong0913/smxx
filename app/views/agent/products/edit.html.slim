@@ -1,0 +1,7 @@
+h1 
+  | 编辑 agent_product
+  .pull-right
+    = link_to '查看', agent_product_path(@agent_product), class: 'btn btn-primary'
+    = link_to '返回', agent_products_path, class: 'btn btn-primary'
+
+== render 'form'
