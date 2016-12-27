@@ -33,53 +33,59 @@ user_id is by checking `current_user.id`, won't record resource and payload.
       @visit_payload
     end
 ## views使用
-### 在view中引入(slim写法):
+- 引入js/css:
 
-  > - 注意: 在veiws中引用tracker模块前使用class为'tracker'的容器作为最外层容器，css/js才会生效
+   > 注意: 在veiws中引用tracker模块前使用class为'tracker'的容器作为最外层容器，css/js才会生效
 
+   > 需要vue.js
 
+```
+#= require tracker //js 引入
+*= require tracker //css 引入
+
+```
 #### 1. 汇总功能页面
 　
   > summary: true,页面导航选中＇数据总览＇
 
-  > @collect_visits: 汇总shuj,@chart_data: ip/访客曲线图形数据(即将移除，改为vue/json)
+  > path: 处理得到json数据
 
   >　在views中引入
 
   ```
-  .tracker
-    == cell(Tracker::NavTopCell, nil, summary: true)
-    == cell(Tracker::SummaryCell, @collect_visits, chart_data: @chart_data)
+   .tracker
+     == cell(Tracker::NavTopCell, nil, summary: true)
+     == cell(Tracker::SummaryCell, nil, path: admin_tracker_url
   ```
-#### 2. 访问统计功能页面－访问明细
+#### 2. 访问统计－访问明细
 
   > visit: true，页面导航选中"访问统计"
 
-  > @visits: 数据部分(即将移除，改为vue/json)
+  > path: 处理得到json数据
 
   >　在views中引入
 
   ```
-  .tracker
-    == cell(Tracker::NavTopCell, nil, visit: true)
-    == cell(Tracker::VisitDetailedCell, @visits)
+    .tracker
+      == cell(Tracker::NavTopCell, nil, visit: true)
+      == cell(Tracker::VisitDetailedCell, nil, path: admin_tracker_visits_details_url)
+
   ```
 
-#### 3. 访问统计功能页面－受访页面
+#### 3. 访问统计－受访页面
 
-
-  > @visits_data: 数据部分(即将移除，改为vue/json)
+  > path: 处理得到json数据
 
   > 在views中引入
 
   ```
   .tracker
     == cell(Tracker::NavTopCell, nil, visit: true)
-    == cell(Tracker::VisitStatisticCell, @visits_data)
+    == cell(Tracker::VisitStatisticCell, nil, path: admin_tracker_visits_statistics_url)
+
   ```
 
 #### 4. 分销统计
-
 
   > share: true, 页面导航选中＇分销统计＇
 
@@ -88,10 +94,37 @@ user_id is by checking `current_user.id`, won't record resource and payload.
   ```
   .tracker
     == cell(Tracker::NavTopCell, nil, share: true)
-    == cell(Tracker::ShareStatisticCell)
+    == cell(Tracker::ShareStatisticCell, nil, path: admin_tracker_shares_url)
+
   ```
 
+## controller 数据返回
 
+```
+# 根据view中引入cell时的path
+
+# 汇总/数据总览
+
+respond_to do |format|
+  format.html
+  format.json {render json: Tracker::Summary.report}
+end
+
+# 访问统计/访问明细
+
+respond_to do |format|
+  format.html
+  format.json {render json: Tracker::Visit.visits(page: params[:page])}
+end
+
+# 访问统计/受访页面
+
+respond_to do |format|
+  format.html
+  format.json {render json: Tracker::VisitStatistic.page_statistic}
+end
+
+```
 
 ## Installation
 Add this line to your application's Gemfile:
