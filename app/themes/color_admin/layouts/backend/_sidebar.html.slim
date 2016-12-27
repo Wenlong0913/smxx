@@ -20,6 +20,7 @@
           = fa_icon 'laptop', text: '首页'
       li class=("has-sub #{'active' if page?('admin/users', 'admin/roles')}")
         a href="javascript:;"
+          b.caret.pull-right
           i.fa.fa-inbox
           span 账户管理
         ul.sub-menu
@@ -39,15 +40,17 @@
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
-          span 产品管理
+          span #{Product.model_name.human}管理
         ul.sub-menu
           li[class=('active' if page?('admin/products#index'))]
-            = link_to '产品列表', admin_products_path
+            = link_to "#{Product.model_name.human}列表", admin_products_path
+          li[class=('active' if page?('admin/products#new'))]
+            = link_to "发布#{Product.model_name.human}", new_admin_product_path
       li class=("has-sub #{'active' if page?('admin/sites')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
-          span Site管理
+          span #{Site.model_name.human}管理
         ul.sub-menu
           li[class=('active' if page?('admin/products#index'))]
             = link_to '列表', admin_sites_path
@@ -59,8 +62,6 @@
         ul.sub-menu
           li[class= ('active' if page?('admin/catalogs#index?klass='))]
             = link_to '所有分类', admin_catalogs_path
-          li[class= ('active' if page?('admin/catalogs#index?klass=MaterialCatalog'))]
-            = link_to '物料分类', admin_material_catalogs_path
       li class=("has-sub #{'active' if page?('admin/static_pages')}")
         a href="javascript:;"
           b.caret.pull-right

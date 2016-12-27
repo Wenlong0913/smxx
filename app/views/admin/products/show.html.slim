@@ -1,5 +1,5 @@
 h1 
-  | 查看产品
+  | 查看#{Product.model_name.human}
   .pull-right
     => link_to '编辑', edit_admin_product_path(@product), class: 'btn btn-primary'
     = link_to '返回', admin_products_path, class: 'btn btn-primary'
@@ -11,7 +11,6 @@ h1
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-    h4 查看#{@product.site.title}产品
   .panel-body
     .profile-container
       .profile-info
