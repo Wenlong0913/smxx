@@ -69,7 +69,7 @@
 
   .modal-body {
     margin: 20px 0;
-    height: 300px;
+    height: 50%;
   }
 
   .modal-default-button {

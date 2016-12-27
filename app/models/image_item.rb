@@ -5,10 +5,11 @@ class ImageItem < ApplicationRecord
   has_many :image_item_relations, dependent: :destroy
 
   has_attached_file :image,
-                    path: ":id-:hash.:extension",
+                    path: ":rails_root/public/photos/:id/:style.:extension",
                     hash_secret: 'f240-r3i-3-',
-                    styles: { :original => '800>'}
-                    # default_url: "/images/:style/missing.png"
+                    styles: { :original => '800>'},
+                    :url => "/photos/:id/:style.:extension",
+                    default_url: "/images/:style/missing.png"
 
 
   # validates_attachment_presence :image
@@ -17,6 +18,6 @@ class ImageItem < ApplicationRecord
   validates_attachment_content_type :image, :content_type => /\Aimage/
 
   def image_url
-    "http://" + image.url
+    "http://localhost:5000" + image.url
   end
 end

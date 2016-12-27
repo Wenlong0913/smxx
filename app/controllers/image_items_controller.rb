@@ -17,7 +17,7 @@ class ImageItemsController < ApplicationController
     if params[:ids]
       @image_items = @image_items.where(id: params[:ids].split(/[,]/))
     end
-    @image_item_tags = ImageItemTag.select(:name).distinct.pluck(:name)
+    @image_item_tags = ImageItemTag.where(image_item_id: @image_items.pluck(:id)).select(:name).distinct.pluck(:name)
     @image_items = @image_items.page(params[:page]).order(updated_at: :desc)
     render json: {image_items: ActiveModelSerializers::SerializableResource.new(@image_items, {}).as_json, tags: @image_item_tags}
   end
