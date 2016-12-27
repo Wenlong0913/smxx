@@ -11,3 +11,14 @@ Vue.http.interceptors.push((request, next)  => {
   next((response) => {
   });
 });
+
+// check 250 status
+Vue.http.interceptors.push((request, response)  => {
+  response((response) => {
+    if(response.status == 250){
+      return response.body
+    }else{
+      return response;
+    }
+  });
+});

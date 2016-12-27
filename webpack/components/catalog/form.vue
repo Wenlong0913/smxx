@@ -1,6 +1,7 @@
 <template>
   <!-- modal -->
-  <div class="catalog-modal">
+  <transition name="bounce">
+    <div class="catalog-modal">
     <div class="modal-dialog">
       <div class="modal-content">
         <!-- modal header -->
@@ -17,7 +18,7 @@
             <div class="form-group">
               <div class="col-sm-2 control-label">名称</div>
               <div class="col-sm-10">
-                <input type="text" v-model='model.name' class="form-control" placeholder="输入名称">
+                <input type="text" v-focus @keyup.enter="submit" v-model='model.name' class="form-control" placeholder="输入名称">
               </div>
             </div>
             <!-- 状态提示信息 -->
@@ -37,8 +38,11 @@
       </div>
     </div>
   </div>
+  </transition>
 </template>
 <script>
+import 'transitions/bounce';
+
 export default{
   props: {
     options: { type: Object, required: true },
@@ -68,9 +72,8 @@ export default{
 
 <style scoped>
 .catalog-modal{
-  overflow: hidden;
   position: fixed;
-  top: 10vh;
+  top: 30vh;
   right: 0;
   bottom: 0;
   left: 0;

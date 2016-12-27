@@ -10,13 +10,14 @@
   Role.find_or_create_by name: name
 end
 
-_, admin = User::Create.(mobile_phone: '15328077520', nickname: '管理员', password: 'abcd1234')
+_, admin = User::Create.(id: 1, mobile_phone: '15328077520', nickname: '管理员', password: 'abcd1234')
 _, agent = User::Create.(mobile_phone: '15328077521', nickname: '商家', password: 'abcd1234')
 _, user = User::Create.(mobile_phone: '15328077522', nickname: '用户', password: 'abcd1234')
 
 admin.add_role :admin
 agent.add_role :agent
 
+Site.create(id: 1, title: '本公司', user: admin)
 
 # init Cms
 # visit: http://localhost:3000/cms_1/

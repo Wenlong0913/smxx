@@ -10,20 +10,22 @@
     <!-- list body -->
     <div class="list-body table-responsiev">
       <ul class="list-unstyled">
-        <transition-group name="transition-list">
-          <li class="column" :data-id="catalog.id" :key="catalog.id" v-for="(catalog, index) in filterCatalog(catalogs)" v-on:mouseenter="mouseEnters(catalog)" v-on:mouseleave="mouseLeaves(catalog)" v-show="catalog.filterShow" v-bind:class="catalog.selected ? 'active' : ''">
-            <div class="col-xs-9" @click="choosed(catalog)">
+        <transition-group name="fade">
+          <li class="column" v-for="(catalog, index) in filterCatalog(catalogs)" :data-id="catalog.id" :key="catalog.id"  v-on:mouseenter="mouseEnters(catalog)" v-on:mouseleave="mouseLeaves(catalog)" v-show="catalog.filterShow" v-bind:class="{'active': catalog.selected}">
+            <div v-bind:class="[editable ? 'col-xs-9' : 'col-xs-12']" @click="selected(catalog)">
               <i class="fa fa-circle text-info m-r-10 small"></i>{{catalog.name}}
             </div>
-            <div class="col-xs-3 text-center text-success handle" v-show="catalog.showActions">
-              <span data-target=".modal-form" data-toggle="modal" @click="openModal('new', index, {}, catalog.id)">
-                <i class="fa fa-plus"></i>
-              </span>
-              <span data-target=".modal-form" data-toggle="modal" @click="openModal('edit', index, catalog)">
-                <i class="fa fa-edit"></i>
-              </span>
-              <span v-on:click="removeData(catalog, index)">
-                <i class="fa fa-remove"></i>
+            <div class="col-xs-3 text-center text-success handle" v-show="editable">
+              <span v-show="catalog.showActions">
+                <span class="icon" data-target=".modal-form" data-toggle="modal" @click="openModal('new', index, {}, catalog.id)">
+                  <i class="fa fa-plus"></i>
+                </span>
+                <span class="icon" data-target=".modal-form" data-toggle="modal" @click="openModal('edit', index, catalog)">
+                  <i class="fa fa-edit"></i>
+                </span>
+                <span class="icon" v-on:click="removeData(catalog, index)">
+                  <i class="fa fa-remove"></i>
+                </span>
               </span>
             </div>
           </li>
@@ -31,7 +33,7 @@
       </ul>
     </div>
     <!-- li footer -->
-    <div class="classify-footer">
+    <div class="classify-footer" v-if="editable">
       <span class="btn-link btn-sm pull-right" @click="openModal('new', depth, {})">
         <i class="fa fa-plus-square m-r-5"></i>新增
       </span>
@@ -41,8 +43,10 @@
 </template>
 <script>
 import CatalogForm from './form'
+import 'transitions/fade';
 export default {
   props: {
+    editable: { type: Boolean},
     breadcrumb: { type: Array, required: true },
     parent_id: { type: Number },
     catalogs: { type: Array, required: true },
@@ -54,7 +58,6 @@ export default {
       options: {formStatus: '', responseMessage: '', parent_id: '', index:'', addChildren: false},
       showModal : false,
       newCatalogModel: {},
-      showActionButton: false,
       searchText: ''
     }
   },
@@ -72,13 +75,16 @@ export default {
         return catalog
       })
     },
-    choosed (catalog) {
-      this.$emit('choosed', catalog, this.depth);
+    selected (catalog) {
+      this.$emit('selected', catalog, this.depth);
       this.catalogs.forEach(function(value){
         value.selected = false;
+        value.children.forEach(function(value){
+          value.selected = false;
+        })
       })
       catalog.selected = true;
-      this.breadcrumb.splice(this.depth+1, this.breadcrumb.length-1, catalog.name);
+      this.breadcrumb.splice(this.depth, this.breadcrumb.length, catalog);
     },
     mouseEnters (catalog) {
       this.$set(catalog, 'showActions', true)
@@ -115,17 +121,18 @@ export default {
         var reCatalog = response.body;
         if (this.options.addChildren) {// 分为内部添加按钮 和 底部添加按钮
           this.catalogs[options.index].children.push(reCatalog);
-          this.choosed(this.catalogs[options.index])
+          this.selected(this.catalogs[options.index])
         }else {
           this.catalogs.push(reCatalog)
         }
         this.options.responseMessage = {status: true, text: '添加成功'};
         var _this = this;
-        setTimeout(function () {
+        // setTimeout(function () {
           _this.showModal = false;
-        }, 1000);
+        // }, 1000);
       }
       var errorHandler = function(response){
+        console.log(response)
         this.options.responseMessage = {status: false, text: '添加失败，出错了......'}
       }
       this.$http.post(addUrl, catalog).then(successHandler, errorHandler);
@@ -137,9 +144,9 @@ export default {
         options.responseMessage = {status: true, text: '修改成功'}
         this.catalogs[options.index].name= catalog.name
         var _this = this;
-        setTimeout(function () {
+        // setTimeout(function () {
           _this.showModal = false;
-        }, 1000);
+        // }, 1000);
       }
       var errorHandler = function(response){
         options.responseMessage = {status: false, text: '出错了......'}
@@ -203,13 +210,13 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.black-classify .list-body ul.list-unstyled li .col-xs-3 sapn{
+.black-classify .list-body ul.list-unstyled li .col-xs-3 span.icon{
   float: left;
 }
 .black-classify .list-body ul.list-unstyled li .col-xs-3 i{
   margin: 0px 5px;
 }
-.black-classify .list-body ul.list-unstyled li .col-xs-3 span:hover{
+.black-classify .list-body ul.list-unstyled li .col-xs-3 span.icon:hover{
   color: red;
 }
 .black-classify .classify-footer{

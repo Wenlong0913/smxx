@@ -16,9 +16,8 @@
               li = message
 
       = f.association :site
-      - catalogList = Catalog.where(name: '产品分类').first.try{children.map{ |x| [x.name, x.id]}}
-      = f.association :catalog, collection: catalogList, include_blank: true, input_html: { class: 'select2', data: { placeholder: '选择' }}
       = f.input :name
+      catalog-list[data-url=admin_product_catalogs_path]
       = f.input :price
       = f.input :description
       .form-group

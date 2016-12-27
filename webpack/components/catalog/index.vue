@@ -1,53 +1,55 @@
 <template>
-  <div class="panel panel-default">
-    <!-- panel head -->
-    <div class="panel-heading">
-      <div class="panel-heading-btn">
-        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand">
-          <i class="fa fa-expand"></i>
-        </a>
-        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse">
-          <i class="fa fa-minus"></i>
-        </a>
-      </div>
-      <ol class="breadcrumb samll">
-        <li v-for="value in breadcrumb">{{ value }}</li>
-      </ol>
+  <div class="">
+    <ol class="breadcrumb samll">
+      <li>选择：</li>
+      <li v-for="value in breadcrumb">{{ value.name }}</li>
+    </ol>
+    <div class="well well-sm table-responsive">
+      <!-- <ol class="list-inline"> -->
+        <transition-group name="bounce" tag="ol" class="list-inline">
+          <catalog class="black-classify" :key="depth" v-for="(arr, depth) in catalogGroups" :depth="depth" :parent_id="arr[0]" :catalogs="arr[1]" @selected="selected"  :breadcrumb="breadcrumb" :dataUrl="dataUrl" @removeCatalog="removeCatalogGroupsData" :editable="editable"></catalog>
+        </transition-group>
+      <!-- </ol> -->
     </div>
-    <!-- panel body -->
-    <div class="panel-body">
-      <div class="well well-sm table-responsive">
-        <ol class="list-inline">
-          <li class="black-classify" v-for="(arr, depth) in catalogGroups" is='catalog' :depth="depth" :parent_id="arr[0]" :catalogs="arr[1]" @choosed="choosed"  :breadcrumb="breadcrumb" :dataUrl="dataUrl" @removeCatalog="removeCatalogGroupsData"></li>
-        </ol>
-      </div>
+    <div class="panel-footer text-right" v-if="showConfirmButtons">
+      <button type="button" class="btn btn-default" @click="closePanel">取消</button>
+      <button type="button" class="btn btn-primary" @click="onSelected">确定</button>
     </div>
   </div>
 </template>
 <script>
 import Catalog from './list'
+import 'transitions/bounce';
 export default {
   props: {
-    dataUrl: { required: true, type: String }
+    dataUrl: { required: true, type: String },
+    editable: { type: Boolean, default: true },
+    showConfirmButtons: { type: Boolean, default: false },
+    default: { type: Array, default: function(){
+      return [];
+    }}
   },
   components: { Catalog },
   data () {
     return {
       catalogGroups: [],
-      breadcrumb: ['选择：']
+      breadcrumb: [],
     }
   },
   methods: {
     loadData () {
       var successHandler = function(response){
         this.catalogGroups.push([null, response.body]);
+        if ( this.showConfirmButtons && this.default.length > 0){
+          this.defaultSelected(this.default)
+        }
       }
       var errorHandler = function(response){
         alert('falied')
       }
       this.$http.get(this.dataUrl).then(successHandler, errorHandler);
     },
-    choosed (catalog, depth) {
+    selected (catalog, depth) {
       var shouldPush = true;
       if(this.catalogGroups[depth + 1] && this.catalogGroups[depth + 1] == catalog.children){
         shouldPush = false
@@ -67,6 +69,28 @@ export default {
           this.catalogGroups.splice(depth + 1)
         }
       }
+    },
+    closePanel () {
+      this.$emit('closed');
+    },
+    onSelected () {
+      this.$emit('selected', this.breadcrumb);
+    },
+    defaultSelected(selectedArray){
+      this.catalogGroups.splice(1);
+      this.breadcrumb = [];
+      this.recursive(this.catalogGroups[0][1], selectedArray, 0)
+    },
+    recursive(catalogGroups, selectedArray, i){
+      var _this = this;
+      catalogGroups.forEach(function(value){
+        if(value.id == selectedArray[i]){
+          _this.breadcrumb.push(value)
+          value.selected = true;
+          _this.selected(value, i)
+          _this.recursive(value.children, selectedArray, ++i)
+        }
+      })
     }
   },
   mounted () {
@@ -76,11 +100,20 @@ export default {
 </script>
 
 <style scoped>
+/*.catalog-fixed{
+  position: fixed;
+  width: 80%;
+  left: 10vw;
+  top: 5vh;
+  z-index: 10000;
+  box-shadow: 0px 0px 5px 0px #ccc;
+}*/
 .well{
   background: #efefef;
   min-width: 100%;
   overflow-x: scroll;
   overflow-y: hidden;
+  margin-bottom: 0px;
 }
 .well ol.list-inline{
   margin: 0px;
@@ -88,7 +121,6 @@ export default {
   display: inline-block;
 }
 .well ol li.black-classify{
-  height: 420px;
   width: 300px;
   margin-right: 10px;
   background: #fff;

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   Dir[Rails.root.join('config/routes/**/*_route.rb')].each { |f| require_dependency f }
   extend CmsFrontendRoute
   extend CmsBackendRoute
+  extend CatalogResourcesRoute
 
   mount Ckeditor::Engine => '/ckeditor'
 
@@ -48,7 +49,11 @@ Rails.application.routes.draw do
         get '/', to: 'home#show'
       end
     end
+
     resources :catalogs
+    # catalog_resources_for MaterialCatalog
+    catalog_resources_for ProductCatalog
+
     resources :roles, only: [:index], :concerns => :paginatable do
       resources :users, only: [:index], :concerns => :paginatable
     end

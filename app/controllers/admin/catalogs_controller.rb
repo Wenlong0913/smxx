@@ -1,13 +1,14 @@
 class Admin::CatalogsController < Admin::BaseController
+  before_action :set_catalog_model
   before_action :set_admin_catalog, only: [:edit, :update, :destroy]
 
   # GET /admin/catalogs
   def index
-    authorize Catalog
+    authorize catalog_model
     respond_to do |format|
       format.html
       format.json do
-        @catalogs = Catalog.roots
+        @catalogs = catalog_model.roots
         render json: @catalogs
       end
     end
@@ -20,8 +21,8 @@ class Admin::CatalogsController < Admin::BaseController
 
   # GET /admin/catalogs/new
   def new
-    authorize Catalog
-    @admin_catalog = Catalog.new
+    authorize catalog_model
+    @admin_catalog = catalog_model.new
   end
 
   # GET /admin/catalogs/1/edit
@@ -31,41 +32,49 @@ class Admin::CatalogsController < Admin::BaseController
 
   # POST /admin/catalogs
   def create
-    authorize Catalog
-    flag, @admin_catalog = Catalog::Create.(admin_catalog_params)
+    authorize catalog_model
+    flag, @admin_catalog = catalog_model::Create.(admin_catalog_params)
     if flag
       render json: @admin_catalog
     else
-      json_update_failed!
+      render json: @admin_catalog.errors, status: :failed
     end
   end
 
   # PATCH/PUT /admin/catalogs/1
   def update
     authorize @admin_catalog
-    flag, @admin_catalog = Catalog::Update.(@admin_catalog, admin_catalog_params)
+    flag, @admin_catalog = catalog_model::Update.(@admin_catalog, admin_catalog_params)
     if flag
       head :ok
     else
-      json_update_failed!
+      render json: @admin_catalog.errors.as_json, status: :failed
     end
   end
 
   # DELETE /admin/catalogs/1
   def destroy
     authorize @admin_catalog
-    Catalog::Destroy.(@admin_catalog)
+    catalog_model::Destroy.(@admin_catalog)
     head :ok
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_admin_catalog
-      @admin_catalog = Catalog.find(params[:id])
+      @admin_catalog = catalog_model.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def admin_catalog_params
       params.permit(:parent_id, :name, :position)
+    end
+
+    def catalog_model
+      @catalog_model
+    end
+
+    def set_catalog_model
+      @catalog_model = params[:klass] ? params[:klass].constantize : Catalog
     end
 end

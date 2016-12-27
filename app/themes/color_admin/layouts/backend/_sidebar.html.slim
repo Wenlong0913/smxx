@@ -15,48 +15,62 @@
     /! begin sidebar nav
     ul.nav
       li.nav-header 功能导航
-      li class=("#{'active' if controller_path == 'admin/home'}")
+      li class=("#{'active' if page?('admin/home') }")
         = link_to admin_root_path do
           = fa_icon 'laptop', text: '首页'
-      li class=("has-sub #{'active' if %w(admin/users admin/roles).include?(controller_path)}")
+      li class=("has-sub #{'active' if page?('admin/users', 'admin/roles')}")
         a href="javascript:;"
           i.fa.fa-inbox
           span 账户管理
         ul.sub-menu
-          li class=("#{'active' if controller_path == 'admin/users'}") = link_to '用户', admin_users_path
-          li class=("#{'active' if controller_path == 'admin/roles'}") = link_to '角色', admin_roles_path
-      li class=("has-sub #{'active' if controller_path == 'admin/tracker/home'}")
+          li class=("#{'active' if page?('admin/users')}") = link_to '用户', admin_users_path
+          li class=("#{'active' if page?('admin/roles')}") = link_to '角色', admin_roles_path
+      li class=("has-sub #{'active' if page?('admin/tracker/home', 'admin/tracker/shares/home')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
           span 站点统计
         ul.sub-menu
-          li.active
+          li[class=('active' if page?('admin/tracker/home#index'))]
             = link_to '访问统计', admin_tracker_path
-          li
+          li[class=('active' if page?('admin/tracker/shares/home#show'))]
             = link_to '分销统计', admin_tracker_shares_path
-      li class=("has-sub #{'active' if controller_path == 'admin/products'}")
+      li class=("has-sub #{'active' if page?('admin/products')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
           span 产品管理
         ul.sub-menu
-          li.active
+          li[class=('active' if page?('admin/products#index'))]
             = link_to '产品列表', admin_products_path
-      li class=("has-sub #{'active' if controller_path == 'admin/sites'}")
+      li class=("has-sub #{'active' if page?('admin/sites')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
           span Site管理
         ul.sub-menu
-          li.active
+          li[class=('active' if page?('admin/products#index'))]
             = link_to '列表', admin_sites_path
-      li class=("#{'active' if controller_path == 'admin/catalogs'}")
-        = link_to admin_catalogs_path do
-          = fa_icon 'inbox', text: '分类管理'
+      li class=("has-sub #{'active' if page?('admin/catalogs')}")
+        a href="javascript:;"
+          b.caret.pull-right
+          i.fa.fa-inbox
+          span 分类管理
+        ul.sub-menu
+          li[class= ('active' if page?('admin/catalogs#index?klass='))]
+            = link_to '所有分类', admin_catalogs_path
+          li[class= ('active' if page?('admin/catalogs#index?klass=ProductCatalog'))]
+            = link_to '产品分类', admin_product_catalogs_path
+      li class=("has-sub #{'active' if page?('admin/static_pages')}")
+        a href="javascript:;"
+          b.caret.pull-right
+          i.fa.fa-inbox
+          span 帮助
+        ul.sub-menu
+          li[class=('active' if page?('admin/static_pages#show?id=home'))]
+            = link_to admin_page_path('home') do
+              = fa_icon 'leaf', text: '开发手册'
       li
-        = link_to admin_page_path('home') do
-          = fa_icon 'leaf', text: '开发手册'
         = link_to cms_sites_path do
           = fa_icon 'file-text', text: 'CMS系统'
       li
