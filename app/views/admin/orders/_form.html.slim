@@ -13,8 +13,9 @@
           ul
             - @order.errors.full_messages.each do |message|
               li = message
-
+      = f.input :code, disabled: true
       = f.association :user
       = f.association :site
       = f.input :price
+      = f.input :description, as: :text
       = f.submit class: 'btn btn-success btn-block'
