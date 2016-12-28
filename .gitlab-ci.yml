@@ -1,6 +1,6 @@
 image: tanmer/ruby:2.3.1
 services:
-  - tanmer/postgres
+  - tanmer/postgresql
 variables:
   POSTGRES_DB: tmf_test
   POSTGRES_USER: runner
