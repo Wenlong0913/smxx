@@ -1,64 +1,83 @@
 <template>
-  <div> 
-    <div id="options" class="m-b-10">
-      <span class="gallery-option-set" id="filter" data-option-key="filter">
-          <a class="btn btn-default btn-xs active" @click="load_images()">
-              所有
-          </a>
-          <a v-for="tag in tagList"  class="btn btn-default btn-xs" @click="selected_tag(tag)">
-              {{tag}}
-          </a>
-      </span>
+  <div class="image_items">
+    <div class="gallery-option-set" id="filter" data-option-key="filter">
+      <a class="btn btn-default btn-xs" @click="load_images()">
+          所有
+      </a>
+      <a v-for="tag in tagList"  class="btn btn-default btn-xs" @click="selected_tag(tag)">
+          {{tag}}
+      </a>
     </div>
     <div id="gallery" class="gallery">
-      <div class="row">
-          <div class="image col-sm-6 col-md-4" v-for="image in imageList">
-              <div class="image-inner">
-                  <a href="javascript:;" data-lightbox="gallery-group-1">
-                      <img :src="image.data.image" alt="" />
-                  </a>
-                  <p class="image-caption">
-                      {{image.name}}
-                  </p>
-              </div>
-              <div class="image-info">
-                  <h5 class="title">Lorem ipsum dolor sit amet</h5>
-                  <div class="pull-right">
-                      <small>by</small> <a href="javascript:;">Sean Ngu</a>
-                  </div>
-                  <div class="desc">
-                      Nunc velit urna, aliquam at interdum sit amet, lacinia sit amet ligula. Quisque et erat eros. Aenean auctor metus in tortor placerat, non luctus justo blandit.
-                  </div>
-                  <p>
-                    <button type="button" class="btn btn-primary btn-xs" :disabled="selectedList.indexOf(image.id) != -1" @click="choose_image(image)">选择</button>
-                    <button type="button" class="btn btn-warning btn-xs">编辑</button>
-                    <button type="button" class="btn btn-danger btn-xs pull-right" v-on:click="delete_image(image.id)">删除</button>
-                  </p>
-              </div>
+      <transition-group name="list" tag="div">
+        <div class="col-xs-12 col-sm-6 col-md-4" v-for="image in imageList" :key="image.id">
+          <div class="img-thumbnail">
+            <div class="image-inner">
+              <img :src="image.image_url" alt="" @click="choose_image(image)"/>
+              <span class="glyphicon glyphicon-ok selected" v-show="selectedList.indexOf(image.id) != -1"></span>
+              <span class="glyphicon glyphicon-remove remove" @click="delete_image(image.id)"></span>
+            </div>
           </div>
-      </div>
+          <div class="image-info">
+
+          </div>
+        </div>
+      </transition-group>
     </div>
+
+      <div class="row">
+        <div class="col-sm-5">
+          <div class="dataTables_info" id="data-table_info" role="status" aria-live="polite">
+          </div>
+        </div>
+        <div class="col-sm-7">
+          <div class="dataTables_paginate paging_simple_numbers" id="data-table_paginate">
+            <ul class="pagination">
+              <li class="paginate_button previous" :class="currentPage-1 <= 0 ? 'disabled' : '' " id="data-table_previous" @click="load_images(currentPage-1)">
+                <span aria-controls="data-table" data-dt-idx="0" tabindex="0">
+                  上一页
+                </span>
+              </li>
+              <li :class="['paginate_button', n==currentPage ? 'active' : '']" v-for="n in totalPage" v-if="(currentPage-3) < n && n < (currentPage+3)" @click="load_images(n)">
+                <span  aria-controls="data-table" :data-dt-idx="n" tabindex="0">{{n}}</span>
+              </li>
+              <li class="paginate_button next" :class="currentPage+1 > totalPage ? 'disabled' : '' " id="data-table_next" @click="load_images(currentPage+1)">
+                <span href="#" aria-controls="data-table" :data-dt-idx="currentPage+1" tabindex="0">下一页</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>  
   </div>  
 </template>
 
 <script>
   export default {
-    props: ['server', 'deleteServer', 'selectedList'],
+    // props: ['server', 'deleteServer', 'selectedList'],
+    props: {
+      server: {type: String, required: true},
+      selectedList: {type: Array}
+    },
     data () {
       return {
         imageList: [],
-        tagList: []
+        tagList: [],
+        totalPage: 1,
+        currentPage: 1
       }
     },
     mounted() {
-      this.load_images();   
+      this.load_images(1);   
     },
     methods: {
-      load_images() {
+      load_images(page) {
         var vm = this
-        vm.$http.get(vm.server).then((data) => {
+        vm.$http.get(vm.server+'?page='+page).then((data) => {
+          vm.currentPage = page;
           vm.imageList = data.body.image_items;
           vm.tagList = data.body.tags;
+          vm.totalPage = data.body.total_page;
         }, (response) => {
             // error callback
         });
@@ -77,15 +96,16 @@
       delete_image(id) {
         var vm = this;
         if(window.confirm('确定要删除吗?')){
-          vm.$http.delete(this.deleteServer+'/'+id).then((data) => {
+          vm.$http.delete(this.server+'/'+id).then((data) => {
             var image_index = vm.get_image_index(id);
             if(image_index != -1){
-              vm.imageList.splice(image_index, 1)  
+              vm.imageList.splice(image_index, 1)
             }
+            vm.$emit('delete', id);
           }, (response) => {
               // error callback
-          });     
-        }    
+          });
+        }
       },
       get_image_index(id) {
         var vm = this;
@@ -100,37 +120,72 @@
 </script>
 
 <style scoped>
-
+  .image_items{
+    height: 100%;
+  }
   .gallery {
-      margin: 0 -10px;
-  }
-  .gallery-option-set {
-      display: block;
-      margin-bottom: -5px;
-  }
-  .gallery-option-set .btn {
-      margin: 0 5px 5px 0;
-  }
-  .gallery .image {
-      width: 25%;
-      display: block;
-      margin-right: -10px;
+      margin: 0px;
       overflow: hidden;
-      padding: 10px;
+      overflow-y: scroll;
+      height: 90%;
   }
-  .gallery .image img {
-      width: 100%;
-      height: 200px;
-      -webkit-border-radius: 3px 3px 0 0;
-      -moz-border-radius: 3px 3px 0 0;
-      border-radius: 3px 3px 0 0;
+
+  .gallery-option-set{
+    margin: 3px 15px;
+  }
+  .gallery .col-xs-12{
+    margin-top: 5px;
+  }
+  .gallery .img-thumbnail{
+    width: 100%;
+  }
+  .gallery .img-thumbnail:hover{
+    box-shadow: 0px 0px 10px -3px #00acac;
+    cursor: pointer;
+  }
+  .gallery .img-thumbnail img{
+    width: 100%;
   }
   .gallery .image-inner {
-      position: relative;
-      background: #fff;
-      -webkit-border-radius: 3px 3px 0 0;
-      -moz-border-radius: 3px 3px 0 0;
-      border-radius: 3px 3px 0 0;
+    position: relative;
+    background: #fff;
+    -webkit-border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+    text-align: center;
+    overflow: hidden;
+    width: 100%;
+    height: 150px;
+  }
+
+  .gallery .image-inner .selected{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #fff;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    font-size: 14px;
+    background-color: rgba(64,183,66,0.8);
+    border-radius: 10px;
+  }
+
+  .gallery .image-inner .remove{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #a94442;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    font-size: 14px;
+    background-color: rgba(255,255,255,0.15);
+    border-radius: 10px;
+  }
+  .gallery .image-inner .remove:hover{
+    background-color: rgba(255,255,255,0.3);
+    cursor: pointer;
   }
   .gallery .image a {
       -webkit-transition: all .2s linear;
@@ -187,6 +242,14 @@
   }
   .gallery .rating span.star.active:before {
       color: #FF8500;
+  }
+
+  .list-enter-active, .list-leave-active {
+    transition: all 0.5s;
+  }
+  .list-enter, .list-leave-active {
+    opacity: 0;
+    transform: translateY(30px);
   }
 
 </style>

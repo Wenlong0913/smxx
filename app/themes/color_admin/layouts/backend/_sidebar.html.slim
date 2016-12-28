@@ -31,12 +31,14 @@
             = link_to '访问统计', admin_tracker_path
           li[class=('active' if page?('admin/tracker/shares/home#show'))]
             = link_to '分销统计', admin_tracker_shares_path
-      li class=("has-sub #{'active' if page?('admin/products')}")
+      li class=("has-sub #{'active' if page?('admin/products', 'admin/catalogs#index?klass=ProductCatalog')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
           span #{Product.model_name.human}管理
         ul.sub-menu
+          li[class= ('active' if page?('admin/catalogs#index?klass=ProductCatalog'))]
+            = link_to '产品分类', admin_product_catalogs_path
           li[class=('active' if page?('admin/products#index'))]
             = link_to "#{Product.model_name.human}列表", admin_products_path
           /li[class=('active' if page?('admin/products#new'))]

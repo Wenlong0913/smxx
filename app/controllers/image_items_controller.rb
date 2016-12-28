@@ -1,25 +1,25 @@
 class ImageItemsController < ApplicationController
-  # skip_before_filter :verify_authenticity_token, :only => [:create]
+  skip_before_filter :verify_authenticity_token, :only => [:create]
 
   # 获取Site或User的相册列表
   def index
-    assoc =
+    @image_items =
       if params[:site_id]
         @site = Site.find(@site)
         authorize @site, :edit # can edit site, then can get all images of site
         @site.image_items
       else # user's images
-        # current_user.image_items
-        ImageItem.all
+        current_user.image_items
       end
     if params[:tag]
-      @image_items = assoc.joins(:image_item_tags).where(image_item_tags: {name: params[:tag]})
-    else
-      @image_items = assoc
+      @image_items = @image_items.joins(:image_item_tags).where(image_item_tags: {name: params[:tag]})
     end
-    @image_item_tags = ImageItemTag.select(:name).distinct.pluck(:name)
+    if params[:ids]
+      @image_items = @image_items.where(id: params[:ids].split(/[,]/))
+    end
+    @image_item_tags = @image_items.joins(:image_item_tags).select("image_item_tags.name").distinct.map(&:name)
     @image_items = @image_items.page(params[:page]).order(updated_at: :desc)
-    render json: {image_items: @image_items, tags: @image_item_tags}
+    render json: {image_items: ActiveModelSerializers::SerializableResource.new(@image_items, {}).as_json, total_page: @image_items.total_pages, tags: @image_item_tags}
   end
 
   def create
@@ -39,7 +39,7 @@ class ImageItemsController < ApplicationController
     if flag
       render json: @image_item.id
     else
-      head 403
+      render json: @image_item.errors, status: :failed
     end
   end
 
@@ -57,11 +57,12 @@ class ImageItemsController < ApplicationController
   def image_item_params
     json_image_data = {}
     params.each_pair do |k, v|
-      if v[:image_items]
+      if v[:image_item_ids]
         hash_params = {}
-        json_image_data = JSON.parse(v[:image_items].first)
+        json_image_data = JSON.parse(v[:image_item_ids].first)
         hash_params[:name] = json_image_data["input"]["name"]
-        hash_params[:data] = json_image_data['output']
+        hash_params[:data] = json_image_data["input"]["name"]
+        hash_params[:image] = json_image_data['output']["image"]
         hash_params[:id] = json_image_data['server']
         # hash_params[:user_id] = current_user.id
         # hash_params[:site_id] = params[:site_id]

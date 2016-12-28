@@ -52,6 +52,7 @@ Rails.application.routes.draw do
 
     resources :catalogs
     catalog_resources_for MaterialCatalog # 物料分类管理
+    catalog_resources_for ProductCatalog
     resources :materials # 物料管理
     resources :vendors # 供应商管理
 

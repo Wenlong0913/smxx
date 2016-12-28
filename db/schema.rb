@@ -139,8 +139,12 @@ ActiveRecord::Schema.define(version: 20161228053123) do
     t.integer  "width"
     t.integer  "height"
     t.jsonb    "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
     t.index ["owner_type", "owner_id"], name: "index_image_items_on_owner_type_and_owner_id", using: :btree
   end
 
@@ -159,6 +163,7 @@ ActiveRecord::Schema.define(version: 20161228053123) do
     t.datetime "updated_at", null: false
     t.string   "type"
     t.string   "name_py"
+    t.integer  "catalog_id"
     t.index ["site_id"], name: "index_items_on_site_id", using: :btree
   end
 

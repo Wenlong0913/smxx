@@ -1,4 +1,4 @@
-h1 
+h1.page-header
   | 查看#{Product.model_name.human}
   .pull-right
     => link_to '编辑', edit_admin_product_path(@product), class: 'btn btn-primary'
@@ -22,12 +22,16 @@ h1
                 a
                   =@product.site.title
             tr.divider
-              td[colspan='2']
+              td[colspan='4']
             tr
               td.field 产品名称
               td
                 a
                   = @product.name
+              td.field 产品分类
+              td
+                a
+                  =@product.catalog.try(:name)
             tr.divider
               td[colspan='2']
             tr
@@ -44,3 +48,13 @@ h1
                   = @product.description
             tr.divider
               td[colspan='2']
+          h4 产品图片
+          .gallery#gallery
+            .row
+            -@product.image_items.each do |image|
+              .image.col-sm-6.col-md-4
+                .image-inner
+                  a[href="javascript:;" data-lightbox="gallery-group-1"]
+                    img[src="#{image.image_url}"]
+                  .image-caption
+                    =image.name
