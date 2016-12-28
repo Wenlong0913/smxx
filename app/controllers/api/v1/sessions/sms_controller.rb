@@ -27,7 +27,7 @@ class Api::V1::Sessions::SmsController < Api::V1::BaseController
     begin
       response = t.post!
       response.valid!
-      render json: {message: "验证码发送成功！#{is_dev && '非生成环境虚拟验证码[1234]'}", status: 'ok'}
+      render json: {message: "验证码发送成功！#{is_dev ? '非生成环境虚拟验证码[1234]' : ''}", status: 'ok'}
     rescue Sms::Services::YunPianService::SentFailed
       render json: {message: '服务器出问题啦，请稍候在试！', status: 'error'}
     end

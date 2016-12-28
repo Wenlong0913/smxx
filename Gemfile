@@ -60,7 +60,8 @@ gem 'ckeditor', '~> 4.2'
 
 #File upload
 gem 'paperclip'
-gem 'paperclip-qiniu'
+# gem 'qiniu'
+# gem 'paperclip-qiniu', '>= 0.2.0'
 
 # In Rails 5, active_model/serializers/xml has been extracted into its own gem.
 #   So, a quick solution is to add the activemodel-serializers-xml gem to your Gemfile

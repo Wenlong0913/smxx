@@ -7,3 +7,5 @@ Vue.components.ImageAlbum = Vue.component('image-album', require('./image_album'
 Vue.components.Modal = Vue.component('modal', require('./modal'));
 Vue.components.ImageSelect = Vue.component('image-select', require('./image_select'));
 Vue.components.CatalogList = Vue.component('catalog-list', require('./catalog'))
+Vue.components.MultiImageUpload = Vue.component('multi-image-upload', require('./multi_image_upload'));
+
