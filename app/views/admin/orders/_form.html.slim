@@ -19,5 +19,6 @@
       = f.association :site
       = f.input :price
       = f.input :description, as: :text
-      = f.input :status, collection: enum_options_for_select(Order, :status), as: :radio_buttons
+      - unless @order.new_record?
+        = f.input :status, collection: enum_options_for_select(Order, :status), as: :radio_buttons
       = f.submit class: 'btn btn-success btn-block'
