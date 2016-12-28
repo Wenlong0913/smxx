@@ -18,10 +18,16 @@ h1
           table.table.table-profile
             tr
               td.field
+                | #{Order.human_attribute_name(:code)}
+              td
+                span
+                  = @order.code
+            tr
+              td.field
                 | #{Order.human_attribute_name(:user)}
               td
                 a
-                  = @order.user
+                  = decorate(@order.user).display_name
             tr.divider
               td[colspan='2']
             tr
@@ -29,7 +35,7 @@ h1
                 | #{Order.human_attribute_name(:site)}
               td
                 a
-                  = @order.site
+                  = @order.site.title
             tr.divider
               td[colspan='2']
             tr

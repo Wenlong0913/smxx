@@ -61,15 +61,15 @@ h1.page-header
       table.table.table-striped.table-bordered
         thead
           tr
-            th = Order.human_attribute_name(:user)
+            th = Order.human_attribute_name(:code)
             th = Order.human_attribute_name(:site)
             th = Order.human_attribute_name(:price)
             th
         tbody
           - @orders.each do |order|
             tr
-              td = order.user
-              td = order.site
+              td = order.code
+              td = order.site.title
               td = order.price
               td
                 => link_to '查看', admin_order_path(order), class: 'btn btn-xs btn-default'

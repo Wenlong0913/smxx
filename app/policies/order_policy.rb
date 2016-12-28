@@ -6,9 +6,8 @@ class OrderPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    fail "请在#{__FILE__}中添加params的permit属性"
-    if user.has_role? :admin
-      []
+    if user.super_admin_or_admin?
+      [:user_id, :site_id, :price, :description]
     else
       []
     end

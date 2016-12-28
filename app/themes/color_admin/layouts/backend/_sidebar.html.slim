@@ -18,15 +18,10 @@
       li class=("#{'active' if page?('admin/home') }")
         = link_to admin_root_path do
           = fa_icon 'laptop', text: '首页'
-      li class=("has-sub #{'active' if page?('admin/users', 'admin/roles')}")
-        a href="javascript:;"
-          b.caret.pull-right
-          i.fa.fa-inbox
-          span 账户管理
-        ul.sub-menu
-          li class=("#{'active' if page?('admin/users')}") = link_to '用户', admin_users_path
-          li class=("#{'active' if page?('admin/roles')}") = link_to '角色', admin_roles_path
-      /li class=("has-sub #{'active' if page?('admin/tracker/home', 'admin/tracker/shares/home')}")
+      li class=("#{'active' if page?('admin/orders') }")
+        = link_to admin_orders_path do
+          = fa_icon 'cube', text: "#{Order.model_name.human}管理"
+      li class=("has-sub #{'active' if page?('admin/tracker/home', 'admin/tracker/shares/home')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
@@ -74,6 +69,14 @@
             = link_to '物料分类', admin_material_catalogs_path
           li[class= ('active' if page?('admin/vendors#index'))]
             = link_to '供应商', admin_vendors_path
+      li class=("has-sub #{'active' if page?('admin/users', 'admin/roles')}")
+        a href="javascript:;"
+          b.caret.pull-right
+          i.fa.fa-inbox
+          span 账户管理
+        ul.sub-menu
+          li class=("#{'active' if page?('admin/users')}") = link_to '用户', admin_users_path
+          li class=("#{'active' if page?('admin/roles')}") = link_to '角色', admin_roles_path
       li class=("has-sub #{'active' if page?('admin/static_pages')}")
         a href="javascript:;"
           b.caret.pull-right
