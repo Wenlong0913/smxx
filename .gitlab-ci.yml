@@ -1,0 +1,19 @@
+image: tanmer/ruby:2.3.1
+services:
+  - tanmer/postgres
+variables:
+  POSTGRES_DB: tmf_test
+  POSTGRES_USER: runner
+  POSTGRES_PASSWORD: ""
+
+before_script:
+  - bundle install
+
+test:
+  script:
+    - export RAILS_ENV=test
+    - bundle exec rake db:drop
+    - bundle exec rake db:create
+    - bundle exec rake db:migrate
+    - bundle exec rake spec
+    - unset RAILS_ENV
