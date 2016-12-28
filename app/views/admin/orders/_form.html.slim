@@ -13,7 +13,8 @@
           ul
             - @order.errors.full_messages.each do |message|
               li = message
-      = f.input :code, disabled: true
+      - unless @order.new_record?
+        = f.input :code, disabled: true
       = f.association :user
       = f.association :site
       = f.input :price
