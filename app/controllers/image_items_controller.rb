@@ -19,7 +19,7 @@ class ImageItemsController < ApplicationController
     end
     @image_item_tags = @image_items.joins(:image_item_tags).select("image_item_tags.name").distinct.map(&:name)
     @image_items = @image_items.page(params[:page]).order(updated_at: :desc)
-    render json: {image_items: ActiveModelSerializers::SerializableResource.new(@image_items, {}).as_json, tags: @image_item_tags}
+    render json: {image_items: ActiveModelSerializers::SerializableResource.new(@image_items, {}).as_json, total_page: @image_items.total_pages, tags: @image_item_tags}
   end
 
   def create
@@ -39,7 +39,7 @@ class ImageItemsController < ApplicationController
     if flag
       render json: @image_item.id
     else
-      head 403
+      render json: @image_item.errors, status: :failed
     end
   end
 
@@ -59,8 +59,7 @@ class ImageItemsController < ApplicationController
     params.each_pair do |k, v|
       if v[:image_item_ids]
         hash_params = {}
-        # json_image_data = JSON.parse(v[:image_item_ids].first)
-        json_image_data = JSON.parse(v[:image_item_ids])
+        json_image_data = JSON.parse(v[:image_item_ids].first)
         hash_params[:name] = json_image_data["input"]["name"]
         hash_params[:data] = json_image_data["input"]["name"]
         hash_params[:image] = json_image_data['output']["image"]

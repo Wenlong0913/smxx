@@ -2,16 +2,17 @@
   <div>
     <div class="well">
       <ul class="row list-inline">
-        <li class="col-sm-12 col-xs-6 col-md-3" v-for="(image, index) in imageList" :key="image">
+        <li class="col-sm-12 col-xs-6 col-md-3" v-for="(image, index) in imageList" :key="image.image_url">
           <div class="img-thumbnail">
             <image-upload class="image-slim" :auto-upload="true"
                           :name="name"
                           :server="server"
                           v-model="image.id"
+                          label=""
                           :image-url="image.image_url"
                           :init-save="image.init_save"
-                          @remove="delete_image(image.id)"
-                          :key="image.image_url">
+                          @remove="delete_image(image.image_url)"
+                          >
             </image-upload>
           </div>
         </li>
@@ -31,16 +32,12 @@
       </ul>
     </div>
 
-    <!-- use the modal component, pass in the prop -->
-    <modal v-if="showModal" @close="showModal = false">
-      <h3 slot="header">
-        选择图片
-      </h3>
-
-      <div slot="body">
-        <image-album :server="server" @delete="delete_image" @selected="selected_images" :selected-list="imageListIds"></image-album>
-      </div>
+    <modal title="选择图片" :show.sync="showModal" @cancel="showModal = false" okText='保存' cancelText="取消" @ok="showModal = false">
+        <div>
+          <image-album :server="server" @delete="delete_image" @selected="selected_images" :selected-list="imageListIds"></image-album>
+        </div>
     </modal>
+
   </div>
 </template>
 
@@ -50,7 +47,7 @@
     props: {
       server: {type: String, required: true},
       name: {type: String, required: true},
-      selectedIds: {type: String}
+      selectedIds: {type: String, default: ''}
     },
     data(){
       return {
@@ -65,14 +62,14 @@
         return this.imageList.map(function(image) {
           return image.id;
         })
-        // return [1,2,3];
       }
     },
     mounted (){
       var vm = this;
       if(vm.selectedIds){
         vm.$http.get(vm.server + '?ids=' + vm.selectedIds).then((data) => {
-          vm.imageList = data.body.image_items;
+          if(data.body.image_items)
+            vm.imageList = data.body.image_items;
         }, (response) => {
             // error callback
         });
@@ -87,8 +84,13 @@
           this.imageList.push(image);
         }
       },
-      delete_image(id){
-        var image_index = this.get_image_index(id);
+      delete_image(id_or_url){
+        var image_index = -1;
+        if(typeof(id_or_url) == 'number'){
+          image_index = this.get_image_index(id_or_url);
+        }else{
+          image_index = this.get_image_url_index(id_or_url);
+        }
         if(image_index >= 0){
           this.imageList.splice(image_index,1)
         }
@@ -121,6 +123,14 @@
             return i;
           }
         return -1;
+      },
+      get_image_url_index(url){
+        var vm = this;
+        for(var i = 0; i< vm.imageList.length; i++)
+          if(vm.imageList[i].image_url == url){
+            return i;
+          }
+        return -1;        
       }
     }
   }

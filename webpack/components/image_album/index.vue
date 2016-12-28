@@ -24,7 +24,32 @@
         </div>
       </transition-group>
     </div>
-  </div>
+
+      <div class="row">
+        <div class="col-sm-5">
+          <div class="dataTables_info" id="data-table_info" role="status" aria-live="polite">
+          </div>
+        </div>
+        <div class="col-sm-7">
+          <div class="dataTables_paginate paging_simple_numbers" id="data-table_paginate">
+            <ul class="pagination">
+              <li class="paginate_button previous" :class="currentPage-1 <= 0 ? 'disabled' : '' " id="data-table_previous" @click="load_images(currentPage-1)">
+                <span aria-controls="data-table" data-dt-idx="0" tabindex="0">
+                  上一页
+                </span>
+              </li>
+              <li :class="['paginate_button', n==currentPage ? 'active' : '']" v-for="n in totalPage" v-if="(currentPage-3) < n && n < (currentPage+3)" @click="load_images(n)">
+                <span  aria-controls="data-table" :data-dt-idx="n" tabindex="0">{{n}}</span>
+              </li>
+              <li class="paginate_button next" :class="currentPage+1 > totalPage ? 'disabled' : '' " id="data-table_next" @click="load_images(currentPage+1)">
+                <span href="#" aria-controls="data-table" :data-dt-idx="currentPage+1" tabindex="0">下一页</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>  
 </template>
 
 <script>
@@ -37,18 +62,22 @@
     data () {
       return {
         imageList: [],
-        tagList: []
+        tagList: [],
+        totalPage: 1,
+        currentPage: 1
       }
     },
     mounted() {
-      this.load_images();
+      this.load_images(1);   
     },
     methods: {
-      load_images() {
+      load_images(page) {
         var vm = this
-        vm.$http.get(vm.server).then((data) => {
+        vm.$http.get(vm.server+'?page='+page).then((data) => {
+          vm.currentPage = page;
           vm.imageList = data.body.image_items;
           vm.tagList = data.body.tags;
+          vm.totalPage = data.body.total_page;
         }, (response) => {
             // error callback
         });
