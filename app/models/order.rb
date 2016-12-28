@@ -9,6 +9,9 @@ class Order < ApplicationRecord
 
   belongs_to :user
   belongs_to :site
+  has_many :order_products, dependent: :destroy
+  has_many :products, through: :order_products
+
   before_create :generate_code
 
   validates_presence_of :user, :site
