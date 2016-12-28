@@ -9,8 +9,14 @@ zh-CN:
         user: 用户
         site: 商家
         price: 价格
+        status: 订单状态
+        statuses:
+          processing: 处理中
+          cancelled: 已取消
+          completed: 已完成
+        description: 备注
     errors:
       models:
-        order: 
+        order:
   helpers:
-    order: 
+    order:

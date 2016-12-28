@@ -64,6 +64,7 @@ h1.page-header
             th = Order.human_attribute_name(:code)
             th = Order.human_attribute_name(:site)
             th = Order.human_attribute_name(:price)
+            th = Order.human_attribute_name(:status)
             th
         tbody
           - @orders.each do |order|
@@ -71,6 +72,7 @@ h1.page-header
               td = order.code
               td = order.site.title
               td = order.price
+              td = enum_l(order, :status)
               td
                 => link_to '查看', admin_order_path(order), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_order_path(order), class: 'btn btn-xs btn-default'
