@@ -127,14 +127,9 @@
           </form>
           <h4 class="title m-b-0">分类</h4>
           <ul class="search-category-list">
-              <li><a href="#">Microsoft <span class="pull-right">(10)</span></a></li>
-              <li><a href="#">Micromax <span class="pull-right">(4)</span></a></li>
-              <li><a href="#">Karbonn <span class="pull-right">(6)</span></a></li>
-              <li><a href="#">Intex <span class="pull-right">(8)</span></a></li>
-              <li><a href="#">Sony <span class="pull-right">(42)</span></a></li>
-              <li><a href="#">Asus <span class="pull-right">(15)</span></a></li>
-              <li><a href="#">Nokia <span class="pull-right">(84)</span></a></li>
-              <li><a href="#">Blackberry <span class="pull-right">(8)</span></a></li>
+            <% @catalogs.each do |catalog| %>
+              <li><a href="#"><%= catalog.name %> <span class="pull-right">(10)</span></a></li>
+            <% end %>
           </ul>
       </div>
       <!-- END search-sidebar -->
