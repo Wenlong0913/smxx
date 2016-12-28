@@ -59,7 +59,8 @@ class ImageItemsController < ApplicationController
     params.each_pair do |k, v|
       if v[:image_item_ids]
         hash_params = {}
-        json_image_data = JSON.parse(v[:image_item_ids].first)
+        # json_image_data = JSON.parse(v[:image_item_ids].first)
+        json_image_data = JSON.parse(v[:image_item_ids])
         hash_params[:name] = json_image_data["input"]["name"]
         hash_params[:data] = json_image_data["input"]["name"]
         hash_params[:image] = json_image_data['output']["image"]

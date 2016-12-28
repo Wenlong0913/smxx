@@ -17,6 +17,13 @@ ActiveRecord::Schema.define(version: 20161226074707) do
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
 
+  create_table "admin_tests", force: :cascade do |t|
+    t.string   "name"
+    t.string   "age"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "audits", force: :cascade do |t|
     t.integer  "auditable_id"
     t.string   "auditable_type"
@@ -140,8 +147,12 @@ ActiveRecord::Schema.define(version: 20161226074707) do
     t.integer  "width"
     t.integer  "height"
     t.jsonb    "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
     t.index ["owner_type", "owner_id"], name: "index_image_items_on_owner_type_and_owner_id", using: :btree
   end
 

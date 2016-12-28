@@ -24,10 +24,13 @@
     },
     mounted (){
       var vm = this;
+
+      // $(".well .img-thumbnail ").height()
+
       this.cropper = new Slim(vm.$el, {
         service:  vm.server || '/image_items',
         push: vm.autoUpload,
-        label: '选择图片',
+        label: '' ,
         buttonConfirmLabel: '确定',
         buttonCancelLabel: '取消',
         didRemove: function(data){
@@ -35,10 +38,15 @@
         },
         didUpload: function(error, data, response){
           vm.$emit('input', response);
+        },
+        didTransform: function(){
+          setTimeout(function(){
+            $(vm.$el).find('.slim-area .slim-result .out').animate({'opacity': '0'}, 1000)
+          },100)
         }
-      }); 
+      });
       if(vm.imageUrl && !vm.value) this.cropper.load(vm.imageUrl)
-    }    
+    }
   }
 </script>
 
