@@ -18,6 +18,6 @@ class ImageItem < ApplicationRecord
   validates_attachment_content_type :image, :content_type => /\Aimage/
 
   def image_url
-    "http://" + Settings.site.host + image.url
+    Settings.site.host + image.url
   end
 end
