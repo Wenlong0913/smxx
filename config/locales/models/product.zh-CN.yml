@@ -7,7 +7,8 @@ zh-CN:
       product:
         site: 代理商
         name: 产品名称
-        price: 价格
+        price: 单价
+        unit: 单位
         description: 介绍
     errors:
       models:

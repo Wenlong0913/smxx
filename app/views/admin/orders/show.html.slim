@@ -1,4 +1,4 @@
-h1 
+h1.page-header 
   | 查看#{Order.model_name.human}
   .pull-right
     => link_to '编辑', edit_admin_order_path(@order), class: 'btn btn-primary'
@@ -11,6 +11,7 @@ h1
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
+    h5 订单详情
   .panel-body
     .profile-container
       .profile-info
@@ -52,3 +53,31 @@ h1
                   = @order.price
             tr.divider
               td[colspan='2']
+
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+    h5 #{Product.model_name.human}列表
+  .panel-body
+    .profile-container
+      .profile-info
+        - if @order.order_products.any?
+          .table-responsive
+            table.table
+              tr
+                th = Product.human_attribute_name(:name)
+                th = Product.human_attribute_name(:price)
+                th = OrderProduct.human_attribute_name(:amount)
+                th = OrderProduct.human_attribute_name(:price)
+                
+              - @order.order_products.each do |order_product|
+                tr
+                  td = order_product.product.name
+                  td = order_product.product.price
+                  td = "#{order_product.amount}#{order_product.product.unit}"
+                  td = order_product.price
+          
