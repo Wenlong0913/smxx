@@ -8,6 +8,7 @@ class Agent::ProductsController < Agent::BaseController
     #   format.html
     #   format.json { render json: @products }
     # end
+    @catalogs = Catalog.roots
   end
 
   def show
