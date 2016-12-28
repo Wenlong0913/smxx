@@ -46,8 +46,10 @@ new Vue({el: 'catalog-list'});
   ```
 - 组件内部将返回选择的目录数组
   ```
-  :showConfirmButtons = "true" // type: Boolean 默认不显示底部确认按钮
   :default = "[]" // 传入默认选中值, 选中id
+
+  <!-- 选中值由确认按钮触发返回值，所以需要设置下面两个属性 -->
+  :show-confirm-buttons = "true" // type: Boolean 默认不显示底部确认按钮
   @selected = "ReceivingMethod" // 接收选中值数组 selected(){}: return array
   ```
 
