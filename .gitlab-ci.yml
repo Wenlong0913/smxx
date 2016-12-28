@@ -8,9 +8,7 @@ variables:
 
 before_script:
   - source /etc/profile.d/rvm.sh
-  - rvm env
-  - env
-  - ls -al
+  - gem i bundler --no-ri --no-rdoc
   - bundle install
 
 test:
