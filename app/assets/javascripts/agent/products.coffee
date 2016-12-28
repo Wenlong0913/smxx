@@ -6,4 +6,4 @@ $(document).ready ->
       $(this).addClass('active')
 
     new Vue
-      el: '.tab-content'
+      el: "div[rel='basicInformation']"
