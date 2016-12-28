@@ -1,28 +1,26 @@
 <template>
   <transition name="modal">
     <div class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container">
+      <div class="modal-container">
 
-          <div class="modal-header">
-            <slot name="header">
-              default header
-            </slot>
-          </div>
+        <div class="modal-header">
+          <slot name="header">
+            default header
+          </slot>
+        </div>
 
-          <div class="modal-body table-responsive">
-            <slot name="body">
-              default body
-            </slot>
-          </div>
+        <div class="modal-body">
+          <slot name="body">
+            default body
+          </slot>
+        </div>
 
-          <div class="modal-footer">
-            <slot name="footer">
-              <button type="button" class="btn btn-success" @click="$emit('close')">
-                关闭
-              </button>
-            </slot>
-          </div>
+        <div class="modal-footer">
+          <slot name="footer">
+            <button type="button" class="btn btn-success" @click="$emit('close')">
+              关闭
+            </button>
+          </slot>
         </div>
       </div>
     </div>
@@ -30,7 +28,7 @@
 </template>
 
 <script>
-  
+
 </script>
 
 <style>
@@ -42,18 +40,15 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, .5);
-    display: table;
     transition: opacity .3s ease;
-  }
-
-  .modal-wrapper {
-    display: table-cell;
-    vertical-align: middle;
+    overflow-y: auto;
   }
 
   .modal-container {
-    width: 800px;
-    margin: 0px auto;
+    width: 70%;
+    height: 85%;
+    margin: 5% auto;
+    min-height: 425px;
     padding: 20px 30px;
     background-color: #fff;
     border-radius: 2px;
@@ -68,10 +63,16 @@
   }
 
   .modal-body {
-    margin: 20px 0;
-    height: 50%;
+    margin: 0px;
+    height: 75%;
+    /*overflow: hidden;*/
+    padding: 15px !important;
+    margin: 0px !important;
   }
 
+  .modal-body>div:first-child{
+    height: 100%;
+  }
   .modal-default-button {
     float: right;
   }

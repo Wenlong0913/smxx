@@ -1,23 +1,34 @@
 <template>
   <div>
-    <div class="btn-group">
-      <button type="button" class="btn btn-success" @click="showModal = true">选择已有图片</button>
-      <button type="button" class="btn btn-success file">批量添加图片
-        <input type="file" multiple @change="selectImages($event)">
-      </button>
-    </div>
-      <div class="row">
-          <div class="col-sm-6 col-md-3 image" v-for="(image, index) in imageList">
-            <image-upload :auto-upload="true" 
-                          :name="name" 
-                          :server="server" 
+    <div class="well">
+      <ul class="row list-inline">
+        <li class="col-sm-12 col-xs-6 col-md-3" v-for="(image, index) in imageList" :key="image">
+          <div class="img-thumbnail">
+            <image-upload class="image-slim" :auto-upload="true"
+                          :name="name"
+                          :server="server"
                           v-model="image.id"
                           :image-url="image.image_url"
-                          :init-save="image.init_save" 
+                          :init-save="image.init_save"
                           @remove="delete_image(image.id)"
                           :key="image.image_url">
             </image-upload>
           </div>
+        </li>
+        <li class="col-sm-12 col-xs-6 col-md-3">
+          <div class="img-thumbnail">
+            <div class="bg-gray">
+              <div class="add-images-btn file" title="添加本地图片">
+                <i class="fa fa-plus fa-2x"></i>
+                <input type="file" multiple @change="selectImages($event)">
+              </div>
+              <div class="add-btn text-center">
+                <button type="button" class="btn btn-success" @click="showModal = true">选择已的上传图片</button>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
 
     <!-- use the modal component, pass in the prop -->
@@ -66,14 +77,14 @@
             // error callback
         });
       }
-     
+
     },
     methods: {
       selected_images(image){
         if(this.imageListIds.indexOf(image.id) >= 0){
           this.delete_image(image.id);
         }else{
-          this.imageList.push(image);  
+          this.imageList.push(image);
         }
       },
       delete_image(id){
@@ -93,7 +104,7 @@
         }
       },
       getObjectURL(file){
-        var url = null ; 
+        var url = null ;
         if (window.createObjectURL!=undefined) { // basic
           url = window.createObjectURL(file) ;
         } else if (window.URL!=undefined) { // mozilla(firefox)
@@ -142,12 +153,55 @@
       color: #fff;
       text-decoration: none;
   }
-  .image{
-      height: 300px;
-      display: block;
-      margin-right: -10px;
-      overflow: hidden;
-      padding: 10px;
+  .well{
+    margin: 10px auto;
+    padding-right: 0px;
   }
-
+  ul.row{
+    width: 100%;
+    min-height: 300px;
+    padding: 0px;
+  }
+  ul.row li{
+    margin: 5px auto;
+  }
+  ul.row li .img-thumbnail{
+    height: 250px;
+    width: 100%;
+  }
+  ul.row li .img-thumbnail:hover{
+    box-shadow: 0px 0px 10px -3px #00acac;
+  }
+  ul.row li .img-thumbnail .image-slim{
+    height: 100%;
+    overflow: hidden;
+  }
+  ul.row li .img-thumbnail .bg-gray .add-images-btn{
+    margin: 0px auto;
+    height: 60px;
+    border: 1px solid #ccc;
+    width: 60px;
+    border-radius: 100%;
+    line-height: 60px;
+    text-align: center;
+    font-size: 20px;
+    background: rgba(255,255,255,0.5);
+    box-shadow: 0px 0px 0px 5px rgba(167, 156, 156, 0.09);
+  }
+  ul.row li .img-thumbnail .bg-gray .add-images-btn:hover{
+    color: #8ad28b;
+  }
+  ul.row li .img-thumbnail .bg-gray{
+    background: #eeeeee;
+    height: 100%;
+    width: 100%;
+    padding: 45% 0px;
+    text-align: center;
+  }
+  ul.row li .img-thumbnail .bg-gray .add-images-btn i{
+    vertical-align: sub;
+  }
+  .img-thumbnail .add-btn{
+    margin-top: 35px;
+  }
 </style>

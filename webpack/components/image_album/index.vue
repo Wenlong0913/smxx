@@ -1,32 +1,30 @@
 <template>
-  <div> 
-    <div id="options" class="m-b-10">
-      <span class="gallery-option-set" id="filter" data-option-key="filter">
-          <a class="btn btn-default btn-xs active" @click="load_images()">
-              所有
-          </a>
-          <a v-for="tag in tagList"  class="btn btn-default btn-xs" @click="selected_tag(tag)">
-              {{tag}}
-          </a>
-      </span>
+  <div class="image_items">
+    <div class="gallery-option-set" id="filter" data-option-key="filter">
+      <a class="btn btn-default btn-xs" @click="load_images()">
+          所有
+      </a>
+      <a v-for="tag in tagList"  class="btn btn-default btn-xs" @click="selected_tag(tag)">
+          {{tag}}
+      </a>
     </div>
     <div id="gallery" class="gallery">
-      <div class="row">
-        <transition-group name="list" tag="div">
-          <div class="image col-sm-6 col-md-4" v-for="image in imageList" :key="image.id">
-              <div class="image-inner">
-                  <img :src="image.image_url" alt="" @click="choose_image(image)"/>                      
-                  <span class="glyphicon glyphicon-ok selected" v-show="selectedList.indexOf(image.id) != -1"></span>
-                  <span class="glyphicon glyphicon-remove remove" @click="delete_image(image.id)"></span>
-              </div>
-              <div class="image-info">
-                 
-              </div>
+      <transition-group name="list" tag="div">
+        <div class="col-xs-12 col-sm-6 col-md-4" v-for="image in imageList" :key="image.id">
+          <div class="img-thumbnail">
+            <div class="image-inner">
+              <img :src="image.image_url" alt="" @click="choose_image(image)"/>
+              <span class="glyphicon glyphicon-ok selected" v-show="selectedList.indexOf(image.id) != -1"></span>
+              <span class="glyphicon glyphicon-remove remove" @click="delete_image(image.id)"></span>
+            </div>
           </div>
-        </transition-group>
-      </div>
-    </div>  
-  </div>  
+          <div class="image-info">
+
+          </div>
+        </div>
+      </transition-group>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -43,7 +41,7 @@
       }
     },
     mounted() {
-      this.load_images();   
+      this.load_images();
     },
     methods: {
       load_images() {
@@ -72,13 +70,13 @@
           vm.$http.delete(this.server+'/'+id).then((data) => {
             var image_index = vm.get_image_index(id);
             if(image_index != -1){
-              vm.imageList.splice(image_index, 1)  
+              vm.imageList.splice(image_index, 1)
             }
             vm.$emit('delete', id);
           }, (response) => {
               // error callback
-          });     
-        }    
+          });
+        }
       },
       get_image_index(id) {
         var vm = this;
@@ -93,64 +91,73 @@
 </script>
 
 <style scoped>
-
+  .image_items{
+    height: 100%;
+  }
   .gallery {
-      margin: 0 -10px;
-  }
-  .gallery-option-set {
-      display: block;
-      margin-bottom: -5px;
-  }
-  .gallery-option-set .btn {
-      margin: 0 5px 5px 0;
-  }
-  .gallery .image {
-      width: 25%;
-      display: block;
-      margin-right: -10px;
+      margin: 0px;
       overflow: hidden;
-      padding: 10px;
+      overflow-y: scroll;
+      height: 90%;
   }
-  .gallery .image img {
-      width: 100%;
-      height: 200px;
-      -webkit-border-radius: 3px 3px 0 0;
-      -moz-border-radius: 3px 3px 0 0;
-      border-radius: 3px 3px 0 0;
+
+  .gallery-option-set{
+    margin: 3px 15px;
+  }
+  .gallery .col-xs-12{
+    margin-top: 5px;
+  }
+  .gallery .img-thumbnail{
+    width: 100%;
+  }
+  .gallery .img-thumbnail:hover{
+    box-shadow: 0px 0px 10px -3px #00acac;
+    cursor: pointer;
+  }
+  .gallery .img-thumbnail img{
+    width: 100%;
   }
   .gallery .image-inner {
-      position: relative;
-      background: #fff;
-      -webkit-border-radius: 3px 3px 0 0;
-      -moz-border-radius: 3px 3px 0 0;
-      border-radius: 3px 3px 0 0;
+    position: relative;
+    background: #fff;
+    -webkit-border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+    text-align: center;
+    overflow: hidden;
+    width: 100%;
+    height: 150px;
   }
-  
+
   .gallery .image-inner .selected{
     position: absolute;
-    top: 90%;
-    right: 0px;
-    color: green;
+    top: 10px;
+    left: 10px;
+    color: #fff;
     height: 20px;
-    width: 20px;    
-    padding: 4px 2px;
+    width: 20px;
+    line-height: 20px;
     font-size: 14px;
-    background-color: rgba(255,255,255,0.15);
+    background-color: rgba(64,183,66,0.8);
     border-radius: 10px;
   }
 
   .gallery .image-inner .remove{
     position: absolute;
-    right: 0px;
+    top: 10px;
+    right: 10px;
     color: #a94442;
     height: 20px;
-    width: 20px;    
-    padding: 4px 2px;
+    width: 20px;
+    line-height: 20px;
     font-size: 14px;
     background-color: rgba(255,255,255,0.15);
     border-radius: 10px;
   }
-
+  .gallery .image-inner .remove:hover{
+    background-color: rgba(255,255,255,0.3);
+    cursor: pointer;
+  }
   .gallery .image a {
       -webkit-transition: all .2s linear;
       -moz-transition: all .2s linear;
