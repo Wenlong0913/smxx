@@ -24,6 +24,12 @@ h1
                   = @order.code
             tr
               td.field
+                | #{Order.human_attribute_name(:status)}
+              td
+                span
+                  = enum_l(@order, :status)
+            tr
+              td.field
                 | #{Order.human_attribute_name(:user)}
               td
                 a

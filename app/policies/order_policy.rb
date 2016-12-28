@@ -7,7 +7,7 @@ class OrderPolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.super_admin_or_admin?
-      [:user_id, :site_id, :price, :description]
+      [:user_id, :site_id, :price, :description, :status]
     else
       []
     end

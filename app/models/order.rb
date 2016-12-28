@@ -1,10 +1,21 @@
 class Order < ApplicationRecord
   audited
+
+  enum status: {
+    processing: 0, # 处理中
+    cancelled: 1,  # 已取消
+    completed: 2   # 已完成
+  }
+
   belongs_to :user
   belongs_to :site
   before_create :generate_code
 
   validates_uniqueness_of :code
+
+  after_initialize do
+    self.status ||= 0
+  end
 
   private
 
