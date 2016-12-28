@@ -11,6 +11,7 @@ class Order < ApplicationRecord
   belongs_to :site
   before_create :generate_code
 
+  validates_presence_of :user, :site
   validates_uniqueness_of :code
 
   after_initialize do
@@ -21,7 +22,7 @@ class Order < ApplicationRecord
 
   def generate_code
     time = Time.now.strftime('%Y%m%d%H%M%S')
-    max_length = 30
+    max_length = 20
     time_length = time.length
     site_length = site.id.to_s.length
     rnd_length = max_length - time_length - site_length - 1
