@@ -6,7 +6,7 @@ GIT
       activemodel (>= 4.0, < 5.1)
 
 GIT
-  remote: git@gitlab.tanmer.com:tm-themes/theme_color_admin.git
+  remote: http://gitlab.tanmer.com/tm-themes/theme_color_admin.git
   revision: 8d4fa59abc0e17713ef3d1320520ac0e462b04d5
   specs:
     theme_color_admin (0.0.4)

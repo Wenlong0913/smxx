@@ -94,7 +94,7 @@ gem 'tracker', path: 'components/tracker'
 gem 'decorator', path: 'components/decorator'
 
 gem 'themeable', '~> 1.2.0'#, path: '../../gems/themeable'
-gem 'theme_color_admin', git: 'git@gitlab.tanmer.com:tm-themes/theme_color_admin.git'
+gem 'theme_color_admin', git: 'http://gitlab.tanmer.com/tm-themes/theme_color_admin.git'
 # gem 'theme_card', git: 'git@gitlab.tanmer.com:tm-themes/theme_card.git'
 gem 'closure_tree'
 gem 'select2-rails'
