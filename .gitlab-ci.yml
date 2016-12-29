@@ -3,8 +3,8 @@ services:
   - tanmer/postgresql
 variables:
   POSTGRES_DB: tmf_test
-  POSTGRES_USER: runner
-  POSTGRES_PASSWORD: ""
+  POSTGRES_USER: docker
+  POSTGRES_PASSWORD: docker
 
 before_script:
   - source /etc/profile.d/rvm.sh
