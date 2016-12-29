@@ -10,8 +10,13 @@ before_script:
   - source /etc/profile.d/rvm.sh
   - gem i bundler --no-ri --no-rdoc
   - bundle install
-  - cp config/database.yml.test config/database.yml
-test:
+rspec:
+  stage: test
+  before_script:
+    - cp config/database.yml.test config/database.yml
+  artifacts:
+    paths:
+      - coverage/
   script:
     - export RAILS_ENV=test
     - bundle exec rake db:drop
@@ -19,3 +24,15 @@ test:
     - bundle exec rake db:migrate
     - bundle exec rake spec
     - unset RAILS_ENV
+pages:
+  stage: deploy
+  dependencies:
+    - rspec
+  script:
+    - mv coverage/ public/
+  artifacts:
+    paths:
+      - public
+    expire_in: 30 days
+  only:
+    - master

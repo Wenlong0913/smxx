@@ -133,6 +133,7 @@ group :development, :doc do
   gem 'yard'
   # https://github.com/ctran/annotate_models
   gem 'annotate'
+  gem 'simplecov'
 end
 
 group :deployment do
