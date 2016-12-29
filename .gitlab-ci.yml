@@ -6,12 +6,16 @@ variables:
   POSTGRES_USER: docker
   POSTGRES_PASSWORD: docker
 
-before_script:
-  - source /etc/profile.d/rvm.sh
-  - gem i bundler --no-ri --no-rdoc
-  - bundle install
+bundle:
+  stage: build
+  script:
+    - source /etc/profile.d/rvm.sh
+    - gem i bundler --no-ri --no-rdoc
+    - bundle install
 rspec:
   stage: test
+  dependencies:
+    - build
   before_script:
     - cp config/database.yml.test config/database.yml
   artifacts:
@@ -27,6 +31,7 @@ rspec:
 pages:
   stage: deploy
   dependencies:
+    - build
     - rspec
   script:
     - mv coverage/ public/
