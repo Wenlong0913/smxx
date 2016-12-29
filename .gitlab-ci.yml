@@ -1,29 +1,34 @@
 image: tanmer/tmf
 services:
   - tanmer/postgresql
+  - redis
 variables:
   POSTGRES_DB: tmf_test
   POSTGRES_USER: docker
   POSTGRES_PASSWORD: docker
 
+before_script:
+  - source /etc/profile.d/rvm.sh
+  - gem i bundler --no-ri --no-rdoc
+  - bundle install
+
 rspec:
   stage: test
-  before_script:
-    - source /etc/profile.d/rvm.sh
-    - gem i bundler --no-ri --no-rdoc
-    - bundle install
-    - cp config/database.yml.test config/database.yml
+  only: master
   artifacts:
     paths:
       - coverage/
   script:
+    - cp config/database.yml.test config/database.yml
     - export RAILS_ENV=test
-    - bundle exec rake db:create
-    - bundle exec rake db:migrate
-    - bundle exec rake spec
+    - bundle exec rails db:create
+    - bundle exec rails db:migrate
+    - bundle exec rails spec
     - unset RAILS_ENV
+
 pages:
   stage: deploy
+  only: master
   dependencies:
     - rspec
   script:
