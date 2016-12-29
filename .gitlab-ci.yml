@@ -14,7 +14,8 @@ before_script:
 
 rspec:
   stage: test
-  only: master
+  only:
+  - master
   artifacts:
     paths:
       - coverage/
@@ -28,7 +29,8 @@ rspec:
 
 pages:
   stage: deploy
-  only: master
+  only:
+  - master
   dependencies:
     - rspec
   script:
