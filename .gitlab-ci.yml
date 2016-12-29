@@ -1,4 +1,4 @@
-image: tanmer/ruby:2.3.1
+image: tanmer/tmf
 services:
   - tanmer/postgresql
 variables:
