@@ -22,7 +22,7 @@
               </div>
             </div>
             <!-- 状态提示信息 -->
-            <div class="return_messages text-right" :class="options.responseMessage.status ? 'text-success' : 'text-danger' ">
+            <div class="return_messages text-center" :class="options.responseMessage.status ? 'text-success' : 'text-danger' ">
               {{ options.responseMessage.text}}
             </div>
             <div class="small text-right warn">
@@ -79,10 +79,5 @@ export default{
   left: 0;
   z-index: 1050;
   overflow: hidden;
-}
-.catalog-modal .warn{
-  position: absolute;
-  bottom: -15px;
-  right: 15px;
 }
 </style>
