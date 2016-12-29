@@ -1,5 +1,5 @@
 class ImageItemsController < ApplicationController
-  skip_before_filter :verify_authenticity_token, :only => [:create]
+  skip_before_action :verify_authenticity_token, :only => [:create]
 
   # 获取Site或User的相册列表
   def index
@@ -11,10 +11,10 @@ class ImageItemsController < ApplicationController
       else # user's images
         current_user.image_items
       end
-    if params[:tag]
+    if params[:tag].present?
       @image_items = @image_items.joins(:image_item_tags).where(image_item_tags: {name: params[:tag]})
     end
-    if params[:ids]
+    if params[:ids].present?
       @image_items = @image_items.where(id: params[:ids].split(/[,]/))
     end
     @image_item_tags = @image_items.joins(:image_item_tags).select("image_item_tags.name").distinct.map(&:name)
@@ -61,7 +61,7 @@ class ImageItemsController < ApplicationController
         hash_params = {}
         json_image_data = JSON.parse(v[:image_item_ids].first)
         hash_params[:name] = json_image_data["input"]["name"]
-        hash_params[:data] = json_image_data["input"]["name"]
+        # hash_params[:data] = json_image_data["input"]["name"]
         hash_params[:image] = json_image_data['output']["image"]
         hash_params[:id] = json_image_data['server']
         # hash_params[:user_id] = current_user.id

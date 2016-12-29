@@ -1,10 +1,10 @@
 <template>
   <div class="image_items">
     <div class="gallery-option-set" id="filter" data-option-key="filter">
-      <a class="btn btn-default btn-xs" @click="load_images()">
+      <a class="btn btn-default btn-xs" @click="load_images(currentPage,'')">
           所有
       </a>
-      <a v-for="tag in tagList"  class="btn btn-default btn-xs" @click="selected_tag(tag)">
+      <a v-for="tag in tagList"  class="btn btn-default btn-xs" @click="load_images(currentPage,tag)">
           {{tag}}
       </a>
     </div>
@@ -71,21 +71,13 @@
       this.load_images(1);   
     },
     methods: {
-      load_images(page) {
+      load_images(page,tag_name=null) {
         var vm = this
-        vm.$http.get(vm.server+'?page='+page).then((data) => {
+        vm.$http.get(vm.server, {params: {tag: tag_name, page: page}}).then((data) => {
           vm.currentPage = page;
           vm.imageList = data.body.image_items;
           vm.tagList = data.body.tags;
           vm.totalPage = data.body.total_page;
-        }, (response) => {
-            // error callback
-        });
-      },
-      selected_tag(name) {
-        var vm = this
-        vm.$http.get(vm.server, {params: {tag: name}}).then((data) => {
-          vm.imageList = data.body.image_items;
         }, (response) => {
             // error callback
         });

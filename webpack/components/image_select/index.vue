@@ -24,7 +24,7 @@
                 <input type="file" multiple @change="selectImages($event)">
               </div>
               <div class="add-btn text-center">
-                <button type="button" class="btn btn-success" @click="showModal = true">选择已的上传图片</button>
+                <button type="button" class="btn btn-success" @click="showModal = true">选择已上传图片</button>
               </div>
             </div>
           </div>

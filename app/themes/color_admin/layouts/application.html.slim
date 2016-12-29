@@ -19,7 +19,7 @@ html
     - if controller_name == 'sessions' && action_name == 'new'
       = yield
     -else
-      #page-container.page-sidebar-fixed.page-header-fixed[rel="vue"]
+      #page-container.page-sidebar-fixed.page-header-fixed
         = render 'layouts/backend/header'
         = render 'layouts/backend/sidebar'
         #content.content

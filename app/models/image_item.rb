@@ -4,6 +4,7 @@ class ImageItem < ApplicationRecord
   has_many :image_item_tags, dependent: :destroy
   has_many :image_item_relations, dependent: :destroy
 
+  store_accessor :data, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at
   has_attached_file :image,
                     path: ":rails_root/public/photos/:id/:style.:extension",
                     hash_secret: 'f240-r3i-3-',
@@ -18,6 +19,6 @@ class ImageItem < ApplicationRecord
   validates_attachment_content_type :image, :content_type => /\Aimage/
 
   def image_url
-    "http://" + Settings.site.host + image.url
+    Settings.site.host + image.url
   end
 end
