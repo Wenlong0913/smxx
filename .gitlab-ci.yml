@@ -15,7 +15,7 @@ bundle:
 rspec:
   stage: test
   dependencies:
-    - build
+    - bundle
   before_script:
     - cp config/database.yml.test config/database.yml
   artifacts:
@@ -31,7 +31,7 @@ rspec:
 pages:
   stage: deploy
   dependencies:
-    - build
+    - bundle
     - rspec
   script:
     - mv coverage/ public/
