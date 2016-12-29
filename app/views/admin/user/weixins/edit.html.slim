@@ -1,0 +1,7 @@
+h1.page-header
+  | 编辑#{User::Weixin.model_name.human}
+  .pull-right
+    => link_to '查看', admin_user_weixin_path(@user_weixin), class: 'btn btn-primary'
+    = link_to '返回', admin_user_weixins_path, class: 'btn btn-primary'
+
+== render 'form'

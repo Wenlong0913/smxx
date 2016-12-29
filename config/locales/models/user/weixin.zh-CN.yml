@@ -1,0 +1,16 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      user/weixin: 微信用户
+    attributes:
+      user/weixin:
+        user: 登录用户
+        name: 昵称
+        created_at: 首次登录
+        created_at: 最近登录
+    errors:
+      models:
+        weixin:
+  helpers:
+    weixin:

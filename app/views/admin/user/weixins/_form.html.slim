@@ -1,0 +1,26 @@
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+  .panel-body
+    = simple_form_for @user_weixin, url: @user_weixin.new_record? ? admin_user_weixins_path : admin_user_weixin_path(@user_weixin), validate: true do |f|
+      - if @user_weixin.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@user_weixin.errors.count, "error")} prohibited this user_weixin from being saved:"
+          ul
+            - @user_weixin.errors.full_messages.each do |message|
+              li = message
+
+      = f.association :user
+      = f.input :name
+      = f.input :headshot
+      = f.input :city
+      = f.input :province
+      = f.input :country
+      = f.input :gender
+      = f.input :created_at
+      = f.input :updated_at
+      = f.submit class: 'btn btn-success btn-block'

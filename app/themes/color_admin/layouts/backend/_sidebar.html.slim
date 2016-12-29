@@ -66,6 +66,7 @@
           span 账户管理
         ul.sub-menu
           li class=("#{'active' if page?('admin/users')}") = link_to '用户', admin_users_path
+          li class=("#{'active' if page?('admin/user/weixins')}") = link_to '微信用户', admin_user_weixins_path
           li class=("#{'active' if page?('admin/roles')}") = link_to '角色', admin_roles_path
       li class=("has-sub #{'active' if page?('admin/static_pages')}")
         a href="javascript:;"
