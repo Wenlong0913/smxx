@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "routing to client", :type => :routing do
+RSpec.describe "routing to frontend", :type => :routing do
   it { expect(get: '/').to route_to('home#index') }
   describe "Session" do
     it { expect(post: '/sessions/1/impersonate').to route_to('users/sessions#impersonate', id: "1") }
