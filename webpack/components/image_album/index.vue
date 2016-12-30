@@ -11,7 +11,7 @@
     <div id="gallery" class="gallery">
       <transition-group name="list" tag="div">
         <div class="col-xs-12 col-sm-6 col-md-4" v-for="image in imageList" :key="image.id">
-          <div class="img-thumbnail">
+          <div class="image">
             <div class="image-inner">
               <img :src="image.image_url" alt="" @click="choose_image(image)"/>
               <span class="glyphicon glyphicon-ok selected" v-show="selectedList.indexOf(image.id) != -1"></span>
@@ -57,7 +57,12 @@
     // props: ['server', 'deleteServer', 'selectedList'],
     props: {
       server: {type: String, required: true},
-      selectedList: {type: Array}
+      selectedList: {
+        type: Array,
+        default: function(){
+          return []
+        }
+      }
     },
     data () {
       return {
@@ -128,6 +133,9 @@
   .gallery .col-xs-12{
     margin-top: 5px;
   }
+  .gallery .image{
+    width: 100%;
+  }
   .gallery .img-thumbnail{
     width: 100%;
   }
@@ -147,7 +155,7 @@
     text-align: center;
     overflow: hidden;
     width: 100%;
-    height: 150px;
+    height: 250px;
   }
 
   .gallery .image-inner .selected{
