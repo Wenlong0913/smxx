@@ -9,6 +9,7 @@ class Order < ApplicationRecord
 
   belongs_to :user
   belongs_to :site
+
   has_many :order_products, dependent: :destroy
   has_many :products, through: :order_products
 
@@ -19,6 +20,10 @@ class Order < ApplicationRecord
 
   after_initialize do
     self.status ||= 0
+  end
+
+  def member
+    site && user && site.members.where(user: user)
   end
 
   private
