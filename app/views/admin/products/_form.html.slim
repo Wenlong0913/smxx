@@ -29,6 +29,5 @@
       = f.input :description, as: :text
       .form-group
         image-select[server="#{image_items_path}" name="product[image_item_ids][]" selected-ids="#{@product.image_item_ids.join(', ')}"]
-        multi-image-upload[server="#{image_items_path}" name="product[image_item_ids][]" auto-upload=true]
 
       = f.submit class: 'btn btn-success btn-block'
