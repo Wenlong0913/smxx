@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   extend CmsFrontendRoute
   extend CmsBackendRoute
 
+  extend DocRoute
+
   # === Plugins ===
   mount Ckeditor::Engine => '/ckeditor'
 

@@ -12,7 +12,7 @@
   - [View中获得Enum字段的中文列表](#how-to-get-enum-i18n-from-view)
 - [Helper中的一些方法](#helper-methods)
 - [Model中的一些用法](#how-to-program-model)
-    - [数据验证]("how-to-program-model-validators")
+    - [数据验证](#how-to-program-model-validators)
 - [测试](#testing)
 
 <a name="config"></a>
