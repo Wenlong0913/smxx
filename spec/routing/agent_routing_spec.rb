@@ -13,4 +13,18 @@ RSpec.describe "Routing to Agent,", :type => :routing do
     it { expect(put: '/agent/members/1').to route_to 'agent/members#edit' }
     it { expect(delete: '/agent/members/1').to route_to 'agent/members#destroy' }
   end
+
+  describe 'Products' do
+    it { expect(get: '/agent/products').to route_to 'agent/products#index' }
+    it { expect(get: '/agent/products/1').to route_to 'agent/products#show' }
+    it { expect(put: '/agent/products/1').to route_to 'agent/products#edit' }
+    it { expect(delete: '/agent/products/1').to route_to 'agent/products#destroy' }
+  end
+
+  describe 'Orders' do
+    it { expect(get: '/agent/orders').to route_to 'agent/orders#index' }
+    it { expect(get: '/agent/orders/1').to route_to 'agent/orders#show' }
+    it { expect(put: '/agent/orders/1').to route_to 'agent/orders#edit' }
+    it { expect(delete: '/agent/orders/1').to route_to 'agent/orders#destroy' }
+  end
 end

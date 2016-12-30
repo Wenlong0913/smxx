@@ -19,7 +19,12 @@ Bundler.require(*Rails.groups)
 module Tmf
   class Application < Rails::Application
     require 'settings'
+    # We don't want include all helpers to controller
+    #   CMS helpers to CMS controllers
+    #   Admin helpers to Admin controllers
     config.action_controller.include_all_helpers = false
+    config.autoload_paths << Rails.root.join('config/routes')
+
     generators do |app|
 
       require 'rails/generators/base'

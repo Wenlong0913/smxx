@@ -71,26 +71,30 @@
             = link_to '物料分类', admin_material_catalogs_path
           li[class= ('active' if page?('admin/vendors#index'))]
             = link_to '供应商', admin_vendors_path
-      li class=("has-sub #{'active' if page?('admin/users', 'admin/roles')}")
+      li class=("has-sub #{'active' if page?('admin/users', 'admin/roles', 'admin/user/weixins')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
           span 账户管理
         ul.sub-menu
           li class=("#{'active' if page?('admin/users')}") = link_to '用户', admin_users_path
+          li class=("#{'active' if page?('admin/user/weixins')}") = link_to '微信用户', admin_user_weixins_path
           li class=("#{'active' if page?('admin/roles')}") = link_to '角色', admin_roles_path
-      li class=("has-sub #{'active' if page?('admin/static_pages')}")
-        a href="javascript:;"
-          b.caret.pull-right
-          i.fa.fa-inbox
-          span 帮助
-        ul.sub-menu
-          li[class=('active' if page?('admin/static_pages#show?id=home'))]
-            = link_to admin_page_path('home') do
-              = fa_icon 'leaf', text: '开发手册'
       li
         = link_to cms_sites_path do
           = fa_icon 'file-text', text: 'CMS系统'
+      li class=("has-sub")
+        a href="javascript:;"
+          b.caret.pull-right
+          i.fa.fa-question-circle
+          span 帮助文档
+        ul.sub-menu
+          li
+            = link_to doc_path(page: 'dev_doc.md'), target: '_blank' do
+              = fa_icon 'leaf', text: '开发手册'
+          li
+            = link_to doc_root_path, target: '_blank' do
+              = fa_icon 'leaf', text: '客户使用手册'
       li
         = link_to sign_out_path, method: :delete do
           = fa_icon 'sign-out', text: '退出系统'

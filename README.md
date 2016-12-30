@@ -1,7 +1,7 @@
 # Tanmer Framework
 [![build status](http://gitlab.tanmer.com/tm-framework/tmf/badges/master/build.svg)](http://gitlab.tanmer.com/tm-framework/tmf/commits/master)[![coverage report](http://gitlab.tanmer.com/tm-framework/tmf/badges/master/coverage.svg)](http://gitlab.tanmer.com/tm-framework/tmf/commits/master)
 
-## [开发文档](dev.doc.md)
+## [开发文档](dev_doc.md)
 
 更多内容：http://gitlab.tanmer.com/tanmer/tmf/wikis/home
 
