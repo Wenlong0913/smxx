@@ -59,7 +59,7 @@
             = link_to '所有分类', admin_catalogs_path
           li[class= ('active' if page?('admin/catalogs#index?klass=ProductCatalog'))]
             = link_to '产品分类', admin_product_catalogs_path
-      li class=("has-sub #{'active' if page?('admin/users', 'admin/roles')}")
+      li class=("has-sub #{'active' if page?('admin/users', 'admin/roles', 'admin/user/weixins')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
