@@ -18,9 +18,7 @@ module AdminRoute
 
         resources :catalogs # 分类管理
 
-        catalog_resources_for ProductCatalog
-        resources :materials # 物料管理
-        resources :vendors # 供应商管理
+        catalog_resources_for ProductCatalog 
 
         resources :roles, only: [:index], :concerns => :paginatable do
           resources :users, only: [:index], :concerns => :paginatable
