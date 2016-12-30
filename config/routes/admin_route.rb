@@ -25,7 +25,12 @@ module AdminRoute
         resources :roles, only: [:index], :concerns => :paginatable do
           resources :users, only: [:index], :concerns => :paginatable
         end
+
         resources :users, :concerns => :paginatable
+        namespace :user do
+          resources :weixins, :concerns => :paginatable
+        end
+
         resources :products, :concerns => :paginatable
         resources :sites, :concerns => :paginatable do
           resources :members, :concerns => :paginatable
