@@ -16,7 +16,7 @@
 
       = f.association :site
       = f.input :name
-      .form-group.catalog-list[data-catalog-name="#{@product.catalog.name}" data-catalog-id="#{@product.catalog_id}"]
+      .form-group.catalog-list[data-catalog-name="#{@product.catalog.try(:name)}" data-catalog-id="#{@product.catalog_id}"]
         label[class="control-label"] 产品分类
         input[type="hidden" v-model="id" name="product[catalog_id]"]
         input.form-control[readonly=true @click="showCatalog = true" :value="catalogs"]
@@ -27,7 +27,8 @@
           div[slot="footer"]
       = f.input :price
       = f.input :description, as: :text
-      .form-group.image-select
+      .form-group
         image-select[server="#{image_items_path}" name="product[image_item_ids][]" selected-ids="#{@product.image_item_ids.join(', ')}"]
+        multi-image-upload[server="#{image_items_path}" name="product[image_item_ids][]" auto-upload=true]
 
       = f.submit class: 'btn btn-success btn-block'
