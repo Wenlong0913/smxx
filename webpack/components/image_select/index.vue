@@ -2,7 +2,7 @@
   <div>
     <div class="well">
       <ul class="row list-inline">
-        <li class="col-sm-12 col-xs-6 col-md-3" v-for="(image, index) in imageList" :key="image.image_url">
+        <li class="col-xs-12 col-sm-6 col-md-4" v-for="(image, index) in imageList" :key="image.image_url">
           <div class="img-thumbnail">
             <image-upload class="image-slim" :auto-upload="true"
                           :name="name"
@@ -16,8 +16,8 @@
             </image-upload>
           </div>
         </li>
-        <li class="col-sm-12 col-xs-6 col-md-3">
-          <div class="img-thumbnail">
+        <li class="col-xs-12 col-sm-6 col-md-4">
+          <div class="img-thumbnail add-images">
             <div class="bg-gray">
               <div class="add-images-btn file" title="添加本地图片">
                 <i class="fa fa-plus fa-2x"></i>
@@ -130,7 +130,7 @@
           if(vm.imageList[i].image_url == url){
             return i;
           }
-        return -1;        
+        return -1;
       }
     }
   }
@@ -176,11 +176,14 @@
     margin: 5px auto;
   }
   ul.row li .img-thumbnail{
-    height: 250px;
+    height: 30vh;
     width: 100%;
   }
   ul.row li .img-thumbnail:hover{
     box-shadow: 0px 0px 10px -3px #00acac;
+  }
+  ul.row li .img-thumbnail .add-images{
+    padding: 5% 0;
   }
   ul.row li .img-thumbnail .image-slim{
     height: 100%;
@@ -205,7 +208,7 @@
     background: #eeeeee;
     height: 100%;
     width: 100%;
-    padding: 45% 0px;
+    padding: 10% 0;
     text-align: center;
   }
   ul.row li .img-thumbnail .bg-gray .add-images-btn i{
