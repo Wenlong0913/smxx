@@ -1,7 +1,5 @@
 h1.page-header
   | #{User::Weixin.model_name.human}列表
-  .pull-right
-    = link_to "新建#{User::Weixin.model_name.human}", new_admin_user_weixin_path, class: 'btn btn-primary'
 
 .panel.panel-default
   .panel-heading
@@ -70,23 +68,24 @@ h1.page-header
             th = User::Weixin.human_attribute_name(:gender)
             th = User::Weixin.human_attribute_name(:created_at)
             th = User::Weixin.human_attribute_name(:updated_at)
-            th
+            th 查看
         tbody
           - @user_weixins.each do |user_weixin|
-            tr
-              td = user_weixin.user
-              td = user_weixin.name
-              td = user_weixin.headshot
-              td = user_weixin.city
-              td = user_weixin.province
-              td = user_weixin.country
-              td = user_weixin.gender
-              td = user_weixin.created_at
-              td = user_weixin.updated_at
-              td
-                => link_to '查看', admin_user_weixin_path(user_weixin), class: 'btn btn-xs btn-default'
-                => link_to '编辑', edit_admin_user_weixin_path(user_weixin), class: 'btn btn-xs btn-default'
-                = link_to '删除', admin_user_weixin_path(user_weixin), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+            - decorate(user_weixin) do |d_weixin|
+              tr
+                td = d_weixin.user.try(:nickname)
+                td = d_weixin.name
+                td = d_weixin.headshot
+                td = d_weixin.city
+                td = d_weixin.province
+                td = d_weixin.country
+                td = d_weixin.gender
+                td = d_weixin.display_created_at
+                td = d_weixin.display_updated_at
+                td
+                  => link_to '查看', admin_user_weixin_path(user_weixin), class: 'btn btn-xs btn-default'
+                  => link_to '查看用户', admin_user_path(user_weixin.user), class: 'btn btn-xs btn-default' if user_weixin.user
+
 / TODO: move this code to application.js
 javascript:
   $(document).ready(function(){
