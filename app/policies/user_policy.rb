@@ -33,6 +33,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def destroy?
+    return false if record.id == User::MAIN_ID
     return false if user.id == record.id # 自己不能删除自己的信息
     return false unless user.super_admin_or_admin? # 只有管理员和超级管理员能删除
     return false if user.has_role?(:admin, :any) && record.super_admin_or_admin? # 管理员不能删除另外一个管理员的信息，当然，更不能删除超级管理员的信息
@@ -40,7 +41,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def impersonate?
-    user.super_admin_or_admin?
+    user.id != record.id && user.super_admin_or_admin?
   end
 
   def permitted_attributes_for_create
@@ -53,7 +54,11 @@ class UserPolicy < ApplicationPolicy
 
   def permitted_attributes_for_update
     if user.super_admin_or_admin?
-      [:mobile_phone, :nickname, :password, :password_confirmation, :role_ids => []]
+      if record.id == User::MAIN_ID
+        [:mobile_phone, :nickname, :password, :password_confirmation]
+      else
+        [:mobile_phone, :nickname, :password, :password_confirmation, :role_ids => []]
+      end
     elsif user.id == record.id
       [:nickname]
     else
