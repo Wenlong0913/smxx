@@ -17,7 +17,7 @@ h1.page-header
       .profile-section
         .profile-left
           .profile-image
-            = image_tag d_weixin.display_headshot
+            = image_tag d_weixin.headshot
             i[class="fa fa-user hide"]
           .m-b-10
             .profile-highlight
@@ -79,7 +79,7 @@ h1.page-header
                     | #{User::Weixin.human_attribute_name(:created_at)}
                   td
                     a
-                      = d_weixin.display_created_at
+                      = d_weixin.created_at
                 tr.divider
                   td[colspan='2']
                 tr
@@ -87,6 +87,6 @@ h1.page-header
                     | #{User::Weixin.human_attribute_name(:updated_at)}
                   td
                     a
-                      = d_weixin.display_updated_at
+                      = d_weixin.updated_at
                 tr.divider
                   td[colspan='2']

@@ -75,13 +75,13 @@ h1.page-header
               tr
                 td = d_weixin.user.try(:nickname)
                 td = d_weixin.name
-                td = d_weixin.headshot
+                td = image_tag d_weixin.headshot, size: "50"
                 td = d_weixin.city
                 td = d_weixin.province
                 td = d_weixin.country
                 td = d_weixin.gender
-                td = d_weixin.display_created_at
-                td = d_weixin.display_updated_at
+                td = d_weixin.created_at
+                td = d_weixin.updated_at
                 td
                   => link_to '查看', admin_user_weixin_path(user_weixin), class: 'btn btn-xs btn-default'
                   => link_to '查看用户', admin_user_path(user_weixin.user), class: 'btn btn-xs btn-default' if user_weixin.user
