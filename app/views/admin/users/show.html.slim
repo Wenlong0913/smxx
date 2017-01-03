@@ -17,39 +17,39 @@ h1
 
   .panel-body
     .profile-container
-    - decorate(@admin_user) do |d_user|
-      .profile-section
-        .profile-left
-          .profile-image
-            = image_tag d_user.display_headshot
-            i[class="fa fa-user hide"]
-          .m-b-10
-            .profile-highlight
-              h4 = d_user.try(:nickname)
-        .profile-right    
-          .profile-info
-            .table-responsive
-              table.table.table-profile
-                tr
-                  td.field
-                    | #{User.human_attribute_name(:nickname)}
-                  td
-                    a
-                      = d_user.nickname
-                tr.divider
-                  td[colspan='2']
-                tr
-                  td.field
-                    | 手机号
-                  td
-                    a
-                      = d_user.mobile_phone
-                tr.divider
-                  td[colspan='2']
-                tr
-                  td.field
-                    | 角色
-                  td
-                    a
-                      = d_user.display_role
+      - decorate(@admin_user) do |d_user|
+        .profile-section
+          .profile-left
+            .profile-image
+              = image_tag d_user.display_headshot
+              i[class="fa fa-user hide"]
+            .m-b-10
+              .profile-highlight
+                h4 = d_user.try(:nickname)
+          .profile-right    
+            .profile-info
+              .table-responsive
+                table.table.table-profile
+                  tr
+                    td.field
+                      | #{User.human_attribute_name(:nickname)}
+                    td
+                      a
+                        = d_user.nickname
+                  tr.divider
+                    td[colspan='2']
+                  tr
+                    td.field
+                      | 手机号
+                    td
+                      a
+                        = d_user.mobile_phone
+                  tr.divider
+                    td[colspan='2']
+                  tr
+                    td.field
+                      | 角色
+                    td
+                      a
+                        = d_user.display_role
 
