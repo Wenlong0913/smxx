@@ -36,7 +36,9 @@ module AdminRoute
         resources :sites, :concerns => :paginatable do
           resources :members, :concerns => :paginatable
         end
-        resources :orders, :concerns => :paginatable
+        resources :orders, :concerns => :paginatable do
+          resources :materials, except: [:index], controller: 'order_materials'
+        end
       end
     end
   end
