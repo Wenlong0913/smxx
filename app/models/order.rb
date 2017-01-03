@@ -12,10 +12,13 @@ class Order < ApplicationRecord
 
   has_many :order_products, dependent: :destroy
   has_many :products, through: :order_products
+  has_many :order_materials, dependent: :destroy
+  has_many :materials, through: :order_materials
 
   before_create :generate_code
 
   validates_presence_of :user, :site
+  validates_presence_of :member
   validates_uniqueness_of :code
 
   after_initialize do

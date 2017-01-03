@@ -2,7 +2,7 @@
 zh-CN:
   activerecord:
     models:
-      site: 代理商
+      site: 经销商
     attributes:
       site:
         user: 所有者

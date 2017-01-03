@@ -3,6 +3,7 @@ class Item < ApplicationRecord
   store_accessor :features, :description
   cast_pinyin_for :name
   belongs_to :site
+  belongs_to :catalog
 
   has_many :child_relations, class_name: 'ItemRelation', dependent: :destroy, foreign_key: :master_id
   has_many :parent_relations, class_name: 'ItemRelation', dependent: :destroy, foreign_key: :slave_id

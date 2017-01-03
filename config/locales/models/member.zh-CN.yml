@@ -2,12 +2,12 @@
 zh-CN:
   activerecord:
     models:
-      member: 会员
+      member: 客户
     attributes:
       member:
         user: 用户
         site: 站点
-        name: 会员名称
+        name: 客户名称
         gender: 性别
         genders:
           male: 男

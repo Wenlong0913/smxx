@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161228084223) do
+ActiveRecord::Schema.define(version: 20170103065515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,6 +175,15 @@ ActiveRecord::Schema.define(version: 20161228084223) do
     t.datetime "updated_at", null: false
     t.index ["site_id"], name: "index_members_on_site_id", using: :btree
     t.index ["user_id"], name: "index_members_on_user_id", using: :btree
+  end
+
+  create_table "order_materials", force: :cascade do |t|
+    t.integer  "order_id"
+    t.integer  "material_id"
+    t.integer  "amount"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["order_id"], name: "index_order_materials_on_order_id", using: :btree
   end
 
   create_table "order_products", force: :cascade do |t|
@@ -344,6 +353,7 @@ ActiveRecord::Schema.define(version: 20161228084223) do
   add_foreign_key "items", "sites"
   add_foreign_key "members", "sites"
   add_foreign_key "members", "users"
+  add_foreign_key "order_materials", "orders"
   add_foreign_key "order_products", "orders"
   add_foreign_key "orders", "sites"
   add_foreign_key "orders", "users"
