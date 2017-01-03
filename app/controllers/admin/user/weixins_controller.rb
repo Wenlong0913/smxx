@@ -27,45 +27,6 @@ class Admin::User::WeixinsController < Admin::BaseController
     authorize @user_weixin
   end
 
-  # GET /admin/user/weixins/new
-  def new
-    authorize User::Weixin
-    @user_weixin = User::Weixin.new
-  end
-
-  # GET /admin/user/weixins/1/edit
-  def edit
-    authorize @user_weixin
-  end
-
-  # POST /admin/user/weixins
-  def create
-    authorize User::Weixin
-    @user_weixin = User::Weixin.new(permitted_attributes(User::Weixin))
-
-    if @user_weixin.save
-      redirect_to admin_user_weixin_path(@user_weixin), notice: "#{User::Weixin.model_name.human} 创建成功."
-    else
-      render :new
-    end
-  end
-
-  # PATCH/PUT /admin/user/weixins/1
-  def update
-    authorize @user_weixin
-    if @user_weixin.update(permitted_attributes(@user_weixin))
-      redirect_to admin_user_weixin_path(@user_weixin), notice: "#{User::Weixin.model_name.human} 更新成功."
-    else
-      render :edit
-    end
-  end
-
-  # DELETE /admin/user/weixins/1
-  def destroy
-    authorize @user_weixin
-    @user_weixin.destroy
-    redirect_to admin_user_weixins_url, notice: "#{User::Weixin.model_name.human} 删除成功."
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
