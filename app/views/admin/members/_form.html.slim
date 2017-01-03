@@ -8,15 +8,15 @@
     h4.panel-title 会员
   .panel-body
     = simple_form_for @member, url: @member.new_record? ? admin_site_members_path : admin_site_member_path(@site, @member), validate: true do |f|
-      - if @member.errors.any?
-        #error_explanation.alert.alert-danger
-          / h2 = "#{pluralize(@member.errors.count, "error")} prohibited this member from being saved:"
-          ul.list-unstyled
-            - @member.errors.full_messages.each do |message|
-              li = message
+      / - if @member.errors.any?
+      /   #error_explanation.alert.alert-danger
+      /     / h2 = "#{pluralize(@member.errors.count, "error")} prohibited this member from being saved:"
+      /     ul.list-unstyled
+      /       - @member.errors.full_messages.each do |message|
+      /         li = message
       = f.input :name
       = f.input :mobile_phone, required: true
-      = f.input :gender, collection: enum_options_for_select(Member, :gender), as: :radio_buttons
+      = f.input :gender, collection: enum_options_for_select(Member, :gender), as: :radio_buttons, selected: :male
       = f.input :birth, start_year: Date.today.year - 70,
                               end_year: Date.today.year
       = f.input :qq
