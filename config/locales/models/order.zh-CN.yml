@@ -15,6 +15,12 @@ zh-CN:
           processing: 处理中
           cancelled: 已取消
           completed: 已完成
+        internal_status: 内部状态
+        internal_statuses:
+          picking: 正在捡货
+          picked: 捡货完毕
+          packing: 正在打包
+          packed: 打包完成
         description: 备注
     errors:
       models:

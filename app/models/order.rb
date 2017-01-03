@@ -7,6 +7,13 @@ class Order < ApplicationRecord
     completed: 2   # 已完成
   }
 
+  enum internal_status: {
+    picking: 0,
+    picked: 1,
+    packing: 2,
+    packed: 3
+  }
+
   belongs_to :user
   belongs_to :site
 
