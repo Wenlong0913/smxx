@@ -7,4 +7,5 @@ class Member < ApplicationRecord
   validates :email, email: true, allow_blank: true
   validates :qq, qq: true, allow_blank: true
   enum gender: [ :male, :female, :secret ]
+  attr_accessor :mobile_phone
 end

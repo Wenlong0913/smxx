@@ -35,7 +35,7 @@ class MemberPolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.has_role?(:admin) || user.has_role?(:agent)
-      [:user_id, :name, :qq, :email, :birth, :gender]
+      [:user_id, :name, :qq, :email, :birth, :gender, :mobile_phone]
     else
       []
     end
