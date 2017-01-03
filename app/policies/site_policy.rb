@@ -30,7 +30,7 @@ class SitePolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.super_admin_or_admin?
+    record.id != Site::MAIN_ID && user.super_admin_or_admin?
   end
 
   def permitted_attributes_for_create
