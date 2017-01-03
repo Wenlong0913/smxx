@@ -3,5 +3,5 @@ class OrderMaterial < ApplicationRecord
   belongs_to :order
   belongs_to :material
   validates_presence_of :order, :material, :amount
-  validates_uniqueness_of :order_id, :material_id
+  validates_uniqueness_of :material_id, scope: :order_id
 end
