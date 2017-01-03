@@ -31,6 +31,12 @@ h1.page-header
                   = enum_l(@order, :status)
             tr
               td.field
+                | #{Order.human_attribute_name(:internal_status)}
+              td
+                span
+                  = enum_l(@order, :internal_status)
+            tr
+              td.field
                 | #{Order.human_attribute_name(:user)}
               td
                 a

@@ -21,4 +21,5 @@
       = f.input :description, as: :text
       - unless @order.new_record?
         = f.input :status, collection: enum_options_for_select(Order, :status), as: :radio_buttons
+        = f.input :internal_status, collection: enum_options_for_select(Order, :internal_status), as: :radio_buttons
       = f.submit class: 'btn btn-success btn-block'
