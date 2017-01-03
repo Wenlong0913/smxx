@@ -26,7 +26,7 @@ module AdminRoute
 
         resources :users, :concerns => :paginatable
         namespace :user do
-          resources :weixins, :concerns => :paginatable
+          resources :weixins, only: [:index], :concerns => :paginatable
         end
 
         resources :products, :concerns => :paginatable
