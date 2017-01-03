@@ -7,7 +7,8 @@ zh-CN:
       member:
         user: 用户
         site: 站点
-        name: 客户名称
+        mobile_phone: 手机号
+        name: 会员名称
         gender: 性别
         genders:
           male: 男

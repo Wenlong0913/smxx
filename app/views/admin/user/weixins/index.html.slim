@@ -83,8 +83,9 @@ h1.page-header
                 td = d_weixin.created_at
                 td = d_weixin.updated_at
                 td
-                  => link_to '查看', admin_user_weixin_path(user_weixin), class: 'btn btn-xs btn-default'
-                  => link_to '查看用户', admin_user_path(user_weixin.user), class: 'btn btn-xs btn-default' if user_weixin.user
+                  => link_to '查看', admin_user_weixin_path(user_weixin), class: 'btn btn-xs btn-info'
+                  => link_to '查看用户', admin_user_path(user_weixin.user), class: 'btn btn-xs btn-info' if user_weixin.user
+  = paginate @user_weixins
 
 / TODO: move this code to application.js
 javascript:

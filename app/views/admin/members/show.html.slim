@@ -18,10 +18,17 @@ h1
         .table-responsive
           table.table.table-profile
             tr
-              td.field 用户名
+              td.field 登陆用户
               td
                 a
                   =@member.user && decorate(@member.user).display_name
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 手机号
+              td
+                a
+                  =@member.user.mobile.phone_number
             tr.divider
               td[colspan='2']
             tr

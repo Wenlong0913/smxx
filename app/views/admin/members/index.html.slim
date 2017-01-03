@@ -61,8 +61,9 @@ h1.page-header
       table.table.table-striped.table-bordered
         thead
           tr
-            th 用户名
+            th 登陆用户
             th 会员名称
+            th 手机号
             th 性别
             th 生日
             th QQ
@@ -73,6 +74,7 @@ h1.page-header
             tr
               td = member.user && decorate(member.user).display_name
               td = member.name
+              td = member.user.mobile.phone_number
               td = decorate(member).display_gender
               td = member.birth
               td = member.qq
