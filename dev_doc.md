@@ -25,8 +25,11 @@
 <a name="config"></a>
 ## 开发配置
 
-    bundle install
-    rails s
+    bundle install # 安装Gem
+    npm install # 安装nodejs的各种依赖保，Vue+webpack需要这些文件
+    foreman start
+
+### 如果要分别启动
 
 <a name="modules-list"></a>
 ## 模块介绍
