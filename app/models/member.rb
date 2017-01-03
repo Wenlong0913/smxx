@@ -12,6 +12,10 @@ class Member < ApplicationRecord
 
   before_validation :create_user, if: -> { user_id.blank? && mobile_phone.present? }
 
+  after_initialize do
+    self.gender ||= 'secret'
+  end
+
   private
 
   def create_user

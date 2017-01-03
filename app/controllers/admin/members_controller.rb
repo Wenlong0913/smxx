@@ -42,7 +42,7 @@ class Admin::MembersController < Admin::BaseController
   # POST /admin/members
   def create
     authorize @site.members
-    flag, @member = Member::Create.(permitted_attributes(@site.members).merge(site_id: @site.id, mobile_phone: params[:member][:mobile_phone]))
+    flag, @member = Member::Create.(permitted_attributes(@site.members).merge(site_id: @site.id))
     if flag
       redirect_to admin_site_member_path(@site, @member), notice: 'Member 创建成功.'
     else
