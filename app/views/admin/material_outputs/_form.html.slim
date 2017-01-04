@@ -6,7 +6,7 @@
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
   .panel-body.choose-material[data-init-material-output-details = @material_output.material_output_details.to_json unless @material_output.new_record? ]
-    = simple_form_for @material_output, url: @material_output.new_record? ? admin_material_outputs_path : admin_material_output_path(@material_output), validate: true do |f|
+    = simple_form_for @material_output, url: @material_output.new_record? ? admin_material_outputs_path : admin_material_output_path(@material_output) do |f|
       - if @material_output.errors.any?
         #error_explanation
           h2 = "#{pluralize(@material_output.errors.count, "error")} prohibited this material_output from being saved:"
@@ -18,14 +18,7 @@
           = f.input :output_date    
         .col-md-4
           = f.input :note
-      .row
         .col-md-4
-          = f.input :material_code
-        .col-md-4
-          = f.input :material_number
-        .col-md-4
-          p ｜
-          button[type="button" class="btn btn-info btn-sm" @click="showModel=true"] 选择物料
           modal[title="产品分类" :show.sync="showModel" @cancel="showModel = false"  ok-text="确认" cancel-text="取消"]
             div
               table.table
@@ -75,7 +68,7 @@
             th
               |数量
             th
-              |
+              button[type="button" class="btn btn-info btn-sm" @click="showModel=true"] 选择物料
         tbody
           tr[v-for="(mo,index) in materialOutputDetails" :key="mo.id"]
             td 
