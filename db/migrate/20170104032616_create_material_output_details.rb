@@ -4,7 +4,6 @@ class CreateMaterialOutputDetails < ActiveRecord::Migration[5.0]
       t.references :material_output
       t.integer :material_id
       t.integer :number
-      t.jsonb :features
       t.timestamps
     end
   end

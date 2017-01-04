@@ -167,7 +167,6 @@ ActiveRecord::Schema.define(version: 20170104032616) do
     t.integer  "material_output_id"
     t.integer  "material_id"
     t.integer  "number"
-    t.jsonb    "features"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.index ["material_output_id"], name: "index_material_output_details_on_material_output_id", using: :btree
