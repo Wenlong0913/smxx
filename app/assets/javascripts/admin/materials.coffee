@@ -8,7 +8,6 @@ $(document).ready ()->
         data:
           id: container[0].dataset["catalogId"]
           showCatalog: false
-          roninimei: '99'
           catalogs: container[0].dataset["catalogName"]
           selecteDefault: []
         methods:
