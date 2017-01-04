@@ -5,7 +5,7 @@
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-  .panel-body.choose-material[data-init-material-output-details = @material_output.material_output_details.to_json unless @material_output.new_record? ]
+  .panel-body.choose-material
     = simple_form_for @material_output, url: @material_output.new_record? ? admin_material_outputs_path : admin_material_output_path(@material_output) do |f|
       - if @material_output.errors.any?
         #error_explanation

@@ -40,7 +40,6 @@ class Admin::MaterialOutputsController < Admin::BaseController
 
   # POST /admin/material_outputs
   def create
-    binding.pry
     authorize MaterialOutput
     flag,  @material_output = MaterialOutput::Create.(permitted_attributes(MaterialOutput))
     if flag
