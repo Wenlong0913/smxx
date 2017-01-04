@@ -34,6 +34,16 @@ $(document).ready ()->
             )
           ,(response)->
           )
+        watch:
+          selectedAll: (val)->
+            if val
+              this.materials.forEach((material)->
+                material.selected = true
+              )
+            else
+              this.materials.forEach((material)->
+                material.selected = false
+              )
         methods:
           cancel: ()->
             this.showModel = false
@@ -53,8 +63,7 @@ $(document).ready ()->
                 detail = mod
             )
             detail
-          selectAll: ()->
-            
+
 
 
 
