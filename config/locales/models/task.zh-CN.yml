@@ -1,0 +1,18 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      task: Task
+    attributes:
+      task:
+        site: Site
+        title: Title
+        description: Description
+        creator_id: Creator
+        assignee_id: Assignee
+        resource: Resource
+    errors:
+      models:
+        task: 
+  helpers:
+    task: 
