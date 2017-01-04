@@ -18,6 +18,10 @@ class Admin::MaterialsController < Admin::BaseController
         format.html { send_data(@materials.as_csv(only: []), filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
+        format.json do
+          @catalogs = Catalog.roots
+          render json: @catalogs
+        end
       end
     end
   end

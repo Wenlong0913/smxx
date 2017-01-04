@@ -63,12 +63,14 @@ h1.page-header
           tr
             th = Material.human_attribute_name(:name)
             th = Material.human_attribute_name(:name_py)
+            th = Material.human_attribute_name(:catalog)
             th
         tbody
           - @materials.each do |material|
             tr
               td = material.name
               td = material.name_py
+              th = material.catalog.try{name}
               td
                 => link_to '查看', admin_material_path(material), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_material_path(material), class: 'btn btn-xs btn-default'

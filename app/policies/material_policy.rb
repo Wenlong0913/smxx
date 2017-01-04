@@ -7,7 +7,7 @@ class MaterialPolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.super_admin_or_admin?
-      [:name, :name_py]
+      [:name, :name_py,:catalog_id, :image_item_ids => []]
     else
       []
     end
