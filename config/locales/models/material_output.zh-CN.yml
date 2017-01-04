@@ -1,0 +1,16 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      material_output: 物料出库
+    attributes:
+      material_output:
+        output_date: 出库日期
+        note: 备注
+        material_code: 物料名称/编码
+        material_number: 数量
+    errors:
+      models:
+        material_output: 
+  helpers:
+    material_output: 

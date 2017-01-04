@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170103131852) do
+ActiveRecord::Schema.define(version: 20170104032616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -161,6 +161,23 @@ ActiveRecord::Schema.define(version: 20170103131852) do
     t.string   "name_py"
     t.integer  "catalog_id"
     t.index ["site_id"], name: "index_items_on_site_id", using: :btree
+  end
+
+  create_table "material_output_details", force: :cascade do |t|
+    t.integer  "material_output_id"
+    t.integer  "material_id"
+    t.integer  "number"
+    t.jsonb    "features"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["material_output_id"], name: "index_material_output_details_on_material_output_id", using: :btree
+  end
+
+  create_table "material_outputs", force: :cascade do |t|
+    t.date     "output_date"
+    t.string   "note"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "members", force: :cascade do |t|

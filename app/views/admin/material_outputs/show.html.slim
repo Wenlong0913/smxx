@@ -1,0 +1,59 @@
+h1.page-header
+  | 查看#{MaterialOutput.model_name.human}
+  .pull-right
+    => link_to '编辑', edit_admin_material_output_path(@material_output), class: 'btn btn-primary'
+    = link_to '返回', admin_material_outputs_path, class: 'btn btn-primary'
+
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+  .panel-body
+    .profile-container
+      .profile-info
+        .table-responsive
+          .row
+            .col-md-3
+              h5 
+                span 出库日期：
+                span = @material_output.output_date
+            .col-md-3
+              h5 
+                span 备注：
+                span = @material_output.note
+            .col-md-3
+              h5
+                span 出库数量：
+                span = @material_output.material_output_details.pluck(:number).sum
+          hr
+          table.table.table-profile
+            thead
+              tr
+                th 
+                  |序号
+                th
+                  |物料编号
+                th 
+                  |物料名称
+                th 
+                  |价格
+                th
+                  |数量
+            tbody
+              - @material_output.material_output_details.each_with_index do |material_output_detail, index|
+                tr
+                  td 
+                    = index+1
+                  td
+                    = material_output_detail.material.name_py
+                  td 
+                    = material_output_detail.material.name
+                  td
+                    = material_output_detail.material.price
+                  td 
+                    = material_output_detail.number
+                  td
+                    

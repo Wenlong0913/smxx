@@ -1,0 +1,14 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      material_output_detail: Material output detail
+    attributes:
+      material_output_detail:
+        materila: Materila
+        number: Number
+    errors:
+      models:
+        material_output_detail: 
+  helpers:
+    material_output_detail: 
