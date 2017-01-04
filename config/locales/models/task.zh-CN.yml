@@ -6,13 +6,15 @@ zh-CN:
     attributes:
       task:
         site: Site
-        title: Title
-        description: Description
-        creator_id: Creator
-        assignee_id: Assignee
+        title: 任务标题
+        description: 描述
+        creator_id: 创建者
+        assignee_id: 任务分配
         resource: Resource
+        task_type_id: 任务类型
+        ordinal: 任务顺序
     errors:
       models:
-        task: 
+        task:
   helpers:
-    task: 
+    task:
