@@ -21,6 +21,8 @@ class Order < ApplicationRecord
   has_many :products, through: :order_products
   has_many :order_materials, dependent: :destroy
   has_many :materials, through: :order_materials
+  has_many :image_item_relations, as: :relation
+  has_many :image_items, :through => :image_item_relations
 
   before_create :generate_code
 
