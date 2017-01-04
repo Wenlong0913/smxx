@@ -1,0 +1,16 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      task_type: Task type
+    attributes:
+      task_type:
+        type: Type
+        name: Name
+        ordinal: Ordinal
+        roles: Roles
+    errors:
+      models:
+        task_type: 
+  helpers:
+    task_type: 
