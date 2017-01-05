@@ -60,7 +60,7 @@ h1.page-header
             tr.divider
               td[colspan='2']
         .text-center
-          = link_to '开始生产', '', class: "btn btn-info"
+          = link_to '开始生产', admin_order_produces_path(@order), class: "btn btn-info", method: :post
 .panel
   .panel-heading
     .panel-heading-btn

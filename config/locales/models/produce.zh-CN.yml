@@ -2,15 +2,18 @@
 zh-CN:
   activerecord:
     models:
-      produce: Produce
+      produce: 生产任务
     attributes:
       produce:
-        order: Order
-        status: Status
-        current_task_id: Current task
-        assignee_id: Assignee
+        order: 订单编号
+        status: 生产任务状态
+        assignee_id: 负责人
+        statuses:
+          processing: 处理中
+          cancelled: 已取消
+          completed: 已完成
     errors:
       models:
-        produce: 
+        produce:
   helpers:
-    produce: 
+    produce:

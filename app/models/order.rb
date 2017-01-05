@@ -23,7 +23,7 @@ class Order < ApplicationRecord
   has_many :materials, through: :order_materials
   has_many :image_item_relations, as: :relation
   has_many :image_items, :through => :image_item_relations
-
+  has_one :produce, dependent: :destroy
   before_create :generate_code
 
   validates_presence_of :user, :site

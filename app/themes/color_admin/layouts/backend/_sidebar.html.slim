@@ -30,6 +30,14 @@
             = link_to "创建#{Order.model_name.human}", new_admin_order_path
           li[class=('active' if page?('admin/orders#index'))]
             = link_to "#{Order.model_name.human}管理", admin_orders_path
+      / 生产任务
+      li class="#{'active' if page?('admin/produces', 'admin/orders/:order_id/produces/:id')}"
+        = link_to admin_produces_path do
+          = fa_icon 'file-text', text: "#{Produce.model_name.human}管理"
+
+      li class="#{'active' if page?('admin/task_types')}"
+        = link_to admin_task_types_path do
+          = fa_icon 'file-text', text: "#{TaskType.model_name.human}管理"
 
       li class=("has-sub #{'active' if page?('admin/tracker/home', 'admin/tracker/shares/home')}")
         a href="javascript:;"

@@ -2,10 +2,10 @@
 zh-CN:
   activerecord:
     models:
-      task: Task
+      task: 工作任务
     attributes:
       task:
-        site: Site
+        site: 站点
         title: 任务标题
         description: 描述
         creator_id: 创建者
