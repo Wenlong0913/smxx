@@ -1,0 +1,16 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      produce: Produce
+    attributes:
+      produce:
+        order: Order
+        status: Status
+        current_task_id: Current task
+        assignee_id: Assignee
+    errors:
+      models:
+        produce: 
+  helpers:
+    produce: 

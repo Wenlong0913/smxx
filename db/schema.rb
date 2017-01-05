@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104064327) do
+ActiveRecord::Schema.define(version: 20170105025511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -211,6 +211,16 @@ ActiveRecord::Schema.define(version: 20170104064327) do
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
   end
 
+  create_table "produces", force: :cascade do |t|
+    t.integer  "order_id"
+    t.integer  "status"
+    t.integer  "current_task_id"
+    t.integer  "assignee_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["order_id"], name: "index_produces_on_order_id", using: :btree
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string   "name"
     t.string   "resource_type"
@@ -384,6 +394,7 @@ ActiveRecord::Schema.define(version: 20170104064327) do
   add_foreign_key "order_products", "orders"
   add_foreign_key "orders", "sites"
   add_foreign_key "orders", "users"
+  add_foreign_key "produces", "orders"
   add_foreign_key "tasks", "sites"
   add_foreign_key "theme_configs", "sites"
   add_foreign_key "theme_configs", "themes"
