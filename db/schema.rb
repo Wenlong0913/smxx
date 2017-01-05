@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104032616) do
+ActiveRecord::Schema.define(version: 20170105021556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -163,20 +163,22 @@ ActiveRecord::Schema.define(version: 20170104032616) do
     t.index ["site_id"], name: "index_items_on_site_id", using: :btree
   end
 
-  create_table "material_output_details", force: :cascade do |t|
-    t.integer  "material_output_id"
+  create_table "material_management_details", force: :cascade do |t|
     t.integer  "material_id"
+    t.integer  "material_management_id"
     t.integer  "number"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.index ["material_output_id"], name: "index_material_output_details_on_material_output_id", using: :btree
+    t.decimal  "price",                  precision: 8, scale: 2
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.index ["material_management_id"], name: "index_material_management_details_on_material_management_id", using: :btree
   end
 
-  create_table "material_outputs", force: :cascade do |t|
-    t.date     "output_date"
+  create_table "material_managements", force: :cascade do |t|
     t.string   "note"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "operate_type"
+    t.date     "operate_date"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "members", force: :cascade do |t|
@@ -368,6 +370,7 @@ ActiveRecord::Schema.define(version: 20170104032616) do
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
   add_foreign_key "items", "sites"
+  add_foreign_key "material_management_details", "material_managements"
   add_foreign_key "members", "sites"
   add_foreign_key "members", "users"
   add_foreign_key "order_materials", "orders"

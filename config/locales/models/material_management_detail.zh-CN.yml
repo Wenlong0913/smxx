@@ -1,0 +1,16 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      material_management_detail: Material management detail
+    attributes:
+      material_management_detail:
+        material: Material
+        material_management: Material management
+        number: Number
+        price: Price
+    errors:
+      models:
+        material_management_detail: 
+  helpers:
+    material_management_detail: 
