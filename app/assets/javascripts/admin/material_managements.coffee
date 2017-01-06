@@ -3,7 +3,7 @@ $(document).ready ()->
   if pages.length > 0
     container = pages.find('.choose-material')
     if container.length > 0
-      catalog = new Vue
+      material_management = new Vue
         el: container[0]
         data:
           showModel: false
@@ -18,7 +18,7 @@ $(document).ready ()->
         mounted: ()->
           vm = this
           # load data
-          vm.$http.get("/admin/materials.json").then((data)->
+          vm.$http.get(vm.$el.dataset.url).then((data)->
             data.body.forEach((value)->
               value.number = 1
               value.selected = false

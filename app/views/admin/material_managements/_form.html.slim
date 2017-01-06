@@ -5,7 +5,7 @@
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-  .panel-body.choose-material
+  .panel-body.choose-material[data-url=admin_materials_path(format: 'json')]
     = simple_form_for @material_management, url: @material_management.new_record? ? admin_material_managements_path : admin_material_management_path(@material_management) do |f|
       - if @material_management.errors.any?
         #error_explanation

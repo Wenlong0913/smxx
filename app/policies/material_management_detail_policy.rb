@@ -7,7 +7,7 @@ class MaterialManagementDetailPolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     fail "请在#{__FILE__}中添加params的permit属性"
-    if user.has_role? :admin
+    if user.super_admin_or_admin?
       []
     else
       []

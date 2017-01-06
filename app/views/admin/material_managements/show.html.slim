@@ -18,11 +18,11 @@ h1.page-header
           .row
             .col-md-3
               h5 
-                span #{decorate(@material_management).display_operate_type}日期：
+                span #{decorate(@material_management).display_operate_type+MaterialManagement.human_attribute_name(:operate_date)}：
                 span = @material_management.operate_date
             .col-md-3
               h5 
-                span 备注：
+                span #{MaterialManagement.human_attribute_name(:note)}：
                 span = @material_management.note
             .col-md-3
               h5
@@ -39,9 +39,9 @@ h1.page-header
                 th 
                   |物料名称
                 th 
-                  |价格
+                  |#{MaterialManagementDetail.human_attribute_name(:price)}
                 th
-                  |数量
+                  |#{MaterialManagementDetail.human_attribute_name(:number)}
             tbody
               - @material_management.material_management_details.each_with_index do |material_management_detail, index|
                 tr
