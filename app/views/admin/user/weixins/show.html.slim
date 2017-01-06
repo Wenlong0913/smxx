@@ -71,7 +71,7 @@ h1.page-header
                       | #{User::Weixin.human_attribute_name(:gender)}
                     td
                       a
-                        = @user_weixin.gender
+                        = decorate(@user_weixin).display_gender
                   tr.divider
                     td[colspan='2']
                   tr

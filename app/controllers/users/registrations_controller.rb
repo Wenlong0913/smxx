@@ -30,7 +30,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
     code = params[:user][:code]
     t = Sms::Token.new(mobile)
     if t.valid?(code)
-      flag, user = User::Create.(mobile_phone: mobile)
+      user_attributes = {}
+      user_attributes[:mobile_phone] = mobile
+      if session["omniauth.origin"] =~ /\?role=agent/
+        user_attributes[:role_ids] = [Role.find_by(name: 'agent').id]
+      end
+      flag, user = User::Create.(user_attributes)
       if flag
         User::Weixin.connect_user(user, OmniAuth::AuthHash.new(session["devise.wechat_data"])) if session["devise.wechat_data"]
         sign_in user, :event => :authentication #this will throw if @user is not activate

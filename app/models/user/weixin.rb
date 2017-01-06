@@ -19,6 +19,8 @@ class User::Weixin < ApplicationRecord
   belongs_to :user
   validates :uid, presence: true, uniqueness: true
 
+  enum gender: [:secret, :male, :female]
+
   ##
   # get weixin_user base infromation
   # @param [Hash] auth is wexin omniauth request
