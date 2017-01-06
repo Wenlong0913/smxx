@@ -70,7 +70,7 @@
         ul.sub-menu
           li[class= ('active' if page?('admin/catalogs#index?klass='))]
             = link_to '所有分类', admin_catalogs_path
-      li class=("has-sub #{'active' if page?('admin/materials', admin_material_catalogs_path, 'admin/vendors')}")
+      li class=("has-sub #{'active' if page?('admin/materials', admin_material_catalogs_path, 'admin/material_managements', 'admin/vendors')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
@@ -78,6 +78,10 @@
         ul.sub-menu
           li[class= ('active' if page?('admin/materials#index'))]
             = link_to '物料列表', admin_materials_path
+          li[class= ('active' if page?('/admin/material_managements?type=output'))]
+            = link_to '物料出库', admin_material_managements_path(type: 'output')
+          li[class= ('active' if page?('/admin/material_managements?type=input'))]
+            = link_to '物料入库', admin_material_managements_path(type: 'input')
           li[class= ('active' if page?(admin_material_catalogs_path))]
             = link_to '物料分类', admin_material_catalogs_path
           li[class= ('active' if page?('admin/vendors#index'))]

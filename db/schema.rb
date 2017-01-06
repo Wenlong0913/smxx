@@ -163,6 +163,24 @@ ActiveRecord::Schema.define(version: 20170105060833) do
     t.index ["site_id"], name: "index_items_on_site_id", using: :btree
   end
 
+  create_table "material_management_details", force: :cascade do |t|
+    t.integer  "material_id"
+    t.integer  "material_management_id"
+    t.integer  "number"
+    t.decimal  "price",                  precision: 8, scale: 2
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.index ["material_management_id"], name: "index_material_management_details_on_material_management_id", using: :btree
+  end
+
+  create_table "material_managements", force: :cascade do |t|
+    t.string   "note"
+    t.integer  "operate_type"
+    t.date     "operate_date"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "members", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "site_id"
@@ -387,6 +405,7 @@ ActiveRecord::Schema.define(version: 20170105060833) do
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
   add_foreign_key "items", "sites"
+  add_foreign_key "material_management_details", "material_managements"
   add_foreign_key "members", "sites"
   add_foreign_key "members", "users"
   add_foreign_key "order_materials", "orders"

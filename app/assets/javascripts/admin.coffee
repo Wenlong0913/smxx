@@ -2,6 +2,7 @@
 #= require admin/sessions
 #= require admin/catalogs
 #= require admin/products
+#= require admin/material_managements
 #= require admin/materials
 #= require admin/order
 #= require tracker

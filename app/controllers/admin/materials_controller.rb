@@ -9,8 +9,11 @@ class Admin::MaterialsController < Admin::BaseController
     @filter_colums = %w(id)
     @materials = build_query_filter(Material.all, only: @filter_colums).page(params[:page])
     respond_to do |format|
-      if params[:json].present?
-        format.html { send_data(@materials.to_json, filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
+      if params[:format] == "json"
+        # format.html { send_data(@materials.to_json, filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
+        format.json do
+          render json: ActiveModelSerializers::SerializableResource.new(@materials, {}).as_json  
+        end
       elsif params[:xml].present?
         format.html { send_data(@materials.to_xml, filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?

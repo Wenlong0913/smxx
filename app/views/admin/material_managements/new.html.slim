@@ -1,0 +1,6 @@
+h1.page-header
+  | 新建物料#{I18n.t("material_managements."+@type)}
+  .pull-right
+    = link_to '返回', admin_material_managements_path(type: @type), class: 'btn btn-primary'
+
+== render 'form'
