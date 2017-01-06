@@ -47,7 +47,7 @@ class Admin::ProducesController < Admin::BaseController
       @produce = Produce.new(order: @order)
       return redirect_to admin_order_path(@order), notice: "生产任务创建失败." unless @produce.save
     end
-    redirect_to admin_order_produce_path(@order, @produce), notice: "#{Produce.model_name.human} 创建成功."
+    redirect_to admin_produces_path, notice: "#{Produce.model_name.human} 创建成功."
   end
 
   # PATCH/PUT /admin/produces/1
@@ -64,7 +64,7 @@ class Admin::ProducesController < Admin::BaseController
   def destroy
     authorize @produce
     @produce.destroy
-    redirect_to admin_produces_url, notice: "#{Produce.model_name.human} 删除成功."
+    redirect_to admin_produces_path, notice: "#{Produce.model_name.human} 删除成功."
   end
 
   private

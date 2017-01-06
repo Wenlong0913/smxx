@@ -13,6 +13,11 @@ zh-CN:
         resource: Resource
         task_type_id: 任务类型
         ordinal: 任务顺序
+        status: 状态
+        statuses:
+          processing: 处理中
+          cancelled: 已取消
+          completed: 已完成
     errors:
       models:
         task:

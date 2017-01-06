@@ -36,11 +36,13 @@ module AdminRoute
         resources :sites, :concerns => :paginatable do
           resources :members, :concerns => :paginatable
         end
-        resources :produces, only: [:index]
+        resources :produces, only: [:index] do
+          resources :tasks, only: [:create]
+        end
         resources :task_types
         resources :orders, :concerns => :paginatable do
           resources :materials, except: [:index], controller: 'order_materials'
-          resources :produces, only: [:show, :create]
+          resources :produces, only: [:show, :create, :destroy]
         end
       end
     end

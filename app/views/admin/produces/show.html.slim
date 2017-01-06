@@ -22,7 +22,10 @@ h1.page-header
       .col-sm-6
         strong 任务负责人
         span.p-l-10
-          = @produce.assignee_id && User.find(@produce.assignee_id)
+          - if @produce.assignee_id
+            = @produce.assignee_id && User.find(@produce.assignee_id)
+          - else
+            = link_to '选择分配', ''
     hr
     .row
       - @produce.tasks.each do |task|
@@ -31,11 +34,28 @@ h1.page-header
             strong
               = task.task_type.name
             span.pull-right
-              span.label.label-success 完成
+              - classStatus = {processing: 'warning' ,cancelled: 'default', completed: 'success'}
+              span[class="label label-#{ classStatus[(task.status).to_sym] }"]
+                = enum_l(task, :status)
           .list-group-item
-            | ......
-      
-        
-          
-            
-              
+            h4.text-center
+              = task.title
+            h6
+              strong.p-r-10
+                = Task.human_attribute_name(:assignee_id)
+              span.pull-right
+                - if task.assignee_id
+                  = task.assignee_id
+                - else
+                  = link_to '选择分配用户组'
+            h6
+              = Task.human_attribute_name(:description)
+              .well.m-t-10
+                = task.description
+      - if @produce.tasks.size < 1
+        .list-group.col-md-3
+          .list-group-item.active[alt='wang']
+            strong 添加流程
+          .list-group-item
+            .jumbotron.text-center.m-b-0
+              = link_to '添加流程', '', class: "h4 text-center"
