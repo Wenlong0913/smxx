@@ -2,7 +2,7 @@
 require 'csv'
 class Admin::OrdersController < Admin::BaseController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
-
+  before_action :get_user, only: [:create, :update]
   # GET /admin/orders
   def index
     authorize Order
@@ -73,6 +73,12 @@ class Admin::OrdersController < Admin::BaseController
       @order = Order.find(params[:id])
     end
 
+    def get_user
+      if params[:order][:member].present?
+        member = Member.find(params[:order][:member])
+        params[:order][:user_id] =  member.user.id
+      end
+    end
     # Only allow a trusted parameter "white list" through.
     # def admin_order_params
     #       #   params.require(:admin_order).permit(policy(@admin_order).permitted_attributes)

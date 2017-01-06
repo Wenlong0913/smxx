@@ -3,7 +3,7 @@ $(document).ready ()->
   if pages.length > 0
     container = pages.find(".catalog-list")
     if container.length > 0
-      window.catalog = new Vue
+      catalog = new Vue
         el: container[0]
         data:
           id: container[0].dataset["catalogId"]
