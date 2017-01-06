@@ -100,7 +100,12 @@ GEM
     audited (4.3.0)
       activerecord (>= 4.0, < 5.1)
       rails-observers (~> 0.1.2)
+    autoprefixer-rails (6.6.1)
+      execjs
     bcrypt (3.1.11)
+    bootstrap-sass (3.3.7)
+      autoprefixer-rails (>= 5.2.1)
+      sass (>= 3.3.4)
     bower-rails (0.11.0)
     browser (2.3.0)
     builder (3.2.2)
@@ -525,6 +530,7 @@ DEPENDENCIES
   activemodel-serializers-xml
   annotate
   audited (~> 4.3)
+  bootstrap-sass (~> 3.3, >= 3.3.7)
   bower-rails
   byebug
   capistrano (~> 3.7.1)
