@@ -1,0 +1,41 @@
+h1.page-header
+  | &nbsp;
+  .pull-right
+    / => link_to '编辑', edit_admin_produce_path(@produce), class: 'btn btn-primary'
+    = link_to '返回', admin_produces_path, class: 'btn btn-primary'
+
+.panel.panel-info
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+    h3.panel-title
+      | 生产任务
+  .panel-body
+    .row
+      .col-sm-6
+        strong 订单编号
+        span.p-l-10
+          = @produce.order.code
+      .col-sm-6
+        strong 任务负责人
+        span.p-l-10
+          = @produce.assignee_id && User.find(@produce.assignee_id)
+    hr
+    .row
+      - @produce.tasks.each do |task|
+        .list-group.col-md-3
+          .list-group-item.active[alt='wang']
+            strong
+              = task.task_type.name
+            span.pull-right
+              span.label.label-success 完成
+          .list-group-item
+            | ......
+      
+        
+          
+            
+              
