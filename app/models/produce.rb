@@ -4,7 +4,8 @@ class Produce < ApplicationRecord
   enum status: {
     processing: 0,
     cancelled: 1,
-    completed: 2
+    completed: 2,
+    wait_for_task: 3
   }
 
   belongs_to :order
@@ -13,7 +14,7 @@ class Produce < ApplicationRecord
   validates_uniqueness_of :order
 
   after_initialize do
-    self.status ||= 0
+    self.status ||= 3
   end
 
 end

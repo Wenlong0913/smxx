@@ -8,7 +8,7 @@ class Admin::ProducesController < Admin::BaseController
   def index
     authorize Produce
     @filter_colums = %w(id)
-    @produces = build_query_filter(Produce.all, only: @filter_colums).page(params[:page])
+    @produces = build_query_filter(Produce.all, only: @filter_colums).order(status: :desc, created_at: :desc).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@produces.to_json, filename: "produces-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

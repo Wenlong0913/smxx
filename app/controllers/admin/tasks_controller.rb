@@ -46,7 +46,9 @@ class Admin::TasksController < Admin::BaseController
         taskType= TaskType.find(taskType)
         next if @produce.tasks.where(task_type_id: taskType).present?
         @task = @produce.tasks.new(task_type: taskType, title: taskType.name, creator_id: current_user.id, ordinal: taskType.ordinal)
-        unless @task.save
+        if @task.save
+          @produce.update(status: 'processing')
+        else
           return render json: @task.errors.as_json, status: :failed
         end
       end

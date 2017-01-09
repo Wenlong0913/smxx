@@ -75,7 +75,7 @@
               td
                 = produce.order.code
               td
-                - if  produce.tasks.size > 0
+                - if produce.status != 'wait_for_task'
                   .progress[style="min-width: 180px"]
                     - progress = (produce.tasks.completed.size*100/produce.tasks.size).to_s
                     .progress-bar[role='progressbar' aria-valuenow="#{progress}" aria-valuemin="0" aria-valuemax="100" style="width: #{progress}%;"]
@@ -85,7 +85,7 @@
               td
                 = produce.created_at.localtime
               td
-                => link_to '查看', admin_order_produce_path(produce.order, produce), class: "btn btn-xs btn-default #{'hide' unless produce.tasks.size > 0}"
+                => link_to '查看', admin_order_produce_path(produce.order, produce), class: "btn btn-xs btn-default #{'hide' if produce.status == 'wait_for_task'}"
                 / => link_to '编辑', edit_admin_produce_path(produce), class: 'btn btn-xs btn-default'
                 = link_to '删除', admin_order_produce_path(produce.order, produce), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
     .modal.fade.create_task[tabindex="-1" role="dialog" aria-labelledby="create_task" aria-hidden="true"]
