@@ -16,7 +16,8 @@ module FrontendRoute
       namespace :users do
         namespace :weixins do
           resource :registrations, only: [:new, :show]
-          resource :sessions, only: [:new, :show]
+          resource :sessions, only: [:new, :create]
+          resource :web_qrcodes, only: [:new, :show]
         end
       end
     end

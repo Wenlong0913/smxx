@@ -8,7 +8,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if current_user && !weixin_user.persisted?
       weixin_user = User::Weixin.connect_user(current_user, auth)
 
-    # "http://tao.dev.tanmer.com/api/v1/weixins/web_qrcodes/new?user_id=2"
+    # "http://tao.dev.tanmer.com/users/weixins/registrations/new?user_id=2"
     # 带参二维码绑定微信用户
     elsif params[:origin] =~ /\?user_id=\d+/ && !weixin_user.persisted?
       user_id =  params[:origin].split('?user_id=').last

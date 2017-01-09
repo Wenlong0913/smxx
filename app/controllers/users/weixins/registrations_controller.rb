@@ -16,7 +16,7 @@ class Users::Weixins::RegistrationsController < ApplicationController
     # 登录用户绑定微信
     if params[:user_id]
       p[:user_id] = params[:user_id]
-    # 只允许代理商注册
+    #代理商注册
     elsif params[:role] && params[:role] == 'agent'
       p[:role] = params[:role]
     end
