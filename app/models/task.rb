@@ -10,8 +10,15 @@ class Task < ApplicationRecord
   belongs_to :site
   belongs_to :task_type
   belongs_to :resource, polymorphic: true
+  validates_uniqueness_of :task_type_id, scope: [:resource]
+  validates_presence_of :task_type_id
 
   after_initialize do
     self.status ||= 0
   end
+
+  before_validation do
+    self.title = TaskType.where(id: self.task_type_id).first.try{name} if self.title.blank?
+  end
+
 end

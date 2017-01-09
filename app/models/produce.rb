@@ -9,7 +9,6 @@ class Produce < ApplicationRecord
   }
 
   belongs_to :order
-  # has_many :user, as: :assignee_id
   has_many :tasks, as: :resource
   validates_uniqueness_of :order
 

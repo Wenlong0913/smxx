@@ -1,8 +1,8 @@
 # csv support
 require 'csv'
 class Admin::ProducesController < Admin::BaseController
+  before_action :set_order, except: [:index]
   before_action :set_produce, only: [:show, :edit, :update, :destroy]
-  before_action :set_order, only: [:create]
 
   # GET /admin/produces
   def index
@@ -53,10 +53,11 @@ class Admin::ProducesController < Admin::BaseController
   # PATCH/PUT /admin/produces/1
   def update
     authorize @produce
-    if @produce.update(permitted_attributes(@produce))
-      redirect_to admin_produce_path(@produce), notice: "#{Produce.model_name.human} 更新成功."
+    member = @order.site.members.find(params[:assignee_id])
+    if member && @produce.update(assignee_id: member.id)
+      render json: {message: '修改成功.'}
     else
-      render :edit
+      render json: {error: '修改失败'}
     end
   end
 

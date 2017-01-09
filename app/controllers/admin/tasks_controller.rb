@@ -1,8 +1,8 @@
 # csv support
 require 'csv'
 class Admin::TasksController < Admin::BaseController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :set_produce
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
   # GET /admin/tasks
   def index
     authorize Task
@@ -45,7 +45,7 @@ class Admin::TasksController < Admin::BaseController
       params[:taskTypeIds].uniq.each do |taskType|
         taskType= TaskType.find(taskType)
         next if @produce.tasks.where(task_type_id: taskType).present?
-        @task = @produce.tasks.new(task_type: taskType, title: taskType.name, creator_id: current_user.id, ordinal: taskType.ordinal)
+        @task = @produce.tasks.new(task_type: taskType, creator_id: current_user.id, ordinal: taskType.ordinal)
         if @task.save
           @produce.update(status: 'processing')
         else
@@ -53,6 +53,13 @@ class Admin::TasksController < Admin::BaseController
         end
       end
       render json: {text: "数据创建成功！"}, status: :ok
+    elsif params[:task].present?
+      flag, @task = Task::Create.(permitted_attributes(@produce.tasks).merge(produce_id: @produce.id))
+      if flag
+        render js: "window.location.href=window.location.href;"
+      else
+        render js: "alert('创建失败！'+#{@task.errors.messages.map{|k, v| Task.human_attribute_name(k)+':'+v.first.to_s}})"
+      end
     else
       render json: "数据为空创建失败！", status: :failed
     end
@@ -61,10 +68,10 @@ class Admin::TasksController < Admin::BaseController
   # PATCH/PUT /admin/tasks/1
   def update
     authorize @task
-    if @task.update(permitted_attributes(@task))
-      redirect_to admin_task_path(@task), notice: "#{Task.model_name.human} 更新成功."
+    if @task.update(status: params[:status])
+      render json: {message: '更新成功.', status: params[:status]}
     else
-      render :edit
+      render json: {error: '更新失败！'}
     end
   end
 

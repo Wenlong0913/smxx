@@ -75,7 +75,7 @@
               td
                 = produce.order.code
               td
-                - if produce.status != 'wait_for_task'
+                - if produce.tasks.size > 0
                   .progress[style="min-width: 180px"]
                     - progress = (produce.tasks.completed.size*100/produce.tasks.size).to_s
                     .progress-bar[role='progressbar' aria-valuenow="#{progress}" aria-valuemin="0" aria-valuemax="100" style="width: #{progress}%;"]
