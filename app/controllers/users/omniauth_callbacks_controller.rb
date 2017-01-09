@@ -5,14 +5,14 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     weixin_user = User::Weixin.from_omniauth(auth)
 
-    if current_user && !weixin_user.persisted?
-      weixin_user = User::Weixin.connect_user(current_user, auth)
-
-    # "http://tao.dev.tanmer.com/users/weixins/registrations/new?user_id=2"
-    # 带参二维码绑定微信用户
-    elsif params[:origin] =~ /\?user_id=\d+/ && !weixin_user.persisted?
-      user_id =  params[:origin].split('?user_id=').last
-      user = User.find_by_id(user_id)
+    unless weixin_user.persisted?
+      user = nil
+      if params[:origin] =~ /\?user_id=\d+/
+        user_id = params[:origin].split('?user_id=').last
+        user = User.find_by_id(user_id)
+        session["message"] = 'ok'
+      end
+      user ||= current_user
       weixin_user = User::Weixin.connect_user(user, auth) if user
     end
 
