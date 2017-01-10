@@ -12,7 +12,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       if weixin_user.user
         sign_in_and_redirect weixin_user.user, :event => :authentication 
       else
-        session["devise.wechat_data"] = request.env["omniauth.auth"]
         redirect_to sign_up_url(weixin_uid: weixin_user.uid)
       end
     end

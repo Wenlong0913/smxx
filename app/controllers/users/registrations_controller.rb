@@ -39,12 +39,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
       if flag
         # User::Weixin.connect_user(user, OmniAuth::AuthHash.new(session["devise.wechat_data"])) if session["devise.wechat_data"]
         if params[:user][:weixin_user_id].present?
-          weixin_user = User::Weixn.find_by_id(params["weixin_user_id"]) 
+          weixin_user = User::Weixn.find_by_id(params[:user][:weixin_user_id])
           weixin_user.user = user
           weixin_user.save!
         end
         sign_in user, :event => :authentication #this will throw if @user is not activate
-        return redirect_to session["omniauth.origin"] if session["omniauth.origin"]
         render json: {}
       else
         render json: {error: '创建失败了，请检查！'}
