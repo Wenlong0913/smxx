@@ -24,7 +24,7 @@
             button.btn.btn-success.btn-block.btn-lg[data-toggle='modal' data-target='#mobile_login_modal'] 手机号登陆
             button.btn.btn-primary.btn-block.btn-lg[@click="showModal = true"]
               |微信扫码登录
-            modal[title="打开微信扫一扫登录" :show.sync="showModal" @cancel="showModal = false"]
+            modal[title="打开微信扫一扫登录" :show="showModal" @cancel="showModal = false"]
               div
                 div[v-if="showImage" class="text-center"]
                   h3 

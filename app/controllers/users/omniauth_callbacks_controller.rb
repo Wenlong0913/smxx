@@ -12,6 +12,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       if weixin_user.user
         sign_in_and_redirect weixin_user.user, :event => :authentication 
       else
+        session["params"] = {weixin_uid: weixin_user.uid}
         redirect_to sign_up_url(weixin_uid: weixin_user.uid)
       end
     end

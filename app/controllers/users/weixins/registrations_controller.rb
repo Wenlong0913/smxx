@@ -24,7 +24,8 @@ class Users::Weixins::RegistrationsController < ApplicationController
           end
         # 进入注册页面
         else
-          redirect_to sign_up_url(qrcode_params)
+          session["params"] = qrcode_params
+          redirect_to sign_up_url
           return
         end
       else
