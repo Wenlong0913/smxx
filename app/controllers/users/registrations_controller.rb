@@ -1,7 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   def new
     @user = User.new
-    @user.weixin_user = User::Weixin.find_by_uid(uid: params["weixin_uid"]) if params["weixin_uid"].present?
+    @user.weixin = User::Weixin.find_by_uid(params["weixin_uid"]) if params["weixin_uid"].present?
     @user.role_ids = Role.where(name: params[:role]) if params[:role].present?
   end
 
@@ -39,7 +39,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       if flag
         # User::Weixin.connect_user(user, OmniAuth::AuthHash.new(session["devise.wechat_data"])) if session["devise.wechat_data"]
         if params[:user][:weixin_user_id].present?
-          weixin_user = User::Weixn.find_by_id(params[:user][:weixin_user_id])
+          weixin_user = User::Weixin.find_by_id(params[:user][:weixin_user_id])
           weixin_user.user = user
           weixin_user.save!
         end
