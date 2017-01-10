@@ -28,7 +28,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   => {error: '创建失败了，请检查！'}
   #   
   def create
-    binding.pry
     mobile = params[:user][:mobile]
     code = params[:user][:code]
     t = Sms::Token.new(mobile)
