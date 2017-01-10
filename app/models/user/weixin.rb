@@ -40,6 +40,7 @@ class User::Weixin < ApplicationRecord
     wx_user.city = auth.info.city
     wx_user.country = auth.info.country
     wx_user.headshot = auth.info.headimgurl
+    fail Weixin::RegisterError.new(wx_user) unless wx_user.save
     wx_user
   end
 

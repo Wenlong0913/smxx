@@ -3,9 +3,15 @@ class Users::Weixins::WebQrcodesController < ApplicationController
 
   # 新建微信二维码登陆需要的URL
   def new
+
+    if params[:weixin_uid].present? && !current_user
+      user = User::Weixin.find_by_uid(params[:weixin_uid]).try(:user)
+      sign_in user if user
+    end
+
     unless current_user
       redirect_to user_wechat_omniauth_authorize_path(origin: request.original_url)
-      return
+      return    
     end
 
     redis = Redis.current

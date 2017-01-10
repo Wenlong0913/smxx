@@ -59,4 +59,4 @@ h1
                       - if @admin_user.weixin
                         = link_to '查看微信详细', admin_user_weixin_path(@admin_user.weixin), class: 'btn btn-primary'
                       - else#if @admin_user == current_user
-                       = image_tag users_weixins_registrations_path(user_id: @admin_user.id)
+                       = image_tag users_weixins_registrations_path(uuid: @admin_user.uuid)
