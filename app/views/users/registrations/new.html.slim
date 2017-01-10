@@ -6,7 +6,7 @@ h4 手机号注册
       = flash[:alert]
   .form-group.m-b-25.m-t-10
     input[type="hidden" name="user[weixin_user_id]" value=@user.weixin.try(:id)]
-    input[type="hidden" name="user[role_ids]" value=@user.role_ids]
+    input[type="hidden" name="user[role_ids]" value=@user.role_ids.join(',')]
     input.form-control.input-lg[placeholder="手机号"name="user[mobile]"type="text"]
   .form-group.m-b-25.p-0.row
     .col-xs-9
