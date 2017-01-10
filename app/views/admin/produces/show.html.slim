@@ -66,13 +66,12 @@ h1.page-header
                 = Task.human_attribute_name(:description)
                 .well.m-t-10
                   = task.description
-      / - if @produce.tasks.size < 1
       .list-group.col-md-6
         .list-group-item.active[alt='wang']
           strong 添加工作流程
         .list-group-item
           = simple_form_for @produce.tasks.new, url: admin_produce_tasks_path(@produce), remote: :true do |f|
-            = f.input :task_type_id, collection: TaskType.all
+            = f.input :task_type_id, collection: TaskType.where.not(id: @produce.tasks.pluck(:task_type_id))
             = f.input :title
             = f.input :ordinal
             = f.input :description
