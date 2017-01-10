@@ -58,6 +58,9 @@ $(document).ready ->
       $.ajax
         url: dom.data('url')
         type: 'PATCH'
+        data:
+          produce:
+            assignee_id: dom.data('id')
         success: (data)->
           dom.parents('span.p-l-10').find('a:first').text(dom.text())
         error: (data)->

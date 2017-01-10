@@ -2,41 +2,41 @@
 require 'csv'
 class Admin::TasksController < Admin::BaseController
   before_action :set_produce
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [:edit, :update, :destroy]
   # GET /admin/tasks
-  def index
-    authorize Task
-    @filter_colums = %w(id)
-    @tasks = build_query_filter(Task.all, only: @filter_colums).page(params[:page])
-    respond_to do |format|
-      if params[:json].present?
-        format.html { send_data(@tasks.to_json, filename: "tasks-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
-      elsif params[:xml].present?
-        format.html { send_data(@tasks.to_xml, filename: "tasks-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
-      elsif params[:csv].present?
-        # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@tasks.as_csv(only: []), filename: "tasks-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
-      else
-        format.html
-      end
-    end
-  end
+  # def index
+  #   authorize Task
+  #   @filter_colums = %w(id)
+  #   @tasks = build_query_filter(Task.all, only: @filter_colums).page(params[:page])
+  #   respond_to do |format|
+  #     if params[:json].present?
+  #       format.html { send_data(@tasks.to_json, filename: "tasks-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
+  #     elsif params[:xml].present?
+  #       format.html { send_data(@tasks.to_xml, filename: "tasks-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
+  #     elsif params[:csv].present?
+  #       # as_csv =>  () | only: [] | except: []
+  #       format.html { send_data(@tasks.as_csv(only: []), filename: "tasks-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+  #     else
+  #       format.html
+  #     end
+  #   end
+  # end
 
   # GET /admin/tasks/1
-  def show
-    authorize @task
-  end
+  # def show
+  #   authorize @task
+  # end
 
-  # GET /admin/tasks/new
-  def new
-    authorize Task
-    @task = Task.new
-  end
+  # # GET /admin/tasks/new
+  # def new
+  #   authorize Task
+  #   @task = Task.new
+  # end
 
   # GET /admin/tasks/1/edit
-  def edit
-    authorize @task
-  end
+  # def edit
+  #   authorize @task
+  # end
 
   # POST /admin/tasks
   def create
@@ -45,8 +45,8 @@ class Admin::TasksController < Admin::BaseController
       params[:taskTypeIds].uniq.each do |taskType|
         taskType= TaskType.find(taskType)
         next if @produce.tasks.where(task_type_id: taskType).present?
-        @task = @produce.tasks.new(task_type: taskType, creator_id: current_user.id, ordinal: taskType.ordinal)
-        if @task.save
+        flag, @task = Task::Create.(task_type: taskType, creator_id: current_user.id, ordinal: taskType.ordinal, resource: @produce)
+        if flag
           @produce.update(status: 'processing')
         else
           return render json: @task.errors.as_json, status: :failed
@@ -54,7 +54,7 @@ class Admin::TasksController < Admin::BaseController
       end
       render json: {text: "数据创建成功！"}, status: :ok
     elsif params[:task].present?
-      flag, @task = Task::Create.(permitted_attributes(@produce.tasks).merge(produce_id: @produce.id))
+      flag, @task = Task::Create.(permitted_attributes(@produce.tasks).merge(resource: @produce))
       if flag
         render js: "window.location.href=window.location.href;"
       else

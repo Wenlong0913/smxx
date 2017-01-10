@@ -27,7 +27,7 @@ h1.page-header
             li.divider
             - @order.site.members.each do |member|
               li
-                = link_to member.name, 'javascript:void(0);',data: {url: admin_order_produce_path(@order, @produce)+"?assignee_id="+member.id.to_s}
+                = link_to member.name, 'javascript:void(0);',data: {url: admin_order_produce_path(@order, @produce), id: member.id}
               li.divider
     hr
     .row.tasks_list

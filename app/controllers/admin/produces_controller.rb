@@ -53,8 +53,7 @@ class Admin::ProducesController < Admin::BaseController
   # PATCH/PUT /admin/produces/1
   def update
     authorize @produce
-    member = @order.site.members.find(params[:assignee_id])
-    if member && @produce.update(assignee_id: member.id)
+    if @produce.update(permitted_attributes(@produce))
       render json: {message: '修改成功.'}
     else
       render json: {error: '修改失败'}

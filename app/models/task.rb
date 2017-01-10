@@ -15,10 +15,12 @@ class Task < ApplicationRecord
 
   after_initialize do
     self.status ||= 0
+    self.site_id = Site::MAIN_ID
   end
 
   before_validation do
     self.title = TaskType.where(id: self.task_type_id).first.try{name} if self.title.blank?
+    self.site_id = Site::MAIN_ID
   end
 
 end
