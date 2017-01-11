@@ -1,17 +1,55 @@
 class Users::Weixins::SessionsController < ApplicationController
 
-    before_action :get_token, only: [:create]
+    before_action :get_token, only: [:login, :status]
 
     WEB_QR_TIMEOUT_SEC = 120
 
     def new
-      @token = generate_token
-      @timeout_sec = WEB_QR_TIMEOUT_SEC
-      render json: {token: @token, timeout_sec: @timeout_sec}
+      if params[:format] == 'png'
+        @token = get_token
+        qrcode = RQRCode::QRCode.new(login_users_weixins_sessions_url(token: @token))
+        send_data qrcode.as_png(
+          resize_gte_to: false,
+          resize_exactly_to: false,
+          fill: 'white',
+          color: 'black',
+          size: 240,
+          border_modules: 4,
+          module_px_size: 6,
+          file: nil
+        )
+      else
+        @token = generate_token
+        @timeout_sec = WEB_QR_TIMEOUT_SEC
+        render json: {token: @token, timeout_sec: @timeout_sec}      
+      end
     end
 
     # 微信二维码扫码登录验证
-    def create
+    def login
+      if session[:weixin_uid] && !current_user
+        user = User::Weixin.find_by_uid(session[:weixin_uid]).try(:user)
+        sign_in user if user
+      end
+
+      unless current_user
+        redirect_to user_wechat_omniauth_authorize_path(origin: request.original_url)
+        return    
+      end
+
+      redis = Redis.current
+      @token = params[:token]
+      key = token_key(@token)
+      @success = !!redis.get(key)
+      if @success
+        redis.set key, current_user.id
+        redis.expire key, 30
+      end
+      
+      redirect_to root_path
+    end
+
+    def status
       redis = Redis.current
       user_id = redis.get(token_key(@token))
       if user_id.nil?
@@ -26,7 +64,7 @@ class Users::Weixins::SessionsController < ApplicationController
         else
           render json: { status: 'failed' }
         end
-      end
+      end      
     end
 
     private

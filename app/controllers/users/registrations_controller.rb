@@ -26,17 +26,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   => {error: '创建失败了，请检查！'}
   #   
   def create
+    binding.pry
     mobile = params[:user][:mobile]
     code = params[:user][:code]
     t = Sms::Token.new(mobile)
     if t.valid?(code)
       user_attributes = {}
       user_attributes[:mobile_phone] = mobile
-      user_attributes[:role_ids] = Role.where(name: session["params"]["role"]).map(&:id) if session["params"] && session["params"]["role"]
+      user_attributes[:role_ids] = Role.where(name: 'agent').map(&:id) if session["agent"]
       flag, user = User::Create.(user_attributes)
       if flag
-        if session["params"] && session["params"]["weixin_uid"]
-          weixin_user = User::Weixin.find_by_uid(session["params"]["weixin_uid"])
+        if session["weixin_uid"]
+          weixin_user = User::Weixin.find_by_uid(session["weixin_uid"])
           weixin_user.user = user
           weixin_user.save!
         end

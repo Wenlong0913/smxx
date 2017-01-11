@@ -1,10 +1,10 @@
 $(document).ready ->
-  body = $('body.admin-sessions.new')
+  body = $('body.admin-users.show')
   if body.length > 0
-    container = body.find('.weixin-login')
+    container = body.find('.bind-user')
     if container.length > 0
       console.log(container[0])
-      sessionUrl = container[0].dataset["sessionUrl"]
+      bindUrl = container[0].dataset["bindUrl"]
       verifyUrl = container[0].dataset["verifyUrl"]
       qrcodeImgUrl = container[0].dataset["qrcodeImgUrl"]
       weixin = new Vue
@@ -20,7 +20,7 @@ $(document).ready ->
         computed:
           message: ()->
             if this.timeoutSec <= 0
-              this.message = '登录超时，请关闭重试!'
+              this.message = '绑定超时，请关闭重试!'
             else
               this.message = '请在'+this.timeoutSec+'内打开微信扫一扫!'
         watch:
@@ -32,7 +32,7 @@ $(document).ready ->
         methods:
           loadQrcode: ()->
             vm = this
-            vm.$http.get(sessionUrl).then((response)->
+            vm.$http.get(bindUrl).then((response)->
               vm.token = response.body.token
               vm.timeoutSec = response.body.timeout_sec
               vm.weixinQrcode = qrcodeImgUrl+'?token='+vm.token+'&format=png'
@@ -51,11 +51,14 @@ $(document).ready ->
             vm.$http.post(verifyUrl, token: vm.token).then((response)->
               json = response.body
               console.log(json)
-              if json['status'] == 'ok'
-                vm.message = '登录成功，正在转到访问页面...'
+              if json['status'] == 'success'
+                vm.message = '页面绑定成功！'
                 setTimeout(()-> 
-                  window.location.href = json["url"]
+                   location.reload()
                 , 1500);
+              else if json["status"] == 'used'
+                vm.message = '该账户已经绑定！'
+                vm.showModal = false
               else
                 if vm.stopLogin == false
                   window.setTimeout(vm.checkTokenLogin, 3000);

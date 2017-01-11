@@ -3,17 +3,15 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def wechat
     auth = request.env["omniauth.auth"]
     weixin_user = User::Weixin.from_omniauth(auth)
-
     if request.env['omniauth.origin']
-      uri =  URI.parse(request.env['omniauth.origin'])
-      uri.query = [uri.query, "weixin_uid=" + weixin_user.uid ].compact.join('&')
-      redirect_to uri.to_s
+      session["weixin_uid"] = weixin_user.uid
+      redirect_to request.env['omniauth.origin']
     else
       if weixin_user.user
         sign_in_and_redirect weixin_user.user, :event => :authentication 
       else
-        session["params"] = {weixin_uid: weixin_user.uid}
-        redirect_to sign_up_url(weixin_uid: weixin_user.uid)
+        session["weixin_uid"] = weixin_user.uid
+        redirect_to sign_up_url
       end
     end
 
