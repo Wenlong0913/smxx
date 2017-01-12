@@ -15,7 +15,7 @@ end
 quit("项目名PN必须填写在命令行中提供") unless ENV['PN']
 set :application, ENV['PN']
 
-set :repo_url, "git@gitlab.tanmer.com:tanmer/tmf.git"
+set :repo_url, "git@gitlab.tanmer.com:tanmer/dagle.git"
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :deploy_to, "/data/www/#{fetch(:application)}"
 
