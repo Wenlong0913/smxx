@@ -1,10 +1,16 @@
 class Api::BaseController < ActionController::API
+  include Pundit
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def current_user
     @current_user
   end
 
   private
+
+  def user_not_authorized
+    render_failed('没有权限')
+  end
 
   def authenticate!
     render_failed and return unless token?
