@@ -1,0 +1,188 @@
+<nav class="navbar navbar-inverse navbar-custom-dark" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">菜单导航</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="<%= get_cms_url('index')%>">
+        Dagle德格
+      </a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-top-collapse" id="bs-navbar-collapse-1">
+
+      <ul class="nav navbar-nav navbar-left">
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons">home</i> 平台 <span class="caret"></span>
+          </a>
+
+          <ul class="dropdown-menu">
+            <li>
+              <a href="<%= get_cms_url('desk') %>">
+                <i class="material-icons">grade</i> 桌面端
+              </a>
+            </li>
+            <li>
+              <a href="<%= get_cms_url('mobile') %>">
+                <i class="material-icons">switch_video</i> 手机端
+              </a>
+            </li>
+          </ul>
+        </li>
+
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons">pages</i> 产品 <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="<%= page_path('pricing') %>">
+                <i class="material-icons">monetization_on</i> 工厂ERP管理系统
+              </a>
+            </li>
+            <li>
+              <a href="<%= page_path('services') %>">
+                <i class="material-icons">done_all</i> 经销商SCRM关系管理系统
+              </a>
+            </li>
+            <li>
+              <a href="<%= page_path('features') %>">
+                <i class="material-icons">new_releases</i> OMS订单管理系统
+              </a>
+            </li>
+            <li>
+              <a href="<%= page_path('about') %>">
+                <i class="material-icons">face</i> BPM流程管理系统
+              </a>
+            </li>
+            <li>
+              <a href="<%= page_path('contact_us') %>">
+                <i class="material-icons">contact_mail</i> 电子商务系统
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons">dashboard</i> 功能 <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="<%= page_path('portfolio_1_col') %>">
+                <i class="material-icons">brightness_4</i>
+                管库存
+              </a>
+            </li>
+            <li>
+              <a href="<%= page_path('portfolio_2_col') %>">
+                <i class="material-icons">brightness_5</i>
+                管销售
+              </a>
+            </li>
+            <li>
+              <a href="<%= page_path('portfolio_3_col') %>">
+                <i class="material-icons">brightness_6</i>
+                管采购
+              </a>
+            </li>
+            <li>
+              <a href="<%= page_path('portfolio_item') %>">
+                <i class="material-icons">camera_alt</i>
+                管生产
+              </a>
+            </li>
+            <li>
+              <a href="<%= page_path('portfolio_item') %>">
+                <i class="material-icons">camera_alt</i>
+                管营销
+              </a>
+            </li>
+            <li>
+              <a href="<%= page_path('portfolio_item') %>">
+                <i class="material-icons">camera_alt</i>
+                管客户
+              </a>
+            </li>
+            <li>
+              <a href="<%= page_path('portfolio_item') %>">
+                <i class="material-icons">camera_alt</i>
+                管电商
+              </a>
+            </li>
+            <li>
+              <a href="<%= page_path('gallery_4_col') %>">
+                <i class="material-icons">compare</i>
+                管协同
+              </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <a href="<%= page_path('gallery_4_col') %>">
+                <i class="material-icons">compare</i>
+                定制功能
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons">receipt</i> 支持 <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="<%= get_cms_url('support') %>">
+                <i class="material-icons">record_voice_over</i>
+                技术支持
+              </a>
+            </li>
+
+            <li>
+              <a href="<%= get_cms_url('faq') %>">
+                <i class="material-icons">question_answer</i>
+                常见问答
+              </a>
+            </li>
+
+            <li class="divider"></li>
+
+            <li>
+              <a href="<%= get_cms_url('blog') %>">
+                <i class="material-icons">border_color</i>
+                博客
+              </a>
+            </li>
+            <li>
+              <a href="<%= get_cms_url('log') %>">
+                <i class="material-icons">insert_emoticon</i>
+                更新日志
+              </a>
+            </li>
+
+          </ul>
+        </li>
+
+
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="navbar-btn-container">
+          <a href="#" type="button" class="btn btn-primary navbar-btn">
+            <i class="material-icons">supervisor_account</i>
+            申请试用
+          </a>
+        </li>
+
+      </ul>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- container -->
+</nav>

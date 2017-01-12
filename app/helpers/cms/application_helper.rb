@@ -44,6 +44,10 @@ module Cms::ApplicationHelper
       cms_frontend_channel_path(obj.site.beauty_url, obj.beauty_url, params)
     when Cms::Site
       cms_frontend_root_path(obj.beauty_url, params)
+    when String
+      obj = Cms::Channel.find_by(short_title: obj)
+      return root_path(params) unless obj.present?
+      cms_frontend_channel_path(obj.site.beauty_url, obj.beauty_url, params)
     else
       root_path(params)
     end

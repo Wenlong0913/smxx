@@ -1,0 +1,77 @@
+<div id="blog">
+  <section id="blog-index">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-9 main-content">
+
+          <% @pages.each do |page| %>
+            <article class="blog-post">
+              <h2 class="post-title">
+                <%= link_to page.title, get_cms_url(page) %>
+              </h2>
+
+              <div class="post-image">
+                <a href="<%= page_path("blog_post") %>">
+                  <img src="/templetes/dagle/img/cleancut/blog1.jpg" alt="" class="img-thumbnail img-responsive">
+                </a>
+              </div>
+
+              <div class="post-meta">
+
+                <div class="row">
+                  <div class="col-lg-1 col-md-1 hidden-xs hidden-sm image">
+                    <img src="http://placehold.it/48x48" alt="" class="img-circle img-thumbnail">
+                  </div>
+
+                  <div class="col-lg-11 col-md-11">
+                    <div class="post-meta-text text-muted">
+                      <p class="lead">
+                        by <a href="#">Bharani Muthukumaraswamy</a> <br>
+                      </p>
+
+                      <p>
+                        <i class="fa fa-clock-o"></i> Posted on August 28, 2013 at 10:00 PM
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="post-content">
+                <p class="lead">
+                  This is a very basic starter template for a blog homepage. It makes use of Font Awesome icons that are built into the 'Modern Business' template, and it makes use of the Bootstrap 3 pager at the bottom of the page
+                </p>
+
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora, temporibus tempore fugiat quod ipsam aut aspernatur ut facere vero consequuntur eum nemo fugit alias est itaque et ullam culpa voluptatum! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, hic eum reiciendis beatae harum. Doloremque maxime laboriosam quas. Sapiente, delectus odit minus maiores libero itaque ullam iusto dignissimos. Facilis, perferendis.
+                </p>
+
+                <br>
+
+                <div class="text-right">
+                  <a href="<%= page_path("blog_post") %>" class="btn btn-bordered btn-primary btn-round">Continue Reading &rarr;</a>
+                </div>
+              </div>
+            </article>
+          <% end %>
+
+          <div class="row text-center pagination-container">
+            <div class="col-md-12">
+              <nav>
+                <ul class="pager">
+                  <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older Posts</a></li>
+                  <li class="next"><a href="#">Newer Posts <span aria-hidden="true">&rarr;</span></a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+        </div>
+
+        <%= render file: "public/templetes/dagle/shared/partials/_blog_sidebar" %>
+      </div>
+    </div>
+  </section>
+</div>

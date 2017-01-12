@@ -23,7 +23,7 @@ Ckeditor.setup do |config|
 
   # Setup authorization to be run as a before filter
   # By default: there is no authorization.
-  # config.authorize_with :cancan
+  config.authorize_with :pundit
 
   # Override parent controller CKEditor inherits from
   # By default: 'ApplicationController'
@@ -43,8 +43,8 @@ Ckeditor.setup do |config|
 
   # To reduce the asset precompilation time, you can limit plugins and/or languages to those you need:
   # By default: nil (no limit)
-  # config.assets_languages = ['en', 'uk']
-  # config.assets_plugins = ['image', 'smiley']
+  config.assets_languages = ['en', 'zh-CN']
+  config.assets_plugins = ['image', 'smiley']
 
   # CKEditor CDN
   # More info here http://cdn.ckeditor.com/
