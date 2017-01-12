@@ -54,7 +54,7 @@ class User < ApplicationRecord
   end
 
   def token
-    Token.encode(user_id: self.id)
+    AuthToken.encode(user_id: self.id)
   end
 
 end
