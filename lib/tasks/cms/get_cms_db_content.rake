@@ -27,41 +27,43 @@ namespace :cms do
 
     #2. write site
     db_file.write("\nCms::Site.create!(")
-    db_file.write("\n  :name    => #{@site.name || 'nil'},")
-    db_file.write("\n  :template         => '#{@site.template || 'nil'}',")
-    db_file.write("\n  :domain        => '#{@site.domain || 'nil'}',")
+    db_file.write("\n  :name         => '#{@site.name || 'nil'}',")
+    db_file.write("\n  :template     => '#{@site.template || 'nil'}',")
+    db_file.write("\n  :domain       => '#{@site.domain || 'nil'}',")
     db_file.write("\n  :description  => '#{@site.description || 'nil'}',")
-    db_file.write("\n  :is_published   => #{@site.is_published || 'nil'},")
+    db_file.write("\n  :is_published => #{@site.is_published || 'nil'}")
     db_file.write("\n)")
     #3. write channel
-    Cms::Channel.find_each do |ch|
+    @site.channels.find_each do |ch|
       db_file.write("\nCms::Channel.create!(")
-      db_file.write("\n  :site_id    => #{ch.site_id || 'nil'},")
-      db_file.write("\n  :parent_id    => #{ch.parent_id || 'nil'},")
+      db_file.write("\n  :site_id      => #{ch.site_id || 'nil'},")
+      db_file.write("\n  :parent_id    => '#{ch.parent_id || 'nil'}',")
       db_file.write("\n  :title        => '#{ch.title || 'nil'}',")
       db_file.write("\n  :short_title  => '#{ch.short_title || 'nil'}',")
-      db_file.write("\n  :properties   => #{ch.properties || 'nil'},")
+      db_file.write("\n  :properties   => '#{ch.properties || 'nil'}',")
       db_file.write("\n  :tmp_index    => '#{ch.tmp_index || 'nil'}',")
       db_file.write("\n  :tmp_detail   => '#{ch.tmp_detail || 'nil'}',")
       db_file.write("\n  :keywords     => '#{ch.keywords || 'nil'}',")
       db_file.write("\n  :description  => '#{ch.description || 'nil'}',")
-      db_file.write("\n  :image_path   => '#{ch.image_path || 'nil'}'")
+      db_file.write("\n  :image_path   => '#{ch.image_path || 'nil'}',")
       db_file.write("\n  :content      => '#{ch.content || 'nil'}'")
       db_file.write("\n)")
     end
 
     #4. write page
-    Cms::Page.find_each do |page|
-      db_file.write("\nCms::Page.create!(")
-      db_file.write("\n  :channel_id   => #{page.channel_id || 'nil'},")
-      db_file.write("\n  :title        => '#{page.title || 'nil'}',")
-      db_file.write("\n  :short_title  => '#{page.short_title || 'nil'}',")
-      db_file.write("\n  :keywords     => '#{page.keywords || 'nil'}',")
-      db_file.write("\n  :description  => '#{page.description || 'nil'}',")
-      db_file.write("\n  :properties   => '#{page.properties || 'nil'}',")
-      db_file.write("\n  :image_path   => '#{page.image_path || 'nil'}',")
-      db_file.write("\n  :content      => '#{page.content || 'nil'}'")
-      db_file.write("\n)")
+    @site.channels.each do |ch|
+      ch.pages.find_each do |page|
+        db_file.write("\nCms::Page.create!(")
+        db_file.write("\n  :channel_id   => #{page.channel_id || 'nil'},")
+        db_file.write("\n  :title        => '#{page.title || 'nil'}',")
+        db_file.write("\n  :short_title  => '#{page.short_title || 'nil'}',")
+        db_file.write("\n  :keywords     => '#{page.keywords || 'nil'}',")
+        db_file.write("\n  :description  => '#{page.description || 'nil'}',")
+        db_file.write("\n  :properties   => '#{page.properties || 'nil'}',")
+        db_file.write("\n  :image_path   => '#{page.image_path || 'nil'}',")
+        db_file.write("\n  :content      => '#{'nil'}'")
+        db_file.write("\n)")
+      end
     end
 
     #5. close
