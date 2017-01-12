@@ -14,4 +14,7 @@ class Task < ApplicationRecord
   after_initialize do
     self.status ||= 0
   end
+
+  belongs_to :site
+  belongs_to :resource, polymorphic: true
 end
