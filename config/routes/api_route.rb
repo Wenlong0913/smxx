@@ -7,6 +7,7 @@ module ApiRoute
           namespace :sessions do
             resource :sms, only: [:create]
           end
+          resources :sessions, only: [:create]
         end
       end
     end

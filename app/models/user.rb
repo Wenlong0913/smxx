@@ -53,4 +53,8 @@ class User < ApplicationRecord
     has_any_role?({name: :admin, resource: :any}, {name: :super_admin, resource: :any})
   end
 
+  def token
+    Token.encode(user_id: self.id)
+  end
+
 end
