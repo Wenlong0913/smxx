@@ -1,5 +1,5 @@
 
-Cms::Site.create!(
+@site = Cms::Site.create!(
   :name         => 'dagle',
   :template     => 'dagle',
   :domain       => 'dagle',
@@ -7,8 +7,8 @@ Cms::Site.create!(
   :is_published => true
 )
 Cms::Channel.create!(
-  :site_id      => '4',
-  :parent_id    => 'nil',
+  :site_id      => @site.id,
+  :parent_id    => nil,
   :title        => '首页',
   :short_title  => 'index',
   :properties   => 'nil',
@@ -20,8 +20,8 @@ Cms::Channel.create!(
   :content      => 'nil'
 )
 Cms::Channel.create!(
-  :site_id      => '4',
-  :parent_id    => 'nil',
+  :site_id      => @site.id,
+  :parent_id    => nil,
   :title        => '桌面端',
   :short_title  => 'desk',
   :properties   => '',
@@ -33,8 +33,8 @@ Cms::Channel.create!(
   :content      => ''
 )
 Cms::Channel.create!(
-  :site_id      => '4',
-  :parent_id    => 'nil',
+  :site_id      => @site.id,
+  :parent_id    => nil,
   :title        => '手机端',
   :short_title  => 'mobile',
   :properties   => '',
@@ -46,8 +46,8 @@ Cms::Channel.create!(
   :content      => ''
 )
 Cms::Channel.create!(
-  :site_id      => '4',
-  :parent_id    => '4',
+  :site_id      => @site.id,
+  :parent_id    => 4,
   :title        => '更新日志',
   :short_title  => 'log',
   :properties   => '',
@@ -59,8 +59,8 @@ Cms::Channel.create!(
   :content      => ''
 )
 Cms::Channel.create!(
-  :site_id      => '4',
-  :parent_id    => 'nil',
+  :site_id      => @site.id,
+  :parent_id    => nil,
   :title        => '博客',
   :short_title  => 'blog',
   :properties   => '',
@@ -72,8 +72,8 @@ Cms::Channel.create!(
   :content      => ''
 )
 Cms::Channel.create!(
-  :site_id      => '4',
-  :parent_id    => 'nil',
+  :site_id      => @site.id,
+  :parent_id    => nil,
   :title        => '技术支持',
   :short_title  => 'support',
   :properties   => '',
@@ -85,8 +85,8 @@ Cms::Channel.create!(
   :content      => ''
 )
 Cms::Channel.create!(
-  :site_id      => '4',
-  :parent_id    => '9',
+  :site_id      => @site.id,
+  :parent_id    => 9,
   :title        => '常见问题',
   :short_title  => 'faq',
   :properties   => '',

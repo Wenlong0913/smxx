@@ -26,7 +26,7 @@ namespace :cms do
     #1. write account
 
     #2. write site
-    db_file.write("\nCms::Site.create!(")
+    db_file.write("\n@site = Cms::Site.create!(")
     db_file.write("\n  :name         => '#{@site.name || 'nil'}',")
     db_file.write("\n  :template     => '#{@site.template || 'nil'}',")
     db_file.write("\n  :domain       => '#{@site.domain || 'nil'}',")
@@ -36,8 +36,8 @@ namespace :cms do
     #3. write channel
     @site.channels.find_each do |ch|
       db_file.write("\nCms::Channel.create!(")
-      db_file.write("\n  :site_id      => #{ch.site_id || 'nil'},")
-      db_file.write("\n  :parent_id    => '#{ch.parent_id || 'nil'}',")
+      db_file.write("\n  :site_id      => @site.id,")
+      db_file.write("\n  :parent_id    => #{ch.parent_id || 'nil'},")
       db_file.write("\n  :title        => '#{ch.title || 'nil'}',")
       db_file.write("\n  :short_title  => '#{ch.short_title || 'nil'}',")
       db_file.write("\n  :properties   => '#{ch.properties || 'nil'}',")
@@ -54,7 +54,7 @@ namespace :cms do
     @site.channels.each do |ch|
       ch.pages.find_each do |page|
         db_file.write("\nCms::Page.create!(")
-        db_file.write("\n  :channel_id   => #{page.channel_id || 'nil'},")
+        db_file.write("\n  :channel_id   => #{ch.id || 'nil'},")
         db_file.write("\n  :title        => '#{page.title || 'nil'}',")
         db_file.write("\n  :short_title  => '#{page.short_title || 'nil'}',")
         db_file.write("\n  :keywords     => '#{page.keywords || 'nil'}',")
