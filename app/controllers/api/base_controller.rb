@@ -7,7 +7,7 @@ class Api::BaseController < ActionController::API
   private
 
   def authenticate!
-    render_failed unless token?
+    render_failed and return unless token?
     @current_user = User.find_by(id: auth_token[:user_id])
   rescue JWT::VerificationError, JWT::DecodeError
     render_failed
