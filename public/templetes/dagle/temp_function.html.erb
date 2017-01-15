@@ -1,0 +1,113 @@
+<%= render file: "public/templetes/dagle/shared/_header" %>
+
+<div id="barba-wrapper" >
+  <div class="barba-container">
+    <div id="index">
+      <!-- banner -->
+      <section id="headline-cover" style="padding-top: 100px !important;padding-bottom: 100px !important; min-width: 100px !important;min-height: 100% !important;">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12" data-aos="fade-down">
+              <h1 class="headline-text">
+                用德格·<span style="color:gold;"><%= @channel.title %></span>
+              </h1>
+              <p class="subheading-text" data-aos="fade-up">德格帮助你布局互联网营销，建立平台与经销商、经销商与客户的关系。软件的渐进式体验和迭代式开发，帮助正在成长的企业，步步为赢！</p>
+              <div class="buttons-container" data-aos="fade-up-right">
+                <a href="#"  data-toggle="modal" data-target="#purchaseModal" class="btn btn-lg btn-primary btn-round btn-main-cta">
+                  马上申请试用
+                </a>
+                <span class="or">or</span>
+                <a href="<%= page_path("features") %>" class="btn btn-link">
+                  了解详情 &rarr;
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <%= render file: "public/templetes/dagle/shared/partials/_horizontal_features" %>
+      
+      <!-- 功能展示 -->
+      <section id="features">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <h2>德格SaaS极大的简化了业务流程，用最精简的方式满足您的需求</h2>
+              <p class="lead">德格融合了工厂ERP管理、SCRM客户关系管理、BPM业务流程管理、 OMS订单管理等四大企业业务信息系统。</p>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row feature-single">
+            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-right">
+              <img src="/templetes/dagle/img/display/mockup-2.png" class="img-responsive" alt="feature1" />
+            </div>            
+            <div class="col-md-6 col-sm-8 text">
+              <h3 data-aos="fade-up-left" style="font-size: 30px;"><strong>天生具备大数据驱动能力</strong></h3>
+              <p class="lead" data-aos="fade-up-right">通过智能训练，让软件越用越好用通过智能训练，让软件越用越好用通过智能训练，让软件越用越好用</p>
+              <p data-aos="fade-up-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. </p>
+
+              <div class="buttons-container" data-aos="fade-up" >
+                <a href="#" data-toggle="modal" data-target="#purchaseModal" class="btn btn-lg btn-primary btn-round btn-main-cta">
+                  马上申请试用
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="row feature-single">
+            <div class="col-md-6 col-sm-8 text">
+              <h3 data-aos="fade-up-left" style="font-size: 30px;"><strong>天生具备大数据驱动能力</strong></h3>
+              <p class="lead" data-aos="fade-up-right">通过智能训练，让软件越用越好用通过智能训练，让软件越用越好用通过智能训练，让软件越用越好用</p>
+              <p data-aos="fade-up-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. </p>
+
+              <div class="buttons-container" data-aos="fade-up" >
+                <a href="#" data-toggle="modal" data-target="#purchaseModal" class="btn btn-lg btn-primary btn-round btn-main-cta">
+                  马上申请试用
+                </a>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-left">
+              <img src="/templetes/dagle/img/display/mockup-5.png" class="img-responsive" alt="feature1" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section data-aos="fade-up" class="logos">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <div class="heading">
+                <h2>来自各行业超过1000家客户，见证德格的成长!</h2>
+                <p class="lead">Here's what our users say about us &rarr;</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="logo-slider">
+            <div class="item"><img src="/templetes/dagle/img/company-logos-svg/bosch.svg" ></div>
+            <div class="item"><img src="/templetes/dagle/img/company-logos-svg/cisco.svg" ></div>
+            <div class="item"><img src="/templetes/dagle/img/company-logos-svg/codeacademy.svg" ></div>
+            <div class="item"><img src="/templetes/dagle/img/company-logos-svg/facebook.svg" ></div>
+            <div class="item"><img src="/templetes/dagle/img/company-logos-svg/instagram.svg" ></div>
+            <div class="item"><img src="/templetes/dagle/img/company-logos-svg/linkedin.svg" ></div>
+            <div class="item"><img src="/templetes/dagle/img/company-logos-svg/motorola.svg" ></div>
+            <div class="item"><img src="/templetes/dagle/img/company-logos-svg/nokia.svg" ></div>
+            <div class="item"><img src="/templetes/dagle/img/company-logos-svg/shopify.svg" ></div>
+            <div class="item"><img src="/templetes/dagle/img/company-logos-svg/soundcloud.svg" ></div>
+          </div>
+
+          <%= render file: "public/templetes/dagle/shared/partials/_contact_question.html.erb" %>
+
+        </div>
+      </section>
+
+      
+      <%= render file: "public/templetes/dagle/shared/partials/_pay_now.html.erb" %>
+      
+      
+    </div>
+  </div>
+</div>
+<%= render file: "public/templetes/dagle/shared/_footer" %>
