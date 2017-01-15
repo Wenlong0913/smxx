@@ -20,8 +20,7 @@
                 i.fa.fa-arrow-circle-o-right
 
       .row
-        - while cms_channel.children.any? do
-          - cms_channel = cms_channel.children.first
+        - cms_channel.children.each do |cms_channel|
           .col-md-12.col-sm-12
             div class=("widget widget-stats bg-#{color}")
               .stats-icon
