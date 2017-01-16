@@ -27,7 +27,6 @@ class Users::Weixins::SessionsController < ApplicationController
 
   # 微信二维码扫码登录验证
   def login
-    binding.pry
     if session[:weixin_uid]
       user = User::Weixin.find_by_uid(session[:weixin_uid]).try(:user)
       sign_in user if user
