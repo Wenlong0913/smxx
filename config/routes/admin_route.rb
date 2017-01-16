@@ -24,6 +24,7 @@ module AdminRoute
         resources :vendors # 供应商管理
 
         resources :material_managements #物料出库/入库
+        resources :material_warehouses # 物料仓库
 
         resources :roles, only: [:index], :concerns => :paginatable do
           resources :users, only: [:index], :concerns => :paginatable

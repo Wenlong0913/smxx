@@ -14,5 +14,8 @@ class Material < Item
     self.site_id = Site::MAIN_ID
   end
 
-  before_save -> { self.price = price.to_i }
+  before_save do
+    self.price = price.to_i
+    self.stock = stock.to_i
+  end
 end
