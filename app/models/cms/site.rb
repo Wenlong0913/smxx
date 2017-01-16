@@ -1,10 +1,7 @@
 class Cms::Site < ApplicationRecord
   has_many :channels, dependent: :destroy
   has_many :pages, through: :channels
-
-  def template
-    template ||= 'default'
-  end
+  after_create :initialize_channel
 
   def template_dir
     "#{Rails.root}/public/templetes/#{template}/"
@@ -22,6 +19,17 @@ class Cms::Site < ApplicationRecord
 
   def to_param
     @beauty_url ? "#{id}" : id.to_s
+  end
+
+  private
+  def initialize_channel
+    channel = self.channels.build(
+      title: '首页',
+      short_title: 'index',
+      tmp_index: 'temp_index.html.erb',
+      tmp_detail: 'temp_detail.html.erb'
+    )
+    channel.save!
   end
 
 end
