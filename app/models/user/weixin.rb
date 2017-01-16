@@ -19,6 +19,8 @@ class User::Weixin < ApplicationRecord
   belongs_to :user
   validates :uid, presence: true, uniqueness: true
 
+  enum gender: [:secret, :male, :female]
+
   ##
   # get weixin_user base infromation
   # @param [Hash] auth is wexin omniauth request
@@ -38,6 +40,7 @@ class User::Weixin < ApplicationRecord
     wx_user.city = auth.info.city
     wx_user.country = auth.info.country
     wx_user.headshot = auth.info.headimgurl
+    fail Weixin::RegisterError.new(wx_user) unless wx_user.save
     wx_user
   end
 

@@ -88,6 +88,7 @@ gem 'iconv', '~> 1.0', '>= 1.0.4'
 gem "weixin_rails_middleware", '~> 1.3', '>= 1.3.1'
 gem 'weixin_authorize', '1.6.3'
 gem "omniauth-wechat-oauth2", "~> 0.1.0"
+gem 'rqrcode', '~> 0.10.1'
 
 # require components
 gem 'sms', path: 'components/sms'
