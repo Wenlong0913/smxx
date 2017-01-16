@@ -22,19 +22,19 @@ require 'rails_helper'
 # expectations of assigns and templates rendered. These features have been
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
-RSpec.describe Admin::MaterialManagementDetailsController, type: :controller do
+RSpec.describe Admin::MaterialManagementHistoriesController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
-  # MaterialManagementDetail. As you add validations to MaterialManagementDetail, be sure to
+  # Admin::MaterialManagementHistory. As you add validations to Admin::MaterialManagementHistory, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    attributes_for(:material_management_detail)
+    attributes_for(:admin_material_management_history)
   }
   let(:invalid_attributes) {
-    attributes_for(:material_management_detail)
+    attributes_for(:admin_material_management_history)
   }
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
-  # Admin::MaterialManagementDetailsController. Be sure to keep this updated too.
+  # Admin::MaterialManagementHistoriesController. Be sure to keep this updated too.
 
   login_admin
   # login_user
@@ -42,7 +42,7 @@ RSpec.describe Admin::MaterialManagementDetailsController, type: :controller do
 
   describe "GET #index" do
     it "returns a success response" do
-      material_management_detail = create(:material_management_detail)
+      admin_material_management_history = create(:admin_material_management_history)
       get :index
       expect(response).to be_success
     end
@@ -50,8 +50,8 @@ RSpec.describe Admin::MaterialManagementDetailsController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      material_management_detail = create(:material_management_detail)
-      get :show, params: {id: material_management_detail.to_param}
+      admin_material_management_history = create(:admin_material_management_history)
+      get :show, params: {id: admin_material_management_history.to_param}
       expect(response).to be_success
     end
   end
@@ -64,29 +64,29 @@ RSpec.describe Admin::MaterialManagementDetailsController, type: :controller do
   end
   describe "GET #edit" do
     it "returns a success response" do
-      material_management_detail = create(:material_management_detail)
-      get :edit, params: {id: material_management_detail.to_param}
+      admin_material_management_history = create(:admin_material_management_history)
+      get :edit, params: {id: admin_material_management_history.to_param}
       expect(response).to be_success
     end
   end
 
   describe "POST #create" do
     context "with valid params" do
-      it "creates a new MaterialManagementDetail" do
+      it "creates a new Admin::MaterialManagementHistory" do
         expect {
-          post :create, params: {material_management_detail: valid_attributes}
-        }.to change(MaterialManagementDetail, :count).by(1)
+          post :create, params: {admin_material_management_history: valid_attributes}
+        }.to change(Admin::MaterialManagementHistory, :count).by(1)
       end
 
-      it "redirects to the created admin_material_management_detail" do
-        post :create, params: {material_management_detail: valid_attributes}
-        expect(response).to redirect_to(admin_material_management_detail_url(MaterialManagementDetail.last))
+      it "redirects to the created admin_material_management_history" do
+        post :create, params: {admin_material_management_history: valid_attributes}
+        expect(response).to redirect_to(admin_material_management_history_url(Admin::MaterialManagementHistory.last))
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {material_management_detail: invalid_attributes}
+        post :create, params: {admin_material_management_history: invalid_attributes}
         expect(response).to be_success
       end
     end
@@ -96,38 +96,38 @@ RSpec.describe Admin::MaterialManagementDetailsController, type: :controller do
       let(:new_attributes) {
         skip("Add a hash of attributes valid for your model")
       }
-      it "updates the requested admin_material_management_detail" do
-        material_management_detail = create(:material_management_detail)
-        put :update, params: {id: material_management_detail.to_param, material_management_detail: new_attributes}
-        material_management_detail.reload
+      it "updates the requested admin_material_management_history" do
+        admin_material_management_history = create(:admin_material_management_history)
+        put :update, params: {id: admin_material_management_history.to_param, admin_material_management_history: new_attributes}
+        admin_material_management_history.reload
         skip("Add assertions for updated state")
       end
-      it "redirects to the admin_material_management_detail" do
-        material_management_detail = create(:material_management_detail)
-        put :update, params: {id: material_management_detail.to_param, material_management_detail: valid_attributes}
-        expect(response).to redirect_to(admin_material_management_detail_url(material_management_detail))
+      it "redirects to the admin_material_management_history" do
+        admin_material_management_history = create(:admin_material_management_history)
+        put :update, params: {id: admin_material_management_history.to_param, admin_material_management_history: valid_attributes}
+        expect(response).to redirect_to(admin_material_management_history_url(admin_material_management_history))
       end
     end
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        material_management_detail = create(:material_management_detail)
-        put :update, params: {id: material_management_detail.to_param, material_management_detail: invalid_attributes}
+        admin_material_management_history = create(:admin_material_management_history)
+        put :update, params: {id: admin_material_management_history.to_param, admin_material_management_history: invalid_attributes}
         expect(response).to be_success
       end
     end
   end
 
   describe "DELETE #destroy" do
-    it "destroys the requested admin_material_management_detail" do
-      material_management_detail = create(:material_management_detail)
+    it "destroys the requested admin_material_management_history" do
+      admin_material_management_history = create(:admin_material_management_history)
       expect {
-        delete :destroy, params: {id: material_management_detail.to_param}
-      }.to change(MaterialManagementDetail, :count).by(-1)
+        delete :destroy, params: {id: admin_material_management_history.to_param}
+      }.to change(Admin::MaterialManagementHistory, :count).by(-1)
     end
-    it "redirects to the admin_material_management_details list" do
-      material_management_detail = create(:material_management_detail)
-      delete :destroy, params: {id: material_management_detail.to_param}
-      expect(response).to redirect_to(admin_material_management_details_url)
+    it "redirects to the admin_material_management_histories list" do
+      admin_material_management_history = create(:admin_material_management_history)
+      delete :destroy, params: {id: admin_material_management_history.to_param}
+      expect(response).to redirect_to(admin_material_management_histories_url)
     end
   end
 end

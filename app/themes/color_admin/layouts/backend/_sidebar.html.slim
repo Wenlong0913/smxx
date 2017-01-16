@@ -70,7 +70,7 @@
         ul.sub-menu
           li[class= ('active' if page?('admin/catalogs#index?klass='))]
             = link_to '所有分类', admin_catalogs_path
-      li class=("has-sub #{'active' if page?('admin/materials', admin_material_catalogs_path, 'admin/material_managements', 'admin/vendors', 'admin/material_warehouses', 'admin/material_management_details')}")
+      li class=("has-sub #{'active' if page?('admin/materials', admin_material_catalogs_path, 'admin/material_managements', 'admin/vendors', 'admin/material_warehouses', 'admin/material_management_histories')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
@@ -86,13 +86,13 @@
             = link_to '物料分类', admin_material_catalogs_path
           li[class= ('active' if page?('admin/material_warehouses'))]
             = link_to '物料仓库', admin_material_warehouses_path
-          li class=("has-sub #{'active' if page?('admin/material_warehouse_stock_managements', 'admin/material_management_details')}")
+          li class=("has-sub #{'active' if page?('admin/material_warehouse_stock_managements', 'admin/material_management_histories')}")
             a href="javascript:;"
               b.caret.pull-right
               span 物料库存
             ul.sub-menu
-              li[class=('active' if page?('admin/material_management_details'))]
-                = link_to '库存流水', admin_material_management_details_path
+              li[class=('active' if page?('admin/material_management_histories'))]
+                = link_to '库存流水', admin_material_management_histories_path
           li[class= ('active' if page?('admin/vendors#index'))]
             = link_to '供应商', admin_vendors_path
 

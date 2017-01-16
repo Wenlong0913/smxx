@@ -10,7 +10,7 @@ h1.page-header
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
   .panel-body
-    = form_for :search, url:  admin_material_management_details_path, method: :get do |f|
+    = form_for :search, url:  admin_material_management_histories_path, method: :get do |f|
       .toolbar.row
         .col-md-12
           p
@@ -53,7 +53,7 @@ h1.page-header
         strong
           = "查询："
         span
-          = @material_management_details.size.to_s + "条记录"
+          = @admin_material_management_histories.size.to_s + "条记录"
         span.close[data-dismiss="alert"]
           | ×
     .table-responsive.row.m-0
@@ -77,22 +77,22 @@ h1.page-header
             th
               | 相关单号
         tbody
-          - @material_management_details.each do |material_management_detail|
+          - @admin_material_management_histories.each do |admin_material_management_history|
             tr
               td
-                = material_management_detail.id
+                = admin_material_management_history.id
               td
-                = material_management_detail.material_management.operate_date
+                = admin_material_management_history.material_management.operate_date
               td
-                = decorate(material_management_detail.material_management).display_operate_type
+                = decorate(admin_material_management_history.material_management).display_operate_type
               td
-                = material_management_detail.material.name_py
+                = admin_material_management_history.material.name_py
               td
-                = material_management_detail.material.name
+                = admin_material_management_history.material.name
               td
                 
               td
-                = material_management_detail.number
+                = admin_material_management_history.number
               td
 / TODO: move this code to application.js
 javascript:

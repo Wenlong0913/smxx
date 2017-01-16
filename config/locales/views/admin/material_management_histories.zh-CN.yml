@@ -1,18 +1,18 @@
 ---
 zh-CN:
   admin:
-    material_management_details:
+    material_management_histories:
       index:
-        title: Material management details
+        title: Material management histories
       show:
-        title: Material management detail
+        title: Material management history
       edit:
-        title: Editing Material management detail
+        title: Editing Material management history
       new:
-        title: New Material management detail
+        title: New Material management history
   flash:
     admin:
-      material_management_details:
+      material_management_histories:
         create:
           notice: "%{resource_name} was successfully created."
         update:
