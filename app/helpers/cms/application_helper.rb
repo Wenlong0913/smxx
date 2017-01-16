@@ -36,6 +36,8 @@ module Cms::ApplicationHelper
   end
 
   #use for Frontpage: get production frontpage path
+  # get_cms_url(obj)
+  # get_cms_url('short_title')
   def get_cms_url(obj, params = {})
     case obj
     when Cms::Page
@@ -44,6 +46,10 @@ module Cms::ApplicationHelper
       cms_frontend_channel_path(obj.site.beauty_url, obj.beauty_url, params)
     when Cms::Site
       cms_frontend_root_path(obj.beauty_url, params)
+    when String
+  	  obj = Cms::Channel.find_by(short_title: obj)
+	    return root_path(params) unless obj.present?
+	    cms_frontend_channel_path(obj.site.beauty_url, obj.beauty_url, params)
     else
       root_path(params)
     end
