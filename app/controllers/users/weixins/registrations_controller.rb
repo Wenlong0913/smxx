@@ -1,9 +1,9 @@
 class Users::Weixins::RegistrationsController < ApplicationController
 
   def new
-    qrcode = RQRCode::QRCode.new(users_weixins_registrations_url)
     respond_to do |format|
       format.png do
+        qrcode = RQRCode::QRCode.new(users_weixins_registrations_url)
         send_data qrcode.as_png(
           resize_gte_to: false,
           resize_exactly_to: false,
