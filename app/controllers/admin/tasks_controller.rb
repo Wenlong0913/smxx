@@ -42,10 +42,10 @@ class Admin::TasksController < Admin::BaseController
   def create
     authorize Task
     if params[:taskTypeIds].present? && params[:taskTypeIds].size > 0
-      params[:taskTypeIds].uniq.each do |taskType|
-        taskType= TaskType.find(taskType)
-        next if @produce.tasks.where(task_type_id: taskType).present?
-        flag, @task = Task::Create.(task_type: taskType, creator_id: current_user.id, ordinal: taskType.ordinal, resource: @produce)
+      params[:taskTypeIds].uniq.each do |taskTypeId|
+        taskType = TaskType.find(taskTypeId)
+        next if @produce.tasks.where(task_type_id: taskTypeId).present?
+        flag, @task = Task::Create.({task_type: taskType, ordinal: taskType.ordinal, resource: @produce}.merge(creator_id: current_user.id))
         if flag
           @produce.update(status: 'processing')
         else
@@ -54,7 +54,7 @@ class Admin::TasksController < Admin::BaseController
       end
       render json: {text: "数据创建成功！"}, status: :ok
     elsif params[:task].present?
-      flag, @task = Task::Create.(permitted_attributes(@produce.tasks).merge(resource: @produce))
+      flag, @task = Task::Create.(permitted_attributes(@produce.tasks).merge(resource: @produce, creator_id: current_user.id))
       if flag
         render js: "window.location.href=window.location.href;"
       else

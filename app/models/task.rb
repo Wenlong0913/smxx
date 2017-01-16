@@ -10,8 +10,8 @@ class Task < ApplicationRecord
   belongs_to :site
   belongs_to :task_type
   belongs_to :resource, polymorphic: true
-  validates_uniqueness_of :task_type_id, scope: [:resource]
-  validates_presence_of :task_type_id
+  validates_uniqueness_of :task_type_id, scope: [:resource_id]
+  validates_presence_of :task_type_id, :site_id, :creator_id, :title
 
   after_initialize do
     self.status ||= 0

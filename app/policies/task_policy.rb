@@ -15,6 +15,10 @@ class TaskPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_update
-    permitted_attributes_for_create
+    if user.super_admin_or_admin?
+      [:status, :title, :description, :assignee_id, :ordinal]
+    else
+      []
+    end
   end
 end
