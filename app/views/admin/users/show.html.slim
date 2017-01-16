@@ -15,7 +15,7 @@ h1
     h4 
       | 查看用户
 
-  .panel-body.bind-user[data-bind-url=new_users_weixins_connects_path data-verify-url=status_users_weixins_connects_path data-qrcode-img-url=new_users_weixins_connects_path]
+  .panel-body.bind-user[data-bind-url=new_users_weixins_connects_path data-verify-url=status_users_weixins_connects_path data-qrcode-img-url=new_users_weixins_connects_path(format: 'png')]
     .profile-container
       - decorate(@admin_user) do |d_user|
         .profile-section
@@ -58,7 +58,7 @@ h1
                     td
                       - if @admin_user.weixin
                         = link_to '查看微信详细', admin_user_weixin_path(@admin_user.weixin), class: 'btn btn-primary'
-                      - else
+                      - elsif current_user == @admin_user
                           button[class="btn btn-scueess" @click="showModal = true"] 绑定微信
                           modal[title="打开微信扫一扫登录" :show="showModal" @cancel="showModal = false"]
                             div

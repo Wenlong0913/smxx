@@ -35,7 +35,7 @@ $(document).ready ->
             vm.$http.get(bindUrl).then((response)->
               vm.token = response.body.token
               vm.timeoutSec = response.body.timeout_sec
-              vm.weixinQrcode = qrcodeImgUrl+'?token='+vm.token+'&format=png'
+              vm.weixinQrcode = qrcodeImgUrl+'?token='+vm.token
               vm.showImage = true
               vm.startTimer()
               vm.checkTokenLogin()
