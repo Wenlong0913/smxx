@@ -21,6 +21,7 @@ class Cms::Site < ApplicationRecord
     @beauty_url ? "#{id}" : id.to_s
   end
 
+  private
   def initialize_channel
     channel = self.channels.build(
       title: '首页',
