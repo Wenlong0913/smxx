@@ -43,10 +43,10 @@ gem 'devise', '~> 4.2.0'
 gem 'devise-i18n'
 gem 'jwt', '~> 1.5.6'
 gem 'settingslogic', '~> 2.0.9'
-gem 'swagger-docs'
+# gem 'swagger-docs' # 太麻烦，不如自己写markdown文档
 gem 'font-awesome-rails', '~> 4.7.0'
 gem 'simple_form', '~> 3.3.1'
-gem 'active_model_serializers'
+# gem 'active_model_serializers' # 不好用，不如直接as_json输出
 
 # gem 'client_side_validations',
 #   github: 'DavyJonesLocker/client_side_validations',
