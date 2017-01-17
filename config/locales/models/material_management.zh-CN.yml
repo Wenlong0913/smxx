@@ -10,6 +10,7 @@ zh-CN:
           output: 出库
           input: 入库
         operate_date: 日期
+        material_warehouse_id: 仓库
     errors:
       models:
         material_management: 

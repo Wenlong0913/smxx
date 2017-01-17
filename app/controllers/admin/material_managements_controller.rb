@@ -8,7 +8,7 @@ class Admin::MaterialManagementsController < Admin::BaseController
     authorize MaterialManagement
     @filter_colums = %w(id)
     return redirect_to admin_root_path, alert: "访问的页面不存在" unless @type
-    @material_managements = build_query_filter(MaterialManagement.all.send(@type), only: @filter_colums).page(params[:page])
+    @material_managements = build_query_filter(MaterialManagement.all.send(@type), only: @filter_colums).order("created_at desc").page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@material_managements.to_json, filename: "material_managements-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

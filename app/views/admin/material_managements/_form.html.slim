@@ -20,6 +20,8 @@
         .col-md-4
           = f.input :note
         .col-md-4
+          = f.input :material_warehouse_id, as: :select, collection: MaterialWarehouse.all, include_blank: false
+        .col-md-4
           modal[title="产品分类" :show.sync="showModel" @cancel="showModel = false"  ok-text="确认" cancel-text="取消"]
             div
               table.table
