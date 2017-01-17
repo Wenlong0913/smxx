@@ -46,7 +46,7 @@
 
 因为Gem `drapper` 是一个成熟的Decorator,但是他不支持Rails 5，所以我们自己写个组件实现这个功能
 
-所在目录： `components/decorator`
+所在目录： `components/decorator`，[查看文档](components/decorator/README.md)
 
 <a name="get-started"></a>
 ## 如何开始工作

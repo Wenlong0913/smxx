@@ -3,31 +3,28 @@ Model修饰工具Decorator
 
 ## Usage
 
-`rails g decorator Thing`
-      create  app/decorators/thing_decorator.rb
-      invoke  rspec
-      create    spec/decorators/thing_spec.rb
+    rails g decorator Thing
+          create  app/decorators/thing_decorator.rb
+          invoke  rspec
+          create    spec/decorators/thing_spec.rb
 
 ## Installation
 Add this line to your application's Gemfile:
 
-```ruby
-gem 'decorator'
-```
+`gem 'decorator'`
 
 And then execute:
-```bash
-$ bundle
-```
+
+    $ bundle
 
 Or install it yourself as:
-```bash
-$ gem install decorator
-```
+
+    $ gem install decorator
 
 ## 如何使用
 
 继承`Decorator::Base`之后，提供了3个方法：
+
 - object => 获得decorate的对象
 - h => helper的快捷方式，如创建html标签，则 `h.content_tag(:p, "Hello world!")`
 - r => router的快捷方式，如获得一个链接，则`r.root_path`
