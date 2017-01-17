@@ -11,6 +11,25 @@ module FrontendRoute
         post 'sign_up', to: 'users/registrations#create'
         get  'sign_up', to: 'users/registrations#new'
       end
+
+        # 微信注册／登录
+      namespace :users do
+        namespace :weixins do
+          resource :registrations, only: [:new, :show]
+          resource :sessions, only: [:new] do
+            collection do
+              post 'status'
+              get 'login'
+            end
+          end
+          resource :connects, only: [:new, :create] do
+            collection do
+              post "status"
+              get "confirm"
+            end
+          end
+        end
+      end
     end
   end
 end

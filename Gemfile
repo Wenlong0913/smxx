@@ -43,10 +43,10 @@ gem 'devise', '~> 4.2.0'
 gem 'devise-i18n'
 gem 'jwt', '~> 1.5.6'
 gem 'settingslogic', '~> 2.0.9'
-gem 'swagger-docs'
+# gem 'swagger-docs' # 太麻烦，不如自己写markdown文档
 gem 'font-awesome-rails', '~> 4.7.0'
 gem 'simple_form', '~> 3.3.1'
-gem 'active_model_serializers'
+# gem 'active_model_serializers' # 不好用，不如直接as_json输出
 
 # gem 'client_side_validations',
 #   github: 'DavyJonesLocker/client_side_validations',
@@ -88,6 +88,7 @@ gem 'iconv', '~> 1.0', '>= 1.0.4'
 gem "weixin_rails_middleware", '~> 1.3', '>= 1.3.1'
 gem 'weixin_authorize', '1.6.3'
 gem "omniauth-wechat-oauth2", "~> 0.1.0"
+gem 'rqrcode', '~> 0.10.1'
 
 # require components
 gem 'sms', path: 'components/sms'

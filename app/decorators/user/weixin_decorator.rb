@@ -4,6 +4,10 @@ class User::WeixinDecorator < ApplicationDecorator
     super || 'logo.jpg'
   end
 
+  def display_gender
+    enum_l(object, :gender)
+  end
+
   def created_at
     super.localtime.strftime('%Y-%m-%d %H:%M:%S')
   end

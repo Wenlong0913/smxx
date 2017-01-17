@@ -1,7 +1,7 @@
 # csv support
 require 'csv'
 class Admin::User::WeixinsController < Admin::BaseController
-  before_action :set_user_weixin, only: [:show, :edit, :update, :destroy]
+  before_action :set_user_weixin, only: [:show]
 
   # GET /admin/user/weixins
   def index
@@ -26,7 +26,6 @@ class Admin::User::WeixinsController < Admin::BaseController
   def show
     authorize @user_weixin
   end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -36,6 +36,8 @@ module Cms::ApplicationHelper
   end
 
   #use for Frontpage: get production frontpage path
+  # get_cms_url(obj)
+  # get_cms_url('short_title')
   def get_cms_url(obj, params = {})
     case obj
     when Cms::Page

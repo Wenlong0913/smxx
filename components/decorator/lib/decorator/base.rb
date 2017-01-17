@@ -1,5 +1,6 @@
 module Decorator
   class Base < SimpleDelegator
+    include ActiveModel::Serializers::JSON
     # 解决I18n的解析问题
     def self.model_class
       self.name.gsub(/Decorator$/, '').constantize
