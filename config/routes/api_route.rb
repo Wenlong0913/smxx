@@ -8,6 +8,7 @@ module ApiRoute
             resource :sms, only: [:create]
           end
           resources :sessions, only: [:create]
+          resources :materials
         end
       end
     end
