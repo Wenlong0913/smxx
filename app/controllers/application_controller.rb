@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
+  # include helpers
   helper FontAwesome::Rails::IconHelper
+  include EnumI18nHelper
   helper :enum_i18n
+
   include Pundit
   include QueryFilterControllerConcern
   protect_from_forgery with: :exception

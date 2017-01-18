@@ -20,4 +20,8 @@ class Material < Item
     self.price = price.to_i
     self.stock = stock.to_i
   end
+
+  def update_stock!
+    update_attributes! stock: material_warehouse_items.inject(0) { |sum, mwi| sum += mwi.stock }
+  end
 end

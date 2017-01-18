@@ -16,13 +16,13 @@
       .row
         .col-md-4
           = f.input :operate_type, as: :hidden
-          = f.input :operate_date, label: I18n.t("material_managements."+@type)+'日期'
+          = f.input :operate_date, label: enum_l(@material_management, :operate_type) + '日期'
         .col-md-4
           = f.input :note
         .col-md-4
           = f.input :material_warehouse_id, as: :select, collection: MaterialWarehouse.all, include_blank: false
         .col-md-4
-          modal[title="产品分类" :show.sync="showModel" @cancel="showModel = false"  ok-text="确认" cancel-text="取消"]
+          modal[title="选择物料" :show="showModel" @cancel="showModel = false"  ok-text="确认" cancel-text="取消"]
             div
               table.table
                 thead
@@ -31,42 +31,42 @@
                       input[type="checkbox" name="check" v-model="selectedAll" ]
                     th
                       |物料编号
-                    th 
+                    th
                       |物料名称
                     th
                       |价格
-                    th 
+                    th
                       |库存
                     th
                       |数量
                 tbody
                   tr[v-for="(m, index) in materials" :key="m.id"]
                     td
-                      input[type="checkbox" name="check" 
+                      input[type="checkbox" name="check"
                             v-model="m.selected"]
-                    td 
+                    td
                       | {{m.name_py}}
-                    td 
+                    td
                       | {{m.name}}
-                    td 
+                    td
                       | {{m.price}}
-                    td 
+                    td
                       | {{m.stock}}
-                    td 
+                    td
                       input[type="number" v-model="m.number" class="form-control input-sm"]
             div[slot="footer"]
               button[type="button" class="btn btn-default" @click="cancel"]取消
-              button[type="button" class="btn btn-success" @click="confirm"]确认                
+              button[type="button" class="btn btn-success" @click="confirm"]确认
       table.table
         thead
           tr
-            th 
+            th
               |序号
             th
               |物料编号
-            th 
+            th
               |物料名称
-            th 
+            th
               |库存
             th
               |数量
@@ -74,17 +74,17 @@
               button[type="button" class="btn btn-info btn-sm" @click="showModel=true"] 选择物料
         tbody
           tr[v-for="(mo,index) in materialOutputDetails" :key="mo.id"]
-            td 
+            td
               |{{index+1}}
             td
               |{{mo.name_py}}
-            td 
+            td
               |{{mo.name}}
-            td 
+            td
               |{{mo.stock}}
             td
               input[type="number" v-model="mo.number" class="form-control input-sm" :name="'material_management[material_management_details_attributes]['+index+'][number]'"]
               input[type="hidden" :value="mo.id" :name="'material_management[material_management_details_attributes]['+index+'][material_id]'"]
             td
               button[type="button" class="btn btn-xs btn-danger" @click="deleteDetail(mo.id, index)"] 删除
-      = f.submit '新增物料'+I18n.t("material_managements."+@type), class: 'btn btn-success btn-block'
+      = f.submit '新增物料' + enum_l(@material_management, :operate_type), class: 'btn btn-success btn-block'

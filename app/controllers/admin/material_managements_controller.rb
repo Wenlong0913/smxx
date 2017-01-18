@@ -79,6 +79,9 @@ class Admin::MaterialManagementsController < Admin::BaseController
       @type = nil
       if ['output', 'input'].include?(params[:type])
         @type = params[:type]
+        @operate_type_name = enum_i18n(MaterialManagement, :operate_type, @type)
+      else
+        raise "unknown operate_type"
       end
     end
 
