@@ -10,7 +10,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
   def index
     authorize Material
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
-    materials = Material.all.page(params[:page] || 1).per(page_size)
+    materials = Material.all.order(created_at: :desc).page(params[:page] || 1).per(page_size)
     render json: {
       materials: material_json(materials),
       page_size: page_size,
@@ -24,9 +24,10 @@ class Api::V1::MaterialsController < Api::V1::BaseController
     authorize Material
     flag, material = Material::Create.(permitted_attributes(Material))
     if flag
-      render json: {status: 'ok'}
+      render json: {status: 'ok', material: material}
     else
-      render json: {status: 'fail'}
+      render json: {status: 'failed', error_message:  material.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
+
     end
   end
 
