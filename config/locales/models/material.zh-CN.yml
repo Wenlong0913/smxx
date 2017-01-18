@@ -6,6 +6,7 @@ zh-CN:
     attributes:
       material:
         stock: 库存数
+        min_stock: 库存警戒线
     errors:
       models:
         material:
