@@ -6,6 +6,3 @@ zh-CN:
     user: '用户'
     product_manager: '产品经理'
     factory_manager: '厂长'
-  material_managements:
-    input: '入库'
-    output: '出库'
