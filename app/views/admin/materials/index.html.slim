@@ -64,17 +64,21 @@ h1.page-header
             th = Material.human_attribute_name(:name)
             th = Material.human_attribute_name(:name_py)
             th = Material.human_attribute_name(:catalog)
+            th = Material.human_attribute_name(:stock)
             th
-        tbody
+        tbody.material-list
           - @materials.each do |material|
-            tr
+            - stock = material.material_warehouse_items.map{|item| [item.material_warehouse.name+": "+item.stock.to_s]}
+            tr[class="warehouse-list" data-stock="#{stock}"]
               td = material.name
               td = material.name_py
               th = material.catalog.try{name}
+              td = material.stock
               td
                 => link_to '查看', admin_material_path(material), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_material_path(material), class: 'btn btn-xs btn-default'
                 = link_to '删除', admin_material_path(material), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+  
 / TODO: move this code to application.js
 javascript:
   $(document).ready(function(){

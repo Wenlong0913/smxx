@@ -31,7 +31,8 @@ end
 # init Cms
 # visit: http://localhost:3000/cms_1/
 cms_site = Cms::Site.create!(name: '企业官网', template: 'default', description: '这是用CMS搭建的官网')
-cms_channel = Cms::Channel.create!(site_id: cms_site.reload.id, title: '首页', description: '这里是首页的栏目描述', short_title: 'index', tmp_index: 'temp_index.html.erb', tmp_detail: 'temp_detail.html.erb')
+# Cms::Site after_create :initialize_channel　已经存在，会自动创建一个首页
+# cms_channel = Cms::Channel.create!(site_id: cms_site.reload.id, title: '首页', description: '这里是首页的栏目描述', short_title: 'index', tmp_index: 'temp_index.html.erb', tmp_detail: 'temp_detail.html.erb')
 cms_channel = Cms::Channel.create!(site_id: cms_site.reload.id, title: '新闻列表', description: '这里是新闻的栏目描述', short_title: 'news', tmp_index: 'temp_news_list.html.erb', tmp_detail: 'temp_detail.html.erb')
 content = ''
 5.times{|i| content += '<p>这是内容部分!</p>'}
@@ -61,12 +62,21 @@ vendor_names.each do |vendor_name|
   _, vendor_user = Vendor::Create.(name: vendor_name, contact_name: vendor_name + '联系人', phone_number: '152133643' + (10..99).to_a.sample(1).join)
 end
 
-# 德格物料分类
-puts "创建物料分类"
-material_catalogs = {"柜体": %w(板材 五金 封边带 纸箱 气泡垫/珍珠棉 油漆 刀具 封口胶 胶 旋转鞋柜 密码抽 反转床 穿衣镜), "移门": %w(五金 皮纹/软包 玻璃/腰线 型材), "平开门": %w(五金 吸塑)}
+# 德格物料分类 & 物料
+puts "创建物料分类 & 物料"
+material_catalogs = {
+  "柜体": [{'板材': []}, {'五金': []}, {'封边带': []}, {'纸箱': []}, {'气泡垫/珍珠棉': []}, {'油漆': []}, {'刀具': []}, {'封口胶': []}, {'胶': []}, {'旋转鞋柜': []}, {'密码抽': []}, {'反转床': []}, {'穿衣镜': []}],
+  "移门": [{'五金': []}, {'皮纹/软包': []}, {'玻璃/腰线': []}, {'型材': []}],
+  "平开门": [{'五金': []}, {'吸塑': []}]
+}
 material_catalogs.each_pair do |material_catalog, sub_material_catalos|
   _, material_catalog = MaterialCatalog::Create.(name: material_catalog)
   sub_material_catalos.each do |sub_material|
-    _, sub_material_catalog = MaterialCatalog::Create.(name: sub_material, parent: material_catalog)
+    sub_material.each_pair do |next_catalog, materials|
+      _, next_catalog = MaterialCatalog::Create.(name: next_catalog, parent: material_catalog)
+      5.times do | index |
+        _, material = Material::Create.(name: next_catalog.name + (index+1).to_s, catalog: next_catalog, site_id: Site.first.id)
+      end
+    end
   end
 end

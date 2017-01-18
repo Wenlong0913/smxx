@@ -6,12 +6,14 @@ zh-CN:
     attributes:
       material_management:
         note: 备注
-        operate_types: 
+        operate_types:
           output: 出库
           input: 入库
         operate_date: 日期
+        material_warehouse_id: 仓库
+        material_management_details: 物料清单
     errors:
       models:
-        material_management: 
+        material_management:
   helpers:
-    material_management: 
+    material_management:

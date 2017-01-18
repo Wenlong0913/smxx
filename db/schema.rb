@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112035647) do
+ActiveRecord::Schema.define(version: 20170117080729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,8 +181,17 @@ ActiveRecord::Schema.define(version: 20170112035647) do
     t.string   "note"
     t.integer  "operate_type"
     t.date     "operate_date"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "material_warehouse_id"
+  end
+
+  create_table "material_warehouse_items", force: :cascade do |t|
+    t.integer  "material_warehouse_id"
+    t.integer  "material_id"
+    t.integer  "stock",                 default: 0
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   create_table "members", force: :cascade do |t|
