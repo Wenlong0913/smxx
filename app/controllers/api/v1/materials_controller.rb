@@ -24,7 +24,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
     authorize Material
     flag, material = Material::Create.(permitted_attributes(Material))
     if flag
-      render json: {status: 'ok', material: material}
+      render json: {status: 'ok', material: material_json(material)}
     else
       render json: {status: 'failed', error_message:  material.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
 
