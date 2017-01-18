@@ -14,7 +14,7 @@ class Api::V1::MaterialManagementsController < Api::V1::BaseController
     operate_type = set_operate_type
     material_managements = MaterialManagement.where(operate_type: set_operate_type).page(params[:page] || 1).per(page_size)
     render json: {
-      materials: material_management_json(material_managements)
+      materials: material_management_json(material_managements),
       page_size: page_size,
       current_page: material_managements.current_page,
       total_pages: material_managements.total_pages,
