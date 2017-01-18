@@ -12,7 +12,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
     materials = Material.all.page(params[:page] || 1).per(page_size)
     render json: {
-      materials: materials.as_json(only: %w(id name), methods: %w(stock)),
+      materials: material_json(materials),
       page_size: page_size,
       current_page: materials.current_page,
       total_pages: materials.total_pages,
@@ -28,6 +28,10 @@ class Api::V1::MaterialsController < Api::V1::BaseController
     else
       render json: {status: 'fail'}
     end
+  end
+
+  def material_json(materials)
+    materials.as_json(only: %w(id name), methods: %w(stock))
   end
 
 end
