@@ -47,7 +47,7 @@ class Admin::TasksController < Admin::BaseController
         next if @produce.tasks.where(task_type_id: taskTypeId).present?
         flag, @task = Task::Create.({task_type: taskType, ordinal: taskType.ordinal, resource: @produce}.merge(creator_id: current_user.id))
         if flag
-          @produce.update(status: 'processing')
+          @produce.processing!
         else
           return render json: @task.errors.as_json, status: :failed
         end
@@ -68,7 +68,8 @@ class Admin::TasksController < Admin::BaseController
   # PATCH/PUT /admin/tasks/1
   def update
     authorize @task
-    if @task.update(status: params[:status])
+    if Task.statues.key?(params[:status])
+      @task.send("#{params[:status]}!")
       render json: {message: '更新成功.', status: params[:status]}
     else
       render json: {error: '更新失败！'}
