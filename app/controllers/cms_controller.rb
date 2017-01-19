@@ -33,9 +33,9 @@ class CmsController < ApplicationController
 
   def search
     if params[:utf8]
-      redirect_to cms_frontend_search_path(site: @site, q: URI.escape(params[:q]))
+      redirect_to cms_frontend_search_path(site: @site, search: URI.escape(params[:search]))
     else
-      @pages = @site.pages.search(params[:q]).order("updated_at DESC").page(params[:page])
+      @pages = @site.pages.search(params[:search]).order("updated_at DESC").page(params[:page])
       @channel ||= @site.channels.first
     end
   end

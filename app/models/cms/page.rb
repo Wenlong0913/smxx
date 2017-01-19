@@ -9,6 +9,15 @@ class Cms::Page < ApplicationRecord
   #   message: "名称简写只能包括字母数字和横线" }
   validates_uniqueness_of :short_title
 
+  enum properties: {
+    hot: 0,
+    recommend: 1,
+    slider: 2,
+    scroll: 3,
+    redirect: 4,
+    hide: 5
+  }
+
   #最近新闻
   #eg: Cms::Page.recent(12, :rand => true)
   #    Cms::Page.recent(10, :channel => 'product-bed')
@@ -19,7 +28,7 @@ class Cms::Page < ApplicationRecord
     end
     assoc
   }
-  scope :search, ->(q) { where('title LIKE ?', "%#{q}%") }
+  scope :search, ->(q) { where('cms_pages.title LIKE ?', "%#{q}%") }
 
   def format_date
     self.updated_at.strftime("%Y-%m-%d") unless self.updated_at.nil?
