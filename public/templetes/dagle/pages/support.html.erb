@@ -5,22 +5,24 @@
       <div class="row">
         <div class="col-md-12">
           <h2>
-            技术支持? <br>
+            技术支持<br>
             <small>
-              Browse our knowledge base to find solutions to common problems
+              德格提供全方位的技术支持和实施培训，让软件顺利部署。
             </small>
           </h2>
 
 
           <div id="custom-search-input">
-            <div class="input-group col-md-10 col-md-offset-1">
-              <input type="text" class="input-lg form-control" placeholder="Have a question? Ask here..." />
-              <span class="input-group-btn">
-                <span class="btn btn-default btn-lg">
-                  <span class="fa fa-search"></span> Search
-                </span>
-              </span>
-            </div>
+            <%= form_tag cms_frontend_search_path(@site), :method => 'get', role: 'search' do %>
+              <div class="input-group col-md-10 col-md-offset-1">
+                  <input type="search" class="input-lg form-control" name="search" placeholder="输入要查询的内容">
+                  <span class="input-group-btn">
+                    <span class="btn btn-default btn-lg">
+                      <span class="fa fa-search"></span> 搜索
+                    </span>
+                  </span>
+              </div>
+            <% end %>
           </div>
         </div><!-- search input-->
 
@@ -33,7 +35,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="additional-header">
-            <h3>Browse By Categories</h3>
+            <h3>获取帮助</h3>
           </div>
         </div>
       </div>

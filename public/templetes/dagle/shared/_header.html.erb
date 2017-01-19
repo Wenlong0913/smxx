@@ -138,6 +138,7 @@
             <i class="material-icons">receipt</i> 支持 <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
+           <% if false %>
             <li>
               <a href="<%= get_cms_url('support') %>">
                 <i class="material-icons">record_voice_over</i>
@@ -153,7 +154,7 @@
             </li>
 
             <li class="divider"></li>
-
+            <% end %>
             <li>
               <a href="<%= get_cms_url('blog') %>">
                 <i class="material-icons">border_color</i>
@@ -175,7 +176,7 @@
 
       <ul class="nav navbar-nav navbar-right">
         <li class="navbar-btn-container">
-          <a href="#" type="button" class="btn btn-primary navbar-btn">
+          <a href="javascript:void(0);" onclick="_MEIQIA._SHOWPANEL();" type="button" class="btn btn-primary navbar-btn">
             <i class="material-icons">supervisor_account</i>
             申请试用
           </a>

@@ -2,37 +2,37 @@
   <div class="sidebar-widget">
     <div class="additional-header">
       <h3>
-        Search
+        搜索
       </h3>
     </div>
 
     <p class="help-block text-muted">
-      Type your search term and hit enter
+      请输入你想要搜索的关键词
     </p>
 
-    <form role="search">
-      <input type="search" class="form-control search-field" placeholder="Search..">
-    </form>
+    <%= form_tag cms_frontend_search_path(@site), :method => 'get', role: 'search' do %>
+      <input type="search" class="form-control search-field" name="search" placeholder="输入要查询的内容">
+    <% end %>
+
   </div>
 
   <div class="sidebar-widget">
     <div class="notepaper">
       <div class='note'>
         <div class='text'>
-          <h3 class="text-center"><i class="fa fa-rss"></i> Subscribe to our Feed</h3>
+          <h3 class="text-center"><i class="fa fa-rss"></i> 订阅文章更新 </h3>
 
           <p>
-            Latest news, product updates, helpful articles and much more. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam, maiores vitae eveniet magni. Molestiae, neque.
+            你可以添加邮箱订阅，获取德格的最新资讯信息，德格会定期发布行业观察文章、企业应用实践，不错过任何一次更新。
           </p>
-
 
           <form>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Your email">
+              <input type="text" class="form-control" placeholder="请输入你的邮箱">
             </div>
             <div class="text-right actions">
               <a href="#" class="btn btn-danger">
-                <i class="fa fa-check-square"></i> Subscribe
+                <i class="fa fa-check-square"></i> 订 阅
               </a>
             </div>
           </form>
@@ -48,39 +48,24 @@
   <!-- /well -->
   <div class="sidebar-widget">
     <div class="additional-header">
-      <h3>Popular Categories</h3>
+      <h3>最近更新文章</h3>
     </div>
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-lg-12">
         <ul class="list-unstyled">
-          <li><a href="#dinosaurs">Dinosaurs</a>
-          </li>
-          <li><a href="#spaceships">Spaceships</a>
-          </li>
-          <li><a href="#fried-foods">Fried Foods</a>
-          </li>
-          <li><a href="#wild-animals">Wild Animals</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-lg-6">
-        <ul class="list-unstyled">
-          <li><a href="#alien-abductions">Aliens</a>
-          </li>
-          <li><a href="#business-casual">Business</a>
-          </li>
-          <li><a href="#robots">Robots</a>
-          </li>
-          <li><a href="#fireworks">Fireworks</a>
-          </li>
+          <% Cms::Page.recent(6).each do |page| %>
+            <li>
+              <i class="fa fa-circle-o"></i>
+              <%=link_to page.title, get_cms_url(page) %>
+            </li>
+          <% end %>
         </ul>
       </div>
     </div>
   </div>
   <!-- /well -->
   <div class="well">
-    <h4>Side Widget Well</h4>
-    <p>Bootstrap's default well's work great for side widgets! What is a widget anyways...?</p>
+    <p><img src="/templetes/dagle/img/logos/logo-gray.jpg" class="img-responsive"/></p>
   </div>
   <!-- /well -->
 

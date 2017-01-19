@@ -8,82 +8,40 @@
 
           <article class="blog-post">
             <h2 class="post-title">
-              <a href="<%= page_path("blog_post") %>">A Blog Home Template for Bootstrap 3</a>
+              <%= @page.title %>
             </h2>
 
-            <div class="post-image">
-              <a href="<%= page_path("blog_post") %>">
-                <img src="/templetes/dagle/img/cleancut/blog2.jpg" alt="" class="img-thumbnail img-responsive">
-              </a>
-            </div>
+            <% if @page.image_path.present? %>
+              <div class="post-image">
+                  <img src="<%= @page.image_path %>" alt="<%= @page.keywords %>" class="img-thumbnail img-responsive">
+              </div>
+            <% end %>
 
             <div class="post-meta">
-
               <div class="row">
                 <div class="col-lg-1 col-md-1 hidden-xs hidden-sm image">
-                  <img src="http://placehold.it/48x48" alt="" class="img-circle img-thumbnail">
+                  <img class="img-circle img-thumbnail" src="/templetes/dagle/img/icons/icon-circle-color.png" alt="Dagle Icon">
                 </div>
 
                 <div class="col-lg-11 col-md-11">
                   <div class="post-meta-text text-muted">
                     <p class="lead">
-                      by <a href="#">Bharani Muthukumaraswamy</a>
-                      <br>
+                      by <a href="#">Dagle</a> <br>
                     </p>
 
                     <p>
-                      <i class="fa fa-clock-o"></i> Posted on August 28, 2013 at 10:00 PM
+                      <i class="fa fa-clock-o"></i> <%= get_date(@page.updated_at) %>
                     </p>
                   </div>
                 </div>
               </div>
-
             </div>
 
             <div class="post-content">
               <p class="lead">
-                Science cuts two ways, of course; its products can be used for both good and evil. But there's no turning back from science. The early warnings about technological dangers also come from science.
+                <%= @page.description %>
               </p>
-              <p>
-                You know, being a test pilot isn't always the healthiest business in the world.
-              </p>
-              <p>
-                Cookie jelly beans soufflé icing. Gummi bears tootsie roll powder chupa chups cheesecake chocolate jelly-o lollipop lollipop. Halvah applicake chupa chups. Marshmallow chocolate jujubes icing lollipop gummi bears chupa chups pudding bonbon. Jelly beans jelly soufflé jujubes. Sesame snaps lollipop icing donut lemon drops soufflé.
-              </p>
-              <p>
-
-                <img src="/templetes/dagle/img/cleancut/person1.jpg" alt="" class="img-thumbnail pull-left">Donut caramels gingerbread. Sweet roll macaroon pastry cotton candy oat cake sesame snaps biscuit lemon drops dessert. Candy canes carrot cake danish carrot cake soufflé jelly chocolate cake muffin. Topping brownie donut. Oat cake marzipan dragée cheesecake. Donut chocolate cake jujubes tart dragée toffee.
-              </p>
-              <p>
-                Tilefish electric knifefish salmon shark southern Dolly Varden. Pacific argentine tope golden shiner ilisha barreleye loosejaw catla, dogteeth tetra catfish tenpounder nase scup Ragfish brotula." Codlet brook lamprey pleco, Japanese eel convict cichlid titan triggerfish, plownose chimaera topminnow Black scalyfin. Walleye pollock, blue shark Sacramento blackfish prickleback airbreathing catfish yellowfin cutthroat trout, goby southern sandfish. North Pacific daggertooth dorab cepalin weever flying gurnard.
-              </p>
-
-              <blockquote>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, unde perferendis tempora doloribus quibusdam sint natus eos dolores saepe sed delectus alias repudiandae ullam repellendus ea nostrum omnis officia dolorum?
-                </p>
-              </blockquote>
-
-              <p>
-                NASA is not about the ‘Adventure of Human Space Exploration’…We won’t be doing it just to get out there in space – we’ll be doing it because the things we learn out there will be making life better for a lot of people who won’t be able to go.
-              </p>
-
-              <p>
-                As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore . . . and this is exploration at its greatest.
-              </p>
-
-              <p>
-                I don't know what you could say about a day in which you have seen four beautiful sunsets.
-              </p>
-
-              <p>
-                NASA is not about the ‘Adventure of Human Space Exploration’…We won’t be doing it just to get out there in space – we’ll be doing it because the things we learn out there will be making life better for a lot of people who won’t be able to go.
-              </p>
-
-              <p>
-                Houston, Tranquillity Base here. The Eagle has landed.
-              </p>
-
+              <%= raw @page.content %>
 
             </div>
 
@@ -93,7 +51,10 @@
             <div class="post-tags">
               <div class="row">
                 <div class="col-md-12">
-                  Tagged: <span class="badge">Bootstrap 3</span>  <span class="badge">Web Design</span>  <span class="badge">Responsive UI</span>
+                  标签:
+                  <% @page.keywords.split(/,|;|:|\.|\||\\|，|；|。|、/).each do |tag| %>
+                    <span class="badge"><%= tag %></span>
+                  <% end %>
                 </div>
               </div>
             </div>
@@ -105,19 +66,20 @@
               <div class="row">
 
                 <div class="col-md-3">
-                  <img alt="64x64" src="http://i.pravatar.cc/300?img=28" class="img-responsive img-thumbnail">
+                  <img alt="64x64" src="/templetes/dagle/img/logos/logo-gray.jpg" class="img-responsive img-thumbnail">
 
                 </div>
 
                 <div class="col-md-9">
                   <h4>
-                    Jenny McIntyre <span class="badge">5 articles</span>
+                    Ken <span class="badge">@xuejiang</span>
                   </h4>
                   <p>
-                    Designer, developer &amp; Dreamer.
+                    营销部业务经理
                   </p>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime, dolore, officiis aliquam a nobis natus ipsa unde qui consequuntur architecto tenetur ducimus fugiat ea eum molestias officia est harum maiores.
+                    Hi, 你好，我是德格营销部的业务经理，很高兴与您分享德格的文章。
+                    德格采用最先进的技术开发理念，为中小企业提供全方位的信息系统、客户系统、和营销系统；如果你需要这方面的服务，请跟我联系。
                   </p>
 
                   <ul class="list-unstyled list-inline list-social-icons">
@@ -137,64 +99,19 @@
             <div class="comments-area">
               <div class="additional-header">
                 <h3>
-                  Commments
+                  评论
                 </h3>
               </div>
 
               <div class="comments-list-container">
                 <div class="media">
                   <div class="media-left">
-                    <img alt="64x64" class="media-object" src="http://i.pravatar.cc/64?img=16" style="width: 64px; height: 64px;">
                   </div>
                   <div class="media-body">
-                    <h4 class="media-heading">
-                      Rachel Lynch
-                      <small class="time-ago text-muted">2 months ago</small>
-                    </h4>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                    暂无评论！
                   </div>
                 </div>
 
-                <div class="media">
-                  <div class="media-left">
-                    <img alt="64x64" class="media-object" src="http://i.pravatar.cc/64?img=68" style="width: 64px; height: 64px;">
-                  </div>
-                  <div class="media-body">
-                    <h4 class="media-heading">
-                      Alexander Griffin
-                      <small class="time-ago text-muted">1 month ago</small>
-                    </h4>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-
-                    <div class="media">
-                      <div class="media-left">
-                        <img alt="64x64" class="media-object" src="http://i.pravatar.cc/64?img=49" style="width: 64px; height: 64px;">
-                      </div>
-                      <div class="media-body">
-                        <h4 class="media-heading">
-                          Virginia Payne
-                          <small class="time-ago text-muted">2 weeks ago</small>
-                        </h4>
-                        Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo.
-                      </div>
-                    </div>
-
-
-                  </div>
-                </div>
-
-                <div class="media">
-                  <div class="media-left">
-                    <img alt="64x64" class="media-object" src="http://i.pravatar.cc/64?img=12" style="width: 64px; height: 64px;">
-                  </div>
-                  <div class="media-body">
-                    <h4 class="media-heading">
-                      Timothy Bell
-                      <small class="time-ago text-muted">3 days ago</small>
-                    </h4>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -203,7 +120,7 @@
               <div class="row">
                 <div class="col-md-12 col-lg-12">
                   <div class="additional-header">
-                    <h3>Add your comment</h3>
+                    <h3>发表评论</h3>
                   </div>
                 </div>
               </div>
@@ -211,30 +128,30 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="name">Name</label>
-                      <input type="text" class="form-control" id="name" placeholder="Enter name" required="required" />
+                      <label for="name">姓名</label>
+                      <input type="text" class="form-control" id="name" placeholder="" required="required" />
                     </div>
                     <div class="form-group">
-                      <label for="email">Email Address</label>
+                      <label for="email">电子邮箱</label>
 
-                      <input type="email" class="form-control" id="email" placeholder="Enter email" required="required" />
+                      <input type="email" class="form-control" id="email" placeholder="" required="required" />
                     </div>
                     <div class="form-group">
-                      <label for="website">website</label>
+                      <label for="website">手机号码</label>
 
-                      <input type="text" class="form-control" id="website" placeholder="www.google.com" />
+                      <input type="text" class="form-control" id="website" placeholder="" />
 
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="name">Message</label>
+                      <label for="name">评论内容</label>
                       <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required" placeholder="Message"></textarea>
                     </div>
                   </div>
                   <div class="col-md-12">
                     <button type="submit" class="btn btn-primary pull-right">
-                      Add Comment</button>
+                      提 交</button>
                     </div>
                   </div>
                 </form>

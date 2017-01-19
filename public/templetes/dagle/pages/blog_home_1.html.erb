@@ -5,33 +5,42 @@
       <div class="row">
         <div class="col-md-9 main-content">
 
+          <% if @pages.empty? %>
+            <h2>没有找到任何内容！</h2>
+          <% end %>
+          <% if @pages.any? && params[:search] %>
+            <h2>为你找到<%= @pages.size %>条信息。</h2>
+          <% end %>
+
           <% @pages.each do |page| %>
             <article class="blog-post">
               <h2 class="post-title">
                 <%= link_to page.title, get_cms_url(page) %>
               </h2>
 
-              <div class="post-image">
-                <a href="<%= page_path("blog_post") %>">
-                  <img src="/templetes/dagle/img/cleancut/blog1.jpg" alt="" class="img-thumbnail img-responsive">
-                </a>
-              </div>
+              <% if page.image_path.present? %>
+                <div class="post-image">
+                  <a href="<%= get_cms_url(page) %>">
+                    <img src="<%= page.image_path %>" alt="<%= page.keywords %>" class="img-thumbnail img-responsive">
+                  </a>
+                </div>
+              <% end %>
 
               <div class="post-meta">
 
                 <div class="row">
                   <div class="col-lg-1 col-md-1 hidden-xs hidden-sm image">
-                    <img src="http://placehold.it/48x48" alt="" class="img-circle img-thumbnail">
+                    <img class="img-circle img-thumbnail" src="/templetes/dagle/img/icons/icon-circle-color.png" alt="Dagle Icon">
                   </div>
 
                   <div class="col-lg-11 col-md-11">
                     <div class="post-meta-text text-muted">
                       <p class="lead">
-                        by <a href="#">Bharani Muthukumaraswamy</a> <br>
+                        by <a href="#">Dagle</a> <br>
                       </p>
 
                       <p>
-                        <i class="fa fa-clock-o"></i> Posted on August 28, 2013 at 10:00 PM
+                        <i class="fa fa-clock-o"></i> <%= get_date(page.updated_at) %>
                       </p>
                     </div>
                   </div>
@@ -41,17 +50,13 @@
 
               <div class="post-content">
                 <p class="lead">
-                  This is a very basic starter template for a blog homepage. It makes use of Font Awesome icons that are built into the 'Modern Business' template, and it makes use of the Bootstrap 3 pager at the bottom of the page
-                </p>
-
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora, temporibus tempore fugiat quod ipsam aut aspernatur ut facere vero consequuntur eum nemo fugit alias est itaque et ullam culpa voluptatum! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, hic eum reiciendis beatae harum. Doloremque maxime laboriosam quas. Sapiente, delectus odit minus maiores libero itaque ullam iusto dignissimos. Facilis, perferendis.
+                  <%= page.description %>
                 </p>
 
                 <br>
 
                 <div class="text-right">
-                  <a href="<%= page_path("blog_post") %>" class="btn btn-bordered btn-primary btn-round">Continue Reading &rarr;</a>
+                  <a href="<%= get_cms_url(page) %>" class="btn btn-bordered btn-primary btn-round">阅读更多 &rarr;</a>
                 </div>
               </div>
             </article>
