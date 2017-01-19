@@ -12,7 +12,7 @@ class Admin::MaterialsController < Admin::BaseController
       if params[:format] == "json"
         # format.html { send_data(@materials.to_json, filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
         format.json do
-          render json: ActiveModelSerializers::SerializableResource.new(@materials, {}).as_json  
+          render json: @materials.as_json(only: [:id, :name, :name_py], methods: [:stock, :price])
         end
       elsif params[:xml].present?
         format.html { send_data(@materials.to_xml, filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
