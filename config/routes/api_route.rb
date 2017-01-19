@@ -10,7 +10,7 @@ module ApiRoute
           resources :sessions, only: [:create]
           resources :materials, only: [:index, :create]
           resources :orders, only: [:index]
-          resources :material_managements, only: [:index, :create]
+          resources :material_management_details, only: [:index, :create]
         end
       end
     end
