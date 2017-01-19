@@ -26,6 +26,7 @@ module AdminRoute
         resources :material_managements #物料出库/入库
         resources :material_warehouses # 物料仓库
         resources :material_management_histories, only: [:index] # 库存流水
+        resources :material_stock_alerts, only: [:index] # 库存警报
 
         resources :roles, only: [:index], :concerns => :paginatable do
           resources :users, only: [:index], :concerns => :paginatable
@@ -40,11 +41,13 @@ module AdminRoute
         resources :sites, :concerns => :paginatable do
           resources :members, :concerns => :paginatable
         end
-        resources :produces, only: [:index]
-        resources :task_types
+        resources :produces, only: [:index] do
+          resources :tasks, only: [:create, :update]
+        end
+        resources :task_types, except: [:show]
         resources :orders, :concerns => :paginatable do
           resources :materials, except: [:index], controller: 'order_materials'
-          resources :produces, only: [:show, :create]
+          resources :produces, only: [:show, :create, :destroy, :update]
         end
       end
     end

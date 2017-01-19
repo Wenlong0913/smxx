@@ -77,7 +77,6 @@ h1.page-header
               td
                 = task_type.roles
               td
-                => link_to '查看', admin_task_type_path(task_type), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_task_type_path(task_type), class: 'btn btn-xs btn-default'
                 = link_to '删除', admin_task_type_path(task_type), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
 / TODO: move this code to application.js

@@ -24,6 +24,7 @@
           div
             catalog-list[data-url=admin_material_catalogs_path :default="selecteDefault" selecteDefault="[#{@material.catalog_id}]"@selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false"]
           div[slot="footer"]
+      = f.input :min_stock
       = f.input :images do
         image-select[server=image_items_path name="material[image_item_ids][]" selected-ids="#{@material.image_item_ids.join(',')}"]
       = f.submit class: 'btn btn-success btn-block'

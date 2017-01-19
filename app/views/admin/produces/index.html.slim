@@ -66,7 +66,7 @@
             th #
             th 订单号
             th 完成进度
-            th 创建时间
+            th 生产任务创建时间
         tbody
           - @produces.each_with_index do |produce, index|
             tr
@@ -75,19 +75,46 @@
               td
                 = produce.order.code
               td
-                - if  produce.tasks.size > 0
+                - if produce.tasks.size > 0
                   .progress[style="min-width: 180px"]
                     - progress = (produce.tasks.completed.size*100/produce.tasks.size).to_s
                     .progress-bar[role='progressbar' aria-valuenow="#{progress}" aria-valuemin="0" aria-valuemax="100" style="width: #{progress}%;"]
                       = progress+'%'
                 - else
-                  = link_to '选择创建流程', ''
+                  a[href="javascript:void(0);"data-toggle="modal" data-target=".create_task" data-path=admin_produce_tasks_path(produce) data-code="#{produce.order.code}"] 选择添加任务流程
               td
                 = produce.created_at.localtime
               td
-                => link_to '查看', admin_order_produce_path(produce.order, produce), class: 'btn btn-xs btn-default'
+                => link_to '查看', admin_order_produce_path(produce.order, produce), class: "btn btn-xs btn-default #{'hide' if produce.status == 'wait_for_task'}"
                 / => link_to '编辑', edit_admin_produce_path(produce), class: 'btn btn-xs btn-default'
                 = link_to '删除', admin_order_produce_path(produce.order, produce), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+    .modal.fade.create_task[tabindex="-1" role="dialog" aria-labelledby="create_task" aria-hidden="true"]
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close[data-dismiss="modal" type="button"]
+              span[aria-hidden="true"] &times;
+              span.sr-only Close
+            .modal-title.h4 添加任务流程
+          .modal-body
+            .well
+              div.h6
+                strong 订单号：
+                span.m-l-10 ~
+            .continue
+              .list-group
+                - TaskType.all.order(ordinal: :asc).each do |type|
+                  a.list-group-item[href="javascript:void(0);" data-id=type.id]
+                    i.fa.fa-circle-o.m-r-15
+                    strong = type.name
+                    span.badge[title="任务优先级"] = type.ordinal
+              h4.text-right
+                small.pull-left.text-danger.error-messages
+                small * 选中需要建立的流程
+          .modal-footer
+            button.btn.btn-default[type="button" data-dismiss="modal"] 关闭
+            button.btn.btn-primary.btn-create-task[type="button"] 保存
+
 / TODO: move this code to application.js
 javascript:
   $(document).ready(function(){
