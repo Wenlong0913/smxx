@@ -6,9 +6,9 @@ class ProducePolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    fail "请在#{__FILE__}中添加params的permit属性"
-    if user.has_role? :admin
-      []
+    # fail "请在#{__FILE__}中添加params的permit属性"
+    if user.super_admin_or_admin?
+      [:assignee_id, :status]
     else
       []
     end

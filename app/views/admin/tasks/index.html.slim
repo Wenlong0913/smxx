@@ -1,7 +1,7 @@
 h1.page-header
-  | &nbsp;
+  | #{Task.model_name.human}列表
   .pull-right
-    = link_to "新建#{TaskType.model_name.human}", new_admin_task_type_path, class: 'btn btn-primary'
+    = link_to "新建#{Task.model_name.human}", new_admin_task_path, class: 'btn btn-primary'
 
 .panel.panel-default
   .panel-heading
@@ -10,10 +10,8 @@ h1.page-header
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-    h3.panel-title
-      | #{TaskType.model_name.human}列表
   .panel-body
-    = form_for :search, url:  admin_task_types_path, method: :get do |f|
+    = form_for :search, url:  admin_tasks_path, method: :get do |f|
       .toolbar.row
         .col-md-12
           p
@@ -56,29 +54,21 @@ h1.page-header
         strong
           = "查询："
         span
-          = @task_types.size.to_s + "条记录"
+          = @tasks.size.to_s + "条记录"
         span.close[data-dismiss="alert"]
           | ×
     .table-responsive.row.m-0
       table.table.table-striped.table-bordered
         thead
           tr
-            th = TaskType.human_attribute_name(:ordinal)
-            th = TaskType.human_attribute_name(:name)
-            th = TaskType.human_attribute_name(:roles)
-            th 操作
+            th
         tbody
-          - @task_types.each do |task_type|
+          - @tasks.each do |task|
             tr
               td
-                = task_type.ordinal
-              td
-                = task_type.name
-              td
-                = task_type.roles
-              td
-                => link_to '编辑', edit_admin_task_type_path(task_type), class: 'btn btn-xs btn-default'
-                = link_to '删除', admin_task_type_path(task_type), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+                => link_to '查看', admin_task_path(task), class: 'btn btn-xs btn-default'
+                => link_to '编辑', edit_admin_task_path(task), class: 'btn btn-xs btn-default'
+                = link_to '删除', admin_task_path(task), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
 / TODO: move this code to application.js
 javascript:
   $(document).ready(function(){
