@@ -4,9 +4,10 @@ zh-CN:
     models:
       material: 物料
     attributes:
-      material: {}
+      material:
+        stock: 库存数
     errors:
       models:
-        material: 
+        material:
   helpers:
-    material: 
+    material:
