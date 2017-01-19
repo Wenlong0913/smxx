@@ -3,7 +3,7 @@
   .login.login-with-news-feed
     .news-feed
       .news-image
-          = image_tag 'http://img3.iqilu.com/data/attachment/forum/201308/21/192654ai88zf6zaa60zddo.jpg', data: { id: 'login-cover-image' }
+          = image_tag rand_banner_img, data: { id: 'login-cover-image' }
       .news-caption
         h4.caption-title
           i.fa.fa-diamond.text-success
@@ -21,7 +21,7 @@
             i.fa.fa-sign-in
       .login-content
         .login-buttons.m-b-30.m-t-30
-            button.btn.btn-success.btn-block.btn-lg[data-toggle='modal' data-target='#mobile_login_modal'] 手机号登陆
+            button.btn.btn-success.btn-block.btn-lg[data-toggle='modal' data-target='#mobile_login_modal'] 手机号登录
         hr
         p.text-center.text-inverse
           = Settings.site.copyright
