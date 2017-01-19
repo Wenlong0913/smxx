@@ -3,5 +3,5 @@ class MaterialStockAlert < ApplicationRecord
 
   enum status: [:unprocessed, :processed]
 
-  belongs_to :owner, polymorphic: true
+  belongs_to :material
 end

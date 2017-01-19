@@ -6,7 +6,7 @@ class Material < Item
   has_many :image_items, :through => :image_item_relations
   has_many :material_warehouse_items, dependent: :destroy
   has_many :material_warehouses, through: :material_warehouse_items
-  has_many :material_stock_alerts, as: :owner
+  has_many :material_stock_alerts, dependent: :destroy
 
   # 物料只属于本公司，不能设置为其他Site
   after_initialize do
