@@ -51,7 +51,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
   end
 
   def material_json(materials)
-    materials.as_json(only: %w(id name name_py), methods: %w(stock price))
+    materials.as_json(only: %w(id name name_py), methods: %w(stock))
   end
 
 end

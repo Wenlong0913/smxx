@@ -22,9 +22,6 @@ class Api::V1::MaterialManagementDetailsController < Api::V1::BaseController
     }
   end
 
-  def create
-  end
-
   private
   def set_operate_type
     if ['input', 'output'].include?(params["operate_type"])
@@ -36,11 +33,12 @@ class Api::V1::MaterialManagementDetailsController < Api::V1::BaseController
 
   def material_management_detail_json(material_management_details)
     material_management_details.as_json(
-      only: %w(id number price),
+      only: %w(id number),
       include: {
         material_management: { 
           only: %w(id operate_date operate_type),
-          include: {material_warehouse: %w(id name)}
+          methods: :material_warehouse_name
+          # include: {material_warehouse: %w(id name)}
         },
         material: {only: %w(id name)}
       }
