@@ -12,6 +12,7 @@ module ApiRoute
           resources :orders, only: [:index]
           resources :material_management_details, only: [:index, :create]
           resources :material_warehouses, only: [:index]
+          resources :produces, only: [:index, :create]
         end
       end
     end

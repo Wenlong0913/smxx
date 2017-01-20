@@ -36,4 +36,14 @@ class Api::BaseController < ActionController::API
   def token?
     http_token && auth_token && auth_token[:user_id].to_i
   end
+
+  def render_base_data(base_data_json, base_data, page_size)
+    {
+      orders: base_data_json,
+      page_size: page_size,
+      current_page: base_data.current_page,
+      total_pages: base_data.total_pages,
+      total_count: base_data.total_count
+    }
+  end
 end
