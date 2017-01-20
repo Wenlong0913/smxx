@@ -12,7 +12,7 @@ class Api::V1::MaterialManagementDetailsController < Api::V1::BaseController
     authorize MaterialManagement
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
     operate_type = set_operate_type
-    material_management_details = MaterialManagementDetail.joins(:material_management).where(material_managements: {operate_type: operate_type}).page(params[:page] || 1).per(page_size)
+    material_management_details = MaterialManagementDetail.joins(:material_management).includes(:material, material_management: [:material_warehouse]).where(material_managements: {operate_type: operate_type}).page(params[:page] || 1).per(page_size)
     render json: {
       material_management_details: material_management_detail_json(material_management_details),
       page_size: page_size,

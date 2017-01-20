@@ -11,7 +11,7 @@ class Api::V1::MaterialStockAlertsController < Api::V1::BaseController
     authorize MaterialStockAlert
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
     material_stock_alerts = params['status'].present? ? MaterialStockAlert.where(status: params["status"]) : MaterialStockAlert.all
-    material_stock_alerts =  material_stock_alerts.order(created_at: :desc).page(params[:page] || 1).per(page_size)
+    material_stock_alerts =  material_stock_alerts.includes(:material).order(created_at: :desc).page(params[:page] || 1).per(page_size)
     render json: {
       material_stock_alerts: material_stock_alert_json(material_stock_alerts),
       page_size: page_size,
