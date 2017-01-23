@@ -19,6 +19,7 @@ module ApiRoute
           resources :image_items, only: [:create]
           resources :sites, only: [:index]
           resources :members, only: [:index]
+          resources :search, only: [:index]
         end
       end
     end
