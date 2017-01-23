@@ -1,13 +1,27 @@
 class Api::V1::ProducesController < Api::V1::BaseController
   before_action :authenticate!
   before_action :set_order, only: [:create]
+  before_action :set_produces, only: [:index]
 
   def index
     authorize Produce
     page_size = params[:page_size] ? params[:page_size].to_i : 20
-    orders = Order.all.page(params[:page] || 1).per(page_size)
-    orders_json = orders.all.as_json(only: [:code, :price, :status, :internal_status, :description, :created_at], include: {site: {only: [:id, :title]}, member: {only: [:name]}})
-    render json: render_base_data(orders_json, orders, page_size)
+    produces = @produces.all.page(params[:page] || 1).per(page_size)
+    produces_json = produces.all.as_json(
+      only: [:id, :order_id, :status, :assignee_id, :created_at],
+      include: {
+        order: {
+          only: [:id, :code],
+          include:{
+            member: {only: [:name]}}
+          },
+        tasks: {
+          only: [:id, :assignee_id, :title, :description, :status],
+          include: {task_type: {only: [:id, :name]}}
+        }
+      }
+    )
+    render json: render_base_data(produces_json, produces, page_size, @produce_list_type)
   end
 
   def create
@@ -24,5 +38,18 @@ class Api::V1::ProducesController < Api::V1::BaseController
   private
     def set_order
       @order = Order.find(params[:order_id])
+    end
+    def set_produces
+      @produce_list_type = params[:produce_list_type]
+      @produces = case @produce_list_type
+      when 'processing'
+        Produce.processing
+      when 'cancelled'
+        Produce.cancelled
+      when 'completed'
+        Produce.completed
+      else
+        Produce.all
+      end
     end
 end
