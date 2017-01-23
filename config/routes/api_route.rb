@@ -17,6 +17,7 @@ module ApiRoute
           resources :material_catalogs, only: [:index]
           resources :produces, only: [:index, :create]
           resources :image_items, only: [:create]
+          resources :sites, only: [:index]
         end
       end
     end
