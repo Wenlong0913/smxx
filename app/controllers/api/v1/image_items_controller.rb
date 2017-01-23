@@ -11,16 +11,6 @@ class  Api::V1::ImageItemsController < Api::V1::BaseController
     end
   end
 
-  def destroy
-    @image_item = ImageItem.find(params[:id])
-    flag, @image_item = ImageItem::Destroy.(@image_item, user: current_user)
-    if flag
-      render json: {}
-    else
-      head 403
-    end
-  end
-
   private
   def image_item_json(image_item)
     image_item.as_json(only: %w(id name), methods: [:image_url, :image_file_name])

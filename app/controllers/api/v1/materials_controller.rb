@@ -34,15 +34,12 @@ class Api::V1::MaterialsController < Api::V1::BaseController
   def update
     material = set_material
     authorize material
-    flag, material = Material::Update.(material, permitted_attributes(material))
+    flag, material = Material::Update.(material, permitted_attributes(material).merge(image_item_ids: params["image_item_ids"]))
     if flag
       render json: {status: 'ok', material: material_json(material)}
     else
       render json: {status: 'failed', error_message:  material.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
     end    
-  end
-
-  def destroy
   end
 
   private
@@ -53,8 +50,11 @@ class Api::V1::MaterialsController < Api::V1::BaseController
   def material_json(materials)
     materials.as_json(
       only: %w(id name name_py catalog_id), 
-      methods: %w(stock),
-      include: {catalog: {only: %w(id name), methods: %w(full_name)}}
+      methods: %w(stock image_item_ids),
+      include: {
+        catalog: { only: %w(id name), methods: %w(full_name) },
+        image_items: { only: %w(id), methods: %w(image_url image_file_name) }
+      }
     )
   end
 
