@@ -13,10 +13,10 @@
                 德格·<%= @channel.title %>
               </h1>
               <p class="headline-text"  data-aos="fade-up-right" style="font-size: 43px;">
-                <strong>提供可见、可控的业务流程</strong>
+                <strong><%= @channel.keywords %></strong>
               </p>
               <p class="subheading-text"  data-aos="fade-up-right">
-                业务流程是企业优胜的管家，德格BPM系统提供运营效率、业务可见性、卓越客户体验和敏捷性的业务流程将帮助企业在竞争中占据优势地位
+                <%= @channel.description %>
               </p>
               <div class="buttons-container" data-aos="fade-up-right">
                 <!-- data-toggle="modal" data-target="#purchaseModal" -->
@@ -31,110 +31,13 @@
             </div>
 
             <div class="col-md-6 hidden-sm hidden-xs" data-aos="fade-up-left">
-              <img class="img-responsive main-img" src="/templetes/dagle/img/display/mockup-4.png" alt="<%= @channel.description %>">
+              <img class="img-responsive main-img" src="<%= @channel.image_path %>" alt="<%= @channel.description %>">
             </div>
           </div>
         </div>
       </section>
 
-      <!-- 实操描述 -->
-      <div id="services" class="page">
-        <div class="section-header">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12">
-                <h2>
-                  标准化的业务流程管理,实时的业务监控,让企业经历自信地管理"变革"
-                  <br>
-                  <small>
-                    直观的治理方式来自信地管理变更,加强协作能力来加快完成任务
-                  </small>
-                </h2>
-              </div>
-            </div>
-          </div>
-        </div>
-        <section class="tour">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="text-center">
-                  <img src="/templetes/dagle/img/display/tour-1.png" alt="" class="img-responive">
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <!-- 应用特点 -->
-      <section id="features">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12 text-center">
-              <h2>
-                持续的对业务流程监控和分析，可预见性的调整业务流程满足市场需求
-                <br/>
-                <small>
-                  轻量级务流程管理易于部署和轻量级业,自信的"变革"
-                </small>
-              </h2>
-
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-right">
-              <img src="/templetes/dagle/img/display/mockup-2.png" class="img-responsive" alt="feature1" />
-            </div>
-
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-left">
-              <h3>精简的操作，只需要几步就可以实现销售流程自动化</h3>
-              <p class="lead">
-                提供直接了当的点击式界面,方便您将业务流程自动化<br/>
-              </p>
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-right">
-              <h3>简化流程审批操作同步生产数据，保证交易顺利进行</h3>
-              <p class="lead">
-                德格BPM系统将审批流程自动化<br/>为企业节省大量的宝贵时间
-              </p>
-            </div>
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-left">
-              <img src="/templetes/dagle/img/display/mockup-5.png" class="img-responsive" alt="feature1" />
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-right">
-              <img src="/templetes/dagle/img/display/mockup-2.png" class="img-responsive" alt="feature1" />
-            </div>
-
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-left">
-              <h3>降低沟通成本,大幅度的节省企业成本</h3>
-              <p class="lead">
-                解决了员工与领导的签字环节的问题，帮助您大幅度的节省纸张、电话、传真、沟通、查询等各种成本问题<br/>
-              </p>
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-right">
-              <h3>规范企业的业务流程，减少了出错机会</h3>
-              <p class="lead">
-                统一化标准化的管理流程，避免工作人员办事随心所欲<br/>自动生成期限报表，避免人工计算环节中的错误
-              </p>
-            </div>
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-left">
-              <img src="/templetes/dagle/img/display/mockup-5.png" class="img-responsive" alt="feature1" />
-            </div>
-          </div>
-        </div>
-      </section>
+      <%= raw @channel.content %>
 
       <!-- 核心业务 -->
       <%= render file: "public/templetes/dagle/shared/partials/_application_domain.html.erb" %>
