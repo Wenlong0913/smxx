@@ -10,6 +10,17 @@ class Api::V1::OrdersController < Api::BaseController
     render json: render_base_data(orders_json, orders, page_size, @order_list_type)
   end
 
+  def create
+    authorize Order
+    flag, order = Order::Create.(permitted_attributes(Order).merge(image_item_ids: params["image_item_ids"]))
+    if flag
+      render json: {status: 'ok', order: order_json(order)}
+    else
+      render json: {status: 'failed', error_message:  order.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
+    end
+  end
+
+
   private
     def set_orders
       @order_list_type = params[:order_list_type]

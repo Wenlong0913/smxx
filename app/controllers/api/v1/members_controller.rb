@@ -5,8 +5,16 @@ class Api::V1::MembersController < Api::BaseController
   def index
     authorize Member
     members = @site.members
-    member_json = member_json(members)
-    render json: {json_data: member_json}
+    page_size = params[:page_size].present? ? params[:page_size].to_i : 20
+    members =  members.where("name like :key", {key: ['%',params['name'].upcase, '%'].join}) if params['name'].present?
+    members = members.order(created_at: :desc).page(params[:page] || 1).per(page_size)
+    render json: {
+      members: member_json(members),
+      page_size: page_size,
+      current_page: members.current_page,
+      total_pages: members.total_pages,
+      total_count: members.total_count
+    }
   end
 
   private
@@ -17,7 +25,7 @@ class Api::V1::MembersController < Api::BaseController
 
     def member_json(members)
       members.as_json(
-        only: [:id, :name, :qq, :email, :gender, :birth]
+        only: %w(id name user_id)
       )
     end
 end
