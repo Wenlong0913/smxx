@@ -10,7 +10,7 @@
   - [imageAlbum(图片集显示)](webpack/components/image_album/README.md)
   - [multiImageUpload(多图片上传)](webpack/components/multi_image_upload/README.md)
   - [modal(模态框)](webpack/components/modal/README.md)
-  
+
 - [如何开始工作](#get-started)
   - [怎么生成一个Model](#how-to-generate-model)
   - [怎么生成一个Item](#how-to-generate-item)
@@ -21,6 +21,7 @@
 - [Model中的一些用法](#how-to-program-model)
     - [数据验证](#how-to-program-model-validators)
 - [测试](#testing)
+- [CMS建站](doc_cms.md)
 
 <a name="config"></a>
 ## 开发配置

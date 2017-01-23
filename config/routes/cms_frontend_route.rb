@@ -10,6 +10,11 @@ module CmsFrontendRoute
         get '/:channel(/pages/:page)', to: 'cms#channel', as: :channel
         get '/:channel/:id', to: 'cms#page', as: :page
       end
+
+      constraints(Subdomain) do
+        match '/' => 'cms#index', via: [:get, :post]
+      end
+
     end
   end
 end
