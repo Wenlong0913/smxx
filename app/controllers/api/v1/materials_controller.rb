@@ -10,7 +10,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
   def index
     authorize Material
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
-    materials = params['name_py'].present? ? Material.where("name_py like :key OR name like :key", {key: ['%',params['name_py'].upcase, '%'].join}) : Material.all
+    materials = params['search_content'].present? ? Material.where("name_py like :key OR name like :key", {key: ['%',params['search_content'].upcase, '%'].join}) : Material.all
     materials = materials.order(created_at: :desc).page(params[:page] || 1).per(page_size)
     render json: {
       materials: material_json(materials),
