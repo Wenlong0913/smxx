@@ -44,6 +44,7 @@ class CmsController < ApplicationController
 
   private
     def set_site
-      @site = Cms::Site.find(params[:site])
+      @site ||= Cms::Site.find_by(id: params[:site])
+      not_found! if @site.nil?
     end
 end
