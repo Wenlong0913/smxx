@@ -20,10 +20,10 @@ class ApplicationController < ActionController::Base
   end
 
   def check_subdomain!
-    return if @site.present?
+    return if @cms_site.present?
     return if ["", "www", "api"].include?(request.subdomain)
     if Subdomain.matches?(request) && Cms::Site.find_by(domain: request.subdomain)
-      @site = Cms::Site.find_by(domain: request.subdomain)
+      @cms_site = Cms::Site.find_by(domain: request.subdomain)
     end
   end
 
