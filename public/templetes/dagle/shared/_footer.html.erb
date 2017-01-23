@@ -191,9 +191,10 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          Dagle. Copyright &copy; 2017. All Rights Reserved
+          Dagle. Copyright &copy; 2017 成都德格软件技术有限公司
 
           <div class="pull-right hidden-xs">
+            技术支持：
             <a href="http://www.tanmer.com" target="_blank" title="探码科技">探码科技</a>
           </div>
         </div>
@@ -208,38 +209,40 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Modal example</h4>
+        <h4 class="modal-title">填写您的详细信息</h4>
       </div>
       <div class="modal-body">
-        <p class="lead">
-          This is a modal with costom transitions. You can choose from 'zoom-out' 'move-horizontal' & 'newspaper-effect'.
-        </p>
-
-        <p>
-          Below are some are some other home page variants that you can use -
-        </p>
-
-        <ul>
-          <li>
-            <a href="/">
-              Default home page with 2
-            </a>
-          </li>
-          <li>
-            <a href="<%= page_path("index_2") %>">
-              Home page for software products
-            </a>
-          </li>
-          <li>
-            <a href="<%= page_path("index_3") %>">
-              Home page for Mobile apps
-            </a>
-          </li>
-        </ul>
-
-      </div>
+        <form role="form">
+          <!-- 姓名 -->
+          <div class="form-group">
+            <label for="inputUserFirstname">公司名/个人姓名</label>
+            <input type="text" class="form-control input-lg" placeholder="输入公司名或您的姓名" id="inputUserFirstname">
+          </div>
+          <!-- 邮箱 -->
+          <div class="form-group">
+            <label for="inputUsernameEmail">邮箱地址</label>
+            <input type="text" class="form-control input-lg" placeholder="you@yourcompany.com" id="inputUsernameEmail">
+          </div>
+          <!-- 行业 -->
+          <div class="form-group">
+            <label for="inputUsernameLastname">所属行业</label>
+            <input type="text" class="form-control input-lg" placeholder="IT/制造/家具..." id="inputUsernameLastname">
+          </div>
+          <!--  -->
+          <div class="form-group">
+            <label for="inputUsernameContent">留言咨询</label>
+            <textarea type="text" class="form-control input-lg" placeholder="我们会逐一对您的疑问进行回答和采用" id="inputUsernameContent"></textarea>
+          </div>
+          <br>
+          <div class="actions">
+            <button type="submit" class="btn btn-lg btn-primary">
+              <i class="fa fa-check-sign"></i>提交订单
+            </button>
+          </div>
+        </form>
+      </div>  
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
