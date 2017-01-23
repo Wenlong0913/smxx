@@ -6,9 +6,11 @@
     <div id="blog">
       <section id="blog-index">
         <div class="container">
-
+          <div class="additional-header">
+            <h3>行业案例解决</h3>
+          </div>
           <div class="row">
-          <% Cms::Page.where(channel_id: '29').each do |page| %>
+          <% @channel.pages.each do |page| %>
             <div class="col-md-6 main-content">
               <article class="blog-post">
                 <div class="post-image">
@@ -29,21 +31,6 @@
                 <div class="text-right">
                   <a href="<%= get_cms_url(page) %>" class="btn btn-bordered btn-primary btn-round">进去看看 &rarr;</a>
                 </div>
-                <!-- <div class="post-content">
-                  <p class="lead">
-                    This is a very basic starter template for a blog homepage. It makes use of Font Awesome icons that are built into the 'Modern Business' template, and it makes use of the Bootstrap 3 pager at the bottom of the page
-                  </p>
-
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora, temporibus tempore fugiat quod ipsam aut aspernatur ut facere vero consequuntur eum nemo fugit alias est itaque et ullam culpa voluptatum! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, hic eum reiciendis beatae harum. Doloremque maxime laboriosam quas. Sapiente, delectus odit minus maiores libero itaque ullam iusto dignissimos. Facilis, perferendis.
-                  </p>
-
-                  <br>
-
-                  <div class="text-right">
-                    <a href="blog-post.html" class="btn btn-bordered btn-primary btn-round">Continue Reading &rarr;</a>
-                  </div>
-                </div> -->
               </article>
             </div>
           <% end %>

@@ -12,12 +12,11 @@
               <h1 class="headline-text"  data-aos="fade-up-right" style="font-size: 30px; font-weight: 300; margin-top: 60px; margin-bottom: 35px;">
                 德格·<%= @channel.title %>
               </h1>
-
               <p class="headline-text"  data-aos="fade-up-right" style="font-size: 43px;">
-                <strong>入驻互联网+  轻松无障碍</strong>
+                <strong><%= @channel.keywords %></strong>
               </p>
               <p class="subheading-text"  data-aos="fade-up-right">
-                支持企业的对外业务协作，从运作、管理和决策等层次全面提高企业信息化水平，为企业提供全渠道的电子商务网站建设
+                <%= @channel.description %>
               </p>
               <div class="buttons-container" data-aos="fade-up-right">
                 <!-- data-toggle="modal" data-target="#purchaseModal" -->
@@ -32,7 +31,7 @@
             </div>
 
             <div class="col-md-6 hidden-sm hidden-xs" data-aos="fade-up-left">
-              <img class="img-responsive main-img" src="/templetes/dagle/img/display/mockup-4.png" alt="<%= @channel.description %>">
+              <img class="img-responsive main-img" src="<%= @channel.image_path %>" alt="<%= @channel.description %>">
             </div>
           </div>
         </div>
