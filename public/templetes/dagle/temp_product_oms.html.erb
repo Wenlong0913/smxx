@@ -24,7 +24,7 @@
                   申请试用
                 </a>
                 <span class="or">or</span>
-                <a href="<%= page_path("features") %>" class="btn btn-link">
+                <a href="<%= get_cms_url("blog") %>" class="btn btn-link">
                   了解更多 &rarr;
                 </a>
               </div>
@@ -37,116 +37,7 @@
         </div>
       </section>
 
-      <!-- 实操描述 -->
-      <div id="services" class="page">
-        <div class="section-header">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12">
-                <h2>
-                完美优雅的交互界面,产品的价格\折扣\数量一目了然、事无巨细
-                  <br>
-                  <small>
-                    使库存、物流、订单形成一个一体化的有机的整体,使用户从服务到物流得到全程的满足
-                  </small>
-                </h2>
-              </div>
-            </div>
-          </div>
-        </div>
-        <section class="tour">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="text-center">
-                  <img src="/templetes/dagle/img/display/tour-1.png" alt="" class="img-responive">
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <!-- 应用特点 -->
-      <section id="features">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12 text-center">
-              <h2>
-                提升经销商的销售业绩,将“飞单”转变为企业自己经销商不在是不可能
-                <br>
-                <small>
-                  包括了订单处理、订单确认，订单状态管理（取消、付款、发货等，以及订单出库和订单查询）
-                </small>
-              </h2>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-right">
-              <img src="/templetes/dagle/img/display/mockup-2.png" class="img-responsive" alt="feature1" />
-            </div>
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-left">
-              <h3>优雅的展示商品,客户/订单数据一目了然</h3>
-              <p class="lead">
-                德格Saas平台的完美展示商品，为您的产品加分<br/>
-                价格/数量/商品信息/客户信息清清楚楚,为您的产品加分
-              </p>
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-right">
-              <h3>各大系统API无缝结合,让订单畅通无阻</h3>
-              <p class="lead">
-                无缝的系统结合，科学精准的判断库存数量<br/>通过销售订单、采购周期、库存预警的方式给出采购计划，让订单持续的增长没有阻碍
-              </p>
-            </div>
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-left">
-              <img src="/templetes/dagle/img/display/mockup-5.png" class="img-responsive" alt="feature1" />
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-right">
-              <img src="/templetes/dagle/img/display/mockup-2.png" class="img-responsive" alt="feature1" />
-            </div>
-
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-left">
-              <h3>订单状态可以查询，实时掌握产品订单的生产动态</h3>
-              <p class="lead">
-                产品的生产状态可以以短信的方式告知客户<br/>在线查询入口随时查看配送状态，发货时间、预计到货时间轻松可控
-              </p>
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-right">
-              <h3>一部手机处理所有订货业务,web、手机同步协作让生意更简单</h3>
-              <p class="lead">
-                实现多终端适用，PC端/移动端/微信端随时随地的下单<br/>扩大下单业务，提升管理效率和销售业绩
-              </p>
-            </div>
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-left">
-              <img src="/templetes/dagle/img/display/mockup-5.png" class="img-responsive" alt="feature1" />
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-right">
-              <img src="/templetes/dagle/img/display/mockup-2.png" class="img-responsive" alt="feature1" />
-            </div>
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-left">
-              <h3>经销商的业绩分析，掌握经销商的业绩进度</h3>
-              <p class="lead">
-                经内置的数据统计分析，打印出业绩图标<br/>直观的查看经销商的销售业绩,更好的优化与经销商的协作关系
-                
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <%= raw @channel.content %>
 
       <%= render file: "public/templetes/dagle/shared/partials/_application_domain.html.erb" %>     
 

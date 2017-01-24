@@ -24,7 +24,7 @@
                   申请试用
                 </a>
                 <span class="or">or</span>
-                <a href="<%= page_path("features") %>" class="btn btn-link">
+                <a href="<%= get_cms_url("blog") %>" class="btn btn-link">
                   了解更多 &rarr;
                 </a>
               </div>
@@ -36,114 +36,9 @@
           </div>
         </div>
       </section>
-
-      <!-- 实操描述 -->
-      <div id="services" class="page">
-        <div class="section-header">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12">
-                <h2>
-                  了解德格ERP的应用功能，只需要泡一杯咖啡的时间
-                  <br>
-                  <small>
-                    部署简单，使用方便，维护低成本，根据企业自身的发展量身定制
-                  </small>
-                </h2>
-              </div>
-            </div>
-          </div>
-        </div>
-        <section class="tour">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="text-center">
-                  <img src="/templetes/dagle/img/display/tour-1.png" alt="" class="img-responive">
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <!-- 应用特点 -->
-      <section id="features">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12 text-center">
-              <h2>不再做怪兽级别的ERP，没有冗长的流程，都是 '走心'的操作</h2>
-              <p class="lead">走心的操作，个性化定制、API无缝对接、业务高效协同、透明化的产品更新 ……</p>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-right">
-              <img src="/templetes/dagle/img/display/mockup-2.png" class="img-responsive" alt="feature1" />
-            </div>
-
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-left">
-              <h3>全方位进销存管理</h3>
-              <p class="lead">
-                让您从繁忙、复杂的琐事中得到解放<br/>
-                让我成为您最得力的管家
-              </p>
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-right">
-              <h3>安全库存预警，科学智能的采购分析</h3>
-              <p class="lead">完备的库存管理功能，自定义库存物料预警<br/>
-              根据销售速度、采购周期、库存上下限，自动生成物料采购数量，让生产永不停歇</p>
-            </div>
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-left">
-              <img src="/templetes/dagle/img/display/mockup-5.png" class="img-responsive" alt="feature1" />
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-right">
-              <img src="/templetes/dagle/img/display/mockup-2.png" class="img-responsive" alt="feature1" />
-            </div>
-
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-left">
-              <h3>多角色的权限分配</h3>
-              <p class="lead">
-                严谨的权限控制，精确到字段级别<br/>
-                可以精细分配数据任务，
-                保障了数据安全。
-              </p>
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-right">
-              <h3>各部门、各角色数据共享</h3>
-              <p class="lead">数据实现各部门、经销商的数据互连<br/>大数据科学的精准分析，数据营销提高销售效益</p>
-            </div>
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-left">
-              <img src="/templetes/dagle/img/display/mockup-5.png" class="img-responsive" alt="feature1" />
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-right">
-              <img src="/templetes/dagle/img/display/mockup-2.png" class="img-responsive" alt="feature1" />
-            </div>
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-left">
-              <h3>进度实时追踪，过程尽在掌控</h3>
-              <p class="lead">
-                内部产品生产管理的进度实时跟进可查<br/>通过短信让客户实时地了解产品的生产阶段<br/>
-                做到不催单，让客户放心、省心。
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
       
+      <%= raw @channel.content %>
+
       <%= render file: "public/templetes/dagle/shared/partials/_application_domain.html.erb" %>
 
       <!-- 客户案例 -->

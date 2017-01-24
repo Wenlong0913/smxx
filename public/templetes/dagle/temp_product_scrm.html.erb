@@ -24,7 +24,7 @@
                   申请试用
                 </a>
                 <span class="or">or</span>
-                <a href="<%= page_path("features") %>" class="btn btn-link">
+                <a href="<%= get_cms_url("blog") %>" class="btn btn-link">
                   了解更多 &rarr;
                 </a>
               </div>
@@ -37,101 +37,7 @@
         </div>
       </section>
 
-      <!-- 实操描述 -->
-      <div id="services" class="page">
-        <div class="section-header">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12">
-                <h2>
-                  德格的Social·CRM系统帮您从社交媒体中“聆听”客户的心声
-                  <br>
-                  <small>
-                    Social·CRM系统通过社交媒体分析和归纳总结,将各种业务流程、人员和技术联系在一起,实现并保持让客户满意这一目标
-                  </small>
-                </h2>
-              </div>
-            </div>
-          </div>
-        </div>
-        <section class="tour">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="text-center">
-                  <img src="/templetes/dagle/img/display/tour-1.png" alt="" class="img-responive">
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <!-- 应用特点 -->
-      <section id="features">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12 text-center">
-              <h2>从蛛丝马迹中发现销售机遇，让客户成为企业终生拥护者</h2>
-              <p class="lead">德格Social·CRM系统将配班与企业一起成长,您可随时扩展及定制业务</p>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-right">
-              <img src="/templetes/dagle/img/display/mockup-2.png" class="img-responsive" alt="feature1" />
-            </div>
-
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-left">
-              <h3>主动的对客户的社交行为进行分析</h3>
-              <p class="lead">
-                主动追踪并管理客户资料，注重随时随地的维护客户关系<br>让您能发现更多的商机，达成更多的交易
-              </p>
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-right">
-              <h3>拥有及时的应变能力、导向能力</h3>
-              <p class="lead">
-                经过大数据自动生成直观的数据视图，为企业的业务规划和方向起到决定性的作用<br/>仅需一眼便可掌握所有信息
-              </p>
-            </div>
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-left">
-              <img src="/templetes/dagle/img/display/mockup-5.png" class="img-responsive" alt="feature1" />
-            </div>
-          </div>
-          <div class="divider"></div>
-
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-right">
-              <img src="/templetes/dagle/img/display/mockup-2.png" class="img-responsive" alt="feature1" />
-            </div>
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-left">
-              <h3>精细化管理所有客户资料,让您能专注于捕捉、挖掘潜在商机</h3>
-              <p class="lead">
-                发现更多商机，迅速的处理并实现更多交易<br>根据客户社交媒体、行为，预测客户需求
-              </p>
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="row feature-single">
-            <div class="col-md-6 col-sm-8 text" data-aos="fade-up-right">
-              <h3>拥有及时的应变能力、导向能力</h3>
-              <p class="lead">
-                经过大数据自动生成直观的扑图信息，为企业的业务规划和方向起到决定性的作用<br/>让您能专注于捕捉商机挖掘潜在商机
-              </p>
-            </div>
-            <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-left">
-              <img src="/templetes/dagle/img/display/mockup-5.png" class="img-responsive" alt="feature1" />
-            </div>
-          </div>
-          <div class="divider"></div>
-
-        </div>
-      </section>
+      <%= raw @channel.content %>
 
       <%= render file: "public/templetes/dagle/shared/partials/_application_domain.html.erb" %>  
 
