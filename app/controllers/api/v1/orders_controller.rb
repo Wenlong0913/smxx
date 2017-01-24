@@ -5,7 +5,8 @@ class Api::V1::OrdersController < Api::BaseController
   def index
     authorize Order
     page_size = params[:page_size] ? params[:page_size].to_i : 20
-    orders = @orders.page(params[:page] || 1).per(page_size)
+    orders = params['search_content'].blank? ? @orders : @orders.where("code like :key", {key: ['%',params['search_content'].upcase, '%'].join})
+    orders = orders.page(params[:page] || 1).per(page_size)
     orders_json = order_json(orders)
     render json: render_base_data(orders_json, orders, page_size, @order_list_type)
   end
