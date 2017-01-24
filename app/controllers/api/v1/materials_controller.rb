@@ -53,7 +53,10 @@ class Api::V1::MaterialsController < Api::V1::BaseController
       methods: %w(stock image_item_ids),
       include: {
         catalog: { only: %w(id name), methods: %w(full_name) },
-        image_items: { only: %w(id), methods: %w(image_url image_file_name) }
+        image_items: { only: %w(id), methods: %w(image_url image_file_name) },
+        material_warehouse_items: { only: %w(stock),
+          include: {material_warehouse: {only: %w{name}}}
+        }
       }
     )
   end
