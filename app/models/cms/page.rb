@@ -9,6 +9,9 @@ class Cms::Page < ApplicationRecord
   #   message: "名称简写只能包括字母数字和横线" }
   validates_uniqueness_of :short_title
 
+  before_save :set_content_image
+  before_save :set_thumb_image_path
+
   enum properties: {
     hot: 0,
     recommend: 1,
@@ -78,5 +81,30 @@ class Cms::Page < ApplicationRecord
       suffix += ('a'..'z').to_a.sample
     end
   end
+
+ #set image_path to thumb
+ def set_thumb_image_path
+   if image_path =~ /\/(content|original)\./
+     image_path.sub!(/\/(content|original)\./, '/thumb.')
+   end
+ end
+
+ #remove width/height style, add class='img-responsive'
+ def set_content_image
+   doc = Nokogiri::HTML(content)
+   begin
+     doc.search("img").each do |img|
+       img.remove_attribute("style")
+       if img.attributes["class"].nil?
+         img.set_attribute("class", "img-responsive")
+       elsif (val = img.attribute("class").value) !~ /img-responsive/
+         img.set_attribute("class", "#{val} img-responsive")
+       end
+     end
+   rescue => ex
+     puts ex.message
+   end
+   self.content = doc.at("body").inner_html
+ end
 
 end
