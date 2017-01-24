@@ -2,44 +2,43 @@
 
 <div id="barba-wrapper">
   <div class="barba-container">
-
     <div id="blog">
       <section id="blog-index">
         <div class="container">
           <div class="additional-header">
-            <h3>行业案例解决</h3>
+            <h2>行业解决方案</h2>
           </div>
           <div class="row">
-          <% @channel.pages.each do |page| %>
-            <div class="col-md-6 main-content">
-              <article class="blog-post">
-                <div class="post-image">
-                  <a href="blog-post.html">
-                    <img src="<%= page.image_path %>" alt="<%= page.keywords %>" class="img-thumbnail img-responsive">
-                  </a>
-                </div>
-                <div class="post-meta">
-                  <div class="post-meta-text text-muted">
-                    <p class="lead">
-                      <a href="<%= get_cms_url(page) %>"><%= page.title %></a><br><%= page.keywords %>
-                    </p>
-                    <p>
-                      <i class="fa fa-clock-o"></i> <%= get_date(page.updated_at) %>创建
-                    </p>
+            <% @channel.pages.each do |page| %>
+              <div class="col-md-6">
+                <article class="blog-post">
+                  <div class="post-image">
+                    <a href="<%= get_cms_url(page) %>">
+                      <img src="<%= page.image_path %>" alt="<%= page.keywords %>" class="img-thumbnail img-responsive">
+                    </a>
                   </div>
-                </div>
-                <div class="text-right">
-                  <a href="<%= get_cms_url(page) %>" class="btn btn-bordered btn-primary btn-round">进去看看 &rarr;</a>
-                </div>
-              </article>
-            </div>
-          <% end %>
+                  <h3 style="font-size: 30px;"><%= link_to page.title, get_cms_url(page)%><br/>
+                    <small><i class="fa fa-clock-o"></i> 发布时间：<%= get_date(page.updated_at) %></small>
+                  </h3>
+                  <p class="lead">
+                    <%= page.keywords %>
+                  </p>
+                  <div class="post-content">
+                    <p class="lead">
+                      <%= page.description %> 
+                    </p>
+                    <br>
+                    <div class="text-right">
+                      <a href="<%= get_cms_url(page) %>" class="btn btn-bordered btn-primary btn-round">阅读更多 &rarr;</a>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            <% end %>
           </div> 
         </div>
       </section>
     </div>
-
-
   </div>
 </div>
 

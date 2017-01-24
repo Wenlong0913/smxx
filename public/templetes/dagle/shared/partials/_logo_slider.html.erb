@@ -8,7 +8,7 @@
   </div>
 
   <div id="logo-slider">
-    <% Cms::Page.where(channel_id: '29').each do |page| %>
+    <% Cms::Page.where(channel_id: '32').each do |page| %>
       <div class="item"><a href="<%= get_cms_url(page) %>"><img src="<%= page.image_path %>" ></a></div>
     <% end %>
   </div>
