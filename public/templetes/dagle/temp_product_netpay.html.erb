@@ -24,7 +24,7 @@
                   申请试用
                 </a>
                 <span class="or">or</span>
-                <a href="<%= page_path("features") %>" class="btn btn-link">
+                <a href="<%= get_cms_url("blog") %>" class="btn btn-link">
                   了解更多 &rarr;
                 </a>
               </div>
@@ -37,79 +37,7 @@
         </div>
       </section>
 
-      <!-- 实操描述 -->
-      <div id="services" class="page">
-        <div class="section-header">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12">
-                <h2>
-                  PC、手机、微信，三网合一，数据互通，维护简单
-                  <br>
-                  <small>
-                    微信/微博/QQ营销，电话营销，邮件营销，线上H5海报
-                  </small>
-                </h2>
-              </div>
-            </div>
-          </div>
-        </div>
-        <section id="features" style="padding: 0px;">
-          <div class="container">
-            <div class="row feature-single" style="margin: 0px;">
-              <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-right">
-                <img src="/templetes/dagle/img/display/mockup-2.png" class="img-responsive" alt="feature1" />
-              </div>
-
-              <div class="col-md-6 col-sm-8 text" data-aos="fade-up-left">
-                <h3>跨平台，多终端数据同步</h3>
-                <p class="lead">
-                  客户能在使用PC、手机、微信、pad等终端设备访问，均可让客户具有良好的体验<br/>
-                  发布信息同步更新，不同设备切换完美
-                </p>
-              </div>
-            </div>
-            <div class="divider"></div>
-            <div class="row feature-single">
-              <div class="col-md-6 col-sm-8 text" data-aos="fade-up-right">
-                <h3>定制化网站搭建, 所见即所得</h3>
-                <p class="lead">
-                  灵活专一的风格选择、配色方案<br/>搭建出数据自己的个性化的网站，
-                </p>
-              </div>
-              <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-left">
-                <img src="/templetes/dagle/img/display/mockup-5.png" class="img-responsive" alt="feature1" />
-              </div>
-            </div>
-            <div class="divider"></div>
-            <div class="row feature-single" style="margin: 0px;">
-              <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-right">
-                <img src="/templetes/dagle/img/display/mockup-2.png" class="img-responsive" alt="feature1" />
-              </div>
-
-              <div class="col-md-6 col-sm-8 text" data-aos="fade-up-left">
-                <h3>强有力的数据采集，企业门户网张最有力的支撑</h3>
-                <p class="lead">
-                快速准确地自动跟踪、采集数千家网络媒体信息<br/>扩大新闻线索，提高采集速度
-                </p>
-              </div>
-            </div>
-            <div class="divider"></div>
-            <div class="row feature-single">
-              <div class="col-md-6 col-sm-8 text" data-aos="fade-up-right">
-                <h3>做电子商务，提供最有力的保障</h3>
-                <p class="lead">
-                  全网产品信息采集，产品素材获取<br/>通过分析产品价格和销量，指导新品上架策略<br/>云评论系统的搭建和维护<br/>
-                  电子商务渠道分销
-                </p>
-              </div>
-              <div class="col-md-6 col-sm-4 image hidden-xs" data-aos="fade-up-left">
-                <img src="/templetes/dagle/img/display/mockup-5.png" class="img-responsive" alt="feature1" />
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
+      <%= raw @channel.content %>
 
       <%= render file: "public/templetes/dagle/shared/partials/_application_domain.html.erb" %>
 
