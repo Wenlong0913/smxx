@@ -23,6 +23,7 @@ class Task < ApplicationRecord
 
   before_validation do
     self.title = task_type.name if self.title.blank? && task_type
+    self.ordinal = task_type.ordinal if self.ordinal.blank? && task_type
     self.site_id = Site::MAIN_ID
   end
 end

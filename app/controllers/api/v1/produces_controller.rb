@@ -16,8 +16,8 @@ class Api::V1::ProducesController < Api::V1::BaseController
             member: {only: [:name]}}
           },
         tasks: {
-          only: [:id, :assignee_id, :title, :description, :status],
-          include: {task_type: {only: [:id, :name]}}
+          only: [:id, :assignee_id, :title, :description, :status, :resource_id],
+          include: {task_type: {only: [:id, :name, :ordinal]}}
         }
       }
     )

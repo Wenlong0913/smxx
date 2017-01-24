@@ -16,12 +16,14 @@ module ApiRoute
           resources :material_stock_alerts, only: [:index]
           resources :material_catalogs, only: [:index]
           resources :produces, only: [:index, :create] do
-            resources :tasks, only: [:create, :index]
+            resources :tasks, only: [:create, :index, :update]
           end
+          resources :task_types, only: [:index]
           resources :image_items, only: [:create]
           resources :sites, only: [:index]
           resources :members, only: [:index]
           resources :search, only: [:index]
+          resources :users, only: [:index]
         end
       end
     end
