@@ -19,36 +19,53 @@
         = link_to admin_root_path do
           = fa_icon 'laptop', text: '首页'
 
+      li class=("has-sub #{'active' if page?('admin/materials', admin_material_catalogs_path, 'admin/material_managements', 'admin/vendors', 'admin/material_warehouses', 'admin/material_management_histories', 'admin/material_stock_alerts')}")
+        a href="javascript:;"
+          b.caret.pull-right
+          i.fa.fa-inbox
+          span 物料进销存
+        ul.sub-menu
+          li[class= ('active' if page?('admin/materials#index'))]
+            = link_to '物料列表', admin_materials_path
+          li[class= ('active' if page?('/admin/material_managements?type=output'))]
+            = link_to '物料出库', admin_material_managements_path(type: 'output')
+          li[class= ('active' if page?('/admin/material_managements?type=input'))]
+            = link_to '物料入库', admin_material_managements_path(type: 'input')
+          li[class= ('active' if page?(admin_material_catalogs_path))]
+            = link_to '物料分类', admin_material_catalogs_path
+          li[class= ('active' if page?('admin/material_warehouses'))]
+            = link_to '物料仓库', admin_material_warehouses_path
+          li class=("has-sub #{'active' if page?('admin/material_warehouse_stock_managements', 'admin/material_management_histories', 'admin/material_stock_alerts')}")
+            a href="javascript:;"
+              b.caret.pull-right
+              span 物料库存
+            ul.sub-menu
+              li[class=('active' if page?('admin/material_management_histories'))]
+                = link_to '库存流水', admin_material_management_histories_path
+              li[class=('active' if page?('admin/material_stock_alerts'))]
+                = link_to '库存警报', admin_material_stock_alerts_path
+
       / 订单管理
       li class=("has-sub #{'active' if page?('admin/orders')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-cube
-          span #{Order.model_name.human}管理
+          span 订单流程协同
         ul.sub-menu
           li[class=('active' if page?('admin/orders#new'))]
             = link_to "创建#{Order.model_name.human}", new_admin_order_path
           li[class=('active' if page?('admin/orders#index'))]
             = link_to "#{Order.model_name.human}管理", admin_orders_path
-      / 生产任务
-      li class="#{'active' if page?('admin/produces', 'admin/orders/:order_id/produces/:id')}"
-        = link_to admin_produces_path do
-          = fa_icon 'file-text', text: "#{Produce.model_name.human}管理"
+          / 生产任务
+          li class="#{'active' if page?('admin/produces', 'admin/orders/:order_id/produces/:id')}"
+            = link_to admin_produces_path do
+              = fa_icon 'file-text', text: "#{Produce.model_name.human}管理"
 
-      li class="#{'active' if page?('admin/task_types')}"
-        = link_to admin_task_types_path do
-          = fa_icon 'file-text', text: "#{TaskType.model_name.human}管理"
+          li class="#{'active' if page?('admin/task_types')}"
+            = link_to admin_task_types_path do
+              = fa_icon 'file-text', text: "#{TaskType.model_name.human}管理"
 
-      li class=("has-sub #{'active' if page?('admin/tracker/home', 'admin/tracker/shares/home')}")
-        a href="javascript:;"
-          b.caret.pull-right
-          i.fa.fa-inbox
-          span 站点统计
-        ul.sub-menu
-          li[class=('active' if page?('admin/tracker/home#index'))]
-            = link_to '访问统计', admin_tracker_path
-          li[class=('active' if page?('admin/tracker/shares/home#show'))]
-            = link_to '分销统计', admin_tracker_shares_path
+
       li class=("has-sub #{'active' if page?('admin/products', 'admin/catalogs#index?klass=ProductCatalog')}")
         a href="javascript:;"
           b.caret.pull-right
@@ -70,55 +87,36 @@
         ul.sub-menu
           li[class= ('active' if page?('admin/catalogs#index?klass='))]
             = link_to '所有分类', admin_catalogs_path
-      li class=("has-sub #{'active' if page?('admin/materials', admin_material_catalogs_path, 'admin/material_managements', 'admin/vendors', 'admin/material_warehouses', 'admin/material_management_histories', 'admin/material_stock_alerts')}")
-        a href="javascript:;"
-          b.caret.pull-right
-          i.fa.fa-inbox
-          span 物料管理
-        ul.sub-menu
-          li[class= ('active' if page?('admin/materials#index'))]
-            = link_to '物料列表', admin_materials_path
-          li[class= ('active' if page?('/admin/material_managements?type=output'))]
-            = link_to '物料出库', admin_material_managements_path(type: 'output')
-          li[class= ('active' if page?('/admin/material_managements?type=input'))]
-            = link_to '物料入库', admin_material_managements_path(type: 'input')
-          li[class= ('active' if page?(admin_material_catalogs_path))]
-            = link_to '物料分类', admin_material_catalogs_path
-          li[class= ('active' if page?('admin/material_warehouses'))]
-            = link_to '物料仓库', admin_material_warehouses_path
-          li class=("has-sub #{'active' if page?('admin/material_warehouse_stock_managements', 'admin/material_management_histories', 'admin/material_stock_alerts')}")
-            a href="javascript:;"
-              b.caret.pull-right
-              span 物料库存
-            ul.sub-menu
-              li[class=('active' if page?('admin/material_management_histories'))]
-                = link_to '库存流水', admin_material_management_histories_path
-              li[class=('active' if page?('admin/material_stock_alerts'))]
-                = link_to '库存警报', admin_material_stock_alerts_path
-          li[class= ('active' if page?('admin/vendors#index'))]
-            = link_to '供应商', admin_vendors_path
 
-      li class=("has-sub #{'active' if page?('admin/sites')}")
-        a href="javascript:;"
-          b.caret.pull-right
-          i.fa.fa-inbox
-          span #{Site.model_name.human}管理
-        ul.sub-menu
-          li[class=('active' if page?('admin/sites#index'))]
-            = link_to '列表', admin_sites_path
-      
+
       li class=("has-sub #{'active' if page?('admin/users', 'admin/roles', 'admin/user/weixins')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
-          span 账户管理
+          span 账户角色分工
         ul.sub-menu
           li class=("#{'active' if page?('admin/users')}") = link_to '用户', admin_users_path
           li class=("#{'active' if page?('admin/user/weixins')}") = link_to '微信用户', admin_user_weixins_path
           li class=("#{'active' if page?('admin/roles')}") = link_to '角色', admin_roles_path
+          li[class= ('active' if page?('admin/vendors#index'))]
+            = link_to '供应商', admin_vendors_path
+          li class=("has-sub #{'active' if page?('admin/sites')}")
+            = link_to '经销商', admin_sites_path
+
       li
         = link_to cms_sites_path do
           = fa_icon 'file-text', text: 'CMS系统'
+
+      li class=("has-sub #{'active' if page?('admin/tracker/home', 'admin/tracker/shares/home')}")
+        a href="javascript:;"
+          b.caret.pull-right
+          i.fa.fa-inbox
+          span 站点统计
+        ul.sub-menu
+          li[class=('active' if page?('admin/tracker/home#index'))]
+            = link_to '访问统计', admin_tracker_path
+          li[class=('active' if page?('admin/tracker/shares/home#show'))]
+            = link_to '分销统计', admin_tracker_shares_path
       li class=("has-sub")
         a href="javascript:;"
           b.caret.pull-right
