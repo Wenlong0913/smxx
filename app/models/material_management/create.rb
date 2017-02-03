@@ -11,16 +11,17 @@ class MaterialManagement
           record.errors.add(:material_management_details, '为空')
           return [false, record]
         end
-
         # 出库时，检查库存是否充足
         if attributes["operate_type"] == 'output'
           # 检查仓库的库存是否足够
           alert_materials = []
-          attributes[:material_management_details_attributes].values.each do |detail|
+          details = attributes[:material_management_details_attributes].is_a?(Hash) ? attributes[:material_management_details_attributes].values : attributes[:material_management_details_attributes]
+          details.each do |detail|
             material = Material.find(detail["material_id"])
             warehouse_stock = material_warehouse.material_warehouse_items.find_by(material: material).try(:stock) || 0
             alert_materials << material.name if warehouse_stock < detail["number"].to_i
           end
+
           unless alert_materials.blank?
             record.errors.add(:description, ": #{alert_materials.join(', ')}库存不足")
             return [false, record]

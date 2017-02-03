@@ -76,7 +76,7 @@ h1.page-header
               tr
                 td = material_management.id
                 td = material_management.operate_date
-                td = material_management.material_warehouse.name
+                td = material_management.material_warehouse.try(:name)
                 td = detail.material.name
                 td = detail.material.name_py
                 td = detail.number

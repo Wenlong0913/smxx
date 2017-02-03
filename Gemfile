@@ -84,6 +84,9 @@ gem 'chinese_pinyin'
 #used in CMS: public/templetes/generate_templetes.rb
 gem 'iconv', '~> 1.0', '>= 1.0.4'
 
+# 跨域访问
+gem 'rack-cors', :require => 'rack/cors'
+
 #weixin
 gem "weixin_rails_middleware", '~> 1.3', '>= 1.3.1'
 gem 'weixin_authorize', '1.6.3'
