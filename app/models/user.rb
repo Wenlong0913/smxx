@@ -32,6 +32,7 @@ class User < ApplicationRecord
   has_one :weixin, dependent: :destroy
   has_many :image_items, dependent: :destroy, as: :owner
   has_many :members, dependent: :destroy
+  has_many :orders, dependent: :destroy
   attr_accessor :mobile_phone
   validates :mobile_phone, mobile_phone: true, allow_blank: true
 
@@ -51,6 +52,10 @@ class User < ApplicationRecord
 
   def super_admin_or_admin?
     has_any_role?({name: :admin, resource: :any}, {name: :super_admin, resource: :any})
+  end
+
+  def token
+    AuthToken.encode(user_id: self.id)
   end
 
 end

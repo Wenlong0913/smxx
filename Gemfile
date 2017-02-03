@@ -18,6 +18,7 @@ gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
 gem 'kaminari', '~> 0.17.0'
 gem 'kaminari-i18n', '~> 0.4.0'
 
@@ -42,10 +43,10 @@ gem 'devise', '~> 4.2.0'
 gem 'devise-i18n'
 gem 'jwt', '~> 1.5.6'
 gem 'settingslogic', '~> 2.0.9'
-gem 'swagger-docs'
+# gem 'swagger-docs' # 太麻烦，不如自己写markdown文档
 gem 'font-awesome-rails', '~> 4.7.0'
 gem 'simple_form', '~> 3.3.1'
-gem 'active_model_serializers'
+# gem 'active_model_serializers' # 不好用，不如直接as_json输出
 
 # gem 'client_side_validations',
 #   github: 'DavyJonesLocker/client_side_validations',
@@ -83,10 +84,14 @@ gem 'chinese_pinyin'
 #used in CMS: public/templetes/generate_templetes.rb
 gem 'iconv', '~> 1.0', '>= 1.0.4'
 
+# 跨域访问
+gem 'rack-cors', :require => 'rack/cors'
+
 #weixin
 gem "weixin_rails_middleware", '~> 1.3', '>= 1.3.1'
 gem 'weixin_authorize', '1.6.3'
 gem "omniauth-wechat-oauth2", "~> 0.1.0"
+gem 'rqrcode', '~> 0.10.1'
 
 # require components
 gem 'sms', path: 'components/sms'

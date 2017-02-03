@@ -10,6 +10,18 @@
   - [imageAlbum(图片集显示)](webpack/components/image_album/README.md)
   - [multiImageUpload(多图片上传)](webpack/components/multi_image_upload/README.md)
   - [modal(模态框)](webpack/components/modal/README.md)
+  - Rails模块
+      - [Decorator](#module-decorator)
+
+  - Vue组件
+      - [Loading（页面Loading动画）](webpack/components/loading/README.md)
+      - [Backdrop（半透明蒙版）](webpack/components/backdrop/README.md)
+      - [Catalog(分类显示和管理)](webpack/components/catalog/README.md)
+      - [imageUpload(图片上传)](webpack/components/image_upload/README.md)
+      - [imageSelect(图片选择+多图片上传)](webpack/components/image_select/README.md)
+      - [imageAlbum(图片集显示)](webpack/components/image_album/README.md)
+      - [multiImageUpload(多图片上传)](webpack/components/multi_image_upload/README.md)
+      - [modal(模态框)](webpack/components/modal/README.md)
 
 - [如何开始工作](#get-started)
   - [怎么生成一个Model](#how-to-generate-model)
@@ -43,14 +55,7 @@
 
 因为Gem `drapper` 是一个成熟的Decorator,但是他不支持Rails 5，所以我们自己写个组件实现这个功能
 
-所在目录： `components/decorator`
-
-<a name="module-loading"></a>
-### Loading数据加载效果
-
-<loading v-show="loading"/>
-
-控制显示与否，设置loading值就可以了
+所在目录： `components/decorator`，[查看文档](components/decorator/README.md)
 
 <a name="get-started"></a>
 ## 如何开始工作

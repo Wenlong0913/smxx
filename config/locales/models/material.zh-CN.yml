@@ -4,9 +4,11 @@ zh-CN:
     models:
       material: 物料
     attributes:
-      material: {}
+      material:
+        stock: 库存数
+        min_stock: 库存警戒线
     errors:
       models:
-        material: 
+        material:
   helpers:
-    material: 
+    material:

@@ -1,7 +1,7 @@
 h1.page-header
-  | 物料#{I18n.t("material_managements."+@type)}列表
+  | 物料#{@operate_type_name}列表
   .pull-right
-    = link_to "新建物料#{I18n.t("material_managements."+@type)}", new_admin_material_management_path(type: @type), class: 'btn btn-primary'
+    = link_to "新建物料#{@operate_type_name}", new_admin_material_management_path(type: @type), class: 'btn btn-primary'
 
 .panel.panel-default
   .panel-heading
@@ -58,24 +58,29 @@ h1.page-header
           = @material_managements.size.to_s + "条记录"
         span.close[data-dismiss="alert"]
           | ×
+
     .table-responsive.row.m-0
       table.table.table-striped.table-bordered
         thead
           tr
-            th 出库日期
-            th 备注
+            th #{@operate_type_name}编号
+            th #{@operate_type_name}日期
+            th 仓库名
+            th 物料名称
+            th 物料编号
             th 数量
-            th 操作
+            th 备注
         tbody
           - @material_managements.each do |material_management|
-            tr
-              td = material_management.operate_date
-              td = material_management.note
-              td = material_management.material_management_details.map(&:number).sum
-              td
-                => link_to '查看', admin_material_management_path(material_management), class: 'btn btn-xs btn-info'
-                => link_to '编辑', edit_admin_material_management_path(material_management), class: 'btn btn-xs btn-warning'
-                = link_to '删除', admin_material_management_path(material_management), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+            - material_management.material_management_details.each do |detail|
+              tr
+                td = material_management.id
+                td = material_management.operate_date
+                td = material_management.material_warehouse.try(:name)
+                td = detail.material.name
+                td = detail.material.name_py
+                td = detail.number
+                td = material_management.note
 / TODO: move this code to application.js
 javascript:
   $(document).ready(function(){
