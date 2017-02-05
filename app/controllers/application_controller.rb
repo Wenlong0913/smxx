@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
     redirect_to(request.referrer || root_path)
   end
 
+  #localhost visit subdomain with: http://subname.lvh.me:5000/
   def check_subdomain!
     return if @cms_site.present?
     return if ["", "www", "api"].include?(request.subdomain)

@@ -5,12 +5,12 @@ class CmsController < ApplicationController
   before_action :set_site
 
   def index
-    @channel = @site.channels.first
+    @channel = @cms_site.channels.first
   end
 
   def channel
-    @channel ||= @site.channels.find_by(short_title: params[:channel])
-    @channel ||= @site.channels.find_by(id: params[:channel])
+    @channel ||= @cms_site.channels.find_by(short_title: params[:channel])
+    @channel ||= @cms_site.channels.find_by(id: params[:channel])
     @channel || not_found!
     @channel
     @pages = @channel.pages.page(params[:page])
@@ -22,7 +22,7 @@ class CmsController < ApplicationController
   end
 
   def page
-    @page = @site.pages.find(params[:id])
+    @page = @cms_site.pages.find(params[:id])
     @channel = @page.channel
     if @page && request.path != good_path=get_cms_url(@page)
       redirect_to good_path
@@ -33,10 +33,10 @@ class CmsController < ApplicationController
 
   def search
     if params[:utf8]
-      redirect_to cms_frontend_search_path(site: @site, search: URI.escape(params[:search]))
+      redirect_to cms_frontend_search_path(site: @cms_site, search: URI.escape(params[:search]))
     else
-      @pages = @site.pages.search(params[:search]).order("updated_at DESC").page(params[:page])
-      @channel ||= @site.channels.first
+      @pages = @cms_site.pages.search(params[:search]).order("updated_at DESC").page(params[:page])
+      @channel ||= @cms_site.channels.first
     end
   end
 
@@ -44,8 +44,6 @@ class CmsController < ApplicationController
 
   private
     def set_site
-      @site = @cms_site
-      # @site ||= Cms::Site.find_by(id: params[:site])
-      not_found! if @site.nil?
+      not_found! if @cms_site.nil?
     end
 end

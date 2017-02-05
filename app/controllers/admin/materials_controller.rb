@@ -3,6 +3,9 @@ require 'csv'
 class Admin::MaterialsController < Admin::BaseController
   before_action :set_material, only: [:show, :edit, :update, :destroy]
 
+  def dashboard
+    authorize Material
+  end
   # GET /admin/materials
   def index
     authorize Material

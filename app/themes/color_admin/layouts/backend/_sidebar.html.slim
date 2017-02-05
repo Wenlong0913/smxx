@@ -20,7 +20,7 @@
           = fa_icon 'laptop', text: '首页'
 
       li class=("has-sub #{'active' if page?('admin/materials', admin_material_catalogs_path, 'admin/material_managements', 'admin/vendors', 'admin/material_warehouses', 'admin/material_management_histories', 'admin/material_stock_alerts')}")
-        a href="javascript:;"
+        = link_to dashboard_admin_materials_path
           b.caret.pull-right
           i.fa.fa-inbox
           span 物料进销存
