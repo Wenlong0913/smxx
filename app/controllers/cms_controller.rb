@@ -44,6 +44,7 @@ class CmsController < ApplicationController
 
   private
     def set_site
-      not_found! if @cms_site.nil?
+      @site = @cms_site
+      not_found! if @site.nil?
     end
 end
