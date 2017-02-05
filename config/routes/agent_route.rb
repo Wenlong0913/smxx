@@ -5,6 +5,7 @@ module AgentRoute
         get '/', to: 'home#index', as: :root
         get 'sign_in', to: 'sessions#new'
         resources 'products'
+        resources 'orders'
       end
     end
   end

@@ -1,0 +1,43 @@
+.container-fluid.p-15.agent-orders
+  .header-control.row.m-b-15
+    .col-xs-6
+      .input-group
+        input.form-control[type="text" placeholder="订单搜索"]
+        span.input-group-btn
+          button.btn.btn-default[type="button"] Go!
+  .row.order-list
+    - 5.times do
+      .col-sm-6.col-md-3
+        .thumbnail
+          .caption
+            strong
+              | 订单号: 
+              span.m-l-10 22019210995103
+            hr
+            ul.order-message.m-0.p-0[type="none"]
+              li
+                div 创建时间:
+              li 经销商:
+              li 客户名称:
+              li 价格:
+              li 内部状态:
+            div.text-right
+              a.btn.btn-default.btn-sm.m-r-10[href="#" role="default"] 关闭订单
+              a.btn.btn-primary.btn-sm[href="#" role="button"] 查看订单
+  .row.order-footer.text-right
+    nav
+      ul.pagination.p-0.m-0
+        li
+          a[href="#"]
+            span[aria-hidden="true"] &laquo;
+        li
+          a[href="#"] 1
+        li
+          a[href="#"] 2
+        li
+          a[href="#"] 3
+        li
+          a[href="#"] 4
+        li
+          a[href="#"]
+            span[aria-hidden="true"] &raquo;
