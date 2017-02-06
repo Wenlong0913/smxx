@@ -25,6 +25,18 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
     end
   end
 
+
+  def update
+    material_purchase = MaterialPurchase.find(params[:id])
+    authorize material_purchase
+    flag, material_purchase = MaterialPurchase::Update.(material_purchase, permitted_attributes(material_purchase))
+    if flag
+      render json: {status: 'ok', material_purchases: material_purchase_json(material_purchase)}
+    else
+      render json: {status: 'failed', error_message:  material_purchase.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
+    end
+  end
+
   private
   def material_purchase_json(material_purchases)
     material_purchases.as_json(
