@@ -28,7 +28,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
 
   def create
     authorize Material
-    flag, material = Material::Create.(permitted_attributes(Material).merge(image_item_ids: params["image_item_ids"]))
+    flag, material = Material::Create.(permitted_attributes(Material))
     if flag
       render json: {status: 'ok', material: material_json(material)}
     else
@@ -39,7 +39,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
   def update
     material = set_material
     authorize material
-    flag, material = Material::Update.(material, permitted_attributes(material).merge(image_item_ids: params["image_item_ids"]))
+    flag, material = Material::Update.(material, permitted_attributes(material))
     if flag
       render json: {status: 'ok', material: material_json(material)}
     else
@@ -60,7 +60,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
   def material_json(materials)
     materials.as_json(
       only: %w(id name name_py catalog_id),
-      methods: %w(stock image_item_ids),
+      methods: %w(stock image_item_ids brand color size texture price unit),
       include: {
         catalog: { only: %w(id name), methods: %w(full_name) },
         image_items: { only: %w(id), methods: %w(image_url image_file_name) },

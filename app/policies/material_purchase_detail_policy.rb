@@ -1,4 +1,4 @@
-class MaterialPolicy < ApplicationPolicy
+class MaterialPurchaseDetailPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope
@@ -6,8 +6,9 @@ class MaterialPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    if user.super_admin_or_admin?
-      [:name, :name_py, :catalog_id, :min_stock, :price, :unit, :brand, :color, :size, :texture, :image_item_ids => [], :vendor_ids => []]
+    fail "请在#{__FILE__}中添加params的permit属性"
+    if user.has_role? :admin
+      []
     else
       []
     end

@@ -1,9 +1,11 @@
 class Material < Item
   audited
-  store_accessor :features, :price, :unit, :stock, :min_stock
+  store_accessor :features, :price, :unit, :stock, :min_stock, :brand, :color, :size, :texture
   validates_numericality_of :price, allow_blank: true
   has_many :image_item_relations, as: :relation
   has_many :image_items, :through => :image_item_relations
+  has_many :vendor_relations, as: :relation
+  has_many :vendors, :through => :vendor_relations
   has_many :material_warehouse_items, dependent: :destroy
   has_many :material_warehouses, through: :material_warehouse_items
   has_many :material_stock_alerts, dependent: :destroy

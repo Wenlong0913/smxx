@@ -1,4 +1,4 @@
-class MaterialPolicy < ApplicationPolicy
+class MaterialPurchasePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope
@@ -6,8 +6,8 @@ class MaterialPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    if user.super_admin_or_admin?
-      [:name, :name_py, :catalog_id, :min_stock, :price, :unit, :brand, :color, :size, :texture, :image_item_ids => [], :vendor_ids => []]
+    if user.has_role? :admin
+      [:purchase_date, :note, :vendor_id, :material_purchase_details_attributes => [:id, :material_id, :number, :price]]
     else
       []
     end

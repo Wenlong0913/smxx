@@ -24,6 +24,8 @@ module ApiRoute
           resources :members, only: [:index]
           resources :search, only: [:index]
           resources :users, only: [:index]
+          resources :vendors, only: [:index]
+          resources :material_purchases, only: [:index, :create]
         end
       end
     end
