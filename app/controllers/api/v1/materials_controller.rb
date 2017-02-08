@@ -36,6 +36,16 @@ class Api::V1::MaterialsController < Api::V1::BaseController
     end
   end
 
+  def batch_create
+    authorize Material
+    flag, message, materials = parse_material_upload_file
+    if flag
+      render json: {status: 'ok', materials: material_json(materials)}
+    else
+      render json: {status: 'failed', error_message:  message }
+    end   
+  end
+
   def update
     material = set_material
     authorize material
@@ -70,6 +80,52 @@ class Api::V1::MaterialsController < Api::V1::BaseController
         }
       }
     )
+  end
+
+  def parse_material_upload_file
+    require 'roo'
+    message = ""
+    all_upload = true
+    materials = []
+    begin
+      worksheet = Roo::Spreadsheet.open(params["file"].path)
+      # ["物料编号", "物料名", "物料分类", "品牌", "规格", "价格", "单位", "材质成分", "供应商"]
+      header = worksheet.row(0)
+      Material.transaction do
+        2.upto worksheet.last_row do |index|
+          # .row(index) will return the row which is a subclass of Array
+          row = worksheet.row(index)
+
+          attributes = {
+            name_py:      row[0],
+            name:         row[1],
+            catalog_id:   MaterialCatalog.where(name: row[2]).first.try(:id),
+            brand:        row[3],
+            size:         row[4],
+            price:        row[5],
+            unit:         row[6],
+            texture:      row[7],
+            vendor_ids:   Vendor.where(name: row[8]).pluck(:id)
+          }
+
+          flag, material = Material::Create.(attributes)
+          if flag
+            materials.push(material)
+          else
+            material.errors.messages.each_pair do |k, v|
+              message += material.send(k) +':'+ v.join(':')
+            end
+            all_upload = false
+            raise ActiveRecord::Rollback
+            break
+          end
+        end
+      end
+    rescue
+      all_upload = false
+      message = '文件打不开，请检查文件类型！'
+    end
+    [all_upload, message, materials]
   end
 
 end

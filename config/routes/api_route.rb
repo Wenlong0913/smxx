@@ -8,7 +8,11 @@ module ApiRoute
             resource :sms, only: [:create]
           end
           resources :sessions, only: [:create]
-          resources :materials, only: [:index, :create, :update]
+          resources :materials, only: [:index, :create, :update] do
+            collection do
+              post :batch_create
+            end
+          end
           resources :orders, only: [:index, :create]
           resources :material_management_details, only: [:index, :create]
           resources :material_managements, only: [:create]

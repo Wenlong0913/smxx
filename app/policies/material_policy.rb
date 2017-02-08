@@ -5,6 +5,10 @@ class MaterialPolicy < ApplicationPolicy
     end
   end
 
+  def batch_create?
+    create?
+  end
+
   def permitted_attributes_for_create
     if user.super_admin_or_admin?
       [:name, :name_py, :catalog_id, :min_stock, :price, :unit, :brand, :color, :size, :texture, :image_item_ids => [], :vendor_ids => []]
