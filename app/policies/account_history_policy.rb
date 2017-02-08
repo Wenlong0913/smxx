@@ -1,4 +1,4 @@
-class MaterialPurchasePolicy < ApplicationPolicy
+class AccountHistoryPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope
@@ -6,8 +6,9 @@ class MaterialPurchasePolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
+    fail "请在#{__FILE__}中添加params的permit属性"
     if user.has_role? :admin
-      [:purchase_date, :note, :vendor_id, :status, :material_purchase_details_attributes => [:id, :material_id, :input_number, :number, :price]]
+      []
     else
       []
     end

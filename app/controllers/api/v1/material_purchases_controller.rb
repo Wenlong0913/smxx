@@ -1,5 +1,6 @@
 class Api::V1::MaterialPurchasesController < Api::BaseController
   before_action :authenticate!
+  before_action :set_material_purchase, only: [:update]
 
   def index
     authorize MaterialPurchase
@@ -27,9 +28,11 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
 
 
   def update
-    material_purchase = MaterialPurchase.find(params[:id])
-    authorize material_purchase
-    flag, material_purchase = MaterialPurchase::Update.(material_purchase, permitted_attributes(material_purchase))
+    authorize @material_purchase
+    if params["material_management"]
+      process_material_purchase_import
+    end
+    flag, material_purchase = MaterialPurchase::Update.(@material_purchase, permitted_attributes(@material_purchase))
     if flag
       render json: {status: 'ok', material_purchases: material_purchase_json(material_purchase)}
     else
@@ -48,7 +51,7 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
           methods: %w(contact_name phone_number)
         },
         material_purchase_details: {
-          only: %w(material_id price number),
+          only: %w(id material_id price number input_number),
           include: {
             material: {
               only: %w(id name name_py)
@@ -57,5 +60,13 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
         }
       }
     )
+  end
+
+  def set_material_purchase
+    @material_purchase = MaterialPurchase.find(params[:id])
+  end
+
+  def process_material_purchase_import
+    MaterialManagement::Create.(permitted_attributes(MaterialManagement))
   end
 end
