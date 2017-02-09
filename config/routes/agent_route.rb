@@ -4,7 +4,10 @@ module AgentRoute
       namespace :agent do
         get '/', to: 'home#index', as: :root
         get 'sign_in', to: 'sessions#new'
-        resources 'products'
+        resources 'products', only: [:index, :new, :show, :update]
+        resources 'members'
+        resources 'statistics'
+        catalog_resources_for ProductCatalog, only: [:index]
       end
     end
   end

@@ -1,0 +1,65 @@
+.modal.fade#editModal.bs-example-modal-lg[tabindex="-1" role="dialog" rel="edit-modal" aria-labelledby="myModalLabel"]
+  .modal-dialog.modal-lg[role="document"]
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-label="Close"]
+          span[aria-hidden="true"] &times;
+        h4.modal-title#myModalLabel 商品信息修改
+      = simple_form_for @product, url: agent_product_path, method: :put, remote: true do |f|
+        .modal-body.p-30
+          .row
+            .alert.alert-danger.fade.in.m-b-15.hide
+							strong 错误!&nbsp;
+							span.title
+							span.close[data-dismiss="alert"] &times;
+          .row
+            .col-xs-6
+              .form-group
+                = f.input :name
+            .col-xs-6
+              .form-group.catalog-list[data-catalog-name="#{@product.catalog.try(:name)}" data-catalog-id="#{@product.catalog_id}"]
+                label[class="control-label"] 产品分类
+                input[type="hidden" v-model="id" name="product[catalog_id]"]
+                input.form-control[readonly=true @click="showCatalog = true" :value="catalogs" placeholder="点击输入框选择分类"]
+                modal[title="产品分类" :show.sync="showCatalog" @cancel="showCatalog = false"]
+                  div
+                    catalog-list[data-url=admin_product_catalogs_path :default="[#{@product.catalog_id}]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false" :editable='false']
+                  div[slot="footer"]
+            .col-xs-6
+              .form-group
+                = f.input :price
+            .col-xs-6
+              .form-group
+                = f.input :price, label: '优惠折扣'
+            .col-xs-6
+              .form-group
+                = f.input :description, as: :text
+            .col-xs-12
+              .form-group
+                label 商品主图
+                image-select[server="#{image_items_path}" name="product[image_item_ids][]" selected-ids="#{@product.image_item_ids.join(', ')}"]
+
+        / <form>
+        /   <div class="form-group">
+        /     <label for="exampleInputEmail1">Email address</label>
+        /     <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+        /   </div>
+        /   <div class="form-group">
+        /     <label for="exampleInputPassword1">Password</label>
+        /     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        /   </div>
+        /   <div class="form-group">
+        /     <label for="exampleInputFile">File input</label>
+        /     <input type="file" id="exampleInputFile">
+        /     <p class="help-block">Example block-level help text here.</p>
+        /   </div>
+        /   <div class="checkbox">
+        /     <label>
+        /       <input type="checkbox"> Check me out
+        /     </label>
+        /   </div>
+        /   <button type="submit" class="btn btn-default">Submit</button>
+        /   </form>
+        .modal-footer
+          button.btn.btn-default[type="button" data-dismiss="modal"] 取消
+          = f.submit '保存修改', class: 'btn btn-primary'

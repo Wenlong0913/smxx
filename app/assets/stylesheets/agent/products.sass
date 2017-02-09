@@ -1,3 +1,11 @@
+body.agent-products
+  a.qq
+    background: #3b5998
+  a.weixin
+    background: #6CC964
+  a.weibo
+    background: #d34836
+
 body.agent-products.new
   .checkout-header
     .step
@@ -10,3 +18,22 @@ body.agent-products.new
     min-height: 350px
     .col-xs-8
       border-right: 1px dotted #ccc
+body.agent-products.index
+  .search-item-container
+    .item-row
+      .item.item-thumbnail
+        &:hover
+          transform: scale(1.001, 1.001)
+          box-shadow: 0px 3px 10px -1px rgba(0,172,172,0.38)
+      .item-title
+        a
+          display: inherit
+          color: #000
+          font-weight: 700
+          border-top: 1px solid #f0f3f4
+          line-height: 50px
+body.agent-products.show
+  .product
+    .product-image
+      .product-main-image
+        height: 350px

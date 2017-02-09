@@ -1,3 +1,4 @@
+<%= simple_form_for @product, url: agent_products_path(@product), remote: true do |f| %>
 <!-- BEGIN #checkout-cart -->
 <div class="section-container" id="products_new">
     <!-- BEGIN container -->
@@ -10,53 +11,40 @@
               <div class="row">
                   <!-- BEGIN col-3 -->
                   <div class="col-md-4 col-sm-4">
-                      <div class="step active">
-                          <a href="#basicInformation" role="tab" data-toggle="tab">
-                            <div class="number">1</div>
-                            <div class="info p-l-20">
-                                <div class="title">商品基本信息</div>
-                                <div class="desc"> Basic information of commodities</div>
-                            </div>
-                          </a>
-                      </div>
+                    <div class="basicInformation step active">
+                        <span style="color: #D9D9D9">
+                          <div class="number">1</div>
+                          <div class="info p-l-20">
+                              <div class="title">商品基本信息</div>
+                              <div class="desc"> Basic information of commodities</div>
+                          </div>
+                        </span>
+                    </div>
                   </div>
                   <!-- END col-3 -->
                   <!-- BEGIN col-3 -->
                   <div class="col-md-4 col-sm-4">
-                      <div class="step">
-                        <a href="#configurationInformation" role="tab" data-toggle="tab">
-                          <div class="number">2</div>
-                          <div class="info p-l-20">
-                              <div class="title">商品配置信息</div>
-                              <div class="desc">Product configuration information.</div>
-                          </div>
-                        </a>
-                      </div>
+                    <div class="configurationInformation step">
+                      <span style="color: #D9D9D9">
+                        <div class="number">2</div>
+                        <div class="info p-l-20">
+                            <div class="title">商品配置信息</div>
+                            <div class="desc">Product configuration information.</div>
+                        </div>
+                      </span>
+                    </div>
                   </div>
                   <!-- END col-3 -->
                   <!-- BEGIN col-3 -->
-                  <!-- <div class="col-md-3 col-sm-3">
-                      <div class="step">
-                        <a href="#LogisticsInformation" role="tab" data-toggle="tab">
-                          <div class="number">3</div>
-                          <div class="info">
-                            <div class="title">物流配置</div>
-                            <div class="desc">Logistics distribution. </div>
-                          </div>
-                        </a>
-                      </div>
-                  </div> -->
-                  <!-- END col-3 -->
-                  <!-- BEGIN col-3 -->
                   <div class="col-md-4 col-sm-4">
-                      <div class="step">
-                        <a href="#last" role="tab" data-toggle="tab">
+                      <div class="last step">
+                        <span style="color: #D9D9D9">
                           <div class="number">3</div>
                           <div class="info p-l-20">
-                            <div class="title">确认发布</div>
-                            <div class="desc">Product updates.</div>
+                            <div class="title">发布成功与分享</div>
+                            <div class="desc">Product created and share</div>
                           </div>
-                        </a>
+                        </span>
                       </div>
                   </div>
                   <!-- END col-3 -->
@@ -72,14 +60,25 @@
               <div class="checkout-body">
                 <div class="col-xs-8">
                   <div class="form-group">
-                    <label>商品名称</label>
-                    <input type="email" class="form-control" placeholder=" ">
+                    <%= f.input :name %>
+                  </div>
+                  <div class="form-group catalog-list" data-catalog-name="<%= @product.catalog.try(:name) %>" data-catalog-id="<%= @product.catalog_id %>">
+                    <label class="control-label">产品分类</label>
+                    <input type="hidden" name="product[catalog_id]" v-model="id">
+                    <input readonly=true @click="showCatalog = true" :value="catalogs" class="form-control">
+                    <span class="hint">点击输入框选择分类</span>
+                    <modal title="产品分类" v-show="showCatalog" @cancel="showCatalog = false">
+                      <div>
+                        <catalog-list data-url="<%= agent_product_catalogs_path %>" :default="[]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false" :editable='false'></catalog-list>
+                      </div>
+                      <div slot="footer"></div>
+                    </modal>
                   </div>
                   <div class="form-group">
-                    <!-- [1,2] 'imagepath selected-ids="[1,2]"-->
                     <label for="exampleInputFile">商品主图</label>
-                    <image-select name="paroducts[image_items_ids]" server=""  style="min-height:150px"></image-select>
+                    <image-select name="product[image_item_ids][]" server="<%= image_items_path %>" selected-ids="#{@product.image_item_ids.join(', ')}"></image-select>
                   </div>
+                  
                 </div>
                 <div class="col-xs-4">
                   <ul type="none">
@@ -92,7 +91,7 @@
               <!-- END checkout-body -->
               <!-- BEGIN checkout-footer -->
               <div class="checkout-footer">
-                <a href="#configurationInformation" role="tab" data-toggle="tab" class="btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10">下一步</a>
+                <a href="#configurationInformation" role="tab" data-toggle="tab" class="change-step btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10">下一步</a>
               </div>
               <!-- END checkout-footer -->
             </div>
@@ -101,17 +100,16 @@
               <div class="checkout-body">
                 <div class="col-xs-8">
                   <div class="form-group">
-                    <label>商品单价 </label>
-                    <input type="number" class="form-control" placeholder="" min="0">
+                    <%= f.input :price %>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputFile">商品库存</label>
-                    <input type="number" class="form-control" placeholder="" min="0">
+                    <%= f.input :stock %>
                   </div>
                   <div class="form-group">
-                    <label>商品描述<span class="lable">1</span></label>
-                    <textarea class="form-control" rows="5">
-                    </textarea>
+                    <%= f.input :discount %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.input :description, as: :text %>
                   </div>
                 </div>
                 <div class="col-xs-4">
@@ -125,7 +123,8 @@
               <!-- END checkout-body -->
               <!-- BEGIN checkout-footer -->
               <div class="checkout-footer">
-                  <a href="#last" data-toggle="tab" class="btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10">发布商品</a>
+                <a href="#basicInformation" role="tab" data-toggle="tab" class="change-step btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10">上一步</a>  
+                <%= f.submit '发布商品', class: 'btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10' %>
               </div>
               <!-- END checkout-footer -->
             </div>
@@ -189,10 +188,10 @@
               <div class="checkout-body">
                 <div class="jumbotron">
                   <h3>发布成功!</h3>
-                  <p>自动跳转到此商品展示页面...</p>
+                  <p><span class='jump-time'>5</span>秒自动跳转到此商品展示页面...</p>
                   <p>
                     <div class="product-social">
-                      <a class="btn btn-primary btn-lg pull-left" href="#" role="button">查看</a>
+                      <a class="new-product btn btn-primary btn-lg pull-left" href="#" role="button">查看</a>
                       <ul class="pull-right">
                           <li><a href="javascript:;" class="facebook" data-toggle="tooltip" data-trigger="hover" data-title="Facebook" data-placement="top"><i class="fa fa-facebook"></i></a></li>
                           <li><a href="javascript:;" class="twitter" data-toggle="tooltip" data-trigger="hover" data-title="Twitter" data-placement="top"><i class="fa fa-twitter"></i></a></li>
@@ -212,14 +211,10 @@
             </div>
           </div>
           <!-- End Tab panes -->
-
-
-
-
-
         </div>
         <!-- END checkout -->
     </div>
     <!-- END container -->
 </div>
 <!-- END #checkout-cart -->
+<% end %>

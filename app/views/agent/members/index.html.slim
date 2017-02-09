@@ -1,0 +1,30 @@
+.container
+  h1
+    | 会员列表
+    .pull-right
+      = link_to '添加会员', new_agent_member_path, class: 'btn btn-primary'
+
+  .panel
+    .panel-heading
+      .panel-heading-btn
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+          i class="fa fa-expand"
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+          i class="fa fa-minus"
+      h4 agent_members 列表
+    .panel-body
+      .table-responsive
+        table.table.table-striped
+          thead
+            tr
+              th ID
+              th 姓名
+
+          tbody
+            - @agent_members.each do |agent_member|
+              tr
+                td = agent_member.id
+                td = agent_member.name
+                td = link_to '查看', agent_member_path(agent_member)
+                td = link_to '编辑', edit_agent_member_path(agent_member)
+                td = link_to '删除', agent_member_path(agent_member), data: { confirm: '确定要删除吗?' }, method: :delete
