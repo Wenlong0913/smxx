@@ -1,0 +1,16 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      market_page: 营销页
+    attributes:
+      market_page:
+        market_template: 模板
+        keywords: 关键词
+        description: 描述
+        is_published: 是否发布
+    errors:
+      models:
+        market_page:
+  helpers:
+    market_page:

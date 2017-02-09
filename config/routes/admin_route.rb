@@ -53,6 +53,9 @@ module AdminRoute
           resources :materials, except: [:index], controller: 'order_materials'
           resources :produces, only: [:show, :create, :destroy, :update]
         end
+        resources :market_catalogs, :concerns => :paginatable
+        resources :market_templates, :concerns => :paginatable
+        resources :market_pages, :concerns => :paginatable
       end
     end
   end

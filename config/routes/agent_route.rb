@@ -8,6 +8,7 @@ module AgentRoute
         resources 'members'
         resources 'statistics'
         catalog_resources_for ProductCatalog, only: [:index]
+        resources :market_pages, :concerns => :paginatable
       end
     end
   end
