@@ -1,9 +1,4 @@
 $(document).ready ->
-  body = $('body.agent-products.new')
-  if body.length > 0
-    container = body.find('.catalog-list')
-    catalog = new Vue
-      el: "div[rel='basicInformation']"
   body = $('body.agent-products.show')
   if body.length > 0
     body.find('ul.checkout_image_list li a').on "click", ->
@@ -22,6 +17,18 @@ $(document).ready ->
       data:
         id: container[0].dataset["catalogId"]
         showCatalog: false
+        catalogs: container[0].dataset["catalogName"]
+      methods:
+        selected: (catalogs)->
+          this.catalog =  catalogs[catalogs.length-1]
+          this.id = this.catalog.id
+          this.showCatalog = false
+          this.catalogs = catalogs.map((cata)-> cata.name).join('/')
+  body = $('body.agent-products.new')
+  if body.length > 0
+    container = body.find('.catalog-list')
+    catalog = new Vue
+      el: "div[rel='basicInformation']"
       data:
         id: container[0].dataset["catalogId"]
         showCatalog: false
@@ -33,7 +40,6 @@ $(document).ready ->
           this.id = this.catalog.id
           this.showCatalog = false
           this.catalogs = catalogs.map((cata)-> cata.name).join('/')
-
     body.find('.change-step').on 'click', ->
       change_step_class = $(this).attr("href").replace("#", "")
       body.find('.checkout-header .step').removeClass('active')
