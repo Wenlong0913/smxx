@@ -54,14 +54,15 @@
           <!-- END checkout-header -->
 
           <!-- Tab panes -->
-          <div class="tab-content" rel="basicInformation">
-            <div role="tabpanel" class="tab-pane fade in active" id="basicInformation">
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="basicInformation" rel="basicInformation">
               <!-- BEGIN checkout-body -->
               <div class="checkout-body">
                 <div class="col-xs-8">
                   <div class="form-group">
                     <%= f.input :name %>
                   </div>
+                  
                   <div class="form-group catalog-list" data-catalog-name="<%= @product.catalog.try(:name) %>" data-catalog-id="<%= @product.catalog_id %>">
                     <label class="control-label">产品分类</label>
                     <input type="hidden" name="product[catalog_id]" v-model="id">
@@ -100,16 +101,33 @@
               <div class="checkout-body">
                 <div class="col-xs-8">
                   <div class="form-group">
-                    <%= f.input :price %>
+                    <div class="col-xs-6"><%= f.input :price %></div>
+                    <div class="col-xs-6"><%= f.input :discount %></div>
                   </div>
                   <div class="form-group">
-                    <%= f.input :stock %>
-                  </div>
-                  <div class="form-group">
-                    <%= f.input :discount %>
+                    <div class="col-xs-6"><%= f.input :stock %></div>
+                    <div class="col-xs-6"><%= f.input :unit %></div>
                   </div>
                   <div class="form-group">
                     <%= f.input :description, as: :text %>
+                  </div>
+                  <div class="input-group">
+                    <%= f.input :weight %><span>两个框合在一起</span>
+                    <%= f.input :weight_unit, collection: ['kg', 'g'], selected: 'kg' %>
+                  </div>
+                  <div id="additional-attributes">
+                    <div>
+                      <div class="form-group">
+                        <span class="col-xs-6">产品选项</span>
+                        <span class="col-xs-6">产品数据</span>
+                      </div>
+                      <div class="additional-item form-group" v-for="(list, index) in lists">
+                        <input type="text" v-model="list[0]" :name="'product[additional_attribute_keys][' + list[1] + ']'" class="col-xs-5">
+                        <input type="text" :name="'product[additional_attribute_values][' + list[1] + ']'" class="col-xs-5">
+                        <span @click="removeInputList(index)" class="col-xs-2">删除</span>
+                      </div>
+                    </div>
+                    <a class="btn btn-inverse btn-lg add-additional-item" @click="addInputList">添加其他产品选项</a>
                   </div>
                 </div>
                 <div class="col-xs-4">

@@ -40,6 +40,20 @@ $(document).ready ->
           this.id = this.catalog.id
           this.showCatalog = false
           this.catalogs = catalogs.map((cata)-> cata.name).join('/')
+    additional = new Vue
+      el: "#additional-attributes"
+      data: 
+        lists: [
+          ['尺寸', 'attr_1']
+          ['颜色', 'attr_2']
+        ]
+        count: 3
+      methods:
+        addInputList: ->
+          this.lists.push(['', "attr_"+this.count])
+          this.count++
+        removeInputList: (index)->
+          this.lists.splice(index, 1)
     body.find('.change-step').on 'click', ->
       change_step_class = $(this).attr("href").replace("#", "")
       body.find('.checkout-header .step').removeClass('active')
