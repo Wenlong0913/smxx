@@ -8,6 +8,7 @@ module AgentRoute
         resources 'members'
         resources 'statistics'
         catalog_resources_for ProductCatalog, only: [:index]
+        resources 'orders'
       end
     end
   end
