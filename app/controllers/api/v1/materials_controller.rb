@@ -69,7 +69,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
 
   def material_json(materials)
     materials.as_json(
-      only: %w(id name name_py catalog_id),
+      only: %w(id name name_py catalog_id ),
       methods: %w(stock image_item_ids brand color size texture price unit vendor_ids),
       include: {
         vendors: { only: %w(id name)},
