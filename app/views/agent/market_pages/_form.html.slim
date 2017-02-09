@@ -6,16 +6,25 @@
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
         i class="fa fa-times"
-    h4 agent_market_page
+    h4 更换内容
   .panel-body
-    = form_for @agent_market_page, url: @agent_market_page.new_record? ? agent_market_pages_path(@agent_market_page) : agent_market_page_path(@agent_market_page), html: { class: 'form-horizontal' } do |f|
-      - if @agent_market_page.errors.any?
-        #error_explanation
-          h2 = "#{pluralize(@agent_market_page.errors.count, "error")} prohibited this agent_market_page from being saved:"
-          ul
-            - @agent_market_page.errors.full_messages.each do |message|
-              li = message
+    .row
+      .col-md-4
+        = image_tag @market_template.image_path, class: 'img-responsive'
+      .col-md-8
+        = simple_form_for @market_page, url: @market_page.new_record? ? agent_market_pages_path(@market_page) : agent_market_page_path(@market_page), html: { class: 'form-horizontal' } do |f|
+          - if @market_page.errors.any?
+            #error_explanation
+              h2 = "#{pluralize(@market_page.errors.count, "error")} prohibited this market_page from being saved:"
+              ul
+                - @market_page.errors.full_messages.each do |message|
+                  li = message
+          = f.hidden_field :market_template_id, value: @market_template.id
+          = f.input :name
+          = f.input :keywords
+          = f.input :description
 
-      .form-group
-        .col-md-2
-          = f.submit class: 'btn btn-success'
+          == render inline: @market_template.form_source
+          .form-group
+            .col-md-2
+              = f.submit class: 'btn btn-success'

@@ -1,25 +1,26 @@
-h1 
-  | agent_market_pages 列表
-  .pull-right
-    = link_to '新建 Market page', new_agent_market_page_path, class: 'btn btn-primary'
+.container
+  h1
+    | 营销活动
+    .pull-right
+      = link_to '新建营销活动', new_agent_market_page_path, class: 'btn btn-primary'
 
-.panel
-  .panel-heading
-    .panel-heading-btn
-      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
-        i class="fa fa-expand"
-      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
-        i class="fa fa-minus"
-    h4 agent_market_pages 列表
-  .panel-body
-    .table-responsive
-      table.table.table-striped
-        thead
-          tr
-
-        tbody
-          - @agent_market_pages.each do |agent_market_page|
+  .panel
+    .panel-heading
+      .panel-heading-btn
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+          i class="fa fa-expand"
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+          i class="fa fa-minus"
+      h4 market_pages 列表
+    .panel-body
+      .table-responsive
+        table.table.table-striped
+          thead
             tr
-              td = link_to '查看', agent_market_page_path(agent_market_page)
-              td = link_to '编辑', edit_agent_market_page_path(agent_market_page)
-              td = link_to '删除', agent_market_page_path(agent_market_page), data: { confirm: '确定要删除吗?' }, method: :delete
+
+          tbody
+            - @market_pages.each do |agent_market_page|
+              tr
+                td = link_to '查看', agent_market_page_path(agent_market_page)
+                td = link_to '编辑', edit_agent_market_page_path(agent_market_page)
+                td = link_to '删除', agent_market_page_path(agent_market_page), data: { confirm: '确定要删除吗?' }, method: :delete

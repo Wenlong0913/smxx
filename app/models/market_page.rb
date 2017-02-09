@@ -1,4 +1,6 @@
-class MarketPage < Item
+class MarketPage <  ApplicationRecord
   audited
-  store_accessor :features, :market_template, :keywords, :description, :is_published
+  belongs_to :market_template
+  has_many :image_item_relations, as: :relation
+  has_many :image_items, :through => :image_item_relations
 end

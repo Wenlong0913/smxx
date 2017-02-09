@@ -62,9 +62,17 @@ h1.page-header
         thead
           tr
             th
+            th
+            th
         tbody
           - @market_templates.each do |market_template|
             tr
+              td
+                = image_tag market_template.image_path
+              td
+                = market_template.name
+                br
+                = market_template.base_path
               td
                 => link_to '查看', admin_market_template_path(market_template), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_market_template_path(market_template), class: 'btn btn-xs btn-default'

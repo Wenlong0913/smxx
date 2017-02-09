@@ -1,4 +1,5 @@
 class Agent::MarketPagesController < Agent::BaseController
+  before_action :set_market_templates
   before_action :set_market_page, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -20,20 +21,23 @@ class Agent::MarketPagesController < Agent::BaseController
 
   def new
     authorize MarketPage
+    @market_template = MarketTemplate.find(params[:template_id]) if params[:template_id]
     @market_page = MarketPage.new(market_page_params)
   end
 
   def edit
     authorize @market_page
+    @market_template = @market_page.market_template
   end
 
   def create
     authorize MarketPage
-    @market_page = MarketPage.new(permitted_attributes(MarketPage)))
-
+    @market_page = MarketPage.new(permitted_attributes(MarketPage))
+    @market_page.site_id = @site.id
+    binding.pry
     respond_to do |format|
       format.html do
-        if @market_page.save
+        if @market_page.save!
           redirect_to agent_market_page_path(@market_page), notice: 'Market page 创建成功.'
         else
           render :new
@@ -72,6 +76,10 @@ class Agent::MarketPagesController < Agent::BaseController
     # Use callbacks to share common setup or constraints between actions.
     def set_market_page
       @market_page = MarketPage.find(params[:id])
+    end
+
+    def set_market_templates
+      @market_templates = MarketTemplate.all
     end
 
     # Only allow a trusted parameter "white list" through.

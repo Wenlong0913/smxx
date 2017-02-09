@@ -13,5 +13,16 @@
           ul
             - @market_template.errors.full_messages.each do |message|
               li = message
+      = f.input :name
+      = f.input :base_path, placeholder: 'templetes/market/xxx'
+      = f.input :keywords
+      = f.input :description
+      = f.input :image_path, placeholder: '/templetes/market/snow/previews/demo-1.png'
+      = f.input :html_source, as: :text
+      = f.input :form_source, as: :text
+
+      .form-group
+        image-select[server="#{image_items_path}" name="market_template[image_item_ids][]" selected-ids="#{@market_template.image_item_ids.join(', ')}"]
+
 
       = f.submit class: 'btn btn-success btn-block'

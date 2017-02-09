@@ -55,6 +55,7 @@ module AdminRoute
         end
         resources :market_catalogs, :concerns => :paginatable
         resources :market_templates, :concerns => :paginatable
+        catalog_resources_for MarketCatalog # 分类管理
         resources :market_pages, :concerns => :paginatable
       end
     end

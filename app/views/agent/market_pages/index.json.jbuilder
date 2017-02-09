@@ -1,1 +1,1 @@
-json.array! @agent_market_pages, partial: 'agent_market_pages/agent_market_page', as: :agent_market_page
+json.array! @market_pages, partial: 'market_pages/agent_market_page', as: :agent_market_page

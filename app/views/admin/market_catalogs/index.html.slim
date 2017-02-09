@@ -62,9 +62,12 @@ h1.page-header
         thead
           tr
             th
+            th
         tbody
           - @market_catalogs.each do |market_catalog|
             tr
+              td
+                = market_catalog.name
               td
                 => link_to '查看', admin_market_catalog_path(market_catalog), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_market_catalog_path(market_catalog), class: 'btn btn-xs btn-default'
