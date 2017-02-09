@@ -1,0 +1,81 @@
+class Agent::MarketPagesController < Agent::BaseController
+  before_action :set_market_page, only: [:show, :edit, :update, :destroy]
+
+  def index
+    authorize MarketPage
+    @market_pages = MarketPage.all.page(params[:page])
+    respond_to do |format|
+      format.html
+      format.json { render json: @market_pages }
+    end
+  end
+
+  def show
+    authorize @market_page
+    respond_to do |format|
+      format.html
+      format.json { render json: @market_page }
+    end
+  end
+
+  def new
+    authorize MarketPage
+    @market_page = MarketPage.new(market_page_params)
+  end
+
+  def edit
+    authorize @market_page
+  end
+
+  def create
+    authorize MarketPage
+    @market_page = MarketPage.new(permitted_attributes(MarketPage)))
+
+    respond_to do |format|
+      format.html do
+        if @market_page.save
+          redirect_to agent_market_page_path(@market_page), notice: 'Market page 创建成功.'
+        else
+          render :new
+        end
+      end
+      format.json { render json: @market_page }
+    end
+
+  end
+
+  def update
+    authorize @market_page
+    respond_to do |format|
+      format.html do
+        if @market_page.update(permitted_attributes(@market_page))
+          redirect_to agent_market_page_path(@market_page), notice: 'Market page 更新成功.'
+        else
+          render :edit
+        end
+      end
+      format.json { render json: @market_page }
+    end
+  end
+
+  def destroy
+    authorize @market_page
+    @market_page.destroy
+    respond_to do |format|
+      format.html { redirect_to agent_market_pages_url, notice: 'Market page 删除成功.' }
+      format.json { head 200 }
+    end
+
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_market_page
+      @market_page = MarketPage.find(params[:id])
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def market_page_params
+      params[:market_page]
+    end
+end
