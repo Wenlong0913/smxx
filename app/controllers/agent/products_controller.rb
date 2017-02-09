@@ -52,6 +52,8 @@ class Agent::ProductsController < Agent::BaseController
   def create
     @product = Product.new(permitted_attributes(Product))
     @product.site = current_user.sites.first
+    @product.additional_attribute_keys = params["product"]["additional_attribute_keys"]
+    @product.additional_attribute_values = params["product"]["additional_attribute_values"]
     authorize @product
     if @product.save
       # redirect_to agent_product_path(@product), notice: 'Product 创建成功.'
