@@ -22,15 +22,21 @@
             <div class="col-md-6 text-right">
               <ul class="sort-list">
                 <li class="text"><i class="fa fa-filter"></i> 排序方式:</li>
-                <li class="active">
-                  <%= link_to '点击', agent_products_path+"?reorder=clicks" %>
-                <li>
+                <li class="<%= 'sign' unless params[:reorder].present? %>">
+                  <%= link_to '默认', agent_products_path %>
+                </li>
+                <li class="<%= 'sign' unless params[:reorder] == 'clicks' %>">
+                  <s>点击</s>
+                  <!-- <#%= link_to '点击', agent_products_path+"?reorder=clicks" %> -->
+                </li>
+                <li class="<%= 'sign' if params[:reorder] == 'newest' %>">
                   <%= link_to '最新', agent_products_path+"?reorder=newest" %>
                 </li>
-                <li>
-                  <%= link_to '优惠', agent_products_path+"?reorder=discount" %>
+                <li class="<%= 'sign' if params[:reorder] == 'sales' %>">
+                  <s>销量</s>
+                  <!-- <#%= link_to '销量', agent_products_path+"?reorder=sales" %> -->
                 </li>
-                <li>
+                <li class="<%= 'sign' if params[:reorder] == 'price' %>">
                   <%= link_to '价格', agent_products_path+"?reorder=price" %>
                 </li>
               </ul>
@@ -51,14 +57,23 @@
               <div class="item item-thumbnail">
                   <%= link_to agent_product_path(product), class: 'item-image' do%>
                     <%= image_tag product.image_items.first.try{image_url}||'no-picture'%>
-                    <!-- <div class="discount">15% 优惠<%= index%></div> -->
+                    <% if @product.discount.to_i > 0 && @product.discount.to_i < @product.price.to_i %>
+                      <div class="discount">优惠折扣中</div>
+                    <% end %>
                   <% end %>
                   <div class="item-info" style="letter-spacing: 2px;">
                     <h4 class="item-title">
                       <%= link_to product.name, agent_product_path(product) %>
                     </h4>
                     <p class="item-desc"><%= product.description.blank? ? "暂无描述".html_safe :  product.description %></p>
-                    <div class="text-red item-price ">$<%= product.price %></div>
+                    <div class="m-t-10">
+                      <small class="item-desc">
+                        <s>￥<%= product.price %></s>
+                      </small>
+                      <span class="text-danger h3">
+                        <small class="text-danger">￥</small><%= product.price %>
+                      </span>
+                    </div>
                     <div class="item-discount-price"></div>
                   </div>
               </div>

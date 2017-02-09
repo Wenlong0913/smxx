@@ -1,238 +1,308 @@
 <%= simple_form_for @product, url: agent_products_path(@product), remote: true do |f| %>
 <!-- BEGIN #checkout-cart -->
-<div class="section-container" id="products_new">
-    <!-- BEGIN container -->
-    <div class="container">
-        <!-- BEGIN checkout -->
-        <div class="checkout">
-          <!-- BEGIN checkout-header -->
-          <div class="checkout-header">
-              <!-- BEGIN row -->
-              <div class="row">
-                  <!-- BEGIN col-3 -->
-                  <div class="col-md-4 col-sm-4">
-                    <div class="basicInformation step active">
+  <div class="section-container" id="products_new">
+      <!-- BEGIN container -->
+      <div class="container">
+          <!-- BEGIN checkout -->
+          <div class="checkout">
+            <!-- BEGIN checkout-header -->
+            <div class="checkout-header">
+                <!-- BEGIN row -->
+                <div class="row">
+                    <!-- BEGIN col-3 -->
+                    <div class="col-md-4 col-sm-4">
+                      <div class="basicInformation step active">
+                          <span style="color: #D9D9D9">
+                            <div class="number">1</div>
+                            <div class="info p-l-20">
+                                <div class="title">商品基本信息</div>
+                                <div class="desc"> Basic information of commodities</div>
+                            </div>
+                          </span>
+                      </div>
+                    </div>
+                    <!-- END col-3 -->
+                    <!-- BEGIN col-3 -->
+                    <div class="col-md-4 col-sm-4">
+                      <div class="configurationInformation step">
                         <span style="color: #D9D9D9">
-                          <div class="number">1</div>
+                          <div class="number">2</div>
                           <div class="info p-l-20">
-                              <div class="title">商品基本信息</div>
-                              <div class="desc"> Basic information of commodities</div>
+                              <div class="title">商品配置信息</div>
+                              <div class="desc">Product configuration information.</div>
                           </div>
                         </span>
+                      </div>
+                    </div>
+                    <!-- END col-3 -->
+                    <!-- BEGIN col-3 -->
+                    <div class="col-md-4 col-sm-4">
+                        <div class="last step">
+                          <span style="color: #D9D9D9">
+                            <div class="number">3</div>
+                            <div class="info p-l-20">
+                              <div class="title">发布成功与分享</div>
+                              <div class="desc">Product created and share</div>
+                            </div>
+                          </span>
+                        </div>
+                    </div>
+                    <!-- END col-3 -->
+                </div>
+                <!-- END row -->
+            </div>
+            <!-- END checkout-header -->
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active" id="basicInformation" rel="basicInformation">
+                <!-- BEGIN checkout-body -->
+                <div class="checkout-body">
+                  <div class="col-xs-8 left-form-content">
+                    <div class="form-group">
+                      <%= f.input :name %>
+                    </div>
+
+                    <div class="form-group catalog-list" data-catalog-name="<%= @product.catalog.try(:name) %>" data-catalog-id="<%= @product.catalog_id %>">
+                      <label class="control-label">产品分类</label>
+                      <input type="hidden" name="product[catalog_id]" v-model="id">
+                      <input readonly=true @click="showCatalog = true" :value="catalogs" class="form-control">
+                      <span class="hint">点击输入框选择分类</span>
+                      <modal title="产品分类" v-show="showCatalog" @cancel="showCatalog = false">
+                        <div>
+                          <catalog-list data-url="<%= agent_product_catalogs_path %>" :default="[]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false" :editable='false'></catalog-list>
+                        </div>
+                        <div slot="footer"></div>
+                      </modal>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputFile">商品主图</label>
+                      <image-select name="product[image_item_ids][]" server="<%= image_items_path %>"></image-select>
+                    </div>
+
+                  </div>
+                  <div class="col-xs-4">
+                    <ul type="none">
+                      <li class="text-muted m-b-10"><i class="fa fa-circle"></i> 商品名称注意不可重复</li>
+                      <li class="text-muted m-b-10"><i class="fa fa-circle"></i> 商品名称长度2-10</li>
+                      <li class="text-muted m-b-10"><i class="fa fa-circle"></i> 请上传多张商品图片</li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- END checkout-body -->
+                <!-- BEGIN checkout-footer -->
+                <div class="checkout-footer">
+                  <a href="#configurationInformation" role="tab" data-toggle="tab" class="change-step btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10">下一步</a>
+                </div>
+                <!-- END checkout-footer -->
+              </div>
+              <div role="tabpanel" class="tab-pane fade" id="configurationInformation">
+                <!-- BEGIN checkout-body -->
+                <div class="checkout-body">
+                  <div class="col-xs-8 left-form-content row">
+
+                    <div class="col-xs-6">
+                      <div class="form-group">
+                        <%= f.input :price %>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="form-group">
+                        <%= f.input :discount %>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="form-group">
+                        <%= f.input :stock %>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="form-group">
+                        <%= f.input :unit %>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="form-group">
+                        <%= f.input :weight_unit, vlaue: 'Kg', as: :hidden %>
+                        <label class="control-label string optional">产品重量</label>
+                        <div class="input-group">
+                          <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              单位: Kg(千克)
+                              <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a href="javascript:void(0)" data-val="Kg">Kg(千克)</a></li>
+                              <li role="separator" class="divider"></li>
+                              <li><a href="javascript:void(0)" data-val="g">g(克)</a></li>
+                            </ul>
+                          </div>
+                          <%= f.input :weight, label: false %>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="form-group">
+                        <label class="control-label string.optional">产品是否存在运费</label>
+                        <div class="input-group">
+                          <span class="input-group-addon fee_checkbox">
+                            <%= f.input_field :is_fee, as: :boolean, label: false %>
+                          </span>
+                          <%= f.input :shopping_fee, label: false, input_html: {class: "form-control"} %>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="form-group col-xs-8 p-l-0 m-0">
+                        <%= f.input :stock %>
+                      </div>
+                      <div class="form-group col-xs-4 p-0 m-0">
+                        <%= f.input :unit %>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group">
+                        <%= f.input :description, as: :text %>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group">
+                        <%= f.input_field :is_shelves, as: :boolean, label: false %>
+                        <span>是否创建后立即产品上架</span>
+                      </div>
                     </div>
                   </div>
-                  <!-- END col-3 -->
-                  <!-- BEGIN col-3 -->
-                  <div class="col-md-4 col-sm-4">
-                    <div class="configurationInformation step">
-                      <span style="color: #D9D9D9">
-                        <div class="number">2</div>
-                        <div class="info p-l-20">
-                            <div class="title">商品配置信息</div>
-                            <div class="desc">Product configuration information.</div>
+                  <div class="col-xs-4">
+                    <div id="additional-attributes" class="p-l-15">
+                      <div>
+                        <div class="additional_attr">
+                          <label>产品附加属性</label>
+                          <hr>
                         </div>
+                        <div class="form-group row">
+                          <label class="col-xs-6">产品选项</label>
+                          <label class="col-xs-6">产品数据</label>
+                        </div>
+                        <div class="additional-item form-group row" v-for="(list, index) in lists">
+                          <div class="col-xs-3">
+                            <div class="form-group">
+                              <input class="form-control" type="text" v-model="list[0]" :name="'product[additional_attribute_keys][' + list[1] + ']'">
+                            </div>
+
+                          </div>
+                          <div class="col-xs-8">
+                            <input class="form-control" type="text" :name="'product[additional_attribute_values][' + list[1] + ']'">
+                          </div>
+                          <div class="col-xs-1">
+                            <button type="button" class="btn btn-danger delete btn-xs" @click="removeInputList(index)">
+                              <i class="glyphicon glyphicon-trash"></i>
+                              <span>删除</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <span class="btn btn-success fileinput-button btn-xs" @click="addInputList">
+                        <i class="fa fa-plus"></i>
+                        <span>添加其他产品选项</span>
                       </span>
                     </div>
                   </div>
-                  <!-- END col-3 -->
-                  <!-- BEGIN col-3 -->
-                  <div class="col-md-4 col-sm-4">
-                      <div class="last step">
-                        <span style="color: #D9D9D9">
-                          <div class="number">3</div>
-                          <div class="info p-l-20">
-                            <div class="title">发布成功与分享</div>
-                            <div class="desc">Product created and share</div>
-                          </div>
-                        </span>
-                      </div>
-                  </div>
-                  <!-- END col-3 -->
+                </div>
+                <!-- END checkout-body -->
+                <!-- BEGIN checkout-footer -->
+                <div class="checkout-footer">
+                  <a href="#basicInformation" role="tab" data-toggle="tab" class="change-step btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10">上一步</a>
+                  <%= f.submit '发布商品', class: 'btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10' %>
+                </div>
+                <!-- END checkout-footer -->
               </div>
-              <!-- END row -->
-          </div>
-          <!-- END checkout-header -->
+              <div role="tabpanel" class="tab-pane fade" id="LogisticsInformation">
+                <!-- BEGIN checkout-body -->
+                <div class="checkout-body">
+                  <form role="form">
+                    <div class="form-group col-xs-12">
+                      <label>商品库存计数方式</label>
+                      <div class="">
+                        <label class="radio-inline">
+                          <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 下单减库存
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 实际付款减库存
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group col-xs-12">
+                      <label>商品运费</label>
+                      <input type="password" class="form-control" placeholder="">
+                    </div>
+                    <div class="form-group col-xs-12">
+                      <label for="exampleInputFile">发货地址</label>
+                      <input type="password" class="form-control" placeholder="">
+                    </div>
+                    <div class="form-group col-xs-12">
+                      <label>发票</label>
+                      <div class="">
+                        <label class="radio-inline">
+                          <input type="radio" name="inlineRadioOptions-1" id="inlineRadio3" value="option1"> 无
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="inlineRadioOptions-1" id="inlineRadio4" value="option2"> 有
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group col-xs-12">
+                      <label>保修</label>
+                      <div class="">
+                        <label class="radio-inline">
+                          <input type="radio" name="inlineRadioOptions-2" id="inlineRadio5" value="option1"> 无
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="inlineRadioOptions-2" id="inlineRadio6" value="option2"> 有
+                        </label>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <!-- END checkout-body -->
+                <!-- BEGIN checkout-footer -->
+                <div class="checkout-footer">
+                    <!-- <a href="#" class="btn btn-white btn-lg pull-left">Continue Shopping</a> -->
+                    <button type="submit" class="btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10">下一步</button>
+                </div>
+                <!-- END checkout-footer -->
+              </div>
+              <div role="tabpanel" class="tab-pane fade" id="last">
+                <!-- BEGIN checkout-body -->
+                <div class="checkout-body">
+                  <div class="jumbotron">
+                    <h3>发布成功!</h3>
+                    <p><span class='jump-time'>5</span>秒自动跳转到此商品展示页面...</p>
+                    <p>
+                      <div class="product-social">
+                        <a class="new-product btn btn-primary btn-lg pull-left" href="#" role="button">查看</a>
+                        <ul class="pull-right">
+                            <li><a href="javascript:;" class="facebook" data-toggle="tooltip" data-trigger="hover" data-title="Facebook" data-placement="top"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="javascript:;" class="twitter" data-toggle="tooltip" data-trigger="hover" data-title="Twitter" data-placement="top"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="javascript:;" class="google-plus" data-toggle="tooltip" data-trigger="hover" data-title="Google Plus" data-placement="top"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="javascript:;" class="whatsapp" data-toggle="tooltip" data-trigger="hover" data-title="Whatsapp" data-placement="top"><i class="fa fa-whatsapp"></i></a></li>
+                            <li><a href="javascript:;" class="tumblr" data-toggle="tooltip" data-trigger="hover" data-title="Tumblr" data-placement="top"><i class="fa fa-tumblr"></i></a></li>
+                        </ul>
+                      </div></p>
+                  </div>
+                </div>
+                <!-- END checkout-body -->
 
-          <!-- Tab panes -->
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade in active" id="basicInformation" rel="basicInformation">
-              <!-- BEGIN checkout-body -->
-              <div class="checkout-body">
-                <div class="col-xs-8">
-                  <div class="form-group">
-                    <%= f.input :name %>
-                  </div>
-                  
-                  <div class="form-group catalog-list" data-catalog-name="<%= @product.catalog.try(:name) %>" data-catalog-id="<%= @product.catalog_id %>">
-                    <label class="control-label">产品分类</label>
-                    <input type="hidden" name="product[catalog_id]" v-model="id">
-                    <input readonly=true @click="showCatalog = true" :value="catalogs" class="form-control">
-                    <span class="hint">点击输入框选择分类</span>
-                    <modal title="产品分类" v-show="showCatalog" @cancel="showCatalog = false">
-                      <div>
-                        <catalog-list data-url="<%= agent_product_catalogs_path %>" :default="[]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false" :editable='false'></catalog-list>
-                      </div>
-                      <div slot="footer"></div>
-                    </modal>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputFile">商品主图</label>
-                    <image-select name="product[image_item_ids][]" server="<%= image_items_path %>"></image-select>
-                  </div>
-                  
+                <!-- BEGIN checkout-footer -->
+                <div class="checkout-footer text-center p-40">
                 </div>
-                <div class="col-xs-4">
-                  <ul type="none">
-                    <li class="text-muted m-b-10"><i class="fa fa-circle"></i> 商品名称注意不可重复</li>
-                    <li class="text-muted m-b-10"><i class="fa fa-circle"></i> 商品名称长度2-10</li>
-                    <li class="text-muted m-b-10"><i class="fa fa-circle"></i> 请上传多张商品图片</li>
-                  </ul>
-                </div>
+                <!-- END checkout-footer -->
               </div>
-              <!-- END checkout-body -->
-              <!-- BEGIN checkout-footer -->
-              <div class="checkout-footer">
-                <a href="#configurationInformation" role="tab" data-toggle="tab" class="change-step btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10">下一步</a>
-              </div>
-              <!-- END checkout-footer -->
             </div>
-            <div role="tabpanel" class="tab-pane fade" id="configurationInformation">
-              <!-- BEGIN checkout-body -->
-              <div class="checkout-body">
-                <div class="col-xs-8">
-                  <div class="form-group">
-                    <div class="col-xs-6"><%= f.input :price %></div>
-                    <div class="col-xs-6"><%= f.input :discount %></div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-xs-6"><%= f.input :stock %></div>
-                    <div class="col-xs-6"><%= f.input :unit %></div>
-                  </div>
-                  <div class="form-group">
-                    <%= f.input :description, as: :text %>
-                  </div>
-                  <div class="input-group">
-                    <%= f.input :weight %><span>两个框合在一起</span>
-                    <%= f.input :weight_unit, collection: ['kg', 'g'], selected: 'kg' %>
-                  </div>
-                  <div id="additional-attributes">
-                    <div>
-                      <div class="form-group">
-                        <span class="col-xs-6">产品选项</span>
-                        <span class="col-xs-6">产品数据</span>
-                      </div>
-                      <div class="additional-item form-group" v-for="(list, index) in lists">
-                        <input type="text" v-model="list[0]" :name="'product[additional_attribute_keys][' + list[1] + ']'" class="col-xs-5">
-                        <input type="text" :name="'product[additional_attribute_values][' + list[1] + ']'" class="col-xs-5">
-                        <span @click="removeInputList(index)" class="col-xs-2">删除</span>
-                      </div>
-                    </div>
-                    <a class="btn btn-inverse btn-lg add-additional-item" @click="addInputList">添加其他产品选项</a>
-                  </div>
-                </div>
-                <div class="col-xs-4">
-                  <ul type="none">
-                    <li class="text-muted m-b-10"><i class="fa fa-circle"></i> 商品名称注意不可重复</li>
-                    <li class="text-muted m-b-10"><i class="fa fa-circle"></i> 商品名称长度2-10</li>
-                    <li class="text-muted m-b-10"><i class="fa fa-circle"></i> 请上传多张商品图片</li>
-                  </ul>
-                </div>
-              </div>
-              <!-- END checkout-body -->
-              <!-- BEGIN checkout-footer -->
-              <div class="checkout-footer">
-                <a href="#basicInformation" role="tab" data-toggle="tab" class="change-step btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10">上一步</a>  
-                <%= f.submit '发布商品', class: 'btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10' %>
-              </div>
-              <!-- END checkout-footer -->
-            </div>
-            <div role="tabpanel" class="tab-pane fade" id="LogisticsInformation">
-              <!-- BEGIN checkout-body -->
-              <div class="checkout-body">
-                <form role="form">
-                  <div class="form-group col-xs-12">
-                    <label>商品库存计数方式</label>
-                    <div class="">
-                      <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 下单减库存
-                      </label>
-                      <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 实际付款减库存
-                      </label>
-                    </div>
-                  </div>
-                  <div class="form-group col-xs-12">
-                    <label>商品运费</label>
-                    <input type="password" class="form-control" placeholder="">
-                  </div>
-                  <div class="form-group col-xs-12">
-                    <label for="exampleInputFile">发货地址</label>
-                    <input type="password" class="form-control" placeholder="">
-                  </div>
-                  <div class="form-group col-xs-12">
-                    <label>发票</label>
-                    <div class="">
-                      <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions-1" id="inlineRadio3" value="option1"> 无
-                      </label>
-                      <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions-1" id="inlineRadio4" value="option2"> 有
-                      </label>
-                    </div>
-                  </div>
-                  <div class="form-group col-xs-12">
-                    <label>保修</label>
-                    <div class="">
-                      <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions-2" id="inlineRadio5" value="option1"> 无
-                      </label>
-                      <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions-2" id="inlineRadio6" value="option2"> 有
-                      </label>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <!-- END checkout-body -->
-              <!-- BEGIN checkout-footer -->
-              <div class="checkout-footer">
-                  <!-- <a href="#" class="btn btn-white btn-lg pull-left">Continue Shopping</a> -->
-                  <button type="submit" class="btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10">下一步</button>
-              </div>
-              <!-- END checkout-footer -->
-            </div>
-            <div role="tabpanel" class="tab-pane fade" id="last">
-              <!-- BEGIN checkout-body -->
-              <div class="checkout-body">
-                <div class="jumbotron">
-                  <h3>发布成功!</h3>
-                  <p><span class='jump-time'>5</span>秒自动跳转到此商品展示页面...</p>
-                  <p>
-                    <div class="product-social">
-                      <a class="new-product btn btn-primary btn-lg pull-left" href="#" role="button">查看</a>
-                      <ul class="pull-right">
-                          <li><a href="javascript:;" class="facebook" data-toggle="tooltip" data-trigger="hover" data-title="Facebook" data-placement="top"><i class="fa fa-facebook"></i></a></li>
-                          <li><a href="javascript:;" class="twitter" data-toggle="tooltip" data-trigger="hover" data-title="Twitter" data-placement="top"><i class="fa fa-twitter"></i></a></li>
-                          <li><a href="javascript:;" class="google-plus" data-toggle="tooltip" data-trigger="hover" data-title="Google Plus" data-placement="top"><i class="fa fa-google-plus"></i></a></li>
-                          <li><a href="javascript:;" class="whatsapp" data-toggle="tooltip" data-trigger="hover" data-title="Whatsapp" data-placement="top"><i class="fa fa-whatsapp"></i></a></li>
-                          <li><a href="javascript:;" class="tumblr" data-toggle="tooltip" data-trigger="hover" data-title="Tumblr" data-placement="top"><i class="fa fa-tumblr"></i></a></li>
-                      </ul>
-                    </div></p>
-                </div>
-              </div>
-              <!-- END checkout-body -->
-
-              <!-- BEGIN checkout-footer -->
-              <div class="checkout-footer text-center p-40">
-              </div>
-              <!-- END checkout-footer -->
-            </div>
+            <!-- End Tab panes -->
           </div>
-          <!-- End Tab panes -->
-        </div>
-        <!-- END checkout -->
-    </div>
-    <!-- END container -->
-</div>
-<!-- END #checkout-cart -->
+          <!-- END checkout -->
+      </div>
+      <!-- END container -->
+  </div>
+  <!-- END #checkout-cart -->
 <% end %>

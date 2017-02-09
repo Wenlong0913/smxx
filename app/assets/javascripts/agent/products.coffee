@@ -12,7 +12,7 @@ $(document).ready ->
           $(this).find('.modal-body .alert.alert-danger').removeClass('hide').find('span.title').text(request.error)
           $('#editModal').scrollTop(0)
     container = body.find('.catalog-list')
-    new Vue
+    editProducts = new Vue
       el: "div[rel='edit-modal']"
       data:
         id: container[0].dataset["catalogId"]
@@ -42,7 +42,7 @@ $(document).ready ->
           this.catalogs = catalogs.map((cata)-> cata.name).join('/')
     additional = new Vue
       el: "#additional-attributes"
-      data: 
+      data:
         lists: [
           ['尺寸', 'attr_1']
           ['颜色', 'attr_2']
