@@ -1,8 +1,8 @@
 class Agent::ProductsController < Agent::BaseController
-  before_action :set_current_user_products
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   def index
     authorize Product
+    @products = @site.products
     @catalogs = ProductCatalog.roots
     if params[:reorder].present?
       @products = case params[:reorder]
@@ -51,7 +51,7 @@ class Agent::ProductsController < Agent::BaseController
 
   def create
     @product = Product.new(permitted_attributes(Product))
-    @product.site = current_user.sites.first
+    @product.site = @site.id
     authorize @product
     if @product.save
       # redirect_to agent_product_path(@product), notice: 'Product 创建成功.'
@@ -85,10 +85,6 @@ class Agent::ProductsController < Agent::BaseController
     # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = @products.find(params[:id])
-    end
-
-    def set_current_user_products
-      @products = @site.products
     end
 
     # Only allow a trusted parameter "white list" through.

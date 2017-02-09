@@ -18,8 +18,8 @@ class Site < ApplicationRecord
   has_many :items, dependent: :destroy
   has_many :image_items, dependent: :destroy, as: :owner
   has_many :members, dependent: :destroy
+  has_many :products
   store_accessor :features, :description
-
   validates_presence_of :title, :user_id
   validates_uniqueness_of :title, scope: [:type, :user_id]
 end
