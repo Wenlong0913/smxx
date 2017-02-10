@@ -112,23 +112,14 @@
                       </div>
                     </div>
                     <div class="col-xs-6">
-                      <div class="form-group">
-                        <%= f.input :stock %>
-                      </div>
-                    </div>
-                    <div class="col-xs-6">
-                      <div class="form-group">
-                        <%= f.input :unit %>
-                      </div>
-                    </div>
-                    <div class="col-xs-6">
-                      <div class="form-group">
-                        <%= f.input :weight_unit, vlaue: 'Kg', as: :hidden %>
+                      <div class="form-group weight-input-group">
+                        <%= f.input :weight_unit, vlaue: 'Kg', as: :hidden, input_html: {class: 'hidden-input'} %>
                         <label class="control-label string optional">产品重量</label>
                         <div class="input-group">
                           <div class="input-group-btn">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              单位: Kg(千克)
+                              单位:
+                              <small class="">Kg(千克)</small>
                               <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
@@ -173,31 +164,32 @@
                     </div>
                   </div>
                   <div class="col-xs-4">
-                    <div id="additional-attributes" class="p-l-15">
+                    <div rel="additional-attributes" class="p-l-15">
                       <div>
                         <div class="additional_attr">
                           <label>产品附加属性</label>
                           <hr>
                         </div>
                         <div class="form-group row">
-                          <label class="col-xs-6">产品选项</label>
-                          <label class="col-xs-6">产品数据</label>
+                          <label class="col-xs-6">属性名称</label>
+                          <label class="col-xs-6">属性值</label>
                         </div>
-                        <div class="additional-item form-group row" v-for="(list, index) in lists">
-                          <div class="col-xs-3">
-                            <div class="form-group">
-                              <input class="form-control" type="text" v-model="list[0]" :name="'product[additional_attribute_keys][' + list[1] + ']'">
+                        <div class="additional-item form-group" v-for="(list, index) in lists">
+                          <div class="row" :key="index">
+                            <div class="col-xs-3">
+                              <div class="form-group">
+                                <input class="form-control" type="text" v-model="list.key" :name="'product[additional_attribute_keys][' + list.name + ']'">
+                              </div>
                             </div>
-
-                          </div>
-                          <div class="col-xs-8">
-                            <input class="form-control" type="text" :name="'product[additional_attribute_values][' + list[1] + ']'">
-                          </div>
-                          <div class="col-xs-1">
-                            <button type="button" class="btn btn-danger delete btn-xs" @click="removeInputList(index)">
-                              <i class="glyphicon glyphicon-trash"></i>
-                              <span>删除</span>
-                            </button>
+                            <div class="col-xs-8">
+                              <input class="form-control" type="text" v-model="list.value" :name="'product[additional_attribute_values][' + list.name + ']'">
+                            </div>
+                            <div class="col-xs-1">
+                              <button type="button" class="btn btn-danger delete btn-xs" @click="removeInputList(index)">
+                                <i class="glyphicon glyphicon-trash"></i>
+                                <span>删除</span>
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>

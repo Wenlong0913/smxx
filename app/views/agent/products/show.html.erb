@@ -40,7 +40,7 @@
                     <!-- BEGIN product-info-header -->
                     <div class="product-info-header">
                         <h1 class="product-title">
-                          <% if @product.discount.to_i > 0 && @product.discount.to_i < @product.price.to_i %>
+                          <% if @product.discount.to_f > 0 && @product.discount.to_f < @product.price.to_f %>
                             <span class="label label-danger">
                               优惠折扣中
                             </span>
@@ -101,7 +101,7 @@
                     <!-- END product-social -->
                     <!-- BEGIN product-purchase-container -->
                     <div class="product-purchase-container">
-                      <% if @product.discount.to_i > 0 && @product.discount.to_i < @product.price.to_i %>
+                      <% if @product.discount.to_f > 0 && @product.discount.to_f < @product.price.to_f %>
                         <div class="product-discount">
                           <span class="discount">￥<%= @product.price %></span>
                         </div>
@@ -114,11 +114,13 @@
                         </div>
                       <% end %>
                       <button class="btn btn-info btn-lg" data-toggle="modal" data-target="#editModal" type="submit">编辑信息</button>
-                      <% if @product.is_shelves %>
-                        <button class="btn btn-inverse btn-lg" type="submit">取消上架</button>
-                      <% else %>
-                        <button class="btn btn-warning btn-lg" type="submit">产品上架</button>
-                      <% end %>
+                      <span class="process_shelves" data-url="<%= process_shelves_agent_product_path(@product) %>">
+                        <% if @product.is_shelves %>
+                        <button class="btn btn-inverse btn-lg" type="submit" data-status='0'>取消上架</button>
+                        <% else %>
+                        <button class="btn btn-warning btn-lg" type="submit" data-status='1'>产品上架</button>
+                        <% end %>
+                      </span>
                     </div>
                     <!-- END product-purchase-container -->
                 </div>

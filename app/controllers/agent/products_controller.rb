@@ -1,6 +1,6 @@
 class Agent::ProductsController < Agent::BaseController
   before_action :set_current_user_products
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :process_shelves]
   def index
     authorize Product
     @catalogs = ProductCatalog.roots
@@ -61,11 +61,13 @@ class Agent::ProductsController < Agent::BaseController
     else
       render :new
     end
-
   end
 
   def update
     authorize @product
+    additional_attribute
+    @product.additional_attribute_keys = params["product"]["additional_attribute_keys"]
+    @product.additional_attribute_values = params["product"]["additional_attribute_values"]
     if @product.update(permitted_attributes(@product))
       redirect_to agent_product_path(@product), notice: 'Product 更新成功.'
     else
@@ -82,6 +84,11 @@ class Agent::ProductsController < Agent::BaseController
     # end
 
   end
+  def process_shelves
+    if @product.update(is_shelves: params[:status])
+      render json: {status: 'ok'}
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -93,6 +100,14 @@ class Agent::ProductsController < Agent::BaseController
       @products = @site.products
     end
 
+    def additional_attribute
+      params["product"]["additional_attribute_keys"].each_pair do |k, v|
+        if v.blank?
+          params["product"]["additional_attribute_keys"].delete(k)
+          params["product"]["additional_attribute_values"].delete(k)
+        end
+      end
+    end
     # Only allow a trusted parameter "white list" through.
     def product_params
       params[:product]

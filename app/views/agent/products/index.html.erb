@@ -57,7 +57,7 @@
               <div class="item item-thumbnail">
                   <%= link_to agent_product_path(product), class: 'item-image' do%>
                     <%= image_tag product.image_items.first.try{image_url}||'no-picture'%>
-                    <% if @product.discount.to_i > 0 && @product.discount.to_i < @product.price.to_i %>
+                    <% if product.discount.present? && product.discount.to_f > 0 && product.discount.to_f < product.price.to_f %>
                       <div class="discount">优惠折扣中</div>
                     <% end %>
                   <% end %>
@@ -67,12 +67,18 @@
                     </h4>
                     <p class="item-desc"><%= product.description.blank? ? "暂无描述".html_safe :  product.description %></p>
                     <div class="m-t-10">
-                      <small class="item-desc">
-                        <s>￥<%= product.price %></s>
-                      </small>
-                      <span class="text-danger h3">
-                        <small class="text-danger">￥</small><%= product.price %>
-                      </span>
+                      <% if product.discount.to_f > 0 && product.discount.to_f < product.price.to_f %>
+                        <small class="item-desc">
+                          <s>￥<%= product.price %></s>
+                        </small>
+                        <span class="text-danger h3">
+                          <small class="text-danger">￥</small><%= product.discount %>
+                        </span>
+                      <% else %>
+                        <span class="text-danger h3">
+                          <small class="text-danger">￥</small><%= product.price %>
+                        </span>
+                      <% end %>
                     </div>
                     <div class="item-discount-price"></div>
                   </div>

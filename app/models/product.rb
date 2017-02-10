@@ -5,5 +5,10 @@ class Product < Item
   has_many :image_items, :through => :image_item_relations
   belongs_to :catalog
   belongs_to :site
-  before_save -> { self.price = price.to_i }
+  before_save do
+    self.price = price.to_f.round(2)
+    self.discount = discount.to_f.round(2)
+    self.weight = weight.to_f.round(2)
+    self.stock = stock.to_i
+  end
 end
