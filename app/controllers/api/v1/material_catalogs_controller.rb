@@ -23,7 +23,7 @@ class Api::V1::MaterialCatalogsController < Api::V1::BaseController
   private
 
   def material_catalog_json(material_catalogs)
-    material_catalogs.as_json(only: %w(id name parent_id position), methods: [:full_name])
+    material_catalogs.as_json(only: %w(id name parent_id position features), methods: [:full_name])
   end
 
 end
