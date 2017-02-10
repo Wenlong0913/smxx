@@ -1,8 +1,9 @@
 FactoryGirl.define do
   factory :market_page do
+    site nil
     market_template nil
-    keywords "MyString"
+    name "MyString"
     description "MyString"
-    is_published false
+    features ""
   end
 end

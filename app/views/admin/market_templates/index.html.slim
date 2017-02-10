@@ -68,7 +68,7 @@ h1.page-header
           - @market_templates.each do |market_template|
             tr
               td
-                = image_tag market_template.image_path
+                = image_tag market_template.image_path, style: 'width:225px;', class: 'img-responsive'
               td
                 = market_template.name
                 br

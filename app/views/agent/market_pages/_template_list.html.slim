@@ -15,7 +15,7 @@
     .row.row-space-10
       - @market_templates.each do |market_template|
         /! BEGIN col-2
-        .col-md-2.col-sm-4
+        .col-md-3.col-sm-4
           /! BEGIN item
           .item.item-thumbnail
             = link_to new_agent_market_page_path(template_id: market_template.id) do

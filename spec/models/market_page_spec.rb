@@ -9,7 +9,7 @@ RSpec.describe MarketPage, type: :model do
   end
 
   it do
-    expect(described_class.attribute_names).to match_array(%w(id market_template keywords description is_published updated_at created_at))
+    expect(described_class.attribute_names).to match_array(%w(id site market_template name description features updated_at created_at))
   end
 
   # it { should have_many(:xxx) }

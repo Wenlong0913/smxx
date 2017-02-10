@@ -1,6 +1,7 @@
 class Agent::MarketPagesController < Agent::BaseController
   before_action :set_market_templates
-  before_action :set_market_page, only: [:show, :edit, :update, :destroy]
+  before_action :set_market_page, only: [:show, :edit, :update, :destroy, :preview]
+  layout :resolve_layout
 
   def index
     authorize MarketPage
@@ -34,7 +35,7 @@ class Agent::MarketPagesController < Agent::BaseController
     authorize MarketPage
     @market_page = MarketPage.new(permitted_attributes(MarketPage))
     @market_page.site_id = @site.id
-    binding.pry
+    @market_page.features = params[:mpage]
     respond_to do |format|
       format.html do
         if @market_page.save!
@@ -50,6 +51,7 @@ class Agent::MarketPagesController < Agent::BaseController
 
   def update
     authorize @market_page
+    @market_page.features = params[:mpage]
     respond_to do |format|
       format.html do
         if @market_page.update(permitted_attributes(@market_page))
@@ -72,6 +74,9 @@ class Agent::MarketPagesController < Agent::BaseController
 
   end
 
+  def preview
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_market_page
@@ -86,4 +91,13 @@ class Agent::MarketPagesController < Agent::BaseController
     def market_page_params
       params[:market_page]
     end
+
+    def resolve_layout
+       case action_name
+       when "preview"
+         false
+       else
+         "agent"
+       end
+     end
 end

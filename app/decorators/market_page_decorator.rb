@@ -6,8 +6,8 @@ class MarketPageDecorator < Decorator::Base
   #   end
   # end
 
-  # def created_at
-  #   super.to_i
-  # end
+  def created_at
+    distance_of_time_in_words_to_now(super)
+  end
 
 end
