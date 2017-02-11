@@ -34,7 +34,8 @@
     - [数据验证](#how-to-program-model-validators)
 - [测试](#testing)
 - [CMS建站](doc_cms.md)
-
+- [营销页](doc_market_page.md)
+- [CRM客户管理](doc_member.md)
 <a name="config"></a>
 ## 开发配置
 
