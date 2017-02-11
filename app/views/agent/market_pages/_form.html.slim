@@ -1,0 +1,34 @@
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+        i class="fa fa-times"
+
+  .panel-body
+    .row
+      .col-md-4
+        h4 效果预览
+        .iphone-bg-white
+          = image_tag @market_template.image_path, style: 'width:315px;height:482px;'
+      .col-md-2
+        |
+      .col-md-6
+        h4 替换内容
+        = simple_form_for @market_page, url: @market_page.new_record? ? agent_market_pages_path(@market_page) : agent_market_page_path(@market_page), html: { class: 'form-horizontal' } do |f|
+          - if @market_page.errors.any?
+            #error_explanation
+              h2 = "#{pluralize(@market_page.errors.count, "error")} prohibited this market_page from being saved:"
+              ul
+                - @market_page.errors.full_messages.each do |message|
+                  li = message
+          = f.input :market_template_id, as: :hidden, input_html: {value: @market_template.id}
+          = f.input :name, required: true
+          = f.input :description
+
+          == render inline: @market_template.form_source
+
+          hr
+          = f.submit '提交保存', class: 'btn btn-success'
