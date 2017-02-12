@@ -1,10 +1,10 @@
 $(document).ready ->
   # show
-  body = $('body.agent-products.show')
-  if body.length > 0
+  bodyShow = $('body.agent-products.show')
+  if bodyShow.length > 0
     # 更改上架标志
     onCheckShelvesStatus = ()->
-      body.find('.process_shelves button').on 'click', ->
+      bodyShow.find('.process_shelves button').on 'click', ->
         parentsDom = $(this).parents('.process_shelves')
         url = parentsDom.data('url')
         status = $(this).data('status')
@@ -23,17 +23,17 @@ $(document).ready ->
             alert('错误')
     onCheckShelvesStatus()
     #
-    body.find('ul.checkout_image_list li a').on "click", ->
+    bodyShow.find('ul.checkout_image_list li a').on "click", ->
       imageUrl = $(this).data('url')
-      body.find(".product-main-image[data-id='main-image'] img").attr('src', imageUrl)
-      body.find('ul.checkout_image_list li').removeClass('active')
+      bodyShow.find(".product-main-image[data-id='main-image'] img").attr('src', imageUrl)
+      bodyShow.find('ul.checkout_image_list li').removeClass('active')
       $(this).parent().addClass('active')
     setTimeout ->
-      body.find('#editModal .modal-content form').on "ajax:success", (event, request)->
+      bodyShow.find('#editModal .modal-content form').on "ajax:success", (event, request)->
         if request.hasOwnProperty('error')
           $(this).find('.modal-body .alert.alert-danger').removeClass('hide').find('span.title').text(request.error)
           $('#editModal').scrollTop(0)
-    container = body.find('.catalog-list')
+    container = bodyShow.find('.catalog-list')
     editProducts = new Vue
       el: "div[rel='edit-modal']"
       data:
@@ -57,8 +57,8 @@ $(document).ready ->
           console.log index
           this.lists.splice(index, 1)
     editProductsData = editProducts._data
-    defaultkeys = body.find('#editModal').data('keys')
-    defaultvalues = body.find('#editModal').data('values')
+    defaultkeys = bodyShow.find('#editModal').data('keys')
+    defaultvalues = bodyShow.find('#editModal').data('values')
     editProductsData.lists = []
     max = 0
     for name, v of defaultkeys
@@ -70,14 +70,14 @@ $(document).ready ->
     editProductsData.lists.push {key: ' ', name: editProductsData.count, value: ' '}
 
   # new
-  body = $('body.agent-products.new')
-  if body.length > 0
-    body.find('.weight-input-group .input-group-btn ul.dropdown-menu li a').off().on 'click', ->
+  bodyNew = $('body.agent-products.new')
+  if bodyNew.length > 0
+    bodyNew.find('.weight-input-group .input-group-btn ul.dropdown-menu li a').off().on 'click', ->
       selectedVal = $(this).data('val')
       selectedText = $(this).text()
       $(this).parents('.weight-input-group').find('.input-group-btn .dropdown-toggle small').text(selectedText)
       $(this).parents('.weight-input-group').find('input.hidden-input').val(selectedVal)
-    container = body.find('.catalog-list')
+    container = bodyNew.find('.catalog-list')
     catalog = new Vue
       el: "div[rel='basicInformation']"
       data:
@@ -105,17 +105,17 @@ $(document).ready ->
           this.count++
         removeInputList: (index)->
           this.lists.splice(index, 1)
-    body.find('.change-step').on 'click', ->
+    bodyNew.find('.change-step').on 'click', ->
       change_step_class = $(this).attr("href").replace("#", "")
-      body.find('.checkout-header .step').removeClass('active')
-      body.find("."+change_step_class).addClass('active')
-    body.find('form').on 'ajax:error', (event,request)->
+      bodyNew.find('.checkout-header .step').removeClass('active')
+      bodyNew.find("."+change_step_class).addClass('active')
+    bodyNew.find('form').on 'ajax:error', (event,request)->
       return_mess(setinterval_1, '发送失败！请检查网络')
-    body.find('form').on 'ajax:success', (event,request)->
-      body.find('#last .new-product').attr("href", request.url)
-      body.find('.checkout-header .step').removeClass('active')
-      body.find("[role='tabpanel']").removeClass('active in')
-      body.find('.last.step').addClass('active')
+    bodyNew.find('form').on 'ajax:success', (event,request)->
+      bodyNew.find('#last .new-product').attr("href", request.url)
+      bodyNew.find('.checkout-header .step').removeClass('active')
+      bodyNew.find("[role='tabpanel']").removeClass('active in')
+      bodyNew.find('.last.step').addClass('active')
       $('#last').addClass('active in')
       count = 5
       oldLocation= window.location
