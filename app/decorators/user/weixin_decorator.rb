@@ -1,7 +1,7 @@
 class User::WeixinDecorator < ApplicationDecorator
 
   def headshot
-    super || 'logo.jpg'
+    super || 'user.svg'
   end
 
   def display_gender

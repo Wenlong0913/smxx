@@ -6,7 +6,7 @@ class MarketPagePolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    if user.has_role? :admin
+    if user.has_role?(:admin) || user.has_role?(:agent)
       [:site, :market_template_id, :name, :description, :features]
     else
       []
