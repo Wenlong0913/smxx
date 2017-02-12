@@ -31,7 +31,7 @@
         .col-md-8
           = simple_fields_for :features do |o|
             - @agent_member_catalogs.each do |catalog|
-              = o.input catalog.key, collection: catalog.value, as: :radio_buttons, checked: @agent_member.features[catalog.key]
+              = o.input catalog.key, collection: catalog.value, as: :radio_buttons, checked: @agent_member.features && @agent_member.features[catalog.key]
 
 
       .form-group
