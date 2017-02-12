@@ -86,7 +86,7 @@ class Agent::ProductsController < Agent::BaseController
   end
 
   def process_shelves
-    if @product.update is_shelves: ('0' if params[:status] == '1')
+    if @product.update is_shelves: (params[:status] == '1' ? '1' : '0')
       render json: {status: 'ok'}
     end
   end
