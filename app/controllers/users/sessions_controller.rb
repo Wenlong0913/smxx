@@ -60,7 +60,12 @@ class Users::SessionsController < Devise::SessionsController
         t = Sms::Token.new(mobile)
         if t.valid?(code)
           sign_in user
-          render json: {}
+          url = if user.super_admin_or_admin?
+            admin_root_url
+          elsif user.has_role?(:agent)
+            agent_root_url
+          end
+          render json: {url: url}
         else
           render json: {error: '验证码错误！'}
         end

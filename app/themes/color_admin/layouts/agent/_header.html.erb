@@ -24,7 +24,7 @@
             <div class="header-nav">
                 <div class=" collapse navbar-collapse" id="navbar-collapse">
                     <ul class="nav">
-                        <li><a href="index.html">首页</a></li>
+                        <li><a href="/">首页</a></li>
 
                         <li class="dropdown dropdown-hover">
                             <a href="javascript:void(0);" data-toggle="dropdown">
@@ -38,6 +38,18 @@
                             </ul>
                         </li>
                         <li class="dropdown dropdown-hover">
+                          <a href="javascript:void(0);" data-toggle="dropdown">
+                            订单管理
+                            <i class="fa fa-angle-down"></i>
+                            <span class="arrow top"></span>
+                          </a>
+                          <ul class="dropdown-menu">
+                            <!-- sxhop/dagle 订单不同 -->
+                            <li><%= link_to '订单列表', agent_orders_path %></li>
+                            <li><%= link_to '订单创建', new_agent_product_path %></li>
+                          </ul>
+                        </li>
+                        <li class="dropdown dropdown-hover">
                             <a href="#" data-toggle="dropdown">
                                 生产设计
                                 <i class="fa fa-angle-down"></i>
@@ -47,10 +59,6 @@
                                 <li><a href="index.html">新建任务</a></li>
                                 <li><a href="index_fixed_header.html">任务管理</a></li>
                             </ul>
-                        </li>
-
-                        <li>
-                          <a href="#">订单管理</a>
                         </li>
                         <li class="dropdown dropdown-hover">
                             <a href="#" data-toggle="dropdown">
@@ -64,7 +72,6 @@
                                 <li><a href="index.html">推送</a></li>
                             </ul>
                         </li>
-
                         <li class="dropdown dropdown-hover">
                             <a href="#" data-toggle="dropdown">
                                 网站管理
