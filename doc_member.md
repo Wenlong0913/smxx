@@ -27,3 +27,7 @@
 
   - 插值格式： {A类,B类,C类}
   - Rails返回结果： ["A类", "B类", "C类"]
+
+# 编辑用户标签
+
+  使用插件： [Tokenfield](http://sliptree.github.io/bootstrap-tokenfield/)

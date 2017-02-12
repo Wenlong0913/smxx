@@ -14,6 +14,8 @@ class Agent::MembersController < Agent::BaseController
   def show
     authorize @agent_member
     @agent_member_note = @agent_member.member_notes.build
+    @agent_member_notes = @agent_member.member_notes.order("created_at DESC").limit(5)
+
     respond_to do |format|
       format.html
       format.json { render json: @agent_member }

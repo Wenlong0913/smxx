@@ -4,7 +4,8 @@ class Agent::MemberNotesController < Agent::BaseController
 
   def index
     authorize MemberNote
-    @agent_member_notes = MemberNote.order("created_at DESC").page(params[:page])
+    @agent_member_notes = @agent_member.member_notes.order("created_at DESC").page(params[:page])
+    @agent_member_note = @agent_member.member_notes.build
     respond_to do |format|
       format.html
       format.json { render json: @agent_member_notes }
