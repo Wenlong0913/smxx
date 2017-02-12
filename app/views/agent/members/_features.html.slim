@@ -1,2 +1,4 @@
-- @agent_member.features.each_pair do |k,v|
-  p =v
+.member-features
+  - @agent_member.features.each_pair do |k,v|
+    p class="bg-#{rand_bg_color}"
+      =v

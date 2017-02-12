@@ -36,4 +36,19 @@ module ApplicationHelper
       'http://song-dev.qiniudn.com/g7.jpg'
     ].sample
   end
+
+  # class="bg-blue"
+  def rand_bg_color
+    [ 'silver', 'silver-darker',
+      'black', 'black-darker',
+      'grey', 'grey-darker',
+      'red', 'red-darker', 'red-lighter',
+      'orange', 'orange-darker', 'orange-lighter',
+      'green', 'green-darker', 'green-lighter',
+      'yellow', 'yellow-darker', 
+      'blue', 'blue-darker', 'blue-lighter',
+      'aqua', 'aqua-darker', 'aqua-lighter',
+      'purple', 'purple-darker', 'purple-lighter',
+    ].sample
+  end
 end

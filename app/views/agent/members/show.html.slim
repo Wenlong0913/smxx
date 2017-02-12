@@ -15,9 +15,15 @@
     .panel-body
       .row
         .col-md-4
-          h4 基本信息
-          h2 = @agent_member.mobile_phone
+          h4 手机号码
+          h2 = link_to @agent_member.mobile_phone, 'tel:' + @agent_member.mobile_phone
           p  = distance_of_time_in_words_to_now(@agent_member.created_at) + '前添加'
+          hr
+          .row
+            .col-md-6
+              = link_to '编辑', edit_agent_member_path(@agent_member), class: 'btn btn-primary btn-block'
+            .col-md-6
+              = link_to '删除', agent_member_path(@agent_member), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-default btn-block'
           hr
           p
             |座机：
@@ -40,9 +46,6 @@
           hr
           h4 客户标签
           == render 'agent/members/features'
-          hr
-          = link_to '编辑', edit_agent_member_path(@agent_member), class: 'btn btn-primary'
-          = link_to '删除', agent_member_path(@agent_member), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-default'
 
         .col-md-8
           h4 添加沟通日志

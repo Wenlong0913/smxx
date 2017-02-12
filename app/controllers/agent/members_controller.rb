@@ -41,7 +41,7 @@ class Agent::MembersController < Agent::BaseController
     respond_to do |format|
       format.html do
         if @agent_member.save
-          redirect_to agent_member_path(@agent_member), notice: 'Member 创建成功.'
+          redirect_to agent_members_path, notice: '添加成功.'
         else
           render :new
         end
