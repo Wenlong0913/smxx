@@ -1,4 +1,4 @@
-class MarketPagePolicy < ApplicationPolicy
+class MemberNotePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope
@@ -7,7 +7,7 @@ class MarketPagePolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.has_role?(:admin) || user.has_role?(:agent)
-      [:site, :market_template_id, :name, :description, :features]
+      [:user_id, :member_id, :message]
     else
       []
     end

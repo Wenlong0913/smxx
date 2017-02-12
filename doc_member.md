@@ -20,5 +20,10 @@
 # member_catalog
 
   <p> 属性value是一个PostgreSQL的array类型， 关于Array的知识点参考： </p>
+
   [Rails 4 and PostgreSQL Arrays](http://blog.plataformatec.com.br/2014/07/rails-4-and-postgresql-arrays/)
+
   [How to start using Arrays in Rails with PostgreSQL](http://blog.arkency.com/2014/10/how-to-start-using-arrays-in-rails-with-postgresql/)
+
+  - 插值格式： {A类,B类,C类}
+  - Rails返回结果： ["A类", "B类", "C类"]

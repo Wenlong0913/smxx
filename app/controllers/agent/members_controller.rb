@@ -1,4 +1,5 @@
 class Agent::MembersController < Agent::BaseController
+  before_action :set_member_catalogs
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -12,6 +13,7 @@ class Agent::MembersController < Agent::BaseController
 
   def show
     authorize @agent_member
+    @agent_member_note = @agent_member.member_notes.build
     respond_to do |format|
       format.html
       format.json { render json: @agent_member }
@@ -32,6 +34,8 @@ class Agent::MembersController < Agent::BaseController
     @agent_member = Member.new(permitted_attributes(Member))
     # @agent_member.user_id = ?
     @agent_member.site_id = @site.id
+    @agent_member.features = params[:features].select{|k,v| v.present?}
+
     respond_to do |format|
       format.html do
         if @agent_member.save
@@ -47,6 +51,8 @@ class Agent::MembersController < Agent::BaseController
 
   def update
     authorize @agent_member
+    @agent_member.features = params[:features].select{|k,v| v.present?}
+
     respond_to do |format|
       format.html do
         if @agent_member.update(permitted_attributes(@agent_member))
@@ -71,7 +77,11 @@ class Agent::MembersController < Agent::BaseController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_member
-      @agent_member = Member.where(site_id: @site.id, id: params[:id])
+      @agent_member = Member.find_by(site_id: @site.id, id: params[:id])
+    end
+
+    def set_member_catalogs
+      @agent_member_catalogs = MemberCatalog.all
     end
 
     # Only allow a trusted parameter "white list" through.

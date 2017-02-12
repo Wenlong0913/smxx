@@ -1,18 +1,46 @@
-h1
-  | 查看 agent_member
-  .pull-right
-    = link_to '编辑', edit_agent_member_path(@agent_member), class: 'btn btn-primary'
-    = link_to '返回', agent_members_path, class: 'btn btn-primary', class: 'btn btn-primary'
+.container
+  h1
+    | 查看 agent_member
+    .pull-right
+      = link_to '编辑', edit_agent_member_path(@agent_member), class: 'btn btn-primary'
+      = link_to '返回', agent_members_path, class: 'btn btn-primary', class: 'btn btn-primary'
 
-.panel
-  .panel-heading
-    .panel-heading-btn
-      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
-        i class="fa fa-expand"
-      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
-        i class="fa fa-minus"
-    h4 查看 agent_member
-  .panel-body
-    dl
-      dt: strong
-      dd = @agent_member.name
+  .panel
+    .panel-heading
+      .panel-heading-btn
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+          i class="fa fa-expand"
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+          i class="fa fa-minus"
+      h4 查看 agent_member
+    .panel-body
+      .row
+        .col-md-4
+          h4 基本信息
+          h2 = @agent_member.name
+          p  = @agent_member.created_at
+          hr
+          p
+            |手机：
+            = @agent_member.mobile_phone
+          p
+            |邮箱：
+            = @agent_member.email
+          p
+            |QQ：
+            = @agent_member.qq
+          p
+            |公司：
+            = @agent_member.firm
+          p
+            |地址：
+            = @agent_member.address
+          p
+            |备注：
+            = @agent_member.note
+        .col-md-8
+          h4 客户标签
+          - @agent_member.features.each_pair do |k,v|
+            p =v
+          hr
+          == render 'agent/member_notes/form'

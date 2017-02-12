@@ -1,0 +1,22 @@
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+        i class="fa fa-times"
+    h4 添加沟通日志
+  .panel-body
+    = simple_form_for [@agent_member, @agent_member_note], url: agent_member_member_notes_path(@agent_member), html: { class: 'form-horizontal' } do |f|
+      - if @agent_member_note.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@agent_member_note.errors.count, "error")} prohibited this agent_member_note from being saved:"
+          ul
+            - @agent_member_note.errors.full_messages.each do |message|
+              li = message
+
+      = f.text_area :message, class: 'form-control'
+      .form-group
+        .col-md-2
+          = f.submit '保 存', class: 'btn btn-success'

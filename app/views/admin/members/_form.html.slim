@@ -17,7 +17,6 @@
       = f.input :name
       - if @member.new_record?
         = f.input :mobile_phone, required: true
-      = f.input :gender, collection: enum_options_for_select(Member, :gender), as: :radio_buttons, chec: :male
       = f.input :birth, start_year: Date.today.year - 70,
                               end_year: Date.today.year
       = f.input :qq

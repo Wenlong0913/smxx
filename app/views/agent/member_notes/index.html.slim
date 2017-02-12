@@ -1,0 +1,26 @@
+.container
+  h1
+    | 客户沟通日志
+    .pull-right
+      = link_to '返回', agent_member_path(@agent_member), class: 'btn btn-primary'
+  .panel
+    .panel-heading
+      .panel-heading-btn
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+          i class="fa fa-expand"
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+          i class="fa fa-minus"
+      h4 agent_member_notes 列表
+    .panel-body
+      .table-responsive
+        table.table.table-striped
+          thead
+            tr
+              th Message
+
+          tbody
+            - @agent_member_notes.each do |agent_member_note|
+              tr
+                td = agent_member_note.message
+
+                td = link_to '删除', agent_member_member_note_path(@agent_member, agent_member_note), data: { confirm: '确定要删除吗?' }, method: :delete

@@ -5,7 +5,9 @@ module AgentRoute
         get '/', to: 'home#index', as: :root
         get 'sign_in', to: 'sessions#new'
         resources 'products'
-        resources 'members'
+        resources 'members' do
+          resources 'member_notes'
+        end
         resources 'statistics'
         catalog_resources_for ProductCatalog, only: [:index]
         resources :market_pages, :concerns => :paginatable do
