@@ -80,3 +80,36 @@ material_catalogs.each_pair do |material_catalog, sub_material_catalos|
     end
   end
 end
+
+# 营销页
+MarketTemplate.create!(
+  catalog_id: 1,
+  base_path: 'templetes/market/snow',
+  name: 'snow',
+  keywords: '雪，圣诞祝福海报',
+  description: '圣诞节外发给客户的祝福海报',
+  image_path: '/templetes/market/snow/previews/demo-3.png',
+  html_source: '<!doctype html>
+    <html lang="zh-CN">
+    <head>
+      <title><%= @market_page.name %></title>
+      <meta name="description" content="<%= @market_page.description %>" />
+      <meta charset="utf-8" />
+      <meta name="apple-touch-fullscreen" content="YES" />
+      <meta name="format-detection" content="telephone=no" />
+    </head>
+
+    <body>
+     <h1>圣诞节快乐！</h1>
+     <p><%= @market_page.features['title'] %></p>
+     <p><%= @market_page.features['mobile'] %></p>
+    </body>
+    </html>',
+  form_source: '公司：<br/>
+    <input class="string " name="mpage[title]" value="<%=@market_page.features['title'] if @market_page.features%>" type="string" />
+
+    <br/>
+    联系电话：<br/>
+     <input class="string " name="mpage[mobile]"  value="<%=@market_page.features['mobile']  if @market_page.features%>" type="string" />
+    '
+)

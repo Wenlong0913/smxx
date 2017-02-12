@@ -1,8 +1,8 @@
 .container
   h1
-    | 会员列表
+    | 客户列表
     .pull-right
-      = link_to '添加会员', new_agent_member_path, class: 'btn btn-primary'
+      = link_to '添加客户', new_agent_member_path, class: 'btn btn-primary'
 
   .panel
     .panel-heading
@@ -11,20 +11,23 @@
           i class="fa fa-expand"
         a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
           i class="fa fa-minus"
-      h4 agent_members 列表
     .panel-body
       .table-responsive
         table.table.table-striped
           thead
             tr
-              th ID
               th 姓名
-
+              th 手机号码
+              th 客户类型
+              th 客户来源
+              th 添加时间
+              th 客户归属
           tbody
             - @agent_members.each do |agent_member|
               tr
-                td = agent_member.id
-                td = agent_member.name
-                td = link_to '查看', agent_member_path(agent_member)
-                td = link_to '编辑', edit_agent_member_path(agent_member)
-                td = link_to '删除', agent_member_path(agent_member), data: { confirm: '确定要删除吗?' }, method: :delete
+                td = link_to agent_member.name, agent_member_path(agent_member)
+                td = agent_member.mobile_phone
+                td = agent_member.features['客户类型'] if agent_member.features
+                td = agent_member.features['客户来源'] if agent_member.features
+                td = distance_of_time_in_words_to_now(agent_member.created_at) + '前'
+                td 系统

@@ -103,6 +103,25 @@
           li class=("has-sub #{'active' if page?('admin/sites')}")
             = link_to '经销商', admin_sites_path
 
+      li class=("has-sub #{'active' if page?('admin/market')}")
+        a href="javascript:;"
+          b.caret.pull-right
+          i.fa.fa-inbox
+          span 营销页
+        ul.sub-menu
+          li class=("#{'active' if page?('admin/market_catalogs')}") = link_to '分类管理', admin_market_catalogs_path
+          li class=("#{'active' if page?('admin/market_templates')}") = link_to '模板管理', admin_market_templates_path
+          li class=("#{'active' if page?('admin/market_pages')}") = link_to '营销页', admin_market_pages_path
+
+      li class=("has-sub #{'active' if page?('admin/members')}")
+        a href="javascript:;"
+          b.caret.pull-right
+          i.fa.fa-inbox
+          span 客户CRM
+        ul.sub-menu
+          li class=("#{'active' if page?('admin/member_catalogs')}") = link_to '分类管理', admin_member_catalogs_path
+          // li class=("#{'active' if page?('admin/members')}") = link_to '客户管理', admin_members_path
+
       li
         = link_to cms_sites_path do
           = fa_icon 'file-text', text: 'CMS系统'
