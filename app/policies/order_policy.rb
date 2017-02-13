@@ -16,4 +16,8 @@ class OrderPolicy < ApplicationPolicy
   def permitted_attributes_for_update
     permitted_attributes_for_create
   end
+
+  def create_comment?
+    create?
+  end
 end

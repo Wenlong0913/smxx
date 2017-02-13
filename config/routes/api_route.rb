@@ -13,7 +13,9 @@ module ApiRoute
               post :batch_create
             end
           end
-          resources :orders, only: [:index, :create]
+          resources :orders, only: [:index, :create] do
+            commentable
+          end
           resources :material_management_details, only: [:index, :create]
           resources :material_managements, only: [:create]
           resources :material_warehouses, only: [:index, :create]
