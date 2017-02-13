@@ -23,7 +23,7 @@ class Member < ApplicationRecord
     else
       flag, user = User::Create.(mobile_phone: mobile_phone, nickname: name)
       if flag
-        self.user_id = user
+        self.user_id = user.id
       else
         errors.add :mobile_phone, "手机号错误"
       end

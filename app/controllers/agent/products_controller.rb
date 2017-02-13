@@ -13,7 +13,7 @@ class Agent::ProductsController < Agent::BaseController
       # when 'discount'
       #   @products.order(price: :asc)
       when 'price'
-        @products.order("features -> 'price' desc")
+        @products.order("features -> 'discount' desc")
       else
         @products
       end
