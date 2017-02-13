@@ -7,7 +7,7 @@ class MaterialPurchaseDetailPolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.has_role? :admin
-      [:id, :input_number, :number, :price]
+      [:number, :price]
     else
       []
     end

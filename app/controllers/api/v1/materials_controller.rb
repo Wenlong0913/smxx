@@ -90,9 +90,17 @@ class Api::V1::MaterialsController < Api::V1::BaseController
     message = ""
     all_upload = true
     materials = []
-    begin
-      worksheet = Roo::Spreadsheet.open(params["file"].path)
-      # ["物料编号", "物料名", "物料分类", "品牌", "规格", "价格", "单位", "材质成分", "供应商"]
+    worksheet = nil
+    if File.extname(params["file"].path) == ".xlsx"
+      worksheet = Roo::Excelx.new(params["file"].path)
+    elsif File.extname(params["file"].path) == ".xls"
+      worksheet = Roo::Excel.new(params["file"].path)
+    elsif File.extname(params["file"].path) == ".csv"
+      worksheet = Roo::CSV.new(params["file"].path)
+    end 
+    # worksheet = Roo::Spreadsheet.open(params["file"].path)
+    # ["物料分类", "物料编号", "物料名", "品牌", "价格", "单位", "供应商"]
+    if worksheet
       header = worksheet.row(0)
       Material.transaction do
         2.upto worksheet.last_row do |index|
@@ -124,10 +132,11 @@ class Api::V1::MaterialsController < Api::V1::BaseController
           end
         end
       end
-    rescue
+    else
       all_upload = false
-      message = '文件打不开，请检查文件类型！'
+      message = '文件格式不正确！'
     end
+
     [all_upload, message, materials]
   end
 

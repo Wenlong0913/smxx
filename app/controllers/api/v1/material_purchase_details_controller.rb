@@ -6,12 +6,8 @@ class Api::V1::MaterialPurchaseDetailsController < Api::V1::BaseController
   def destroy
     material_purchase_detail = MaterialPurchaseDetail.find(params[:id])
     authorize material_purchase_detail
-    flag =  material_purchase_detail.destroy
-    if flag
-      render json: {status: 'ok', material_purchase: material_purchase_json(material_purchase_detail.material_purchase)}
-    else
-      render json: {status: 'error'}
-    end
+    MaterialPurchaseDetail::Destroy.(material_purchase_detail)
+    render json: {status: 'ok', material_purchases: material_purchase_json(material_purchase_detail.material_purchase)}
   end
 
   def update
@@ -19,7 +15,7 @@ class Api::V1::MaterialPurchaseDetailsController < Api::V1::BaseController
     authorize material_purchase_detail
     flag, material_purchase_detail = MaterialPurchaseDetail::Update.(material_purchase_detail, permitted_attributes(material_purchase_detail))
     if flag
-      render json: {status: 'ok'}
+      render json: {status: 'ok', material_purchases: material_purchase_json(material_purchase_detail.material_purchase)}
     else
       render json: {status: 'error'}
     end

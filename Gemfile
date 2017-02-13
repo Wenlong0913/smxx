@@ -53,6 +53,7 @@ gem 'active_model_serializers' # 不好用，不如直接as_json输出
 
 # gem 'spreadsheet'
 gem "roo"
+gem 'roo-xls'
 
 # gem 'client_side_validations',
 #   github: 'DavyJonesLocker/client_side_validations',
