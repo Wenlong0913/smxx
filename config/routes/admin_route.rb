@@ -45,6 +45,8 @@ module AdminRoute
         resources :sites, :concerns => :paginatable do
           resources :members, :concerns => :paginatable
         end
+        resources :members, :concerns => :paginatable
+        
         resources :produces, only: [:index] do
           resources :tasks, only: [:create, :update]
         end

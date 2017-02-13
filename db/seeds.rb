@@ -106,7 +106,7 @@ MarketTemplate.create!(
   name: 'snow',
   keywords: '雪，圣诞祝福海报',
   description: '圣诞节外发给客户的祝福海报',
-  image_path: '/templetes/market/snow/previews/demo-3.png',
+  image_path: '/templetes/market/snow/previews/demo-1.png',
   html_source: '<!doctype html>
     <html lang="zh-CN">
     <head>
