@@ -9,7 +9,7 @@
     = simple_form_for @market_template, url: @market_template.new_record? ? admin_market_templates_path : admin_market_template_path(@market_template), validate: true do |f|
       - if @market_template.errors.any?
         #error_explanation
-          h2 = "#{pluralize(@market_template.errors.count, "error")} prohibited this market_template from being saved:"
+          
           ul
             - @market_template.errors.full_messages.each do |message|
               li = message

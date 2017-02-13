@@ -9,7 +9,7 @@
     = simple_form_for @market_page, url: @market_page.new_record? ? admin_market_pages_path : admin_market_page_path(@market_page), validate: true do |f|
       - if @market_page.errors.any?
         #error_explanation
-          h2 = "#{pluralize(@market_page.errors.count, "error")} prohibited this market_page from being saved:"
+          
           ul
             - @market_page.errors.full_messages.each do |message|
               li = message

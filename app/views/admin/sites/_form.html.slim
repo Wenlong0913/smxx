@@ -10,7 +10,7 @@
     = simple_form_for @site, url: @site.new_record? ? admin_sites_path : admin_site_path(@site), validate: true do |f|
       - if @site.errors.any?
         #error_explanation
-          h2 = "#{pluralize(@site.errors.count, "error")} prohibited this admin_site from being saved:"
+          
           ul
             - @site.errors.full_messages.each do |message|
               li = message

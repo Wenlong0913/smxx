@@ -9,7 +9,7 @@
     = simple_form_for @produce, url: @produce.new_record? ? admin_produces_path : admin_produce_path(@produce), validate: true do |f|
       - if @produce.errors.any?
         #error_explanation
-          h2 = "#{pluralize(@produce.errors.count, "error")} prohibited this produce from being saved:"
+          
           ul
             - @produce.errors.full_messages.each do |message|
               li = message

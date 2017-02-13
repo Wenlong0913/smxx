@@ -11,7 +11,7 @@
     = form_for @agent_statistic, url: @agent_statistic.new_record? ? agent_statistics_path(@agent_statistic) : agent_statistic_path(@agent_statistic), html: { class: 'form-horizontal' } do |f|
       - if @agent_statistic.errors.any?
         #error_explanation
-          h2 = "#{pluralize(@agent_statistic.errors.count, "error")} prohibited this agent_statistic from being saved:"
+          
           ul
             - @agent_statistic.errors.full_messages.each do |message|
               li = message

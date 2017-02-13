@@ -9,7 +9,7 @@
     = simple_form_for @member_catalog, url: @member_catalog.new_record? ? admin_member_catalogs_path : admin_member_catalog_path(@member_catalog), validate: true do |f|
       - if @member_catalog.errors.any?
         #error_explanation
-          h2 = "#{pluralize(@member_catalog.errors.count, "error")} prohibited this member_catalog from being saved:"
+          
           ul
             - @member_catalog.errors.full_messages.each do |message|
               li = message

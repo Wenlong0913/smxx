@@ -11,7 +11,7 @@
     = simple_form_for @agent_member, url: @agent_member.new_record? ? agent_members_path(@agent_member) : agent_member_path(@agent_member), html: { class: 'form-horizontal' } do |f|
       - if @agent_member.errors.any?
         #error_explanation
-          h2 = "#{pluralize(@agent_member.errors.count, "error")} prohibited this agent_member from being saved:"
+          
           ul
             - @agent_member.errors.full_messages.each do |message|
               li = message

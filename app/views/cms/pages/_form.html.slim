@@ -9,7 +9,7 @@
     = simple_form_for [@cms_site, @cms_channel, @cms_page], url: @cms_page.new_record? ? cms_site_channel_pages_path(@cms_site, @cms_channel) : cms_site_channel_page_path(@cms_site, @cms_channel, @cms_page), validate: true do |f|
       - if @cms_page.errors.any?
         #error_explanation
-          h2 = "#{pluralize(@cms_page.errors.count, "error")} prohibited this cms_page from being saved:"
+          
           ul
             - @cms_page.errors.full_messages.each do |message|
               li = message
