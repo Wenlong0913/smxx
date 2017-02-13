@@ -28,19 +28,32 @@ class Api::V1::MaterialsController < Api::V1::BaseController
 
   def create
     authorize Material
-    flag, material = Material::Create.(permitted_attributes(Material).merge(image_item_ids: params["image_item_ids"]))
-    if flag
+    flag, material = Material::Create.(permitted_attributes(Material))
+    material.features = material.features.merge(params["material"]['features'])
+    if flag && material.save
       render json: {status: 'ok', material: material_json(material)}
     else
       render json: {status: 'failed', error_message:  material.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
     end
   end
 
+  def batch_create
+    authorize Material
+    flag, message, materials = parse_material_upload_file
+    if flag
+      render json: {status: 'ok', materials: material_json(materials)}
+    else
+      render json: {status: 'failed', error_message:  message }
+    end   
+  end
+
   def update
     material = set_material
     authorize material
-    flag, material = Material::Update.(material, permitted_attributes(material).merge(image_item_ids: params["image_item_ids"]))
-    if flag
+    material.features = {}
+    flag, material = Material::Update.(material, permitted_attributes(material))
+    material.features = material.features.merge(params["material"]['features'])
+    if flag && material.save
       render json: {status: 'ok', material: material_json(material)}
     else
       render json: {status: 'failed', error_message:  material.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
@@ -59,16 +72,63 @@ class Api::V1::MaterialsController < Api::V1::BaseController
 
   def material_json(materials)
     materials.as_json(
-      only: %w(id name name_py catalog_id),
-      methods: %w(stock image_item_ids),
+      only: %w(id name name_py catalog_id features),
+      methods: %w(stock image_item_ids brand price unit vendor_ids),
       include: {
-        catalog: { only: %w(id name), methods: %w(full_name) },
+        vendors: { only: %w(id name)},
+        catalog: { only: %w(id name features), methods: %w(full_name) },
         image_items: { only: %w(id), methods: %w(image_url image_file_name) },
         material_warehouse_items: { only: %w(stock),
           include: {material_warehouse: {only: %w{name}}}
         }
       }
     )
+  end
+
+  def parse_material_upload_file
+    require 'roo'
+    message = ""
+    all_upload = true
+    materials = []
+    begin
+      worksheet = Roo::Spreadsheet.open(params["file"].path)
+      # ["物料编号", "物料名", "物料分类", "品牌", "规格", "价格", "单位", "材质成分", "供应商"]
+      header = worksheet.row(0)
+      Material.transaction do
+        2.upto worksheet.last_row do |index|
+          # .row(index) will return the row which is a subclass of Array
+          row = worksheet.row(index)
+
+          attributes = {
+            name_py:      row[0],
+            name:         row[1],
+            catalog_id:   MaterialCatalog.where(name: row[2]).first.try(:id),
+            brand:        row[3],
+            size:         row[4],
+            price:        row[5],
+            unit:         row[6],
+            texture:      row[7],
+            vendor_ids:   Vendor.where(name: row[8]).pluck(:id)
+          }
+
+          flag, material = Material::Create.(attributes)
+          if flag
+            materials.push(material)
+          else
+            material.errors.messages.each_pair do |k, v|
+              message += material.send(k) +':'+ v.join(':')
+            end
+            all_upload = false
+            raise ActiveRecord::Rollback
+            break
+          end
+        end
+      end
+    rescue
+      all_upload = false
+      message = '文件打不开，请检查文件类型！'
+    end
+    [all_upload, message, materials]
   end
 
 end

@@ -8,15 +8,8 @@
   </div>
 
   <div id="logo-slider">
-    <div class="item"><img src="/templetes/dagle/img/company-logos-svg/bosch.svg" ></div>
-    <div class="item"><img src="/templetes/dagle/img/company-logos-svg/cisco.svg" ></div>
-    <div class="item"><img src="/templetes/dagle/img/company-logos-svg/codeacademy.svg" ></div>
-    <div class="item"><img src="/templetes/dagle/img/company-logos-svg/facebook.svg" ></div>
-    <div class="item"><img src="/templetes/dagle/img/company-logos-svg/instagram.svg" ></div>
-    <div class="item"><img src="/templetes/dagle/img/company-logos-svg/linkedin.svg" ></div>
-    <div class="item"><img src="/templetes/dagle/img/company-logos-svg/motorola.svg" ></div>
-    <div class="item"><img src="/templetes/dagle/img/company-logos-svg/nokia.svg" ></div>
-    <div class="item"><img src="/templetes/dagle/img/company-logos-svg/shopify.svg" ></div>
-    <div class="item"><img src="/templetes/dagle/img/company-logos-svg/soundcloud.svg" ></div>
+    <% Cms::Page.where(channel_id: '32').each do |page| %>
+      <div class="item"><a href="<%= get_cms_url(page) %>"><img src="<%= page.image_path %>" ></a></div>
+    <% end %>
   </div>
 </div>

@@ -6,6 +6,10 @@ class ApplicationPolicy
     @record = record
   end
 
+  def dashboard?
+    user.super_admin_or_admin?
+  end
+
   def index?
     user.super_admin_or_admin?
     # record.is_a?(ActiveRecord::Associations::HasManyAssociation) && record.proxy_association.owner

@@ -31,7 +31,6 @@ class Cms::PagesController < Cms::BaseController
   def create
     @cms_page = @cms_channel.pages.new(permitted_attributes(@cms_channel.pages))
     authorize @cms_page
-
     respond_to do |format|
       format.html do
         if @cms_page.save

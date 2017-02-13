@@ -1,4 +1,8 @@
 /*
+*= require agent/home
 *= require agent/products
+*= require agent/public
+*= require agent/market
+*= require agent/orders
 *= require_self
 */

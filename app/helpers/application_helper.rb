@@ -20,4 +20,35 @@ module ApplicationHelper
       flag
     end
   end
+
+  # get random img use in login interface or banner
+  # == Usage
+  #  image_tag(rand_banner_img)
+  def rand_banner_img
+    [
+      'http://song-dev.qiniudn.com/g0.jpg',
+      'http://song-dev.qiniudn.com/g1.jpg',
+      'http://song-dev.qiniudn.com/g2.jpg',
+      'http://song-dev.qiniudn.com/g3.jpg',
+      'http://song-dev.qiniudn.com/g4.jpg',
+      'http://song-dev.qiniudn.com/g5.jpg',
+      'http://song-dev.qiniudn.com/g6.jpg',
+      'http://song-dev.qiniudn.com/g7.jpg'
+    ].sample
+  end
+
+  # class="bg-blue"
+  def rand_bg_color
+    [ 'silver', 'silver-darker',
+      'black', 'black-darker',
+      'grey', 'grey-darker',
+      'red', 'red-darker', 'red-lighter',
+      'orange', 'orange-darker', 'orange-lighter',
+      'green', 'green-darker', 'green-lighter',
+      'yellow', 'yellow-darker', 
+      'blue', 'blue-darker', 'blue-lighter',
+      'aqua', 'aqua-darker', 'aqua-lighter',
+      'purple', 'purple-darker', 'purple-lighter',
+    ].sample
+  end
 end

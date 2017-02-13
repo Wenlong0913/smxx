@@ -7,6 +7,10 @@ zh-CN:
       material:
         stock: 库存数
         min_stock: 库存警戒线
+        brand: 品牌
+        color: 颜色
+        size: 规格
+        texture: 材质
     errors:
       models:
         material:

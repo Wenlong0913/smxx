@@ -17,7 +17,7 @@
         .col-md-6
           = f.input :title
           = f.input :short_title, label: '名称简写(不填则程序自动生成)', placeholder: '请用全英文，用于生成可读的URL链接'
-          = f.input :properties
+
           = f.input :keywords, placeholder: '关键词用逗号隔开'
         .col-md-6
           = f.input :parent_id, collection: @cms_site.channels.select{|c| c != @cms_channel}.map { |r| [r.children.any? ? "|-#{r.title}" : "|------#{r.title}   ", r.id, { class: r.id }] }, include_blank: true

@@ -9,7 +9,11 @@ zh-CN:
         catalog: 产品分类
         name: 产品名称
         price: 单价
-        unit: 单位
+        unit: 库存单位
+        stock: 库存
+        discount: 促销价
+        weight: 产品重量
+        weight_unit: 重量单位
         description: 介绍
     errors:
       models:

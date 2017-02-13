@@ -11,7 +11,18 @@
 //= require color_admin/plugins/d3/d3
 //= require color_admin/plugins/nvd3/build/nv.d3
 //= require color_admin/js/apps
+
+// dashboard
+// require color_admin/plugins/flot/jquery.flot
+// require color_admin/plugins/flot/jquery.flot.time
+// require color_admin/plugins/flot/jquery.flot.resize
+// require color_admin/plugins/flot/jquery.flot.pie
+// require color_admin/plugins/sparkline/jquery.sparkline
+// require color_admin/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2
+// require color_admin/plugins/jquery-jvectormap/jquery-jvectormap-world-mill-en
+
 //= require admin
 $(document).ready(function() {
   App.init();
+  // Dashboard.init();
 });

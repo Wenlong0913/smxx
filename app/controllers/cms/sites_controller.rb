@@ -66,11 +66,10 @@ class Cms::SitesController < Cms::BaseController
       format.html { redirect_to cms_sites_url, notice: 'Site 删除成功.' }
       format.json { head 200 }
     end
-
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    # @cms_site is initialized in application_controller.rb#check_subdomain!
     def set_cms_site
       @cms_site = Cms::Site.find(params[:id])
     end

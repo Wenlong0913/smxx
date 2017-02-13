@@ -3,6 +3,9 @@ require 'csv'
 class Admin::MaterialsController < Admin::BaseController
   before_action :set_material, only: [:show, :edit, :update, :destroy]
 
+  def dashboard
+    authorize Material
+  end
   # GET /admin/materials
   def index
     authorize Material
@@ -18,7 +21,7 @@ class Admin::MaterialsController < Admin::BaseController
         format.html { send_data(@materials.to_xml, filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@materials.as_csv(only: []), filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@materials.as_csv(only: ['id', 'name']), filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end

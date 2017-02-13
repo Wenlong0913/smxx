@@ -3,7 +3,7 @@
   .login.login-with-news-feed
     .news-feed
       .news-image
-          = image_tag 'http://img3.iqilu.com/data/attachment/forum/201308/21/192654ai88zf6zaa60zddo.jpg', data: { id: 'login-cover-image' }
+          = image_tag rand_banner_img, data: { id: 'login-cover-image' }
       .news-caption
         h4.caption-title
           i.fa.fa-diamond.text-success
@@ -20,6 +20,7 @@
         .icon
             i.fa.fa-sign-in
       .login-content
+
         .login-buttons.m-b-30.m-t-30.weixin-login[data-session-url=new_users_weixins_sessions_path data-verify-url=status_users_weixins_sessions_path data-qrcode-img-url=new_users_weixins_sessions_path(format: 'png')]
             button.btn.btn-success.btn-block.btn-lg[data-toggle='modal' data-target='#mobile_login_modal'] 手机号登陆
             button.btn.btn-primary.btn-block.btn-lg[@click="showModal = true"]
@@ -27,7 +28,7 @@
             modal[title="打开微信扫一扫登录" :show="showModal" @cancel="showModal = false"]
               div
                 div[v-if="showImage" class="text-center"]
-                  h3 
+                  h3
                     |{{message}}
                   img[:src="weixinQrcode"]
               div[slot="footer"]

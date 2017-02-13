@@ -1,0 +1,61 @@
+<%= render file: "public/templetes/dagle/shared/_header" %>
+
+<div id="barba-wrapper" >
+  <div class="barba-container">
+
+    
+    <div id="index">
+      <!-- banner -->
+      <section id="headline-cover" style="padding-top: 100px !important;padding-bottom: 100px !important; min-width: 100px !important;min-height: 100% !important;">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12" data-aos="fade-down">
+              <h1 class="headline-text">
+                用德格·<span style="color:gold;"><%= @channel.title %></span>
+              </h1>
+              <p class="subheading-text" data-aos="fade-up">
+                <%= @channel.description %>
+              </p>
+              <div class="buttons-container" data-aos="fade-up-right">
+                <!-- data-toggle="modal" data-target="#purchaseModal" -->
+                <a href="javascript:void(0);" onclick="_MEIQIA._SHOWPANEL();"  class="btn btn-lg btn-primary btn-round btn-main-cta">
+                  申请试用
+                </a>
+                <span class="or">or</span>
+                <a href="<%= get_cms_url('blog') %>" class="btn btn-link">
+                  了解详情 &rarr;
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <%= render file: "public/templetes/dagle/shared/partials/_horizontal_features" %>
+
+      <%= raw @channel.content %>
+
+      <section id="company-slider">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <%= render file: "public/templetes/dagle/shared/partials/_logo_slider" %>
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <a href="<%= get_cms_url("case") %>" class='btn btn-bordered btn-lg btn-round btn-primary'>
+                    查看更多合作商 &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <%= render file: "public/templetes/dagle/shared/partials/_pay_now.html.erb" %>
+      
+      
+    </div>
+  </div>
+</div>
+<%= render file: "public/templetes/dagle/shared/_footer" %>

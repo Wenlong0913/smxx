@@ -1,3 +1,21 @@
 // Place all the styles related to the agent/home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.form-horizontal .form-group {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.member-features{
+  position: relative;
+  display: block;
+  float: left;
+}
+.member-features p{
+  float: left;
+  margin: 5px;
+  color: #fff;
+  padding: 0px 5px;
+  font-size: 18px;
+}

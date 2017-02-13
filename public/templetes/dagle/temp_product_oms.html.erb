@@ -1,0 +1,69 @@
+<%= render file: "public/templetes/dagle/shared/_header" %>
+
+<div id="barba-wrapper">
+  <div class="barba-container">
+  
+    <div id="index">
+      <!-- banner -->
+      <section id="headline-cover">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <h1 class="headline-text"  data-aos="fade-up-right" style="font-size: 30px; font-weight: 300; margin-top: 60px; margin-bottom: 35px;">
+                德格·<%= @channel.title %>
+              </h1>
+              <p class="headline-text"  data-aos="fade-up-right" style="font-size: 43px;">
+                <strong>打造完美服务,提升销售业绩</strong>
+              </p>
+              <p class="subheading-text"  data-aos="fade-up-right">
+                实时跟踪管理客户订单业务流程,动态掌握订单的进展和完成情况,提升了经销商的销售业绩,从而节省整个业务流程的运作时间和作业成本,提高企业的市场竞争力
+              </p>
+              <div class="buttons-container" data-aos="fade-up-right">
+                <!-- data-toggle="modal" data-target="#purchaseModal" -->
+                <a href="javascript:void(0);" onclick="_MEIQIA._SHOWPANEL();"  class="btn btn-lg btn-primary btn-round btn-main-cta">
+                  申请试用
+                </a>
+                <span class="or">or</span>
+                <a href="<%= get_cms_url("blog") %>" class="btn btn-link">
+                  了解更多 &rarr;
+                </a>
+              </div>
+            </div>
+
+            <div class="col-md-6 hidden-sm hidden-xs" data-aos="fade-up-left">
+              <img class="img-responsive main-img" src="<%= @channel.image_path %>" alt="<%= @channel.keywords %>">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <%= raw @channel.content %>
+
+      <%= render file: "public/templetes/dagle/shared/partials/_application_domain.html.erb" %>     
+
+      <!-- 客户案例 -->
+      <section id="company-slider" data-aos="fade-up">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <%= render file: "public/templetes/dagle/shared/partials/_logo_slider" %>
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <a href="<%= get_cms_url("case") %>" class='btn btn-bordered btn-lg btn-round btn-primary'>
+                    查看更多客户 &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <%= render file: "public/templetes/dagle/shared/partials/_contact_question.html.erb" %>
+      <%= render file: "public/templetes/dagle/shared/partials/_pay_now.html.erb" %>
+
+    </div>
+
+  </div>
+</div>
+
+<%= render file: "public/templetes/dagle/shared/_footer" %>

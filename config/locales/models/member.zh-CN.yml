@@ -17,6 +17,12 @@ zh-CN:
         birth: 生日
         qq: QQ号
         email: 邮箱
+        tel_phone: 座机
+        wechat: 微信号
+        firm: 公司
+        address: 地址
+        note: 备注
+        features: 更多内容
     errors:
       models:
         member:

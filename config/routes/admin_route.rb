@@ -20,7 +20,11 @@ module AdminRoute
         catalog_resources_for ProductCatalog # 产品分类管理
         catalog_resources_for MaterialCatalog # 物料分类管理
 
-        resources :materials # 物料管理
+        resources :materials do # 物料管理
+          collection do
+            get 'dashboard', to: 'materials#dashboard'
+          end
+        end
         resources :vendors # 供应商管理
 
         resources :material_managements #物料出库/入库
@@ -49,6 +53,13 @@ module AdminRoute
           resources :materials, except: [:index], controller: 'order_materials'
           resources :produces, only: [:show, :create, :destroy, :update]
         end
+        #营销页
+        resources :market_catalogs, :concerns => :paginatable
+        resources :market_templates, :concerns => :paginatable
+        catalog_resources_for MarketCatalog # 分类管理
+        resources :market_pages, :concerns => :paginatable
+        #客户CRM
+        resources :member_catalogs, :concerns => :paginatable
       end
     end
   end

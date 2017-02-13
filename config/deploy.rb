@@ -15,7 +15,7 @@ end
 quit("项目名PN必须填写在命令行中提供") unless ENV['PN']
 set :application, ENV['PN']
 
-set :repo_url, "git@gitlab.tanmer.com:tanmer/tmf.git"
+set :repo_url, "git@gitlab.tanmer.com:tanmer/dagle.git"
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :deploy_to, "/data/www/#{fetch(:application)}"
 
@@ -42,7 +42,7 @@ end
 append :linked_files, "config/database.yml", "config/secrets.yml", "config/settings.yml"
 
 # Default value for linked_dirs is []
-append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/assets", 'node_modules'
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/assets", "public/ckeditor_assets", 'node_modules'
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }

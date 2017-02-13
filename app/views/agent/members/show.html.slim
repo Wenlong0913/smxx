@@ -1,0 +1,54 @@
+.container
+  h1
+    | 客户：
+    = @agent_member.name
+    .pull-right
+      = link_to '返回', agent_members_path, class: 'btn btn-primary', class: 'btn btn-default'
+
+  .panel
+    .panel-heading
+      .panel-heading-btn
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+          i class="fa fa-expand"
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+          i class="fa fa-minus"
+    .panel-body
+      .row
+        .col-md-4
+          h4 手机号码
+          h2 = link_to @agent_member.mobile_phone, 'tel:' + @agent_member.mobile_phone
+          p  = distance_of_time_in_words_to_now(@agent_member.created_at) + '前添加'
+          hr
+          .row
+            .col-md-6
+              = link_to '编辑', edit_agent_member_path(@agent_member), class: 'btn btn-primary btn-block'
+            .col-md-6
+              = link_to '删除', agent_member_path(@agent_member), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-default btn-block'
+          hr
+          p
+            |座机：
+            = @agent_member.tel_phone
+          p
+            |邮箱：
+            = @agent_member.email
+          p
+            |QQ：
+            = @agent_member.qq
+          p
+            |公司：
+            = @agent_member.firm
+          p
+            |地址：
+            = @agent_member.address
+          p
+            |备注：
+            = @agent_member.note
+          hr
+          h4 客户标签
+          == render 'agent/members/features'
+
+        .col-md-8
+          h4 添加沟通日志
+          == render 'agent/member_notes/form'
+          hr
+          == render 'agent/member_notes/list'

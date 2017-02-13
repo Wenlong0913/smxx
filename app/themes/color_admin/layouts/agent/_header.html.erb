@@ -24,66 +24,83 @@
             <div class="header-nav">
                 <div class=" collapse navbar-collapse" id="navbar-collapse">
                     <ul class="nav">
-                        <li><a href="index.html">首页</a></li>
+                        <li><a href="/">首页</a></li>
+
                         <li class="dropdown dropdown-hover">
-                          <a href="#" data-toggle="dropdown">
-                              访问统计
-                              <i class="fa fa-angle-down"></i>
-                              <span class="arrow top"></span>
+                            <a href="javascript:void(0);" data-toggle="dropdown">
+                                产品管理
+                                <i class="fa fa-angle-down"></i>
+                                <span class="arrow top"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><%= link_to '产品列表', agent_products_path %></li>
+                              <li><%= link_to '发布新品', new_agent_product_path %></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown dropdown-hover">
+                          <a href="javascript:void(0);" data-toggle="dropdown">
+                            订单管理
+                            <i class="fa fa-angle-down"></i>
+                            <span class="arrow top"></span>
                           </a>
                           <ul class="dropdown-menu">
-                              <li><a href="product.html">当日</a></li>
-                              <li><a href="product.html">本周</a></li>
-                              <li><a href="product.html">上周</a></li>
-                              <li><a href="product.html">上月</a></li>
-                              <li><a href="product.html">本年</a></li>
-                              <li><a href="product.html">汇总</a></li>
+                            <!-- sxhop/dagle 订单不同 -->
+                            <li><%= link_to '订单列表', agent_orders_path %></li>
+                            <li><%= link_to '订单创建', new_agent_product_path %></li>
                           </ul>
                         </li>
                         <li class="dropdown dropdown-hover">
                             <a href="#" data-toggle="dropdown">
-                                我的产品
+                                生产设计
                                 <i class="fa fa-angle-down"></i>
                                 <span class="arrow top"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="product.html">日用品</a></li>
-                                <li><a href="product.html">生鲜食品</a></li>
-                                <li><a href="product.html">海外商品</a></li>
-                                <li><a href="product.html">旅游</a></li>
-                                <li><a href="product.html">运功</a></li>
-                                <li><a href="product.html">娱乐</a></li>
-                                <li><a href="product.html">电子</a></li>
+                                <li><a href="index.html">新建任务</a></li>
+                                <li><a href="index_fixed_header.html">任务管理</a></li>
                             </ul>
                         </li>
                         <li class="dropdown dropdown-hover">
                             <a href="#" data-toggle="dropdown">
-                                我的热销
+                                客户CRM
                                 <i class="fa fa-angle-down"></i>
                                 <span class="arrow top"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="index.html">iPhone 7</a></li>
-                                <li><a href="index_fixed_header.html">红酒</a></li>
+                                <li><%= link_to '客户', agent_members_path %></li>
+                                <li><%= link_to '营销', agent_market_pages_path %></li>
+                                <li><a href="index.html">推送</a></li>
                             </ul>
                         </li>
-                        <li><%= link_to '发布新品', new_agent_product_path %></li>
                         <li class="dropdown dropdown-hover">
                             <a href="#" data-toggle="dropdown">
-                                <i class="fa fa-search search-btn"></i>
+                                网站管理
+                                <i class="fa fa-angle-down"></i>
                                 <span class="arrow top"></span>
                             </a>
-                            <div class="dropdown-menu p-15">
-                                <form action="search_results.html" method="POST" name="search_form">
-                                    <div class="input-group">
-                                        <input type="text" placeholder="搜索" class="form-control bg-silver-lighter" />
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-inverse" type="submit"><i class="fa fa-search"></i></button>
-                                        </span>
-                                    </div>
-                                </form>
-                            </div>
+                            <ul class="dropdown-menu">
+                                <li><a href="index.html">栏目管理</a></li>
+                                <li><a href="index_fixed_header.html">页面管理</a></li>
+                            </ul>
                         </li>
+
+                        <li class="dropdown dropdown-hover">
+                          <!-- <%#= link_to agent_statistics_path, 'data-toggle': "dropdown" do %> -->
+                          <%= link_to '#', 'data-toggle': "dropdown" do %>
+                            统计报表
+                            <i class="fa fa-angle-down"></i>
+                            <span class="arrow top"></span>
+                          <% end %>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <!-- <%#= link_to '汇总', agent_statistics_path %> -->
+                              <%= link_to '汇总', '#' %>
+                            </li>
+                            <li><a href="product.html">分销统计</a></li>
+                            <li><a href="product.html">访问统计</a></li>
+                          </ul>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -93,14 +110,13 @@
                 <ul class="nav pull-right">
                     <li class="dropdown dropdown-hover">
                         <a href="#" class="header-cart" data-toggle="dropdown">
-                            <i class="fa fa-shopping-bag"></i>
                             <span class="total">2</span>
                             <span class="arrow top"></span>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-cart p-0">
                             <div class="cart-header">
-                                <h4 class="cart-title">最新客户订单</h4>
+                                <h4 class="cart-title">未读消息</h4>
                             </div>
                             <div class="cart-body">
                                 <ul class="cart-item">
@@ -109,7 +125,7 @@
                                       <%= image_tag 'macbook-pro'%>
                                     </div>
                                     <div class="cart-item-info">
-                                        <h4>macbook-pro xxxx 128GB - Silver</h4>
+                                        <h4>张三的设计任务有了新反馈</h4>
                                         <div class="price">
                                           <small class="pull-left">金额：$16990.00</small>
                                           <small class="pull-right">日期：2016/5/5/12:20</small></div>
@@ -120,7 +136,7 @@
                                       <%= image_tag 'macbook-pro'%>
                                     </div>
                                     <div class="cart-item-info">
-                                        <h4>macbook-pro xxxx 128GB - Silver</h4>
+                                        <h4>李四在3分钟前下了一个订单</h4>
                                         <div class="price">
                                           <small class="pull-left">金额：$16990.00</small>
                                           <small class="pull-right">日期：2016/5/5/12:20</small></div>
@@ -139,10 +155,10 @@
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="my_account.html">
+                        <%= link_to sign_out_path, method: :delete do %>
                             <%= image_tag 'portrait', class: 'user-img'%>
-                            <span class="hidden-md hidden-sm hidden-xs">退出登录</span>
-                        </a>
+                            <span class="hidden-md hidden-sm hidden-xs">退出</span>
+                        <% end %>
                     </li>
                 </ul>
             </div>

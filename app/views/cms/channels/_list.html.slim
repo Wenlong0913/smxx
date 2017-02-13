@@ -1,13 +1,17 @@
 .row
   - @cms_channels.each do |cms_channel|
-    - color = bg_colors.sample
+    - color = rand_bg_color
     .col-md-3.col-sm-6
       div class=("widget widget-stats bg-#{color}")
         .stats-icon
           i.fa.fa-folder
         .stats-info
-          h4 =cms_channel.short_title
-          p =cms_channel.title
+          h4
+            | 父级：
+          p
+            =cms_channel.title
+            small.pull-right
+              =cms_channel.short_title
         .stats-link
           .row
             .col-md-6
@@ -18,10 +22,18 @@
               = link_to get_cms_url(cms_channel), target: '_blank' do
                 | 前台预览 &nbsp;&nbsp;
                 i.fa.fa-arrow-circle-o-right
+          .row
+            .col-md-6
+              = link_to edit_cms_site_channel_path(@cms_site, cms_channel.id) do
+                | 修改栏目 &nbsp;&nbsp;
+                i.fa.fa-arrow-circle-o-right
+            .col-md-6
+              = link_to new_cms_site_channel_page_path(@cms_site,cms_channel) do
+                | 添加页面 &nbsp;&nbsp;
+                i.fa.fa-arrow-circle-o-right
 
       .row
-        - while cms_channel.children.any? do
-          - cms_channel = cms_channel.children.first
+        - cms_channel.children.each do |cms_channel|
           .col-md-12.col-sm-12
             div class=("widget widget-stats bg-#{color}")
               .stats-icon

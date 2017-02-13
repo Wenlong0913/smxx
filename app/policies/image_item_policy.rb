@@ -17,4 +17,8 @@ class ImageItemPolicy < ApplicationPolicy
   def permitted_attributes_for_update
     permitted_attributes_for_create
   end
+
+  def create?
+    user.super_admin_or_admin? || user.has_role?(:agent)
+  end
 end

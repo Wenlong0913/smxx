@@ -4,50 +4,51 @@
       <div class="col-sm-8 col-xs-12">
         <div class="row">
           <div class="col-sm-4 col-xs-6 footer-menu">
-            <h3><span>Overview</span></h3>
+            <h3><span>快速导航</span></h3>
             <ul class="unstyled">
               <li>
                 <a href="/">
                   <i class="material-icons">home</i>
-                  Home
+                  首页
                 </a>
               </li>
 
               <li>
-                <a href="<%= page_path("index_3") %>">
+                <a href="<%= get_cms_url('desk') %>">
                   <i class="material-icons">home</i>
-                  Mobile App Landing
+                  桌面端
                 </a>
               </li>
 
               <li>
-                <a href="<%= page_path("about") %>">
+                <a href="<%= get_cms_url('mobile') %>">
                   <i class="material-icons">supervisor_account</i>
-                  About Us <small class="label label-success">New!</small>
+                  手机端 <small class="label label-success">New!</small>
                 </a>
               </li>
               <li>
-                <a href="<%= page_path("services") %>">
-                  <i class="material-icons">done_all</i>
-                  Services
+                <a href="<%= get_cms_url('erp') %>">
+                  <i class="material-icons">monetization_on</i> 工厂ERP管理系统
                 </a>
               </li>
               <li>
-                <a href="<%= page_path("features") %>">
-                  <i class="material-icons">new_releases</i>
-                  Features
+                <a href="<%= get_cms_url('scrm') %>">
+                  <i class="material-icons">done_all</i> 经销商SCRM关系管理系统
                 </a>
               </li>
               <li>
-                <a href="<%= page_path("pricing") %>">
-                  <i class="material-icons">monetization_on</i>
-                  Pricing
+                <a href="<%= get_cms_url('oms') %>">
+                  <i class="material-icons">new_releases</i> OMS订单管理系统
                 </a>
               </li>
               <li>
-                <a href="<%= page_path("contact_us") %>">
-                  <i class="material-icons">contact_mail</i>
-                  Contact
+                <a href="<%= get_cms_url('bpm') %>">
+                  <i class="material-icons">face</i> BPM流程管理系统
+                </a>
+              </li>
+              <li>
+                <a href="<%= get_cms_url('net-pay') %>">
+                  <i class="material-icons">contact_mail</i> 电子商务系统
                 </a>
               </li>
 
@@ -55,86 +56,107 @@
           </div><!-- footer menu -->
 
           <div class="col-sm-4 col-xs-6 footer-menu">
-            <h3><span>Menu</span></h3>
+            <h3><span>功能列表</span></h3>
             <ul class="unstyled">
               <li>
-                <a href="<%= page_path("portfolio_1_col") %>">
+                <a href="<%= get_cms_url('admin-stock') %>">
                   <i class="material-icons">brightness_4</i>
-                  Portfolio 1
+                  管库存
                 </a>
               </li>
               <li>
-                <a href="<%= page_path("portfolio_2_col") %>">
+                <a href="<%= get_cms_url('admin-sales') %>">
                   <i class="material-icons">brightness_5</i>
-                  Portfolio 2
+                  管销售
                 </a>
               </li>
-
               <li>
-                <a href="<%= page_path("portfolio_3_col") %>">
+                <a href="<%= get_cms_url('admin-buy') %>">
                   <i class="material-icons">brightness_6</i>
-                  Portfolio 3
+                  管采购
                 </a>
               </li>
               <li>
-                <a href="<%= page_path("gallery_4_col") %>">
+                <a href="<%= get_cms_url('admin-production') %>">
+                  <i class="material-icons">camera_alt</i>
+                  管生产
+                </a>
+              </li>
+              <li>
+                <a href="<%= get_cms_url('admin-marketing') %>">
+                  <i class="material-icons">camera_alt</i>
+                  管营销
+                </a>
+              </li>
+              <li>
+                <a href="<%= get_cms_url('admin-client') %>">
+                  <i class="material-icons">camera_alt</i>
+                  管客户
+                </a>
+              </li>
+              <li>
+                <a href="<%= get_cms_url('admin-online') %>">
+                  <i class="material-icons">camera_alt</i>
+                  管电商
+                </a>
+              </li>
+              <li>
+                <a href="<%= get_cms_url('admin-teamwork') %>">
                   <i class="material-icons">compare</i>
-                  Gallery
+                  管协同
                 </a>
               </li>
-
+              <li class="divider"></li>
               <li>
-                <a href="support.html">
-                  <i class="material-icons">record_voice_over</i>
-                  Knowledge Base
-                </a>
-              </li>
-              <li>
-                <a href="faq.html">
-                  <i class="material-icons">question_answer</i>
-                  FAQ
+                <a href="<%= get_cms_url('admin-customade') %>">
+                  <i class="material-icons">compare</i>
+                  定制功能
                 </a>
               </li>
             </ul>
           </div><!-- footer menu -->
 
           <div class="col-sm-4 hidden-xs footer-menu">
-            <h3><span>Social</span></h3>
+            <h3><span>获取帮助</span></h3>
             <ul class="unstyled">
+              <!-- <li>
+                <a href="<%#= get_cms_url('support') %>">
+                  <i class="material-icons">record_voice_over</i>
+                  技术支持
+                </a>
+              </li> -->
+
+              <!-- <li>
+                <a href="<%#= get_cms_url('faq') %>">
+                  <i class="material-icons">question_answer</i>
+                  常见问答
+                </a>
+              </li> -->
+
               <li>
-                <a href="<%= page_path("blog_home_1") %>">
+                <a href="<%= get_cms_url('blog') %>">
                   <i class="material-icons">border_color</i>
-                  Blog 1
+                  博客
                 </a>
               </li>
               <li>
-                <a href="<%= page_path("blog_home_2") %>">
+                <a href="<%= get_cms_url('log') %>">
                   <i class="material-icons">insert_emoticon</i>
-                  Micro Blog
+                  更新日志
+                </a>
+              </li>
+              <li class="divider"></li>
+
+              <li>
+                <a href="javascript:void(0);" onclick="_MEIQIA._SHOWPANEL();">
+                  <i class="fa fa-comments"></i>
+                  在线咨询
                 </a>
               </li>
               <li>
-                <a href="<%= page_path("features") %>">
-                  <i class="fa fa-youtube"></i>
-                  Youtube
-                </a>
-              </li>
-              <li>
-                <a href="<%= page_path("services") %>">
-                  <i class="fa fa-facebook"></i>
-                  Facebook
-                </a>
-              </li>
-              <li>
-                <a href="<%= page_path("pricing") %>">
-                  <i class="fa fa-twitter"></i>
-                  Twitter
-                </a>
-              </li>
-              <li>
-                <a href="<%= page_path("pricing") %>">
-                  <i class="fa fa-linkedin"></i>
-                  LinkedIn
+                <a href="tel:18080810818">
+                  <i class="fa fa-mobile"></i>
+                  电话沟通
                 </a>
               </li>
             </ul>
@@ -146,20 +168,21 @@
 
 
       <div class="col-sm-4 hidden-xs blog-item">
-        <h3><span>Blog</span></h3>
-        <a href="<%= page_path("blog_home_1") %>">
+        <h3><span>最新博文</span></h3>
+        <% Cms::Page.recent(1).each do |page| %>
+        <a href="<%= get_cms_url(page) %>">
           <div class="image-wrapper">
-            <img src="/templetes/dagle/img/cleancut/website.png" alt="">
+            <img src="<%= page.image_path %>" alt="<%= page.keywords %>">
 
             <div class="text">
               <h4>
-                How to create a beautiful website?
+                <%= page.title %>
               </h4>
             </div>
 
           </div>
         </a>
-
+        <% end %>
       </div>
     </div>
   </div>
@@ -168,10 +191,11 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          StartKit. Copyright &copy; 2016. All Rights Reserved
+          成都德格软件技术有限公司 &copy; 2017 <span style="color: #fff;">cms.dagle.cn</span>
 
           <div class="pull-right hidden-xs">
-            <a href="https://authenticpixels.com" target="_blank" title="Bootstrap Templates">Authentic Pixels</a>
+            技术支持：
+            <a href="http://www.tanmer.com" target="_blank" title="探码科技">探码科技</a>
           </div>
         </div>
       </div>
@@ -185,38 +209,40 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Modal example</h4>
+        <h4 class="modal-title">填写您的详细信息</h4>
       </div>
       <div class="modal-body">
-        <p class="lead">
-          This is a modal with costom transitions. You can choose from 'zoom-out' 'move-horizontal' & 'newspaper-effect'.
-        </p>
-
-        <p>
-          Below are some are some other home page variants that you can use -
-        </p>
-
-        <ul>
-          <li>
-            <a href="/">
-              Default home page with 2
-            </a>
-          </li>
-          <li>
-            <a href="<%= page_path("index_2") %>">
-              Home page for software products
-            </a>
-          </li>
-          <li>
-            <a href="<%= page_path("index_3") %>">
-              Home page for Mobile apps
-            </a>
-          </li>
-        </ul>
-
-      </div>
+        <form role="form">
+          <!-- 姓名 -->
+          <div class="form-group">
+            <label for="inputUserFirstname">公司名/个人姓名</label>
+            <input type="text" class="form-control input-lg" placeholder="输入公司名或您的姓名" id="inputUserFirstname">
+          </div>
+          <!-- 邮箱 -->
+          <div class="form-group">
+            <label for="inputUsernameEmail">邮箱地址</label>
+            <input type="text" class="form-control input-lg" placeholder="you@yourcompany.com" id="inputUsernameEmail">
+          </div>
+          <!-- 行业 -->
+          <div class="form-group">
+            <label for="inputUsernameLastname">所属行业</label>
+            <input type="text" class="form-control input-lg" placeholder="IT/制造/家具..." id="inputUsernameLastname">
+          </div>
+          <!--  -->
+          <div class="form-group">
+            <label for="inputUsernameContent">留言咨询</label>
+            <textarea type="text" class="form-control input-lg" placeholder="我们会逐一对您的疑问进行回答和采用" id="inputUsernameContent"></textarea>
+          </div>
+          <br>
+          <div class="actions">
+            <button type="submit" class="btn btn-lg btn-primary">
+              <i class="fa fa-check-sign"></i>提交订单
+            </button>
+          </div>
+        </form>
+      </div>  
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

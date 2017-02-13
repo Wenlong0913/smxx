@@ -55,7 +55,8 @@ $(document).ready ->
       if request.hasOwnProperty('error')
         return_mess(setinterval_1, request.error)
       else
-        window.location.href = body.find('#mobile_login_modal .modal-body #click_login').data('href')
+        # window.location.href = body.find('#mobile_login_modal .modal-body #click_login').data('href')
+        window.location.href = request.url
   # 清除计时，返回消息
   return_mess = (setinterval_1, text, status)->
     color = 'text-danger'
