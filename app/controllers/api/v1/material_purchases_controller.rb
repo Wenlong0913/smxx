@@ -32,6 +32,7 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
     if params["material_management"]
       process_material_purchase_import
     end
+    @material_purchase.paid = @material_purchase.paid.to_f + params[:material_purchase][:paying].to_f
     flag, material_purchase = MaterialPurchase::Update.(@material_purchase, permitted_attributes(@material_purchase))
     if flag
       render json: {status: 'ok', material_purchases: material_purchase_json(material_purchase)}
@@ -44,7 +45,7 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
   def material_purchase_json(material_purchases)
     material_purchases.as_json(
       only: %w(id vendor_id status),
-      methods: %w(purchase_date amount total),
+      methods: %w(purchase_date amount total paid),
       include: { 
         vendor: {
           only: %w(id name),
