@@ -10,11 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170117080729) do
+
+ActiveRecord::Schema.define(version: 20170210080146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "account_histories", force: :cascade do |t|
+    t.integer  "account_id"
+    t.decimal  "amount",           precision: 8, scale: 2
+    t.integer  "relation_account"
+    t.integer  "relation_type"
+    t.date     "relation_date"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.index ["account_id"], name: "index_account_histories_on_account_id", using: :btree
+  end
+
+  create_table "accounts", force: :cascade do |t|
+    t.string   "owner_type"
+    t.integer  "owner_id"
+    t.string   "name"
+    t.decimal  "amount",     precision: 8, scale: 2
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.index ["owner_type", "owner_id"], name: "index_accounts_on_owner_type_and_owner_id", using: :btree
+  end
 
   create_table "audits", force: :cascade do |t|
     t.integer  "auditable_id"
@@ -53,6 +75,7 @@ ActiveRecord::Schema.define(version: 20170117080729) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "type"
+    t.jsonb    "features"
     t.index ["parent_id"], name: "index_catalogs_on_parent_id", using: :btree
   end
 
@@ -184,6 +207,35 @@ ActiveRecord::Schema.define(version: 20170117080729) do
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.integer  "material_warehouse_id"
+  end
+
+  create_table "material_purchase_details", force: :cascade do |t|
+    t.integer  "material_id"
+    t.integer  "material_purchase_id"
+    t.integer  "number"
+    t.integer  "input_number",                                 default: 0
+    t.decimal  "price",                precision: 8, scale: 2
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
+    t.index ["material_purchase_id"], name: "index_material_purchase_details_on_material_purchase_id", using: :btree
+  end
+
+  create_table "material_purchases", force: :cascade do |t|
+    t.integer  "vendor_id"
+    t.jsonb    "features"
+    t.integer  "created_by"
+    t.integer  "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "material_stock_alerts", force: :cascade do |t|
+    t.integer  "material_id"
+    t.string   "title"
+    t.string   "body"
+    t.integer  "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "material_warehouse_items", force: :cascade do |t|
@@ -415,6 +467,16 @@ ActiveRecord::Schema.define(version: 20170117080729) do
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
   end
 
+  create_table "vendor_relations", force: :cascade do |t|
+    t.integer  "vendor_id"
+    t.string   "relation_type"
+    t.integer  "relation_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["relation_type", "relation_id"], name: "index_vendor_relations_on_relation_type_and_relation_id", using: :btree
+  end
+
+  add_foreign_key "account_histories", "accounts"
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
   add_foreign_key "items", "sites"
