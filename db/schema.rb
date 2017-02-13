@@ -10,15 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20170211155745) do
-=======
-ActiveRecord::Schema.define(version: 20170204080204) do
->>>>>>> purchase
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "account_histories", force: :cascade do |t|
+    t.integer  "account_id"
+    t.decimal  "amount",           precision: 8, scale: 2
+    t.integer  "relation_account"
+    t.integer  "relation_type"
+    t.date     "relation_date"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.index ["account_id"], name: "index_account_histories_on_account_id", using: :btree
+  end
+
+  create_table "accounts", force: :cascade do |t|
+    t.string   "owner_type"
+    t.integer  "owner_id"
+    t.string   "name"
+    t.decimal  "amount",     precision: 8, scale: 2
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.index ["owner_type", "owner_id"], name: "index_accounts_on_owner_type_and_owner_id", using: :btree
+  end
 
   create_table "audits", force: :cascade do |t|
     t.integer  "auditable_id"
@@ -57,6 +74,7 @@ ActiveRecord::Schema.define(version: 20170204080204) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "type"
+    t.jsonb    "features"
     t.index ["parent_id"], name: "index_catalogs_on_parent_id", using: :btree
   end
 
@@ -220,9 +238,10 @@ ActiveRecord::Schema.define(version: 20170204080204) do
     t.integer  "material_id"
     t.integer  "material_purchase_id"
     t.integer  "number"
+    t.integer  "input_number",                                 default: 0
     t.decimal  "price",                precision: 8, scale: 2
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
     t.index ["material_purchase_id"], name: "index_material_purchase_details_on_material_purchase_id", using: :btree
   end
 
@@ -505,18 +524,16 @@ ActiveRecord::Schema.define(version: 20170204080204) do
     t.index ["relation_type", "relation_id"], name: "index_vendor_relations_on_relation_type_and_relation_id", using: :btree
   end
 
+  add_foreign_key "account_histories", "accounts"
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
   add_foreign_key "items", "sites"
   add_foreign_key "market_pages", "market_templates"
   add_foreign_key "market_pages", "sites"
   add_foreign_key "material_management_details", "material_managements"
-<<<<<<< HEAD
+  add_foreign_key "material_purchase_details", "material_purchases"
   add_foreign_key "member_notes", "members"
   add_foreign_key "member_notes", "users"
-=======
-  add_foreign_key "material_purchase_details", "material_purchases"
->>>>>>> purchase
   add_foreign_key "members", "sites"
   add_foreign_key "members", "users"
   add_foreign_key "order_materials", "orders"

@@ -80,8 +80,25 @@ material_catalogs.each_pair do |material_catalog, sub_material_catalos|
     end
   end
 end
+#物料类别所特有的属性
+#物料共有属性：价格, 单位，品牌，供应商， 图片
+material_catalog_attributes = {
+  "板材": ['颜色', '厚度', '单／双', '表面处理', '基材名称', '基材等级'],
+  "五金": ['规格', '颜色'],
+  "封边带": ['规格', '颜色'],
+  "纸箱": ['规格', '颜色'],
+  "气泡垫/珍珠棉": ['规格', '颜色'],
+  "皮纹/软包": ['规格'],
+  "玻璃/腰线": ['规格', '颜色', '厚度'],
+  "吸塑": ['型号', '颜色']
+}
 
-<<<<<<< HEAD
+material_catalog_attributes.each_pair do |material_catalog, attributes|
+  mc = MaterialCatalog.where(name: material_catalog).first
+  mc.features = {attributes: attributes}
+  mc.save!
+end
+
 # 营销页
 MarketTemplate.create!(
   catalog_id: 1,
@@ -102,38 +119,15 @@ MarketTemplate.create!(
 
     <body>
      <h1>圣诞节快乐！</h1>
-     <p><%= @market_page.features['title'] %></p>
-     <p><%= @market_page.features['mobile'] %></p>
+     <p><%= @market_page.features["title"] %></p>
+     <p><%= @market_page.features["mobile"] %></p>
     </body>
     </html>',
   form_source: '公司：<br/>
-    <input class="string " name="mpage[title]" value="<%=@market_page.features['title'] if @market_page.features%>" type="string" />
+    <input class="string " name="mpage[title]" value="<%=@market_page.features["title"] if @market_page.features%>" type="string" />
 
     <br/>
     联系电话：<br/>
-     <input class="string " name="mpage[mobile]"  value="<%=@market_page.features['mobile']  if @market_page.features%>" type="string" />
+     <input class="string " name="mpage[mobile]"  value="<%=@market_page.features["mobile"]  if @market_page.features%>" type="string" />
     '
 )
-=======
-#物料类别所特有的属性
-#物料共有属性：价格, 单位，品牌，供应商， 图片
-material_catalog_attributes = {
-  "板材": ['颜色', '厚度', '单／双', '表面处理', '基材名称', '基材等级'],
-  "五金": ['规格', '颜色'],
-  "封边带": ['规格', '颜色'],
-  "纸箱": ['规格', '颜色'],
-  "气泡垫/珍珠棉": ['规格', '颜色'],
-  "皮纹/软包": ['规格'],
-  "玻璃/腰线": ['规格', '颜色', '厚度'],
-  "吸塑": ['型号', '颜色']
-}
-
-material_catalog_attributes.each_pair do |material_catalog, attributes|
-  mc = MaterialCatalog.where(name: material_catalog).first
-  mc.features = {attributes: attributes}
-  mc.save!
-end
-
-
-
->>>>>>> purchase
