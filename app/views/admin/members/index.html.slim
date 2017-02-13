@@ -64,7 +64,7 @@ h1.page-header
             th 登录用户
             th 会员名称
             th 手机号
-            th 性别
+            / th 性别
             th 生日
             th QQ
             th 邮箱
@@ -75,7 +75,7 @@ h1.page-header
               td = member.user && decorate(member.user).display_name
               td = member.name
               td = member.user.mobile.phone_number
-              td = decorate(member).display_gender
+              / td = decorate(member).display_gender
               td = member.birth
               td = member.qq
               td = member.email
