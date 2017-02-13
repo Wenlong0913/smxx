@@ -48,6 +48,12 @@ gem 'font-awesome-rails', '~> 4.7.0'
 gem 'simple_form', '~> 3.3.1'
 gem 'active_model_serializers' # 不好用，不如直接as_json输出
 
+# gem 'active_model_serializers' # 不好用，不如直接as_json输出
+#
+
+# gem 'spreadsheet'
+gem "roo"
+
 # gem 'client_side_validations',
 #   github: 'DavyJonesLocker/client_side_validations',
 #   branch: 'rails5'

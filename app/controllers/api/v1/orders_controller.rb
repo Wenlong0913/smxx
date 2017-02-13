@@ -13,7 +13,7 @@ class Api::V1::OrdersController < Api::BaseController
 
   def create
     authorize Order
-    flag, order = Order::Create.(permitted_attributes(Order).merge(image_item_ids: params["image_item_ids"]))
+    flag, order = Order::Create.(permitted_attributes(Order))
     if flag
       render json: {status: 'ok', order: order_json(order)}
     else
@@ -38,6 +38,14 @@ class Api::V1::OrdersController < Api::BaseController
     end
 
     def order_json(orders)
-      orders.as_json(only: [:id, :code, :price, :status, :internal_status, :description, :created_at], include: {site: {only: [:id, :title]}, member: {only: [:name]}, produce: {only: [:id]}})
+      orders.as_json(
+        only: [:id, :code, :price, :status, :internal_status, :description, :created_at], 
+        include: {
+          site: {only: [:id, :title]}, 
+          member: {only: [:name]}, 
+          produce: {only: [:id]},
+          image_items: {only: [:id], methods: [:image_url, :image_file_name]}
+        }
+      )
     end
 end

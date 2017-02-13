@@ -15,11 +15,7 @@ class MaterialManagementPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_update
-    if user.super_admin_or_admin?
-      [:operate_date, :note]
-    else
-      []
-    end
+    permitted_attributes_for_create
   end
 
 end
