@@ -27,7 +27,7 @@ class Api::V1::OrdersController < Api::BaseController
     order_comment = @order.comments.new(params[:comment].permit(:content))
     order_comment.user = current_user
     if order_comment.save
-      render json: {status: 'ok', comment: order_comment.as_json(only: [:content])}
+      render json: {status: 'ok', comment: order_comment.as_json(only: [:content], include: {user: {only: [:nickname]}})}
     else
       render json: {status: 'failed', error_message: 'failed'}
     end
@@ -56,9 +56,11 @@ class Api::V1::OrdersController < Api::BaseController
           site: {only: [:id, :title]}, 
           member: {only: [:name]}, 
           produce: {only: [:id]},
-          image_items: {only: [:id], methods: [:image_url, :image_file_name]}
+          image_items: {only: [:id], methods: [:image_url, :image_file_name]},
+          comments: {only: [:content], include: {user: {only: [:nickname]}}}
         }
       )
+
     end
 
     def set_order
