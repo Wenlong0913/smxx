@@ -74,7 +74,7 @@ h1.page-header
             tr
               td = member.user && decorate(member.user).display_name
               td = member.name
-              td = member.user.mobile.phone_number
+              / td = member.user.mobile.phone_number
               / td = decorate(member).display_gender
               td = member.birth
               td = member.qq

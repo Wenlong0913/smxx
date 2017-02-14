@@ -5,7 +5,7 @@ zh-CN:
       market_template: 营销页模板
     attributes:
       market_template:
-        market_catalog: 分类
+        catalog_id: 分类
         base_path: 模板路径
         name: 名称
         keywords: 关键词

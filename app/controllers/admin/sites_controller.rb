@@ -1,6 +1,10 @@
 class Admin::SitesController < Admin::BaseController
   before_action :set_site, only: [:show, :edit, :update, :destroy]
 
+  def dashboard 
+    authorize Site
+  end
+
   # GET /admin/sites
   def index
     authorize Site
