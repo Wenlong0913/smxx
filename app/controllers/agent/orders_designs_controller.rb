@@ -1,21 +1,22 @@
 class Agent::OrdersDesignsController < Agent::BaseController
-  before_action :set_agent_orders_design, only: [:show, :edit, :update, :destroy]
+  before_action :set_orders_design, only: [:show, :edit, :update, :destroy]
 
   def index
-    @agent_orders_designs = @site.orders.page(params[:page])
+    # authorize @agent_orders_design
+    @orders_designs = @site.orders.page(params[:page])
     respond_to do |format|
       format.html
-      # format.json { render json: @agent_orders_designs }
+      format.json { render json: @orders_designs }
     end
   end
 
-  # def show
-  #   authorize @agent_orders_design
-  #   respond_to do |format|
-  #     format.html
-  #     format.json { render json: @agent_orders_design }
-  #   end
-  # end
+  def show
+    # authorize @agent_orders_design
+    respond_to do |format|
+      format.html
+      format.json { render json: @agent_orders_design }
+    end
+  end
   #
   # def new
   #   authorize Agent::OrdersDesign
@@ -69,8 +70,8 @@ class Agent::OrdersDesignsController < Agent::BaseController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_agent_orders_design
-      @agent_orders_design = @site.orders.find(params[:id])
+    def set_orders_design
+      @orders_designs = @site.orders.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
