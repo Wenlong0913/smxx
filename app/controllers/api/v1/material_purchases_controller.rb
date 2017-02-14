@@ -22,7 +22,7 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
     if flag
       render json: {status: 'ok', material_purchases: material_purchase_json(material_purchase)}
     else
-      render json: {status: 'failed', error_message:  material_purchase.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
+      render json: {status: 'failed', error_message:  material_purchase.errors.full_messages.join(', ') }
     end
   end
 
@@ -37,7 +37,7 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
     if flag
       render json: {status: 'ok', material_purchases: material_purchase_json(material_purchase)}
     else
-      render json: {status: 'failed', error_message:  material_purchase.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
+      render json: {status: 'failed', error_message:  material_purchase.errors.full_messages.join(', ') }
     end
   end
 

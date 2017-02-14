@@ -33,7 +33,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
     if flag && material.save
       render json: {status: 'ok', material: material_json(material)}
     else
-      render json: {status: 'failed', error_message:  material.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
+      render json: {status: 'failed', error_message:  material.errors.full_messages.join(', ')}
     end
   end
 
@@ -56,7 +56,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
     if flag && material.save
       render json: {status: 'ok', material: material_json(material)}
     else
-      render json: {status: 'failed', error_message:  material.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
+      render json: {status: 'failed', error_message:  material.errors.full_messages.join(', ') }
     end
   end
 
@@ -73,7 +73,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
   def material_json(materials)
     materials.as_json(
       only: %w(id name name_py catalog_id features),
-      methods: %w(stock image_item_ids brand price unit vendor_ids),
+      methods: %w(stock image_item_ids price unit vendor_ids),
       include: {
         vendors: { only: %w(id name)},
         catalog: { only: %w(id name features), methods: %w(full_name) },
@@ -91,33 +91,38 @@ class Api::V1::MaterialsController < Api::V1::BaseController
     all_upload = true
     materials = []
     worksheet = nil
-    if File.extname(params["file"].path) == ".xlsx"
-      worksheet = Roo::Excelx.new(params["file"].path)
-    elsif File.extname(params["file"].path) == ".xls"
-      worksheet = Roo::Excel.new(params["file"].path)
-    elsif File.extname(params["file"].path) == ".csv"
-      worksheet = Roo::CSV.new(params["file"].path)
+    file_path = params["file"].path
+    if File.extname(file_path) == ".xlsx"
+      worksheet = Roo::Excelx.new(file_path)
+    elsif File.extname(file_path) == ".xls"
+      worksheet = Roo::Excel.new(file_path)
+    elsif File.extname(file_path) == ".csv"
+      worksheet = Roo::CSV.new(file_path)
     end 
-    # worksheet = Roo::Spreadsheet.open(params["file"].path)
-    # ["物料分类", "物料编号", "物料名", "品牌", "价格", "单位", "供应商"]
+    # ["物料分类", "物料名称", "供应商", "单位", "单价"]
     if worksheet
-      header = worksheet.row(0)
+      header = worksheet.row(1)
       Material.transaction do
         2.upto worksheet.last_row do |index|
           # .row(index) will return the row which is a subclass of Array
           row = worksheet.row(index)
 
           attributes = {
-            name_py:      row[0],
+            catalog_id:   MaterialCatalog.where(name: row[0]).first.try(:id),
             name:         row[1],
-            catalog_id:   MaterialCatalog.where(name: row[2]).first.try(:id),
-            brand:        row[3],
-            size:         row[4],
-            price:        row[5],
-            unit:         row[6],
-            texture:      row[7],
-            vendor_ids:   Vendor.where(name: row[8]).pluck(:id)
+            vendor_ids:   Vendor.find_or_create_by(name: row[2]).id
           }
+
+          features = {}
+
+          features['unit'] = row[3]
+          features['price'] = row[4]
+
+          (5..(row.size-1)).to_a.each do |s_index|
+            features[header[s_index]] = row[s_index]
+          end
+
+          attributes["features"] = features
 
           flag, material = Material::Create.(attributes)
           if flag
