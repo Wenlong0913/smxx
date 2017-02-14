@@ -1,5 +1,6 @@
 class Agent::OrdersDesignsController < Agent::BaseController
   before_action :set_orders_design, only: [:show, :edit, :update, :destroy]
+  acts_as_commentable resource: Order
 
   def index
     # authorize @agent_orders_design
@@ -14,7 +15,7 @@ class Agent::OrdersDesignsController < Agent::BaseController
     # authorize @agent_orders_design
     respond_to do |format|
       format.html
-      format.json { render json: @agent_orders_design }
+      format.json { render json: @orders_design }
     end
   end
   #
@@ -71,7 +72,7 @@ class Agent::OrdersDesignsController < Agent::BaseController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_orders_design
-      @orders_designs = @site.orders.find(params[:id])
+      @orders_design = @site.orders.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

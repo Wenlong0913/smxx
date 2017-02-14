@@ -16,7 +16,9 @@ module AgentRoute
           resources 'member_notes'
         end
 
-        resources 'orders_designs'
+        resources 'orders_designs' do
+          commentable
+        end
 
         catalog_resources_for ProductCatalog, only: [:index]
         resources :market_pages, :concerns => :paginatable do

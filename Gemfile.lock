@@ -15,6 +15,17 @@ GIT
       themeable (~> 1.2.0)
 
 PATH
+  remote: components/comment
+  specs:
+    comment (0.1.0)
+      cells (~> 4.1.4)
+      cells-rails (~> 0.0.6)
+      cells-slim (~> 0.0.5)
+      kaminari
+      kaminari-i18n
+      rails (~> 5.0.0, >= 5.0.0.1)
+
+PATH
   remote: components/decorator
   specs:
     decorator (0.1.0)
@@ -70,8 +81,8 @@ GEM
       activemodel (>= 4.1, < 6)
       jsonapi (~> 0.1.1.beta2)
       railties (>= 4.1, < 6)
-    activejob (5.0.0.1)
-      activesupport (= 5.0.0.1)
+    activejob (5.0.1)
+      activesupport (= 5.0.1)
       globalid (>= 0.3.6)
     activemodel (5.0.1)
       activesupport (= 5.0.1)
@@ -548,6 +559,7 @@ DEPENDENCIES
   closure_tree
   coffee-rails (~> 4.2)
   colorize
+  comment!
   database_cleaner
   decorator!
   devise (~> 4.2.0)

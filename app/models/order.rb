@@ -16,7 +16,7 @@ class Order < ApplicationRecord
 
   belongs_to :user
   belongs_to :site
-
+  has_many_comments
 
   has_many :order_products, dependent: :destroy
   has_many :products, through: :order_products
