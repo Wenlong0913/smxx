@@ -5,6 +5,6 @@
 *= require agent/market
 *= require agent/orders
 *= require agent/orders-designs
-*= require comments
+*= require agent/comments
 *= require_self
 */

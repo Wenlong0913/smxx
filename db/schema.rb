@@ -139,6 +139,19 @@ ActiveRecord::Schema.define(version: 20170211155745) do
     t.datetime "updated_at",                  null: false
   end
 
+  create_table "comment_entries", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "resource_type"
+    t.integer  "resource_id"
+    t.text     "content"
+    t.integer  "position"
+    t.boolean  "deleted"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "parent_id"
+    t.index ["resource_type", "resource_id"], name: "index_comment_entries_on_resource_type_and_resource_id", using: :btree
+  end
+
   create_table "image_item_relations", force: :cascade do |t|
     t.integer  "image_item_id"
     t.string   "relation_type"

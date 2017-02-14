@@ -4,45 +4,56 @@
       .design-content-right
         .step-top-content
           .row
-            .col-xs-3
-              .col-xs-4
-                strong 1
-              .col-xs-8
+            .col-xs-3.step-block
+              .step-left
+                .circle.active 1
+              .step-right
                 .title step 1
                 span 图纸确认
-            .col-xs-3
-              .col-xs-4
-                strong 2
-              .col-xs-8
+            .col-xs-3.step-block
+              .step-left
+                .circle.success 2
+              .step-right
                 .title step 1
                 span 报价商定
-            .col-xs-3
-              .col-xs-4
-                strong 3
-              .col-xs-8
+            .col-xs-3.step-block
+              .step-left
+                .circle 3
+              .step-right
                 .title step 1
                 span 工厂生产
-            .col-xs-3
-              .col-xs-4
-                strong 4
-              .col-xs-8.small
+            .col-xs-3.step-block
+              .step-left
+                .circle 4
+              .step-right
                 .title step 1
                 span 完成
         .main-content
-          ul.attached-document.clearfix
-            li
-              .document-name
-                a[href="/"] flight_ticket.pdf
-              .document-file
-                a[href="/"]
-                  i.fa.fa-file-pdf-o
-            li
-              .document-name
-                a[href="/"] front_end_mockup.jpg
-              .document-file
-                a[href="/"]
-                  = image_tag 'no-picture'
-          .commit
+          - if @orders_design.status == 'processing'
+            .file-content
+              .add-file-btn
+                span.btn.btn-info
+                  i.fa.fa-file.fa-2x
+                input.file-input[type="file"]
+              .attached-document
+                ul.clearfix
+                  - 5.times do
+                    li
+                      .document-name
+                        a[href="/"] flight_ticket.pdf
+                      .document-file
+                        a[href="/"]
+                          i.fa.fa-file-pdf-o
+                  li
+                    .document-name
+                      a[href="/"] front_end_mockup.jpg
+                    .document-file
+                      a[href="/"]
+                        = image_tag 'no-picture'
+          - else  
+            .materiel-price-content
+              h2 价格确认
+          .commit-content
             = render_comments(@orders_design, path: comments_agent_orders_design_path )
       .design-sidebar-left
         .sidebar-content
