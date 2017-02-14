@@ -20,7 +20,7 @@
         = simple_form_for @market_page, url: @market_page.new_record? ? agent_market_pages_path(@market_page) : agent_market_page_path(@market_page), html: { class: 'form-horizontal' } do |f|
           - if @market_page.errors.any?
             #error_explanation
-              
+
               ul
                 - @market_page.errors.full_messages.each do |message|
                   li = message
@@ -29,6 +29,10 @@
           = f.input :description
 
           == render inline: @market_template.form_source
+
+          .form-group
+            label 图片
+            image-select[server="#{image_items_path}" rel="vue"  name="market_page[image_item_ids][]" selected-ids="#{@market_page.image_item_ids.join(', ')}"]
 
           p.text-right
             = f.submit '提交保存', class: 'btn btn-success btn-lg'

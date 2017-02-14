@@ -1,3 +1,16 @@
+<div class="container">
+  <h1>营销活动
+    <div class="pull-right">
+      <button class="btn btn-info btn-lg" data-toggle="modal" data-target="#editModal" type="submit">编辑信息</button>
+      <span class="process_shelves" data-url="<%= process_shelves_agent_product_path(@product) %>">
+        <% if @product.is_shelves == '1' %>
+        <button class="btn btn-inverse btn-lg" type="submit" data-status='0'>取消上架</button>
+        <% else %>
+        <button class="btn btn-warning btn-lg" type="submit" data-status='1'>产品上架</button>
+        <% end %>
+      </span>
+    </div>
+</div>
 <!-- BEGIN #product -->
 <div id="product" class="section-container p-t-20">
     <!-- BEGIN container -->
@@ -68,19 +81,7 @@
                         </ul>
                     </div>
 
-                    <!-- BEGIN product-purchase-container -->
-                    <div class="pull-right">
 
-                      <button class="btn btn-info btn-lg" data-toggle="modal" data-target="#editModal" type="submit">编辑信息</button>
-                      <span class="process_shelves" data-url="<%= process_shelves_agent_product_path(@product) %>">
-                        <% if @product.is_shelves == '1' %>
-                        <button class="btn btn-inverse btn-lg" type="submit" data-status='0'>取消上架</button>
-                        <% else %>
-                        <button class="btn btn-warning btn-lg" type="submit" data-status='1'>产品上架</button>
-                        <% end %>
-                      </span>
-                    </div>
-                    <!-- END product-purchase-container -->
 
                     <!-- BEGIN product-info-list 一些主要配置信息列表展示-->
                     <ul class="product-info-list">
