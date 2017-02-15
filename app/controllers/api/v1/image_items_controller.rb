@@ -7,7 +7,7 @@ class  Api::V1::ImageItemsController < Api::V1::BaseController
     if flag
       render json: {status: 'ok', image_item: image_item_json(image_item)}
     else
-      render json: {status: 'failed', error_message:  image_item.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
+      render json: {status: 'failed', error_message:  image_item.errors.full_messages.join(', ') }
     end
   end
 
