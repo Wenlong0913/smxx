@@ -6,5 +6,6 @@
 *= require agent/orders
 *= require agent/orders-designs
 *= require common/error_explanation
+*= require agent/comments
 *= require_self
 */

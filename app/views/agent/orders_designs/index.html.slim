@@ -1,43 +1,80 @@
-.container-fluid.p-15.primary-content.order-designs
-  .header-control.row.m-b-15
-    .col-xs-6
-      .input-group
-        input.form-control[type="text" placeholder="订单搜索"]
-        span.input-group-btn
-          button.btn.btn-default[type="button"] Go!
-  .row.order-list
-    - 5.times do
-      .col-sm-6.col-md-3
-        .thumbnail
-          .caption
-            strong
-              | 订单号: 
-              span.m-l-10 22019210995103
-            hr
-            ul.order-message.m-0.p-0[type="none"]
-              li
-                div 创建时间:
-              li 经销商:
-              li 客户名称:
-              li 价格:
-              li 内部状态:
-            div.text-right
-              a.btn.btn-default.btn-sm.m-r-10[href="#" role="default"] 关闭订单
-              a.btn.btn-primary.btn-sm[href="#" role="button"] 查看订单
-  .row.order-footer.text-right
-    nav
-      ul.pagination.p-0.m-0
-        li
-          a[href="#"]
-            span[aria-hidden="true"] &laquo;
-        li
-          a[href="#"] 1
-        li
-          a[href="#"] 2
-        li
-          a[href="#"] 3
-        li
-          a[href="#"] 4
-        li
-          a[href="#"]
-            span[aria-hidden="true"] &raquo;
+.section-container.bg-silver.m-b-20.primary-content.order-designs
+  .container
+    .search-container
+      .search-content
+        .search-toolbar
+          .row
+            .col-md-6
+              h4 生产设计列表
+            .col-md-6.text-right
+              ul.sort-list
+                li.text
+                  i.fa.fa-filter
+                  | &nbsp;排序方式：
+                li.sign.active
+                  a[href="/"] 默认
+                li
+                  a[href="/"] 最新
+                li
+                  a[href="/"] 处理中
+                li
+                  a[href="/"] 已完成
+        .search-item-container.container-list
+          .row
+            - @orders_designs.each do |order|
+              .col-sm-6.col-md-4
+                .thumbnail
+                  .caption
+                    .strong-title
+                      | 订单号: 
+                      span.m-l-10.f-s-12 = order.code
+                    hr.m-0
+                    ul.order-message[type="none"]
+                      li.row
+                        .col-xs-4 创建时间:
+                        .col-xs-8 = order.created_at
+                      li.row
+                        .col-xs-4 生产进度:
+                        .col-xs-8
+                          label.text-danger
+                            span 图纸确认中
+                            = order.status
+                    div.text-right
+                      a.btn.btn-default.btn-sm.m-r-10[href="#" role="default"] 关闭订单
+                      = link_to '查看订单', agent_orders_design_path(order), class: 'btn btn-primary btn-sm'
+          .row.order-footer.text-right
+            nav
+              ul.pagination.p-0.m-0
+                li
+                  a[href="#"]
+                    span[aria-hidden="true"] &laquo;
+                li
+                  a[href="#"] 1
+                li
+                  a[href="#"] 2
+                li
+                  a[href="#"] 3
+                li
+                  a[href="#"] 4
+                li
+                  a[href="#"]
+                    span[aria-hidden="true"] &raquo;
+
+      .search-sidebar
+        h4.title 查询
+        form[action="search_results.html" method="POST" name="filter_form"]
+          .form-group
+            .control-label 关键字
+            .form-control.input-sm[name="keyword" value="" placeholder="输入查询关键字" type="text"]
+          .form-group
+            label.control-label 价格
+            .row.row-space-0
+              .col-md-5
+                input.form-control.input-sm[name="price_from" value="10" placeholder="最低价格" type="number"]
+              .col-md-2.text-center.p-t-5.f-s-12.text-muted
+              .col-md-5
+                input.form-control.input-sm[name="price_to" value="10000" placeholder="Price To" type="number"]
+          .m-b-30
+            button.btn.btn-sm.btn-inverse[type="submit"]
+              i.fa.fa-search
+              | 查询

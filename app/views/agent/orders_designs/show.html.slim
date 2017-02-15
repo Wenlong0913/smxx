@@ -1,16 +1,101 @@
-h1 
-  | 查看 agent_orders_design
-  .pull-right
-    = link_to '编辑', edit_agent_orders_design_path(@agent_orders_design), class: 'btn btn-primary'
-    = link_to '返回', agent_orders_designs_path, class: 'btn btn-primary', class: 'btn btn-primary'
-
-.panel
-  .panel-heading
-    .panel-heading-btn
-      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
-        i class="fa fa-expand"
-      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
-        i class="fa fa-minus"
-    h4 查看 agent_orders_design
-  .panel-body
-    dl
+.section-container.bg-silver.m-b-20.primary-content.orders-designs-show
+  .container
+    .design-container
+      .design-content-right
+        .step-top-content
+          .row
+            .col-xs-3.step-block
+              .step-left
+                .circle.active 1
+              .step-right
+                .title step 1
+                span 图纸确认
+            .col-xs-3.step-block
+              .step-left
+                .circle.success 2
+              .step-right
+                .title step 1
+                span 报价商定
+            .col-xs-3.step-block
+              .step-left
+                .circle 3
+              .step-right
+                .title step 1
+                span 工厂生产
+            .col-xs-3.step-block
+              .step-left
+                .circle 4
+              .step-right
+                .title step 1
+                span 完成
+        .main-content
+          - if @orders_design.status == 'processing'
+            .file-content
+              .add-file-btn
+                span.btn.btn-info
+                  i.fa.fa-file.fa-2x
+                input.file-input[type="file"]
+              .attached-document
+                ul.clearfix
+                  - 5.times do
+                    li
+                      .document-name
+                        a[href="/"] flight_ticket.pdf
+                      .document-file
+                        a[href="/"]
+                          i.fa.fa-file-pdf-o
+                  li
+                    .document-name
+                      a[href="/"] front_end_mockup.jpg
+                    .document-file
+                      a[href="/"]
+                        = image_tag 'no-picture'
+          - else  
+            .materiel-price-content
+              h2 价格确认
+          .commit-content
+            = render_comments(@orders_design, path: comments_agent_orders_design_path )
+      .design-sidebar-left
+        .sidebar-content
+          .sidebar-heading
+            .sidebar-title
+              span 订单号：
+              span = @orders_design.code
+          ul.sidebar-list[type="none"]
+            li
+              h4.sidebar-text
+                span 客户：
+                a = @orders_design.member.try{name}
+            li
+              h4.sidebar-text
+                span 下单日期：
+                span = @orders_design.created_at
+            li
+              h4.sidebar-text
+                span 交货日期：
+                span.text-warning 订单确认中
+            li
+              h4.sidebar-text
+                span 生产任务进度：
+                span.text-danger
+                  | 图纸确认中
+                  = @orders_design.status
+            li
+              h4.sidebar-text
+                span 订单报价：
+                span.text-danger
+                  - if @orders_design.status == 'completed'
+                    = @orders_design.price
+            li
+              h4.sidebar-text
+                span 备注：
+                .p-l-10.p-t-5.text-primary
+                  = @orders_design.description
+                  | a艾丝凡上的沙发睡地方飞洒的发生的啊沙发的飞洒的发热挖坟发那还啊是的就不基本指标hi不va你的vjnijsnzivnsnvdi阿萨德金币技能教学课程你看见觉得女is直接你就那句的
+          .sidebar-footer.text-right
+            span.btn.btn-xs.btn-default 关闭订单
+    / .row
+    /   .col-xs-3[style = "background: red"]
+    /     h1 sfa
+    /   .col-xs-9[style="padding:0 20px"]
+    /     h1 right

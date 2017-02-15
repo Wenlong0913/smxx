@@ -6,7 +6,7 @@ module Comment
     require 'cells-slim'
     require 'kaminari'
 
-    config.cells.with_assets = ["comment/base_cell"]
+    config.cells.with_assets = ["comment/base_cell", "tracker/base_cell"]
 
     require 'comment/helpers'
     require 'comment/routes'

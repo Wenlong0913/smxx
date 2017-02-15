@@ -1,6 +1,7 @@
 class Api::V1::OrdersController < Api::BaseController
   before_action :authenticate!
   before_action :set_orders, only: [:index]
+  before_action :set_order, only: [:create_comment]
 
   def index
     authorize Order
@@ -18,6 +19,17 @@ class Api::V1::OrdersController < Api::BaseController
       render json: {status: 'ok', order: order_json(order)}
     else
       render json: {status: 'failed', error_message:  order.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
+    end
+  end
+
+  def create_comment
+    authorize Order
+    order_comment = @order.comments.new(params[:comment].permit(:content))
+    order_comment.user = current_user
+    if order_comment.save
+      render json: {status: 'ok', comment: order_comment.as_json(only: [:content], include: {user: {only: [:nickname]}})}
+    else
+      render json: {status: 'failed', error_message: 'failed'}
     end
   end
 
@@ -44,8 +56,14 @@ class Api::V1::OrdersController < Api::BaseController
           site: {only: [:id, :title]}, 
           member: {only: [:name]}, 
           produce: {only: [:id]},
-          image_items: {only: [:id], methods: [:image_url, :image_file_name]}
+          image_items: {only: [:id], methods: [:image_url, :image_file_name]},
+          comments: {only: [:content], include: {user: {only: [:nickname]}}}
         }
       )
+
+    end
+
+    def set_order
+      @order = Order.find(params[:id])
     end
 end

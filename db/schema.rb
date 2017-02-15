@@ -139,6 +139,19 @@ ActiveRecord::Schema.define(version: 20170211155745) do
     t.datetime "updated_at",                  null: false
   end
 
+  create_table "comment_entries", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "resource_type"
+    t.integer  "resource_id"
+    t.text     "content"
+    t.integer  "position"
+    t.boolean  "deleted"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "parent_id"
+    t.index ["resource_type", "resource_id"], name: "index_comment_entries_on_resource_type_and_resource_id", using: :btree
+  end
+
   create_table "image_item_relations", force: :cascade do |t|
     t.integer  "image_item_id"
     t.string   "relation_type"
@@ -293,6 +306,7 @@ ActiveRecord::Schema.define(version: 20170211155745) do
     t.integer  "site_id"
     t.string   "name"
     t.date     "birth"
+    t.string   "qq"
     t.string   "email"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
@@ -303,7 +317,6 @@ ActiveRecord::Schema.define(version: 20170211155745) do
     t.string   "address"
     t.string   "note"
     t.jsonb    "features"
-    t.string   "qq"
     t.index ["site_id"], name: "index_members_on_site_id", using: :btree
     t.index ["user_id"], name: "index_members_on_user_id", using: :btree
   end

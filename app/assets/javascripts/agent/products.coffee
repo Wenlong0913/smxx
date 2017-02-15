@@ -120,7 +120,7 @@ $(document).ready ->
       count = 5
       oldLocation= window.location
       set = setInterval ->
-        body.find('.jumbotron .jump-time').text(count)
+        bodyNew.find('.jumbotron .jump-time').text(count)
         count = count - 1
         if count < 0
           clearInterval(set)
