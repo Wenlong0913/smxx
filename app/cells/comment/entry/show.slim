@@ -1,7 +1,7 @@
 .comment
   .[rel='comment-block' data-url=options[:path]]
     .alert.alert-danger[role="alert" v-if="error"]评论加载失败
-    .alert.alert-danger[role="alert" v-if="loading"]评论加载失败
+    .alert.alert-danger[role="alert" v-if="loading"]组件加载中..
     .comment-list[v-else]
       ul.parent-content[type='none']
         li.li-content[v-for="comment in comments"]
@@ -17,19 +17,23 @@
                   a.btn.btn-xs.btn-default[v-on:click="replyModel(comment)"] 回复
             .message-content
               | {{comment.content}}
-            
-            ul.children-content[v-if="comment.parent"]
-              li
-                | {{ comment.parent.id }} {{ comment.parent.created_at }} {{ comment.parent.content }}
-            .[v-if="replying && replyTo == comment"]
-              textarea[v-model="replyContent" cols=20 rows=4 rel='reply-block']
-              button[v-on:click="postComment('reply')"] Reply 
-      textarea.input-textarea[v-model='content' cols=20 rows=4]
-      button[v-on:click="postComment('comment')"] Post
-      span[v-if="posting"] 正在提交评论...
-      .[class='page-bar']
+            / ul.children-content[v-if="comment.parent"]
+            /   li
+            /     | {{ comment.parent.id }} {{ comment.parent.created_at }} {{ comment.parent.content }}
+            / .reply-area[v-if="replying && replyTo == comment"]
+            /   textarea[v-model="replyContent" cols=20 rows=4 rel='reply-block']
+            /   .btn-groups.text-left
+            /     button.btn.btn-default.btn-sm[@click="replying = false"] 取消
+            /     button.btn.btn-info.btn-sm[v-on:click="postComment('reply')"] 回复
+      .page-bar
         ul[type='none']
           li[v-if="currentPage != 1"]
             a[v-on:click="loadComments(currentPage--)"] 上一页
           li[v-if="currentPage != pageCount"]
             a[v-on:click="loadComments(currentPage++)"] 下一页
+
+      .reply-area
+        textarea.input-textarea[v-model='content' cols=20 rows=4]
+        .btn-groups.text-left
+          button.btn.btn-info.btn-sm[v-on:click="postComment('comment')"] 回复
+        span[v-if="posting"] 正在提交...
