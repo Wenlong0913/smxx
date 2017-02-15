@@ -1,7 +1,7 @@
 class Api::V1::OrdersController < Api::BaseController
   before_action :authenticate!
   before_action :set_orders, only: [:index]
-  before_action :set_order, only: [:create_comment]
+  before_action :set_order, only: [:create_comment, :comments_index]
 
   def index
     authorize Order
@@ -33,6 +33,11 @@ class Api::V1::OrdersController < Api::BaseController
     end
   end
 
+  def comments_index
+    page_size = params[:page_size] ? params[:page_size].to_i : 20
+    order_comments = @order.comments.order(created_at: :asc).page(params[:page] || 1).per(page_size)
+    render json: {comments: order_comment_json(order_comments), current_page: order_comments.current_page, total_pages: order_comments.total_pages, total_count: order_comments.total_count}
+  end
 
   private
     def set_orders
