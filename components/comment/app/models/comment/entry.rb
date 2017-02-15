@@ -1,5 +1,6 @@
 module Comment
   class Entry < ApplicationRecord
+    store_accessor :features, :offer
     belongs_to :resource, polymorphic: true
     belongs_to :user, optional: true
     belongs_to :parent, class_name: 'Comment::Entry'
