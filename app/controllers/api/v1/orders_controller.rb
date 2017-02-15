@@ -27,6 +27,9 @@ class Api::V1::OrdersController < Api::BaseController
     order_comment = @order.comments.new(params[:comment].permit(:content))
     order_comment.user = current_user
     if order_comment.save
+      params[:attachment_ids].each do |attachment_id|
+        @order.attachment_relations.new(attachment_id: attachment_id).save
+      end
       render json: {status: 'ok', comment: order_comment.as_json(only: [:content], include: {user: {only: [:nickname]}})}
     else
       render json: {status: 'failed', error_message: 'failed'}
@@ -57,7 +60,8 @@ class Api::V1::OrdersController < Api::BaseController
           member: {only: [:name]}, 
           produce: {only: [:id]},
           image_items: {only: [:id], methods: [:image_url, :image_file_name]},
-          comments: {only: [:content], include: {user: {only: [:nickname]}}}
+          comments: {only: [:content], include: {user: {only: [:nickname]}}},
+          attachments: {only: %w(id name), methods: [:attachment_url, :attachment_file_name]}
         }
       )
 
