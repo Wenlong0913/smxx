@@ -4,6 +4,10 @@ class Admin::MembersController < Admin::BaseController
   before_action :set_site
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
+  def dashboard
+    authorize @site.members
+  end
+
   # GET /admin/members
   def index
     authorize @site.members

@@ -1,6 +1,10 @@
 class Admin::UsersController < Admin::BaseController
   before_action :set_admin_user, only: [:update, :edit, :destroy, :show]
 
+  def dashboard
+    authorize User
+  end
+
   def index
     authorize User
     @admin_users = User.all
@@ -47,7 +51,7 @@ class Admin::UsersController < Admin::BaseController
     respond_to do |format|
       format.html { redirect_to admin_users_path, notice: '用户删除成功！' }
       format.json { head :no_content }
-    end  
+    end
   end
 
   private

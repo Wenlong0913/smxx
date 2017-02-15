@@ -67,7 +67,7 @@
 
 
       li class=("has-sub #{'active' if page?('admin/products', 'admin/catalogs#index?klass=ProductCatalog')}")
-        a href="javascript:;"
+        = link_to dashboard_admin_products_path
           b.caret.pull-right
           i.fa.fa-inbox
           span #{Product.model_name.human}管理
@@ -90,7 +90,7 @@
 
 
       li class=("has-sub #{'active' if page?('admin/vendors', 'admin/sites', 'admin/users', 'admin/roles', 'admin/user/weixins')}")
-        a href="javascript:;"
+        = link_to dashboard_admin_users_path
           b.caret.pull-right
           i.fa.fa-inbox
           span 账户角色分工
@@ -104,7 +104,7 @@
             = link_to '经销商', admin_sites_path
 
       li class=("has-sub #{'active' if page?('admin/market_catalogs', 'admin/market_templates', 'admin/market_pages')}")
-        a href="javascript:;"
+        = link_to dashboard_admin_market_pages_path
           b.caret.pull-right
           i.fa.fa-inbox
           span 营销页

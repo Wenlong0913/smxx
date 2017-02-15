@@ -7,47 +7,46 @@ ol.breadcrumb.pull-right
 /! end breadcrumb
 /! begin page-header
 h1.page-header
-  | 物料进销存
-  small  快速导航...
+  | 概览
+  small 统计...
 /! end page-header
 /! begin row
 .row
-
+  /! begin col-3
+  .col-md-3.col-sm-6
+    .widget.widget-stats.bg-green
+      .stats-icon
+        | 类
+      .stats-info
+        h4 分类数量
+        p= ProductCatalog.count
+      .stats-link
+        = link_to admin_product_catalogs_path
+          | 查看详细
+          i.fa.fa-arrow-circle-o-right
   /! begin col-3
   .col-md-3.col-sm-6
     .widget.widget-stats.bg-blue
       .stats-icon
-        | 类
+        | 产
       .stats-info
-        h4 分类
-        p= MaterialCatalog.count
+        h4 产品数量
+        p= Product.count
       .stats-link
-        = link_to admin_material_catalogs_path
+        = link_to admin_products_path
           | 查看详细
           i.fa.fa-arrow-circle-o-right
   /! end col-3
   /! begin col-3
   .col-md-3.col-sm-6
-    .widget.widget-stats.bg-green
-      .stats-icon
-        | 物
-      .stats-info
-        h4 物料
-        p= Material.count
-      .stats-link
-        = link_to admin_materials_path
-          | 查看详细
-          i.fa.fa-arrow-circle-o-right
-  /! begin col-3
-  .col-md-3.col-sm-6
     .widget.widget-stats.bg-purple
       .stats-icon
-        | 供
+        | 销
       .stats-info
-        h4 供应商
-        p= Vendor.count
+        h4 经销商数量
+        p= Site.count
       .stats-link
-        = link_to admin_vendors_path
+        = link_to admin_sites_path
           | 查看详细
           i.fa.fa-arrow-circle-o-right
   /! end col-3
@@ -55,13 +54,13 @@ h1.page-header
   .col-md-3.col-sm-6
     .widget.widget-stats.bg-yellow-darker
       .stats-icon
-        | 销
+        | 订
       .stats-info
-        h4 经销商
-        p= Site.count
+        h4 订单数量
+        p= Order.count
       .stats-link
-        = link_to admin_sites_path
-          | 查看详细
+        = link_to admin_orders_path
+          | 查看纤细
           i.fa.fa-arrow-circle-o-right
   /! end col-3
 /! end row

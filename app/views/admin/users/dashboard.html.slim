@@ -7,37 +7,36 @@ ol.breadcrumb.pull-right
 /! end breadcrumb
 /! begin page-header
 h1.page-header
-  | 物料进销存
+  | 用户/角色
   small  快速导航...
 /! end page-header
 /! begin row
 .row
-
-  /! begin col-3
-  .col-md-3.col-sm-6
-    .widget.widget-stats.bg-blue
-      .stats-icon
-        | 类
-      .stats-info
-        h4 分类
-        p= MaterialCatalog.count
-      .stats-link
-        = link_to admin_material_catalogs_path
-          | 查看详细
-          i.fa.fa-arrow-circle-o-right
-  /! end col-3
   /! begin col-3
   .col-md-3.col-sm-6
     .widget.widget-stats.bg-green
       .stats-icon
-        | 物
+        | 用
       .stats-info
-        h4 物料
-        p= Material.count
+        h4 用户
+        p= ProductCatalog.count
       .stats-link
-        = link_to admin_materials_path
+        = link_to admin_users_path
           | 查看详细
           i.fa.fa-arrow-circle-o-right
+  /! begin col-3
+  .col-md-3.col-sm-6
+    .widget.widget-stats.bg-blue
+      .stats-icon
+        | 角
+      .stats-info
+        h4 角色
+        p= Role.count
+      .stats-link
+        = link_to admin_roles_path
+          | 查看详细
+          i.fa.fa-arrow-circle-o-right
+  /! end col-3
   /! begin col-3
   .col-md-3.col-sm-6
     .widget.widget-stats.bg-purple

@@ -42,8 +42,6 @@ class Admin::MarketTemplatesController < Admin::BaseController
   def create
     authorize MarketTemplate
     @market_template = MarketTemplate.new(permitted_attributes(MarketTemplate))
-    # Fixme: need form selected
-    @market_template.catalog_id = 1
     if @market_template.save
       redirect_to admin_market_template_path(@market_template), notice: "#{MarketTemplate.model_name.human} 创建成功."
     else

@@ -36,17 +36,27 @@ module AdminRoute
           resources :users, only: [:index], :concerns => :paginatable
         end
 
-        resources :users, :concerns => :paginatable
+        resources :users, :concerns => :paginatable do
+          collection do
+            get 'dashboard', to: 'users#dashboard'
+          end
+        end
         namespace :user do
           resources :weixins, only: [:index, :show], :concerns => :paginatable
         end
 
-        resources :products, :concerns => :paginatable
+        resources :products, :concerns => :paginatable do
+          collection do
+            get 'dashboard', to: 'products#dashboard'
+          end
+        end
         resources :sites, :concerns => :paginatable do
           resources :members, :concerns => :paginatable
+          collection do
+            get 'dashboard', to: 'sites#dashboard'
+          end
         end
-        resources :members, :concerns => :paginatable
-        
+
         resources :produces, only: [:index] do
           resources :tasks, only: [:create, :update]
         end
@@ -59,9 +69,19 @@ module AdminRoute
         resources :market_catalogs, :concerns => :paginatable
         resources :market_templates, :concerns => :paginatable
         catalog_resources_for MarketCatalog # 分类管理
-        resources :market_pages, :concerns => :paginatable
+        resources :market_pages, :concerns => :paginatable do
+          collection do
+            get 'dashboard', to: 'market_pages#dashboard'
+          end
+        end
         #客户CRM
         resources :member_catalogs, :concerns => :paginatable
+        resources :members, :concerns => :paginatable do
+          collection do
+            get 'dashboard', to: 'members#dashboard'
+          end
+        end
+
       end
     end
   end

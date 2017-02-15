@@ -3,6 +3,9 @@ require 'csv'
 class Admin::MarketPagesController < Admin::BaseController
   before_action :set_market_page, only: [:show, :edit, :update, :destroy]
 
+  def dashboard
+    authorize MarketPage
+  end
   # GET /admin/market_pages
   def index
     authorize MarketPage
