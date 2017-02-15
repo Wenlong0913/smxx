@@ -5,6 +5,10 @@ module Comment
     belongs_to :user, optional: true
     belongs_to :parent, class_name: 'Comment::Entry'
     has_many :children, class_name: 'Comment::Entry', foreign_key: :parent_id, dependent: :destroy
+    has_many :image_item_relations, as: :relation
+    has_many :image_items, :through => :image_item_relations
+    has_many :attachment_relations, as: :relation
+    has_many :attachments, :through => :attachment_relations
 
     validates_presence_of :content
     validate :check_parent_id
