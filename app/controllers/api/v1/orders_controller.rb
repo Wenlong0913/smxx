@@ -24,13 +24,10 @@ class Api::V1::OrdersController < Api::BaseController
 
   def create_comment
     authorize Order
-    order_comment = @order.comments.new(params[:comment].permit(:content))
+    order_comment = @order.comments.new(params[:comment].permit(:content, :offer, :image_item_ids => [], :attachment_ids => []))
     order_comment.user = current_user
     if order_comment.save
-      params[:attachment_ids].each do |attachment_id|
-        @order.attachment_relations.new(attachment_id: attachment_id).save
-      end
-      render json: {status: 'ok', comment: order_comment.as_json(only: [:content], include: {user: {only: [:nickname]}})}
+      render json: {status: 'ok', comment: order_comment_json(order_comment)}
     else
       render json: {status: 'failed', error_message: 'failed'}
     end
@@ -56,18 +53,33 @@ class Api::V1::OrdersController < Api::BaseController
       orders.as_json(
         only: [:id, :code, :price, :status, :internal_status, :description, :created_at], 
         include: {
-          site: {only: [:id, :title]}, 
+          site: {only: [:id, :title], include: { user: { only: [:nickname], include: { mobile: { only: [:phone_number] } } } }}, 
           member: {only: [:name]}, 
           produce: {only: [:id]},
           image_items: {only: [:id], methods: [:image_url, :image_file_name]},
-          comments: {only: [:content], include: {user: {only: [:nickname]}}},
-          attachments: {only: %w(id name), methods: [:attachment_url, :attachment_file_name]}
+          comments: {only: [:content, :offer, :created_at],
+            include: {
+              user: {only: [:nickname]},
+              image_items: {only: [:id], methods: [:image_url, :image_file_name]},
+              attachments: {only: [:id, :name], methods: [:attachment_url, :attachment_file_name]}
+            }
+          }
         }
       )
-
     end
 
     def set_order
       @order = Order.find(params[:id])
+    end
+
+    def order_comment_json(comment)
+      comment.as_json(
+        only: [:content, :offer, :created_at],
+        include: {
+          user: {only: [:nickname]},
+          image_items: {only: [:id], methods: [:image_url, :image_file_name]},
+          attachments: {only: [:id, :name], methods: [:attachment_url, :attachment_file_name]}
+        }
+      )
     end
 end
