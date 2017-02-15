@@ -19,7 +19,7 @@ class Api::V1::MaterialWarehousesController < Api::V1::BaseController
     if flag
       render json: {status: 'ok', material_warehouse: material_warehouse_json(material_warehouse)}
     else
-      render json: {status: 'failed', error_message:  material_warehouse.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
+      render json: {status: 'failed', error_message:  material_warehouse.errors.full_messages.join(', ') }
     end
   end
 
