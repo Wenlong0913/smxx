@@ -18,7 +18,7 @@ class Agent::ProductsController < Agent::BaseController
         @products
       end
     end
-    @products = @products.page(params[:page])
+    @products = @products.page(params[:page]).per(9)
     respond_to do |format|
       format.html
       format.json { render json: @products }

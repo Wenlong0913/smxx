@@ -2,7 +2,7 @@
   .container
     .design-container
       .design-content-right
-        .step-top-content
+        .step-top-content.border-and-radius
           .row
             .col-xs-3.step-block
               .step-left
@@ -29,34 +29,34 @@
                 .title step 1
                 span 完成
         .main-content
-          - if @orders_design.status == 'processing'
-            .file-content
-              .add-file-btn
-                span.btn.btn-info
-                  i.fa.fa-file.fa-2x
-                input.file-input[type="file"]
-              .attached-document
-                ul.clearfix
-                  - 5.times do
-                    li
-                      .document-name
-                        a[href="/"] flight_ticket.pdf
-                      .document-file
-                        a[href="/"]
-                          i.fa.fa-file-pdf-o
-                  li
-                    .document-name
-                      a[href="/"] front_end_mockup.jpg
-                    .document-file
-                      a[href="/"]
-                        = image_tag 'no-picture'
-          - else  
-            .materiel-price-content
-              h2 价格确认
+          / - if @orders_design.status == 'processing'
+          /   .file-content
+          /     .add-file-btn
+          /       span.btn.btn-info
+          /         i.fa.fa-file.fa-2x
+          /       input.file-input[type="file"]
+          /     .attached-document
+          /       ul.clearfix
+          /         - 5.times do
+          /           li
+          /             .document-name
+          /               a[href="/"] flight_ticket.pdf
+          /             .document-file
+          /               a[href="/"]
+          /                 i.fa.fa-file-pdf-o
+          /         li
+          /           .document-name
+          /             a[href="/"] front_end_mockup.jpg
+          /           .document-file
+          /             a[href="/"]
+          /               = image_tag 'no-picture'
+          / - else  
+          /   .materiel-price-content
+          /     h2 价格确认
           .commit-title
             h4 与工厂方交流
-          .commit-content
-            = render_comments(@orders_design, path: comments_agent_orders_design_path )
+          .commit-content.border-and-radius
+            = render_comments(@orders_design, path: {comment_path: comments_agent_orders_design_path, image_path: image_items_url, up_file_path: ''})
       .design-sidebar-left
         .sidebar-content
           .sidebar-heading
@@ -93,11 +93,5 @@
                 span 备注：
                 .p-l-10.p-t-5.text-primary
                   = @orders_design.description
-                  | a艾丝凡上的沙发睡地方飞洒的发生的啊沙发的飞洒的发热挖坟发那还啊是的就不基本指标hi不va你的vjnijsnzivnsnvdi阿萨德金币技能教学课程你看见觉得女is直接你就那句的
           .sidebar-footer.text-right
             span.btn.btn-xs.btn-default 关闭订单
-    / .row
-    /   .col-xs-3[style = "background: red"]
-    /     h1 sfa
-    /   .col-xs-9[style="padding:0 20px"]
-    /     h1 right

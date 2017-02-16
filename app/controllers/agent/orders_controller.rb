@@ -1,5 +1,5 @@
 class Agent::OrdersController < Agent::BaseController
   def index
-    @orders = Order.all.page(params[:page])
+    @orders = Order.all.page(params[:page]).per(10)
   end
 end

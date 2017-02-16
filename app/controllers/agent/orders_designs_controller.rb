@@ -1,10 +1,11 @@
 class Agent::OrdersDesignsController < Agent::BaseController
   before_action :set_orders_design, only: [:show, :edit, :update, :destroy]
+  before_action :get_user, only: [:create, :update]
   acts_as_commentable resource: Order
 
   def index
     # authorize @agent_orders_design
-    @orders_designs = @site.orders.page(params[:page])
+    @orders_designs = @site.orders.page(params[:page]).per(9)
     respond_to do |format|
       format.html
       format.json { render json: @orders_designs }
@@ -28,23 +29,17 @@ class Agent::OrdersDesignsController < Agent::BaseController
   #   authorize @agent_orders_design
   # end
   #
-  # def create
-  #   authorize Agent::OrdersDesign
-  #   @agent_orders_design = Agent::OrdersDesign.new(permitted_attributes(Agent::OrdersDesign)))
-  #
-  #   respond_to do |format|
-  #     format.html do
-  #       if @agent_orders_design.save
-  #         redirect_to agent_orders_design_path(@agent_orders_design), notice: 'Orders design 创建成功.'
-  #       else
-  #         render :new
-  #       end
-  #     end
-  #     format.json { render json: @agent_orders_design }
-  #   end
-  #
-  # end
-  #
+  def create
+    # authorize Order
+    @order = Order.new(permitted_attributes(Order))
+    if @order.save
+      render json: {status: 'ok'}
+    else
+      render json: {status: 'error', message:@order.errors.full_messages.join(',')}
+    end
+
+  end
+
   # def update
   #   authorize @agent_orders_design
   #   respond_to do |format|
@@ -75,8 +70,10 @@ class Agent::OrdersDesignsController < Agent::BaseController
       @orders_design = @site.orders.find(params[:id])
     end
 
-    # Only allow a trusted parameter "white list" through.
-    def agent_orders_design_params
-      params[:agent_orders_design]
+    def get_user
+      if params[:order][:member].present?
+        member = Member.find(params[:order][:member])
+        params[:order][:user_id] = member.user.id
+      end
     end
 end
