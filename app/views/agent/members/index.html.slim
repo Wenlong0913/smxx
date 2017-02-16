@@ -20,8 +20,12 @@
               th 手机号码
               th 客户类型
               th 客户来源
-              th 添加时间
               th 客户归属
+
+              th 添加时间
+              th 最近沟通
+              th 沟通次数
+              th.text-right 操作
           tbody
             - @agent_members.each do |agent_member|
               tr
@@ -29,5 +33,11 @@
                 td = agent_member.mobile_phone
                 td = agent_member.features['客户类型'] if agent_member.features
                 td = agent_member.features['客户来源'] if agent_member.features
-                td = distance_of_time_in_words_to_now(agent_member.created_at) + '前'
                 td 系统
+
+                td = distance_of_time_in_words_to_now(agent_member.created_at) + '前'
+                td = distance_of_time_in_words_to_now(agent_member.last_updated_at)+ '前'
+                td = link_to agent_member.member_notes.count, agent_member_member_notes_path(agent_member)
+                td.text-right
+                  => link_to '编辑', edit_agent_member_path(agent_member), class: 'btn btn-success'
+                  => link_to '删除', agent_member_path(agent_member), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-default'

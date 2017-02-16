@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170211155745) do
+ActiveRecord::Schema.define(version: 20170214085121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,27 @@ ActiveRecord::Schema.define(version: 20170211155745) do
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.index ["owner_type", "owner_id"], name: "index_accounts_on_owner_type_and_owner_id", using: :btree
+  end
+
+  create_table "attachment_relations", force: :cascade do |t|
+    t.integer  "attachment_id"
+    t.string   "relation_type"
+    t.integer  "relation_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["attachment_id"], name: "index_attachment_relations_on_attachment_id", using: :btree
+    t.index ["relation_type", "relation_id"], name: "index_attachment_relations_on_relation_type_and_relation_id", using: :btree
+  end
+
+  create_table "attachments", force: :cascade do |t|
+    t.string   "owner_type"
+    t.integer  "owner_id"
+    t.string   "name"
+    t.integer  "file_size"
+    t.jsonb    "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_type", "owner_id"], name: "index_attachments_on_owner_type_and_owner_id", using: :btree
   end
 
   create_table "audits", force: :cascade do |t|
@@ -538,6 +559,7 @@ ActiveRecord::Schema.define(version: 20170211155745) do
   end
 
   add_foreign_key "account_histories", "accounts"
+  add_foreign_key "attachment_relations", "attachments"
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
   add_foreign_key "items", "sites"
