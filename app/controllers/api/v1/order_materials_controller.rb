@@ -5,18 +5,22 @@ class Api::V1::OrderMaterialsController < Api::BaseController
   def index
     authorize Order
     order_materials = @order.order_materials
-    render json: {order_materials: order_materials_json(order_materials)}
+    render json: order_materials_json(order_materials)
   end
 
   def create
-    binding.pry
     authorize Order
     order_material = @order.order_materials.new(permitted_attributes(OrderMaterial))
     if order_material.save
-      render json: {status: 'ok', order: order_materials_json(order_material)}
+      render json: {status: 'ok', order_material: order_materials_json(order_material)}
     else
       render json: {status: 'failed', error_message:  order_material.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
     end
+  end
+
+  def destroy
+    OrderMaterial.find(params[:id]).destroy
+    render json: {status: 'ok'}
   end
 
   private
@@ -25,8 +29,8 @@ class Api::V1::OrderMaterialsController < Api::BaseController
     end
 
     def order_materials_json(order_materials)
-      order_materials.as_json(only: [:amount],
-        inculde: {
+      order_materials.as_json(only: [:id, :amount],
+        include: {
           material: { only: [:name], methods: [:price] }
         }
       )
