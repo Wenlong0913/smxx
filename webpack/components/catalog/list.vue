@@ -100,6 +100,7 @@ export default {
       }
       this.options = {formStatus: action, responseMessage: {status: false, text: ''}, parent_id: parentId, index: index, addChildren: addChildren};
       this.showModal = true;
+      console.log(catalog)
       this.newCatalogModel = Object.assign({}, catalog);
     },
     removeData (catalog, index) {

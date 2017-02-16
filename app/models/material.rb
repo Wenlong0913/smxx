@@ -32,8 +32,8 @@ class Material < Item
 
   def update_catalog_attributes
     catalog = MaterialCatalog.find(catalog_id)
-    if catalog.features["attributes"]
-      catalog.features["attributes"].each do |attr|
+    if catalog.features["settings"]
+      catalog.features["settings"].each do |attr|
         attr_value = features[attr]
         if attr_value
           catalog.features[attr] ||= []
