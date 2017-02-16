@@ -111,7 +111,7 @@ $(document).ready ->
       bodyNew.find("."+change_step_class).addClass('active')
     bodyNew.find('form').on 'ajax:error', (event,request)->
       return_mess(setinterval_1, '发送失败！请检查网络')
-    bodyNew.find('form').on 'ajax:success', (event,request)->
+    bodyNew.find('form #new_product').on 'ajax:success', (event,request)->
       bodyNew.find('#last .new-product').attr("href", request.url)
       bodyNew.find('.checkout-header .step').removeClass('active')
       bodyNew.find("[role='tabpanel']").removeClass('active in')

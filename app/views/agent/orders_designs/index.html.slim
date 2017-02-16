@@ -42,23 +42,8 @@
                     div.text-right
                       a.btn.btn-default.btn-sm.m-r-10[href="#" role="default"] 关闭订单
                       = link_to '查看订单', agent_orders_design_path(order), class: 'btn btn-primary btn-sm'
-          .row.order-footer.text-right
-            nav
-              ul.pagination.p-0.m-0
-                li
-                  a[href="#"]
-                    span[aria-hidden="true"] &laquo;
-                li
-                  a[href="#"] 1
-                li
-                  a[href="#"] 2
-                li
-                  a[href="#"] 3
-                li
-                  a[href="#"] 4
-                li
-                  a[href="#"]
-                    span[aria-hidden="true"] &raquo;
+          .text-center
+            = paginate @orders_designs
 
       .search-sidebar
         h4.title 查询
