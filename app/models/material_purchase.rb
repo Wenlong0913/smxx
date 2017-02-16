@@ -5,11 +5,31 @@ class MaterialPurchase < ApplicationRecord
   store_accessor :features, :purchase_date, :delivery_date, :amount, :paid, :total, :note
   has_many :material_purchase_details, dependent: :destroy
   accepts_nested_attributes_for :material_purchase_details, reject_if: proc { |attributes| attributes['material_id'].blank? }, allow_destroy: true
-  validates :material_purchase_details, :length => { :minimum => 1 }
+  # validates :material_purchase_details, :length => { :minimum => 1 }
+  before_create :generate_code
+
+  validates_uniqueness_of :code
   
   enum status: {
-    checking: 0, # 审核
-    storage: 1,  # 入库
-    paying: 2,   # 付款
+    uncheck: 0, #未审核
+    checked: 1, #已审核
+    storage: 2, #已入库
   }
+
+  after_initialize do
+    self.status ||= 0
+  end
+
+  private
+
+  def generate_code
+    purchase_code = 'CG'+Time.now.strftime('%Y%m%d')
+    loop do
+      number = self.class.where("code LIKE ?", purchase_code+'%').count
+      number = (number + 1).to_s.rjust(4, '0') 
+      self.code = "#{purchase_code}#{number}"
+      break unless self.class.where(code: self.code).exists?
+    end
+  end
+
 end
