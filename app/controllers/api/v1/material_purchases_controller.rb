@@ -18,7 +18,7 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
 
   def create
     authorize MaterialPurchase
-    flag, material_purchase = MaterialPurchase::Create.(permitted_attributes(MaterialPurchase))
+    flag, material_purchase = MaterialPurchase::Create.(permitted_attributes(MaterialPurchase).merge(created_by: current_user.id))
     if flag
       render json: {status: 'ok', material_purchase: material_purchase_json(material_purchase)}
     else
@@ -63,12 +63,15 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
 
   def material_purchase_json(material_purchase)
     material_purchase.as_json(
-      only: %w(id vendor_id status),
-      methods: %w(code purchase_date amount total paid),
+      only: %w(id vendor_id status created_by),
+      methods: %w(code purchase_date amount total paid delivery_date),
       include: { 
         vendor: {
           only: %w(id name),
           methods: %w(contact_name phone_number)
+        },
+        user: {
+          only: %w(id nickname)
         },
         material_purchase_details: {
           only: %w(id material_id price number input_number),

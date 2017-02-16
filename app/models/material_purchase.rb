@@ -2,12 +2,12 @@ class MaterialPurchase < ApplicationRecord
   audited
   belongs_to :vendor
   validates :vendor, presence: true
-  store_accessor :features, :purchase_date, :delivery_date, :amount, :paid, :total, :note
+  store_accessor :features, :purchase_date, :delivery_date, :amount, :paid, :total, :note, :delivery_date
   has_many :material_purchase_details, dependent: :destroy
   accepts_nested_attributes_for :material_purchase_details, reject_if: proc { |attributes| attributes['material_id'].blank? }, allow_destroy: true
-  # validates :material_purchase_details, :length => { :minimum => 1 }
+  validates :material_purchase_details, :length => { :minimum => 1,  message: "不能为空！" }
   before_create :generate_code
-
+  belongs_to :user, :foreign_key => :created_by
   validates_uniqueness_of :code
   
   enum status: {
