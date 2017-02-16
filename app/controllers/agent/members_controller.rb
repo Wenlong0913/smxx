@@ -53,7 +53,6 @@ class Agent::MembersController < Agent::BaseController
   def update
     authorize @agent_member
     @agent_member.features = params[:features].select{|k,v| v.present?}
-
     respond_to do |format|
       format.html do
         if @agent_member.update(permitted_attributes(@agent_member))

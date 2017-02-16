@@ -13,14 +13,14 @@
           ul
             - @market_template.errors.full_messages.each do |message|
               li = message
-      = f.input :catalog_id, collection: MarketCatalog.all
+      = f.input :catalog_id, collection: MarketCatalog.all, as: :radio_buttons, selected: @market_template.catalog_id, item_wrapper_class: 'radio-inline'
       = f.input :name
       = f.input :base_path, placeholder: 'templetes/market/xxx'
       = f.input :keywords
       = f.input :description
       = f.input :image_path, placeholder: '/templetes/market/snow/previews/demo-1.png'
-      = f.input :html_source, as: :text
-      = f.input :form_source, as: :text
+      = f.input :html_source, as: :text, input_html: {rows: 12}
+      = f.input :form_source, as: :text, input_html: {rows: 12}
 
       .form-group
         image-select[server="#{image_items_path}" name="market_template[image_item_ids][]" selected-ids="#{@market_template.image_item_ids.join(', ')}"]

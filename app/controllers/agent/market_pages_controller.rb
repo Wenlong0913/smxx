@@ -75,6 +75,7 @@ class Agent::MarketPagesController < Agent::BaseController
   end
 
   def preview
+    @member = Member.new(site_id: @site.id)
   end
 
   private

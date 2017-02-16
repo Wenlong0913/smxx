@@ -99,7 +99,20 @@ material_catalog_attributes.each_pair do |material_catalog, attributes|
   mc.save!
 end
 
+# 客户
+MemberCatalog.create!(key: '客户级别', value: '{A类,B类,C类}')
+MemberCatalog.create!(key: '会员关系', value: '{非会员,普通会员,银卡会员,金卡会员,至尊会员}')
+MemberCatalog.create!(key: '客户性别', value: '{男,女}')
+MemberCatalog.create!(key: '客户年龄', value: '{15-20,20-30,30-40,40-50,50-60}')
+MemberCatalog.create!(key: '购买能力', value: '{一般,高,很高}')
+MemberCatalog.create!(key: '客户活跃频次', value: '{很少,一般,高,很高}')
+
 # 营销页
+MarketCatalog.create!(name: '促销')
+MarketCatalog.create!(name: '预约')
+MarketCatalog.create!(name: '加盟')
+MarketCatalog.create!(name: '卡券')
+
 MarketTemplate.create!(
   catalog_id: 1,
   base_path: 'templetes/market/snow',
@@ -107,20 +120,17 @@ MarketTemplate.create!(
   keywords: '雪，圣诞祝福海报',
   description: '圣诞节外发给客户的祝福海报',
   image_path: '/templetes/market/snow/previews/demo-1.png',
-  html_source: '<!doctype html>
-    <html lang="zh-CN">
-    <head>
+  html_source: '
+    <html lang="zh-CN"><head><meta charset="utf-8" />
       <title><%= @market_page.name %></title>
       <meta name="description" content="<%= @market_page.description %>" />
-      <meta charset="utf-8" />
-      <meta name="apple-touch-fullscreen" content="YES" />
-      <meta name="format-detection" content="telephone=no" />
     </head>
-
     <body>
-     <h1>圣诞节快乐！</h1>
-     <p><%= @market_page.features["title"] %></p>
+     <h1><%= @market_page.features["title"] %></h1>
      <p><%= @market_page.features["mobile"] %></p>
+     <% @market_page.image_items.each do |img| %>
+       <%= image_tag img.image_url %>
+     <% end %>
     </body>
     </html>',
   form_source: '公司：<br/>
