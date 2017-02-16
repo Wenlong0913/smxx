@@ -79,7 +79,7 @@ class Api::V1::OrdersController < Api::BaseController
 
     def order_comment_json(comment)
       comment.as_json(
-        only: [:content, :offer, :created_at],
+        only: [:content, :created_at], methods: [:offer],
         include: {
           user: {only: [:nickname]},
           image_items: {only: [:id], methods: [:image_url, :image_file_name]},
