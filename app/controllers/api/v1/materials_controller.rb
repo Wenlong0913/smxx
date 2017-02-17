@@ -3,6 +3,7 @@
 class Api::V1::MaterialsController < Api::V1::BaseController
   before_action :authenticate!
   before_action :set_order, only: [:index]
+  before_action :set_material, only: [:update, :show]
   # 获得物料列表
   # @param [Integer] page 页码
   # @param [Integer] page_size 每页显示数据
@@ -17,7 +18,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
       materials = params['search_content'].present? ? Material.where("name_py like :key OR name like :key", {key: ['%',params['search_content'].upcase, '%'].join}) : Material.all
       materials = materials.order(created_at: :desc).page(params[:page] || 1).per(page_size)
       render json: {
-        materials: material_json(materials),
+        materials: materials_json(materials),
         page_size: page_size,
         current_page: materials.current_page,
         total_pages: materials.total_pages,
@@ -48,16 +49,20 @@ class Api::V1::MaterialsController < Api::V1::BaseController
   end
 
   def update
-    material = set_material
-    authorize material
-    material.features = {}
-    flag, material = Material::Update.(material, permitted_attributes(material))
+    authorize @material
+    @material.features = {}
+    flag, material = Material::Update.(@material, permitted_attributes(@material))
     material.features = material.features.merge(params["material"]['features'])
     if flag && material.save
       render json: {status: 'ok', material: material_json(material)}
     else
       render json: {status: 'failed', error_message:  material.errors.full_messages.join(', ') }
     end
+  end
+
+  def show
+    authorize @material
+    render json: {status: 'ok', material: material_json(@material)}
   end
 
   private
@@ -67,11 +72,22 @@ class Api::V1::MaterialsController < Api::V1::BaseController
   end
 
   def set_material
-    Material.find_by_id(params[:id])
+    @material = Material.find_by_id(params[:id])
   end
 
-  def material_json(materials)
+  def materials_json(materials)
     materials.as_json(
+      only: %w(id name name_py catalog_id features),
+      methods: %w(stock image_item_ids price unit vendor_ids),
+      include: {
+        vendors: { only: %w(id name)},
+        catalog: { only: %w(id name features), methods: %w(full_name) }
+      }
+    )
+  end
+
+  def material_json(material)
+    material.as_json(
       only: %w(id name name_py catalog_id features),
       methods: %w(stock image_item_ids price unit vendor_ids),
       include: {
