@@ -4,5 +4,6 @@ class Ticket < ApplicationRecord
 
   validates_presence_of :title
   validates_presence_of :site
-  validates_uniqueness_of :title, scope: :site_id
+  validates_presence_of :user
+ 
 end
