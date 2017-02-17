@@ -8,7 +8,7 @@ class ImageItem < ApplicationRecord
   has_attached_file :image,
                     path: ":rails_root/public/photos/:year/:month/:day/:id/:style.:extension",
                     hash_secret: 'f240-r3i-3-',
-                    styles: { :original => '800>'},
+                    styles: { :original => '800>', :medium => '300*300', :thumd => '80*80'},
                     :url => "/photos/:id/:style.:extension",
                     default_url: "/images/:style/missing.png"
 
@@ -21,4 +21,13 @@ class ImageItem < ApplicationRecord
   def image_url
     Settings.site.host + image.url
   end
+
+  def medium_image_url
+    Settings.site.host + image.url(:medium)
+  end
+
+  def thumd_image_url
+    Settings.site.host + image.url(:thumd)
+  end
+
 end

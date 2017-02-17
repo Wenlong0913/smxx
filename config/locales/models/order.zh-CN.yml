@@ -8,6 +8,8 @@ zh-CN:
         code: 订单编号
         user: 用户
         member: 客户
+        member_name: 客户名称
+        mobile_phone: 客户手机号
         site: 经销商
         price: 价格
         status: 订单状态

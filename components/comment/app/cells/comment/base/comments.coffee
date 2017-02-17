@@ -1,5 +1,7 @@
 $(document).ready ->
-
+  $('#upFiles input').on "ajax:success", (e, r)->
+    console.log e
+    console.log 'ok'
   processCommentBlock = ()->
     blockEle  = $(this)
     url       = blockEle.data('url')
@@ -15,10 +17,18 @@ $(document).ready ->
         content_info = this.replyContent
       self = this
       self.posting = true
+      images = []
+      $(".comment #images-content input[name='order[image_item_ids][]']").each( ->
+        images.push $(this).val()
+      )
       dataAll =
         'comment[content]': content_info
         'comment[parent_id]': (this.replyTo and this.replyTo.id)
-        'comment[features]': self.features
+        'comment[attachment_ids]': self.features.files.map((f) ->
+            return f.id
+          )
+        'comment[image_item_ids]': images
+        'comment[offer]': self.features.offer
       $.post
         url: url
         data: dataAll
@@ -27,8 +37,10 @@ $(document).ready ->
           self.replying = false
           self.comments.unshift data.comments
           self.content = ''
-          for k, v of self.features
-            self.features[k] = null
+          self.features =
+            files: []
+            images: []
+            offer: ''
         error: (error)->
           self.posting = false
           alert error
@@ -46,29 +58,27 @@ $(document).ready ->
     replyModel = (comment_target)->
       this.replyTo = comment_target
       this.replying = true
-    upFiles = ()->
-      self = this
-      $.post
-        url: '/'
-        data: {}
+    upFile = (formdata, index) ->
+      $.ajax
+        url: filePath
+        type: 'post'
+        data: formdata
+        cache: false
+        processData: false
+        contentType: false
         success: (data)->
-          self.files = data
+          if data.status == 'ok'
+            app._data.features.files[index].id = data.attachment.id
+            app._data.features.files[index].name = data.attachment.attachment_file_name
+            app._data.features.files[index].url = data.attachment.attachment_url
+            app._data.features.files[index].upStatus = 2
+          else
+            alert '文件上传失败'
+            app._data.comment.files[index].upStatus = 1
         error: (data)->
           console.log data
           alert '文件上传失败'
-    upImages = ()->
-      # self = this
-      # formData = new FormData($("#upImages input[name='image']")[0].files[0])
-      # $.post
-      #   url: imagePath
-      #   data: formData
-      #   contentType: false
-      #   processData: false
-      #   success: (data)->
-      #     self.files = data
-      #   error: (data)->
-      #     console.log data
-      #     alert '文件上传失败'
+
     app = new Vue
       el: "[rel='comment-block'][uuid='#{blockEle.attr('uuid')}']"
       data:
@@ -82,43 +92,53 @@ $(document).ready ->
         replyContent: ''
         pageCount: null
         currentPage: 1
-        comment:
+        features:
           files: []
           images: []
-          offer: '999'
-        inputFileValue: ''
-        inputImageValue: ''
+          offer: ''
       methods:
         postComment: postComment
         replyModel: replyModel
         loadComments: loadComments
-        upFiles: upFiles
-        upImages: upImages
-        onChangeFile: (e)->
-          console.log e.target.files
-          console.log imagePath
-          $.post
-            url: '/'
-            data: {}
+        removeFile: (file, index)->
+          self = this
+          $.ajax
+            url: filePath+'/'+file.id
+            type: 'delete'
             success: (data)->
-              self.files = data
+              if data.status == 'ok'
+                self.features.files.splice(index, 1)
+              else
+                alert('删除文件失败')
             error: (data)->
               console.log data
-              alert '文件上传失败'
+              alert('删除文件失败')
+        onChangeFile: (e)->
+          self = this
+          return alert '浏览器不支持此插件' unless window.FormData
+          files = e.target.files
+          formdata = new FormData()
+          # each up file
+          for file in files
+            formdata.append 'file', file
+            thisFile =
+              id: ''
+              name: file.name
+              url: ''
+              upStatus: 0
+            self.features.files.push(thisFile)
+            index = self.features.files.indexOf(thisFile)
+            upFile(formdata, index)
         onChangeImage: (e)->
-          upImages()
-          # files = e.target.files
-          # console.log files[0].
-          # return alert '浏览器不支持' unless window.FormData
-          # formData = new FormData()
-          # # formData.append(files[0])
-          # console.log formData
+          self = this
+          return alert '浏览器不支持此插件' unless window.FormData
           # $.ajax
           #   url: imagePath
           #   type: 'post'
+          #   cache: false
           #   processData: false
           #   contentType: false
-          #   data: formData
+          #   data: new FormData($("#upImages")[0])
           #   dataType: 'json'
           #   success: (data)->
           #     self.files = data

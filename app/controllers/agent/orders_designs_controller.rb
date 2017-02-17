@@ -31,9 +31,9 @@ class Agent::OrdersDesignsController < Agent::BaseController
   #
   def create
     # authorize Order
-    @order = Order.new(permitted_attributes(Order))
+    @order = @site.orders.new(permitted_attributes(Order))
     if @order.save
-      render json: {status: 'ok'}
+      render json: {status: 'ok', url: agent_orders_designs_path}
     else
       render json: {status: 'error', message:@order.errors.full_messages.join(',')}
     end
@@ -76,4 +76,5 @@ class Agent::OrdersDesignsController < Agent::BaseController
         params[:order][:user_id] = member.user.id
       end
     end
+
 end
