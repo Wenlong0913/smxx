@@ -8,7 +8,7 @@ module Comment
     def create_comment
       entry = comment__resolve_resource.comments.new(comment__permitted_params)
       entry.user_id = comment__user_id
-      
+
       if entry.save
         render json: comment__entry_json(entry)
       else
@@ -37,17 +37,26 @@ module Comment
     end
 
     def comment__permitted_params
-      params.require(:comment).permit(:parent_id, :content)
+      params.require(:comment).permit(:parent_id, :content, :offer , :image_item_ids => [], :attachment_ids => [])
     end
 
     def comment__entry_json(entry, page = nil)
       comment_info = {}
-      comment_info[:comments] =  entry.as_json(only: [:id, :content, :created_at], include: {parent: {only: [:id, :content, :created_at]}} )
+      comment_info[:comments] =  entry.as_json(
+        only: [:id, :content, :created_at],
+        methods: [:offer],
+        include: {
+          parent: {only: [:id, :content, :created_at]},
+          attachments: {only: [:id], methods: [:attachment_url, :attachment_file_name]},
+          image_items: {only: [:id], methods: [:image_url, :image_file_name]}
+        }
+      )
       if entry.try(:total_pages)
         comment_info[:total_pages] = entry.total_pages
         comment_info[:current_page] = entry.current_page
       end
       return comment_info
     end
+
   end
 end
