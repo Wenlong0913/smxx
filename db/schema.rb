@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170216141416) do
+ActiveRecord::Schema.define(version: 20170217031930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -330,7 +330,6 @@ ActiveRecord::Schema.define(version: 20170216141416) do
     t.integer  "site_id"
     t.string   "name"
     t.date     "birth"
-    t.string   "qq"
     t.string   "email"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
@@ -455,6 +454,19 @@ ActiveRecord::Schema.define(version: 20170216141416) do
     t.text     "config"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.integer  "site_id"
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "content"
+    t.string   "type"
+    t.jsonb    "features"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["site_id"], name: "index_tickets_on_site_id", using: :btree
+    t.index ["user_id"], name: "index_tickets_on_user_id", using: :btree
   end
 
   create_table "tracker_actions", force: :cascade do |t|
@@ -586,6 +598,8 @@ ActiveRecord::Schema.define(version: 20170216141416) do
   add_foreign_key "tasks", "sites"
   add_foreign_key "theme_configs", "sites"
   add_foreign_key "theme_configs", "themes"
+  add_foreign_key "tickets", "sites"
+  add_foreign_key "tickets", "users"
   add_foreign_key "tracker_visits", "tracker_actions", column: "action_id"
   add_foreign_key "tracker_visits", "tracker_sessions", column: "session_id"
   add_foreign_key "user_mobiles", "users"

@@ -1,144 +1,207 @@
-<div id="search-results" class="section-container bg-silver">
-  <!-- BEGIN container -->
-  <div class="container">
-      <!-- BEGIN search-container -->
-    <div class="search-container">
-      <!-- BEGIN search-content -->
-      <div class="search-content">
-        <!-- BEGIN search-toolbar -->
-        <div class="search-toolbar">
-          <!-- BEGIN row -->
-          <div class="row">
-            <!-- BEGIN col-6 -->
-            <div class="col-md-6">
-              <h4>‘xx’ 搜索出 3个 商品</h4>
-            </div>
-            <!-- END col-6 -->
-            <!-- BEGIN col-6 -->
-            <div class="col-md-6 text-right">
-              <ul class="sort-list">
-                <li class="text"><i class="fa fa-filter"></i> 排序方式:</li>
-                <li class="active"><a href="#">点击</a></li>
-                <li><a href="#">最新</a></li>
-                <li><a href="#">优惠</a></li>
-                <li><a href="#">价格</a></li>
-              </ul>
-            </div>
-            <!-- END col-6 -->
-          </div>
-          <!-- END row -->
+<div class="container">
+<!-- begin #content -->
+<div id="content" class="content">
+  <!-- begin breadcrumb -->
+  <ol class="breadcrumb pull-right">
+    <li><a href="javascript:;">首页</a></li>
+    <li class="active">控制面板</li>
+  </ol>
+  <!-- end breadcrumb -->
+  <!-- begin page-header -->
+  <h1 class="page-header">控制面板 <small>功能快速导航...</small></h1>
+  <!-- end page-header -->
+
+  <!-- begin row -->
+  <div class="row">
+    <!-- begin col-3 -->
+    <div class="col-md-3 col-sm-6">
+      <div class="widget widget-stats bg-green">
+        <div class="stats-icon"><i class="fa fa-desktop"></i></div>
+        <div class="stats-info">
+          <h4>TOTAL VISITORS</h4>
+          <p>3,291,922</p>
         </div>
-        <!-- END search-toolbar -->
-        <!-- BEGIN search-item-container -->
-        <div class="search-item-container">
-          <!-- BEGIN item-row -->
-          <div class="item-row">
-            <!-- BEGIN item -->
-            <div class="item item-thumbnail">
-                <a href="product_detail.html" class="item-image">
-                    <img src="assets/img/iphone.png" alt="">
-                    <div class="discount">15% 优惠</div>
-                </a>
-                <div class="item-info">
-                    <h4 class="item-title">
-                        <a href="product_detail.html">商品三<br>zo-2016</a>
-                    </h4>
-                    <p class="item-desc">简单的一些描述</p>
-                    <div class="item-price">$649.00</div>
-                    <div class="item-discount-price">$739.00</div>
-                </div>
-            </div>
-            <!-- END item -->
-            <!-- BEGIN item -->
-            <div class="item item-thumbnail">
-                <a href="product_detail.html" class="item-image">
-                    <img src="assets/img/samsung-note5.png" alt="">
-                    <div class="discount">32% 优惠</div>
-                </a>
-                <div class="item-info">
-                    <h4 class="item-title">
-                        <a href="product.html">商品二<br>Black</a>
-                    </h4>
-                    <p class="item-desc">small. 描述</p>
-                    <div class="item-price">$599.00</div>
-                    <div class="item-discount-price">$799.00</div>
-                </div>
-            </div>
-            <!-- END item -->
-            <!-- BEGIN item -->
-            <div class="item item-thumbnail">
-                <a href="product_detail.html" class="item-image">
-                    <img src="assets/img/iphone-se.png" alt="">
-                    <div class="discount">20% 优惠</div>
-                </a>
-                <div class="item-info">
-                    <h4 class="item-title">
-                        <a href="product.html">商品一 <br>x/z</a>
-                    </h4>
-                    <p class="item-desc">small. 描述</p>
-                    <div class="item-price">$499.00</div>
-                    <div class="item-discount-price">$599.00</div>
-                </div>
-            </div>
-            <!-- END item -->
-          </div>
-          <!-- END item-row -->
+        <div class="stats-link">
+          <a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
         </div>
-        <!-- END search-item-container -->
-        <!-- BEGIN pagination -->
-        <div class="text-center">
-            <ul class="pagination m-t-0">
-                <li class="disabled"><a href="javascript:;">&laquo;</a></li>
-                <li class="active"><a href="javascript:;">1</a></li>
-                <li><a href="javascript:;">2</a></li>
-                <li><a href="javascript:;">3</a></li>
-                <li><a href="javascript:;">4</a></li>
-                <li><a href="javascript:;">5</a></li>
-                <li><a href="javascript:;">&raquo;</a></li>
-            </ul>
-        </div>
-        <!-- END pagination -->
       </div>
-      <!-- END search-content -->
-      <!-- BEGIN search-sidebar -->
-      <div class="search-sidebar">
-          <h4 class="title">查询</h4>
-          <form action="search_results.html" method="POST" name="filter_form">
-              <div class="form-group">
-                  <label class="control-label">关键字</label>
-                  <input class="form-control input-sm" name="keyword" value="" placeholder="输入查询关键字" type="text">
-              </div>
-              <div class="form-group">
-                  <label class="control-label">价格</label>
-                  <div class="row row-space-0">
-                      <div class="col-md-5">
-                          <input class="form-control input-sm" name="price_from" value="10" placeholder="Price From" type="number">
-                      </div>
-                      <div class="col-md-2 text-center p-t-5 f-s-12 text-muted">～</div>
-                      <div class="col-md-5">
-                          <input class="form-control input-sm" name="price_to" value="10000" placeholder="Price To" type="number">
-                      </div>
-                  </div>
-              </div>
-              <div class="m-b-30">
-                  <button type="submit" class="btn btn-sm btn-inverse"><i class="fa fa-search"></i> 查询</button>
-              </div>
-          </form>
-          <h4 class="title m-b-0">分类</h4>
-          <ul class="search-category-list">
-              <li><a href="#">Microsoft <span class="pull-right">(10)</span></a></li>
-              <li><a href="#">Micromax <span class="pull-right">(4)</span></a></li>
-              <li><a href="#">Karbonn <span class="pull-right">(6)</span></a></li>
-              <li><a href="#">Intex <span class="pull-right">(8)</span></a></li>
-              <li><a href="#">Sony <span class="pull-right">(42)</span></a></li>
-              <li><a href="#">Asus <span class="pull-right">(15)</span></a></li>
-              <li><a href="#">Nokia <span class="pull-right">(84)</span></a></li>
-              <li><a href="#">Blackberry <span class="pull-right">(8)</span></a></li>
-          </ul>
-      </div>
-      <!-- END search-sidebar -->
     </div>
-    <!-- END search-container -->
+    <!-- end col-3 -->
+    <!-- begin col-3 -->
+    <div class="col-md-3 col-sm-6">
+      <div class="widget widget-stats bg-blue">
+        <div class="stats-icon"><i class="fa fa-chain-broken"></i></div>
+        <div class="stats-info">
+          <h4>BOUNCE RATE</h4>
+          <p>20.44%</p>
+        </div>
+        <div class="stats-link">
+          <a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
+        </div>
+      </div>
+    </div>
+    <!-- end col-3 -->
+    <!-- begin col-3 -->
+    <div class="col-md-3 col-sm-6">
+      <div class="widget widget-stats bg-purple">
+        <div class="stats-icon"><i class="fa fa-users"></i></div>
+        <div class="stats-info">
+          <h4>UNIQUE VISITORS</h4>
+          <p>1,291,922</p>
+        </div>
+        <div class="stats-link">
+          <a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
+        </div>
+      </div>
+    </div>
+    <!-- end col-3 -->
+    <!-- begin col-3 -->
+    <div class="col-md-3 col-sm-6">
+      <div class="widget widget-stats bg-red">
+        <div class="stats-icon"><i class="fa fa-clock-o"></i></div>
+        <div class="stats-info">
+          <h4>AVG TIME ON SITE</h4>
+          <p>00:12:23</p>
+        </div>
+        <div class="stats-link">
+          <a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
+        </div>
+      </div>
+    </div>
+    <!-- end col-3 -->
   </div>
-  <!-- END container -->
+  <!-- end row -->
+  <!-- begin row -->
+  <div class="row">
+    <!-- begin col-8 -->
+    <div class="col-md-8">
+      <div class="panel panel-inverse" data-sortable-id="index-1">
+        <div class="panel-heading">
+          <div class="panel-heading-btn">
+          </div>
+          <h4 class="panel-title">Website Analytics (Last 7 Days)</h4>
+        </div>
+        <div class="panel-body">
+          <div id="interactive-chart" class="height-sm"></div>
+        </div>
+      </div>
+    </div>
+    <!-- end col-8 -->
+    <!-- begin col-4 -->
+    <div class="col-md-4">
+      <div class="panel panel-inverse" data-sortable-id="index-6">
+        <div class="panel-heading">
+          <div class="panel-heading-btn">
+          </div>
+          <h4 class="panel-title">Analytics Details</h4>
+        </div>
+        <div class="panel-body p-t-0">
+          <table class="table table-valign-middle m-b-0">
+            <thead>
+              <tr>
+                <th>Source</th>
+                <th>Total</th>
+                <th>Trend</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><label class="label label-danger">Unique Visitor</label></td>
+                <td>13,203 <span class="text-success"><i class="fa fa-arrow-up"></i></span></td>
+                <td><div id="sparkline-unique-visitor"></div></td>
+              </tr>
+              <tr>
+                <td><label class="label label-warning">Bounce Rate</label></td>
+                <td>28.2%</td>
+                <td><div id="sparkline-bounce-rate"></div></td>
+              </tr>
+              <tr>
+                <td><label class="label label-success">Total Page Views</label></td>
+                <td>1,230,030</td>
+                <td><div id="sparkline-total-page-views"></div></td>
+              </tr>
+              <tr>
+                <td><label class="label label-primary">Avg Time On Site</label></td>
+                <td>00:03:45</td>
+                <td><div id="sparkline-avg-time-on-site"></div></td>
+              </tr>
+              <tr>
+                <td><label class="label label-default">% New Visits</label></td>
+                <td>40.5%</td>
+                <td><div id="sparkline-new-visits"></div></td>
+              </tr>
+              <tr>
+                <td><label class="label label-inverse">Return Visitors</label></td>
+                <td>73.4%</td>
+                <td><div id="sparkline-return-visitors"></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel panel-inverse" data-sortable-id="index-8">
+        <div class="panel-heading">
+          <div class="panel-heading-btn">
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+          </div>
+          <h4 class="panel-title">Todo List</h4>
+        </div>
+        <div class="panel-body p-0">
+          <ul class="todolist">
+            <li class="active">
+              <a href="javascript:;" class="todolist-container active" data-click="todolist">
+                <div class="todolist-input"><i class="fa fa-square-o"></i></div>
+                <div class="todolist-title">Donec vehicula pretium nisl, id lacinia nisl tincidunt id.</div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:;" class="todolist-container" data-click="todolist">
+                <div class="todolist-input"><i class="fa fa-square-o"></i></div>
+                <div class="todolist-title">Duis a ullamcorper massa.</div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:;" class="todolist-container" data-click="todolist">
+                <div class="todolist-input"><i class="fa fa-square-o"></i></div>
+                <div class="todolist-title">Phasellus bibendum, odio nec vestibulum ullamcorper.</div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:;" class="todolist-container" data-click="todolist">
+                <div class="todolist-input"><i class="fa fa-square-o"></i></div>
+                <div class="todolist-title">Duis pharetra mi sit amet dictum congue.</div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:;" class="todolist-container" data-click="todolist">
+                <div class="todolist-input"><i class="fa fa-square-o"></i></div>
+                <div class="todolist-title">Duis pharetra mi sit amet dictum congue.</div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:;" class="todolist-container" data-click="todolist">
+                <div class="todolist-input"><i class="fa fa-square-o"></i></div>
+                <div class="todolist-title">Phasellus bibendum, odio nec vestibulum ullamcorper.</div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:;" class="todolist-container active" data-click="todolist">
+                <div class="todolist-input"><i class="fa fa-square-o"></i></div>
+                <div class="todolist-title">Donec vehicula pretium nisl, id lacinia nisl tincidunt id.</div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <!-- end col-4 -->
+  </div>
+  <!-- end row -->
+</div>
+<!-- end #content -->
 </div>
