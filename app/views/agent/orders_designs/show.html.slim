@@ -56,7 +56,7 @@
           .commit-title
             h4 与工厂方交流
           .commit-content.border-and-radius
-            = render_comments(@orders_design, path: {comment_path: comments_agent_orders_design_path, image_path: image_items_url, up_file_path: ''})
+            = render_comments(@orders_design, path: {comment_path: comments_agent_orders_design_path, image_path: image_items_url, up_file_path: attachments_path})
       .design-sidebar-left
         .sidebar-content
           .sidebar-heading

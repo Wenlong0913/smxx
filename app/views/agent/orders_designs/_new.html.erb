@@ -10,10 +10,10 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-xs-6">
-              <%= f.association :site %>
+              <%= f.input :member_name %>
             </div>
             <div class="col-xs-6">
-              <%= f.input :member, placeholder: '需要实现：选择代理商后，动态更新客户列表', collection: Member.all, selected: [], include_blank: true %>
+              <%= f.input :mobile_phone %>
             </div>
           </div>
           <div class="row">
@@ -44,6 +44,7 @@
     domModal.find('form#new_order').on('ajax:success', function (event, request) {
       if (request.status == 'ok') {
         domModal.modal('hide')
+        window.location = request.url
       }else {
         domModal.find('.error-text').show().text('创建失败！：  '+request.message)
       }
