@@ -20,7 +20,7 @@ class Api::V1::MaterialManagementsController < Api::V1::BaseController
       only: %w(id number),
       include: {
         material_management: { 
-          only: %w(id operate_date operate_type),
+          only: %w(id operate_date operate_type note),
           include: {material_warehouse: {only: %w(id name)}}
         },
         material: {only: %w(id name)}

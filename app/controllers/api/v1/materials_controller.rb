@@ -28,9 +28,9 @@ class Api::V1::MaterialsController < Api::V1::BaseController
 
   def create
     authorize Material
-    flag, material = Material::Create.(permitted_attributes(Material))
+    material = Material.new(permitted_attributes(Material))
     material.features = material.features.merge(params["material"]['features'])
-    if flag && material.save
+    if material.save
       render json: {status: 'ok', material: material_json(material)}
     else
       render json: {status: 'failed', error_message:  material.errors.full_messages.join(', ')}
@@ -78,7 +78,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
         vendors: { only: %w(id name)},
         catalog: { only: %w(id name features), methods: %w(full_name) },
         image_items: { only: %w(id), methods: %w(image_url image_file_name) },
-        material_warehouse_items: { only: %w(stock),
+        material_warehouse_items: { only: %w(material_warehouse_id stock),
           include: {material_warehouse: {only: %w{name}}}
         }
       }

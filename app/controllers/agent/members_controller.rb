@@ -34,9 +34,8 @@ class Agent::MembersController < Agent::BaseController
   def create
     authorize Member
     @agent_member = Member.new(permitted_attributes(Member))
-    # @agent_member.user_id = ?
     @agent_member.site_id = @site.id
-    @agent_member.features = params[:features].select{|k,v| v.present?}
+    @agent_member.features = params[:features].select{|k,v| v.present?} if params[:features]
 
     respond_to do |format|
       format.html do
@@ -54,7 +53,6 @@ class Agent::MembersController < Agent::BaseController
   def update
     authorize @agent_member
     @agent_member.features = params[:features].select{|k,v| v.present?}
-
     respond_to do |format|
       format.html do
         if @agent_member.update(permitted_attributes(@agent_member))

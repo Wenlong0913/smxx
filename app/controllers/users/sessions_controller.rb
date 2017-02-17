@@ -35,9 +35,8 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def impersonate
-    authorize User
-    # Pundit.policy!(true_user, User).impersonate?
     user = User.find(params[:id])
+    authorize user
     impersonate_user(user)
     redirect_to root_path
   end

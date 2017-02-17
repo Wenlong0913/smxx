@@ -6,7 +6,7 @@ class ImageItem < ApplicationRecord
 
   store_accessor :data, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at
   has_attached_file :image,
-                    path: ":rails_root/public/photos/:id/:style.:extension",
+                    path: ":rails_root/public/photos/:year/:month/:day/:id/:style.:extension",
                     hash_secret: 'f240-r3i-3-',
                     styles: { :original => '800>', :medium => '300*300', :thumd => '80*80'},
                     :url => "/photos/:id/:style.:extension",

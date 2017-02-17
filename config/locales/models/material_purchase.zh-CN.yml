@@ -2,9 +2,10 @@
 zh-CN:
   activerecord:
     models:
-      material_purchase: Material purchase
+      material_purchase: 物料采购
     attributes:
-      material_purchase: {}
+      material_purchase: 
+        material_purchase_details: 物料清单
     errors:
       models:
         material_purchase: 

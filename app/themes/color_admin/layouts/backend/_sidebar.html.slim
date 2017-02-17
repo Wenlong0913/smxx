@@ -65,7 +65,6 @@
             = link_to admin_task_types_path do
               = fa_icon 'file-text', text: "#{TaskType.model_name.human}管理"
 
-
       li class=("has-sub #{'active' if page?('admin/products', 'admin/catalogs#index?klass=ProductCatalog')}")
         = link_to dashboard_admin_products_path
           b.caret.pull-right
@@ -87,7 +86,6 @@
         ul.sub-menu
           li[class= ('active' if page?('admin/catalogs#index?klass='))]
             = link_to '所有分类', admin_catalogs_path
-
 
       li class=("has-sub #{'active' if page?('admin/vendors', 'admin/sites', 'admin/users', 'admin/roles', 'admin/user/weixins')}")
         = link_to dashboard_admin_users_path

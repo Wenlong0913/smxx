@@ -10,8 +10,11 @@ class Member < ApplicationRecord
   before_validation :create_user, if: -> { user_id.blank? && mobile_phone.present? }
   has_many :member_notes
 
-  private
+  def last_updated_at
+    member_notes.any? ? member_notes.last.updated_at : updated_at
+  end
 
+  private
   def create_user
     user = User.find_by_phone_number(mobile_phone)
     if user

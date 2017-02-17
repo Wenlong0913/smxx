@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170211155745) do
+ActiveRecord::Schema.define(version: 20170216141416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,27 @@ ActiveRecord::Schema.define(version: 20170211155745) do
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.index ["owner_type", "owner_id"], name: "index_accounts_on_owner_type_and_owner_id", using: :btree
+  end
+
+  create_table "attachment_relations", force: :cascade do |t|
+    t.integer  "attachment_id"
+    t.string   "relation_type"
+    t.integer  "relation_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["attachment_id"], name: "index_attachment_relations_on_attachment_id", using: :btree
+    t.index ["relation_type", "relation_id"], name: "index_attachment_relations_on_relation_type_and_relation_id", using: :btree
+  end
+
+  create_table "attachments", force: :cascade do |t|
+    t.string   "owner_type"
+    t.integer  "owner_id"
+    t.string   "name"
+    t.integer  "file_size"
+    t.jsonb    "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_type", "owner_id"], name: "index_attachments_on_owner_type_and_owner_id", using: :btree
   end
 
   create_table "audits", force: :cascade do |t|
@@ -149,6 +170,7 @@ ActiveRecord::Schema.define(version: 20170211155745) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "parent_id"
+    t.jsonb    "features"
     t.index ["resource_type", "resource_id"], name: "index_comment_entries_on_resource_type_and_resource_id", using: :btree
   end
 
@@ -225,6 +247,7 @@ ActiveRecord::Schema.define(version: 20170211155745) do
     t.text     "form_source"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.jsonb    "features"
     t.index ["catalog_id"], name: "index_market_templates_on_catalog_id", using: :btree
   end
 
@@ -265,6 +288,7 @@ ActiveRecord::Schema.define(version: 20170211155745) do
     t.integer  "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "code"
   end
 
   create_table "material_stock_alerts", force: :cascade do |t|
@@ -306,6 +330,7 @@ ActiveRecord::Schema.define(version: 20170211155745) do
     t.integer  "site_id"
     t.string   "name"
     t.date     "birth"
+    t.string   "qq"
     t.string   "email"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
@@ -317,6 +342,9 @@ ActiveRecord::Schema.define(version: 20170211155745) do
     t.string   "note"
     t.jsonb    "features"
     t.string   "qq"
+    t.string   "typo"
+    t.string   "from"
+    t.string   "owned"
     t.index ["site_id"], name: "index_members_on_site_id", using: :btree
     t.index ["user_id"], name: "index_members_on_user_id", using: :btree
   end
@@ -538,6 +566,7 @@ ActiveRecord::Schema.define(version: 20170211155745) do
   end
 
   add_foreign_key "account_histories", "accounts"
+  add_foreign_key "attachment_relations", "attachments"
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
   add_foreign_key "items", "sites"

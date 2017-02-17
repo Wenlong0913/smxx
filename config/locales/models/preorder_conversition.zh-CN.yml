@@ -1,0 +1,12 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      preorder_conversition: Preorder conversition
+    attributes:
+      preorder_conversition: {}
+    errors:
+      models:
+        preorder_conversition: 
+  helpers:
+    preorder_conversition: 

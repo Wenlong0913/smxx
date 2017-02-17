@@ -7,6 +7,9 @@ zh-CN:
       member:
         user: 用户
         site: 站点
+        typo: 类型
+        from: 来源
+        owned: 归属
         mobile_phone: 手机号
         name: 会员名称
         gender: 性别

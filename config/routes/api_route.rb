@@ -31,9 +31,10 @@ module ApiRoute
           resources :search, only: [:index]
           resources :users, only: [:index]
           resources :vendors, only: [:index, :create]
-          resources :material_purchases, only: [:index, :create, :update]
+          resources :material_purchases, only: [:index, :create, :update, :show]
           resources :material_purchase_details, only: [:update, :destroy]
           resources :attachments, only: [:create]
+          resources :order_materials
         end
       end
     end

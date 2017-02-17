@@ -4,7 +4,9 @@
   .container
     .collapse.navbar-collapse
       ul.nav.navbar-nav
-        li 欢迎使用
+        li
+          a[href="#"] = current_user.id
 
       ul.nav.navbar-nav.navbar-right
         li
+          => current_user.username
