@@ -35,6 +35,7 @@ class User < ApplicationRecord
   has_many :members, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :sites
+  has_many :preorder_conversitions
   attr_accessor :mobile_phone
   validates :mobile_phone, mobile_phone: true, allow_blank: true
 
