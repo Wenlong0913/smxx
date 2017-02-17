@@ -16,7 +16,7 @@ module AgentRoute
           resources 'member_notes'
         end
 
-        resources 'orders_designs' do
+        resources 'preorder_conversitions' do
           commentable
         end
 
