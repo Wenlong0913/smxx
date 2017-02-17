@@ -111,7 +111,7 @@
           li class=("#{'active' if page?('admin/market_templates')}") = link_to '模板管理', admin_market_templates_path
           li class=("#{'active' if page?('admin/market_pages')}") = link_to '营销页', admin_market_pages_path
 
-      li class=("has-sub #{'active' if page?('admin/members','admin/sites', 'admin/member_catalogs')}")
+      li class=("has-sub #{'active' if page?('admin/members', 'admin/member_catalogs')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-inbox
