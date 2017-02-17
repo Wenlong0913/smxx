@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170215073342) do
+ActiveRecord::Schema.define(version: 20170216141416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -247,6 +247,7 @@ ActiveRecord::Schema.define(version: 20170215073342) do
     t.text     "form_source"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.jsonb    "features"
     t.index ["catalog_id"], name: "index_market_templates_on_catalog_id", using: :btree
   end
 
@@ -340,6 +341,10 @@ ActiveRecord::Schema.define(version: 20170215073342) do
     t.string   "address"
     t.string   "note"
     t.jsonb    "features"
+    t.string   "qq"
+    t.string   "typo"
+    t.string   "from"
+    t.string   "owned"
     t.index ["site_id"], name: "index_members_on_site_id", using: :btree
     t.index ["user_id"], name: "index_members_on_user_id", using: :btree
   end

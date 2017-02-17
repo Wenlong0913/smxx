@@ -14,5 +14,7 @@ h1.page-header
   .panel-body
     .profile-container
       .profile-info
-        .table-responsive
-          table.table.table-profile
+        h2 = @market_template.name
+        p 表单属性： 
+        pre
+          = @market_template.form_source

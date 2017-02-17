@@ -16,4 +16,5 @@ class MarketPagePolicy < ApplicationPolicy
   def permitted_attributes_for_update
     permitted_attributes_for_create
   end
+
 end
