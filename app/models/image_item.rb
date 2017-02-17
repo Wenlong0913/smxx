@@ -8,10 +8,9 @@ class ImageItem < ApplicationRecord
   has_attached_file :image,
                     path: ":rails_root/public/photos/:year/:month/:day/:id/:style.:extension",
                     hash_secret: 'f240-r3i-3-',
-                    styles: { :original => '800>', :medium => '300*300', :thumd => '80*80'},
-                    :url => "/photos/:id/:style.:extension",
+                    styles: { :original => '800>', :medium => '300x300', :thumb => '100x100' },
+                    :url => "/photos/:year/:month/:day/:id/:style.:extension",
                     default_url: "/images/:style/missing.png"
-
 
   # validates_attachment_presence :image
   # validates_attachment_size :image, :less_than => 4.megabytes
