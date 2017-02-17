@@ -22,7 +22,8 @@ Rails.application.routes.draw do
   extend FrontendRoute
   extend ApiRoute
   extend AdminRoute
-  extend AgentRoute
+  extend AgentBackendRoute
+  extend AgentFrontendRoute
 
   extend CmsFrontendRoute
   extend CmsBackendRoute

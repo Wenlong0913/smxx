@@ -1,4 +1,4 @@
-module AgentRoute
+module AgentBackendRoute
   def self.extended(router)
     router.instance_exec do
       namespace :agent do
@@ -21,11 +21,7 @@ module AgentRoute
         end
 
         catalog_resources_for ProductCatalog, only: [:index]
-        resources :market_pages, :concerns => :paginatable do
-          member do
-            get 'preview'
-          end
-        end
+        resources :market_pages, :concerns => :paginatable
       end
     end
   end

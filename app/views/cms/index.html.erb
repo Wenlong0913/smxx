@@ -2,12 +2,12 @@
   [ @page.try(:title),
     @channel.title,
     @cms_site.description
-  ].join(' | ').sub(/^\s*\|/, '').strip %>
+  ].join(' - ').sub(/^\s*\|/, '').strip %>
 <% meta_keywords \
   [ @page.try(:keywords).blank? ? @page.try(:title) : @page.keywords,
     @channel.title,
     @channel.keywords
-  ].join(', ').sub(/^\s*,/, '').strip %>
+  ].join(',').sub(/^\s*,/, '').strip %>
 <% meta_description \
   @page.nil? ? @channel.description : @page.description %>
 

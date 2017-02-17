@@ -47,7 +47,6 @@ class Agent::MembersController < Agent::BaseController
       end
       format.json { render json: @agent_member }
     end
-
   end
 
   def update

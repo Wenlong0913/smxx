@@ -4,7 +4,7 @@ class Agent::BaseController < ApplicationController
 
   before_action :ensure_agent_user!
   before_action :set_current_site
-  
+
   def set_current_site
     @site = Site.find_by(user_id: current_user.id)
     not_found! if @site.nil?
