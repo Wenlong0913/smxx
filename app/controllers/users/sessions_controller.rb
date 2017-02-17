@@ -35,7 +35,6 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def impersonate
-    # Pundit.policy!(true_user, User).impersonate?
     user = User.find(params[:id])
     authorize user
     impersonate_user(user)
