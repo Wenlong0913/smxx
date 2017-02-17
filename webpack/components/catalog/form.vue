@@ -21,6 +21,12 @@
                 <input type="text" v-focus @keyup.enter="submit" v-model='model.name' class="form-control" placeholder="输入名称">
               </div>
             </div>
+            <div class="form-group">
+              <div class="col-sm-2 control-label">属性</div>
+              <div class="col-sm-10">
+                <input type="text" @keyup.enter="submit" v-model='model.settings' class="form-control" placeholder="输入该分类的属性，用逗号隔开！">
+              </div>
+            </div>
             <!-- 状态提示信息 -->
             <div class="return_messages text-center" :class="options.responseMessage.status ? 'text-success' : 'text-danger' ">
               {{ options.responseMessage.text}}

@@ -288,6 +288,7 @@ ActiveRecord::Schema.define(version: 20170216141416) do
     t.integer  "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "code"
   end
 
   create_table "material_stock_alerts", force: :cascade do |t|
@@ -329,6 +330,7 @@ ActiveRecord::Schema.define(version: 20170216141416) do
     t.integer  "site_id"
     t.string   "name"
     t.date     "birth"
+    t.string   "qq"
     t.string   "email"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false

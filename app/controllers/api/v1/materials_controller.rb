@@ -28,9 +28,9 @@ class Api::V1::MaterialsController < Api::V1::BaseController
 
   def create
     authorize Material
-    flag, material = Material::Create.(permitted_attributes(Material))
+    material = Material.new(permitted_attributes(Material))
     material.features = material.features.merge(params["material"]['features'])
-    if flag && material.save
+    if material.save
       render json: {status: 'ok', material: material_json(material)}
     else
       render json: {status: 'failed', error_message:  material.errors.full_messages.join(', ')}

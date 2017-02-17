@@ -67,7 +67,7 @@ class Admin::CatalogsController < Admin::BaseController
 
     # Only allow a trusted parameter "white list" through.
     def admin_catalog_params
-      params.permit(:parent_id, :name, :position)
+      params.permit(:parent_id, :name, :position, :settings)
     end
 
     def catalog_model
