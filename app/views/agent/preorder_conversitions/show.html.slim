@@ -1,0 +1,97 @@
+.section-container.bg-silver.m-b-20.primary-content.preorder-conversition-show
+  .container
+    .design-container
+      .design-content-right
+        .step-top-content.border-and-radius
+          .row
+            .col-xs-3.step-block
+              .step-left
+                .circle.active 1
+              .step-right
+                .title step 1
+                span 图纸/报价(协商)
+            .col-xs-3.step-block
+              .step-left
+                .circle.success 2
+              .step-right
+                .title step 2
+                span 报价商定
+            .col-xs-3.step-block
+              .step-left
+                .circle 3
+              .step-right
+                .title step 1
+                span 工厂生产
+            .col-xs-3.step-block
+              .step-left
+                .circle 4
+              .step-right
+                .title step 1
+                span 完成
+        .main-content
+          / - if @orders_design.status == 'processing'
+          /   .file-content
+          /     .add-file-btn
+          /       span.btn.btn-info
+          /         i.fa.fa-file.fa-2x
+          /       input.file-input[type="file"]
+          /     .attached-document
+          /       ul.clearfix
+          /         - 5.times do
+          /           li
+          /             .document-name
+          /               a[href="/"] flight_ticket.pdf
+          /             .document-file
+          /               a[href="/"]
+          /                 i.fa.fa-file-pdf-o
+          /         li
+          /           .document-name
+          /             a[href="/"] front_end_mockup.jpg
+          /           .document-file
+          /             a[href="/"]
+          /               = image_tag 'no-picture'
+          / - else  
+          /   .materiel-price-content
+          /     h2 价格确认
+          .commit-title
+            h4 与工厂方交流
+          .commit-content.border-and-radius
+            = render_comments(@preorder_conversition, path: {comment_path: comments_agent_preorder_conversition_path, image_path: image_items_url, up_file_path: attachments_path})
+      .design-sidebar-left
+        .sidebar-content
+          .sidebar-heading
+            .sidebar-title
+              span 订单号：
+              span = @preorder_conversition.title
+          ul.sidebar-list[type="none"]
+            li
+              h4.sidebar-text
+                span 客户：
+                a = @preorder_conversition.member_name
+            li
+              h4.sidebar-text
+                span 下单日期：
+                span = @preorder_conversition.created_at
+            li
+              h4.sidebar-text
+                span 交货日期：
+                span.text-warning 订单确认中
+            / li
+            /   h4.sidebar-text
+            /     span 生产任务进度：
+            /     span.text-danger
+            /       | 图纸确认中
+            /       = @orders_design.status
+            li
+              h4.sidebar-text
+                span 订单报价：
+                span.text-danger
+                  / - if @preorder_conversition.status == 'completed'
+                  / = @preorder_conversition.price
+            li
+              h4.sidebar-text
+                span 备注：
+                .p-l-10.p-t-5.text-primary
+                  / = @orders_design.description
+          .sidebar-footer.text-right
+            span.btn.btn-xs.btn-default 关闭订单
