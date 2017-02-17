@@ -21,7 +21,7 @@ module Sms
     end
 
     def valid?(code)
-      Sms.redis.get(redis_key) == code
+      Sms.redis.get(redis_key) == code.to_s.strip
     end
 
     private
