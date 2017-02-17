@@ -34,6 +34,7 @@ module ApiRoute
           resources :material_purchases, only: [:index, :create, :update, :show]
           resources :material_purchase_details, only: [:update, :destroy]
           resources :attachments, only: [:create]
+          resources :order_materials
         end
       end
     end

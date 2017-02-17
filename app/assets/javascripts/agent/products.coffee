@@ -79,7 +79,7 @@ $(document).ready ->
       $(this).parents('.weight-input-group').find('input.hidden-input').val(selectedVal)
     container = bodyNew.find('.catalog-list')
     catalog = new Vue
-      el: "div[rel='basicInformation']"
+      el: "div[rel='catalog-list']"
       data:
         id: container[0].dataset["catalogId"]
         showCatalog: false
