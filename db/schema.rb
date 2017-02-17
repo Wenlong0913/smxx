@@ -247,7 +247,6 @@ ActiveRecord::Schema.define(version: 20170217031930) do
     t.text     "form_source"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.jsonb    "features"
     t.index ["catalog_id"], name: "index_market_templates_on_catalog_id", using: :btree
   end
 
@@ -340,7 +339,6 @@ ActiveRecord::Schema.define(version: 20170217031930) do
     t.string   "address"
     t.string   "note"
     t.jsonb    "features"
-    t.string   "qq"
     t.string   "typo"
     t.string   "from"
     t.string   "owned"

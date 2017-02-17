@@ -20,6 +20,7 @@ class Site < ApplicationRecord
   has_many :members, dependent: :destroy
   has_many :products
   has_many :orders
+  has_many :preorder_conversitions
   store_accessor :features, :description
   validates_presence_of :title, :user_id
   validates_uniqueness_of :title, scope: [:type, :user_id]
