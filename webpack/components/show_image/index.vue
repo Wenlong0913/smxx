@@ -16,7 +16,7 @@
       showSccren: {type: Boolean, require: true, default: false},
       src: {type: String, require: true},
       title: {tyep: String},
-      alt: {type: String}
+      alt: {type: String, default: "图片加载失败"}
     },
     watch: {
       showSccren (v) {
@@ -28,9 +28,7 @@
       }
     },
     data () {
-      return {
-        url: 'http://pic2.cxtuku.com/00/02/31/b945758fd74d.jpg'
-      }
+      return {}
     },
     methods: {
       colse () {
@@ -75,7 +73,12 @@
     bottom:0px;
     border: 1px solid #fff;
     z-index: 10002;
-    padding: 2px
+    padding: 2px;
+    font-size: 25px;
+    color: #E33737;
+  }
+  .full-screen .no-file{
+    color: #fff
   }
   .full-screen .close-btn{
     background: #000;
