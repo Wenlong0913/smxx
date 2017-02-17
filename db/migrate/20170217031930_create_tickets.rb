@@ -4,7 +4,6 @@ class CreateTickets < ActiveRecord::Migration[5.0]
     create_table :tickets do |t|
       t.references :site, foreign_key: true
       t.references :user, foreign_key: true
-      t.references :member, foreign_key: true
       t.string :title
       t.string :content
       t.string :type
