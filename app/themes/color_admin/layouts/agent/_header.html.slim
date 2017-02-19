@@ -46,7 +46,9 @@
               ul.dropdown-menu
                 li = link_to '任务管理', agent_preorder_conversitions_path
                 li
-                  a[href="#" data-toggle="modal" data-target="#newOrderDesignModal"] 新建任务
+                  a[href="#" data-toggle="modal" data-target="#newOrderDesignModal"]
+                    i class="fa fa-plus-circle"
+                    | &nbsp;新建任务
             li.dropdown.dropdown-hover
               a data-toggle="dropdown" href="#"
                 | 客户CRM

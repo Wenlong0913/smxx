@@ -2,13 +2,10 @@
 <!-- begin #content -->
 <div id="content" class="content">
   <!-- begin breadcrumb -->
-  <ol class="breadcrumb pull-right">
-    <li><a href="javascript:;">首页</a></li>
-    <li class="active">控制面板</li>
-  </ol>
+
   <!-- end breadcrumb -->
   <!-- begin page-header -->
-  <h1 class="page-header">控制面板 <small>功能快速导航...</small></h1>
+  <h1 class="page-header"></h1>
   <!-- end page-header -->
 
   <!-- begin row -->
@@ -18,11 +15,12 @@
       <div class="widget widget-stats bg-green">
         <div class="stats-icon"><i class="fa fa-desktop"></i></div>
         <div class="stats-info">
-          <h4>TOTAL VISITORS</h4>
-          <p>3,291,922</p>
+          <h4>生产设计</h4>
+          <p><%= @preorder_conversition_total_count %></p>
         </div>
         <div class="stats-link">
-          <a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
+          <a href="#" data-toggle="modal" data-target="#newOrderDesignModal">新建任务 <i class="fa fa-plus-circle"></i> </a>
+          <a href="<%= agent_preorder_conversitions_path %>">查看详细 <i class="fa fa-arrow-circle-o-right"></i></a>
         </div>
       </div>
     </div>
@@ -32,11 +30,11 @@
       <div class="widget widget-stats bg-blue">
         <div class="stats-icon"><i class="fa fa-chain-broken"></i></div>
         <div class="stats-info">
-          <h4>BOUNCE RATE</h4>
-          <p>20.44%</p>
+          <h4>生产订单</h4>
+          <p><%= @order_total_count%></p>
         </div>
         <div class="stats-link">
-          <a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
+          <a href="<%= agent_orders_path %>">查看详细 <i class="fa fa-arrow-circle-o-right"></i></a>
         </div>
       </div>
     </div>
@@ -46,11 +44,12 @@
       <div class="widget widget-stats bg-purple">
         <div class="stats-icon"><i class="fa fa-users"></i></div>
         <div class="stats-info">
-          <h4>UNIQUE VISITORS</h4>
-          <p>1,291,922</p>
+          <h4>发展客户</h4>
+          <p><%= @member_total_count %></p>
         </div>
         <div class="stats-link">
-          <a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
+          <a href="<%= new_agent_member_path %>">添加客户 <i class="fa fa-plus-circle"></i></a>
+          <a href="<%= agent_members_path %>">查看详细 <i class="fa fa-arrow-circle-o-right"></i></a>
         </div>
       </div>
     </div>
@@ -60,17 +59,18 @@
       <div class="widget widget-stats bg-red">
         <div class="stats-icon"><i class="fa fa-clock-o"></i></div>
         <div class="stats-info">
-          <h4>AVG TIME ON SITE</h4>
-          <p>00:12:23</p>
+          <h4>营销海报</h4>
+          <p><%= @market_page_total_count %></p>
         </div>
         <div class="stats-link">
-          <a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
+          <a href="<%= agent_market_pages_path %>">查看详细 <i class="fa fa-arrow-circle-o-right"></i></a>
         </div>
       </div>
     </div>
     <!-- end col-3 -->
   </div>
   <!-- end row -->
+  <hr style="height: 100px"/>
   <!-- begin row -->
   <div class="row">
     <!-- begin col-8 -->
@@ -99,10 +99,11 @@
         </div>
         <div class="panel-body p-0">
           <ul class="todolist">
-            <li class="active">
+
+            <li class="">
               <a href="javascript:;" class="todolist-container active" data-click="todolist">
                 <div class="todolist-input"><i class="fa fa-square-o"></i></div>
-                <div class="todolist-title">Donec vehicula pretium nisl, id lacinia nisl tincidunt id.</div>
+                <div class="todolist-title">无.</div>
               </a>
             </li>
           </ul>
