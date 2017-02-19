@@ -15,7 +15,7 @@ class MarketTemplate < ApplicationRecord
     # => {:typo=>"string", :default=>true, :required=>true}
     form_html = {}
     #reg1 = /@market_page.value_for\(\s*'([^'']+)'(?:,\s*(.*))?\)/
-    reg2 = /@market_page.value_for\(\s*'([^'']+)'(?:,\s*(.*))?\)/
+    reg2 = /@market_page.value_for\(\s*['"]([^''""]+)['"](?:,\s*(.*))?\)/
     self.html_source.scan(reg2).each do |match|
       next if form_html.include?(match[0])
       #parse a string into hash

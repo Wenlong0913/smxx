@@ -10,13 +10,11 @@
   .panel-body
     .row
       .col-md-4
-        h4 效果预览
         .iphone-bg-white
           = image_tag @market_template.image_path, style: 'width:315px;height:482px;'
       .col-md-2
         |
       .col-md-6
-        h4 替换内容
         = simple_form_for @market_page, url: @market_page.new_record? ? agent_market_pages_path(@market_page) : agent_market_page_path(@market_page), html: { class: 'form-horizontal' } do |f|
           - if @market_page.errors.any?
             #error_explanation
@@ -24,14 +22,20 @@
               ul
                 - @market_page.errors.full_messages.each do |message|
                   li = message
-          = f.input :market_template_id, as: :hidden, input_html: {value: @market_template.id}
-          = f.input :name, required: true
-          = f.input :description
-
-          == render inline: @market_template.form_source
+          = f.input :market_template_id, as: :hidden,input_html: {value: @market_template.id}
+          fieldset
+            legend[style="background:#ffcc00;"] 微信设置
+            = f.input :name, required: true, label: '微信分享标题'
+            = f.input :description, label: '微信分享描述'
+          fieldset
+            legend[style="background:#ffcc00;"] 内容替换
+            == render inline: @market_template.form_source
 
           .form-group
-            label 图片
+            label
+              | 图片
+              small
+                | (手机全屏推荐大小：640x1136px)
             image-select[server="#{image_items_path}" rel="vue"  name="market_page[image_item_ids][]" selected-ids="#{@market_page.image_item_ids.join(', ')}"]
 
           p.text-right

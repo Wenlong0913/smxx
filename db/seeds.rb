@@ -108,36 +108,33 @@ MemberCatalog.create!(key: '购买能力', value: '{一般,高,很高}')
 MemberCatalog.create!(key: '客户活跃频次', value: '{很少,一般,高,很高}')
 
 # 营销页
-MarketCatalog.create!(name: '促销')
-MarketCatalog.create!(name: '预约')
-MarketCatalog.create!(name: '加盟')
-MarketCatalog.create!(name: '卡券')
+MarketCatalog.create!(name: '博客')
+MarketCatalog.create!(name: '活动')
+MarketCatalog.create!(name: '招商')
+MarketCatalog.create!(name: '会员拉新')
 
 MarketTemplate.create!(
   catalog_id: 1,
-  base_path: 'templetes/market/snow',
-  name: 'snow',
-  keywords: '雪，圣诞祝福海报',
-  description: '圣诞节外发给客户的祝福海报',
-  image_path: '/templetes/market/snow/previews/demo-1.png',
+  base_path: 'templetes/market/default',
+  name: 'default',
+  keywords: '营销页测试页',
+  description: '这只是一个测试页面，可以实现类似一篇博客文章发布',
+  image_path: '/templetes/market/default/previews/demo-1.png',
   html_source: '
-    <html lang="zh-CN"><head><meta charset="utf-8" />
-      <title><%= @market_page.name %></title>
-      <meta name="description" content="<%= @market_page.description %>" />
-    </head>
-    <body>
-     <h1><%= @market_page.features["title"] %></h1>
-     <p><%= @market_page.features["mobile"] %></p>
-     <% @market_page.image_items.each do |img| %>
-       <%= image_tag img.image_url %>
-     <% end %>
-    </body>
-    </html>',
-  form_source: '公司：<br/>
-    <input class="string " name="mpage[title]" value="<%=@market_page.features["title"] if @market_page.features%>" type="string" />
-
-    <br/>
-    联系电话：<br/>
-     <input class="string " name="mpage[mobile]"  value="<%=@market_page.features["mobile"]  if @market_page.features%>" type="string" />
-    '
+    <html lang="zh-CN">
+      <head>
+        <meta charset="utf-8"/>
+        <title><%= @market_page.name %></title>
+        <meta content="<%= @market_page.description %>" name="description"/>
+      </head>
+      <body style="text-align: center;">
+        <div style="margin: 0 auto; width:640px;">
+          <h2><%= @market_page.value_for("title", title: "文章标题", typo: "string", default: "文章标题") %></h2><hr/>
+          <div style="text-align:left;"><%= simple_format @market_page.value_for("content", title: "正文", typo: "text", default: "文章内容") %></div>
+          <% @market_page.image_items.each do |img| %>
+           <%= image_tag img.image_url, style: "width:100%;" %>
+          <% end %>
+        </div>
+      </body>
+    </html>'
 )

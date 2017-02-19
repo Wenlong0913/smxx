@@ -1,0 +1,91 @@
+/*==================================================
+custom style
+==================================================*/
+
+/*==================================================
+demo panel
+==================================================*/
+.panel-demo ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.panel-demo h4 {
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.panel-demo h4:not(:first-child) {
+  margin-top: 10px;
+}
+
+.panel-demo .badge {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.panel-demo {
+  position: fixed;
+  top: 100px;
+  left: -100%;
+  z-index: 1050;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.panel-inner {
+  background-color: #121213;
+  padding: 15px;
+}
+
+.panel-toggle {
+  position: absolute;
+  right: -50px;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  background-color: #121213;
+}
+
+.panel-color > li,
+.panel-overlay > li {
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.panel-color > li > a {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+#opacity-slider-value {
+  color: #fff;
+}
+
+.color1 {
+  background-color: #d33e66;
+}
+.color2 {
+  background-color: #4a86b8;
+}
+.color3 {
+  background-color: #3bae98;
+}
+.color4 {
+  background-color: #9d7f48;
+}
+.color5 {
+  background-color: #665590;
+}
+
+.panel-demo .icons {
+  color: #fff;
+}
