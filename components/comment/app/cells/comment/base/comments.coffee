@@ -83,6 +83,8 @@ $(document).ready ->
       el: "[rel='comment-block'][uuid='#{blockEle.attr('uuid')}']"
       data:
         comments: []
+        showFullImage: false
+        imageRrc: ''
         error: false
         posting: false
         loading: true
@@ -100,6 +102,9 @@ $(document).ready ->
         postComment: postComment
         replyModel: replyModel
         loadComments: loadComments
+        onShowImage: (src)->
+          this.imageRrc = src
+          this.showFullImage = true
         removeFile: (file, index)->
           self = this
           $.ajax

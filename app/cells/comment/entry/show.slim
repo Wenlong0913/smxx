@@ -1,5 +1,7 @@
 .comment
   .[rel='comment-block' data-url=options[:path][:comment_path] data-image=options[:path][:image_path] data-file=options[:path][:up_file_path]]
+    / 全屏显示图片组件
+    show-image[:src="imageRrc" :show-sccren="showFullImage"]
     .alert.alert-danger[role="alert" v-if="error"]评论加载失败
     .alert.alert-danger[role="alert" v-if="loading"]组件加载中..
     .comment-list[v-else]
@@ -14,13 +16,13 @@
                 small
                   | {{comment.created_at}}
                 .pull-right
-                  strong.text-danger
+                  strong.text-danger[v-if="comment.offer"]
                     | 报价： {{comment.offer}}
             .message-content
               | :&nbsp;{{comment.content}}
               .m-t-15.p-t-10[style="border-top:1px solid #ccc" v-if="comment.attachments.length>0"]
-                span.p-r-15[v-for="attachment in comment.attachments" :key="attachment.id"]
-                  span.p-r-10
+                span.file-label[v-for="attachment in comment.attachments" :key="attachment.id"]
+                  span.p-r-10[@click="onShowImage(attachment.attachment_url)"]
                     | {{ attachment.attachment_file_name }}
                   a[:href='attachment.attachment_url' :download="attachment.attachment_file_name"] 下载
             / ul.children-content[v-if="comment.parent"]
@@ -38,7 +40,7 @@
           li[v-if="currentPage != pageCount"]
             a[v-on:click="loadComments(currentPage++)"] 下一页
       #images-content
-        image-select[server="#{image_items_path}" name="order[image_item_ids][]" :selectedList="features.images"]
+        image-select[server="#{image_items_path}" name="order[image_item_ids][]"]
       .reply-area
         textarea.form-control.input-textarea[v-model='content' cols=20 rows=5]
         .btn-groups
