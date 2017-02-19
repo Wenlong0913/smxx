@@ -1,0 +1,16 @@
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8"/>
+    <title><%= @market_page.name %></title>
+    <meta content="<%= @market_page.description %>" name="description"/>
+  </head>
+  <body style="text-align: center;">
+    <div style="margin: 0 auto; width:640px;">
+      <h2><%= @market_page.value_for("title", title: "文章标题", typo: "string", default: "文章标题") %></h2><hr/>
+      <div style="text-align:left;"><%= simple_format @market_page.value_for("content", title: "文字内容", typo: "text", default: "文章内容") %></div>
+      <% @market_page.image_items.each do |img| %>
+       <%= image_tag img.image_url, style: "width:100%;" %>
+      <% end %>
+    </div>
+  </body>
+</html>
