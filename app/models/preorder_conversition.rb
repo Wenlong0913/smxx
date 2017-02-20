@@ -7,4 +7,9 @@ class PreorderConversition < Ticket
   has_many :image_items, :through => :image_item_relations
   has_many :attachment_relations, as: :relation
   has_many :attachments, :through => :attachment_relations
+
+  before_save do
+    self.site_confirm = false if site_confirm.blank?
+    self.factory_confirm = false if factory_confirm.blank?
+  end
 end
