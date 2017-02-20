@@ -59,7 +59,7 @@ class Agent::ProductsController < Agent::BaseController
       # redirect_to agent_product_path(@product), notice: 'Product 创建成功.'
       render json: {url: agent_product_path(@product)}
     else
-      render :new
+      render json: {errors: @product.errors.full_messages.join(',')}
     end
   end
 

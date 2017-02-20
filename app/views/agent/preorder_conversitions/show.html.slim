@@ -10,24 +10,30 @@
               .step-right
                 .title step 1
                 span 图纸/报价(协商)
+            / .col-xs-3.step-block
+            /   .step-left
+            /     .circle.success 2
+            /   .step-right
+            /     .title step 2
+            /     span 报价商定
+            / .col-xs-3.step-block
+            /   .step-left
+            /     .circle 3
+            /   .step-right
+            /     .title step 1
+            /     span 工厂生产
             .col-xs-3.step-block
               .step-left
-                .circle.success 2
+                .circle 2
               .step-right
                 .title step 2
-                span 报价商定
-            .col-xs-3.step-block
-              .step-left
-                .circle 3
-              .step-right
-                .title step 1
-                span 工厂生产
-            .col-xs-3.step-block
-              .step-left
-                .circle 4
-              .step-right
-                .title step 1
-                span 完成
+                span 设计完成
+            / .col-xs-3.step-block
+            /   .step-left
+            /     .circle 3
+            /   .step-right
+            /     .title step 3
+            /     span 创建生产
         .main-content
           / - if @orders_design.status == 'processing'
           /   .file-content
@@ -61,7 +67,7 @@
         .sidebar-content
           .sidebar-heading
             .sidebar-title
-              span 订单号：
+              span 标题：
               span = @preorder_conversition.title
           ul.sidebar-list[type="none"]
             li
@@ -70,28 +76,27 @@
                 a = @preorder_conversition.member_name
             li
               h4.sidebar-text
-                span 下单日期：
-                span = @preorder_conversition.created_at
-            li
-              h4.sidebar-text
-                span 交货日期：
-                span.text-warning 订单确认中
-            / li
-            /   h4.sidebar-text
-            /     span 生产任务进度：
-            /     span.text-danger
-            /       | 图纸确认中
-            /       = @orders_design.status
-            li
-              h4.sidebar-text
-                span 订单报价：
+                span 预计报价：
                 span.text-danger
                   / - if @preorder_conversition.status == 'completed'
-                  / = @preorder_conversition.price
+                  = @preorder_conversition.offer
+            li
+              h4.sidebar-text
+                span 下单日期：
+                span = @preorder_conversition.created_at
+            / li
+            /   h4.sidebar-text
+            /     span 交货日期：
+            /     span.text-warning 订单确认中
+            li
+              h4.sidebar-text
+                span 进度：
+                span.text-warning
+                  | 图纸确认中
             li
               h4.sidebar-text
                 span 备注：
                 .p-l-10.p-t-5.text-primary
-                  / = @orders_design.description
+                  = @preorder_conversition.content
           .sidebar-footer.text-right
             span.btn.btn-xs.btn-default 关闭订单
