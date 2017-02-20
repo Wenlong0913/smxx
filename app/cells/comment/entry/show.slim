@@ -19,12 +19,18 @@
                   strong.text-danger[v-if="comment.offer"]
                     | 报价： {{comment.offer}}
             .message-content
-              | :&nbsp;{{comment.content}}
+              | :&nbsp;{{ comment.content}}
               .m-t-15.p-t-10[style="border-top:1px solid #ccc" v-if="comment.attachments.length>0"]
                 span.file-label[v-for="attachment in comment.attachments" :key="attachment.id"]
                   span.p-r-10[@click="onShowImage(attachment.attachment_url)"]
-                    | {{ attachment.attachment_file_name }}
-                  a[:href='attachment.attachment_url' :download="attachment.attachment_file_name"] 下载
+                    | &nbsp;{{ attachment.attachment_file_name }}
+                  a[href="javascript:void(0);" @click="onShowImage(attachment.attachment_url)"]
+                    i.fa.fa-eye
+                    | 预览
+                  | &nbsp;&nbsp;&nbsp;&nbsp;
+                  a[:href='attachment.attachment_url' :download="attachment.attachment_file_name"]
+                    i.fa.fa-download
+                    | 下载
             / ul.children-content[v-if="comment.parent"]
             /   li
             /     | {{ comment.parent.id }} {{ comment.parent.created_at }} {{ comment.parent.content }}
@@ -88,5 +94,5 @@
             /       a.btn.btn-info.btn-xs.m-r-10[:href='file.url' :download="file.name"] 下载
             /       span.btn.btn-danger.btn-xs[@click="removeFile(file, index)"] 删除
 
-            
+
         span[v-if="posting"] 正在提交...
