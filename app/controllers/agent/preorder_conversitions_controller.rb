@@ -1,10 +1,9 @@
 class Agent::PreorderConversitionsController < Agent::BaseController
   before_action :set_preorder_conversition, only: [:show, :edit, :update, :destroy]
-  before_action :get_user, only: [:create, :update]
   acts_as_commentable resource: Ticket
 
   def index
-    # authorize @agent_orders_design
+    # authorize
     @preorder_conversitions = @site.preorder_conversitions.page(params[:page]).per(9)
     respond_to do |format|
       format.html
@@ -13,7 +12,7 @@ class Agent::PreorderConversitionsController < Agent::BaseController
   end
 
   def show
-    # authorize @agent_orders_design
+    # authorize
     respond_to do |format|
       format.html
       format.json { render json: @preorder_conversition }
@@ -30,10 +29,10 @@ class Agent::PreorderConversitionsController < Agent::BaseController
   # end
 
   def create
-    # authorize Order
-    @preorder_conversition = @site.preorder_conversitions.new(permitted_attributes_for_create(Order))
+    # authorize preorder_conversition
+    @preorder_conversition = @site.preorder_conversitions.new(permitted_attributes(PreorderConversition).merge(user_id: current_user.id))
     if @preorder_conversition.save
-      render json: {status: 'ok', url: agent_orders_designs_path}
+      render json: {status: 'ok', url: agent_preorder_conversitions_path}
     else
       render json: {status: 'error', message:@preorder_conversition.errors.full_messages.join(',')}
     end
@@ -69,10 +68,4 @@ class Agent::PreorderConversitionsController < Agent::BaseController
       @preorder_conversition = @site.preorder_conversitions.find(params[:id])
     end
 
-    def get_user
-      if params[:order][:member].present?
-        member = Member.find(params[:order][:member])
-        params[:order][:user_id] = member.user.id
-      end
-    end
 end

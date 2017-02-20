@@ -5,5 +5,4 @@ class Ticket < ApplicationRecord
   validates_presence_of :title
   validates_presence_of :site
   validates_presence_of :user
- 
 end

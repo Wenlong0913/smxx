@@ -23,16 +23,8 @@
                 <li class="<%= 'sign' unless params[:reorder].present? %>">
                   <%= link_to '默认', agent_products_path %>
                 </li>
-                <li class="<%= 'sign' unless params[:reorder] == 'clicks' %>">
-                  <s>点击</s>
-                  <!-- <#%= link_to '点击', agent_products_path+"?reorder=clicks" %> -->
-                </li>
                 <li class="<%= 'sign' if params[:reorder] == 'newest' %>">
                   <%= link_to '最新', agent_products_path+"?reorder=newest" %>
-                </li>
-                <li class="<%= 'sign' if params[:reorder] == 'sales' %>">
-                  <s>销量</s>
-                  <!-- <#%= link_to '销量', agent_products_path+"?reorder=sales" %> -->
                 </li>
                 <li class="<%= 'sign' if params[:reorder] == 'price' %>">
                   <%= link_to '价格', agent_products_path+"?reorder=price" %>
@@ -59,18 +51,18 @@
                   <!-- begin info-container -->
                   <div class="info-container" style="height:65px">
                     <div class="info">
-                      <h4 class="title">
-                        <%= link_to '这是商品名称', '' %>
+                      <h4 class="title" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                        <%= link_to order.description, '' %>
                       </h4>
                       <ul class="info-start-end">
                         <li class="row">
                           <div class="col-xs-6">
                             订单编号：
-                            <span>20151520168525</span>
+                            <span><%= order.code %></span>
                           </div>
                           <div class="col-xs-6">
                             客户：
-                            <a href=""> xxxx </a>
+                            <a href=""><%= order.member.name%></a>
                           </div>
                           <div class="col-xs-6">
                             物流：20000545x4
@@ -78,18 +70,20 @@
                           </div>
                           <div class="col-xs-6">
                             订单总价(含运费)：
-                            <span class="text-danger">￥50</span>
+                            <span class="text-danger"><%= order.price || '0' %></span>
                           </div>
                         </li>
                       </ul>
                     </div>
                     <div class="date-replies">
                       <div class="time">
-                        2016/12/31 24:60:60
+                        <%= order.created_at %>
                       </div>
                       <div class="replies">
-                        <div class="total">交易完成</div>
+                        <%= link_to agent_order_path(order) do %>
+                        <div class="total"><%= order.status %></div>
                         <div class="text">查看</div>
+                        <% end %>
                       </div>
                     </div>
                   </div>

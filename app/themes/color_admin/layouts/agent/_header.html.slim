@@ -37,7 +37,7 @@
               ul.dropdown-menu
                 /! sxhop/dagle 订单不同
                 li = link_to '订单列表', agent_orders_path
-                li = link_to '订单创建', new_agent_product_path
+                li = link_to '订单创建', new_agent_order_path
             li.dropdown.dropdown-hover
               a data-toggle="dropdown" href="#"
                 | 生产设计
@@ -46,7 +46,7 @@
               ul.dropdown-menu
                 li = link_to '任务管理', agent_preorder_conversitions_path
                 li
-                  a[href="#" data-toggle="modal" data-target="#newOrderDesignModal"]
+                  a[href="#" data-toggle="modal" data-target="#newPreorderConversitionModal"]
                     i class="fa fa-plus-circle"
                     | &nbsp;新建任务
             li.dropdown.dropdown-hover
@@ -120,4 +120,4 @@
           li
             = link_to sign_out_path, method: :delete do
               span 退出
-= render 'agent/orders_designs/new'
+= render 'agent/preorder_conversitions/new'
