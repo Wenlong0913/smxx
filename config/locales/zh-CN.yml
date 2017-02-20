@@ -9,6 +9,8 @@ zh-CN:
     admin: "管理员"
     agent: '代理商'
     user: '用户'
+    factory_manager: "厂长"
+    product_manager: "产品经理"
   will_paginate:
     previous_label: "&#8592; 上一页"
     next_label: "下一页 &#8594;"

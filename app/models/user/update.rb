@@ -28,6 +28,11 @@ class User
         user.errors.add :mobile_phone, user.mobile.errors.full_messages.join(', ') unless flag
       end
 
+      unless attributes["password"].present?
+        attributes.delete("password")
+        attributes.delete("password_confirmation")
+      end
+
       user.assign_attributes attributes if flag
 
       [flag && user.save, user]
