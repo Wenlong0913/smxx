@@ -37,6 +37,9 @@ module ApiRoute
           resources :order_materials
           resources :preorder_conversitions do
             commentable
+            member do
+              get :attachments_index
+            end
           end
         end
       end
