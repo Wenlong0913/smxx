@@ -3,7 +3,6 @@
 class Api::V1::MaterialWarehousesController < Api::V1::BaseController
   before_action :authenticate!
   before_action :set_material_warehouses
-  before_action :leastOneWarehouses
 
   # 获得物料仓库列表
   # @return [JSON]
@@ -25,20 +24,7 @@ class Api::V1::MaterialWarehousesController < Api::V1::BaseController
     end
   end
 
-
   private
-
-  def leastOneWarehouses
-    if @material_warehouses.size < 1
-      MaterialWarehouse::Create.(site_id: params[:site_id], name: '初始厂库')
-    end
-    set_material_warehouses
-  end
-
-  def set_material_warehouses
-    @material_warehouses = MaterialWarehouse.all
-  end
-
 
   def material_warehouse_json(material_warehouses)
     material_warehouses.as_json(only: %w(id name), methods: %w(phone warehouse_address warehouse_user))

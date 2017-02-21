@@ -2,7 +2,6 @@
 require 'csv'
 class Admin::MaterialWarehousesController < Admin::BaseController
   before_action :set_material_warehouses
-  before_action :leastOneWarehouses
   before_action :set_material_warehouse, only: [:show, :edit, :update, :destroy]
 
   # GET /admin/material_warehouses
@@ -64,22 +63,19 @@ class Admin::MaterialWarehousesController < Admin::BaseController
 
   # DELETE /admin/material_warehouses/1
   def destroy
-    authorize @material_warehouse
-    @material_warehouse.destroy
-    redirect_to admin_material_warehouses_url, notice: "#{MaterialWarehouse.model_name.human} 删除成功."
+    if @material_warehouses.size > 0
+      authorize @material_warehouse
+      @material_warehouse.destroy
+      redirect_to admin_material_warehouses_path, notice: "#{MaterialWarehouse.model_name.human} 删除成功."
+    else
+      redirect_to admin_material_warehouses_path, notice: "厂库必须至少保留一个."
+    end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_material_warehouse
       @material_warehouse = @material_warehouses.find(params[:id])
-    end
-
-    def leastOneWarehouses
-      if @material_warehouses.size < 1
-        MaterialWarehouse::Create.(site_id: params[:site_id], name: '初始厂库')
-      end
-      set_material_warehouses
     end
 
     def set_material_warehouses
