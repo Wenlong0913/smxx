@@ -1,12 +1,10 @@
 $(document).ready ->
-  $('#upFiles input').on "ajax:success", (e, r)->
-    console.log e
-    console.log 'ok'
   processCommentBlock = ()->
     blockEle  = $(this)
     url       = blockEle.data('url')
     imagePath = blockEle.data('image')
-    filePath = blockEle.data('file')
+    filePath  = blockEle.data('file')
+    currentUserId = blockEle.data('current')
     blockEle.attr 'uuid', "#{new Date().getTime()}-#{Math.random()}"
 
     postComment = (target) ->
@@ -46,6 +44,8 @@ $(document).ready ->
           alert error
 
     loadComments = ->
+      $(window).scrollTop(0)
+      app._data.currentUserId = currentUserId
       $.get url, 'page': app._data.currentPage
       .success (data)->
         app._data.loading = false
@@ -94,6 +94,7 @@ $(document).ready ->
         replyContent: ''
         pageCount: null
         currentPage: 1
+        currentUserId: ''
         features:
           files: []
           images: []
@@ -150,7 +151,14 @@ $(document).ready ->
           #   error: (data)->
           #     console.log data
           #     alert '图片上传失败'
-
+        onTestImage: (src)->
+          img = new Image()
+          img.src = src
+          # console.log src
+          if img.width > 0 || img.height > 0
+            return true
+          else
+            return false
     loadComments()
 
 
