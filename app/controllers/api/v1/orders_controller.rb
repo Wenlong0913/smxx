@@ -13,7 +13,6 @@ class Api::V1::OrdersController < Api::BaseController
   end
 
   def create
-    binding.pry
     authorize Order
     flag, order = Order::Create.(permitted_attributes(Order))
     if flag
