@@ -1,6 +1,6 @@
 class Api::V1::PreorderConversitionsController < Api::BaseController
   before_action :authenticate!
-  before_action :set_preorder_conversition, only: [:update, :create_comment, :comments_index, :attachments_index]
+  before_action :set_preorder_conversition, only: [:show, :update, :create_comment, :comments_index, :attachments_index]
 
   def index
     authorize PreorderConversition
@@ -24,6 +24,10 @@ class Api::V1::PreorderConversitionsController < Api::BaseController
     else
       render json: {status: 'failed', error_message:  preorder_conversition.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
     end
+  end
+
+  def show
+    render json: {status: 'ok', preorder_conversition: preorder_conversition_json(@preorder_conversition)}
   end
 
   def update
@@ -59,6 +63,7 @@ class Api::V1::PreorderConversitionsController < Api::BaseController
         include: {
           site: { only: [:id, :title]},
           user: { only: [:nickname]},
+          orders: { only: [:id] }
         }
       )
     end
