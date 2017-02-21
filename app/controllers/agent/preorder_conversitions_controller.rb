@@ -1,10 +1,21 @@
 class Agent::PreorderConversitionsController < Agent::BaseController
+  before_action :set_preorder_conversitions
   before_action :set_preorder_conversition, only: [:show, :edit, :update, :destroy, :site_confirm]
   acts_as_commentable resource: Ticket
 
   def index
     # authorize
-    @preorder_conversitions = @site.preorder_conversitions.page(params[:page]).per(9)
+    if params[:search].present?
+      keywords = params[:search][:keywords]
+      query = []
+      conditions = []
+      query << "title like ? or content like ?"
+      conditions << "%" + keywords + "%"
+      conditions << "%" + keywords + "%"
+      conditions.unshift query.join(' AND ')
+      @preorder_conversitions = @preorder_conversitions.where(conditions)
+    end
+    @preorder_conversitions = @preorder_conversitions.page(params[:page]).per(9)
     respond_to do |format|
       format.html
       format.json { render json: @preorder_conversitions }
@@ -72,7 +83,11 @@ class Agent::PreorderConversitionsController < Agent::BaseController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_preorder_conversition
-      @preorder_conversition = @site.preorder_conversitions.find(params[:id])
+      @preorder_conversition = @preorder_conversitions.find(params[:id])
+    end
+
+    def set_preorder_conversitions
+      @preorder_conversitions = @site.preorder_conversitions
     end
 
 end

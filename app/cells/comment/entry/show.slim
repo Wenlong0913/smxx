@@ -22,7 +22,7 @@
                 | &nbsp;&nbsp;报价： {{ comment.offer }}
               .p-t-10[style="border-top:1px solid #ccc" v-if="comment.attachments.length>0"]
                 span.file-label[v-for="attachment in comment.attachments" :key="attachment.id"]
-                  template[v-if="onTestImage(attachment.attachment_url)"]
+                  template[v-if="onTestImage(attachment.attachment_content_type)"]
                     span.p-r-10[@click="onShowImage(attachment.attachment_url)"]
                       i.fa.fa-image
                       | &nbsp;{{ attachment.attachment_file_name }}
