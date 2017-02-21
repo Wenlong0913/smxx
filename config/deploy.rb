@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock "3.7.1"
+lock "3.7.2"
 require 'colorize'
 
 def quit(msg)
@@ -15,18 +15,31 @@ end
 quit("项目名PN必须填写在命令行中提供") unless ENV['PN']
 set :application, ENV['PN']
 
-set :repo_url, "git@gitlab.tanmer.com:tanmer/dagle.git"
+set :repo_url, "git@gitlab.tanmer.com:tanmer/#{ENV['PN']}.git"
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :deploy_to, "/data/www/#{fetch(:application)}"
 
 set :rvm_ruby_version, '2.3'
 
-%w(deploy:check).each do |task|
-  before task, :check_branch do
-    branch_prefix = "#{fetch(:application)}-"
-    quit("branch名称必须以#{branch_prefix}开头，否者不允许部署!") unless fetch(:branch).start_with?(branch_prefix)
+before "deploy", :check_branch do
+
+  branch_prefix = "#{fetch(:application)}-"
+  # quit("branch名称必须以#{branch_prefix}开头，否者不允许部署!") unless fetch(:branch).start_with?(branch_prefix)
+  if fetch(:branch).start_with?(branch_prefix)
+    set :branch, fetch(:branch)[branch_prefix.length..-1]
   end
+
+  puts <<-MSG.green
+
+    real repo url is: #{fetch(:repo_url)}
+      real branch is: #{fetch(:branch)}
+  MSG
+
+  ask(:is_start_to_deploy, 'start to deploy? (y/n, default=n)', 'n')
+
+  quit("aborted") if fetch(:is_start_to_deploy).strip.downcase != 'y'
 end
+
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
