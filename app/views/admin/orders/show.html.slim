@@ -41,7 +41,7 @@ h1.page-header
                   | #{Order.human_attribute_name(:user)}
                 td
                   a
-                    = decorate(@order.user).display_name
+                    = @order.user.blank? ? @order.member.name : decorate(@order.user).display_name
               tr.divider
                 td[colspan='2']
               tr
