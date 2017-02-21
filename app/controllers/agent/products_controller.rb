@@ -4,6 +4,29 @@ class Agent::ProductsController < Agent::BaseController
   def index
     authorize Product
     @catalogs = ProductCatalog.roots
+    # 搜索查询
+    # if params[:search].present?
+    #   conditions = []
+    #   query = []
+    #   keywords = params[:search][:keywords]
+    #   price_form = params[:search][:price_from].to_f
+    #   price_to = params[:search][:price_to].to_f
+    #   if !keywords.blank?
+    #     query << "name like ? or features ->> 'description' like ?"
+    #     conditions << "%" + keywords + "%"
+    #     conditions << "%" + keywords + "%"
+    #   end
+    #   if price_form > 0
+    #     query << "features ->> 'price' >= ?"
+    #     conditions << price_form.to_s
+    #   end
+    #   if price_to > 0
+    #     query << "features ->> 'price' <= ?"
+    #     conditions << price_to.to_s
+    #   end
+    #   conditions.unshift query.join(' and ')
+    #   @products = @site.products.where(conditions)
+    # end
     if params[:reorder].present?
       @products = case params[:reorder]
       # when 'clicks'
