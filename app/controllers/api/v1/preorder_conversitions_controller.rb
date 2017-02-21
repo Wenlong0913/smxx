@@ -22,7 +22,7 @@ class Api::V1::PreorderConversitionsController < Api::BaseController
     if preorder_conversition.save
       render json: {status: 'ok', preorder_conversition: preorder_conversition_json(preorder_conversition)}
     else
-      render json: {status: 'failed', error_message:  preorder_conversition.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
+      render json: {status: 'failed', error_message:  preorder_conversition.errors.full_messages }
     end
   end
 
@@ -63,7 +63,7 @@ class Api::V1::PreorderConversitionsController < Api::BaseController
         include: {
           site: { only: [:id, :title]},
           user: { only: [:nickname]},
-          orders: { only: [:id] }
+          orders: { only: [:id, :code] }
         }
       )
     end
