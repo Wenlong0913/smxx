@@ -16,6 +16,7 @@ class Order < ApplicationRecord
 
   belongs_to :user
   belongs_to :site
+  belongs_to :preorder_conversition
 
   has_many_comments
   has_many :order_products, dependent: :destroy
