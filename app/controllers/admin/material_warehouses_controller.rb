@@ -63,7 +63,8 @@ class Admin::MaterialWarehousesController < Admin::BaseController
 
   # DELETE /admin/material_warehouses/1
   def destroy
-    if @material_warehouses.size > 0
+    authorize @material_warehouse
+    if @material_warehouses.size > 1
       authorize @material_warehouse
       @material_warehouse.destroy
       redirect_to admin_material_warehouses_path, notice: "#{MaterialWarehouse.model_name.human} 删除成功."
