@@ -86,9 +86,9 @@ h1.page-header
               td
                 = decorate(admin_material_management_history.material_management).display_operate_type
               td
-                = admin_material_management_history.material.name_py
+                = admin_material_management_history.material.try(:name_py)
               td
-                = admin_material_management_history.material.name
+                = admin_material_management_history.material.try(:name)
               td
                 
               td
