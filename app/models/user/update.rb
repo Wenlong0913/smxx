@@ -8,16 +8,17 @@ class User
       if current_user
         role_ids = attributes[:role_ids]
         if role_ids
-          role_ids.each do |role_id|
-            next if role_id.blank?
-            # 没有人可以分配超级管理员的角色
-            role_ids.delete(role_id) if Role.find_by(id: role_id).try(:name) == 'super_admin'
-            # 只有超级管理员可以分配管理员的角色
-            role_name = Role.find(role_id).name
-            unless current_user.has_role?('super_admin')
-              role_ids.delete(role_id) if role_name == 'admin'
+          if current_user.super_admin_or_admin?
+            super_admin_id = Role.find_by(name: "super_admin").id
+            admin_id = Role.find_by(name: "admin").id
+            role_ids -= [super_admin_id]
+            # 超级管理员 和 管理员自己 可以修改管理员角色
+            if role_ids.include?(admin_id) && !current_user.has_role?('super_admin') && current_user.id != user.id
+              role_ids -= [admin_id]
             end
             attributes[:role_ids] = role_ids
+          else
+            attributes.delete(:role_ids)
           end
         end
       end

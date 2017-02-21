@@ -144,6 +144,7 @@ export default {
       var successHandler = function(response){
         options.responseMessage = {status: true, text: '修改成功'}
         this.catalogs[options.index].name= catalog.name
+        this.catalogs[options.index].settings = catalog.settings
         var _this = this;
         // setTimeout(function () {
           _this.showModal = false;
