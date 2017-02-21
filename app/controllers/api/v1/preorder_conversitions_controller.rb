@@ -42,7 +42,7 @@ class Api::V1::PreorderConversitionsController < Api::BaseController
     if preorder_conversition_comment.save
       render json: {status: 'ok', comment: preorder_conversition_comment_json(preorder_conversition_comment)}
     else
-      render json: {status: 'failed', error_message: 'failed'}
+      render json: {status: 'failed', error_message: preorder_conversition_comment.errors.full_messages.map{|x| x.gsub(/Content/, '回复内容')}}
     end
   end
 
