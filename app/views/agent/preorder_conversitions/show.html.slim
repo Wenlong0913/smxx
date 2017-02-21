@@ -106,4 +106,5 @@
                 .p-l-10.p-t-5.text-primary
                   = @preorder_conversition.content
           .sidebar-footer.text-right
-            span.btn.btn-sm.btn-danger#confirm[data-url=site_confirm_agent_preorder_conversition_path] 图纸及报价审核确认
+            - unless @preorder_conversition.site_confirm
+              span.btn.btn-sm.btn-danger#confirm[data-url=site_confirm_agent_preorder_conversition_path] 图纸及报价审核确认
