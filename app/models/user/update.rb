@@ -1,24 +1,25 @@
 class User
   Update =
     lambda do |user_or_id, attributes, current_user = nil|
+      attributes = attributes.symbolize_keys
       flag = true
       user = user_or_id.is_a?(User) ? user_or_id : User.find(user_or_id)
       mobile_phone = attributes[:mobile_phone]
 
       if current_user
-        role_ids = attributes[:role_ids]
-        if role_ids
-          role_ids.each do |role_id|
-            next if role_id.blank?
-            # 没有人可以分配超级管理员的角色
-            role_ids.delete(role_id) if Role.find_by(id: role_id).try(:name) == 'super_admin'
-            # 只有超级管理员可以分配管理员的角色
-            role_name = Role.find(role_id).name
-            unless current_user.has_role?('super_admin')
-              role_ids.delete(role_id) if role_name == 'admin'
-            end
-            attributes[:role_ids] = role_ids
-          end
+        # 如果不是管理员，或者是在修改自己的信息，就不允许修改角色
+        if !current_user.super_admin_or_admin? || current_user.id == user.id
+          attributes.delete(:role_ids)
+        # 否者，就是管理员正在修改他人的信息
+        else
+          role_ids = Array(attributes[:role_ids]).map(&:to_i)
+          super_admin_id = Role.find_by(name: "super_admin").id
+          admin_id = Role.find_by(name: "admin").id
+          # 永远不允许添加超级管理员
+          role_ids.delete(super_admin_id)
+          # 只有超级管理员能添加普通管理员
+          role_ids.delete(admin_id) unless current_user.has_role?("super_admin")
+          attributes[:role_ids] = role_ids
         end
       end
 
