@@ -27,7 +27,7 @@ class Material < Item
 
   def update_stock!
     update_attributes! stock: material_warehouse_items.inject(0) { |sum, mwi| sum += mwi.stock }
-    MaterialStockJob.perform_async(id)
+    MaterialStockJob.new.perform(id)
   end
 
   def update_catalog_attributes
