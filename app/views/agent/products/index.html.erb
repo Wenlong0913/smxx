@@ -1,5 +1,13 @@
+<div class="container">
+  <h1> 产品管理
+    <div class="pull-right">
+      <%= link_to '添加产品', new_agent_product_path, class: 'btn btn-primary' %>
+      <%= link_to '分类搜索', '#', class: 'btn btn-info' %>
+    </div>
+  </h1>
+</div>
 
-<div id="search-results" class="section-container bg-silver">
+<div id="search-results" class="section-container bg-silver m-b-20 primary-content">
   <!-- BEGIN container -->
   <div class="container">
       <!-- BEGIN search-container -->
@@ -12,17 +20,34 @@
           <div class="row">
             <!-- BEGIN col-6 -->
             <div class="col-md-6">
-              <h4>‘xx’ 搜索出 3个 商品</h4>
+              <h4>商品列表
+              <% if params[:search].present? %>
+                <span>‘xx’ 搜索出 3个 商品</span>
+              <% end %>
+              </h4>
             </div>
             <!-- END col-6 -->
             <!-- BEGIN col-6 -->
             <div class="col-md-6 text-right">
               <ul class="sort-list">
                 <li class="text"><i class="fa fa-filter"></i> 排序方式:</li>
-                <li class="active"><a href="#">点击</a></li>
-                <li><a href="#">最新</a></li>
-                <li><a href="#">优惠</a></li>
-                <li><a href="#">价格</a></li>
+                <li class="<%= 'sign' unless params[:reorder].present? %>">
+                  <%= link_to '默认', agent_products_path %>
+                </li>
+                <li class="<%= 'sign' unless params[:reorder] == 'clicks' %>">
+                  <s>点击</s>
+                  <!-- <#%= link_to '点击', agent_products_path+"?reorder=clicks" %> -->
+                </li>
+                <li class="<%= 'sign' if params[:reorder] == 'newest' %>">
+                  <%= link_to '最新', agent_products_path+"?reorder=newest" %>
+                </li>
+                <li class="<%= 'sign' if params[:reorder] == 'sales' %>">
+                  <s>销量</s>
+                  <!-- <#%= link_to '销量', agent_products_path+"?reorder=sales" %> -->
+                </li>
+                <li class="<%= 'sign' if params[:reorder] == 'price' %>">
+                  <%= link_to '价格', agent_products_path+"?reorder=price" %>
+                </li>
               </ul>
             </div>
             <!-- END col-6 -->
@@ -32,71 +57,52 @@
         <!-- END search-toolbar -->
         <!-- BEGIN search-item-container -->
         <div class="search-item-container">
-          <!-- BEGIN item-row -->
-          <div class="item-row">
-            <!-- BEGIN item -->
-            <div class="item item-thumbnail">
-                <a href="product_detail.html" class="item-image">
-                  <%= image_tag 'macbook-pro'%>
-                  <div class="discount">15% 优惠</div>
-                </a>
-                <div class="item-info">
+          <% @products.each_with_index do |product, index| %>
+            <% if index%3 == 0 %>
+              <!-- BEGIN item-row -->
+              <div class="item-row">
+            <% end %>
+              <!-- BEGIN item -->
+              <div class="item item-thumbnail">
+                  <%= link_to agent_product_path(product), class: 'item-image' do%>
+                    <%= image_tag product.image_items.first.try{image_url}||'no-picture'%>
+                    <% if product.discount.present? && product.discount.to_f > 0 && product.discount.to_f < product.price.to_f %>
+                      <div class="discount">优惠折扣中</div>
+                    <% end %>
+                  <% end %>
+                  <div class="item-info" style="letter-spacing: 2px;">
                     <h4 class="item-title">
-                        <a href="product_detail.html">商品三<br>zo-2016</a>
+                      <%= link_to product.name, agent_product_path(product) %>
                     </h4>
-                    <p class="item-desc">简单的一些描述</p>
-                    <div class="item-price">$649.00</div>
-                    <div class="item-discount-price">$739.00</div>
-                </div>
-            </div>
-            <!-- END item -->
-            <!-- BEGIN item -->
-            <div class="item item-thumbnail">
-                <a href="product_detail.html" class="item-image">
-                  <%= image_tag 'macbook-pro'%>
-                  <div class="discount">32% 优惠</div>
-                </a>
-                <div class="item-info">
-                    <h4 class="item-title">
-                        <a href="product.html">商品二<br>Black</a>
-                    </h4>
-                    <p class="item-desc">small. 描述</p>
-                    <div class="item-price">$599.00</div>
-                    <div class="item-discount-price">$799.00</div>
-                </div>
-            </div>
-            <!-- END item -->
-            <!-- BEGIN item -->
-            <div class="item item-thumbnail">
-                <a href="product_detail.html" class="item-image">
-                  <%= image_tag 'macbook-pro'%>
-                  <div class="discount">20% 优惠</div>
-                </a>
-                <div class="item-info">
-                    <h4 class="item-title">
-                        <a href="product.html">商品一 <br>x/z</a>
-                    </h4>
-                    <p class="item-desc">small. 描述</p>
-                    <div class="item-price">$499.00</div>
-                    <div class="item-discount-price">$599.00</div>
-                </div>
-            </div>
-            <!-- END item -->
-          </div>
-          <!-- END item-row -->
+                    <p class="item-desc"><%= product.description.blank? ? "暂无描述".html_safe :  product.description %></p>
+                    <div class="m-t-10">
+                      <% if product.discount.to_f > 0 && product.discount.to_f < product.price.to_f %>
+                        <small class="item-desc">
+                          <s>￥<%= product.price %></s>
+                        </small>
+                        <span class="text-danger h3">
+                          <small class="text-danger">￥</small><%= product.discount %>
+                        </span>
+                      <% else %>
+                        <span class="text-danger h3">
+                          <small class="text-danger">￥</small><%= product.price %>
+                        </span>
+                      <% end %>
+                    </div>
+                    <div class="item-discount-price"></div>
+                  </div>
+              </div>
+            <!-- END item-row -->
+            <% if index%3 == 2 || index+1 == @products.size %>
+              <!-- END item -->
+              </div>
+            <% end %>
+          <% end %>
         </div>
         <!-- END search-item-container -->
         <!-- BEGIN pagination -->
         <div class="text-center">
-            <ul class="pagination m-t-0">
-                <li class="disabled"><a href="javascript:;">&laquo;</a></li>
-                <li class="active"><a href="javascript:;">1</a></li>
-                <li><a href="javascript:;">2</a></li>
-                <li><a href="javascript:;">3</a></li>
-                <li><a href="javascript:;">4</a></li>
-                <li><a href="javascript:;">5</a></li>
-                <li><a href="javascript:;">&raquo;</a></li>
-            </ul>
+          <%= paginate @products %>
         </div>
         <!-- END pagination -->
       </div>
@@ -128,7 +134,11 @@
           <h4 class="title m-b-0">分类</h4>
           <ul class="search-category-list">
             <% @catalogs.each do |catalog| %>
-              <li><a href="#"><%= catalog.name %> <span class="pull-right">(10)</span></a></li>
+              <li>
+                <%= link_to agent_products_path+"?catalog=#{catalog.id}" do %>
+                  <%= catalog.name %>
+                  <span class="pull-right"><%= @products.where(catalog_id: catalog.id).size%></span>
+                <% end %>
             <% end %>
           </ul>
       </div>

@@ -10,11 +10,53 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170118055957) do
+ActiveRecord::Schema.define(version: 20170217031930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "account_histories", force: :cascade do |t|
+    t.integer  "account_id"
+    t.decimal  "amount",           precision: 8, scale: 2
+    t.integer  "relation_account"
+    t.integer  "relation_type"
+    t.date     "relation_date"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.index ["account_id"], name: "index_account_histories_on_account_id", using: :btree
+  end
+
+  create_table "accounts", force: :cascade do |t|
+    t.string   "owner_type"
+    t.integer  "owner_id"
+    t.string   "name"
+    t.decimal  "amount",     precision: 8, scale: 2
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.index ["owner_type", "owner_id"], name: "index_accounts_on_owner_type_and_owner_id", using: :btree
+  end
+
+  create_table "attachment_relations", force: :cascade do |t|
+    t.integer  "attachment_id"
+    t.string   "relation_type"
+    t.integer  "relation_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["attachment_id"], name: "index_attachment_relations_on_attachment_id", using: :btree
+    t.index ["relation_type", "relation_id"], name: "index_attachment_relations_on_relation_type_and_relation_id", using: :btree
+  end
+
+  create_table "attachments", force: :cascade do |t|
+    t.string   "owner_type"
+    t.integer  "owner_id"
+    t.string   "name"
+    t.integer  "file_size"
+    t.jsonb    "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_type", "owner_id"], name: "index_attachments_on_owner_type_and_owner_id", using: :btree
+  end
 
   create_table "audits", force: :cascade do |t|
     t.integer  "auditable_id"
@@ -53,6 +95,7 @@ ActiveRecord::Schema.define(version: 20170118055957) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "type"
+    t.jsonb    "features"
     t.index ["parent_id"], name: "index_catalogs_on_parent_id", using: :btree
   end
 
@@ -117,6 +160,20 @@ ActiveRecord::Schema.define(version: 20170118055957) do
     t.datetime "updated_at",                  null: false
   end
 
+  create_table "comment_entries", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "resource_type"
+    t.integer  "resource_id"
+    t.text     "content"
+    t.integer  "position"
+    t.boolean  "deleted"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "parent_id"
+    t.jsonb    "features"
+    t.index ["resource_type", "resource_id"], name: "index_comment_entries_on_resource_type_and_resource_id", using: :btree
+  end
+
   create_table "image_item_relations", force: :cascade do |t|
     t.integer  "image_item_id"
     t.string   "relation_type"
@@ -167,6 +224,33 @@ ActiveRecord::Schema.define(version: 20170118055957) do
     t.index ["site_id"], name: "index_items_on_site_id", using: :btree
   end
 
+  create_table "market_pages", force: :cascade do |t|
+    t.integer  "site_id"
+    t.integer  "market_template_id"
+    t.string   "name"
+    t.string   "description"
+    t.jsonb    "features"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["market_template_id"], name: "index_market_pages_on_market_template_id", using: :btree
+    t.index ["site_id"], name: "index_market_pages_on_site_id", using: :btree
+  end
+
+  create_table "market_templates", force: :cascade do |t|
+    t.integer  "catalog_id",  null: false
+    t.string   "base_path",   null: false
+    t.string   "name",        null: false
+    t.string   "keywords"
+    t.string   "description"
+    t.string   "image_path"
+    t.text     "html_source"
+    t.text     "form_source"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.jsonb    "features"
+    t.index ["catalog_id"], name: "index_market_templates_on_catalog_id", using: :btree
+  end
+
   create_table "material_management_details", force: :cascade do |t|
     t.integer  "material_id"
     t.integer  "material_management_id"
@@ -186,6 +270,27 @@ ActiveRecord::Schema.define(version: 20170118055957) do
     t.integer  "material_warehouse_id"
   end
 
+  create_table "material_purchase_details", force: :cascade do |t|
+    t.integer  "material_id"
+    t.integer  "material_purchase_id"
+    t.integer  "number"
+    t.integer  "input_number",                                 default: 0
+    t.decimal  "price",                precision: 8, scale: 2
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
+    t.index ["material_purchase_id"], name: "index_material_purchase_details_on_material_purchase_id", using: :btree
+  end
+
+  create_table "material_purchases", force: :cascade do |t|
+    t.integer  "vendor_id"
+    t.jsonb    "features"
+    t.integer  "created_by"
+    t.integer  "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "code"
+  end
+
   create_table "material_stock_alerts", force: :cascade do |t|
     t.integer  "material_id"
     t.string   "title"
@@ -203,16 +308,42 @@ ActiveRecord::Schema.define(version: 20170118055957) do
     t.datetime "updated_at",                        null: false
   end
 
+  create_table "member_catalogs", force: :cascade do |t|
+    t.string   "key",                     null: false
+    t.text     "value",      default: [],              array: true
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "member_notes", force: :cascade do |t|
+    t.integer  "member_id"
+    t.integer  "user_id"
+    t.text     "message",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_id"], name: "index_member_notes_on_member_id", using: :btree
+    t.index ["user_id"], name: "index_member_notes_on_user_id", using: :btree
+  end
+
   create_table "members", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "site_id"
     t.string   "name"
-    t.integer  "gender"
     t.date     "birth"
-    t.string   "qq"
     t.string   "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "mobile_phone"
+    t.string   "tel_phone"
+    t.string   "wechat"
+    t.string   "firm"
+    t.string   "address"
+    t.string   "note"
+    t.jsonb    "features"
+    t.string   "qq"
+    t.string   "typo"
+    t.string   "from"
+    t.string   "owned"
     t.index ["site_id"], name: "index_members_on_site_id", using: :btree
     t.index ["user_id"], name: "index_members_on_user_id", using: :btree
   end
@@ -247,6 +378,7 @@ ActiveRecord::Schema.define(version: 20170118055957) do
     t.text     "description"
     t.integer  "status"
     t.integer  "internal_status"
+    t.integer  "member_id"
     t.index ["site_id"], name: "index_orders_on_site_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
   end
@@ -323,6 +455,19 @@ ActiveRecord::Schema.define(version: 20170118055957) do
     t.text     "config"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.integer  "site_id"
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "content"
+    t.string   "type"
+    t.jsonb    "features"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["site_id"], name: "index_tickets_on_site_id", using: :btree
+    t.index ["user_id"], name: "index_tickets_on_user_id", using: :btree
   end
 
   create_table "tracker_actions", force: :cascade do |t|
@@ -424,10 +569,26 @@ ActiveRecord::Schema.define(version: 20170118055957) do
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
   end
 
+  create_table "vendor_relations", force: :cascade do |t|
+    t.integer  "vendor_id"
+    t.string   "relation_type"
+    t.integer  "relation_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["relation_type", "relation_id"], name: "index_vendor_relations_on_relation_type_and_relation_id", using: :btree
+  end
+
+  add_foreign_key "account_histories", "accounts"
+  add_foreign_key "attachment_relations", "attachments"
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
   add_foreign_key "items", "sites"
+  add_foreign_key "market_pages", "market_templates"
+  add_foreign_key "market_pages", "sites"
   add_foreign_key "material_management_details", "material_managements"
+  add_foreign_key "material_purchase_details", "material_purchases"
+  add_foreign_key "member_notes", "members"
+  add_foreign_key "member_notes", "users"
   add_foreign_key "members", "sites"
   add_foreign_key "members", "users"
   add_foreign_key "order_materials", "orders"
@@ -438,6 +599,8 @@ ActiveRecord::Schema.define(version: 20170118055957) do
   add_foreign_key "tasks", "sites"
   add_foreign_key "theme_configs", "sites"
   add_foreign_key "theme_configs", "themes"
+  add_foreign_key "tickets", "sites"
+  add_foreign_key "tickets", "users"
   add_foreign_key "tracker_visits", "tracker_actions", column: "action_id"
   add_foreign_key "tracker_visits", "tracker_sessions", column: "session_id"
   add_foreign_key "user_mobiles", "users"

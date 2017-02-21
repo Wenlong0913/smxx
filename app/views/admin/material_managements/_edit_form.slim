@@ -9,7 +9,7 @@
     = simple_form_for @material_management, url: admin_material_management_path(@material_management) do |f|
       - if @material_management.errors.any?
         #error_explanation
-          h2 = "#{pluralize(@material_management.errors.count, "error")} prohibited this material_management from being saved:"
+          
           ul
             - @material_management.errors.full_messages.each do |message|
               li = message

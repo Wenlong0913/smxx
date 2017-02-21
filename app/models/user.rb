@@ -31,8 +31,11 @@ class User < ApplicationRecord
   has_one :mobile, dependent: :destroy
   has_one :weixin, dependent: :destroy
   has_many :image_items, dependent: :destroy, as: :owner
+  has_many :attachments, dependent: :destroy, as: :owner
   has_many :members, dependent: :destroy
   has_many :orders, dependent: :destroy
+  has_many :sites
+  has_many :preorder_conversitions
   attr_accessor :mobile_phone
   validates :mobile_phone, mobile_phone: true, allow_blank: true
 

@@ -8,6 +8,10 @@
 //= require color_admin/plugins/bootstrap/js/bootstrap
 //= require color_admin/js/apps
 //= require agent
+
+//= require ckeditor/init
+//= require ckeditor/config
+
 $(document).ready(function() {
   App.init();
 });

@@ -1,6 +1,7 @@
 class Api::V1::OrdersController < Api::BaseController
   before_action :authenticate!
   before_action :set_orders, only: [:index]
+  before_action :set_order, only: [:create_comment, :comments_index]
 
   def index
     authorize Order
@@ -13,7 +14,7 @@ class Api::V1::OrdersController < Api::BaseController
 
   def create
     authorize Order
-    flag, order = Order::Create.(permitted_attributes(Order).merge(image_item_ids: params["image_item_ids"]))
+    flag, order = Order::Create.(permitted_attributes(Order))
     if flag
       render json: {status: 'ok', order: order_json(order)}
     else
@@ -21,6 +22,22 @@ class Api::V1::OrdersController < Api::BaseController
     end
   end
 
+  def create_comment
+    authorize Order
+    order_comment = @order.comments.new(params[:comment].permit(:content, :offer, :image_item_ids => [], :attachment_ids => []))
+    order_comment.user = current_user
+    if order_comment.save
+      render json: {status: 'ok', comment: order_comment_json(order_comment)}
+    else
+      render json: {status: 'failed', error_message: 'failed'}
+    end
+  end
+
+  def comments_index
+    page_size = params[:page_size] ? params[:page_size].to_i : 20
+    order_comments = @order.comments.order(created_at: :asc).page(params[:page] || 1).per(page_size)
+    render json: {comments: order_comment_json(order_comments), current_page: order_comments.current_page, total_pages: order_comments.total_pages, total_count: order_comments.total_count}
+  end
 
   private
     def set_orders
@@ -38,6 +55,36 @@ class Api::V1::OrdersController < Api::BaseController
     end
 
     def order_json(orders)
-      orders.as_json(only: [:id, :code, :price, :status, :internal_status, :description, :created_at], include: {site: {only: [:id, :title]}, member: {only: [:name]}, produce: {only: [:id]}})
+      orders.as_json(
+        only: [:id, :code, :price, :status, :internal_status, :description, :created_at], 
+        include: {
+          site: {only: [:id, :title], include: { user: { only: [:nickname], include: { mobile: { only: [:phone_number] } } } }}, 
+          member: {only: [:name]}, 
+          produce: {only: [:id]},
+          image_items: {only: [:id], methods: [:image_url, :image_file_name]},
+          comments: {only: [:content, :offer, :created_at],
+            include: {
+              user: {only: [:nickname]},
+              image_items: {only: [:id], methods: [:image_url, :image_file_name]},
+              attachments: {only: [:id, :name], methods: [:attachment_url, :attachment_file_name]}
+            }
+          }
+        }
+      )
+    end
+
+    def set_order
+      @order = Order.find(params[:id])
+    end
+
+    def order_comment_json(comment)
+      comment.as_json(
+        only: [:content, :created_at], methods: [:offer],
+        include: {
+          user: {only: [:nickname]},
+          image_items: {only: [:id], methods: [:image_url, :image_file_name]},
+          attachments: {only: [:id, :name], methods: [:attachment_url, :attachment_file_name]}
+        }
+      )
     end
 end

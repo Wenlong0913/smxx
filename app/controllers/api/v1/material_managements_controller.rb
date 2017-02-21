@@ -9,7 +9,7 @@ class Api::V1::MaterialManagementsController < Api::V1::BaseController
     if flag
       render json: {status: 'ok', material_management_details: material_management_detail_json(material_management.material_management_details)}
     else
-      render json: {status: 'failed', error_message:  material_management.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
+      render json: {status: 'failed', error_message:  material_management.errors.full_messages.join(', ')}
     end
   end
 
@@ -20,13 +20,12 @@ class Api::V1::MaterialManagementsController < Api::V1::BaseController
       only: %w(id number),
       include: {
         material_management: { 
-          only: %w(id operate_date operate_type),
+          only: %w(id operate_date operate_type note),
           include: {material_warehouse: {only: %w(id name)}}
         },
         material: {only: %w(id name)}
       }
     )
   end
-
 
 end

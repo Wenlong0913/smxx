@@ -9,7 +9,7 @@
     = simple_form_for @task_type, url: @task_type.new_record? ? admin_task_types_path : admin_task_type_path(@task_type), validate: true do |f|
       / - if @task_type.errors.any?
       /   #error_explanation
-      /     h2 = "#{pluralize(@task_type.errors.count, "error")} prohibited this task_type from being saved:"
+      /     
       /     ul
       /       - @task_type.errors.full_messages.each do |message|
       /         li = message

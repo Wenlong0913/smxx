@@ -1,8 +1,10 @@
 $(document).ready ->
-
   processCommentBlock = ()->
     blockEle  = $(this)
     url       = blockEle.data('url')
+    imagePath = blockEle.data('image')
+    filePath  = blockEle.data('file')
+    currentUserId = blockEle.data('current')
     blockEle.attr 'uuid', "#{new Date().getTime()}-#{Math.random()}"
 
     postComment = (target) ->
@@ -13,17 +15,37 @@ $(document).ready ->
         content_info = this.replyContent
       self = this
       self.posting = true
-      $.post url, 'comment[content]': content_info, 'comment[parent_id]': (this.replyTo and this.replyTo.id)
-        .success (data)->
+      images = []
+      $(".comment #images-content input[name='order[image_item_ids][]']").each( ->
+        images.push $(this).val()
+      )
+      dataAll =
+        'comment[content]': content_info
+        'comment[parent_id]': (this.replyTo and this.replyTo.id)
+        'comment[attachment_ids]': self.features.files.map((f) ->
+            return f.id
+          )
+        'comment[image_item_ids]': images
+        'comment[offer]': self.features.offer
+      $.post
+        url: url
+        data: dataAll
+        success: (data)->
           self.posting = false
           self.replying = false
           self.comments.unshift data.comments
           self.content = ''
-        .error (error)->
+          self.features =
+            files: []
+            images: []
+            offer: ''
+        error: (error)->
           self.posting = false
           alert error
 
     loadComments = ->
+      $(window).scrollTop(0)
+      app._data.currentUserId = currentUserId
       $.get url, 'page': app._data.currentPage
       .success (data)->
         app._data.loading = false
@@ -36,11 +58,33 @@ $(document).ready ->
     replyModel = (comment_target)->
       this.replyTo = comment_target
       this.replying = true
+    upFile = (formdata, index) ->
+      $.ajax
+        url: filePath
+        type: 'post'
+        data: formdata
+        cache: false
+        processData: false
+        contentType: false
+        success: (data)->
+          if data.status == 'ok'
+            app._data.features.files[index].id = data.attachment.id
+            app._data.features.files[index].name = data.attachment.attachment_file_name
+            app._data.features.files[index].url = data.attachment.attachment_url
+            app._data.features.files[index].upStatus = 2
+          else
+            alert '文件上传失败'
+            app._data.comment.files[index].upStatus = 1
+        error: (data)->
+          console.log data
+          alert '文件上传失败'
 
     app = new Vue
       el: "[rel='comment-block'][uuid='#{blockEle.attr('uuid')}']"
       data:
         comments: []
+        showFullImage: false
+        imageRrc: ''
         error: false
         posting: false
         loading: true
@@ -49,16 +93,74 @@ $(document).ready ->
         content: ''
         replyContent: ''
         pageCount: null
-        currentPage: 1 
+        currentPage: 1
+        currentUserId: ''
+        features:
+          files: []
+          images: []
+          offer: ''
       methods:
         postComment: postComment
         replyModel: replyModel
         loadComments: loadComments
-
+        onShowImage: (src)->
+          this.imageRrc = src
+          this.showFullImage = true
+        removeFile: (file, index)->
+          self = this
+          $.ajax
+            url: filePath+'/'+file.id
+            type: 'delete'
+            success: (data)->
+              if data.status == 'ok'
+                self.features.files.splice(index, 1)
+              else
+                alert('删除文件失败')
+            error: (data)->
+              console.log data
+              alert('删除文件失败')
+        onChangeFile: (e)->
+          self = this
+          return alert '浏览器不支持此插件' unless window.FormData
+          files = e.target.files
+          formdata = new FormData()
+          # each up file
+          for file in files
+            formdata.append 'file', file
+            thisFile =
+              id: ''
+              name: file.name
+              url: ''
+              upStatus: 0
+            self.features.files.push(thisFile)
+            index = self.features.files.indexOf(thisFile)
+            upFile(formdata, index)
+        onChangeImage: (e)->
+          self = this
+          return alert '浏览器不支持此插件' unless window.FormData
+          # $.ajax
+          #   url: imagePath
+          #   type: 'post'
+          #   cache: false
+          #   processData: false
+          #   contentType: false
+          #   data: new FormData($("#upImages")[0])
+          #   dataType: 'json'
+          #   success: (data)->
+          #     self.files = data
+          #   error: (data)->
+          #     console.log data
+          #     alert '图片上传失败'
+        onTestImage: (src)->
+          img = new Image()
+          img.src = src
+          # console.log src
+          if img.width > 0 || img.height > 0
+            return true
+          else
+            return false
     loadComments()
-    
-    
+
+
   # apply to all comment-block
   $('[rel="comment-block"]').each processCommentBlock
-
-

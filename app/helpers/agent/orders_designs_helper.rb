@@ -1,0 +1,2 @@
+module Agent::OrdersDesignsHelper
+end

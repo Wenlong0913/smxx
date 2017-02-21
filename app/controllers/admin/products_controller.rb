@@ -3,6 +3,10 @@ require 'csv'
 class Admin::ProductsController < Admin::BaseController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
+  def dashboard
+    authorize Product
+  end
+
   # GET /admin/products
   def index
     authorize Product

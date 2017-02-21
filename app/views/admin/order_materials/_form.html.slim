@@ -9,7 +9,7 @@
     = simple_form_for @order_material, url: @order_material.new_record? ? admin_order_materials_path : admin_order_material_path(@order_material), validate: true do |f|
       - if @order_material.errors.any?
         #error_explanation
-          h2 = "#{pluralize(@order_material.errors.count, "error")} prohibited this order_material from being saved:"
+          
           ul
             - @order_material.errors.full_messages.each do |message|
               li = message

@@ -6,12 +6,11 @@ class ImageItem < ApplicationRecord
 
   store_accessor :data, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at
   has_attached_file :image,
-                    path: ":rails_root/public/photos/:id/:style.:extension",
+                    path: ":rails_root/public/photos/:year/:month/:day/:id/:style.:extension",
                     hash_secret: 'f240-r3i-3-',
-                    styles: { :original => '800>'},
-                    :url => "/photos/:id/:style.:extension",
+                    styles: { :original => '800>', :medium => '300x300', :thumb => '100x100' },
+                    :url => "/photos/:year/:month/:day/:id/:style.:extension",
                     default_url: "/images/:style/missing.png"
-
 
   # validates_attachment_presence :image
   # validates_attachment_size :image, :less_than => 4.megabytes
@@ -21,4 +20,13 @@ class ImageItem < ApplicationRecord
   def image_url
     Settings.site.host + image.url
   end
+
+  def medium_image_url
+    Settings.site.host + image.url(:medium)
+  end
+
+  def thumd_image_url
+    Settings.site.host + image.url(:thumd)
+  end
+
 end

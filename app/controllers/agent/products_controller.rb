@@ -1,27 +1,48 @@
 class Agent::ProductsController < Agent::BaseController
-  # before_action :set_product, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_current_user_products
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :process_shelves]
   def index
-    # authorize Product
-    # @products = Product.all.page(params[:page])
-    # respond_to do |format|
-    #   format.html
-    #   format.json { render json: @products }
-    # end
-    @catalogs = Catalog.roots
+    authorize Product
+    @catalogs = ProductCatalog.roots
+    if params[:reorder].present?
+      @products = case params[:reorder]
+      # when 'clicks'
+      #   @products.order(price: :asc)
+      when 'newest'
+        @products.order(created_at: :desc)
+      # when 'discount'
+      #   @products.order(price: :asc)
+      when 'price'
+        @products.order("features -> 'discount' desc")
+      else
+        @products
+      end
+    end
+    @products = @products.page(params[:page]).per(9)
+    respond_to do |format|
+      format.html
+      format.json { render json: @products }
+    end
   end
 
   def show
-    # authorize @product
-    # respond_to do |format|
-    #   format.html
-    #   format.json { render json: @product }
-    # end
+    authorize @product
+    @catalog_ancestors = []
+    if @product.catalog.present?
+      @catalog_ancestors.push(@product.catalog)
+      if @product.catalog.parent
+        @catalog_ancestors = (@catalog_ancestors + @product.catalog.ancestors).reverse
+      end
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @product }
+    end
   end
 
   def new
-    # authorize Product
-    # @product = Product.new(product_params)
+    authorize Product
+    @product = Product.new
   end
 
   def edit
@@ -29,34 +50,29 @@ class Agent::ProductsController < Agent::BaseController
   end
 
   def create
-    # authorize Product
-    # @product = Product.new(permitted_attributes(Product)))
-    #
-    # respond_to do |format|
-    #   format.html do
-    #     if @product.save
-    #       redirect_to agent_product_path(@product), notice: 'Product 创建成功.'
-    #     else
-    #       render :new
-    #     end
-    #   end
-    #   format.json { render json: @product }
-    # end
-
+    @product = Product.new(permitted_attributes(Product))
+    @product.site = current_user.sites.first
+    @product.additional_attribute_keys = params["product"]["additional_attribute_keys"]
+    @product.additional_attribute_values = params["product"]["additional_attribute_values"]
+    authorize @product
+    if @product.save
+      # redirect_to agent_product_path(@product), notice: 'Product 创建成功.'
+      render json: {url: agent_product_path(@product)}
+    else
+      render json: {errors: @product.errors.full_messages.join(',')}
+    end
   end
 
   def update
-    # authorize @product
-    # respond_to do |format|
-    #   format.html do
-    #     if @product.update(permitted_attributes(@product))
-    #       redirect_to agent_product_path(@product), notice: 'Product 更新成功.'
-    #     else
-    #       render :edit
-    #     end
-    #   end
-    #   format.json { render json: @product }
-    # end
+    authorize @product
+    additional_attribute
+    @product.additional_attribute_keys = params["product"]["additional_attribute_keys"]
+    @product.additional_attribute_values = params["product"]["additional_attribute_values"]
+    if @product.update(permitted_attributes(@product))
+      redirect_to agent_product_path(@product), notice: 'Product 更新成功.'
+    else
+      render json: {error: '名称已经被使用'}
+    end
   end
 
   def destroy
@@ -69,12 +85,30 @@ class Agent::ProductsController < Agent::BaseController
 
   end
 
+  def process_shelves
+    if @product.update is_shelves: (params[:status] == '1' ? '1' : '0')
+      render json: {status: 'ok'}
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      @product = Product.find(params[:id])
+      @product = @products.find(params[:id])
     end
 
+    def set_current_user_products
+      @products = @site.products
+    end
+
+    def additional_attribute
+      params["product"]["additional_attribute_keys"].each_pair do |k, v|
+        if v.blank?
+          params["product"]["additional_attribute_keys"].delete(k)
+          params["product"]["additional_attribute_values"].delete(k)
+        end
+      end
+    end
     # Only allow a trusted parameter "white list" through.
     def product_params
       params[:product]

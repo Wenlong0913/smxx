@@ -35,9 +35,8 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def impersonate
-    authorize User
-    # Pundit.policy!(true_user, User).impersonate?
     user = User.find(params[:id])
+    authorize user
     impersonate_user(user)
     redirect_to root_path
   end
@@ -60,7 +59,12 @@ class Users::SessionsController < Devise::SessionsController
         t = Sms::Token.new(mobile)
         if t.valid?(code)
           sign_in user
-          render json: {}
+          url = if user.super_admin_or_admin?
+            admin_root_url
+          elsif user.has_role?(:agent)
+            agent_root_url
+          end
+          render json: {url: url}
         else
           render json: {error: '验证码错误！'}
         end

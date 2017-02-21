@@ -15,11 +15,15 @@ Rails.application.routes.draw do
   # image upload
   resources :image_items, only: [:index, :create, :destroy]
 
+  # file upload
+  resources :attachments, only: [:index, :create, :destroy]
+
   # === Extend partial routes ===
   extend FrontendRoute
   extend ApiRoute
   extend AdminRoute
-  extend AgentRoute
+  extend AgentBackendRoute
+  extend AgentFrontendRoute
 
   extend CmsFrontendRoute
   extend CmsBackendRoute

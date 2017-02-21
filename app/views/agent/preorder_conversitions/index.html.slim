@@ -1,0 +1,71 @@
+.section-container.bg-silver.m-b-20.primary-content.preorder-conversitions
+  .container
+    .search-container
+      .search-content
+        .search-toolbar
+          .row
+            .col-md-6
+              h4 生产设计列表
+            .col-md-6.text-right
+              ul.sort-list
+                li.text
+                  i.fa.fa-filter
+                  | &nbsp;排序方式：
+                li.sign.active
+                  a[href="/"] 默认
+                li
+                  a[href="/"] 最新
+                li
+                  a[href="/"] 处理中
+                li
+                  a[href="/"] 已完成
+        .search-item-container.container-list
+          .row
+            - @preorder_conversitions.each do |preorder_conversition|
+              .col-sm-6.col-md-4
+                .thumbnail
+                  .caption
+                    .strong-title
+                      | 标题: 
+                      span.m-l-10.f-s-12 = preorder_conversition.title
+                    hr.m-0
+                    - status = preorder_conversition.site_confirm && preorder_conversition.factory_confirm
+                    ul.order-message[type="none"]
+                      li.row
+                        .col-xs-4 创建时间:
+                        .col-xs-8 = preorder_conversition.created_at
+                      - if status
+                        li.row
+                          .col-xs-4 预计价格:
+                          .col-xs-8 = preorder_conversition.offer
+                      li.row
+                        .col-xs-4 状态:
+                        .col-xs-8
+                          label.text-danger
+                            - if status
+                              span.text-wanning 进行中
+                            else
+                              span.text-success 已确认
+                    div.text-right
+                      = link_to '查看设计详细', agent_preorder_conversition_path(preorder_conversition), class: 'btn btn-primary btn-sm'
+          .text-center
+            = paginate @preorder_conversitions
+
+      .search-sidebar
+        h4.title 查询
+        form[action="search_results.html" method="POST" name="filter_form"]
+          .form-group
+            .control-label 关键字
+            .form-control.input-sm[name="keyword" value="" placeholder="输入查询关键字" type="text"]
+          .form-group
+            label.control-label 价格
+            .row.row-space-0
+              .col-md-5
+                input.form-control.input-sm[name="price_from" value="10" placeholder="最低价格" type="number"]
+              .col-md-2.text-center.p-t-5.f-s-12.text-muted
+              .col-md-5
+                input.form-control.input-sm[name="price_to" value="10000" placeholder="Price To" type="number"]
+          .m-b-30
+            button.btn.btn-sm.btn-inverse[type="submit"]
+              i.fa.fa-search
+              | 查询

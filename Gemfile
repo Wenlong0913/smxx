@@ -46,7 +46,14 @@ gem 'settingslogic', '~> 2.0.9'
 # gem 'swagger-docs' # 太麻烦，不如自己写markdown文档
 gem 'font-awesome-rails', '~> 4.7.0'
 gem 'simple_form', '~> 3.3.1'
+gem 'active_model_serializers' # 不好用，不如直接as_json输出
+
 # gem 'active_model_serializers' # 不好用，不如直接as_json输出
+#
+
+# gem 'spreadsheet'
+gem "roo"
+gem 'roo-xls'
 
 # gem 'client_side_validations',
 #   github: 'DavyJonesLocker/client_side_validations',
@@ -97,6 +104,7 @@ gem 'rqrcode', '~> 0.10.1'
 gem 'sms', path: 'components/sms'
 gem 'tracker', path: 'components/tracker'
 gem 'decorator', path: 'components/decorator'
+gem 'comment', path: 'components/comment'
 
 gem 'themeable', '~> 1.2.0'#, path: '../../gems/themeable'
 gem 'theme_color_admin', git: 'http://gitlab.tanmer.com/tm-themes/theme_color_admin.git'

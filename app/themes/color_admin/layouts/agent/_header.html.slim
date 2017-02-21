@@ -1,0 +1,123 @@
+/! BEGIN #header
+#header.header
+  /! BEGIN container
+  .container
+    /! BEGIN header-container
+    .header-container
+      /! BEGIN navbar-header
+      .navbar-header
+        button.navbar-toggle.collapsed data-target="#navbar-collapse" data-toggle="collapse" type="button"
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        .header-logo.hidden-xs
+          a href="/agent"
+            span = Settings.site.name
+            small = Settings.site.slogan
+      /! END navbar-header
+      /! BEGIN header-nav
+      .header-nav
+        #navbar-collapse.collapse.navbar-collapse
+          ul.nav
+            li
+              a href="/agent"  首页
+            li.dropdown.dropdown-hover
+              a data-toggle="dropdown" href="javascript:void(0);"
+                | 产品管理
+                i.fa.fa-angle-down
+                span.arrow.top
+              ul.dropdown-menu
+                li = link_to '产品列表', agent_products_path
+                li = link_to '发布新品', new_agent_product_path
+            li.dropdown.dropdown-hover
+              a data-toggle="dropdown" href="javascript:void(0);"
+                | 订单管理
+                i.fa.fa-angle-down
+                span.arrow.top
+              ul.dropdown-menu
+                /! sxhop/dagle 订单不同
+                li = link_to '订单列表', agent_orders_path
+                / li = link_to '订单创建', new_agent_order_path
+            li.dropdown.dropdown-hover
+              a data-toggle="dropdown" href="#"
+                | 生产设计
+                i.fa.fa-angle-down
+                span.arrow.top
+              ul.dropdown-menu
+                li = link_to '任务管理', agent_preorder_conversitions_path
+                li
+                  a[href="#" data-toggle="modal" data-target="#newPreorderConversitionModal"]
+                    i class="fa fa-plus-circle"
+                    | &nbsp;新建任务
+            li.dropdown.dropdown-hover
+              a data-toggle="dropdown" href="#"
+                | 客户CRM
+                i.fa.fa-angle-down
+                span.arrow.top
+              ul.dropdown-menu
+                li = link_to '客户', agent_members_path
+                li = link_to '营销', agent_market_pages_path
+                li
+                  a href="index.html"  推送
+            li.dropdown.dropdown-hover
+              a data-toggle="dropdown" href="#"
+                | 网站管理
+                i.fa.fa-angle-down
+                span.arrow.top
+              ul.dropdown-menu
+                li
+                  a href="#"  栏目管理
+                li
+                  a href="index_fixed_header.html"  页面管理
+            li.dropdown.dropdown-hover
+              /! <%#= link_to agent_statistics_path, 'data-toggle': "dropdown" do
+              = link_to '#', 'data-toggle': "dropdown" do
+                | 统计报表
+                i.fa.fa-angle-down
+                span.arrow.top
+                |
+                ul.dropdown-menu
+                  li
+                    = link_to '汇总', '#'
+                  li
+                    a href="#"  分销统计
+                  li
+                    a href="#"  访问统计
+      /! END header-nav
+      /! BEGIN header-nav
+      .header-nav
+        ul.nav.pull-right
+          li.dropdown.dropdown-hover
+            a.header-cart data-toggle="dropdown" href="#"
+              span.total 2
+              span.arrow.top
+            .dropdown-menu.dropdown-menu-cart.p-0
+              .cart-header
+                h4.cart-title 未读消息
+              .cart-body
+                ul.cart-item
+                  li
+                    .cart-item-image
+                      = image_tag 'macbook-pro'
+                    .cart-item-info
+                      h4 张三的设计任务有了新反馈
+                      .price
+                        small.pull-left 金额：$16990.00
+                        small.pull-right 日期：2016/5/5/12:20
+                  li
+                    .cart-item-image
+                      = image_tag 'macbook-pro'
+                    .cart-item-info
+                      h4 李四在3分钟前下了一个订单
+                      .price
+                        small.pull-left 金额：$16990.00
+                        small.pull-right 日期：2016/5/5/12:20
+              .cart-footer
+                .row.row-space-10
+                  .col-xs-12
+                    a.btn.btn-default.btn-block href="#"  查看更多
+          li.divider
+          li
+            = link_to sign_out_path, method: :delete do
+              span 退出
+= render 'agent/preorder_conversitions/new'

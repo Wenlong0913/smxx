@@ -1,0 +1,59 @@
+<!-- Modal -->
+<div class="modal fade" id="newOrderDesignModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">创建生产设计</h4>
+      </div>
+      <%= simple_form_for Order.new, url: agent_preorder_conversitions_path, html: { class: 'form-horizontal' }, remote: true do |f| %>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-xs-6">
+              <%= f.input :member_name %>
+            </div>
+            <div class="col-xs-6">
+              <%= f.input :mobile_phone %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <%= f.input :description, as: :text, placeholder: '这里填写用户需求' %>
+            </div>
+          </div>
+          <%= f.input :images do %>
+            <image-select server="<%= image_items_path %>" name="order[image_item_ids][]"></image-select>
+          <% end %>
+          <div class="error-text alert alert-danger" role="alert"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <%= f.submit '创建', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(function(){
+    var domModal = $('#newOrderDesignModal')
+    domModal.find('.error-text').text('').hide()
+    newOrdersDesign = new Vue({
+      el: domModal.find('image-select')[0]
+    })
+    domModal.find('form#new_order').on('ajax:success', function (event, request) {
+      if (request.status == 'ok') {
+        domModal.modal('hide')
+        window.location = request.url
+      }else {
+        domModal.find('.error-text').show().text('创建失败！：  '+request.message)
+      }
+    })
+    domModal.find('form#new_order').on('ajax:error', function (event, request) {
+      domModal.find('.error-text').show().text('创建失败! ')
+    })
+    $('#newOrderDesignModal').on('hidden.bs.modal', function (e) {
+      domModal.find('.error-text').text('').hide()
+    })
+  })
+</script>

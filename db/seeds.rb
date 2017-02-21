@@ -80,3 +80,43 @@ material_catalogs.each_pair do |material_catalog, sub_material_catalos|
     end
   end
 end
+
+# 客户
+MemberCatalog.create!(key: '客户级别', value: '{A类,B类,C类}')
+MemberCatalog.create!(key: '会员关系', value: '{非会员,普通会员,银卡会员,金卡会员,至尊会员}')
+MemberCatalog.create!(key: '客户性别', value: '{男,女}')
+MemberCatalog.create!(key: '客户年龄', value: '{15-20,20-30,30-40,40-50,50-60}')
+MemberCatalog.create!(key: '购买能力', value: '{一般,高,很高}')
+MemberCatalog.create!(key: '客户活跃频次', value: '{很少,一般,高,很高}')
+
+# 营销页
+MarketCatalog.create!(name: '博客')
+MarketCatalog.create!(name: '活动')
+MarketCatalog.create!(name: '招商')
+MarketCatalog.create!(name: '会员拉新')
+
+MarketTemplate.create!(
+  catalog_id: 1,
+  base_path: 'templetes/market/default',
+  name: 'default',
+  keywords: '营销页测试页',
+  description: '这只是一个测试页面，可以实现类似一篇博客文章发布',
+  image_path: '/templetes/market/default/previews/demo-1.png',
+  html_source: '
+    <html lang="zh-CN">
+      <head>
+        <meta charset="utf-8"/>
+        <title><%= @market_page.name %></title>
+        <meta content="<%= @market_page.description %>" name="description"/>
+      </head>
+      <body style="text-align: center;">
+        <div style="margin: 0 auto; width:640px;">
+          <h2><%= @market_page.value_for("title", title: "文章标题", typo: "string", default: "文章标题") %></h2><hr/>
+          <div style="text-align:left;"><%= simple_format @market_page.value_for("content", title: "正文", typo: "text", default: "文章内容") %></div>
+          <% @market_page.image_items.each do |img| %>
+           <%= image_tag img.image_url, style: "width:100%;" %>
+          <% end %>
+        </div>
+      </body>
+    </html>'
+)

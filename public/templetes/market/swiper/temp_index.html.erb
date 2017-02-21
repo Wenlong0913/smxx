@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<!-- Mirrored from www.swiper.com.cn/demo/progressShow/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 Feb 2017 12:23:27 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="<%= @market_page.description %>">
+<meta name="keywords" content="<%= @market_page.name %>">
+<meta name="author" content="www.tanmer.com">
+<title><%= @market_page.name %></title>
+<meta name="viewport" content="initial-scale=1">
+<link rel="stylesheet" href="/templetes/market/swiper/assets/css/swiper.min.css">
+<script src="/templetes/market/swiper/assets/js/jquery-1.10.1.min.js"></script>
+<script src="/templetes/market/swiper/assets/js/swiper.min.js"></script>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+}
+  .swiper-container {
+
+  }
+  .swiper-wrapper {
+    -webkit-perspective: 1200px;
+    -moz-perspective: 1200px;
+    -ms-perspective: 1200px;
+    perspective: 1200px;
+  }
+  .swiper-slide {
+    position: relative;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+   background-size:100% auto;
+   overflow:hidden;
+   text-align:center;
+   line-height:300px;
+  }
+.swiper-slide img{
+	max-width:100%;
+}
+
+</style>
+</head>
+<body>
+<div style="max-width:640px; margin:0 auto;">
+<div class="swiper-container">
+  <div class="swiper-wrapper">
+    <% @market_page.image_items.each do |img| %>
+      <div class="swiper-slide">
+        <%= image_tag img.image_url, class: 'img-responsive' %>
+      </div>
+    <% end %>
+    <div class="swiper-slide"><img src="/templetes/market/swiper/assets/img/grand.png"  ></div>
+    <div class="swiper-slide" style="background: #0a4b47; color: #fff;">
+      <div class="text-center" style="margin-left: 30px; margin-right: 30px;">
+        <h1><%= @market_page.value_for('title', title: '相册标题', typo: 'string', default: '相册标题') %></h1>
+				<p style="line-height: 30px;"><%= @market_page.value_for('content', title: '相册详细介绍', typo: 'text', default: '相册活动内容介绍') %></p>
+				<h3><a href="tel:<%= @market_page.value_for('mobile', title: '联系电话', typo: 'string', default: '18080810818') %>">联系我们</a></h3>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script type = "text/javascript">
+function fixPagesHeight() {
+	$('.swiper-slide,.swiper-container').css({
+		height: $(window).height(),
+	})
+}
+$(window).on('resize', function() {
+	fixPagesHeight();
+})
+fixPagesHeight();
+
+var mySwiper = new Swiper('.swiper-container', {
+
+  direction: 'vertical',
+	mousewheelControl: true,
+	watchSlidesProgress: true,
+	onInit: function(swiper) {
+		swiper.myactive = 0;
+	},
+	onProgress: function(swiper) {
+		for (var i = 0; i < swiper.slides.length; i++) {
+			var slide = swiper.slides[i];
+			var progress = slide.progress;
+			var translate, boxShadow;
+
+			translate = progress * swiper.height * 0.8;
+			scale = 1 - Math.min(Math.abs(progress * 0.2), 1);
+			boxShadowOpacity = 0;
+
+			slide.style.boxShadow = '0px 0px 10px rgba(0,0,0,' + boxShadowOpacity + ')';
+
+			if (i == swiper.myactive) {
+				es = slide.style;
+				es.webkitTransform = es.MsTransform = es.msTransform = es.MozTransform = es.OTransform = es.transform = 'translate3d(0,' + (translate) + 'px,0) scale(' + scale + ')';
+				es.zIndex=0;
+			}else{
+				es = slide.style;
+				es.webkitTransform = es.MsTransform = es.msTransform = es.MozTransform = es.OTransform = es.transform ='';
+				es.zIndex=1;
+
+			}
+
+		}
+
+	},
+
+
+	onTransitionEnd: function(swiper, speed) {
+		for (var i = 0; i < swiper.slides.length; i++) {
+		//	es = swiper.slides[i].style;
+		//	es.webkitTransform = es.MsTransform = es.msTransform = es.MozTransform = es.OTransform = es.transform = '';
+		//	swiper.slides[i].style.zIndex = Math.abs(swiper.slides[i].progress);
+
+		}
+
+		swiper.myactive = swiper.activeIndex;
+
+	},
+	onSetTransition: function(swiper, speed) {
+
+		for (var i = 0; i < swiper.slides.length; i++) {
+			//if (i == swiper.myactive) {
+
+				es = swiper.slides[i].style;
+				es.webkitTransitionDuration = es.MsTransitionDuration = es.msTransitionDuration = es.MozTransitionDuration = es.OTransitionDuration = es.transitionDuration = speed + 'ms';
+			//}
+		}
+
+	}
+
+});
+</script>
+</body>
+</html>
