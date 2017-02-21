@@ -48,7 +48,7 @@ module Comment
         include: {
           user: {only: [:id, :nickname]},
           parent: {only: [:id, :content, :created_at]},
-          attachments: {only: [:id], methods: [:attachment_url, :attachment_file_name]},
+          attachments: {only: [:id], methods: [:attachment_url, :attachment_file_name, :attachment_content_type]},
           image_items: {only: [:id], methods: [:image_url, :image_file_name]}
         }
       )

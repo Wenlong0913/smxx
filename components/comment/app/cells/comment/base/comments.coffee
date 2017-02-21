@@ -151,11 +151,8 @@ $(document).ready ->
           #   error: (data)->
           #     console.log data
           #     alert '图片上传失败'
-        onTestImage: (src)->
-          img = new Image()
-          img.src = src
-          # console.log src
-          if img.width > 0 || img.height > 0
+        onTestImage: (typeStr)->
+          if typeStr.indexOf('image') > -1
             return true
           else
             return false
