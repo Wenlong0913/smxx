@@ -15,6 +15,12 @@ class Agent::PreorderConversitionsController < Agent::BaseController
       conditions.unshift query.join(' AND ')
       @preorder_conversitions = @preorder_conversitions.where(conditions)
     end
+    if params[:sort].present?
+      case params[:sort]
+      when 'newest'
+        @preorder_conversitions = @preorder_conversitions.order(updated_at: :desc)
+      end
+    end
     @preorder_conversitions = @preorder_conversitions.page(params[:page]).per(9)
     respond_to do |format|
       format.html
