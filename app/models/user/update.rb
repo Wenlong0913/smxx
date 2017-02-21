@@ -15,7 +15,7 @@ class User
             # 只有超级管理员可以分配管理员的角色
             role_name = Role.find(role_id).name
             unless current_user.has_role?('super_admin')
-              role_ids.delete(role_id) if role_name == 'admin'
+              role_ids.delete(role_id) if role_name == 'admin' && current_user.id != user.id
             end
             attributes[:role_ids] = role_ids
           end
