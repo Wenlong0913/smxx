@@ -8,7 +8,7 @@
       ul.parent-content[type='none']
         li.li-content[v-for="comment in comments" :class=" comment.user.id == currentUserId ? 'other' : '' "]
           .user-image[style="width:50px"]
-            = image_tag 'no-picture'
+            = image_tag 'no-picture.jpeg'
           .message-right
             .title-top
               .user-name
