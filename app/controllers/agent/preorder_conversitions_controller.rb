@@ -1,5 +1,5 @@
 class Agent::PreorderConversitionsController < Agent::BaseController
-  before_action :set_preorder_conversition, only: [:show, :edit, :update, :destroy]
+  before_action :set_preorder_conversition, only: [:show, :edit, :update, :destroy, :site_confirm]
   acts_as_commentable resource: Ticket
 
   def index
@@ -61,6 +61,13 @@ class Agent::PreorderConversitionsController < Agent::BaseController
   #   end
   #
   # end
+  def site_confirm
+    if @preorder_conversition.update(site_confirm: true)
+      render json: {status: 'ok', factory_confirm: @preorder_conversition.factory_confirm.to_json}
+    else
+      render json: {status: 'error', message: preorder_conversition.errors.full_messages.join(',')}
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -18,6 +18,9 @@ module AgentBackendRoute
 
         resources 'preorder_conversitions' do
           commentable
+          member do
+            post :site_confirm
+          end
         end
 
         catalog_resources_for ProductCatalog, only: [:index]

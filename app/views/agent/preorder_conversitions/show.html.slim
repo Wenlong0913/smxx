@@ -62,7 +62,7 @@
           .commit-title
             h4 与工厂方交流
           .commit-content.border-and-radius
-            = render_comments(@preorder_conversition, path: {comment_path: comments_agent_preorder_conversition_path, image_path: image_items_url, up_file_path: attachments_path})
+            = render_comments(@preorder_conversition, path: {comment_path: comments_agent_preorder_conversition_path, image_path: image_items_url, up_file_path: attachments_path, current_user_id: current_user.id})
       .design-sidebar-left
         .sidebar-content
           .sidebar-heading
@@ -91,12 +91,19 @@
             li
               h4.sidebar-text
                 span 进度：
-                span.text-warning
-                  | 图纸确认中
+                span#schedule.text-warning
+                  - if @preorder_conversition.site_confirm && @preorder_conversition.factory_confirm
+                    = '已审核'
+                  - elsif !@preorder_conversition.factory_confirm && @preorder_conversition.site_confirm
+                    = '待工厂方审核'
+                  - elsif @preorder_conversition.factory_confirm && !@preorder_conversition.site_confirm
+                    = '待审核'
+                  - else
+                    = '协商中'
             li
               h4.sidebar-text
                 span 备注：
                 .p-l-10.p-t-5.text-primary
                   = @preorder_conversition.content
           .sidebar-footer.text-right
-            span.btn.btn-xs.btn-default 关闭订单
+            span.btn.btn-sm.btn-danger#confirm[data-url=site_confirm_agent_preorder_conversition_path] 图纸及报价审核确认
