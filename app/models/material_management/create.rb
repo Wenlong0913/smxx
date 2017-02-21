@@ -15,7 +15,7 @@ class MaterialManagement
         if attributes["operate_type"] == 'output'
           # 检查仓库的库存是否足够
           alert_materials = []
-          details = attributes[:material_management_details_attributes].is_a?(Hash) ? attributes[:material_management_details_attributes].values : attributes[:material_management_details_attributes]
+          details = attributes[:material_management_details_attributes].is_a?(Array) ?  attributes[:material_management_details_attributes] : attributes[:material_management_details_attributes].values
           details.each do |detail|
             material = Material.find(detail["material_id"])
             warehouse_stock = material_warehouse.material_warehouse_items.find_by(material: material).try(:stock) || 0

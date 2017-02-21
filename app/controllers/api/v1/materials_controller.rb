@@ -18,7 +18,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
       materials = params['search_content'].present? ? Material.where("name_py like :key OR name like :key", {key: ['%',params['search_content'].upcase, '%'].join}) : Material.all
       materials = materials.order(created_at: :desc).page(params[:page] || 1).per(page_size)
       render json: {
-        materials: materials_json(materials),
+        materials: material_json(materials),
         page_size: page_size,
         current_page: materials.current_page,
         total_pages: materials.total_pages,
@@ -73,17 +73,6 @@ class Api::V1::MaterialsController < Api::V1::BaseController
 
   def set_material
     @material = Material.find_by_id(params[:id])
-  end
-
-  def materials_json(materials)
-    materials.as_json(
-      only: %w(id name name_py catalog_id features),
-      methods: %w(stock image_item_ids price unit vendor_ids),
-      include: {
-        vendors: { only: %w(id name)},
-        catalog: { only: %w(id name features), methods: %w(full_name) }
-      }
-    )
   end
 
   def material_json(material)
