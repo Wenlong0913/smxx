@@ -1,13 +1,15 @@
 # csv support
 require 'csv'
 class Admin::MaterialWarehousesController < Admin::BaseController
+  before_action :set_material_warehouses
+  before_action :leastOneWarehouses
   before_action :set_material_warehouse, only: [:show, :edit, :update, :destroy]
 
   # GET /admin/material_warehouses
   def index
     authorize MaterialWarehouse
     @filter_colums = %w(id)
-    @material_warehouses = build_query_filter(MaterialWarehouse.all, only: @filter_colums).page(params[:page])
+    @material_warehouses = build_query_filter(@material_warehouses, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@material_warehouses.to_json, filename: "material_warehouses-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
@@ -70,9 +72,19 @@ class Admin::MaterialWarehousesController < Admin::BaseController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_material_warehouse
-      @material_warehouse = MaterialWarehouse.find(params[:id])
+      @material_warehouse = @material_warehouses.find(params[:id])
     end
 
+    def leastOneWarehouses
+      if @material_warehouses.size < 1
+        MaterialWarehouse::Create.(site_id: params[:site_id], name: '初始厂库')
+      end
+      set_material_warehouses
+    end
+
+    def set_material_warehouses
+      @material_warehouses = MaterialWarehouse.all
+    end
     # Only allow a trusted parameter "white list" through.
     # def admin_material_warehouse_params
     #       #   params[:admin_material_warehouse]
