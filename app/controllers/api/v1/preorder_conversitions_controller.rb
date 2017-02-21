@@ -1,6 +1,6 @@
 class Api::V1::PreorderConversitionsController < Api::BaseController
   before_action :authenticate!
-  before_action :set_preorder_conversition, only: [:create_comment, :comments_index]
+  before_action :set_preorder_conversition, only: [:update, :create_comment, :comments_index, :attachments_index]
 
   def index
     authorize PreorderConversition
@@ -26,6 +26,11 @@ class Api::V1::PreorderConversitionsController < Api::BaseController
     end
   end
 
+  def update
+    @preorder_conversition.update(factory_confirm: true)
+    render json: {status: 'ok'}
+  end
+
   def create_comment
     authorize Order
     preorder_conversition_comment = @preorder_conversition.comments.new(params[:comment].permit(:content, :offer, :image_item_ids => [], :attachment_ids => []))
@@ -43,11 +48,16 @@ class Api::V1::PreorderConversitionsController < Api::BaseController
     render json: {comments: preorder_conversition_comment_json(preorder_conversition_comments), current_page: preorder_conversition_comments.current_page, total_pages: preorder_conversition_comments.total_pages, total_count: preorder_conversition_comments.total_count}
   end
 
+  def attachments_index
+    attachments = @preorder_conversition.attachments
+    render json: { attachments_id_name: attachments.as_json(only: [:id], methods: [:attachment_file_name]) }
+  end
+
   private
     def preorder_conversition_json(preorder_conversitions)
-      preorder_conversitions.as_json(only: [:id, :title, :content, :created_at], methods: [:site_confirm, :factory_confirm],
+      preorder_conversitions.as_json(only: [:id, :title, :content, :created_at], methods: [:member_name, :member_phone, :site_confirm, :factory_confirm],
         include: {
-          site: { only: [:title]},
+          site: { only: [:id, :title]},
           user: { only: [:nickname]},
         }
       )

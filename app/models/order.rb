@@ -28,9 +28,10 @@ class Order < ApplicationRecord
   has_many :attachments, :through => :attachment_relations
   has_one :produce, dependent: :destroy
   before_create :generate_code
-  before_validation :create_member
+  before_validation :check_member
 
-  validates_presence_of :site, :member_name
+  validates_presence_of :site
+  validates_presence_of :member_name, message: '客户名称错误'
   validates_presence_of :member
   validates_uniqueness_of :code
 
@@ -46,12 +47,27 @@ class Order < ApplicationRecord
 
   private
 
+  def check_member
+    if mobile_phone.blank?
+      create_member
+    else
+      user = User.find_by_phone_number(mobile_phone)
+      if user
+        self.user_id = user.id
+      else
+        create_member
+        self.user_id = member.try(:user_id)
+      end
+    end
+  end
+
   def create_member
     flag, member = Member::Create.(mobile_phone: mobile_phone, name: member_name, site_id: site_id)
     if flag
       self.member_id = member.id
+      return member
     else
-      errors.add :member_name, "客户名称错误"
+      errors.add :mobile_phone, member.errors["mobile_phone"].first
     end
   end
 

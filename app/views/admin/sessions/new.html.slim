@@ -22,7 +22,7 @@
       .login-content
 
         .login-buttons.m-b-30.m-t-30.weixin-login[data-session-url=new_users_weixins_sessions_path data-verify-url=status_users_weixins_sessions_path data-qrcode-img-url=new_users_weixins_sessions_path(format: 'png')]
-            button.btn.btn-success.btn-block.btn-lg[data-toggle='modal' data-target='#mobile_login_modal'] 手机号登陆
+            button.btn.btn-success.btn-block.btn-lg[data-toggle='modal' data-target='#mobile_login_modal'] 手机号登录
             button.btn.btn-primary.btn-block.btn-lg[@click="showModal = true"]
               |微信扫码登录
             modal[title="打开微信扫一扫登录" :show="showModal" @cancel="showModal = false"]
