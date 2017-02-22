@@ -6,7 +6,7 @@ class Admin::MarketCatalogsController < Admin::BaseController
   # GET /admin/market_catalogs
   def index
     authorize MarketCatalog
-    @filter_colums = %w(id)
+    @filter_colums = %w(name id)
     @market_catalogs = build_query_filter(MarketCatalog.all, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?

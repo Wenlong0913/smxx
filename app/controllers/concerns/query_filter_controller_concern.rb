@@ -41,10 +41,11 @@ module QueryFilterControllerConcern
         if v
           if v.is_a?(String)
             query << "#{k} SIMILAR TO ?"
+            conditions << "%" + v + "%"
           else
             query << "#{k} = ?"
+            conditions << v
           end
-          conditions << v
         end
       end
 
