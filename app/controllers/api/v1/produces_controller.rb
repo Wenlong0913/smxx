@@ -13,8 +13,10 @@ class Api::V1::ProducesController < Api::V1::BaseController
         order: {
           only: [:id, :code],
           include:{
-            member: {only: [:name]}}
+            member: {only: [:name]},
+            site: {only: [:title ]}
           },
+        },
         tasks: {
           only: [:id, :assignee_id, :title, :description, :status, :resource_id],
           include: {task_type: {only: [:id, :name, :ordinal]}}
