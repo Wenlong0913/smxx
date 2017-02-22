@@ -21,6 +21,7 @@ class Admin::MaterialsController < Admin::BaseController
         format.html { send_data(@materials.to_xml, filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
+        response.headers['Content-Type'] = 'text/html; charset=utf-8'
         format.html { send_data(@materials.as_csv(only: [:id, :name, :name_py, :stock, :price]), filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
