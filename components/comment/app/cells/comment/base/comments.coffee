@@ -156,6 +156,15 @@ $(document).ready ->
             return true
           else
             return false
+        formatDate: (str)->
+          timeDate = new Date(str)
+          year = timeDate.getFullYear()
+          month = timeDate.getMonth() + 1
+          date = timeDate.getDate()
+          hour = timeDate.getHours()
+          minute = timeDate.getMinutes()
+          second = timeDate.getSeconds()
+          return year + '-' + month + '-' + date + '/' + hour + ':' + minute + ':' + second
     loadComments()
 
 

@@ -45,7 +45,7 @@
                 <li>
                   <!-- begin media -->
                   <div class="media">
-                    <%= image_tag (order.products.blank? ? 'no-picture.jpeg' : (order.products.first.image_items.first.try{image_url})) %>
+                    <%= image_tag (order.products.blank? ? 'no-picture.png' : (order.products.first.image_items.first.try{image_url})) %>
                   </div>
                   <!-- end media -->
                   <!-- begin info-container -->
@@ -77,7 +77,7 @@
                     </div>
                     <div class="date-replies">
                       <div class="time">
-                        <%= order.created_at %>
+                        <%= order.created_at.strftime("%Y-%m-%d/%H:%M:%S") %>
                       </div>
                       <div class="replies">
                         <div class="text"><%= order.status %></div>

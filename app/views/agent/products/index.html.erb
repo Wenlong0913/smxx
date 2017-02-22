@@ -65,7 +65,7 @@
               <!-- BEGIN item -->
               <div class="item item-thumbnail">
                   <%= link_to agent_product_path(product), class: 'item-image' do%>
-                    <%= image_tag product.image_items.first.try{image_url}||'no-picture.jpeg'%>
+                    <%= image_tag product.image_items.first.try{image_url}||'no-picture.png'%>
                     <% if product.discount.present? && product.discount.to_f > 0 && product.discount.to_f < product.price.to_f %>
                       <div class="discount">优惠折扣中</div>
                     <% end %>
