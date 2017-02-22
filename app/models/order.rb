@@ -42,6 +42,12 @@ class Order < ApplicationRecord
     self.status ||= 0
   end
 
+  before_save do
+    if self.price.blank?
+      self.price = 0
+    end
+  end
+
   def member
     return nil unless site
     return site.members.where(user: user).first if user
