@@ -8,14 +8,14 @@
       ul.parent-content[type='none']
         li.li-content[v-for="comment in comments" :class=" comment.user.id == currentUserId ? 'other' : '' "]
           .user-image[style="width:50px"]
-            = image_tag 'no-picture.jpeg'
+            = image_tag 'no-picture.png'
           .message-right
             .title-top
               .user-name
                 | {{ comment.user.nickname }}
               .time
                 small
-                  | {{ comment.created_at }}
+                  | {{ formatDate(comment.created_at) }}
             .message-content
               | :&nbsp;{{ comment.content }}
               .expected.text-danger[v-if="comment.offer"]
