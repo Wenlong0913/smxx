@@ -85,8 +85,8 @@
               td
                 = produce.created_at.localtime
               td
-                => link_to '查看', admin_order_produce_path(produce.order, produce), class: "btn btn-xs btn-default #{'hide' if produce.status == 'wait_for_task'}"
-                / => link_to '编辑', edit_admin_produce_path(produce), class: 'btn btn-xs btn-default'
+                = link_to '查看', admin_order_produce_path(produce.order, produce), class: "btn btn-xs btn-default m-r-5"
+                / = link_to '编辑', edit_admin_order_produce_path(produce), class: 'btn btn-xs btn-default'
                 = link_to '删除', admin_order_produce_path(produce.order, produce), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
     .modal.fade.create_task[tabindex="-1" role="dialog" aria-labelledby="create_task" aria-hidden="true"]
       .modal-dialog
