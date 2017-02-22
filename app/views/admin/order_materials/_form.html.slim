@@ -6,7 +6,7 @@
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
   .panel-body
-    = simple_form_for @order_material, url: @order_material.new_record? ? admin_order_materials_path : admin_order_material_path(@order_material), validate: true do |f|
+    = simple_form_for @order_material, url: @order_material.new_record? ? admin_order_materials_path : admin_order_material_path(@order, @order_material), validate: true do |f|
       - if @order_material.errors.any?
         #error_explanation
           

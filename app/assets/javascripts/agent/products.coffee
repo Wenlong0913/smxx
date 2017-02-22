@@ -54,7 +54,6 @@ $(document).ready ->
           this.count++
           this.lists.push({key: '', value: '', name: this.count})
         removeInputList: (index)->
-          console.log index
           this.lists.splice(index, 1)
     editProductsData = editProducts._data
     defaultkeys = bodyShow.find('#editModal').data('keys')
@@ -62,7 +61,6 @@ $(document).ready ->
     editProductsData.lists = []
     max = 0
     for name, v of defaultkeys
-      console.log parseInt(name)
       if parseInt(name) > 0
         max = parseInt(name) if max < parseInt(name)
         editProductsData.lists.push {key: v, name: parseInt(name), value: defaultvalues[name]}
@@ -72,6 +70,17 @@ $(document).ready ->
   # new
   bodyNew = $('body.agent-products.new')
   if bodyNew.length > 0
+    # 检测名称是否填写
+    bodyNew.find('input#product_name').val('')
+    $("#basicInformation a[href='#configurationInformation']").on　'show.bs.tab', ->
+      productNameDom = $(this).parents('#basicInformation').find('input#product_name')
+      if productNameDom.val() == "" || productNameDom == null
+        $.gritter.add({title: '提示', text: "商品基本信息：产品名称必须填写！"})
+        productNameDom.css('border','1px solid red')
+        productNameDom.on 'focus', ->
+          productNameDom.css('border','1px solid #ccd0d4')
+        return false
+
     bodyNew.find('.weight-input-group .input-group-btn ul.dropdown-menu li a').off().on 'click', ->
       selectedVal = $(this).data('val')
       selectedText = $(this).text()
@@ -83,7 +92,6 @@ $(document).ready ->
       data:
         id: container[0].dataset["catalogId"]
         showCatalog: false
-        as: '654554'
         catalogs: container[0].dataset["catalogName"]
       methods:
         selected: (catalogs)->
@@ -109,9 +117,9 @@ $(document).ready ->
       change_step_class = $(this).attr("href").replace("#", "")
       bodyNew.find('.checkout-header .step').removeClass('active')
       bodyNew.find("."+change_step_class).addClass('active')
-    bodyNew.find('form').on 'ajax:error', (event,request)->
+    bodyNew.find('form#new_product').on 'ajax:error', (event,request)->
       return_mess(setinterval_1, '发送失败！请检查网络')
-    bodyNew.find('form #new_product').on 'ajax:success', (event,request)->
+    bodyNew.find('form#new_product').on 'ajax:success', (event,request)->
       bodyNew.find('#last .new-product').attr("href", request.url)
       bodyNew.find('.checkout-header .step').removeClass('active')
       bodyNew.find("[role='tabpanel']").removeClass('active in')

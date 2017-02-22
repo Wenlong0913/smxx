@@ -29,15 +29,20 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
 
   def update
     authorize @material_purchase
+    import_flag = true
     if params["material_management"]
-      process_material_purchase_import
+      import_flag, import_record = process_material_purchase_import
     end
-    @material_purchase.paid = @material_purchase.paid.to_f + params[:material_purchase][:paying].to_f
-    flag, material_purchase = MaterialPurchase::Update.(@material_purchase, permitted_attributes(@material_purchase))
-    if flag
-      render json: {status: 'ok', material_purchase: material_purchase_json(material_purchase)}
+    if import_flag
+      @material_purchase.paid = @material_purchase.paid.to_f + params[:material_purchase][:paying].to_f
+      flag, material_purchase = MaterialPurchase::Update.(@material_purchase, permitted_attributes(@material_purchase))
+      if flag
+        render json: {status: 'ok', material_purchase: material_purchase_json(material_purchase)}
+      else
+        render json: {status: 'failed', error_message:  material_purchase.errors.full_messages.join(', ') }
+      end
     else
-      render json: {status: 'failed', error_message:  material_purchase.errors.full_messages.join(', ') }
+      render json: {status: 'failed', error_message:  import_record.errors.full_messages.join(', ') }
     end
   end
 

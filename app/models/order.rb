@@ -16,6 +16,7 @@ class Order < ApplicationRecord
 
   belongs_to :user
   belongs_to :site
+  belongs_to :preorder_conversition
 
   has_many_comments
   has_many :order_products, dependent: :destroy
@@ -42,7 +43,10 @@ class Order < ApplicationRecord
   end
 
   def member
-    (site && user && site.members.where(user: user).first) || site.members.where(id: member_id).first
+    return nil unless site
+    return site.members.where(user: user).first if user
+    return site.members.where(id: member_id).first
+    nil
   end
 
   private
@@ -55,7 +59,7 @@ class Order < ApplicationRecord
       if user
         self.user_id = user.id
       else
-        create_member
+        member = create_member
         self.user_id = member.try(:user_id)
       end
     end
@@ -68,6 +72,7 @@ class Order < ApplicationRecord
       return member
     else
       errors.add :mobile_phone, member.errors["mobile_phone"].first
+      return nil
     end
   end
 

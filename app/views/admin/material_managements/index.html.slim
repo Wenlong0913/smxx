@@ -12,7 +12,7 @@ h1.page-header
         i class="fa fa-minus"
   .panel-body
     = form_for :search, url:  admin_material_managements_path, method: :get do |f|
-      .toolbar.row
+      / .toolbar.row
         .col-md-12
           p
             |支持SIMILAR TO查询语法, %代表匹配所有，_代表匹配一个字符
@@ -21,11 +21,16 @@ h1.page-header
         .col-md-6.m-b-15
           .input-group.search_all
             input[type="hidden" name="type" value="#{@type}"]
-            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '关键字搜索...'
+            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '物料/日期搜索...'
             span.input-group-btn
               button.btn.btn-inverse[type='submit']
                 i.fa.fa-search
-        .col-md-6.m-b-15
+      .toolbar.row
+        .col-md-12
+          p
+            h5
+              |注意：查询时请输入'xxxx-xx-xx'格式的内容
+        / .col-md-6.m-b-15
           .btn-group
             button.btn.btn-default.dropdown-toggle[type='button'data-toggle='dropdown']
               | 筛选列名
@@ -34,11 +39,11 @@ h1.page-header
               - @filter_colums.each do |filter_colum|
                 li
                   a[href='javascript:;' data-key=filter_colum] = filter_colum
-          .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
+          / .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
             button.btn.btn-default[type='submit'name='json'value='json'] json
             button.btn.btn-default[type='submit'name='xml'value='xml'] xml
             button.btn.btn-default[type='submit'name='csv'value='csv'] csv
-      .well.form-horizontal.filter_search[class==params[:filters]?'show':'hidden']
+      / .well.form-horizontal.filter_search[class==params[:filters]?'show':'hidden']
         - if params[:filters] && !params[:filters].keys.blank?
           - params[:filters].keys.each do |key|
             .form-group
@@ -81,6 +86,7 @@ h1.page-header
                 td = detail.material.name_py
                 td = detail.number
                 td = material_management.note
+    = paginate @material_managements
 / TODO: move this code to application.js
 javascript:
   $(document).ready(function(){

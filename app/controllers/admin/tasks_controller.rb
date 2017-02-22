@@ -68,7 +68,7 @@ class Admin::TasksController < Admin::BaseController
   # PATCH/PUT /admin/tasks/1
   def update
     authorize @task
-    if Task.statues.key?(params[:status])
+    if Task.statuses.key?(params[:status])
       @task.send("#{params[:status]}!")
       render json: {message: '更新成功.', status: params[:status]}
     else
