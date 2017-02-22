@@ -10,7 +10,12 @@ class Api::V1::OrderMaterialsController < Api::BaseController
 
   def create
     authorize Order
-    order_material = @order.order_materials.new(permitted_attributes(OrderMaterial))
+    order_material = @order.order_materials.where(material_id: params[:order_material][:material_id]).first
+    if order_material
+      order_material.amount += params[:order_material][:amount]
+    else
+      order_material = @order.order_materials.new(permitted_attributes(OrderMaterial))
+    end
     if order_material.save
       render json: {status: 'ok', order_material: order_materials_json(order_material)}
     else
