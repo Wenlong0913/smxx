@@ -11,12 +11,12 @@ h1.page-header
         i class="fa fa-minus"
   .panel-body
     = form_for :search, url:  admin_material_management_histories_path, method: :get do |f|
-      .toolbar.row
+      / .toolbar.row
         .col-md-12
           p
             |支持SIMILAR TO查询语法, %代表匹配所有，_代表匹配一个字符
             a<[href="https://www.postgresql.org/docs/current/static/functions-matching.html" target="_blank"]查看详情说明
-      .toolbar.row
+      / .toolbar.row
         .col-md-6.m-b-15
           .input-group.search_all
             = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '关键字搜索...'
@@ -36,7 +36,7 @@ h1.page-header
             button.btn.btn-default[type='submit'name='json'value='json'] json
             button.btn.btn-default[type='submit'name='xml'value='xml'] xml
             button.btn.btn-default[type='submit'name='csv'value='csv'] csv
-      .well.form-horizontal.filter_search[class==params[:filters]?'show':'hidden']
+      / .well.form-horizontal.filter_search[class==params[:filters]?'show':'hidden']
         - if params[:filters] && !params[:filters].keys.blank?
           - params[:filters].keys.each do |key|
             .form-group
@@ -48,14 +48,14 @@ h1.page-header
                 input.form-control[type="text"name==input_name value==params[:filters][key]]
         hr.filters_box
         button.btn.btn-inverse.p-l-20.p-r-20.pull-center[type='submit'] 搜索
-    - if params[:search]
-      .alert.alert-success.m-b-15
-        strong
-          = "查询："
-        span
-          = @admin_material_management_histories.size.to_s + "条记录"
-        span.close[data-dismiss="alert"]
-          | ×
+    / - if params[:search]
+    /   .alert.alert-success.m-b-15
+    /     strong
+    /       = "查询："
+    /     span
+    /       = @admin_material_management_histories.size.to_s + "条记录"
+    /     span.close[data-dismiss="alert"]
+    /       | ×
     .table-responsive.row.m-0
       table.table.table-striped.table-bordered
         thead
@@ -74,8 +74,8 @@ h1.page-header
               | 仓库名称
             th
               | 出入库数量
-            th
-              | 相关单号
+            / th
+            /   | 相关单号
         tbody
           - @admin_material_management_histories.each do |admin_material_management_history|
             tr
@@ -90,10 +90,11 @@ h1.page-header
               td
                 = admin_material_management_history.material.try(:name)
               td
-                
+                = admin_material_management_history.material_management.material_warehouse.name
               td
                 = admin_material_management_history.number
-              td
+              / td
+    = paginate @admin_material_management_histories
 / TODO: move this code to application.js
 javascript:
   $(document).ready(function(){

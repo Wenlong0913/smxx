@@ -21,6 +21,7 @@
         .search-item-container.container-list
           .row
             - @preorder_conversitions.each do |preorder_conversition|
+              - order = preorder_conversition.orders.first
               .col-sm-6.col-md-4
                 .thumbnail
                   .caption
@@ -32,28 +33,36 @@
                     ul.order-message[type="none"]
                       li.row
                         .col-xs-4 创建时间:
-                        .col-xs-8 = preorder_conversition.created_at
-                      - if status
-                        li.row
-                          .col-xs-4 预计价格:
-                          .col-xs-8 = preorder_conversition.offer
+                        .col-xs-8 = preorder_conversition.created_at.strftime("%Y-%m-%d/%H:%M:%S")
                       li.row
                         .col-xs-4 进度:
-                        .col-xs-8
+                        .col-xs-8.p-0
                           label.text-success
-                            - if preorder_conversition.site_confirm && preorder_conversition.factory_confirm
-                              = '已审核'
-                            - elsif !preorder_conversition.factory_confirm && preorder_conversition.site_confirm
-                              = '待工厂方审核'
-                            - elsif preorder_conversition.factory_confirm && !preorder_conversition.site_confirm
-                              = '待审核'
+                            - if order
+                              - if order.status == 'completed'
+                                = '工厂生产已完成'
+                              - if order.status == 'cancelled'
+                                = '工厂生产已取消'
+                              - if order.status == 'processing'
+                                = '工厂生产中'
                             - else
-                              = '协商中'
+                              - if preorder_conversition.site_confirm && preorder_conversition.factory_confirm
+                                = '已审核'
+                              - elsif !preorder_conversition.factory_confirm && preorder_conversition.site_confirm
+                                = '待工厂方审核'
+                              - elsif preorder_conversition.factory_confirm && !preorder_conversition.site_confirm
+                                = '待审核'
+                              - else
+                                = '协商中'
                       li.row
                         .col-xs-4 生产订单:
-                        .col-xs-8
-                          label.text-warning
-                            = link_to '201650294510623', '＃', class: 'text-warning'
+                        .col-xs-8.p-0
+                          label
+                            - if order
+                              = link_to agent_order_path(order) do
+                                i.fa.fa-link.m-r-5
+                                span
+                                  = order.code
 
                     div.text-right
                       = link_to '查看设计详细', agent_preorder_conversition_path(preorder_conversition), class: 'btn btn-primary btn-sm'
@@ -65,7 +74,7 @@
         = form_for :search, url: agent_preorder_conversitions_path, method: :get do |f|
           .form-group
             .control-label 关键字
-            = f.text_field :keywords, placeholder: "输入查询关键字", class: 'form-control input-sm'
+            = f.text_field :keywords, placeholder: "输入查询关键字", class: 'form-control input-sm', value: (params[:search][:keywords] if params[:search].present?)
           .m-b-30
             button.btn.btn-sm.btn-inverse[type="submit"]
               i.fa.fa-search

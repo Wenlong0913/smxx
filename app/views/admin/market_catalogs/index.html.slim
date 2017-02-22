@@ -32,7 +32,7 @@ h1.page-header
             ul.dropdown-menu#search_column[role='menu']
               - @filter_colums.each do |filter_colum|
                 li
-                  a[href='javascript:;' data-key=filter_colum] = filter_colum
+                  a[href='javascript:;' data-key=filter_colum] = MarketCatalog.human_attribute_name(filter_colum)
           .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
             button.btn.btn-default[type='submit'name='json'value='json'] json
             button.btn.btn-default[type='submit'name='xml'value='xml'] xml
@@ -43,7 +43,7 @@ h1.page-header
             .form-group
               label.col-xs-1.control-label
                 i.fa.fa-trash-o.m-r-5
-                b = key
+                b = MarketCatalog.human_attribute_name(key)
               - input_name = "filters["+key+"]"
               .col-xs-5
                 input.form-control[type="text"name==input_name value==params[:filters][key]]
