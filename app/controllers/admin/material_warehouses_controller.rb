@@ -69,7 +69,7 @@ class Admin::MaterialWarehousesController < Admin::BaseController
       @material_warehouse.destroy
       redirect_to admin_material_warehouses_path, notice: "#{MaterialWarehouse.model_name.human} 删除成功."
     else
-      redirect_to admin_material_warehouses_path, notice: "厂库必须至少保留一个."
+      redirect_to admin_material_warehouses_path, notice: "仓库必须至少保留一个."
     end
   end
 

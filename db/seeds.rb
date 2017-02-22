@@ -62,9 +62,9 @@ vendor_names.each do |vendor_name|
   _, vendor_user = Vendor::Create.(name: vendor_name, contact_name: vendor_name + '联系人', phone_number: '152133643' + (10..99).to_a.sample(1).join)
 end
 
-# 创建厂库
-puts "创建初始厂库"
-MaterialWarehouse::Create.(site_id: Site.first.id, name: '初始厂库')
+# 创建仓库
+puts "创建初始仓库"
+MaterialWarehouse::Create.(site_id: Site.first.id, name: '初始仓库')
 
 # 德格物料分类 & 物料
 puts "创建物料分类 & 物料"
