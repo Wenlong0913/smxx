@@ -12,7 +12,7 @@ h1.page-header
         i class="fa fa-minus"
   .panel-body
     = form_for :search, url:  admin_material_warehouses_path, method: :get do |f|
-      .toolbar.row
+      / .toolbar.row
         .col-md-12
           p
             |支持SIMILAR TO查询语法, %代表匹配所有，_代表匹配一个字符
@@ -20,7 +20,7 @@ h1.page-header
       .toolbar.row
         .col-md-6.m-b-15
           .input-group.search_all
-            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '关键字搜索...'
+            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '仓库名搜索...'
             span.input-group-btn
               button.btn.btn-inverse[type='submit']
                 i.fa.fa-search
@@ -32,7 +32,7 @@ h1.page-header
             ul.dropdown-menu#search_column[role='menu']
               - @filter_colums.each do |filter_colum|
                 li
-                  a[href='javascript:;' data-key=filter_colum] = filter_colum
+                  a[href='javascript:;' data-key=filter_colum] = MaterialWarehouse.human_attribute_name(filter_colum.to_sym)
           .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
             button.btn.btn-default[type='submit'name='json'value='json'] json
             button.btn.btn-default[type='submit'name='xml'value='xml'] xml
@@ -43,7 +43,7 @@ h1.page-header
             .form-group
               label.col-xs-1.control-label
                 i.fa.fa-trash-o.m-r-5
-                b = key
+                b = MaterialWarehouse.human_attribute_name(key.to_sym)
               - input_name = "filters["+key+"]"
               .col-xs-5
                 input.form-control[type="text"name==input_name value==params[:filters][key]]
@@ -77,6 +77,7 @@ h1.page-header
                 => link_to '查看', admin_material_warehouse_path(material_warehouse), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_material_warehouse_path(material_warehouse), class: 'btn btn-xs btn-default'
                 = link_to '删除', admin_material_warehouse_path(material_warehouse), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+    = paginate @material_warehouses
 / TODO: move this code to application.js
 javascript:
   $(document).ready(function(){
