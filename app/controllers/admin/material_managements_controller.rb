@@ -8,7 +8,16 @@ class Admin::MaterialManagementsController < Admin::BaseController
     authorize MaterialManagement
     @filter_colums = %w(id)
     return redirect_to admin_root_path, alert: "访问的页面不存在" unless @type
-    @material_managements = build_query_filter(MaterialManagement.all.send(@type), only: @filter_colums).order("created_at desc").page(params[:page])
+    @material_managements = MaterialManagement.all.send(@type)
+    if params[:search] && params[:search][:keywords]
+      if params[:search][:keywords] =~ /^\d{4}-\d{1,2}-\d{1,2}$/
+        @material_managements = @material_managements.where(operate_date: params[:search][:keywords])
+      else
+        material_id = Material.where("name like ?", ['%', params[:search][:keywords], '%'].join).pluck(:id)
+        @material_managements = @material_managements.joins("join material_management_details on material_management_details.material_management_id = material_managements.id").where("material_management_details.material_id in (?)", material_id)
+      end
+    end
+    @material_managements = @material_managements.page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@material_managements.to_json, filename: "material_managements-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

@@ -11,7 +11,7 @@ h1.page-header
         i class="fa fa-minus"
   .panel-body
     = form_for :search, url:  admin_material_stock_alerts_path, method: :get do |f|
-      .toolbar.row
+      / .toolbar.row
         .col-md-12
           p
             |支持SIMILAR TO查询语法, %代表匹配所有，_代表匹配一个字符
@@ -19,11 +19,11 @@ h1.page-header
       .toolbar.row
         .col-md-6.m-b-15
           .input-group.search_all
-            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '关键字搜索...'
+            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '物料名称搜索...'
             span.input-group-btn
               button.btn.btn-inverse[type='submit']
                 i.fa.fa-search
-        .col-md-6.m-b-15
+        / .col-md-6.m-b-15
           .btn-group
             button.btn.btn-default.dropdown-toggle[type='button'data-toggle='dropdown']
               | 筛选列名
@@ -36,7 +36,7 @@ h1.page-header
             button.btn.btn-default[type='submit'name='json'value='json'] json
             button.btn.btn-default[type='submit'name='xml'value='xml'] xml
             button.btn.btn-default[type='submit'name='csv'value='csv'] csv
-      .well.form-horizontal.filter_search[class==params[:filters]?'show':'hidden']
+      / .well.form-horizontal.filter_search[class==params[:filters]?'show':'hidden']
         - if params[:filters] && !params[:filters].keys.blank?
           - params[:filters].keys.each do |key|
             .form-group
@@ -79,6 +79,7 @@ h1.page-header
                 = material_stock_alert.body
               td
                 = decorate(material_stock_alert).display_status
+    = paginate @material_stock_alerts
 / TODO: move this code to application.js
 javascript:
   $(document).ready(function(){

@@ -7,7 +7,7 @@ class Admin::MaterialWarehousesController < Admin::BaseController
   # GET /admin/material_warehouses
   def index
     authorize MaterialWarehouse
-    @filter_colums = %w(id)
+    @filter_colums = %w(name)
     @material_warehouses = build_query_filter(@material_warehouses, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?
