@@ -9,7 +9,7 @@ class Admin::MaterialsController < Admin::BaseController
   # GET /admin/materials
   def index
     authorize Material
-    @filter_colums = %w(id)
+    @filter_colums = %w(name name_py)
     @materials = build_query_filter(Material.all, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:format] == "json"
