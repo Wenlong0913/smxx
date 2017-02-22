@@ -23,7 +23,6 @@ class Api::V1::MaterialWarehousesController < Api::V1::BaseController
     end
   end
 
-
   private
 
   def material_warehouse_json(material_warehouses)

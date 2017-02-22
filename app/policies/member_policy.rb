@@ -46,6 +46,6 @@ class MemberPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_update
-    permitted_attributes_for_create - [:mobile_phone]
+    permitted_attributes_for_create
   end
 end

@@ -9,7 +9,7 @@ class Admin::MaterialsController < Admin::BaseController
   # GET /admin/materials
   def index
     authorize Material
-    @filter_colums = %w(id)
+    @filter_colums = %w(name name_py)
     @materials = build_query_filter(Material.all, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:format] == "json"
@@ -21,7 +21,8 @@ class Admin::MaterialsController < Admin::BaseController
         format.html { send_data(@materials.to_xml, filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@materials.as_csv(only: ['id', 'name']), filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        response.headers['Content-Type'] = 'text/html; charset=utf-8'
+        format.html { send_data(@materials.as_csv(only: [:id, :name, :name_py, :stock, :price]), filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end

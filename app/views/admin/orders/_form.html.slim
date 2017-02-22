@@ -15,8 +15,10 @@
       /         li = message
       - unless @order.new_record?
         = f.input :code, disabled: true
-      = f.association :site
-      = f.input :member, placeholder: '需要实现：选择代理商后，动态更新客户列表', collection: Member.all, selected: @order.user.try{id}, include_blank: true
+      = f.association :site, collection: Site.all.map{|s| [s.user.nickname, s.id]}
+      / = f.input :member, placeholder: '需要实现：选择代理商后，动态更新客户列表', collection: Member.all, selected: @order.user.try{id}, include_blank: true
+      = f.input :member_name, input_html: {value: (@order.member.name if @order.member)}
+      = f.input :mobile_phone, input_html: {value: (@order.member.mobile_phone if @order.member)}
       = f.input :price, placeholder: '创建时，不填价格，价格在拆单后由拆单人员填写'
       = f.input :description, as: :text, placeholder: '这里填写用户需求'
       = f.input :images do

@@ -20,14 +20,14 @@
             <div class="col-md-6 text-right">
               <ul class="sort-list">
                 <li class="text"><i class="fa fa-filter"></i> 排序方式:</li>
-                <li class="<%= 'sign' unless params[:reorder].present? %>">
-                  <%= link_to '默认', agent_products_path %>
+                <li class="<%= 'sign active' unless params[:reorder].present? %>">
+                  <%= link_to '默认', agent_orders_path %>
                 </li>
                 <li class="<%= 'sign' if params[:reorder] == 'newest' %>">
-                  <%= link_to '最新', agent_products_path+"?reorder=newest" %>
+                  <%= link_to '最新', agent_orders_path+"?reorder=newest" %>
                 </li>
                 <li class="<%= 'sign' if params[:reorder] == 'price' %>">
-                  <%= link_to '价格', agent_products_path+"?reorder=price" %>
+                  <%= link_to '价格', agent_orders_path+"?reorder=price" %>
                 </li>
               </ul>
             </div>
@@ -45,7 +45,7 @@
                 <li>
                   <!-- begin media -->
                   <div class="media">
-                    <%= image_tag (order.products.blank? ? 'no-picture' : (order.products.first.image_items.first.try{image_url})) %>
+                    <%= image_tag (order.products.blank? ? 'no-picture.png' : (order.products.first.image_items.first.try{image_url})) %>
                   </div>
                   <!-- end media -->
                   <!-- begin info-container -->
@@ -77,13 +77,10 @@
                     </div>
                     <div class="date-replies">
                       <div class="time">
-                        <%= order.created_at %>
+                        <%= order.created_at.strftime("%Y-%m-%d/%H:%M:%S") %>
                       </div>
                       <div class="replies">
-                        <%= link_to agent_order_path(order) do %>
-                        <div class="total"><%= order.status %></div>
-                        <div class="text">查看</div>
-                        <% end %>
+                        <div class="text"><%= order.status %></div>
                       </div>
                     </div>
                   </div>

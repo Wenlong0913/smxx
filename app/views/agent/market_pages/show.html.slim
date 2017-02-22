@@ -19,7 +19,7 @@
           div style="text-align: center; margin-top:50px;"
             h2
               = @market_page.name
-            img src="http://qr.liantu.com/api.php?text=#{agent_frontend_market_page_path(@site, @market_page)}&w=200" /
+            img src="http://qr.liantu.com/api.php?text=#{agent_frontend_market_page_url(@site, @market_page)}&w=200" /
             br 营销页二维码，用手机扫描打开
 
           .panel.panel-info

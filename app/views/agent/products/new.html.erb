@@ -60,7 +60,7 @@
                 <div class="checkout-body">
                   <div class="col-xs-8 left-form-content">
                     <div class="form-group">
-                      <%= f.input :name %>
+                      <%= f.input :name, input_html: { value: '' } %>
                     </div>
                     <div rel="catalog-list">
                       <div class="form-group catalog-list" data-catalog-name="<%= @product.catalog.try(:name) %>" data-catalog-id="<%= @product.catalog_id %>">

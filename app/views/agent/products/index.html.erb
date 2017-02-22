@@ -22,7 +22,7 @@
             <div class="col-md-6">
               <h4>商品列表
               <% if params[:search].present? %>
-                <span>‘xx’ 搜索出 3个 商品</span>
+                <span>: 搜索出 <%= @products.size %> 商品</span>
               <% end %>
               </h4>
             </div>
@@ -65,7 +65,7 @@
               <!-- BEGIN item -->
               <div class="item item-thumbnail">
                   <%= link_to agent_product_path(product), class: 'item-image' do%>
-                    <%= image_tag product.image_items.first.try{image_url}||'no-picture'%>
+                    <%= image_tag product.image_items.first.try{image_url}||'no-picture.png'%>
                     <% if product.discount.present? && product.discount.to_f > 0 && product.discount.to_f < product.price.to_f %>
                       <div class="discount">优惠折扣中</div>
                     <% end %>
@@ -110,27 +110,27 @@
       <!-- BEGIN search-sidebar -->
       <div class="search-sidebar">
           <h4 class="title">查询</h4>
-          <form action="search_results.html" method="POST" name="filter_form">
-              <div class="form-group">
-                  <label class="control-label">关键字</label>
-                  <input class="form-control input-sm" name="keyword" value="" placeholder="输入查询关键字" type="text">
-              </div>
-              <div class="form-group">
-                  <label class="control-label">价格</label>
-                  <div class="row row-space-0">
-                      <div class="col-md-5">
-                          <input class="form-control input-sm" name="price_from" value="10" placeholder="Price From" type="number">
-                      </div>
-                      <div class="col-md-2 text-center p-t-5 f-s-12 text-muted">～</div>
-                      <div class="col-md-5">
-                          <input class="form-control input-sm" name="price_to" value="10000" placeholder="Price To" type="number">
-                      </div>
+          <%= form_for :search, url: agent_products_path, method: :get do |f| %>
+            <div class="form-group">
+              <div class="control-label">关键字</div>
+              <%= f.text_field :keywords, value: (params[:search][:keywords] if params[:search]), placeholder: "输入查询关键字", class: 'form-control input-sm'%>
+            </div>
+            <div class="form-group">
+              <label class="control-label">价格</label>
+              <div class="row row-space-0">
+                  <div class="col-md-5">
+                    <%= f.text_field :price_from, value: (params[:search][:price_form] if params[:search]),class: 'form-control input-sm', min: '0'%>
+                  </div>
+                  <div class="col-md-2 text-center p-t-5 f-s-12 text-muted">～</div>
+                  <div class="col-md-5">
+                    <%= f.text_field :price_to, value: (params[:search][:price_to] if params[:search]),class: 'form-control input-sm', min: '0'%>
                   </div>
               </div>
-              <div class="m-b-30">
-                  <button type="submit" class="btn btn-sm btn-inverse"><i class="fa fa-search"></i> 查询</button>
-              </div>
-          </form>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-sm btn-inverse"><i class="fa fa-search"></i> 查询</button>
+            </div>
+          <% end %>
           <h4 class="title m-b-0">分类</h4>
           <ul class="search-category-list">
             <% @catalogs.each do |catalog| %>

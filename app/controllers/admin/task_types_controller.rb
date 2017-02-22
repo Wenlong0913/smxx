@@ -6,7 +6,7 @@ class Admin::TaskTypesController < Admin::BaseController
   # GET /admin/task_types
   def index
     authorize TaskType
-    @filter_colums = %w(id)
+    @filter_colums = %w(name)
     @task_types = build_query_filter(TaskType.all, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?

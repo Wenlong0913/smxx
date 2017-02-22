@@ -10,7 +10,7 @@ module Comment
     has_many :attachment_relations, as: :relation, dependent: :destroy
     has_many :attachments, :through => :attachment_relations
 
-    # validates_presence_of :content
+    validates_presence_of :content
     validate :check_parent_id
 
     def check_parent_id

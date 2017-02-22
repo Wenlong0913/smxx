@@ -76,30 +76,39 @@
                 a = @preorder_conversition.member_name
             li
               h4.sidebar-text
-                span 预计报价：
-                span.text-danger
-                  / - if @preorder_conversition.status == 'completed'
-                  = @preorder_conversition.offer
-            li
-              h4.sidebar-text
                 span 下单日期：
-                span = @preorder_conversition.created_at
-            / li
-            /   h4.sidebar-text
-            /     span 交货日期：
-            /     span.text-warning 订单确认中
+                span = @preorder_conversition.created_at.strftime("%Y-%m-%d/%H:%M:%S")
             li
               h4.sidebar-text
                 span 进度：
                 span#schedule.text-warning
-                  - if @preorder_conversition.site_confirm && @preorder_conversition.factory_confirm
-                    = '已审核'
-                  - elsif !@preorder_conversition.factory_confirm && @preorder_conversition.site_confirm
-                    = '待工厂方审核'
-                  - elsif @preorder_conversition.factory_confirm && !@preorder_conversition.site_confirm
-                    = '待审核'
+                  - order = @preorder_conversition.orders.first
+                  - if order
+                    - if order.status == 'completed'
+                      = '工厂生产已完成'
+                    - if order.status == 'cancelled'
+                      = '工厂生产已取消'
+                    - if order.status == 'processing'
+                      = '工厂生产中'
                   - else
-                    = '协商中'
+                    - if @preorder_conversition.site_confirm && @preorder_conversition.factory_confirm
+                      = '已审核'
+                    - elsif !@preorder_conversition.factory_confirm && @preorder_conversition.site_confirm
+                      = '待工厂方审核'
+                    - elsif @preorder_conversition.factory_confirm && !@preorder_conversition.site_confirm
+                      = '待审核'
+                    - else
+                      = '协商中'
+            li
+              h4.sidebar-text
+                span.p 生产订单：
+                span
+                  - if order
+                    = link_to agent_order_path(order) do
+                      i.fa.fa-link.m-r-5
+                      span
+                        = order.code
+
             li
               h4.sidebar-text
                 span 备注：

@@ -9,12 +9,12 @@ class Admin::MaterialManagementHistoriesController < Admin::BaseController
     @admin_material_management_histories = build_query_filter(MaterialManagementDetail.all, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?
-        format.html { send_data(@admin_material_management_details.to_json, filename: "admin_material_management_details-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
+        format.html { send_data(@admin_material_management_histories.to_json, filename: "admin_material_management_details-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
       elsif params[:xml].present?
-        format.html { send_data(@admin_material_management_details.to_xml, filename: "admin_material_management_details-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
+        format.html { send_data(@admin_material_management_histories.to_xml, filename: "admin_material_management_details-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@admin_material_management_details.as_csv(only: []), filename: "admin_material_management_details-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@admin_material_management_histories.as_csv(only: []), filename: "admin_material_management_details-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end
