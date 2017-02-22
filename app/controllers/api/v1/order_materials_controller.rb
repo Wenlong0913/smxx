@@ -14,7 +14,7 @@ class Api::V1::OrderMaterialsController < Api::BaseController
     if order_material.save
       render json: {status: 'ok', order_material: order_materials_json(order_material)}
     else
-      render json: {status: 'failed', error_message:  order_material.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
+      render json: {status: 'failed', error_message:  order_material.errors.full_messages }
     end
   end
 

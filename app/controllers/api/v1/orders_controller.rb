@@ -1,7 +1,7 @@
 class Api::V1::OrdersController < Api::BaseController
   before_action :authenticate!
   before_action :set_orders, only: [:index]
-  # before_action :set_order, only: [:create_comment, :comments_index]
+  before_action :set_order, only: [:show]
 
   def index
     authorize Order
@@ -21,6 +21,11 @@ class Api::V1::OrdersController < Api::BaseController
       order.errors.messages.delete(:member)
       render json: {status: 'failed', error_message:  order.errors.messages.values.join(', ') }
     end
+  end
+
+  def show
+    authorize @order
+    render json: {status: 'ok', order: order_json(@order)}
   end
 
   # def create_comment
@@ -67,9 +72,9 @@ class Api::V1::OrdersController < Api::BaseController
       )
     end
 
-    # def set_order
-    #   @order = Order.find(params[:id])
-    # end
+    def set_order
+      @order = Order.find(params[:id])
+    end
 
     # def order_comment_json(comment)
     #   comment.as_json(
