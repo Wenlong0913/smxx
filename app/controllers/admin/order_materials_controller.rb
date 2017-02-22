@@ -65,7 +65,7 @@ class Admin::OrderMaterialsController < Admin::BaseController
   def destroy
     authorize @order_material
     @order_material.destroy
-    redirect_to admin_order_materials_url, notice: "#{OrderMaterial.model_name.human} 删除成功."
+    redirect_to admin_order_path(@order), notice: "#{OrderMaterial.model_name.human} 删除成功."
   end
 
   private

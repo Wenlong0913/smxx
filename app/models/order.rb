@@ -72,7 +72,7 @@ class Order < ApplicationRecord
       return member
     else
       errors.add :mobile_phone, member.errors["mobile_phone"].first
-      returnn nil
+      return nil
     end
   end
 
