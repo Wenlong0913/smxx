@@ -12,7 +12,7 @@ class User
           attributes.delete(:role_ids)
         # 否者，就是管理员正在修改他人的信息
         else
-          role_ids = Array(attributes[:role_ids]).map(&:to_i)
+          role_ids = Array(attributes[:role_ids]).select{|id| id.present? }.map(&:to_i)
           super_admin_id = Role.find_by(name: "super_admin").id
           admin_id = Role.find_by(name: "admin").id
           # 永远不允许添加超级管理员
@@ -29,9 +29,9 @@ class User
         user.errors.add :mobile_phone, user.mobile.errors.full_messages.join(', ') unless flag
       end
 
-      unless attributes["password"].present?
-        attributes.delete("password")
-        attributes.delete("password_confirmation")
+      unless attributes[:password].present?
+        attributes.delete(:password)
+        attributes.delete(:password_confirmation)
       end
 
       user.assign_attributes attributes if flag
