@@ -43,7 +43,7 @@ class Order < ApplicationRecord
   end
 
   def member
-    (site && user && site.members.where(user: user).first) || site.members.where(id: member_id).first
+    (site && user && site.members.where(user: user).first) || site && site.members.where(id: member_id).first
   end
 
   private
