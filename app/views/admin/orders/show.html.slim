@@ -62,7 +62,7 @@ h1.page-header
                 td[colspan='2']
         .col-sm-5
           a.thumbnail[href="#"]
-            = image_tag @order.image_items.first.try{image} || 'no-picture'
+            = image_tag @order.image_items.first.try{image} || 'no-picture.jpeg'
             .caption.text-right
               strong
                 = "设计图纸( 共 #{@order.image_items.size} 张 )"
