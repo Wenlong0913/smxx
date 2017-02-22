@@ -45,7 +45,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
       render json: {status: 'ok', materials: material_json(materials)}
     else
       render json: {status: 'failed', error_message:  message }
-    end   
+    end
   end
 
   def update
@@ -103,7 +103,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
       worksheet = Roo::Excel.new(file_path)
     elsif File.extname(file_path) == ".csv"
       worksheet = Roo::CSV.new(file_path)
-    end 
+    end
     # ["物料分类", "物料名称", "供应商", "单位", "单价"]
     if worksheet
       header = worksheet.row(1)
@@ -145,7 +145,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
         end
       else
         all_upload = false
-        message = '列名不正确，请按照模版内列名填写！'        
+        message = '列名不正确，请按照模版内列名填写！'
       end
     else
       all_upload = false
