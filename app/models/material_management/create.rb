@@ -11,6 +11,10 @@ class MaterialManagement
           record.errors.add(:material_management_details, '为空')
           return [false, record]
         end
+        if material_warehouse.nil?
+          record.errors.add(:material_warehouse, '为空')
+          return [false, record]
+        end
         # 出库时，检查库存是否充足
         if attributes["operate_type"] == 'output'
           # 检查仓库的库存是否足够

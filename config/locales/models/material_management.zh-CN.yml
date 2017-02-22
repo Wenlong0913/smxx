@@ -12,6 +12,7 @@ zh-CN:
         operate_date: 日期
         material_warehouse_id: 仓库
         material_management_details: 物料清单
+        material_warehouse: 仓库
     errors:
       models:
         material_management:
