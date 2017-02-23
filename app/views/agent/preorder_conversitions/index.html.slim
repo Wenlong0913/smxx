@@ -57,12 +57,11 @@
                       li.row
                         .col-xs-4 生产订单:
                         .col-xs-8.p-0
-                          label
-                            - if order
-                              = link_to agent_order_path(order) do
-                                i.fa.fa-link.m-r-5
-                                span
-                                  = order.code
+                          - if order
+                            = link_to agent_order_path(order) do
+                              i.fa.fa-link.m-r-5
+                              span
+                                = order.code
 
                     div.text-right
                       = link_to '查看设计详细', agent_preorder_conversition_path(preorder_conversition), class: 'btn btn-primary btn-sm'

@@ -66,10 +66,14 @@ class Agent::MembersController < Agent::BaseController
 
   def destroy
     authorize @agent_member
-    @agent_member.destroy
-    respond_to do |format|
-      format.html { redirect_to agent_members_url, notice: 'Member 删除成功.' }
-      format.json { head 200 }
+    if @agent_member.orders.size > 0
+      redirect_to agent_members_url, notice: '客户存在订单，不能删除.'
+    else
+      @agent_member.destroy
+      respond_to do |format|
+        format.html { redirect_to agent_members_url, notice: 'Member 删除成功.' }
+        format.json { head 200 }
+      end
     end
   end
 
