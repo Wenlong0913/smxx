@@ -15,10 +15,18 @@ h1.page-header
       | 生产任务
   .panel-body
     .row
-      .col-sm-6
-        strong 订单编号
+      .col-sm-4
+        strong 订单编号：
         span.p-l-10
           = @produce.order.code
+      .col-sm-4
+        strong 经销商：
+        span.p-l-10
+          = @produce.order.site.title
+      .col-sm-4
+        strong 客户：
+        span.p-l-10
+          = @produce.order.member.name
       / .col-sm-6
         strong 任务负责人
         span.p-l-10
