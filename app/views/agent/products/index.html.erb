@@ -119,7 +119,7 @@
               <label class="control-label">价格</label>
               <div class="row row-space-0">
                   <div class="col-md-5">
-                    <%= f.text_field :price_from, type: 'number', value: (params[:search][:price_form] if params[:search]),class: 'form-control input-sm', min: '0' %>
+                    <%= f.text_field :price_from, type: 'number', value: (params[:search][:price_from] if params[:search]),class: 'form-control input-sm', min: '0' %>
                   </div>
                   <div class="col-md-2 text-center p-t-5 f-s-12 text-muted">～</div>
                   <div class="col-md-5">
