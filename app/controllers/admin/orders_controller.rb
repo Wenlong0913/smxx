@@ -6,7 +6,7 @@ class Admin::OrdersController < Admin::BaseController
   # GET /admin/orders
   def index
     authorize Order
-    @filter_colums = %w(id)
+    @filter_colums = %w(code)
     @orders = build_query_filter(Order.all, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?
