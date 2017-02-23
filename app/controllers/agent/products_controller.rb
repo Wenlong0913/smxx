@@ -6,8 +6,8 @@ class Agent::ProductsController < Agent::BaseController
     @catalogs = ProductCatalog.roots
     # 搜索查询
     if params[:search].present?
-        conditions = []
-        query = []
+      conditions = []
+      query = []
       keywords = params[:search][:keywords]
       price_form = params[:search][:price_from].to_f
       price_to = params[:search][:price_to].to_f
