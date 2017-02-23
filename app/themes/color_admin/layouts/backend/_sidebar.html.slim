@@ -98,7 +98,7 @@
           li class=("#{'active' if page?('admin/roles')}") = link_to '角色', admin_roles_path
           li[class= ('active' if page?('admin/vendors'))]
             = link_to '供应商', admin_vendors_path
-          li class=("has-sub #{'active' if page?('admin/sites')}")
+          li[class=("active" if page?('admin/sites'))]
             = link_to '经销商', admin_sites_path
 
       li class=("has-sub #{'active' if page?('admin/market_catalogs', 'admin/market_templates', 'admin/market_pages')}")
@@ -118,8 +118,8 @@
           span 客户管理
         ul.sub-menu
           li class=("#{'active' if page?('admin/member_catalogs')}") = link_to '分类管理', admin_member_catalogs_path
-          li class=("has-sub #{'active' if page?('admin/sites')}")
-            = link_to '客户列表', admin_sites_path
+          / li class=("has-sub #{'active' if page?('admin/sites')}")
+          /   = link_to '客户列表', admin_members_path
 
       li
         = link_to cms_sites_path do
