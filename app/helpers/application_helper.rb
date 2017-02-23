@@ -32,8 +32,7 @@ module ApplicationHelper
       'http://song-dev.qiniudn.com/g3.jpg',
       'http://song-dev.qiniudn.com/g4.jpg',
       'http://song-dev.qiniudn.com/g5.jpg',
-      'http://song-dev.qiniudn.com/g6.jpg',
-      'http://song-dev.qiniudn.com/g7.jpg'
+      'http://song-dev.qiniudn.com/g6.jpg'
     ].sample
   end
 
@@ -45,7 +44,7 @@ module ApplicationHelper
       'red', 'red-darker', 'red-lighter',
       'orange', 'orange-darker', 'orange-lighter',
       'green', 'green-darker', 'green-lighter',
-      'yellow', 'yellow-darker', 
+      'yellow', 'yellow-darker',
       'blue', 'blue-darker', 'blue-lighter',
       'aqua', 'aqua-darker', 'aqua-lighter',
       'purple', 'purple-darker', 'purple-lighter',
