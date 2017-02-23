@@ -21,7 +21,7 @@ class Material < Item
   end
 
   before_save do
-    self.price = price.to_i
+    self.price = price.to_f
     self.stock = stock.to_i
   end
 
