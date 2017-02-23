@@ -16,15 +16,15 @@ class Agent::ProductsController < Agent::BaseController
         conditions << "%" + keywords + "%"
         conditions << "%" + keywords + "%"
       end
-      binding.pry
-      if price_form > 0
-        query << "features =>> 'price' >= ?"
-        conditions << price_form
-      end
-      if price_to > 0
-        query << "features ->> 'price' <= ?"
-        conditions << price_to
-      end
+      # binding.pry
+      # if price_form > 0
+      #   query << "features -> 'price' >= ?"
+      #   conditions << price_form
+      # end
+      # if price_to > 0
+      #   query << "features -> 'price' <= ?"
+      #   conditions << price_to
+      # end
       conditions.unshift query.join(' and ')
       @products = @site.products.where(conditions)
     end
