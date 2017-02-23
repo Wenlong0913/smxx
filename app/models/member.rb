@@ -14,6 +14,10 @@ class Member < ApplicationRecord
     member_notes.any? ? member_notes.last.updated_at : updated_at
   end
 
+  def orders
+    Order.where(member_id: id)
+  end
+
   private
   def create_user
     user = User.find_by_phone_number(mobile_phone)

@@ -46,7 +46,7 @@
                 = link_to '库存警报', admin_material_stock_alerts_path
 
       / 订单管理
-      li class=("has-sub #{'active' if page?('admin/orders')}")
+      li class=("has-sub #{'active' if page?('admin/orders', 'admin/produces', 'admin/orders/:order_id/produces/:id', 'admin/task_types')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-cube
@@ -96,9 +96,9 @@
           li class=("#{'active' if page?('admin/users')}") = link_to '用户', admin_users_path
           li class=("#{'active' if page?('admin/user/weixins')}") = link_to '微信用户', admin_user_weixins_path
           li class=("#{'active' if page?('admin/roles')}") = link_to '角色', admin_roles_path
-          li[class= ('active' if page?('admin/vendors#index'))]
+          li[class= ('active' if page?('admin/vendors'))]
             = link_to '供应商', admin_vendors_path
-          li class=("has-sub #{'active' if page?('admin/sites')}")
+          li[class=("active" if page?('admin/sites'))]
             = link_to '经销商', admin_sites_path
 
       li class=("has-sub #{'active' if page?('admin/market_catalogs', 'admin/market_templates', 'admin/market_pages')}")
@@ -109,7 +109,7 @@
         ul.sub-menu
           li class=("#{'active' if page?('admin/market_catalogs')}") = link_to '分类管理', admin_market_catalogs_path
           li class=("#{'active' if page?('admin/market_templates')}") = link_to '模板管理', admin_market_templates_path
-          li class=("#{'active' if page?('admin/market_pages')}") = link_to '营销页', admin_market_pages_path
+          / li class=("#{'active' if page?('admin/market_pages')}") = link_to '营销页', admin_market_pages_path #暂时隐藏营销页链接
 
       li class=("has-sub #{'active' if page?('admin/members', 'admin/member_catalogs')}")
         a href="javascript:;"
@@ -118,8 +118,8 @@
           span 客户管理
         ul.sub-menu
           li class=("#{'active' if page?('admin/member_catalogs')}") = link_to '分类管理', admin_member_catalogs_path
-          li class=("has-sub #{'active' if page?('admin/sites')}")
-            = link_to '客户列表', admin_sites_path
+          / li class=("has-sub #{'active' if page?('admin/sites')}")
+          /   = link_to '客户列表', admin_members_path
 
       li
         = link_to cms_sites_path do

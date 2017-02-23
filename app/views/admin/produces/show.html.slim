@@ -14,12 +14,20 @@ h1.page-header
     h3.panel-title
       | 生产任务
   .panel-body
-    .row.produce-info
-      .col-sm-6
-        strong 订单编号
+    .row
+      .col-sm-4
+        strong 订单编号：
         span.p-l-10
           = @produce.order.code
-      .col-sm-6
+      .col-sm-4
+        strong 经销商：
+        span.p-l-10
+          = @produce.order.site.title
+      .col-sm-4
+        strong 客户：
+        span.p-l-10
+          = @produce.order.member.name
+      / .col-sm-6
         strong 任务负责人
         span.p-l-10
           = link_to @produce.assignee_id ? @order.site.members.find(@produce.assignee_id).name : '选择分配', 'javascript:void(0);', 'data-toggle':"dropdown"
@@ -31,7 +39,7 @@ h1.page-header
               li.divider
     hr
     .row.tasks_list
-      .col-md-6
+      .col-md-6.produce-info
         - @produce.tasks.order(ordinal: :asc).each do |task|
           .list-group.col-md-6
             .list-group-item.active[alt='wang']
@@ -61,7 +69,22 @@ h1.page-header
                   - if task.assignee_id
                     = task.assignee_id
                   - else
-                    = link_to '选择分配用户组'
+                    .btn-group
+                      = link_to 'javascript:void(0);', 'data-toggle':"dropdown" do 
+                        span.task-user
+                          = @produce.assignee_id ? User.with_role(:factory_manager).find(@produce.assignee_id).nickname : '选择分配'
+                        span.caret
+                      ul.dropdown-menu.edit-member[role="menu"]
+                        li.divider
+                        - if User.with_role(:factory_manager).blank?
+                          li.text-center.text-warning
+                            = "没有可选择的用户"
+                          li.divider
+                        - else
+                          - User.with_role(:factory_manager).each do |user|
+                            li
+                              = link_to user.nickname, 'javascript:void(0);',data: {url: admin_order_produce_path(@order, @produce), id: user.id}
+                            li.divider
               h6
                 = Task.human_attribute_name(:description)
                 .well.m-t-10

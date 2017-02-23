@@ -18,8 +18,8 @@ class Api::V1::OrdersController < Api::BaseController
     if flag
       render json: {status: 'ok', order: order_json(order)}
     else
-      order.errors.messages.delete(:member)
-      render json: {status: 'failed', error_message:  order.errors.messages.values.join(', ') }
+      # order.errors.messages.delete(:member)
+      render json: {status: 'failed', error_message:  order.errors.full_messages.join(', ') }
     end
   end
 

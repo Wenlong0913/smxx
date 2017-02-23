@@ -23,9 +23,9 @@ class Order < ApplicationRecord
   has_many :products, through: :order_products
   has_many :order_materials, dependent: :destroy
   has_many :materials, through: :order_materials
-  has_many :image_item_relations, as: :relation
+  has_many :image_item_relations, as: :relation, dependent: :destroy
   has_many :image_items, :through => :image_item_relations
-  has_many :attachment_relations, as: :relation
+  has_many :attachment_relations, as: :relation, dependent: :destroy
   has_many :attachments, :through => :attachment_relations
   has_one :produce, dependent: :destroy
   before_create :generate_code
@@ -40,6 +40,12 @@ class Order < ApplicationRecord
 
   after_initialize do
     self.status ||= 0
+  end
+
+  before_save do
+    if self.price.blank?
+      self.price = 0
+    end
   end
 
   def member
