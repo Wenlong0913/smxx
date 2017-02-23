@@ -62,7 +62,7 @@ $(document).ready ->
           produce:
             assignee_id: dom.data('id')
         success: (data)->
-          dom.parents('span.p-l-10').find('a:first').text(dom.text())
+          dom.parents('.btn-group').find('.task-user').text(dom.text())
         error: (data)->
           alert(data.error)
 
