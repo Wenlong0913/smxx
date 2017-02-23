@@ -1,10 +1,10 @@
 <% meta_title \
   [ @page.try(:title),
     @channel.title,
-  ].join(' | ').sub(/^\s*\|/, '').strip %>
+  ].compact.join(' | ').sub(/^\s*\|/, '').strip %>
 <% meta_keywords \
   [ @page.try(:keywords).blank? ? @page.try(:title) : @page.keywords,
-    @channel.title, @channel.keywords].join(', ').sub(/^\s*,/, '').strip %>
+    @channel.title, @channel.keywords].compact.join(', ').sub(/^\s*,/, '').strip %>
 <% meta_description \
   @page.nil? ? @channel.description : @page.description %>
 
