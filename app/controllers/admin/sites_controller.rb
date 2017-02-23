@@ -33,7 +33,7 @@ class Admin::SitesController < Admin::BaseController
     @site = Site.new(permitted_attributes(Site))
 
     if @site.save
-      redirect_to admin_site_path(@site), notice: 'Site 创建成功.'
+      redirect_to admin_site_path(@site), notice: '经销商 创建成功.'
     else
       render :new
     end
@@ -43,7 +43,7 @@ class Admin::SitesController < Admin::BaseController
   def update
     authorize @site
     if @site.update(permitted_attributes(@site))
-      redirect_to admin_site_path(@site), notice: 'Site 更新成功.'
+      redirect_to admin_site_path(@site), notice: '经销商 更新成功.'
     else
       render :edit
     end
@@ -53,7 +53,7 @@ class Admin::SitesController < Admin::BaseController
   def destroy
     authorize @site
     @site.destroy
-    redirect_to admin_sites_url, notice: 'Site 删除成功.'
+    redirect_to admin_sites_url, notice: '经销商 删除成功.'
   end
 
   private

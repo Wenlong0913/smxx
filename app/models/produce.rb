@@ -9,7 +9,7 @@ class Produce < ApplicationRecord
   }
 
   belongs_to :order
-  has_many :tasks, as: :resource
+  has_many :tasks, as: :resource, dependent: :destroy
   validates_uniqueness_of :order
 
   after_initialize do

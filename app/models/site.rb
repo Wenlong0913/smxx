@@ -18,9 +18,9 @@ class Site < ApplicationRecord
   has_many :items, dependent: :destroy
   has_many :image_items, dependent: :destroy, as: :owner
   has_many :members, dependent: :destroy
-  has_many :products
-  has_many :orders
-  has_many :preorder_conversitions
+  has_many :products, dependent: :destroy
+  has_many :orders, dependent: :destroy
+  has_many :preorder_conversitions, dependent: :destroy
   has_many :market_pages
   store_accessor :features, :description
   validates_presence_of :title, :user_id
