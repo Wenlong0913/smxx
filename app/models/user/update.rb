@@ -5,14 +5,14 @@ class User
       flag = true
       user = user_or_id.is_a?(User) ? user_or_id : User.find(user_or_id)
       mobile_phone = attributes[:mobile_phone]
-
       if current_user
         # 如果不是管理员，或者是在修改自己的信息，就不允许修改角色
         if !current_user.super_admin_or_admin? || current_user.id == user.id
           attributes.delete(:role_ids)
         # 否者，就是管理员正在修改他人的信息
         else
-          role_ids = Array(attributes[:role_ids]).select{|id| id.present? }.map(&:to_i)
+          role_ids = Array(attributes[:role_ids]).map(&:to_i)
+          role_ids.delete(0)
           super_admin_id = Role.find_by(name: "super_admin").id
           admin_id = Role.find_by(name: "admin").id
           # 永远不允许添加超级管理员
@@ -28,7 +28,6 @@ class User
         flag = user.mobile.save
         user.errors.add :mobile_phone, user.mobile.errors.full_messages.join(', ') unless flag
       end
-
       unless attributes[:password].present?
         attributes.delete(:password)
         attributes.delete(:password_confirmation)
