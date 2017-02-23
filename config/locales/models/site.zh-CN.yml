@@ -5,7 +5,7 @@ zh-CN:
       site: 经销商
     attributes:
       site:
-        user: 所有者
+        user_id: 经销商-所有者
         title: 标题
         description: 备注
     errors:
