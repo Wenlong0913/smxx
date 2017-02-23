@@ -1,9 +1,8 @@
-.container
+.container.member-container.primary-content[data-notice=notice]
   h1
     | 客户列表
     .pull-right
       = link_to '添加客户', new_agent_member_path, class: 'btn btn-primary'
-
   .panel
     .panel-heading
       .panel-heading-btn
@@ -41,3 +40,10 @@
                 td.text-right
                   => link_to '编辑', edit_agent_member_path(agent_member), class: 'btn btn-success'
                   => link_to '删除', agent_member_path(agent_member), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-default'
+javascript:
+  $(document).ready(function(){
+    var notice =  $('.member-container').data("notice")
+    if(notice.length > 0 ){
+      $.gritter.add({title: '提示', text: notice})
+    }
+  })
