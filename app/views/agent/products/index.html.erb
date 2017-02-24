@@ -115,7 +115,7 @@
               <div class="control-label">关键字</div>
               <%= f.text_field :keywords, value: (params[:search][:keywords] if params[:search]), placeholder: "输入查询关键字", class: 'form-control input-sm' %>
             </div>
-            <!-- <div class="form-group">
+            <div class="form-group">
               <label class="control-label">价格</label>
               <div class="row row-space-0">
                   <div class="col-md-5">
@@ -126,7 +126,7 @@
                     <%= f.text_field :price_to, type: 'number', value: (params[:search][:price_to] if params[:search]),class: 'form-control input-sm', min: '0' %>
                   </div>
               </div>
-            </div> -->
+            </div>
             <div class="form-group">
               <button type="submit" class="btn btn-sm btn-inverse"><i class="fa fa-search"></i> 查询</button>
             </div>
