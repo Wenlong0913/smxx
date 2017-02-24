@@ -12,7 +12,7 @@ class Agent::ProductsController < Agent::BaseController
       price_form = params[:search][:price_from].to_f
       price_to = params[:search][:price_to].to_f
       if !keywords.blank?
-        query << "name like ? or features ->> 'description' like ?"
+        query << "(name like ? or features ->> 'description' like ?)"
         conditions << "%" + keywords + "%"
         conditions << "%" + keywords + "%"
       end
@@ -47,7 +47,6 @@ class Agent::ProductsController < Agent::BaseController
       format.json { render json: @products }
     end
   end
-
   def show
     authorize @product
     @catalog_ancestors = []
