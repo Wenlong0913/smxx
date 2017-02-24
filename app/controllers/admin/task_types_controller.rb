@@ -7,7 +7,7 @@ class Admin::TaskTypesController < Admin::BaseController
   def index
     authorize TaskType
     @filter_colums = %w(name)
-    @task_types = build_query_filter(TaskType.all, only: @filter_colums).page(params[:page])
+    @task_types = build_query_filter(TaskType.all, only: @filter_colums).order(ordinal: :asc).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@task_types.to_json, filename: "task_types-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
