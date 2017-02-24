@@ -7,6 +7,7 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 server 'prod2uc.corp.tanmer.com', user: 'deployer', roles: %w{app db web assets}, ssh_options: { keys: '~/.ssh/id_rsa.deploy.tanmer.prod.key'  }
+set :stage, :production
 
 # role-based syntax
 # ==================
