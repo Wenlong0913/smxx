@@ -15,6 +15,7 @@ $(document).ready ->
           app._data.visits = data.visits
           app._data.total_pages = data.total_pages
           app._data.selected_page = data.selected_page
+          app._data.showPage = data.selected_page
           documentLoadAnimation(true)
         error: ->
           documentLoadAnimation(false, '数据加载失败，请刷新页面')
@@ -24,7 +25,19 @@ $(document).ready ->
         visits: []
         total_pages: 1
         selected_page: 1
+        showPage: 0
       methods:
         loadDetailed: (n)->
           loadDetailed(n)
+        onPreviousPageGroup: ()->
+          if (this.showPage-5) > 0
+            this.showPage = this.showPage-5
+          else
+            this.showPage = 0
+        onNextPageGroup: ()->
+          if this.total_pages > 5
+            if (this.showPage + 10) <= this.total_pages
+              this.showPage = this.showPage + 5
+            else
+              this.showPage = this.total_pages - 5
     loadDetailed()
