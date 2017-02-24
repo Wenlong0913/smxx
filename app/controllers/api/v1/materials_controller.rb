@@ -107,7 +107,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
     # ["物料分类", "物料名称", "供应商", "单位", "单价"]
     if worksheet
       header = worksheet.row(1)
-      if header[0..4].join(',') == "物料分类,物料名称,单位,单价,供应商,数量"
+      if header[0..5].join(',') == "物料分类,物料名称,单位,单价,供应商,数量"
         Material.transaction do
           2.upto worksheet.last_row do |index|
             # .row(index) will return the row which is a subclass of Array
