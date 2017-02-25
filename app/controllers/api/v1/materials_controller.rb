@@ -107,7 +107,8 @@ class Api::V1::MaterialsController < Api::V1::BaseController
     # ["物料分类", "物料名称", "供应商", "单位", "单价"]
     if worksheet
       header = worksheet.row(1)
-      if header[0..4].join(',') == "物料分类,物料名称,供应商,单位,单价"
+      if header[0..5].join(',') == "物料分类,物料名称,单位,单价,供应商,数量"
+        warehouse = MaterialWarehouse.find_or_create_by(name: '原材料库')
         Material.transaction do
           2.upto worksheet.last_row do |index|
             # .row(index) will return the row which is a subclass of Array
@@ -116,13 +117,14 @@ class Api::V1::MaterialsController < Api::V1::BaseController
             attributes = {
               catalog_id:   MaterialCatalog.where(name: row[0]).first.try(:id),
               name:         row[1],
-              vendor_ids:   Vendor.find_or_create_by(name: row[2]).id
+              vendor_ids:   Vendor.find_or_create_by(name: row[4]).id
             }
 
             features = {}
 
-            features['unit'] = row[3]
-            features['price'] = row[4]
+            features['unit'] = row[2]
+            features['price'] = row[3]
+
 
             (5..(row.size-1)).to_a.each do |s_index|
               features[header[s_index]] = row[s_index]
@@ -133,6 +135,14 @@ class Api::V1::MaterialsController < Api::V1::BaseController
             flag, material = Material::Create.(attributes)
             if flag
               materials.push(material)
+              if row[5].to_i > 0
+                MaterialManagement::Create.({
+                  operate_type: 'input',
+                  operate_date: Time.now.to_date,
+                  material_warehouse_id: warehouse.id,
+                  material_management_details_attributes: [{material_id: material.id, number: row[5]}]
+                })
+              end
             else
               material.errors.messages.each_pair do |k, v|
                 message += material.send(k) +':'+ v.join(':')
