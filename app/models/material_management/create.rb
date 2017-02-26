@@ -40,7 +40,7 @@ class MaterialManagement
             material_warehouse_item.stock -= mmd.number
           elsif record.input?
             material_warehouse_item = material_warehouse.material_warehouse_items.find_or_create_by(material: mmd.material)
-            material_warehouse_item.stock += mmd.number
+            material_warehouse_item.stock += mmd.number if mmd.number
           end
           material_warehouse_item.save!
         end

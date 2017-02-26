@@ -51,8 +51,12 @@
         ul.pagination.pagination-sm
           li[v-bind:class="{ 'disabled': selected_page == 1 }"]
             a[href="javascript:;"v-on:click="selected_page == 1 ? false : loadDetailed(--selected_page)"] &laquo;
-          li[v-for="n in total_pages"v-bind:class=" n == selected_page ? 'active' : false"]
-            a[href="javascript:;"v-on:click="loadDetailed(n)"]
-              | {{ n }}
+          li[v-if="total_pages > 5"]
+            a[href="javascript:;" @click="onPreviousPageGroup"] ...
+          li[v-for="n in (total_pages > 5 ? 5 : total_pages)" v-bind:class="(showPage + n) == selected_page ? 'active' : false"]
+            a[href="javascript:;" v-on:click="loadDetailed(showPage + n)"]
+              | {{ showPage + n }}
+          li[v-if="total_pages > 5"]
+            a[href="javascript:;" @click="onNextPageGroup"] ...
           li[v-bind:class="{ 'disabled': selected_page == total_pages }"]
             a[href="javascript:;"v-on:click="selected_page == total_pages ? false : loadDetailed(++selected_page)"] &raquo;
