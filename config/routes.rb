@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   # === Extend partial routes ===
 
+  extend FrontendRoute
   extend ApiRoute
   extend AdminRoute
   extend AgentBackendRoute
@@ -32,6 +33,4 @@ Rails.application.routes.draw do
 
   # === Plugins ===
   mount Ckeditor::Engine => '/ckeditor'
-
-  extend FrontendRoute
 end
