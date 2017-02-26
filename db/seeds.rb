@@ -18,6 +18,7 @@ _, agent = User::Create.(mobile_phone: '15328077521', nickname: '商家', passwo
 _, user = User::Create.(mobile_phone: '18080810818', nickname: '用户', password: 'abcd1234')
 
 admin.add_role :admin
+admin.add_role :super_admin
 agent.add_role :agent
 
 site = Site.create(title: '本公司', user: admin)
