@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   resources :attachments, only: [:index, :create, :destroy]
 
   # === Extend partial routes ===
-  extend FrontendRoute
+
   extend ApiRoute
   extend AdminRoute
   extend AgentBackendRoute
@@ -33,4 +33,5 @@ Rails.application.routes.draw do
   # === Plugins ===
   mount Ckeditor::Engine => '/ckeditor'
 
+  extend FrontendRoute
 end
