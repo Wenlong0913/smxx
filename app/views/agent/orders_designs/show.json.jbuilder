@@ -1,1 +1,0 @@
-json.partial! "agent_orders_designs/agent_orders_design", agent_orders_design: @agent_orders_design
