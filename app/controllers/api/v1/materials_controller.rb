@@ -114,6 +114,15 @@ class Api::V1::MaterialsController < Api::V1::BaseController
             # .row(index) will return the row which is a subclass of Array
             row = worksheet.row(index)
 
+            material_catalog_id = MaterialCatalog.where(name: row[0]).first.try(:id)
+
+            unless material_catalog_id
+              message = '找不到物料分类：'+ row[0] + '，请检查！'
+              all_upload = false
+              raise ActiveRecord::Rollback
+              break
+            end
+
             attributes = {
               catalog_id:   MaterialCatalog.where(name: row[0]).first.try(:id),
               name:         row[1],
