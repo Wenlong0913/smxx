@@ -67,6 +67,8 @@ class Api::V1::OrdersController < Api::BaseController
           site: {only: [:id, :title], include: { user: { only: [:nickname], include: { mobile: { only: [:phone_number] } } } }}, 
           member: {only: [:name]}, 
           produce: {only: [:id]},
+          create_user: {only: [:id, :nickname]},
+          update_user: {only: [:id, :nickname]},
           attachments: {only: [:id], methods: [:attachment_url, :attachment_file_name]},
           order_materials: {
             only: [:id, :amount, :factory_expected_number, :practical_number, :material_id],

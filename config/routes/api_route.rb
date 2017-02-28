@@ -41,6 +41,7 @@ module ApiRoute
               get :attachments_index
             end
           end
+          resources :order_cvs, only: [:index, :create]
         end
       end
     end
