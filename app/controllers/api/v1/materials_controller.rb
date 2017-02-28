@@ -16,6 +16,11 @@ class Api::V1::MaterialsController < Api::V1::BaseController
     else
       page_size = params[:page_size].present? ? params[:page_size].to_i : 20
       materials = params['search_content'].present? ? Material.where("name_py like :key OR name like :key", {key: ['%',params['search_content'].upcase, '%'].join}) : Material.all
+      if params["catalog_id"].present?
+        catalog = MaterialCatalog.find_by_id(params[:catalog_id])
+        catalog_ids = [catalog.id] + catalog.children.map(&:id)
+        materials = materials.where(catalog_id: catalog_ids)
+      end
       materials = materials.order(created_at: :desc).page(params[:page] || 1).per(page_size)
       render json: {
         materials: material_json(materials),
