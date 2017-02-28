@@ -22,7 +22,7 @@ class Admin::MaterialsController < Admin::BaseController
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
         response.headers['Content-Type'] = 'text/html; charset=utf-8'
-        format.html { send_data(@materials.as_csv(only: [:id, :name, :name_py, :stock, :price]), filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@materials.as_csv(only: [:id, :name, :name_py, :stock, :price]).encode('gb2312', :invalid => :replace, :undef => :replace, :replace => "?"), filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end

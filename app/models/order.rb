@@ -8,15 +8,16 @@ class Order < ApplicationRecord
   }
 
   enum internal_status: {
-    picking: 0,
-    picked: 1,
+    importing: 0,
     packing: 2,
-    packed: 3
+    producing: 4
   }
 
   belongs_to :user
   belongs_to :site
   belongs_to :preorder_conversition
+  belongs_to :create_user, class_name: 'User', foreign_key: :create_by
+  belongs_to :update_user, class_name: 'User', foreign_key: :update_by
 
   has_many_comments
   has_many :order_products, dependent: :destroy
@@ -27,6 +28,7 @@ class Order < ApplicationRecord
   has_many :image_items, :through => :image_item_relations
   has_many :attachment_relations, as: :relation, dependent: :destroy
   has_many :attachments, :through => :attachment_relations
+  has_many :order_cvs, dependent: :destroy
   has_one :produce, dependent: :destroy
   before_create :generate_code
   before_validation :check_member

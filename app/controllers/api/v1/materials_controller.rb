@@ -16,6 +16,11 @@ class Api::V1::MaterialsController < Api::V1::BaseController
     else
       page_size = params[:page_size].present? ? params[:page_size].to_i : 20
       materials = params['search_content'].present? ? Material.where("name_py like :key OR name like :key", {key: ['%',params['search_content'].upcase, '%'].join}) : Material.all
+      if params["catalog_id"].present?
+        catalog = MaterialCatalog.find_by_id(params[:catalog_id])
+        catalog_ids = [catalog.id] + catalog.children.map(&:id)
+        materials = materials.where(catalog_id: catalog_ids)
+      end
       materials = materials.order(created_at: :desc).page(params[:page] || 1).per(page_size)
       render json: {
         materials: material_json(materials),
@@ -114,6 +119,15 @@ class Api::V1::MaterialsController < Api::V1::BaseController
             # .row(index) will return the row which is a subclass of Array
             row = worksheet.row(index)
 
+            material_catalog_id = MaterialCatalog.where(name: row[0]).first.try(:id)
+
+            unless material_catalog_id
+              message = '找不到物料分类：'+ row[0] + '，请检查！'
+              all_upload = false
+              raise ActiveRecord::Rollback
+              break
+            end
+
             attributes = {
               catalog_id:   MaterialCatalog.where(name: row[0]).first.try(:id),
               name:         row[1],
@@ -126,8 +140,8 @@ class Api::V1::MaterialsController < Api::V1::BaseController
             features['price'] = row[3]
 
 
-            (5..(row.size-1)).to_a.each do |s_index|
-              features[header[s_index]] = row[s_index]
+            (6..(row.size-1)).to_a.each do |s_index|
+              features[header[s_index]] = row[s_index] if row[s_index].present?
             end
 
             attributes["features"] = features
