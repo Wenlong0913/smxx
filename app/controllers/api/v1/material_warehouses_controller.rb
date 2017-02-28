@@ -7,7 +7,7 @@ class Api::V1::MaterialWarehousesController < Api::V1::BaseController
   # @return [JSON]
   def index
     authorize MaterialWarehouse
-    material_warehouses = MaterialWarehouse.all.where(site_id: params["site_id"]).order(created_at: :desc)
+    material_warehouses = MaterialWarehouse.all.where(site_id: params["site_id"])
     render json: {
       material_warehouses: material_warehouse_json(material_warehouses)
     }
