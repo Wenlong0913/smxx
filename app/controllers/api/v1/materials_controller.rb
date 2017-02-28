@@ -135,8 +135,8 @@ class Api::V1::MaterialsController < Api::V1::BaseController
             features['price'] = row[3]
 
 
-            (5..(row.size-1)).to_a.each do |s_index|
-              features[header[s_index]] = row[s_index]
+            (6..(row.size-1)).to_a.each do |s_index|
+              features[header[s_index]] = row[s_index] if row[s_index].present?
             end
 
             attributes["features"] = features
