@@ -12,6 +12,10 @@ module ApiRoute
             collection do
               post :batch_create
             end
+            member do
+              get :audit
+              get :purchase
+            end
           end
           resources :orders, only: [:index, :create, :show] do
             commentable

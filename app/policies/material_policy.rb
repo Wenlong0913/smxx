@@ -9,6 +9,14 @@ class MaterialPolicy < ApplicationPolicy
     create?
   end
 
+  def audit?
+    show?
+  end
+
+  def purchase?
+    show?
+  end
+
   def permitted_attributes_for_create
     if user.super_admin_or_admin?
       [:name, :name_py, :catalog_id, :min_stock, :price, :unit, :brand, :image_item_ids => [], :vendor_ids => []]
