@@ -73,7 +73,13 @@ class Api::V1::OrdersController < Api::BaseController
           order_materials: {
             only: [:id, :amount, :factory_expected_number, :practical_number, :material_id],
             include: {
-              material: {only: [:id, :name, :name_py], methods: [:stock]}
+              material: {
+                only: [:id, :name, :name_py],
+                methods: [:stock],
+                include: {
+                  material_warehouse_items: { only: %w(material_warehouse_id stock)}
+                }
+              }
             }
           }
         }
