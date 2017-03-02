@@ -1,15 +1,17 @@
-h1
-  | cms_pages 列表
-  .pull-right
-    = link_to '新建 Page', new_cms_page_path, class: 'btn btn-primary'
+.container
+  h1
+    | 页面列表
+    .pull-right
+      => link_to '添加页面', new_cms_site_page_path(@cms_site), class: 'btn btn-primary'
+      => link_to '返回', cms_site_path(@cms_site), class: 'btn btn-default'
 
-.panel
-  .panel-heading
-    .panel-heading-btn
-      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
-        i class="fa fa-expand"
-      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
-        i class="fa fa-minus"
-    h4 cms_pages 列表
-  .panel-body
-    = render 'list'
+  .panel
+    .panel-heading
+      .panel-heading-btn
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+          i class="fa fa-expand"
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+          i class="fa fa-minus"
+      h4 页面列表
+    .panel-body
+      = render 'list'

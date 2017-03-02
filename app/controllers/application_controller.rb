@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   impersonates :user
-  before_action :check_subdomain!
 
   #render 404 error
   def not_found!
@@ -22,13 +21,5 @@ class ApplicationController < ActionController::Base
     redirect_to(request.referrer || root_path)
   end
 
-  #localhost visit subdomain with: http://subname.lvh.me:5000/
-  def check_subdomain!
-    return if @cms_site.present?
-    return if ["", "www", "api"].include?(request.subdomain)
-    if Subdomain.matches?(request) && Cms::Site.find_by(domain: request.subdomain)
-      @cms_site = Cms::Site.find_by(domain: request.subdomain)
-    end
-  end
 
 end

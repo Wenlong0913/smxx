@@ -65,10 +65,14 @@
                 i.fa.fa-angle-down
                 span.arrow.top
               ul.dropdown-menu
-                li
-                  a href="javascript: alert('敬请期待');"  栏目管理
-                li
-                  a href="javascript: alert('敬请期待');"  页面管理
+                - if @site.cms_site
+                  li = link_to '站点栏目', cms_site_path(@site.cms_site)
+                  li = link_to '页面列表', cms_site_pages_path(@site.cms_site)
+                  li = link_to new_cms_site_page_path(@site.cms_site) do
+                        i class="fa fa-plus-circle"
+                        | &nbsp;添加页面
+                - else
+                  li = link_to '添加站点', new_cms_site_path(@site.cms_site)
 
       /! END header-nav
       /! BEGIN header-nav

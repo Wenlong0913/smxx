@@ -6,6 +6,7 @@ module CmsBackendRoute
           resources :channels do
             resources :pages
           end
+          resources :pages
         end
       end
     end

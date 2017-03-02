@@ -1,7 +1,7 @@
 <!-- site loader -->
 <div class="site-loader">
   <span></span>
-  <p><%= @site.name %></p> <!-- site loader text -->
+  <p><%= @cms_site.name %></p> <!-- site loader text -->
 </div>
 <!-- site loader -->
 
@@ -25,7 +25,7 @@
           <div class="site-nav__inner">
             <!-- menu -->
             <ul class="site-nav__menu">
-              <% @site.channels.order("id ASC").each do |channel| %>
+              <% @cms_site.channels.order("id ASC").each do |channel| %>
                 <li><a href="<%= get_cms_url(channel)%>"><%= channel.title %></a></li>
               <% end %>
             </ul>
