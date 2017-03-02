@@ -3,7 +3,6 @@ class Cms::SitesController < Cms::BaseController
 
   def index
     authorize Cms::Site
-
   end
 
   def show
@@ -25,9 +24,9 @@ class Cms::SitesController < Cms::BaseController
   end
 
   def create
-    authorize Cms::Site
     @cms_site = Cms::Site.new(permitted_attributes(Cms::Site))
     @cms_site.site_id = @site.id
+    authorize @cms_site
 
     respond_to do |format|
       format.html do

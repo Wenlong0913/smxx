@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301004922) do
+ActiveRecord::Schema.define(version: 20170302123048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -224,6 +224,15 @@ ActiveRecord::Schema.define(version: 20170301004922) do
     t.string   "name_py"
     t.integer  "catalog_id"
     t.index ["site_id"], name: "index_items_on_site_id", using: :btree
+  end
+
+  create_table "keystores", force: :cascade do |t|
+    t.string   "key",         null: false
+    t.string   "value",       null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["key"], name: "index_keystores_on_key", using: :btree
   end
 
   create_table "market_pages", force: :cascade do |t|

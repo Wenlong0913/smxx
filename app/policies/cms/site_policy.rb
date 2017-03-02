@@ -5,8 +5,37 @@ class Cms::SitePolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    user.super_admin_or_admin? || user.has_role?(:agent)
+  end
+
+  def show?
+    return true if user.super_admin_or_admin?
+    user.has_role?(:agent) && record.site.try(:user_id) == user.id
+  end
+
+  def new?
+    user.super_admin_or_admin? || user.has_role?(:agent)
+  end
+
+  def create?
+    user.super_admin_or_admin? || (user.has_role?(:agent) && record.site.try(:user_id) == user.id)
+  end
+
+  def edit?
+    create?
+  end
+
+  def update?
+    edit?
+  end
+
+  def destroy?
+    create?
+  end
+
   def permitted_attributes_for_create
-    if user.super_admin_or_admin?
+    if user.super_admin_or_admin? || user.has_role?(:agent)
       [:site_id, :name, :template, :domain, :description, :is_published]
     else
       []

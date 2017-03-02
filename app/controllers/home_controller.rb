@@ -3,7 +3,7 @@ class HomeController < ApplicationController
   def index
     #首页跳转的CMS
     if @cms_site
-      return redirect_to cms_frontend_root_path(site: @cms_site.id)
+      return redirect_to cms_frontend_root_path
     end
   end
 

@@ -2,7 +2,6 @@ class CmsController < ApplicationController
   layout 'cms'
   helper Cms::ApplicationHelper
   include Cms::ApplicationHelper
-  before_action :check_subdomain!
 
   #{"controller"=>"welcome", "action"=>"index", "channel"=>"fw", "id"=>"2", "tag" => "tagkey"}
   #params
@@ -84,13 +83,5 @@ class CmsController < ApplicationController
   end
 
   private
-  #localhost visit subdomain with: http://subname.lvh.me:5000/
-  def check_subdomain!
-    return if @cms_site.present?
-    return if ["", "www", "api"].include?(request.subdomain)
-    if Subdomain.matches?(request) && (@cms_site = Cms::Site.find_by(domain: request.subdomain))
-      #redirect_to cms_frontend_root_url(subdomain: request.subdomain)
-    end
-  end
 
 end

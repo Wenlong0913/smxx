@@ -4,6 +4,7 @@ module AgentBackendRoute
       namespace :agent do
         get '/', to: 'home#index', as: :root
         get 'sign_in', to: 'sessions#new'
+        resources 'sites'
         resources 'products' do
           member do
             post 'process_shelves'
