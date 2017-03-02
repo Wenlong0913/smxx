@@ -9,6 +9,7 @@ class Material < Item
   has_many :material_warehouse_items, dependent: :destroy
   has_many :material_warehouses, through: :material_warehouse_items
   has_many :material_stock_alerts, dependent: :destroy
+  has_many :material_purchase_details
   after_save :update_catalog_attributes
 
   # 物料只属于本公司，不能设置为其他Site

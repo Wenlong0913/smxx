@@ -3,7 +3,7 @@
 class Api::V1::MaterialsController < Api::V1::BaseController
   before_action :authenticate!
   before_action :set_order, only: [:index]
-  before_action :set_material, only: [:update, :show]
+  before_action :set_material, only: [:update, :show, :audit, :purchase]
   # 获得物料列表
   # @param [Integer] page 页码
   # @param [Integer] page_size 每页显示数据
@@ -55,10 +55,13 @@ class Api::V1::MaterialsController < Api::V1::BaseController
 
   def update
     authorize @material
-    @material.features = {}
+    # @material.features = {}
+    @material.features = params["material"]['features']
     flag, material = Material::Update.(@material, permitted_attributes(@material))
-    material.features = material.features.merge(params["material"]['features'])
-    if flag && material.save
+    # params_featues = params["material"]['features']
+    # params_featues.delete('unit')
+    # material.features = material.features.merge(params_featues)
+    if flag #&& material.save
       render json: {status: 'ok', material: material_json(material)}
     else
       render json: {status: 'failed', error_message:  material.errors.full_messages.join(', ') }
@@ -68,6 +71,41 @@ class Api::V1::MaterialsController < Api::V1::BaseController
   def show
     authorize @material
     render json: {status: 'ok', material: material_json(@material)}
+  end
+
+  def audit
+    authorize @material
+    page_size = params[:page_size].present? ? params[:page_size].to_i : 20
+    audits = @material.audits.order(created_at: :desc).page(params[:page] || 1).per(page_size)
+    render json: {
+      audits: audits.as_json(only: %w(id action audited_changes created_at), methods: %w(user)),
+      page_size: page_size,
+      current_page: audits.current_page,
+      total_pages: audits.total_pages,
+      total_count: audits.total_count
+    }
+  end
+
+  def purchase
+    authorize @material
+    page_size = params[:page_size].present? ? params[:page_size].to_i : 20
+    purchases = @material.material_purchase_details.order(created_at: :desc).page(params[:page] || 1).per(page_size)
+    render json: {
+      purchases: purchases.as_json(
+        only: %w(id number input_number price created_at), 
+        include: {
+          material_purchase: {
+            only: %w(status vendor_id),
+            methods: %w(purchase_date),
+            include: {vendor: {only: %w(id name)}}
+          }
+        }
+      ),
+      page_size: page_size,
+      current_page: purchases.current_page,
+      total_pages: purchases.total_pages,
+      total_count: purchases.total_count
+    }    
   end
 
   private
