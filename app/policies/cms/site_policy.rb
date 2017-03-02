@@ -7,7 +7,7 @@ class Cms::SitePolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.super_admin_or_admin?
-      [:name, :template, :domain, :description, :is_published]
+      [:site_id, :name, :template, :domain, :description, :is_published]
     else
       []
     end

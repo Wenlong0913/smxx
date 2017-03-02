@@ -1,0 +1,26 @@
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+  .panel-body
+    = simple_form_for [@cms_site, @cms_channel], url: @cms_channel.new_record? ? admin_cms_site_channels_path(@cms_site) : admin_cms_site_channel_path(@cms_site, @cms_channel), validate: true do |f|
+      - if @cms_channel.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@cms_channel.errors.count, "error")} prohibited this cms_channel from being saved:"
+          ul
+            - @cms_channel.errors.full_messages.each do |message|
+              li = message
+
+      = f.association :parent, collection: @cms_site.channels
+      = f.input :title
+      = f.input :short_title
+      = f.input :tmp_index
+      = f.input :tmp_detail
+      = f.input :keywords
+      = f.input :description
+      = f.input :image_path
+      = f.input :content, as: :ckeditor
+      = f.submit class: 'btn btn-success btn-block'
