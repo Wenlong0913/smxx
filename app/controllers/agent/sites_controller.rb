@@ -12,9 +12,9 @@ class Agent::SitesController < Agent::BaseController
   end
 
   def create
-    authorize Site
     @agent_site = Site.new(permitted_attributes(Site))
     @agent_site.user_id = current_user.id
+    authorize @agent_site
 
     respond_to do |format|
       format.html do
