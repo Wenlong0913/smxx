@@ -13,7 +13,7 @@ module ApiRoute
               post :batch_create
             end
           end
-          resources :orders, only: [:index, :create, :show] do
+          resources :orders, only: [:index, :create, :show, :update] do
             commentable
           end
           resources :material_management_details, only: [:index, :create]
@@ -27,7 +27,7 @@ module ApiRoute
           resources :task_types, only: [:index]
           resources :image_items, only: [:create]
           resources :sites, only: [:index]
-          resources :members, only: [:index]
+          resources :members, only: [:index, :create]
           resources :search, only: [:index]
           resources :users, only: [:index]
           resources :vendors, only: [:index, :create]

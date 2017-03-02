@@ -31,6 +31,7 @@ class Api::V1::ProducesController < Api::V1::BaseController
 
     produce = Produce.new(order: @order)
     if produce.save
+      @order.update(internal_status: 'producing', update_by: current_user.id)
       render json: {status: 'ok', produce: produce.as_json(only: [:id])}
     else
       render json: {status: 'failed', error_message: produce.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
