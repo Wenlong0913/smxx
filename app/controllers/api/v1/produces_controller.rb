@@ -33,10 +33,15 @@ class Api::V1::ProducesController < Api::V1::BaseController
       only: [:id, :order_id, :status, :assignee_id, :created_at],
       include: {
         order: {
-          only: [:id, :code],
+          only: [:id, :code, :description],
           include:{
             member: {only: [:name]},
-            site: {only: [:title ]}
+            site: {only: [:title ]},
+            order_materials: {
+              only: [:id, :amount, :factory_expected_number, :practical_number],
+              include: {material: {only: [:id, :name, :name_py]}}
+            },
+            attachments: {only: [:id], methods: [:attachment_url, :attachment_file_name, :attachment_content_type]},
           },
         },
         tasks: {
