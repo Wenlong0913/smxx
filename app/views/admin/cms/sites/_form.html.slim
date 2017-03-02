@@ -15,8 +15,8 @@
               li = message
 
       = f.association :site
-      = f.input :name
       = f.input :template, collection: eval(Keystore.value_for('cms_template_names'))
+      = f.input :name
       = f.input :domain
       = f.input :description
       = f.input :is_published

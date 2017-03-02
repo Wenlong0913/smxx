@@ -1,4 +1,5 @@
 class Agent::SitesController < Agent::BaseController
+  skip_before_action :set_current_site
   before_action :set_site, only: [:show, :edit, :update, :destroy]
 
   def new

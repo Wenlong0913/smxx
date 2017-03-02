@@ -7,9 +7,7 @@ class Agent::BaseController < ApplicationController
 
   def set_current_site
     @site = Site.find_by(user_id: current_user.id)
-    if @site.nil? && params[:controller] == 'agent/sites'
-      redirect_to new_agent_site_path
-    end
+    not_found! if @site.nil?
   end
 
   def ensure_agent_user!

@@ -29,6 +29,9 @@ raise "创建的第一个代理商ID不等于1!!!" unless site.id == 1
   Role.find_or_create_by name: name
 end
 
+#系统参数
+Keystore.put('cms_template_names', "['default','dagle']")
+
 # init Cms
 # visit: http://localhost:3000/cms_1/
 cms_site = Cms::Site.create!(site_id: site.id, name: '企业官网', template: 'default', description: '这是用CMS搭建的官网')
