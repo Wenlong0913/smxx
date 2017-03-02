@@ -11,7 +11,7 @@ class Admin::MembersController < Admin::BaseController
   # GET /admin/members
   def index
     authorize @site.members
-    @filter_colums = %w(id name qq email)
+    @filter_colums = %w(name qq email)
     @members = build_query_filter(@site.members.all, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?

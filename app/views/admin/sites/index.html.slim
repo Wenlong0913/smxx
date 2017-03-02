@@ -27,7 +27,7 @@ h1.page-header
               td = site.title
               td = site.description
               td
-                => link_to '客户', admin_site_members_path(site), class: 'btn btn-xs btn-success'
+                => link_to '客户列表', admin_site_members_path(site), class: 'btn btn-xs btn-success'
                 => link_to '查看', admin_site_path(site), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_site_path(site), class: 'btn btn-xs btn-default'
                 => link_to '删除', admin_site_path(site), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger' if policy(site).destroy?

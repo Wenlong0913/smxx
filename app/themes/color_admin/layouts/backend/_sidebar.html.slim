@@ -109,7 +109,7 @@
         ul.sub-menu
           li class=("#{'active' if page?('admin/market_catalogs')}") = link_to '分类管理', admin_market_catalogs_path
           li class=("#{'active' if page?('admin/market_templates')}") = link_to '模板管理', admin_market_templates_path
-          / li class=("#{'active' if page?('admin/market_pages')}") = link_to '营销页', admin_market_pages_path #暂时隐藏营销页链接
+          li class=("#{'active' if page?('admin/market_pages')}") = link_to '营销页', admin_market_pages_path
 
       li class=("has-sub #{'active' if page?('admin/members', 'admin/member_catalogs')}")
         a href="javascript:;"
@@ -118,8 +118,8 @@
           span 客户管理
         ul.sub-menu
           li class=("#{'active' if page?('admin/member_catalogs')}") = link_to '分类管理', admin_member_catalogs_path
-          / li class=("has-sub #{'active' if page?('admin/sites')}")
-          /   = link_to '客户列表', admin_members_path
+          li class=("has-sub #{'active' if page?('admin/sites')}")
+            = link_to '客户列表', admin_sites_path
 
       li class=("has-sub")
         a href="javascript:;"
@@ -134,6 +134,7 @@
             - ::Cms::Site.all.each do |cms_site|
               li
                 = link_to cms_site.name, admin_cms_site_channels_path(cms_site)
+
 
       li class=("has-sub #{'active' if page?('admin/tracker/home', 'admin/tracker/shares/home')}")
         a href="javascript:;"
