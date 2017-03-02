@@ -127,6 +127,8 @@
           i.fa.fa-leaf
           span 网站管理系统
         ul.sub-menu
+          li
+            = link_to '添加站点', new_admin_cms_site_path
           - if ::Cms::Site.count > 5
             li
               = link_to '站点列表', admin_cms_sites_path
@@ -158,6 +160,9 @@
           li
             = link_to doc_root_path, target: '_blank' do
               = fa_icon 'leaf', text: '客户使用手册'
+      li
+        = link_to admin_keystores_path do
+          = fa_icon 'key', text: '参数管理'
       li
         = link_to sign_out_path, method: :delete do
           = fa_icon 'sign-out', text: '退出系统'

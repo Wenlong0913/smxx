@@ -1,7 +1,7 @@
 class Cms::Site < ApplicationRecord
   has_many :channels, dependent: :destroy
   has_many :pages, through: :channels
-  belongs_to :site, class_name: 'Site'
+  belongs_to :site, class_name: '::Site'
   after_create :initialize_channel
 
   validates :name, :template, :domain, :description, presence: true
