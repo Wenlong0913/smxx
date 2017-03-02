@@ -3,7 +3,7 @@ class Cms::ChannelsController < Cms::BaseController
   before_action :set_cms_channel, only: [:show, :edit, :update, :destroy]
 
   def index
-    @cms_channels = @cms_site.channels.page(params[:page])
+    @cms_channels = @cms_site.channels.where("parent_id is null").page(params[:page])
     authorize @cms_channels
     respond_to do |format|
       format.html

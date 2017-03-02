@@ -14,15 +14,6 @@ class Cms::Channel < ApplicationRecord
 
   before_validation :sanitize_short_title
 
-  def beauty_url
-    @beauty_url = true
-    self
-  end
-
-  def to_param
-    @beauty_url ? short_title : id.to_s
-  end
-
   private
 
   def sanitize_short_title

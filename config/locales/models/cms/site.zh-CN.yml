@@ -5,6 +5,7 @@ zh-CN:
       cms/site: 站点
     attributes:
       cms/site:
+        site: 经销商
         name: 站点名称
         template: 模板名称
         domain: 域名(Domain)

@@ -31,7 +31,7 @@ class Cms::Page < ApplicationRecord
     end
     assoc
   }
-  scope :search, ->(q) { where('cms_pages.title LIKE ?', "%#{q}%") }
+  scope :search, ->(site_id, q) { joins(:channel).where('cms_channels.site_id = ? AND cms_pages.title LIKE ?', site_id, "%#{q}%") }
 
   def format_date
     self.updated_at.strftime("%Y-%m-%d") unless self.updated_at.nil?
@@ -47,19 +47,6 @@ class Cms::Page < ApplicationRecord
 
   def show_image
     image_path.blank? ? 'http://pic.wedxt.com/placeholder-300x225.jpg' : image_path
-  end
-
-  def to_param
-    "#{id}-#{short_title.parameterize}"
-  end
-
-  def beauty_url
-    @beauty_url = true
-    self
-  end
-
-  def to_param
-    @beauty_url ? "#{id}-#{short_title}" : id.to_s
   end
 
   private

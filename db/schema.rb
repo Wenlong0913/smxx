@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170221060423) do
+ActiveRecord::Schema.define(version: 20170301004922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -158,6 +158,8 @@ ActiveRecord::Schema.define(version: 20170221060423) do
     t.boolean  "is_published", default: true
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.integer  "site_id"
+    t.index ["site_id"], name: "index_cms_sites_on_site_id", using: :btree
   end
 
   create_table "comment_entries", force: :cascade do |t|
@@ -268,6 +270,8 @@ ActiveRecord::Schema.define(version: 20170221060423) do
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.integer  "material_warehouse_id"
+    t.string   "order_code"
+    t.string   "created_by"
   end
 
   create_table "material_purchase_details", force: :cascade do |t|
@@ -348,12 +352,24 @@ ActiveRecord::Schema.define(version: 20170221060423) do
     t.index ["user_id"], name: "index_members_on_user_id", using: :btree
   end
 
+  create_table "order_cvs", force: :cascade do |t|
+    t.string   "cabinet_no"
+    t.string   "cabinet_name"
+    t.integer  "order_id"
+    t.jsonb    "features"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["order_id"], name: "index_order_cvs_on_order_id", using: :btree
+  end
+
   create_table "order_materials", force: :cascade do |t|
     t.integer  "order_id"
     t.integer  "material_id"
     t.integer  "amount"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "factory_expected_number"
+    t.integer  "practical_number"
     t.index ["order_id"], name: "index_order_materials_on_order_id", using: :btree
   end
 
@@ -380,6 +396,8 @@ ActiveRecord::Schema.define(version: 20170221060423) do
     t.integer  "internal_status"
     t.integer  "member_id"
     t.integer  "preorder_conversition_id"
+    t.integer  "create_by"
+    t.integer  "update_by"
     t.index ["site_id"], name: "index_orders_on_site_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
   end
@@ -592,6 +610,7 @@ ActiveRecord::Schema.define(version: 20170221060423) do
   add_foreign_key "member_notes", "users"
   add_foreign_key "members", "sites"
   add_foreign_key "members", "users"
+  add_foreign_key "order_cvs", "orders"
   add_foreign_key "order_materials", "orders"
   add_foreign_key "order_products", "orders"
   add_foreign_key "orders", "sites"

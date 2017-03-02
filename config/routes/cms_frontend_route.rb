@@ -5,15 +5,14 @@ module CmsFrontendRoute
         get '(page-:page)', :as => ''
       end
 
-      scope path: '/cms-:site', as: :cms_frontend do
-        get '', to: 'cms#index', as: :root
-        get '/search', to: 'cms#search', as: :search
-        get '/:channel(/pages/:page)', to: 'cms#channel', as: :channel
-        get '/:channel/:id', to: 'cms#page', as: :page
-      end
-
       constraints(Subdomain) do
-        match '/' => 'cms#index', via: [:get, :post]
+        scope path: 'cms', as: :cms_frontend do
+          root :to => "cms#index"
+          match '/search(/:search(/page/:page))', to: "cms#search", via: :get, as: 'search'
+          match '/tag/:tag(/page/:page)', to: "cms#tag", as: 'tag', via: :get
+          match '/:channel(/:id)', to: "cms#index", via: :get
+          match '/:channel(/page/:page)', to: "cms#index", via: :get
+        end
       end
 
     end
