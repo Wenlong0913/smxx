@@ -62,10 +62,10 @@ class Api::V1::OrdersController < Api::BaseController
 
     def order_json(orders)
       orders.as_json(
-        only: [:id, :code, :price, :status, :internal_status, :description, :created_at], 
+        only: [:id, :code, :price, :status, :internal_status, :description, :created_at],
         include: {
-          site: {only: [:id, :title], include: { user: { only: [:nickname], include: { mobile: { only: [:phone_number] } } } }}, 
-          member: {only: [:name]}, 
+          site: {only: [:id, :title], include: { user: { only: [:nickname], include: { mobile: { only: [:phone_number] } } } }},
+          member: {only: [:name]},
           produce: {only: [:id]},
           create_user: {only: [:id, :nickname]},
           update_user: {only: [:id, :nickname]},

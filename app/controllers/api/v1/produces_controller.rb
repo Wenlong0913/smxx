@@ -1,7 +1,7 @@
 class Api::V1::ProducesController < Api::V1::BaseController
   before_action :authenticate!
   before_action :set_order, only: [:create]
-  before_action :set_produces, only: [:index]
+  before_action :set_produces, only: [:index, :show]
 
   def index
     authorize Produce
@@ -18,12 +18,33 @@ class Api::V1::ProducesController < Api::V1::BaseController
           },
         },
         tasks: {
-          only: [:id, :assignee_id, :title, :description, :status, :resource_id],
+          only: [:id, :assignee_id, :title, :description, :status, :resource_id, :ordinal],
           include: {task_type: {only: [:id, :name, :ordinal]}}
         }
       }
     )
     render json: render_base_data(produces_json, produces, page_size, @produce_list_type)
+  end
+
+  def show
+    @produce = @produces.find(params[:id])
+    authorize @produce
+    render json: @produce.as_json(
+      only: [:id, :order_id, :status, :assignee_id, :created_at],
+      include: {
+        order: {
+          only: [:id, :code],
+          include:{
+            member: {only: [:name]},
+            site: {only: [:title ]}
+          },
+        },
+        tasks: {
+          only: [:id, :assignee_id, :title, :description, :status, :resource_id, :ordinal],
+          include: {task_type: {only: [:id, :name, :ordinal]}}
+        }
+      }
+    )
   end
 
   def create
