@@ -3,7 +3,7 @@ class Cms::PagesController < Cms::BaseController
   before_action :set_cms_page, only: [:show, :edit, :update, :destroy]
 
   def index
-    @cms_pages = @cms_channel.pages.page(params[:page])
+    @cms_pages = Cms::Page.joins(:channel).where("cms_channels.site_id = ?", @cms_site.id).page(params[:page])
     authorize @cms_pages
     respond_to do |format|
       format.html
@@ -34,7 +34,7 @@ class Cms::PagesController < Cms::BaseController
     respond_to do |format|
       format.html do
         if @cms_page.save
-          redirect_to cms_site_channel_path(@cms_site, @cms_channel), notice: 'Page 创建成功.'
+          redirect_to cms_site_pages_path(@cms_site), notice: '创建成功.'
         else
           render :new
         end
@@ -49,7 +49,7 @@ class Cms::PagesController < Cms::BaseController
     respond_to do |format|
       format.html do
         if @cms_page.update(permitted_attributes(@cms_page))
-          redirect_to cms_site_channel_path(@cms_site, @cms_channel), notice: 'Page 更新成功.'
+          redirect_to cms_site_pages_path(@cms_site), notice: ' 更新成功.'
         else
           render :edit
         end
@@ -62,7 +62,7 @@ class Cms::PagesController < Cms::BaseController
     authorize @cms_page
     @cms_page.destroy
     respond_to do |format|
-      format.html { redirect_to cms_site_channel_path(@cms_site, @cms_channel), notice: 'Page 删除成功.' }
+      format.html { redirect_to cms_site_pages_path(@cms_site), notice: ' 删除成功.' }
       format.json { head 200 }
     end
 
@@ -71,7 +71,8 @@ class Cms::PagesController < Cms::BaseController
   private
     def set_cms_site_and_channel
       @cms_site = Cms::Site.find(params[:site_id])
-      @cms_channel = @cms_site.channels.find(params[:channel_id])
+      @cms_channel = @cms_site.channels.find_by(id: params[:channel_id])
+      @cms_channel ||= @cms_site.channels.first
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_cms_page

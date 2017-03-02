@@ -1,42 +1,20 @@
-/! begin #content
-/! begin breadcrumb
-ol.breadcrumb.pull-right
-  li
-    a href="javascript:;"  首页
-  li.active 概览
-/! end breadcrumb
-/! begin page-header
-h1.page-header
-  | CMS网站管理系统
-  small  ...
-/! end page-header
-/! begin row
-.row
-  - @cms_sites.each do |cms_site|
-    .col-md-3.col-sm-6
-      .widget.widget-stats.bg-green
-        .stats-icon
-          i.fa.fa-desktop
-        .stats-info
-          h4 =cms_site.template
-          p =cms_site.name
-          small = cms_site.description
-        .stats-link
-          .row
-            .col-md-6
-              = link_to cms_site_path(cms_site) do
-                | 栏目列表 &nbsp;&nbsp;
-                i.fa.fa-arrow-circle-o-right
-            .col-md-6
-              = link_to get_cms_url(cms_site), target: '_blank' do
-                | 前台预览 &nbsp;&nbsp;
-                i.fa.fa-arrow-circle-o-right
-          .row
-            .col-md-6
-              = link_to new_cms_site_channel_path(cms_site) do
-                | 添加栏目 &nbsp;&nbsp;
-                i.fa.fa-arrow-circle-o-right
-            .col-md-6
-              = link_to new_cms_site_channel_page_path(cms_site, cms_site.channels.last) do
-                | 添加文章 &nbsp;&nbsp;
-                i.fa.fa-arrow-circle-o-right
+.container
+  h2
+    | 站点管理
+    .pull-right
+      => link_to '添加站点', new_cms_site_path, class: 'btn btn-success'
+  .panel
+    .panel-heading
+      .panel-heading-btn
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+          i class="fa fa-expand"
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+          i class="fa fa-minus"
+    .panel-body
+       - if @site.cms_site
+        h2
+          i class="fa fa-cube"
+          => link_to @site.cms_site.name, cms_site_path(@site.cms_site)
+       - else
+        h2 还未开通站点！
+        => link_to '点击这里添加', new_cms_site_path, class: 'btn btn-success'

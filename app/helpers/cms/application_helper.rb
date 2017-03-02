@@ -23,19 +23,16 @@ module Cms::ApplicationHelper
   # get_cms_url(obj)
   # get_cms_url('short_title')
   def get_cms_url(obj, params = {})
+    prefix = cms_frontend_root_url(params)
     case obj
     when Cms::Page
-      cms_frontend_page_path(obj.site.beauty_url, obj.channel.beauty_url, obj.beauty_url, params)
+      prefix.concat("/#{obj.channel.short_title}/#{obj.id}")
     when Cms::Channel
-      cms_frontend_channel_path(obj.site.beauty_url, obj.beauty_url, params)
-    when Cms::Site
-      cms_frontend_root_path(obj.beauty_url, params)
+      prefix.concat("/#{obj.short_title}")
     when String
-      obj = Cms::Channel.find_by(short_title: obj)
-      return root_path(params) unless obj.present?
-      cms_frontend_channel_path(obj.site.beauty_url, obj.beauty_url, params)
+      prefix.concat("/#{obj}")
     else
-      root_path(params)
+      prefix
     end
   end
 
