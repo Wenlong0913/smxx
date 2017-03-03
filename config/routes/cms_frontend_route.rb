@@ -6,7 +6,7 @@ module CmsFrontendRoute
       end
 
       constraints(Subdomain) do
-        scope path: '', as: :cms_frontend do
+        scope path: 's', as: :cms_frontend do
           root :to => "cms#index"
           match '/search(/:search(/page/:page))', to: "cms#search", via: :get, as: 'search'
           match '/tag/:tag(/page/:page)', to: "cms#tag", as: 'tag', via: :get

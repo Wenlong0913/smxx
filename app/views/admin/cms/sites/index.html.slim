@@ -72,7 +72,7 @@ h1.page-header
         tbody
           - @cms_sites.each do |cms_site|
             tr
-              td = cms_site.site.try(:name)
+              td = cms_site.site.try(:title)
               td = cms_site.name
               td = cms_site.template
               td = cms_site.domain

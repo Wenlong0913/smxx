@@ -61,7 +61,7 @@ class Admin::Cms::ChannelsController < Admin::Cms::BaseController
     @cms_channel = ::Cms::Channel.new(permitted_attributes(::Cms::Channel))
     @cms_channel.site_id = @cms_site.id
     if @cms_channel.save
-      redirect_to admin_cms_channel_path(@cms_channel), notice: "#{::Cms::Channel.model_name.human} 创建成功."
+      redirect_to admin_cms_site_channel_path(@cms_site, @cms_channel), notice: "#{::Cms::Channel.model_name.human} 创建成功."
     else
       render :new
     end

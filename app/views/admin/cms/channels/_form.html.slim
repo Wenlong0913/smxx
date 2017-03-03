@@ -14,13 +14,17 @@
             - @cms_channel.errors.full_messages.each do |message|
               li = message
 
-      = f.association :parent, collection: @cms_site.channels
-      = f.input :title
-      = f.input :short_title
-      = f.input :tmp_index
-      = f.input :tmp_detail
-      = f.input :keywords
-      = f.input :description
-      = f.input :image_path
-      = f.input :content, as: :ckeditor
+      .row
+        .col-md-6
+          = f.input :title
+          = f.input :short_title, label: '名称简写(不填则程序自动生成)', placeholder: '请用全英文，用于生成可读的URL链接'
+          = f.input :keywords, placeholder: '关键词用逗号隔开'
+          = f.input :description, placeholder: '文章摘要，用于SEO描述'
+        .col-md-6
+          = f.input :parent_id, collection: @cms_site.channels.select{|c| c != @cms_channel}.map { |r| [r.children.any? ? "|-#{r.title}" : "|------#{r.title}   ", r.id, { class: r.id }] }, include_blank: true
+          = f.input :tmp_index, collection: @cms_site.template_list, label: '栏目模板：(用于承载本栏目的前台显示)'
+          = f.input :tmp_detail, collection: @cms_site.template_list, label: '页面模板：(用于承载本栏目下的页面显示)'
+          = f.input :image_path, placeholder: '网页预览图片路径'
+
+      = f.input :content, as: :ckeditor, input_html: { ckeditor: {toolbar: 'custom', height: '600px'}}
       = f.submit class: 'btn btn-success btn-block'
