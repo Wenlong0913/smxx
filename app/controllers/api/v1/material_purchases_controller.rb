@@ -1,6 +1,6 @@
 class Api::V1::MaterialPurchasesController < Api::BaseController
   before_action :authenticate!
-  before_action :set_material_purchase, only: [:update, :show, :audit]
+  before_action :set_material_purchase, only: [:update, :show, :audit, :destroy]
 
   def index
     authorize MaterialPurchase
@@ -43,6 +43,15 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
       end
     else
       render json: {status: 'failed', error_message:  import_record.errors.full_messages.join(', ') }
+    end
+  end
+
+  def destroy
+    authorize @material_purchase
+    if @material_purchase.destroy
+      render json: {status: 'ok'}
+    else
+      render json: {status: 'error'}
     end
   end
 

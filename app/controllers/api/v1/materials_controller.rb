@@ -76,9 +76,9 @@ class Api::V1::MaterialsController < Api::V1::BaseController
   def audit
     authorize @material
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
-    audits = @material.audits.order(created_at: :desc).page(params[:page] || 1).per(page_size)
+    audits = @material.audits.page(params[:page] || 1).per(page_size)
     render json: {
-      audits: audits.as_json(only: %w(id action audited_changes created_at), methods: %w(user)),
+      audits: audits.as_json(only: %w(id action audited_changes created_at), methods: %w(user)).reverse,
       page_size: page_size,
       current_page: audits.current_page,
       total_pages: audits.total_pages,

@@ -1,5 +1,6 @@
 class Api::V1::VendorsController < Api::BaseController
   before_action :authenticate!
+  before_action :set_vendor, only: [:show, :destroy, :update]
 
   def index
     authorize Vendor
@@ -22,6 +23,36 @@ class Api::V1::VendorsController < Api::BaseController
     else
       render json: {status: 'failed', error_message:  vendor.errors.full_messages.join(', ') }
     end
+  end
+
+  def show
+    authorize @vendor
+    render json: {status: 'ok', vendor: vendor_json(@vendor)}
+  end
+
+  def update
+    authorize @vendor
+    flag, vendor = Vendor::Update.(@vendor, permitted_attributes(Vendor))
+    if flag
+      render json: {status: 'ok', vendor: vendor_json(vendor)}
+    else
+      render json: {status: 'failed', error_message:  vendor.errors.full_messages.join(', ') }
+    end    
+  end
+
+  def destroy
+    authorize @vendor
+    if @vendor.destroy
+      render json: {status: 'ok'}
+    else
+      render json: {status: 'error'}
+    end
+  end
+
+  private
+
+  def set_vendor
+    @vendor = Vendor.find(params[:id])
   end
 
   def vendor_json(vendor)
