@@ -8,13 +8,14 @@ class Order < ApplicationRecord
   }
 
   enum internal_status: {
-    importing: 0,
-    packing: 2,
-    producing: 4
+    packing: 0,   # 拆分物料
+    packed: 1,    # 完成拆分
+    producing: 2  # 生产中（表示已创建生产任务了）
   }
 
   belongs_to :user
   belongs_to :site
+  belongs_to :member
   belongs_to :preorder_conversition
   belongs_to :create_user, class_name: 'User', foreign_key: :create_by
   belongs_to :update_user, class_name: 'User', foreign_key: :update_by
@@ -31,58 +32,61 @@ class Order < ApplicationRecord
   has_many :order_cvs, dependent: :destroy
   has_one :produce, dependent: :destroy
   before_create :generate_code
-  before_validation :check_member
+  # before_validation :check_member
 
   validates_presence_of :site
-  validates_presence_of :member_name, message: '客户名称错误'
+  # validates_presence_of :member_name, message: '客户名称错误'
   validates_presence_of :member
   validates_uniqueness_of :code
 
-  attr_accessor :mobile_phone, :member_name
+  # attr_accessor :mobile_phone, :member_name
 
   after_initialize do
     self.status ||= 0
+    self.internal_status ||= 0
   end
 
   before_save do
     if self.price.blank?
       self.price = 0
     end
+    self.user = self.member.user
   end
 
-  def member
-    return nil unless site
-    return site.members.where(user: user).first if user
-    return site.members.where(id: member_id).first
-    nil
-  end
+  # def member
+  #   return nil unless site
+  #   return site.members.where(user: user).first if user
+  #   return site.members.where(id: member_id).first
+  #   nil
+  # end
 
   private
 
-  def check_member
-    if mobile_phone.blank?
-      create_member
-    else
-      user = User.find_by_phone_number(mobile_phone)
-      if user
-        self.user_id = user.id
-      else
-        member = create_member
-        self.user_id = member.try(:user_id)
-      end
-    end
-  end
+  # def check_member
+  #   if mobile_phone.blank?
+  #     create_member
+  #   else
+  #     user = User.find_by_phone_number(mobile_phone)
+  #     if user
+  #       self.user_id = user.id
+  #     else
+  #       member = create_member
+  #       self.user_id = member.try(:user_id)
+  #     end
+  #   end
+  # end
 
-  def create_member
-    flag, member = Member::Create.(mobile_phone: mobile_phone, name: member_name, site_id: site_id)
-    if flag
-      self.member_id = member.id
-      return member
-    else
-      errors.add :mobile_phone, member.errors["mobile_phone"].first
-      return nil
-    end
-  end
+  # def create_member
+  #   member = Member.find
+  #   flag, member = Member::Create.(mobile_phone: mobile_phone, name: member_name, site_id: site_id)
+  #   if flag
+  #     self.member_id = member.id
+  #     return member
+  #   else
+  #     errors.add :mobile_phone, member.errors["mobile_phone"].first
+  #     return nil
+  #   end
+  # end
 
   def generate_code
     time = Time.now.strftime('%Y%m%d%H%M%S')

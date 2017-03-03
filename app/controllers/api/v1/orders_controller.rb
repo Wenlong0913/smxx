@@ -1,7 +1,7 @@
 class Api::V1::OrdersController < Api::BaseController
   before_action :authenticate!
   before_action :set_orders, only: [:index]
-  before_action :set_order, only: [:show]
+  before_action :set_order, only: [:show, :update]
 
   def index
     authorize Order
@@ -14,7 +14,7 @@ class Api::V1::OrdersController < Api::BaseController
 
   def create
     authorize Order
-    flag, order = Order::Create.(permitted_attributes(Order))
+    flag, order = Order::Create.(permitted_attributes(Order).merge({create_by: current_user.id}))
     if flag
       render json: {status: 'ok', order: order_json(order)}
     else
@@ -26,6 +26,15 @@ class Api::V1::OrdersController < Api::BaseController
   def show
     authorize @order
     render json: {status: 'ok', order: order_json(@order)}
+  end
+
+  def update
+    authorize @order
+    if @order.update(permitted_attributes(Order))
+      render json: {status: 'ok', order: order_json(@order)}
+    else
+      render json: {status: 'failed', error_message:  @order.errors.full_messages.join(', ') }
+    end
   end
 
   # def create_comment
