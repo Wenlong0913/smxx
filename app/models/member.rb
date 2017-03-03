@@ -8,8 +8,10 @@ class Member < ApplicationRecord
   validates :email, email: true, allow_blank: true
   validates :qq, qq: true, allow_blank: true
   validates_uniqueness_of :name, scope: [:site_id, :user_id]
+  validates :mobile_phone, mobile_phone: true, allow_blank: true
+  #validates_uniqueness_of :mobile_phone, scope: [:site_id, :user_id]
   before_validation :create_user, if: -> { user_id.blank? && mobile_phone.present? }
-  has_many :member_notes
+  has_many :member_notes, dependent: :destroy
   has_many :orders
 
   def last_updated_at

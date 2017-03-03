@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   #localhost visit subdomain with: http://subname.lvh.me:5000/
   def check_subdomain!
     return if @cms_site.present?
-    return if ["", "www", "api"].include?(request.subdomain)
+    return if ["api"].include?(request.subdomain)
     if Subdomain.matches?(request) && (@cms_site = Cms::Site.find_by(domain: request.subdomain))
       #redirect_to cms_frontend_root_url(subdomain: request.subdomain)
     end
