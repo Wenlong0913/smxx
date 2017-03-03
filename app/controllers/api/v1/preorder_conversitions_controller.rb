@@ -59,7 +59,7 @@ class Api::V1::PreorderConversitionsController < Api::BaseController
 
   private
     def preorder_conversition_json(preorder_conversitions)
-      preorder_conversitions.as_json(only: [:id, :title, :content, :created_at], methods: [:member_name, :member_phone, :site_confirm, :factory_confirm],
+      preorder_conversitions.as_json(only: [:id, :title, :content, :created_at], methods: [:member_id, :member_name, :member_phone, :site_confirm, :factory_confirm],
         include: {
           site: { only: [:id, :title]},
           user: { only: [:nickname]},
