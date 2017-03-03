@@ -22,7 +22,7 @@
           => link_to @cms_site.show_published, edit_cms_site_path(@cms_site)
       p
         | 前台地址：
-        = link_to get_cms_url(@cms_site), get_cms_url(@cms_site), target: '_blank'
+        = link_to  cms_frontend_root_url(subdomain: @cms_site.domain), cms_frontend_root_url(subdomain: @cms_site.domain), target: '_blank'
       p
         = @cms_site.description
     .panel-body

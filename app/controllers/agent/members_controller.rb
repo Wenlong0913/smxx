@@ -32,10 +32,10 @@ class Agent::MembersController < Agent::BaseController
   end
 
   def create
-    authorize Member
     @agent_member = Member.new(permitted_attributes(Member))
     @agent_member.site_id = @site.id
     @agent_member.features = params[:features].select{|k,v| v.present?} if params[:features]
+    authorize @agent_member
 
     respond_to do |format|
       format.html do

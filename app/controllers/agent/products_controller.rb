@@ -1,6 +1,7 @@
 class Agent::ProductsController < Agent::BaseController
   before_action :set_current_user_products
   before_action :set_product, only: [:show, :edit, :update, :destroy, :process_shelves]
+
   def index
     authorize Product
     @catalogs = ProductCatalog.roots
@@ -47,6 +48,7 @@ class Agent::ProductsController < Agent::BaseController
       format.json { render json: @products }
     end
   end
+
   def show
     authorize @product
     @catalog_ancestors = []
@@ -73,10 +75,11 @@ class Agent::ProductsController < Agent::BaseController
 
   def create
     @product = Product.new(permitted_attributes(Product))
-    @product.site = current_user.sites.first
+    @product.site = @site
     @product.additional_attribute_keys = params["product"]["additional_attribute_keys"]
     @product.additional_attribute_values = params["product"]["additional_attribute_values"]
     authorize @product
+
     if @product.save
       # redirect_to agent_product_path(@product), notice: 'Product 创建成功.'
       render json: {url: agent_product_path(@product)}
@@ -131,8 +134,5 @@ class Agent::ProductsController < Agent::BaseController
         end
       end
     end
-    # Only allow a trusted parameter "white list" through.
-    def product_params
-      params[:product]
-    end
+
 end
