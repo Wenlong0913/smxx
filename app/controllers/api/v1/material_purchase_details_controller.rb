@@ -9,7 +9,7 @@ class Api::V1::MaterialPurchaseDetailsController < Api::V1::BaseController
     material_purchase = material_purchase_detail.material_purchase
     if material_purchase.material_purchase_details.count > 1
       MaterialPurchaseDetail::Destroy.(material_purchase_detail)
-      render json: {status: 'ok', material_purchases: material_purchase_json(material_purchase_detail.material_purchase)}
+      render json: {status: 'ok', material_purchase: material_purchase_json(material_purchase_detail.material_purchase)}
     else
       render json: {status: 'error', error_message: '无法删除该物料，物料清单不能为空！'}
     end

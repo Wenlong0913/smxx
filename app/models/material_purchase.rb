@@ -1,5 +1,6 @@
 class MaterialPurchase < ApplicationRecord
   audited
+  has_associated_audits
   belongs_to :vendor
   validates :vendor, presence: true
   store_accessor :features, :purchase_date, :delivery_date, :amount, :paid, :total, :note, :delivery_date

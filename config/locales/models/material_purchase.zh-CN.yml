@@ -6,6 +6,7 @@ zh-CN:
     attributes:
       material_purchase: 
         material_purchase_details: 物料清单
+        vendor: 供应商
     errors:
       models:
         material_purchase: 

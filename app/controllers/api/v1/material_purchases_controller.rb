@@ -1,6 +1,6 @@
 class Api::V1::MaterialPurchasesController < Api::BaseController
   before_action :authenticate!
-  before_action :set_material_purchase, only: [:update, :show]
+  before_action :set_material_purchase, only: [:update, :show, :audit]
 
   def index
     authorize MaterialPurchase
@@ -51,6 +51,21 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
     render json: {status: 'ok', material_purchase: material_purchase_json(@material_purchase)}
   end
 
+  def audit
+    authorize @material_purchase
+    page_size = params[:page_size].present? ? params[:page_size].to_i : 20
+    audits = @material_purchase.audits.order(created_at: :desc).page(params[:page] || 1).per(page_size)
+    render json: {
+      audits: audits_json(audits),
+      detail_audits: detail_audits_json(@material_purchase.associated_audits),
+      destory_materials: Material.where(id: @material_purchase.associated_audits.where(action: 'destroy').map{|a| a.audited_changes["material_id"]}).as_json(only: %w(id name)),
+      page_size: page_size,
+      current_page: audits.current_page,
+      total_pages: audits.total_pages,
+      total_count: audits.total_count
+    }
+  end
+
   private
 
   def material_purchases_json(material_purchases)
@@ -88,6 +103,36 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
         }
       }
     )
+  end
+
+  def audits_json(audits)
+    audits.as_json(
+      only: %w(id action audited_changes created_at),
+      include: {
+        user: {
+          only: %w(nickname)
+        }
+      }
+    )
+  end
+
+  def detail_audits_json(audits)
+    audits.as_json(
+      only: %w(id action audited_changes created_at),
+      include: {
+        user: {
+          only: %w(nickname)
+        },
+        auditable: {
+          only: [],
+          include: {
+            material: {
+              only: %w(name)
+            }
+          }
+        }
+      }
+    )    
   end
 
   def set_material_purchase
