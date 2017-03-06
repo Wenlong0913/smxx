@@ -34,8 +34,8 @@ module ApiRoute
           resources :members, only: [:index, :create]
           resources :search, only: [:index]
           resources :users, only: [:index]
-          resources :vendors, only: [:index, :create]
-          resources :material_purchases, only: [:index, :create, :update, :show] do
+          resources :vendors, only: [:index, :create, :destroy, :show, :update]
+          resources :material_purchases, only: [:index, :create, :update, :show, :destroy] do
             member do
               get :audit
             end
@@ -50,6 +50,7 @@ module ApiRoute
             end
           end
           resources :order_cvs, only: [:index, :create]
+          resources :audits, only: [:index]
         end
       end
     end
