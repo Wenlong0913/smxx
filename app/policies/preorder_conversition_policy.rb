@@ -7,7 +7,7 @@ class PreorderConversitionPolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.super_admin_or_admin? || user.has_role?(:agent)
-      [:site_id, :title, :content, :member_name, :member_phone, :member_address]
+      [:site_id, :title, :content, :member_id, :member_name, :member_phone, :member_address]
     else
       []
     end

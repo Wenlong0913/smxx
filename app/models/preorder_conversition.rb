@@ -1,6 +1,6 @@
 class PreorderConversition < Ticket
   audited
-  store_accessor :features, :offer, :member_name, :member_phone, :member_address, :site_confirm, :factory_confirm
+  store_accessor :features, :offer, :member_id, :member_name, :member_phone, :member_address, :site_confirm, :factory_confirm
   validates_presence_of :site, :member_name
   has_many_comments
   # has_many :image_item_relations, as: :relation
