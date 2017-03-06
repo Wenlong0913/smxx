@@ -27,6 +27,9 @@ module ApiRoute
           resources :material_catalogs, only: [:index]
           resources :produces, only: [:index, :create] do
             resources :tasks, only: [:create, :index, :update]
+            collection do 
+              get :need_export
+            end
           end
           resources :task_types, only: [:index]
           resources :image_items, only: [:create]

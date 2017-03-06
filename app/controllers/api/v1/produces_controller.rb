@@ -37,6 +37,31 @@ class Api::V1::ProducesController < Api::V1::BaseController
     end
   end
 
+  def need_export
+    authorize Produce
+    produces = Produce.processing
+    produces = produces.joins(order: [:order_materials]).includes(order: [:order_materials]).where("order_materials.factory_expected_number > order_materials.practical_number")
+    produces_json = produces.as_json(
+      only: [:id, :order_id],
+      include: {
+        order: {
+          only: [:id, :code],
+          include:{
+            member: {only: [:name]},
+            site: {only: [:title ]},
+            order_materials: {
+              only: [:id, :material_id, :amount, :factory_expected_number, :practical_number],
+              include: {
+                material: {only: [:name, :name_py]}
+              }
+            }
+          }
+        }
+      }
+    )  
+    render json: {produces: produces_json}
+  end
+
   private
     def set_order
       @order = Order.find(params[:order_id])
