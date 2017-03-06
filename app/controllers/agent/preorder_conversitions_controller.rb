@@ -47,7 +47,8 @@ class Agent::PreorderConversitionsController < Agent::BaseController
 
   def create
     # authorize preorder_conversition
-    @preorder_conversition = @site.preorder_conversitions.new(permitted_attributes(PreorderConversition).merge(user_id: current_user.id))
+    member = Member.where(id: params[:preorder_conversition][:member_id]).first
+    @preorder_conversition = @site.preorder_conversitions.new(permitted_attributes(PreorderConversition).merge(user_id: current_user.id, member_name: member.name, member_phone: member.mobile_phone))
     if @preorder_conversition.save
       render json: {status: 'ok', url: agent_preorder_conversitions_path}
     else

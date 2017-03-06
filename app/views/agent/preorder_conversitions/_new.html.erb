@@ -14,11 +14,12 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-6">
-              <%= f.input :member_name %>
+            <div class="col-xs-10">
+              <%= f.input :member_id, collection: @site.members.map{|m| [m.name + '(' + (m.mobile_phone.blank? ? '暂无' : m.mobile_phone) + ')', m.id]}, include_blank: true, input_html: { class: 'select2 select-member' } %>
             </div>
-            <div class="col-xs-6">
-              <%= f.input :member_phone %>
+            <div class="col-xs-2 form-group">
+              <label class="control-label select optional">&nbsp;</label>
+              <div><button type="button" class="btn btn-primary" id="addMemberButton">快速创建用户</button></div>
             </div>
           </div>
           <div class="row">
@@ -36,30 +37,27 @@
           <%= f.submit '创建', class: 'btn btn-primary' %>
         </div>
       <% end %>
+      <div class="add-member" id="addMember" style="display: none">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content" style="padding: 10px">
+            <%= simple_form_for Member.new, url: agent_members_path(format: 'json'), html: { class: 'form-horizontal' }, remote: true do |m| %>
+              <div class="error-text alert alert-danger" role="alert"></div>
+              <div class="modal-body">
+                <div class="row">
+                  <%= m.input :name %>
+                </div>
+                <div class="row">
+                  <%= m.input :mobile_phone %>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default close-add-member-modal">关闭</button>
+                <%= m.submit '创建', class: 'btn btn-primary' %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<script type="text/javascript">
-  $(function(){
-    var domModal = $('#newPreorderConversitionModal')
-    domModal.find('.error-text').text('').hide()
-    newOrdersDesign = new Vue({
-      el: domModal.find('image-select')[0]
-    })
-    domModal.find('form#new_preorder_conversition').on('ajax:success', function (event, request) {
-      if (request.status == 'ok') {
-        domModal.modal('hide')
-        window.location = request.url
-        console.log(request.url);
-      }else {
-        domModal.find('.error-text').show().text('创建失败！：  '+request.message)
-      }
-    })
-    domModal.find('form#new_preorder_conversition').on('ajax:error', function (event, request) {
-      domModal.find('.error-text').show().text('创建失败! ')
-    })
-    $('#newPreorderConversitionModal').on('hidden.bs.modal', function (e) {
-      domModal.find('.error-text').text('').hide()
-    })
-  })
-</script>
