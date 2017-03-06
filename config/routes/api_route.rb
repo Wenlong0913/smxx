@@ -41,6 +41,7 @@ module ApiRoute
           resources :material_purchases, only: [:index, :create, :update, :show, :destroy] do
             member do
               get :audit
+              post :update_material
             end
           end
           resources :material_purchase_details, only: [:update, :destroy]
