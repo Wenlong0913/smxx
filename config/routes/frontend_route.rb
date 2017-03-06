@@ -1,7 +1,7 @@
 module FrontendRoute
   def self.extended(router)
     router.instance_exec do
-      root 'home#index'
+      root 'cms#index'
       devise_for "users", skip: [:sessions, :passwords, :registrations], :controllers => { :omniauth_callbacks => 'users/omniauth_callbacks' }
       devise_scope :user do
         post '/sessions/:id/impersonate', to: 'users/sessions#impersonate', as: :impersonate_session

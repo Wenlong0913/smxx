@@ -109,7 +109,7 @@
         ul.sub-menu
           li class=("#{'active' if page?('admin/market_catalogs')}") = link_to '分类管理', admin_market_catalogs_path
           li class=("#{'active' if page?('admin/market_templates')}") = link_to '模板管理', admin_market_templates_path
-          / li class=("#{'active' if page?('admin/market_pages')}") = link_to '营销页', admin_market_pages_path #暂时隐藏营销页链接
+          li class=("#{'active' if page?('admin/market_pages')}") = link_to '营销页', admin_market_pages_path
 
       li class=("has-sub #{'active' if page?('admin/members', 'admin/member_catalogs')}")
         a href="javascript:;"
@@ -118,12 +118,21 @@
           span 客户管理
         ul.sub-menu
           li class=("#{'active' if page?('admin/member_catalogs')}") = link_to '分类管理', admin_member_catalogs_path
-          / li class=("has-sub #{'active' if page?('admin/sites')}")
-          /   = link_to '客户列表', admin_members_path
+          li class=("has-sub #{'active' if page?('admin/sites')}")
+            = link_to '客户列表', admin_sites_path
 
-      li
-        = link_to cms_sites_path do
-          = fa_icon 'file-text', text: 'CMS系统'
+      li class=("has-sub")
+        a href="javascript:;"
+          b.caret.pull-right
+          i.fa.fa-leaf
+          span 网站管理系统
+        ul.sub-menu
+          li
+            = link_to '站点列表', admin_cms_sites_path
+          - if ::Cms::Site.count < 5
+            - ::Cms::Site.all.each do |cms_site|
+              li
+                = link_to cms_site.name, admin_cms_site_channels_path(cms_site)
 
       li class=("has-sub #{'active' if page?('admin/tracker/home', 'admin/tracker/shares/home')}")
         a href="javascript:;"
@@ -147,6 +156,9 @@
           li
             = link_to doc_root_path, target: '_blank' do
               = fa_icon 'leaf', text: '客户使用手册'
+      li
+        = link_to admin_keystores_path do
+          = fa_icon 'key', text: '参数管理'
       li
         = link_to sign_out_path, method: :delete do
           = fa_icon 'sign-out', text: '退出系统'

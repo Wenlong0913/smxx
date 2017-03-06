@@ -1,6 +1,6 @@
 class Api::V1::MembersController < Api::BaseController
   before_action :authenticate!
-  before_action :set_site, only: [:index]
+  before_action :set_site, only: [:index, :create]
 
   def index
     authorize Member
@@ -17,6 +17,16 @@ class Api::V1::MembersController < Api::BaseController
     }
   end
 
+  def create
+    authorize Member
+    member = @site.members.new(permitted_attributes(Member))
+    if member.save
+      render json: {status: 'ok', member: member_json(member)}
+    else
+      render json: {status: 'failed', error_message:  member.errors.full_messages.join(', ') }
+    end
+  end
+
   private
 
     def set_site
@@ -25,7 +35,7 @@ class Api::V1::MembersController < Api::BaseController
 
     def member_json(members)
       members.as_json(
-        only: %w(id name user_id)
+        only: %w(id name mobile_phone user_id)
       )
     end
 end

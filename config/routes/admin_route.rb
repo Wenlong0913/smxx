@@ -81,7 +81,8 @@ module AdminRoute
             get 'dashboard', to: 'members#dashboard'
           end
         end
-
+        #系统参数
+        resources :keystores
       end
     end
   end

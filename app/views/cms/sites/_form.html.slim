@@ -10,11 +10,11 @@
       = f.error_notification
 
       .form-inputs
+        = f.input :template, collection: eval(Keystore.value_for('cms_template_names'))
         = f.input :name
-        = f.input :template
         = f.input :domain
         = f.input :description
         = f.input :is_published
 
       .form-actions
-        = f.button :submit, '提 交'
+        = f.button :submit, '提 交', class: 'btn btn-primary btn-block'

@@ -35,7 +35,7 @@ class ProductPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    if user.super_admin_or_admin?
+    if user.super_admin_or_admin? || user.has_role?(:agent)
       [:site_id, :name, :price, :stock, :unit, :discount, :description, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values, :is_shelves, :is_fee, :shopping_fee, :catalog_id, :image_item_ids => []]
     else
       [:name, :price, :stock, :unit, :discount, :description, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values, :is_shelves, :is_fee, :shopping_fee, :catalog_id,  :image_item_ids => []]

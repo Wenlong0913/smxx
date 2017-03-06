@@ -14,11 +14,11 @@ class SitePolicy < ApplicationPolicy
   end
 
   def new?
-    user.super_admin_or_admin?
+    user.super_admin_or_admin? || user.has_role?(:agent)
   end
 
   def create?
-    user.super_admin_or_admin?
+    user.super_admin_or_admin? || user.has_role?(:agent)
   end
 
   def edit?

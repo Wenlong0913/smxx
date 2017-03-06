@@ -1,1 +1,0 @@
-json.array! @cms_sites, partial: 'cms_sites/cms_site', as: :cms_site

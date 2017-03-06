@@ -32,10 +32,10 @@ class Agent::MarketPagesController < Agent::BaseController
   end
 
   def create
-    authorize MarketPage
     @market_page = MarketPage.new(permitted_attributes(MarketPage))
     @market_page.site_id = @site.id
     @market_page.features = params[:mpage]
+    authorize @market_page
     respond_to do |format|
       format.html do
         if @market_page.save!

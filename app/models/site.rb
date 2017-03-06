@@ -22,6 +22,7 @@ class Site < ApplicationRecord
   has_many :orders, dependent: :destroy
   has_many :preorder_conversitions, dependent: :destroy
   has_many :market_pages, dependent: :destroy
+  has_one :cms_site, class_name: '::Cms::Site', dependent: :destroy
   store_accessor :features, :description
   validates_presence_of :title, :user_id
   validates_uniqueness_of :title, scope: [:type, :user_id]

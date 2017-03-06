@@ -30,10 +30,11 @@ class Agent::MemberNotesController < Agent::BaseController
   end
 
   def create
-    authorize MemberNote
     @agent_member_note = MemberNote.new(permitted_attributes(MemberNote))
     @agent_member_note.member_id = @agent_member.id
     @agent_member_note.user_id = current_user.id
+    authorize @agent_member_note
+
     respond_to do |format|
       format.html do
         if @agent_member_note.save

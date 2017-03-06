@@ -1,7 +1,13 @@
 class Cms::Site < ApplicationRecord
   has_many :channels, dependent: :destroy
   has_many :pages, through: :channels
+  belongs_to :site, class_name: '::Site'
   after_create :initialize_channel
+
+  validates :name, :template, :domain, :description, presence: true
+  validates_uniqueness_of :domain
+  validates :domain, format: { with: /\A[a-z0-9]+\z/,
+    message: "域名只能包括字母和数字, 字母必须为小写" }
 
   def template_dir
     "#{Rails.root}/public/templetes/#{template}/"
@@ -19,6 +25,10 @@ class Cms::Site < ApplicationRecord
 
   def to_param
     @beauty_url ? "#{id}" : id.to_s
+  end
+
+  def show_published
+    is_published ? '已发布' : '未发布'
   end
 
   private

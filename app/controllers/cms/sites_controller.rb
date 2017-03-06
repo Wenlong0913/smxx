@@ -3,11 +3,6 @@ class Cms::SitesController < Cms::BaseController
 
   def index
     authorize Cms::Site
-    @cms_sites = Cms::Site.all
-    respond_to do |format|
-      format.html
-      format.json { render json: @cms_sites }
-    end
   end
 
   def show
@@ -29,13 +24,14 @@ class Cms::SitesController < Cms::BaseController
   end
 
   def create
-    authorize Cms::Site
     @cms_site = Cms::Site.new(permitted_attributes(Cms::Site))
+    @cms_site.site_id = @site.id
+    authorize @cms_site
 
     respond_to do |format|
       format.html do
         if @cms_site.save
-          redirect_to cms_site_path(@cms_site), notice: 'Site 创建成功.'
+          redirect_to cms_site_path(@cms_site), notice: '站点创建成功.'
         else
           render :new
         end
@@ -50,7 +46,7 @@ class Cms::SitesController < Cms::BaseController
     respond_to do |format|
       format.html do
         if @cms_site.update(permitted_attributes(@cms_site))
-          redirect_to cms_site_path(@cms_site), notice: 'Site 更新成功.'
+          redirect_to cms_site_path(@cms_site), notice: '站点更新成功.'
         else
           render :edit
         end
@@ -61,9 +57,13 @@ class Cms::SitesController < Cms::BaseController
 
   def destroy
     authorize @cms_site
-    @cms_site.destroy
+    # destroy site is dangers, just let it hidden
+    #@cms_site.destroy
+    @cms_site.is_published = false
+    @cms_site.save!
+
     respond_to do |format|
-      format.html { redirect_to cms_sites_url, notice: 'Site 删除成功.' }
+      format.html { redirect_to cms_sites_url, notice: '在未审核之前我们不能删除您的站点，但是已经为你取消了站点发布.' }
       format.json { head 200 }
     end
   end
