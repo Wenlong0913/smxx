@@ -72,7 +72,7 @@ h1.page-header
             tr
               td = order.code
               td = order.site.title
-              td = order.price
+              td = order.price.to_f / 100
               td = enum_l(order, :status)
               td = enum_l(order, :internal_status) || '-'
               td
