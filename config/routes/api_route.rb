@@ -25,7 +25,7 @@ module ApiRoute
           resources :material_warehouses, only: [:index, :create]
           resources :material_stock_alerts, only: [:index]
           resources :material_catalogs, only: [:index]
-          resources :produces, only: [:index, :create, :show] do
+          resources :produces, only: [:index, :create, :show, :update] do
             resources :tasks, only: [:create, :index, :update]
           end
           resources :task_types, only: [:index]

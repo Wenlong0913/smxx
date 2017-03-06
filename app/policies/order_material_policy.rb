@@ -7,13 +7,17 @@ class OrderMaterialPolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.super_admin_or_admin?
-      [:material_id, :amount]
+      [:material_id, :amount, :factory_expected_number]
     else
       []
     end
   end
 
   def permitted_attributes_for_update
-    permitted_attributes_for_create
+    if user.super_admin_or_admin?
+      [:factory_expected_number, :practical_number]
+    else
+      []
+    end
   end
 end

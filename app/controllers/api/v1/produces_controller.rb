@@ -8,7 +8,7 @@ class Api::V1::ProducesController < Api::V1::BaseController
     page_size = params[:page_size] ? params[:page_size].to_i : 20
     produces = @produces.all.page(params[:page] || 1).per(page_size)
     produces_json = produces.all.as_json(
-      only: [:id, :order_id, :status, :assignee_id, :created_at],
+      only: [:id, :order_id, :status, :assignee_id, :created_at, :material_status],
       include: {
         order: {
           only: [:id, :code],
@@ -30,13 +30,18 @@ class Api::V1::ProducesController < Api::V1::BaseController
     @produce = @produces.find(params[:id])
     authorize @produce
     render json: @produce.as_json(
-      only: [:id, :order_id, :status, :assignee_id, :created_at],
+      only: [:id, :order_id, :status, :assignee_id, :created_at, :material_status],
       include: {
         order: {
-          only: [:id, :code],
+          only: [:id, :code, :description],
           include:{
             member: {only: [:name]},
-            site: {only: [:title ]}
+            site: {only: [:title ]},
+            order_materials: {
+              only: [:id, :amount, :factory_expected_number, :practical_number],
+              include: {material: {only: [:id, :name, :name_py]}}
+            },
+            attachments: {only: [:id], methods: [:attachment_url, :attachment_file_name, :attachment_content_type]},
           },
         },
         tasks: {
@@ -59,6 +64,16 @@ class Api::V1::ProducesController < Api::V1::BaseController
     end
   end
 
+  def update
+    authorize Produce
+    produce = Produce.find(params[:id])
+    flag, produce = Produce::Update.(produce, permitted_attributes(produce))
+    if flag
+      render json: {status: 'ok', produce: produce}
+    else
+      render json: {status: 'failed', error_message: produce.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
+    end
+  end
   private
     def set_order
       @order = Order.find(params[:order_id])
