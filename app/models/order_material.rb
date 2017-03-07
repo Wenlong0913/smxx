@@ -11,4 +11,8 @@ class OrderMaterial < ApplicationRecord
     self.factory_expected_number = self.amount if self.factory_expected_number.blank?
   end
 
+  before_create do
+    self.practical_number = 0
+  end
+
 end

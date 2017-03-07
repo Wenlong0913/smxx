@@ -6,7 +6,8 @@ class Api::V1::ProducesController < Api::V1::BaseController
   def index
     authorize Produce
     page_size = params[:page_size] ? params[:page_size].to_i : 20
-    produces = @produces.all.page(params[:page] || 1).per(page_size)
+    @produces =  params["search_content"].present? ? @produces.joins(:order).where(orders: {code: params[:search_content]}) : @produces.all
+    produces = @produces.order(updated_at: :desc).page(params[:page] || 1).per(page_size)
     produces_json = produces.all.as_json(
       only: [:id, :order_id, :status, :assignee_id, :created_at, :material_status],
       include: {
@@ -64,6 +65,32 @@ class Api::V1::ProducesController < Api::V1::BaseController
     end
   end
 
+  def need_export
+    authorize Produce
+    produces = Produce.processing
+    produces = produces.joins(order: [:order_materials]).includes(order: [:order_materials]).where("order_materials.factory_expected_number > order_materials.practical_number")
+    produces_json = produces.as_json(
+      only: [:id, :order_id],
+      include: {
+        order: {
+          only: [:id, :code],
+          include:{
+            member: {only: [:name]},
+            site: {only: [:title ]},
+            order_materials: {
+              only: [:id, :material_id, :amount, :factory_expected_number, :practical_number],
+              include: {
+                material: {only: [:name, :name_py]}
+              }
+            }
+          }
+        }
+      }
+    )  
+    render json: {produces: produces_json}
+  end
+
+
   def update
     authorize Produce
     produce = Produce.find(params[:id])
@@ -74,6 +101,7 @@ class Api::V1::ProducesController < Api::V1::BaseController
       render json: {status: 'failed', error_message: produce.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
     end
   end
+
   private
     def set_order
       @order = Order.find(params[:order_id])

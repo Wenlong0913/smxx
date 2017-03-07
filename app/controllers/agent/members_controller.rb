@@ -45,7 +45,13 @@ class Agent::MembersController < Agent::BaseController
           render :new
         end
       end
-      format.json { render json: @agent_member }
+      format.json do
+        if @agent_member.save
+          render json: { status: 'ok', member: @agent_member }
+        else
+          render json: { status: 'failed', message: @agent_member.errors.full_messages.join(', ') }
+        end
+      end
     end
   end
 
