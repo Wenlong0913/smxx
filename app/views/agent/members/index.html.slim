@@ -1,4 +1,4 @@
-.container.member-container.primary-content[data-notice=notice]
+.container.member-container.primary-content[data-notice="#{notice}"]
   h1
     | 客户列表
     .pull-right
@@ -42,8 +42,11 @@
                   => link_to '删除', agent_member_path(agent_member), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-default'
 javascript:
   $(document).ready(function(){
-    var notice =  $('.member-container').data("notice")
-    if(notice.length > 0 ){
-      $.gritter.add({title: '提示', text: notice})
+    var agentMembers =  $('.agent-members.index')
+    if(agentMembers.length > 0 ){
+      var notice = agentMembers.find('.member-container').data('notice')
+      if(notice.length > 0){
+        $.gritter.add({title: '提示', text: notice})
+      }
     }
   })
