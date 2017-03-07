@@ -72,7 +72,7 @@
                           </div>
                           <div class="col-xs-6">
                             订单总价(含运费)：
-                            <span class="text-danger"><%= order.price || '0' %></span>
+                            <span class="text-danger"><%= order.price.to_f / 100 %></span>
                           </div>
                         </li>
                       </ul>

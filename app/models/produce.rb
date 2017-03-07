@@ -16,7 +16,10 @@ class Produce < ApplicationRecord
     self.status ||= 0
   end
 
-  # after_save do
-  #   binding.pry
-  # end
+  after_save do
+    if self.completed?
+      self.order.produced!
+    end
+  end
+
 end

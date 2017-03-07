@@ -57,7 +57,7 @@ h1.page-header
                   | #{Order.human_attribute_name(:price)}
                 td
                   a
-                    = @order.price
+                    = @order.price.to_f/100
               tr.divider
                 td[colspan='2']
         .col-sm-5

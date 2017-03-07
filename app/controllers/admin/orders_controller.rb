@@ -36,16 +36,17 @@ class Admin::OrdersController < Admin::BaseController
   # GET /admin/orders/1/edit
   def edit
     authorize @order
+    @order.price = @order.price.to_f/100
   end
 
   # POST /admin/orders
   def create
     authorize Order
-    @order = Order.new(permitted_attributes(Order))
-
-    if @order.save
-      redirect_to admin_order_path(@order), notice: "#{Order.model_name.human} 创建成功."
+    flag, @order = Order::Create.(permitted_attributes(Order).merge(create_by: current_user.id))
+    if flag
+      redirect_to admin_orders_path(@order), notice: "#{Order.model_name.human} 创建成功."
     else
+      @order.price = @order.price.to_f/100
       render :new
     end
   end
