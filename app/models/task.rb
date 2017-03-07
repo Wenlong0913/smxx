@@ -2,9 +2,9 @@ class Task < ApplicationRecord
   audited
 
   enum status: {
-    processing: 0,
-    cancelled: 1,
-    completed: 2
+    processing: 0, #处理中
+    cancelled: 1,  #已取消
+    completed: 2   #已完成
   }
 
   belongs_to :site

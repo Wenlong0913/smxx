@@ -18,7 +18,7 @@ class Produce < ApplicationRecord
 
   after_save do
     if self.completed?
-      self.order.update(internal_status: 'completed')
+      self.order.produced!
     end
   end
 
