@@ -86,10 +86,9 @@ class Api::V1::ProducesController < Api::V1::BaseController
           }
         }
       }
-    )  
+    )
     render json: {produces: produces_json}
   end
-
 
   def update
     authorize Produce
@@ -100,6 +99,12 @@ class Api::V1::ProducesController < Api::V1::BaseController
     else
       render json: {status: 'failed', error_message: produce.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
     end
+  end
+
+  def destroy
+    produce = Produce::Destroy.(params[:id])
+    produce.order.packed!
+    render json: {status: 'ok'}
   end
 
   private
