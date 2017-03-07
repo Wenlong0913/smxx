@@ -1,6 +1,6 @@
 class Api::V1::MaterialPurchasesController < Api::BaseController
   before_action :authenticate!
-  before_action :set_material_purchase, only: [:update, :show, :audit, :destroy]
+  before_action :set_material_purchase, only: [:update, :show, :audit, :destroy, :update_material]
 
   def index
     authorize MaterialPurchase
@@ -58,6 +58,30 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
   def show
     authorize @material_purchase
     render json: {status: 'ok', material_purchase: material_purchase_json(@material_purchase)}
+  end
+
+  def update_material
+    authorize @material_purchase
+    success = true
+    material_purchase_detail = @material_purchase.material_purchase_details.find_or_create_by(material_id: params["material"]["material_id"])
+    if material_purchase_detail.new_record?
+      material_purchase_detail.price = params["material"]["price"]
+      material_purchase_detail.number = params["material"]["amount"]
+      success &= material_purchase_detail.save
+      if success
+        amount = @material_purchase.amount.to_f
+        @material_purchase.amount = amount + (material_purchase_detail.price.to_f * material_purchase_detail.number.to_i)
+        @material_purchase.total += material_purchase_detail.number
+        success &= @material_purchase.save
+      end
+      if success
+        render json: {status: 'ok'}
+      else
+        render json: {status: 'failed', error_message: material_purchase_detail.errors.full_messages.join(', ')}
+      end
+    else
+      render json: {status: 'failed', error_message: '物料已存在！'}
+    end
   end
 
   def audit

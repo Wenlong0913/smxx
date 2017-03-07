@@ -18,9 +18,9 @@ class Api::V1::AuditsController < Api::V1::BaseController
     end
     if params["dateRange"].present? && params["dateRange"].many?
       if params['dateRange'][0] == params['dateRange'][1]
-        conditions['created_at'] = params["dateRange"][0].to_date.beginning_of_day..params["dateRange"][0].to_date.end_of_day unless params["dateRange"][0] == 'null'
+        conditions['created_at'] = Time.at(params["dateRange"][0].to_i).to_date.beginning_of_day..Time.at(params["dateRange"][0].to_i).to_date.end_of_day unless params["dateRange"][0] == 'NaN'
       else
-        conditions['created_at'] =  params['dateRange'][0].to_datetime..params['dateRange'][1].to_datetime
+        conditions['created_at'] =  Time.at(params['dateRange'][0].to_i).to_datetime..Time.at(params['dateRange'][1].to_i).to_datetime
       end
     end
     audits = Audit.where(conditions).order(created_at: :desc).page(params[:page] || 1).per(page_size)

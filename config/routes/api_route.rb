@@ -27,6 +27,9 @@ module ApiRoute
           resources :material_catalogs, only: [:index]
           resources :produces, only: [:index, :create, :show, :update] do
             resources :tasks, only: [:create, :index, :update]
+            collection do 
+              get :need_export
+            end
           end
           resources :task_types, only: [:index]
           resources :image_items, only: [:create]
@@ -38,6 +41,7 @@ module ApiRoute
           resources :material_purchases, only: [:index, :create, :update, :show, :destroy] do
             member do
               get :audit
+              post :update_material
             end
           end
           resources :material_purchase_details, only: [:update, :destroy]

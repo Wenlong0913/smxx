@@ -12,7 +12,16 @@ class Api::V1::MaterialManagementDetailsController < Api::V1::BaseController
     authorize MaterialManagement
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
     operate_type = set_operate_type
-    material_management_details = MaterialManagementDetail.joins(:material_management, :material).includes(:material, material_management: [:material_warehouse]).where(material_managements: {operate_type: operate_type})
+    conditions = {}
+    conditions['operate_type'] = operate_type
+    if params["date_range"].present? && params["date_range"].many?
+      if params['date_range'][0] == params['date_range'][1]
+        conditions['operate_date'] = params["date_range"][0].to_date unless params["date_range"][0] == 'NaN'
+      else
+        conditions['operate_date'] =  params['date_range'][0].to_date..params['date_range'][1].to_date
+      end
+    end
+    material_management_details = MaterialManagementDetail.joins(:material_management, :material).includes(:material, material_management: [:material_warehouse]).where(material_managements: conditions)
     material_management_details = material_management_details.where("items.name_py like :key OR items.name like :key", {key: ['%',params['search_content'].upcase, '%'].join}) if params['search_content'].present?
     material_management_details = material_management_details.order("material_management_details.created_at desc").page(params[:page] || 1).per(page_size)
     render json: {
