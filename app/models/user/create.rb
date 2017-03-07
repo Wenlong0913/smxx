@@ -13,8 +13,7 @@ class User
           user.roles.delete(Role.find_by_name('admin'))
         end
       end
-
-      if mobile_phone
+      if mobile_phone.present?
         mobile = User::Mobile.find_or_initialize_by(phone_number: mobile_phone)
         if mobile.new_record?
           user.password ||= Devise.friendly_token[0,20]
