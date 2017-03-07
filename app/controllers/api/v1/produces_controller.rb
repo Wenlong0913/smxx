@@ -6,7 +6,8 @@ class Api::V1::ProducesController < Api::V1::BaseController
   def index
     authorize Produce
     page_size = params[:page_size] ? params[:page_size].to_i : 20
-    produces = @produces.all.page(params[:page] || 1).per(page_size)
+    @produces =  params["search_content"].present? ? @produces.joins(:order).where(orders: {code: params[:search_content]}) : @produces.all
+    produces = @produces.order(updated_at: :desc).page(params[:page] || 1).per(page_size)
     produces_json = produces.all.as_json(
       only: [:id, :order_id, :status, :assignee_id, :created_at, :material_status],
       include: {
