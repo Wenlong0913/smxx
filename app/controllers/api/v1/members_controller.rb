@@ -6,7 +6,7 @@ class Api::V1::MembersController < Api::BaseController
     authorize Member
     members = @site.members
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
-    members =  members.where("name like :key", {key: ['%',params['name'].upcase, '%'].join}) if params['name'].present?
+    members =  members.where("name ~* :key", {key: params['name']}) if params['name'].present?
     members = members.order(created_at: :desc).page(params[:page] || 1).per(page_size)
     render json: {
       members: member_json(members),
