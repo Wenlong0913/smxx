@@ -19,10 +19,10 @@ zh-CN:
           completed: 已完成
         internal_status: 内部状态
         internal_statuses:
-          picking: 正在捡货
-          picked: 捡货完毕
-          packing: 正在打包
-          packed: 打包完成
+          packing: 拆分物料
+          packed: 物料拆分完成
+          producing: 生产中
+          produced: 生产完成
         description: 备注
     errors:
       models:
