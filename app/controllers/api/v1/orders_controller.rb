@@ -78,7 +78,7 @@ class Api::V1::OrdersController < Api::BaseController
           produce: {only: [:id]},
           create_user: {only: [:id, :nickname]},
           update_user: {only: [:id, :nickname]},
-          attachments: {only: [:id], methods: [:attachment_url, :attachment_file_name]},
+          attachments: {only: [:id], methods: [:attachment_url, :attachment_file_name, :attachment_content_type]},
           order_materials: {
             only: [:id, :amount, :factory_expected_number, :practical_number, :material_id],
             include: {
