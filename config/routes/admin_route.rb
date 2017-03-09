@@ -83,6 +83,7 @@ module AdminRoute
         end
         #系统参数
         resources :keystores
+        resources :audits, only: [:index], :concerns => :paginatable
       end
     end
   end
