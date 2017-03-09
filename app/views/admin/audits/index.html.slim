@@ -15,8 +15,9 @@
     span.text-info = audit.user.nickname if audit.user
     | &nbsp;
     span.text-warning = I18n.t('action.' + audit.action)
-    span 了
-    span.text-info = audit.auditable.try(:model_name).try(:human) if audit.auditable
+    span 了 id 为 
+    span = audit.auditable_id.to_s + ' 的 '
+    span.text-info =  audit.auditable ? audit.auditable.try(:model_name).try(:human) : audit.auditable_type
     | &nbsp;
     span 更改内容为
     p.well = audit.audited_changes
