@@ -23,6 +23,7 @@ module ApiRoute
           resources :material_management_details, only: [:index, :create]
           resources :material_managements, only: [:create]
           resources :material_warehouses, only: [:index, :create]
+          resources :material_warehouse_items, only: [:index]
           resources :material_stock_alerts, only: [:index]
           resources :material_catalogs, only: [:index]
           resources :produces do
