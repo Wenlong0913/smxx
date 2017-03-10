@@ -90,15 +90,11 @@ class Order < ApplicationRecord
   # end
 
   def generate_code
-    time = Time.now.strftime('%Y%m%d%H%M%S')
-    max_length = 20
-    time_length = time.length
-    site_length = site.id.to_s.length
-    rnd_length = max_length - time_length - site_length - 1
-    fail "run out of order code!!!" if rnd_length < 1
+    order_code = Time.now.strftime('%Y%m%d')
     loop do
-      r = SecureRandom.random_number(10**rnd_length)
-      self.code = "#{time}#{r.to_s.ljust(rnd_length, '0')}0#{site.id}"
+      number = self.class.where("code LIKE ?", order_code+'%').count
+      number = (number + 1).to_s.rjust(3, '0')
+      self.code = "#{order_code}#{number}"
       break unless self.class.where(code: self.code).exists?
     end
   end
