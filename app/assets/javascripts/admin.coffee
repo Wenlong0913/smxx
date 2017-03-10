@@ -8,6 +8,7 @@
 #= require admin/materials
 #= require admin/order
 #= require admin/produces
+#= require admin/audit
 #= require tracker
 # can't require tree
 # require_tree .

@@ -63,6 +63,8 @@ class Users::SessionsController < Devise::SessionsController
             admin_root_url
           elsif user.has_role?(:agent)
             agent_root_url
+          else
+            root_url
           end
           render json: {url: url}
         else

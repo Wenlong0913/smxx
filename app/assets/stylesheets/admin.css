@@ -3,6 +3,7 @@
 *= require tracker
 *= require admin/catalogs
 *= require admin/produces
+*= require admin/home
 *= require common/error_explanation
 *= require_self
 */

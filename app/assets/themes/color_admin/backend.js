@@ -10,6 +10,8 @@
 //= require color_admin/plugins/jquery-cookie/jquery.cookie
 //= require color_admin/plugins/d3/d3
 //= require color_admin/plugins/nvd3/build/nv.d3
+//= require color_admin/plugins/bootstrap-daterangepicker/moment
+//= require color_admin/plugins/bootstrap-daterangepicker/daterangepicker
 //= require color_admin/js/apps
 
 // dashboard
