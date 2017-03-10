@@ -8,10 +8,12 @@ class Order < ApplicationRecord
   }
 
   enum internal_status: {
-    packing: 0,   # 拆分物料
-    packed: 1,    # 完成拆分
+    packing: 0,    # 拆分物料
+    packed: 1,     # 完成拆分
     producing: 2,  # 生产中（表示已创建生产任务了）
-    produced: 3   # 生产完成
+    produced: 3,   # 生产完成
+    delivering: 4, # 发货中
+    delivered: 5   # 已收货
   }
 
   belongs_to :user
