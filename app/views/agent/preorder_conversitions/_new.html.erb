@@ -15,7 +15,9 @@
           </div>
           <div class="row">
             <div class="col-xs-10">
-              <%= f.input :member_id, collection: @site.members.map{|m| [m.name + '(' + (m.mobile_phone.blank? ? '暂无' : m.mobile_phone) + ')', m.id]}, include_blank: true, input_html: { class: 'select2 select-member' } %>
+              <% if @site.present? %>
+                <%= f.input :member_id, collection: @site.members.map{|m| [m.name + '(' + (m.mobile_phone.blank? ? '暂无' : m.mobile_phone) + ')', m.id]}, include_blank: true, input_html: { class: 'select2 select-member' } %>
+              <% end %>
             </div>
             <div class="col-xs-2 form-group">
               <label class="control-label select optional">&nbsp;</label>
