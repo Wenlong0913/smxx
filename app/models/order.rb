@@ -32,6 +32,8 @@ class Order < ApplicationRecord
   has_many :attachments, :through => :attachment_relations
   has_many :order_cvs, dependent: :destroy
   has_one :produce, dependent: :destroy
+  has_one :order_delivery, dependent: :destroy
+
   before_create :generate_code
   # before_validation :check_member
 
