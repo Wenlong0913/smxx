@@ -2,7 +2,7 @@
 zh-CN:
   activerecord:
     models:
-      user: User
+      user: 用户
     attributes:
       user:
         mobile_phone: 手机号
