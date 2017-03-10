@@ -24,7 +24,7 @@
           div
             catalog-list[data-url=admin_material_catalogs_path :default="selecteDefault" selecteDefault="[#{@material.catalog_id}]"@selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false"]
           div[slot="footer"]
-      = f.input :min_stock
+      / = f.input :min_stock
       = f.input :price
       = f.input :unit
       = f.input :images do
