@@ -5,4 +5,12 @@ class Delivery < Item
   validates_presence_of :name, :phone_number
 
   has_many :order_delivery
+
+  after_initialize do
+    self.site_id = Site::MAIN_ID
+  end
+
+  before_validation do
+    self.site_id = Site::MAIN_ID
+  end
 end
