@@ -1,0 +1,12 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      order_delivery: Order delivery
+    attributes:
+      order_delivery: {}
+    errors:
+      models:
+        order_delivery: 
+  helpers:
+    order_delivery: 

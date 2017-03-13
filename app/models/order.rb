@@ -8,10 +8,12 @@ class Order < ApplicationRecord
   }
 
   enum internal_status: {
-    packing: 0,   # 拆分物料
-    packed: 1,    # 完成拆分
-    producing: 2,  # 生产中（表示已创建生产任务了）
-    produced: 3   # 生产完成
+    packing: 0,     # 拆分物料
+    packed: 1,      # 完成拆分
+    producing: 2,   # 生产中（表示已创建生产任务了）
+    produced: 3,    # 生产完成
+    delivering: 4,  # 发货中
+    delivered: 5    # 发货完成
   }
 
   belongs_to :user
@@ -32,6 +34,8 @@ class Order < ApplicationRecord
   has_many :attachments, :through => :attachment_relations
   has_many :order_cvs, dependent: :destroy
   has_one :produce, dependent: :destroy
+  has_one :order_delivery, dependent: :destroy
+
   before_create :generate_code
   # before_validation :check_member
 
