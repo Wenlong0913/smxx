@@ -4,6 +4,7 @@
 #= require agent/products
 #= require agent/preorder_conversitions
 #= require agent/new_preorder_conversitions
+#= require agent/orders
 #= require select2
 #= require select2_locale_zh-CN
 #= require select2_js

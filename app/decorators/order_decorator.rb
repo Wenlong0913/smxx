@@ -7,5 +7,7 @@ class OrderDecorator < ApplicationDecorator
   # def created_at
   #   super.to_i
   # end
-
+  def display_internal_status
+    enum_l(object, :internal_status)
+  end
 end
