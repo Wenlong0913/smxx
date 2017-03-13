@@ -62,6 +62,7 @@ module AdminRoute
         end
         resources :task_types, except: [:show]
         resources :deliveries, except: [:show]
+        resources :order_deliveries, only: [:index]
         resources :orders, :concerns => :paginatable do
           resources :materials, except: [:index], controller: 'order_materials'
           resources :produces, only: [:show, :create, :destroy, :update]

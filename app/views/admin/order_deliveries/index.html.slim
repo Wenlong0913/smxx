@@ -1,0 +1,58 @@
+h1.page-header
+  | 发货记录列表
+
+.panel.panel-default
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+  .panel-body
+    = form_for :search, url:  admin_order_deliveries_path, method: :get do |f|
+      .toolbar.row
+        .col-md-12
+          / p
+          /   |支持SIMILAR TO查询语法, %代表匹配所有，_代表匹配一个字符
+          /   a<[href="https://www.postgresql.org/docs/current/static/functions-matching.html" target="_blank"]查看详情说明
+      .toolbar.row
+        .col-md-6.m-b-15
+          .input-group.search_all
+            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '关键字搜索...'
+            span.input-group-btn
+              button.btn.btn-inverse[type='submit']
+                i.fa.fa-search
+        .col-md-6.m-b-15
+          .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
+            button.btn.btn-default[type='submit'name='json'value='json'] json
+            button.btn.btn-default[type='submit'name='xml'value='xml'] xml
+            button.btn.btn-default[type='submit'name='csv'value='csv'] csv
+    - if params[:search]
+      .alert.alert-success.m-b-15
+        strong
+          = "查询："
+        span
+          = @members.size.to_s + "条记录"
+        span.close[data-dismiss="alert"]
+          | ×
+    .table-responsive.row.m-0
+      table.table.table-striped.table-bordered
+        thead
+          tr
+            th 订单号
+            th 发货部
+            th 手机号
+            th 发货时间
+            th 发货状态
+        tbody
+          - @order_deliveries.each do |order_delivery|
+            tr
+              td = order_delivery.order.code
+              td = order_delivery.delivery.name
+              td = order_delivery.delivery.phone_number
+              td = order_delivery.created_at.strftime("%Y-%m-%d/%H:%M:%S")
+              td
+                span.label.label-success
+                  = decorate(order_delivery.order).display_internal_status
+    = paginate @order_deliveries
+            

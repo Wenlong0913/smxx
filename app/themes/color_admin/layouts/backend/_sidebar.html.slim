@@ -60,6 +60,9 @@
           li class="#{'active' if page?('admin/produces', 'admin/orders/:order_id/produces/:id')}"
             = link_to "#{Produce.model_name.human}管理", admin_produces_path
 
+          li class="#{'active' if page?('admin/order_deliveries')}"
+            = link_to '发货记录', admin_order_deliveries_path
+
           li class="#{'active' if page?('admin/task_types')}"
             = link_to "#{TaskType.model_name.human}管理", admin_task_types_path
 

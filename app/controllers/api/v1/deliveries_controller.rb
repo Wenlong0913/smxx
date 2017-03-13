@@ -4,12 +4,12 @@ class  Api::V1::DeliveriesController < Api::V1::BaseController
   def index
     authorize Attachment
     deliveries = Delivery.all
-    render json: deliveries.as_json
+    render json: deliveries.as_json(only: %w(name id), methods: %w(phone_number address))
   end
 
   private
-  def attachment_json(attachment)
-    attachment.as_json(only: %w(id name), methods: [:attachment_url, :attachment_file_name])
-  end
+  # def attachment_json(attachment)
+  #   attachment.as_json(only: %w(id name), methods: [:attachment_url, :attachment_file_name])
+  # end
 
 end
