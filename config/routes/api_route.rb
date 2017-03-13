@@ -47,7 +47,11 @@ module ApiRoute
           end
           resources :material_purchase_details, only: [:update, :destroy]
           resources :attachments, only: [:create]
-          resources :order_materials
+          resources :order_materials do
+            collection do
+              get :need_purchase
+            end
+          end
           resources :preorder_conversitions do
             commentable
             member do

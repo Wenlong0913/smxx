@@ -78,7 +78,7 @@ class Api::V1::ProducesController < Api::V1::BaseController
             member: {only: [:name]},
             site: {only: [:title ]},
             order_materials: {
-              only: [:id, :material_id, :amount, :factory_expected_number, :practical_number],
+              only: [:id, :material_id, :amount, :factory_expected_number, :practical_number, :purchase_status],
               include: {
                 material: {only: [:name, :name_py]}
               }

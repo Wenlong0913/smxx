@@ -27,8 +27,6 @@ class Api::V1::MaterialPurchaseDetailsController < Api::V1::BaseController
   end
 
   private
-
-  private
   def material_purchase_json(material_purchases)
     material_purchases.as_json(
       only: %w(id vendor_id status created_by),

@@ -20,6 +20,14 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
     authorize MaterialPurchase
     flag, material_purchase = MaterialPurchase::Create.(permitted_attributes(MaterialPurchase).merge(created_by: current_user.id))
     if flag
+      if params["material_purchase"]["order_material_id"].present?
+        order_material_ids = params["material_purchase"]["order_material_id"]
+        order_material_ids.each do |id|
+          next if id.blank?
+          order_material = OrderMaterial.find_by(id: id)
+          order_material.purchased!
+        end
+      end
       render json: {status: 'ok', material_purchase: material_purchase_json(material_purchase)}
     else
       render json: {status: 'failed', error_message:  material_purchase.errors.full_messages.join(', ') }

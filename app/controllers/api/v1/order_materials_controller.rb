@@ -39,6 +39,13 @@ class Api::V1::OrderMaterialsController < Api::BaseController
     render json: {status: 'ok'}
   end
 
+  def need_purchase
+    authorize OrderMaterial
+    orders = Order.producing
+    order_materials = orders.map{|o| o.order_materials.purchasing}.flatten
+    render json: {status: 'ok', order_materials: order_materials_json(order_materials)}
+  end
+
   private
     def set_order
       @order = Order.find(params[:order_id])
@@ -47,7 +54,7 @@ class Api::V1::OrderMaterialsController < Api::BaseController
     def order_materials_json(order_materials)
       order_materials.as_json(only: [:id, :amount, :factory_expected_number, :practical_number],
         include: {
-          material: { only: [:name], methods: [:price] }
+          material: { only: [:id, :name, :name_py], methods: [:price] }
         }
       )
     end
