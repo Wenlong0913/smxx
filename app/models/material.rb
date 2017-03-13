@@ -28,7 +28,8 @@ class Material < Item
 
   def update_stock!
     update_attributes! stock: material_warehouse_items.inject(0) { |sum, mwi| sum += mwi.stock }
-    MaterialStockJob.new.perform(id)
+    # 不显示物料警报
+    # MaterialStockJob.new.perform(id)
   end
 
   def update_catalog_attributes
