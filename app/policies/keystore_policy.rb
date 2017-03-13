@@ -6,7 +6,7 @@ class KeystorePolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    if user.has_role? :admin
+    if user.super_admin_or_admin?
       [:key, :value, :description]
     else
       []
