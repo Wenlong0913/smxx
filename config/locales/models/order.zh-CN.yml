@@ -20,9 +20,11 @@ zh-CN:
         internal_status: 内部状态
         internal_statuses:
           packing: 拆分物料
-          packed: 物料拆分完成
+          packed: 完成拆分
           producing: 生产中
           produced: 生产完成
+          delivering: 发货中
+          delivered: 发货完成
         description: 备注
     errors:
       models:
