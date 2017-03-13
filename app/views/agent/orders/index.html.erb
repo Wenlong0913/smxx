@@ -47,7 +47,7 @@
                 <li>
                   <!-- begin media -->
                   <div class="media">
-                    <%= image_tag (order.products.blank? ? 'no-picture.png' : (order.products.first.image_items.first.try{image_url})) %>
+                    <%= image_tag ('gelan.jpg') %>
                   </div>
                   <!-- end media -->
                   <!-- begin info-container -->
@@ -67,8 +67,7 @@
                             <a href=""><%= order.member.try(:name)%></a>
                           </div>
                           <div class="col-xs-6">
-                            物流：20000545x4
-                            <a href=""> (不知道什么物流) </a>
+                            物流: 格兰货运
                           </div>
                           <div class="col-xs-6">
                             订单总价(含运费)：
@@ -79,10 +78,20 @@
                     </div>
                     <div class="date-replies">
                       <div class="time">
-                        <%= order.created_at.strftime("%Y-%m-%d/%H:%M:%S") %>
+                        <%= order.created_at.strftime("%Y-%m-%d") %>
                       </div>
-                      <div class="replies">
-                        <div class="text"><%= order.status %></div>
+                      <div class="time">
+                        <%= order.created_at.strftime("%H:%M:%S") %>
+                      </div>
+                      <div class="order-status-display">
+                        <% if order.internal_status == 'delivering' %>
+                          <%= link_to '确认收货', agent_order_path(order), method: :put, remote: true, data: {confirm: '确定收货吗?'}, class: 'label label-info order-status', style: 'padding: 8px 10px' %>
+                          <!-- <a class="label label-info" style="padding: 8px 10px" >确认收货</a> -->
+                        <% else %>
+                          <span class="label label-info" style="padding: 8px 10px">
+                            <%= decorate(order).display_internal_status %>
+                          </span>
+                        <% end %>
                       </div>
                     </div>
                   </div>

@@ -1,4 +1,4 @@
-class OrderDecorator < Decorator::Base
+class OrderDecorator < ApplicationDecorator
 
   # def display_name
   #   h.content_tag :span, class: 'title' do
@@ -9,5 +9,7 @@ class OrderDecorator < Decorator::Base
   # def created_at
   #   super.to_i
   # end
-
+  def display_internal_status
+    enum_l(object, :internal_status)
+  end
 end

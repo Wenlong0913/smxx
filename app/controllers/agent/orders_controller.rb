@@ -1,4 +1,6 @@
 class Agent::OrdersController < Agent::BaseController
+  before_action :set_order, only: [:update]
+
   def index
     @orders = @site.orders.all
     if params[:search].present?
@@ -32,4 +34,17 @@ class Agent::OrdersController < Agent::BaseController
     end
     @orders = @orders.page(params[:page]).per(10)
   end
+
+  def update
+    if @order.delivered!
+      render json: {status: 'ok'}
+    else
+      render json: {status: 'failed', message: @order.errors.full_messages.join(', ')}
+    end
+  end
+
+  private
+    def set_order
+      @order = Order.find(params[:id])
+    end
 end
