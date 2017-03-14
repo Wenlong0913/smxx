@@ -25,7 +25,8 @@ site = Site.create(title: '本公司', user: admin)
 raise "创建的第一个代理商ID不等于1!!!" unless site.id == 1
 
 # 德格角色
-%w(product_manager factory_manager).each do |name|
+# 总经销商，厂长，库管员，设计，工人，拆单员（物料分配）
+%w(product_manager factory_manager storekeeper designer worker allocator).each do |name|
   Role.find_or_create_by name: name
 end
 
