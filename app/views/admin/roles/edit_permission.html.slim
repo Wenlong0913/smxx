@@ -1,0 +1,16 @@
+h1.page-header
+  | 管理角色
+  small 修改色权限
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+    h4 角色 列表
+  .panel-body
+    .col-row.[rel='permission-block' data-url=update_permission_admin_role_path data-permission=@permissions]
+      / .col-md-4[v-for='group in allPermission']
+      | {{ allPermission }}
+
