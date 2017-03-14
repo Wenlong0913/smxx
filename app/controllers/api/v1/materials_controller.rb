@@ -9,7 +9,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
   # @param [Integer] page_size 每页显示数据
   # @return [JSON]
   def index
-    authorize Material
+    # authorize Material
     if params[:order_id].present?
       materials = @order.materials.order(created_at: :desc)
       render json: {materials: materials}
@@ -69,7 +69,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
   end
 
   def show
-    authorize @material
+    # authorize @material
     render json: {status: 'ok', material: material_json(@material)}
   end
 

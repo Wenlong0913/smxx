@@ -5,12 +5,20 @@ class MaterialPolicy < ApplicationPolicy
     end
   end
 
+  def create?
+    user.super_admin_or_admin? || user.permission?('create_material')
+  end
+
+  def update?
+    user.super_admin_or_admin? || user.permission?('update_material')
+  end
+
   def batch_create?
     create?
   end
 
   def audit?
-    show?
+    true
   end
 
   def purchase?
@@ -18,7 +26,7 @@ class MaterialPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    if user.super_admin_or_admin?
+    if user.super_admin_or_admin? || user.permission?('create_material')
       [:name, :name_py, :catalog_id, :min_stock, :price, :unit, :brand, :image_item_ids => [], :vendor_ids => []]
     else
       []
@@ -26,6 +34,10 @@ class MaterialPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_update
-    permitted_attributes_for_create
+    if user.super_admin_or_admin? || user.permission?('update_material')
+      [:name, :name_py, :catalog_id, :min_stock, :price, :unit, :brand, :image_item_ids => [], :vendor_ids => []]
+    else
+      []
+    end
   end
 end

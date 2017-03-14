@@ -4,7 +4,7 @@ class Api::V1::ProducesController < Api::V1::BaseController
   before_action :set_produces, only: [:index, :show]
 
   def index
-    authorize Produce
+    # authorize Produce
     page_size = params[:page_size] ? params[:page_size].to_i : 20
     @produces =  params["search_content"].present? ? @produces.joins(:order).where(orders: {code: params[:search_content]}) : @produces.all
     produces = @produces.order(updated_at: :desc).page(params[:page] || 1).per(page_size)
@@ -29,7 +29,7 @@ class Api::V1::ProducesController < Api::V1::BaseController
 
   def show
     @produce = @produces.find(params[:id])
-    authorize @produce
+    # authorize @produce
     render json: @produce.as_json(
       only: [:id, :order_id, :status, :assignee_id, :created_at, :material_status],
       include: {
@@ -66,7 +66,7 @@ class Api::V1::ProducesController < Api::V1::BaseController
   end
 
   def need_export
-    authorize Produce
+    # authorize Produce
     produces = Produce.processing
     produces = produces.joins(order: [:order_materials]).includes(order: [:order_materials]).where("order_materials.factory_expected_number > order_materials.practical_number")
     produces_json = produces.as_json(

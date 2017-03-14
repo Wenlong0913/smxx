@@ -4,7 +4,7 @@ class Api::V1::OrdersController < Api::BaseController
   before_action :set_order, only: [:show, :update]
 
   def index
-    authorize Order
+    # authorize Order
     page_size = params[:page_size] ? params[:page_size].to_i : 20
     orders = params['search_content'].blank? ? @orders : @orders.where("code like :key", {key: ['%',params['search_content'].upcase, '%'].join})
     orders = orders.order(updated_at: :desc).page(params[:page] || 1).per(page_size)

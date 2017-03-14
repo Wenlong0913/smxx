@@ -3,7 +3,7 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
   before_action :set_material_purchase, only: [:update, :show, :audit, :destroy, :update_material]
 
   def index
-    authorize MaterialPurchase
+    # authorize MaterialPurchase
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
     material_purchases =  params[:role].present? ? MaterialPurchase.with_role(params[:role]) : MaterialPurchase.all
     material_purchases = material_purchases.order(created_at: :desc).page(params[:page] || 1).per(page_size)
@@ -64,7 +64,7 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
   end
 
   def show
-    authorize @material_purchase
+    # authorize @material_purchase
     render json: {status: 'ok', material_purchase: material_purchase_json(@material_purchase)}
   end
 

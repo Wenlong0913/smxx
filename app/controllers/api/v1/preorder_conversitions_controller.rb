@@ -3,7 +3,7 @@ class Api::V1::PreorderConversitionsController < Api::BaseController
   before_action :set_preorder_conversition, only: [:show, :update, :create_comment, :comments_index, :attachments_index]
 
   def index
-    authorize PreorderConversition
+    # authorize PreorderConversition
     page_size = params[:page_size] ? params[:page_size].to_i : 20
     preorder_conversitions = PreorderConversition.all.order(created_at: :desc)
     preorder_conversitions = preorder_conversitions.page(params[:page] || 1).per(page_size)

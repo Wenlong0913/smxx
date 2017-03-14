@@ -3,7 +3,7 @@ class Api::V1::VendorsController < Api::BaseController
   before_action :set_vendor, only: [:show, :destroy, :update]
 
   def index
-    authorize Vendor
+    # authorize Vendor
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
     vendors = Vendor.all.order(created_at: :desc).page(params[:page] || 1).per(page_size)
     render json: {
@@ -26,7 +26,7 @@ class Api::V1::VendorsController < Api::BaseController
   end
 
   def show
-    authorize @vendor
+    # authorize @vendor
     render json: {status: 'ok', vendor: vendor_json(@vendor)}
   end
 

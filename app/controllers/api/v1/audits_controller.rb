@@ -4,7 +4,7 @@ class Api::V1::AuditsController < Api::V1::BaseController
   before_action :authenticate!
 
   def index
-    authorize Audit
+    # authorize Audit
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
     conditions = {}
     conditions['action'] = params["actionValue"] if params["actionValue"].present?

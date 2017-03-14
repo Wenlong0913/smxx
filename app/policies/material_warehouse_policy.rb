@@ -5,8 +5,12 @@ class MaterialWarehousePolicy < ApplicationPolicy
     end
   end
 
+  def create?
+    user.super_admin_or_admin? || user.permission?(:warehouse)
+  end
+
   def permitted_attributes_for_create
-    if user.super_admin_or_admin?
+    if user.super_admin_or_admin? || user.permission?(:warehouse)
       [:name, :warehouse_user, :phone, :warehouse_address]
     else
       []
