@@ -22,6 +22,7 @@
 class User < ApplicationRecord
   MAIN_ID = 1
   rolify
+  has_and_belongs_to_many :permissions, join_table: 'users_permissions'
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -46,6 +47,14 @@ class User < ApplicationRecord
   # @return [User]
   def self.find_by_phone_number(phone_number)
     User::Mobile.find_by(phone_number: phone_number).try(:user)
+  end
+
+  def permission?(*symbol_names, any: false)
+    finder = ->(symbol_name) do
+        permissions.exists?(symbol_name: symbol_name) ||
+          roles.joins(:permissions).exists?(Permission.table_name => { symbol_name: symbol_name })
+      end
+    symbol_names.send(any ? :find : :all?, &finder).present?
   end
 
   ##
