@@ -1,6 +1,6 @@
 class OrderDelivery < ApplicationRecord
   audited
-  store_accessor :features, :list
+  store_accessor :features, :list, :note
   belongs_to :delivery
   belongs_to :order
   validates_presence_of :delivery_id, :order_id
