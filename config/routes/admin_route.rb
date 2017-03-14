@@ -34,6 +34,10 @@ module AdminRoute
 
         resources :roles, only: [:index], :concerns => :paginatable do
           resources :users, only: [:index], :concerns => :paginatable
+          member do
+            get 'edit_permission'
+            put 'update_permission'
+          end
         end
 
         resources :users, :concerns => :paginatable do

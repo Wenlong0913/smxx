@@ -1,0 +1,54 @@
+$(document).ready ->
+  bodyEdit = $('.admin-roles.edit_permission')
+  if bodyEdit.length > 0
+    blockEle  = $('[rel="permission-block"]')
+    url       = blockEle.data('url')
+    permissions = blockEle.data('permission')
+    clickstatus = blockEle.data('status')
+    checked     = blockEle.data('checked')
+
+    loadPermissions = ->
+      app._data.allPermission = permissions
+      app._data.clickStatus = clickstatus
+      app._data.permission_ids = checked
+
+    app = new Vue
+      el: "[rel='permission-block']"
+      data:
+        allPermission: []
+        clickStatus: {}
+        deletePermission: []
+        newPermission: []
+        permission_ids: []
+      methods:
+        checkAll: (values, group_name) ->
+          if (this.clickStatus[group_name] == false)
+            values.forEach (value) =>
+              this.permission_ids.push(value.id)
+            this.clickStatus[group_name] = true
+          else
+            this.deletePermission = []
+            this.newPermission = []
+            values.forEach (value) =>
+              this.deletePermission.push(value.id)
+            this.permission_ids.forEach (id) =>
+              unless (this.deletePermission.includes(id))
+                this.newPermission.push(id)
+            this.permission_ids = this.newPermission 
+            this.clickStatus[group_name] = false
+        postPermission: () ->
+          $.ajax
+            url: url
+            type: 'put'
+            data: 
+              'permission_ids': this.permission_ids
+            success: (data)->
+              if data.status == 'ok'
+                console.log('ok')
+                $.gritter.add({title: '提示', text: "权限修改成功"})
+              else
+                alert('failed-1')
+            error: (data)->
+              console.log('failed')
+
+    loadPermissions()
