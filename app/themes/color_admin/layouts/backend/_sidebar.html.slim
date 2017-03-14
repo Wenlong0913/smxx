@@ -46,7 +46,7 @@
                 = link_to '库存警报', admin_material_stock_alerts_path
 
       / 订单管理
-      li class=("has-sub #{'active' if page?('admin/orders', 'admin/produces', 'admin/orders/:order_id/produces/:id', 'admin/task_types', 'admin/deliveries')}")
+      li class=("has-sub #{'active' if page?('admin/orders', 'admin/produces', 'admin/orders/:order_id/produces/:id', 'admin/task_types', 'admin/deliveries', 'admin/order_deliveries')}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-cube
