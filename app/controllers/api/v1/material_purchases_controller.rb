@@ -59,7 +59,7 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
     if @material_purchase.destroy
       render json: {status: 'ok'}
     else
-      render json: {status: 'error'}
+      render json: {status: 'failed', error_message: '出错了!'}
     end
   end
 
@@ -117,16 +117,16 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
         vendor: {
           only: %w(id name),
           methods: %w(contact_name phone_number)
-        }        
+        }
       }
-    )    
+    )
   end
 
   def material_purchase_json(material_purchase)
     material_purchase.as_json(
       only: %w(id vendor_id status created_by),
       methods: %w(code purchase_date amount total paid delivery_date),
-      include: { 
+      include: {
         vendor: {
           only: %w(id name),
           methods: %w(contact_name phone_number)
@@ -173,7 +173,7 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
           }
         }
       }
-    )    
+    )
   end
 
   def set_material_purchase
