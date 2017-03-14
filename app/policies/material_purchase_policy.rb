@@ -5,8 +5,20 @@ class MaterialPurchasePolicy < ApplicationPolicy
     end
   end
 
+  def create?
+    user.super_admin_or_admin? || user.permission?(:purchase)
+  end
+
+  def update?
+    user.super_admin_or_admin? || user.permission?(:purchase)
+  end
+
+  def destroy?
+    user.super_admin_or_admin? || user.permission?(:purchase)
+  end
+
   def audit?
-    show?
+    true
   end
 
   def update_material?
@@ -14,7 +26,7 @@ class MaterialPurchasePolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    if user.has_role? :admin
+    if user.super_admin_or_admin? || user.permission?(:purchase)
       [:purchase_date, :delivery_date, :note, :vendor_id, :status, :material_purchase_details_attributes => [:id, :material_id, :input_number, :number, :price]]
     else
       []

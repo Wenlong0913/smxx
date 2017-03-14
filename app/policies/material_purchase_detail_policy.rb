@@ -5,6 +5,14 @@ class MaterialPurchaseDetailPolicy < ApplicationPolicy
     end
   end
 
+  def update?
+    user.super_admin_or_admin? || user.permission?(:purchase)
+  end
+
+  def destroy?
+    user.super_admin_or_admin? || user.permission?(:purchase)
+  end
+
   def permitted_attributes_for_create
     if user.has_role? :admin
       [:number, :price]

@@ -9,7 +9,7 @@ class Api::V1::MaterialManagementDetailsController < Api::V1::BaseController
   # @param [Integer] page_size 每页显示数据
   # @return [JSON]
   def index
-    authorize MaterialManagement
+    # authorize MaterialManagement
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
     operate_type = set_operate_type
     conditions = {}

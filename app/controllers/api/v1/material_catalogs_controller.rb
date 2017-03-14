@@ -6,7 +6,7 @@ class Api::V1::MaterialCatalogsController < Api::V1::BaseController
   # 获得物料列表
   # @return [JSON]
   def index
-    authorize MaterialCatalog
+    # authorize MaterialCatalog
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
     material_catalogs = params['name'].present? ? MaterialCatalog.where("name like :key", {key: ['%',params['name'].upcase, '%'].join}) : MaterialCatalog.all
     if params[:parent_id].present? && params[:parent_id] == 'null'

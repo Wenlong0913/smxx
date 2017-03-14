@@ -5,7 +5,7 @@ class Api::V1::MaterialWarehouseItemsController < Api::V1::BaseController
   # 获得物料仓库列表
   # @return [JSON]
   def index
-    authorize MaterialWarehouse
+    # authorize MaterialWarehouse
     material_warehouse_items = MaterialWarehouseItem.where(material_warehouse_id: params["material_warehouse_id"], material_id: params["material_id"])
     render json: {
       material_warehouse_items: material_warehouse_items_json(material_warehouse_items)

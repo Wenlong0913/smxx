@@ -5,8 +5,20 @@ class VendorPolicy < ApplicationPolicy
     end
   end
 
+  def create?
+    user.super_admin_or_admin? || user.permission?(:vendor)
+  end
+
+  def destory?
+    user.super_admin_or_admin? || user.permission?(:vendor)
+  end
+
+  def update?
+    user.super_admin_or_admin? || user.permission?(:vendor)
+  end
+
   def permitted_attributes_for_create
-    if user.super_admin_or_admin?
+    if user.super_admin_or_admin? || user.permission?(:vendor)
       [:name, :contact_name, :phone_number, :description]
     else
       []

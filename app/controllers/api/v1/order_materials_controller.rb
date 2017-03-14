@@ -3,7 +3,7 @@ class Api::V1::OrderMaterialsController < Api::BaseController
   before_action :set_order, only: [:index, :create]
 
   def index
-    authorize Order
+    # authorize Order
     order_materials = @order.order_materials
     render json: order_materials_json(order_materials)
   end
@@ -40,7 +40,7 @@ class Api::V1::OrderMaterialsController < Api::BaseController
   end
 
   def need_purchase
-    authorize OrderMaterial
+    # authorize OrderMaterial
     orders = Order.producing
     order_materials = orders.map{|o| o.order_materials.purchasing}.flatten
     render json: {status: 'ok', order_materials: order_materials_json(order_materials)}
