@@ -9,17 +9,18 @@
   background-color: #fff;
 }
 .p-head1{
-  font-size: 45px;
-  color: #666;
+  font-size: 40px;
+  color: #5e5e5e;
 }
 .p-head2{
-  font-size: 35px;
+  font-size: 25px;
   margin-bottom: 50px;
-  color: #2d2d2d;
+  color: #8e8e8e;
   letter-spacing: .5px;
 }
 .p-head3-color{
-   color:#666;
+   color: #9e9e9e;
+   font-size: 18px;
 }
 
 .item-header{
