@@ -1,0 +1,33 @@
+# 初始创建权限
+permissions = [
+  {symbol_name: 'create_preorder_conversition', name: '生产设计-创建', group_name: '生产设计管理', description: ''},
+  {symbol_name: 'update_preorder_conversition', name: '生产设计-更改', group_name: '生产设计管理', description: ''},
+
+  {symbol_name: 'create_order', name: '订单-创建', group_name: '订单管理', description: ''},
+  {symbol_name: 'order_material_split', name: '订单物料-拆分', group_name: '订单管理', description: ''},
+
+  {symbol_name: 'create_produce', name: '生产任务-创建', group_name: '生产任务', description: ''},
+  {symbol_name: 'produce_material_review', name: '生产任务-物料审核', group_name: '生产任务', description: ''},
+  {symbol_name: 'destroy_produce', name: '生产任务-删除', group_name: '生产任务', description: ''},
+  {symbol_name: 'update_produce', name: '生产任务-更改', group_name: '生产任务', description: ''},
+  {symbol_name: 'assignment_task', name: '生产任务-分配任务', group_name: '生产任务', description: ''},
+
+  {symbol_name: 'order_delivery', name: '订单发货', group_name: '发货', description: ''},
+  {symbol_name: 'confirm_delivery', name: '确认收货', group_name: '发货', description: ''},
+
+  {symbol_name: 'create_material', name: '物料创建', group_name: '物料管理', description: ''},
+  {symbol_name: 'update_material', name: '物料更新', group_name: '物料管理', description: ''},
+  {symbol_name: 'storage', name: '出入库', group_name: '物料管理', description: ''},
+  {symbol_name: 'purchase', name: '采购', group_name: '物料管理', description: ''},
+  {symbol_name: 'warehouse', name: '仓库', group_name: '物料管理', description: ''},
+
+  {symbol_name: 'vendor', name: '供应商管理', group_name: '供应商管理', description: ''}
+]
+permissions.each do |permission|
+  Permission::Create.(
+    symbol_name: permission[:symbol_name],
+    name: permission[:name],
+    group_name: permission[:group_name],
+    description: permission[:description]
+  )
+end
