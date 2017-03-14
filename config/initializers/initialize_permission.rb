@@ -1,5 +1,7 @@
 # 初始创建权限
 permissions = [
+  {symbol_name: 'login_desktop', name: '登陆桌面端', group_name: '登陆', description: ''},
+
   {symbol_name: 'create_preorder_conversition', name: '生产设计-创建', group_name: '生产设计管理', description: ''},
   {symbol_name: 'update_preorder_conversition', name: '生产设计-更改', group_name: '生产设计管理', description: ''},
 
