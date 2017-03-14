@@ -37,7 +37,7 @@ class Api::V1::VendorsController < Api::BaseController
       render json: {status: 'ok', vendor: vendor_json(vendor)}
     else
       render json: {status: 'failed', error_message:  vendor.errors.full_messages.join(', ') }
-    end    
+    end
   end
 
   def destroy
@@ -45,7 +45,7 @@ class Api::V1::VendorsController < Api::BaseController
     if @vendor.destroy
       render json: {status: 'ok'}
     else
-      render json: {status: 'error'}
+      render json: {status: 'failed', error_message: '出错了!'}
     end
   end
 

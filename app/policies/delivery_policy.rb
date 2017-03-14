@@ -9,6 +9,8 @@ class DeliveryPolicy < ApplicationPolicy
     # fail "请在#{__FILE__}中添加params的permit属性"
     if user.has_role? :admin
       [:name, :features, :address, :phone_number]
+    elsif user.permission? :create_produce
+      []
     else
       []
     end
