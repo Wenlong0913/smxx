@@ -20,7 +20,8 @@ class Api::BaseController < ActionController::API
   end
 
   def render_failed(messages = ['验证失败'])
-    render json: { errors: messages}, status: :unauthorized
+    # render json: { errors: messages}, status: :unauthorized
+    render json: {status: 'failed', error_message: messages}
   end
 
   def http_token
