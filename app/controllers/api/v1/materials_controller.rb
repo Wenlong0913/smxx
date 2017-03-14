@@ -87,7 +87,7 @@ class Api::V1::MaterialsController < Api::V1::BaseController
   end
 
   def purchase
-    authorize @material
+    # authorize @material
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
     purchases = @material.material_purchase_details.order(created_at: :desc).page(params[:page] || 1).per(page_size)
     render json: {
