@@ -1,0 +1,33 @@
+/* product head and description */
+.p-t-0{
+  padding-top: 0px !important;
+}
+.p-b-e{
+  background-color: #eee;
+}
+.p-b-f{
+  background-color: #fff;
+}
+.p-head1{
+  font-size: 45px;
+  color: #666;
+}
+.p-head2{
+  font-size: 35px;
+  margin-bottom: 50px;
+  color: #2d2d2d;
+  letter-spacing: .5px;
+}
+.p-head3-color{
+   color:#666;
+}
+
+.item-header{
+  text-align: center;
+  padding: 40px 0px;
+}
+.item-header-e{
+  text-align: center;
+  padding: 40px 0px;
+  background-color: #eee;
+}
