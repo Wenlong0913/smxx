@@ -1,16 +1,23 @@
 h1.page-header
-  | 管理角色
+  | 管理角色权限
   small 修改色权限
-.panel
+  .pull-right
+    = link_to "新建#{Order.model_name.human}", new_admin_order_path, class: 'btn btn-primary'
+.panel.panel-default
   .panel-heading
     .panel-heading-btn
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-    h4 角色 列表
   .panel-body
-    .col-row.[rel='permission-block' data-url=update_permission_admin_role_path data-permission=@permissions]
-      / .col-md-4[v-for='group in allPermission']
-      | {{ allPermission }}
+    .[rel='permission-block' data-url=update_permission_admin_role_path data-permission=@permissions.to_json data-status=@checked_status.to_json data-checked=@chekced_permissions]
+      .col-row[v-for='value, group_name in allPermission']
+        h4
+          input[v-on:click="checkAll(value, group_name)" type='checkbox']{{ group_name }}
+        .col-md-12[v-for='item in value']
+          input[type='checkbox' v-model='permission_ids' :value='item.id']{{ item.name }}
+      button[v-on:click="postPermission" class='btn btn-big btn-primary'] 保存
+        
+
 
