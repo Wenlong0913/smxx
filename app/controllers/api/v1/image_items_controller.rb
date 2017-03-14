@@ -2,7 +2,7 @@ class  Api::V1::ImageItemsController < Api::V1::BaseController
   before_action :authenticate!
 
   def create
-    authorize ImageItem
+    # authorize ImageItem
     flag, image_item = ImageItem::Create.({image: params["file"], owner: @current_user})
     if flag
       render json: {status: 'ok', type: 'image', image_item: image_item_json(image_item)}
