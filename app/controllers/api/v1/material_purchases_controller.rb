@@ -6,6 +6,13 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
     # authorize MaterialPurchase
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
     material_purchases =  params[:role].present? ? MaterialPurchase.with_role(params[:role]) : MaterialPurchase.all
+    if params["status"].present?
+      if ['uncheck', 'checked', 'storage'].include?(params["status"])
+        material_purchases = material_purchases.send(params["status"])
+      elsif params['status'] == 'unclear'
+        material_purchases = material_purchases.where("features ->> 'paid' < features ->> 'total'")
+      end
+    end
     material_purchases = material_purchases.order(created_at: :desc).page(params[:page] || 1).per(page_size)
     render json: {
       material_purchases: material_purchases_json(material_purchases),
