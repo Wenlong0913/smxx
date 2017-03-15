@@ -3,7 +3,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   before_action :set_produce
 
   def index
-    authorize Task
+    # authorize Task
   end
 
   def create

@@ -4,7 +4,6 @@ class Api::V1::OrderCvsController < Api::BaseController
   before_action :set_order, only: [:index, :create]
 
   def index
-    authorize Order
     order_cvs = @order.order_cvs
     render json: { order_cvs: order_cv_json(order_cvs) }
   end

@@ -24,7 +24,6 @@ class Api::V1::OrdersController < Api::BaseController
   end
 
   def show
-    authorize @order
     render json: {status: 'ok', order: order_json(@order)}
   end
 

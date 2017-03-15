@@ -31,12 +31,12 @@ class Api::V1::PreorderConversitionsController < Api::BaseController
   end
 
   def update
+    authorize PreorderConversition
     @preorder_conversition.update(factory_confirm: true)
     render json: {status: 'ok'}
   end
 
   def create_comment
-    authorize Order
     preorder_conversition_comment = @preorder_conversition.comments.new(params[:comment].permit(:content, :offer, :image_item_ids => [], :attachment_ids => []))
     preorder_conversition_comment.user = current_user
     if preorder_conversition_comment.save

@@ -3,7 +3,7 @@ class Api::V1::MembersController < Api::BaseController
   before_action :set_site, only: [:index, :create]
 
   def index
-    authorize Member
+    # authorize Member
     members = @site.members
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
     members =  members.where("name ~* :key", {key: params['name']}) if params['name'].present?
