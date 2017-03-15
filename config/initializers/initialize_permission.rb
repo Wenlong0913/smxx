@@ -5,6 +5,8 @@ if Permission.table_exists?
     permissions = [
       {symbol_name: 'login_desktop', name: '登陆桌面端', group_name: '登陆', description: ''},
 
+      {symbol_name: 'create_member', name: 'add_menmber', group_name: 'menmber', description: ''},
+
       {symbol_name: 'create_preorder_conversition', name: '生产设计-创建', group_name: '生产设计管理', description: ''},
       {symbol_name: 'update_preorder_conversition', name: '生产设计-更改', group_name: '生产设计管理', description: ''},
 
@@ -29,12 +31,7 @@ if Permission.table_exists?
       {symbol_name: 'vendor', name: '供应商管理', group_name: '供应商管理', description: ''}
     ]
     permissions.each do |permission|
-      Permission::Create.(
-      symbol_name: permission[:symbol_name],
-      name: permission[:name],
-      group_name: permission[:group_name],
-      description: permission[:description]
-      )
+      Permission::Create.(permission)
     end
   end
 end

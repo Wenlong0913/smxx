@@ -3,13 +3,12 @@ class Api::V1::OrderMaterialsController < Api::BaseController
   before_action :set_order, only: [:index, :create]
 
   def index
-    # authorize Order
     order_materials = @order.order_materials
     render json: order_materials_json(order_materials)
   end
 
   def create
-    authorize Order
+    authorize OrderMaterial
     order_material = @order.order_materials.where(material_id: params[:order_material][:material_id]).first
     if order_material
       order_material.amount += params[:order_material][:amount] if params[:order_material][:amount].present?
@@ -25,6 +24,7 @@ class Api::V1::OrderMaterialsController < Api::BaseController
   end
 
   def update
+    authorize OrderMaterial
     order_material = OrderMaterial.find(params[:id])
     authorize order_material
     if order_material.update(permitted_attributes(OrderMaterial))
@@ -35,12 +35,12 @@ class Api::V1::OrderMaterialsController < Api::BaseController
   end
 
   def destroy
+    authorize OrderMaterial
     OrderMaterial.find(params[:id]).destroy
     render json: {status: 'ok'}
   end
 
   def need_purchase
-    # authorize OrderMaterial
     orders = Order.producing
     order_materials = orders.map{|o| o.order_materials.purchasing}.flatten
     render json: {status: 'ok', order_materials: order_materials_json(order_materials)}

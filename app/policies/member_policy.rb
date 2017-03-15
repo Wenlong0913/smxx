@@ -18,7 +18,7 @@ class MemberPolicy < ApplicationPolicy
   end
 
   def create?
-    user.super_admin_or_admin? || (user.has_role?(:agent) && record.site.try(:user_id) == user.id)
+    user.super_admin_or_admin? || (user.has_role?(:agent) && record.site.try(:user_id) == user.id) || user.permission?('create_member')
   end
 
   def edit?
