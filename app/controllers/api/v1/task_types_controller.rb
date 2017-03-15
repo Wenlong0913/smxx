@@ -2,7 +2,7 @@ class Api::V1::TaskTypesController < Api::V1::BaseController
   before_action :authenticate!
 
   def index
-    authorize TaskType
+    # authorize TaskType
     @task_types = TaskType.all
     if params[:produce_id].present?
       produce = Produce.find(params[:produce_id])

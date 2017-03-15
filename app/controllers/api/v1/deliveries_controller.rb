@@ -2,7 +2,7 @@ class  Api::V1::DeliveriesController < Api::V1::BaseController
   before_action :authenticate!
 
   def index
-    authorize Attachment
+    # authorize Attachment
     deliveries = Delivery.all
     render json: deliveries.as_json(only: %w(name id), methods: %w(phone_number address))
   end

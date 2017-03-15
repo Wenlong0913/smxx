@@ -2,7 +2,7 @@ class Api::V1::UsersController < Api::BaseController
   before_action :authenticate!
 
   def index
-    authorize User
+    # authorize User
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
     users =  params[:role].present? ? User.with_role(params[:role]) : User.all
     users = users.order(created_at: :desc).page(params[:page] || 1).per(page_size)

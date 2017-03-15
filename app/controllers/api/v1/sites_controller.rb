@@ -2,7 +2,7 @@ class Api::V1::SitesController < Api::BaseController
   before_action :authenticate!
 
   def index
-    authorize Site
+    # authorize Site
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
     sites = params['name'].present? ? Site.where("title like :key", {key: ['%',params['name'].upcase, '%'].join}) : Site.all
     sites = sites.order(created_at: :desc).page(params[:page] || 1).per(page_size)
