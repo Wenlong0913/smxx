@@ -15,6 +15,7 @@ zh-CN:
     designer: "设计"
     worker: "工人"
     allocator: "拆单员"
+    purchase: "采购"
   will_paginate:
     previous_label: "&#8592; 上一页"
     next_label: "下一页 &#8594;"
