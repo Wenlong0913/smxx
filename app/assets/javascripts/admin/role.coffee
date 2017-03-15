@@ -1,11 +1,13 @@
 $(document).ready ->
   bodyEdit = $('.admin-roles.edit_permission')
-  if bodyEdit.length > 0
-    blockEle  = $('[rel="permission-block"]')
+  blockEle = $('[rel="permission-block"]')
+  if bodyEdit.length > 0 and blockEle.length > 0
+    # blockEle  = $('[rel="permission-block"]')
     url       = blockEle.data('url')
     permissions = blockEle.data('permission')
     clickstatus = blockEle.data('status')
     checked     = blockEle.data('checked')
+    rolesUrl    = blockEle.data('list_url')
 
     loadPermissions = ->
       app._data.allPermission = permissions
@@ -43,12 +45,9 @@ $(document).ready ->
             data: 
               'permission_ids': this.permission_ids
             success: (data)->
-              if data.status == 'ok'
-                console.log('ok')
-                $.gritter.add({title: '提示', text: "权限修改成功"})
-              else
-                alert('failed-1')
+              if data.status == 'failed'
+                $.gritter.add({title: '提示', text: data.message})
             error: (data)->
-              console.log('failed')
+              alert('网络错误')
 
     loadPermissions()
