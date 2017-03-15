@@ -11,7 +11,7 @@ class MaterialManagementPolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     # fail "请在#{__FILE__}中添加params的permit属性"
-    if user.super_admin_or_admin? || user.permission?(:storage)
+    if user.super_admin_or_admin? || user.permission?(:storage) || user.permission?(:purchase)
       [:operate_date, :operate_type, :note, :order_code, :material_warehouse_id, :material_management_details_attributes => [:id, :material_id, :number]]
     else
       []

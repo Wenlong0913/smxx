@@ -9,7 +9,7 @@ class VendorPolicy < ApplicationPolicy
     user.super_admin_or_admin? || user.permission?(:vendor)
   end
 
-  def destory?
+  def destroy?
     user.super_admin_or_admin? || user.permission?(:vendor)
   end
 
