@@ -9,8 +9,16 @@ class OrderMaterialPolicy < ApplicationPolicy
     index?
   end
 
+  def create?
+    user.super_admin_or_admin? || user.permission?('order_material_split')
+  end
+
   def update?
     user.super_admin_or_admin? || user.permission?('order_material_split') || user.permission?('storage')
+  end
+
+  def destroy?
+    create?
   end
 
   def permitted_attributes_for_create
@@ -22,7 +30,7 @@ class OrderMaterialPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_update
-    if user.super_admin_or_admin?
+    if user.super_admin_or_admin? || user.permission?('order_material_split')
        [:factory_expected_number, :practical_number, :purchase_status]
     elsif user.permission?('storage')
       [:purchase_status]
