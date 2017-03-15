@@ -67,15 +67,11 @@ class Admin::UsersController < Admin::BaseController
 
   def update_permission
     authorize @admin_user
-    if @admin_user.try{roles.pluck(:name)}.include?('super_admin')
-      redirect_to admin_users_path, notice: '超级管理员的权限不允许修改.'
+    @admin_user.permission_ids = params[:permission_ids].try{map(&:to_i).uniq}
+    if @admin_user.save
+      redirect_to admin_users_path(@product), notice: '权限修改成功.'
     else
-      @admin_user.permission_ids = params[:permission_ids].try{map(&:to_i).uniq}
-      if @admin_user.save
-        redirect_to admin_users_path(@product), notice: '权限修改成功.'
-      else
-        render json: {status: 'failed', message: '权限修改出错.'}
-      end
+      render json: {status: 'failed', message: '权限修改出错.'}
     end
   end
 
