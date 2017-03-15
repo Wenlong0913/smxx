@@ -25,8 +25,8 @@ class Api::V1::OrderMaterialsController < Api::BaseController
   end
 
   def update
-    authorize Order
     order_material = OrderMaterial.find(params[:id])
+    authorize order_material
     if order_material.update(permitted_attributes(OrderMaterial))
       render json: {status: 'ok', order_material: order_materials_json(order_material)}
     else
