@@ -10,6 +10,7 @@
 #= require admin/produces
 #= require admin/audit
 #= require admin/role
+#= require admin/user
 #= require select2
 #= require tracker
 # can't require tree

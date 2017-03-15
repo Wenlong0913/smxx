@@ -24,5 +24,5 @@ h1.page-header
               td = role.role_name
               td
                 => link_to '用户列表', admin_role_users_path(role_id: role.id), class: 'btn btn-xs btn-primary'
-                => link_to '修改权限', edit_permission_admin_role_path(role), class: 'btn btn-xs btn-primary' unless role.name == 'super_admin'
+                => link_to '修改权限', edit_permission_admin_role_path(role), class: 'btn btn-xs btn-primary' unless ['super_admin', 'admin'].include?(role.name)
 = paginate @admin_roles

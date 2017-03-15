@@ -1,7 +1,8 @@
 $(document).ready ->
-  bodyEdit = $('.admin-roles.edit_permission')
+  bodyEdit = $('.admin-users.edit_permission')
   blockEle = $('[rel="permission-block"]')
   if bodyEdit.length > 0 and blockEle.length > 0
+    # blockEle  = $('[rel="permission-block"]')
     url       = blockEle.data('url')
     permissions = blockEle.data('permission')
     clickstatus = blockEle.data('status')

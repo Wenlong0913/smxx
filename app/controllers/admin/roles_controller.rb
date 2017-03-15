@@ -7,22 +7,18 @@ class Admin::RolesController < Admin::BaseController
   end
 
   def edit_permission
-    authorize Role
+    authorize @role
     sort_permissions
     @chekced_permissions = @role.permission_ids
   end
 
   def update_permission
-    authorize Role
-    if @role.name == 'super_admin'
-      redirect_to admin_roles_path, notice: '超级管理员的权限不允许修改.'
+    authorize @role
+    @role.permission_ids = params[:permission_ids].try{map(&:to_i).uniq}
+    if @role.save
+      redirect_to admin_roles_path(@product), notice: '权限修改成功.'
     else
-      @role.permission_ids = params[:permission_ids].try{map(&:to_i).uniq}
-      if @role.save
-        redirect_to admin_roles_path(@product), notice: '权限修改成功.'
-      else
-        render json: {status: 'failed', message: '权限修改出错.'}
-      end
+      render json: {status: 'failed', message: '权限修改出错.'}
     end
   end
 

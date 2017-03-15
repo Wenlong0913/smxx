@@ -40,6 +40,17 @@ class UserPolicy < ApplicationPolicy
     true
   end
 
+  def edit_permission?
+    return false if user.id == record.id # 自己不能修改自己的权限
+    return true if user.has_role?(:super_admin) # 超级管理员能修改任何人的权限
+    return false if user.has_role?(:admin, :any) && record.super_admin_or_admin? # 管理员不能修改另外一个管理员的权限，更不能修改超级管理员的权限
+    true
+  end
+
+  def update_permission?
+    edit_permission?
+  end
+
   def impersonate?
     user.id != record.id && user.super_admin_or_admin? && !record.has_role?(:super_admin)
   end
