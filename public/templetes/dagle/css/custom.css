@@ -32,3 +32,10 @@
   padding: 40px 0px;
   background-color: #eee;
 }
+/* check background color to product */
+.product-bright{
+  background-color: #fff;
+}
+.product-dark{
+  background-color: #eee;
+}
