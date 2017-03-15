@@ -102,6 +102,7 @@ class Api::V1::ProducesController < Api::V1::BaseController
   end
 
   def destroy
+    authorize Produce
     produce = Produce::Destroy.(params[:id])
     produce.order.packed!
     render json: {status: 'ok'}
