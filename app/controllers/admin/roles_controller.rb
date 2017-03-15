@@ -7,18 +7,18 @@ class Admin::RolesController < Admin::BaseController
   end
 
   def edit_permission
-    authorize Role
+    authorize @role
     sort_permissions
     @chekced_permissions = @role.permission_ids
   end
 
   def update_permission
-    authorize Role
-    @role.permission_ids = params[:permission_ids].map(&:to_i).uniq
+    authorize @role
+    @role.permission_ids = params[:permission_ids].try{map(&:to_i).uniq}
     if @role.save
-      render json: {status: 'ok'}
+      redirect_to admin_roles_path(@product), notice: '权限修改成功.'
     else
-      render json: {status: 'failed'}
+      render json: {status: 'failed', message: '权限修改出错.'}
     end
   end
 

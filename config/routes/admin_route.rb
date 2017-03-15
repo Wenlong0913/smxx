@@ -44,6 +44,10 @@ module AdminRoute
           collection do
             get 'dashboard', to: 'users#dashboard'
           end
+          member do
+            get 'edit_permission'
+            put 'update_permission'
+          end
         end
         namespace :user do
           resources :weixins, only: [:index, :show], :concerns => :paginatable

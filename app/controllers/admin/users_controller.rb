@@ -1,5 +1,5 @@
 class Admin::UsersController < Admin::BaseController
-  before_action :set_admin_user, only: [:update, :edit, :destroy, :show]
+  before_action :set_admin_user, only: [:update, :edit, :destroy, :show, :edit_permission, :update_permission]
 
   def dashboard
     authorize User
@@ -59,10 +59,40 @@ class Admin::UsersController < Admin::BaseController
     end
   end
 
+  def edit_permission
+    authorize @admin_user
+    sort_permissions
+    @chekced_permissions = @admin_user.permission_ids
+  end
+
+  def update_permission
+    authorize @admin_user
+    @admin_user.permission_ids = params[:permission_ids].try{map(&:to_i).uniq}
+    if @admin_user.save
+      redirect_to admin_users_path(@product), notice: '权限修改成功.'
+    else
+      render json: {status: 'failed', message: '权限修改出错.'}
+    end
+  end
+
   private
 
   def set_admin_user
     @admin_user = User.find_by(id: params[:id])
+  end
+
+  def sort_permissions
+    permission_hash = {}
+    checked_status = {}
+    Permission.all.each do |permission|
+      if permission_hash[permission.group_name].blank?
+        permission_hash[permission.group_name] = []
+        checked_status[permission.group_name] = false
+      end
+      permission_hash[permission.group_name] << permission.as_json(only: [:id, :name, :group_name])
+    end
+    @permissions = permission_hash
+    @checked_status = checked_status
   end
 
 end
