@@ -22,7 +22,7 @@ class ProducePolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    if user.super_admin_or_admin?
+    if user.super_admin_or_admin? || user.permission?(:create_produce)
       [:assignee_id, :status]
     else
       []
@@ -30,7 +30,7 @@ class ProducePolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_update
-    if user.super_admin_or_admin?
+    if user.super_admin_or_admin? || user.permission?(:update_produce)
       [:status]
     else
       []

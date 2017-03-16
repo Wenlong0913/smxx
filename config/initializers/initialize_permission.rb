@@ -5,7 +5,9 @@ if Permission.table_exists?
     permissions = [
       {symbol_name: 'login_desktop', name: '登陆桌面端', group_name: '登陆', description: ''},
 
-      {symbol_name: 'create_member', name: 'add_menmber', group_name: 'menmber', description: ''},
+      {symbol_name: 'upload_attachment', name: '上传附件', group_name: '附件管理', description: ''},
+
+      {symbol_name: 'create_member', name: '客户-创建', group_name: '客户管理', description: ''},
 
       {symbol_name: 'create_preorder_conversition', name: '生产设计-创建', group_name: '生产设计管理', description: ''},
       {symbol_name: 'update_preorder_conversition', name: '生产设计-更改', group_name: '生产设计管理', description: ''},
@@ -17,7 +19,6 @@ if Permission.table_exists?
       {symbol_name: 'produce_material_review', name: '生产任务-物料审核', group_name: '生产任务', description: ''},
       {symbol_name: 'destroy_produce', name: '生产任务-删除', group_name: '生产任务', description: ''},
       {symbol_name: 'update_produce', name: '生产任务-更改', group_name: '生产任务', description: ''},
-      {symbol_name: 'assignment_task', name: '生产任务-分配任务', group_name: '生产任务', description: ''},
 
       {symbol_name: 'order_delivery', name: '订单发货', group_name: '发货', description: ''},
       {symbol_name: 'confirm_delivery', name: '确认收货', group_name: '发货', description: ''},
