@@ -18,18 +18,18 @@ h1.page-header
             |支持SIMILAR TO查询语法, %代表匹配所有，_代表匹配一个字符
             a<[href="https://www.postgresql.org/docs/current/static/functions-matching.html" target="_blank"]查看详情说明
       .toolbar.row
-        .col-md-6.m-b-15
-          .input-group.search_all
-            input[type="hidden" name="type" value="#{@type}"]
-            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '物料/日期搜索...'
-            span.input-group-btn
-              button.btn.btn-inverse[type='submit']
-                i.fa.fa-search
-      .toolbar.row
-        .col-md-12
-          p
-            h5
-              |注意：查询时请输入'xxxx-xx-xx'格式的内容
+        .col-md-4.m-b-15
+          input[type="hidden" name="type" value="#{@type}"]
+          = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '物料搜索...'
+        .col-md-4
+          input[type="text" name="daterange" class="form-control" placeholder="请选择日期范围" value="#{params['daterange']}"]
+        .col-md-1
+          button.btn.btn-inverse[type='submit'] 搜索
+        .col-md-3
+          .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
+            button.btn.btn-default[type='submit'name='json'value='json'] json
+            button.btn.btn-default[type='submit'name='xml'value='xml'] xml
+            button.btn.btn-default[type='submit'name='csv'value='csv'] csv
         / .col-md-6.m-b-15
           .btn-group
             button.btn.btn-default.dropdown-toggle[type='button'data-toggle='dropdown']
