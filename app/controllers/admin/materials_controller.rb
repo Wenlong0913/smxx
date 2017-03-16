@@ -9,8 +9,15 @@ class Admin::MaterialsController < Admin::BaseController
   # GET /admin/materials
   def index
     authorize Material
-    @filter_colums = %w(name name_py)
-    @materials = build_query_filter(Material.all, only: @filter_colums).page(params[:page])
+    @materials_all = params['keywords'].present? ? Material.where("name_py like :key OR name like :key", {key: ['%',params['keywords'].upcase, '%'].join}) : Material.all
+
+    if params["catalog_id"].present?
+      catalog = MaterialCatalog.find_by_id(params[:catalog_id])
+      catalog_ids = [catalog.id] + catalog.children.map(&:id)
+      @materials_all = @materials_all.where(catalog_id: catalog_ids)
+    end
+
+    @materials = @materials_all.page(params[:page])
     respond_to do |format|
       if params[:format] == "json"
         # format.html { send_data(@materials.to_json, filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
@@ -20,9 +27,7 @@ class Admin::MaterialsController < Admin::BaseController
       elsif params[:xml].present?
         format.html { send_data(@materials.to_xml, filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
-        # as_csv =>  () | only: [] | except: []
-        response.headers['Content-Type'] = 'text/html; charset=utf-8'
-        format.html { send_data(@materials.as_csv(only: [:id, :name, :name_py, :stock, :price]).encode('gb2312', :invalid => :replace, :undef => :replace, :replace => "?"), filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(to_csv(@materials_all), filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end
@@ -79,6 +84,29 @@ class Admin::MaterialsController < Admin::BaseController
     def set_material
       @material = Material.find(params[:id])
     end
+
+    def to_csv(objects)
+      return [] if objects.nil?
+      # make excel using utf8 to open csv file
+      head = 'EF BB BF'.split(' ').map{|a|a.hex.chr}.join()
+      CSV.generate(head) do |csv|
+        csv << ['物料总量', objects.sum{ |p| p.stock }, '总金额', objects.sum{ |p| p.price * p.stock }]
+        # 获取字段名称
+        column_names = [ '物料名称', '编码', '价格', '数量', '总金额', '物料分类']
+        csv << column_names        
+        objects.each do |obj|
+          values = []
+          values << obj.name
+          values << obj.name_py
+          values << obj.price
+          values << obj.stock
+          values << obj.price * obj.stock
+          values << obj.catalog.try(:name)
+          csv << values
+        end
+      end
+    end
+
 
     # Only allow a trusted parameter "white list" through.
     # def admin_material_params

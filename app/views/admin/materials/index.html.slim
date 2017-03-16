@@ -10,45 +10,26 @@ h1.page-header
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-  .panel-body
-    = form_for :search, url:  admin_materials_path, method: :get do |f|
-      / .toolbar.row
-        .col-md-12
-          p
-            |支持SIMILAR TO查询语法, %代表匹配所有，_代表匹配一个字符
-            a<[href="https://www.postgresql.org/docs/current/static/functions-matching.html" target="_blank"]查看详情说明
-      .toolbar.row
-        .col-md-6.m-b-15
-          .input-group.search_all
-            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '物料名称搜索...'
-            span.input-group-btn
-              button.btn.btn-inverse[type='submit']
-                i.fa.fa-search
-        .col-md-6.m-b-15
-          .btn-group
-            button.btn.btn-default.dropdown-toggle[type='button'data-toggle='dropdown']
-              | 筛选列名
-              span.caret
-            ul.dropdown-menu#search_column[role='menu']
-              - @filter_colums.each do |filter_colum|
-                li
-                  a[href='javascript:;' data-key=filter_colum] = Material.human_attribute_name(filter_colum.to_sym)
+    = form_for :search, url:  admin_materials_path, method: :get, :html => {class: 'admin_material_search'} do |f|
+      h5 条件查询
+      .row.m-b-15
+        .col-md-4
+          input[type="text" value="#{params[:keywords]}" name="keywords" placeholder='物料名称/编码', class="form-control"]
+          - mc = MaterialCatalog.find_by(id: params['catalog_id'])
+        .col-md-4.catalog-list[data-catalog-name="#{mc.try(:name)}" data-catalog-id="#{mc.try(:id)}"]
+          input[type="hidden" v-model="id" name="catalog_id"]
+          input.form-control[@click="showCatalog = true" :value="catalogs" placeholder="点击选择分类"]
+          modal[title="产品分类" :show.sync="showCatalog" @cancel="showCatalog = false"]
+            div
+              catalog-list[data-url=admin_material_catalogs_path :default="selecteDefault" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false"]
+            div[slot="footer"]
+        .col-md-4
+          button.btn.btn-inverse 搜索 
           .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
             button.btn.btn-default[type='submit'name='json'value='json'] json
             button.btn.btn-default[type='submit'name='xml'value='xml'] xml
             button.btn.btn-default[type='submit'name='csv'value='csv'] csv
-      .well.form-horizontal.filter_search[class==params[:filters]?'show':'hidden']
-        - if params[:filters] && !params[:filters].keys.blank?
-          - params[:filters].keys.each do |key|
-            .form-group
-              label.pull-left.m-l-15.control-label
-                i.fa.fa-trash-o.m-r-5
-                b = Material.human_attribute_name(key.to_sym)
-              - input_name = "filters["+key+"]"
-              .col-xs-5
-                input.form-control[type="text"name==input_name value==params[:filters][key]]
-        hr.filters_box
-        button.btn.btn-inverse.p-l-20.p-r-20.pull-center[type='submit'] 搜索
+  .panel-body
     - if params[:search]
       .alert.alert-success.m-b-15
         strong
