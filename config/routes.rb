@@ -24,6 +24,16 @@ Rails.application.routes.draw do
 
   # === Extend partial routes ===
 
+  # Grape API
+  constraints subdomain: 'api' do
+    mount API::Root => '/'
+    if Rails.env.development?
+      mount GrapeSwaggerRails::Engine => '/'
+    else
+      root to: redirect('/not_found')
+    end
+  end
+
   extend FrontendRoute
   extend ApiRoute
   extend AdminRoute

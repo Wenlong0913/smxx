@@ -6,5 +6,4 @@ class HomeController < ApplicationController
       return redirect_to cms_frontend_root_path
     end
   end
-
 end

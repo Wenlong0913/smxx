@@ -91,9 +91,6 @@ gem 'chinese_pinyin'
 #used in CMS: public/templetes/generate_templetes.rb
 gem 'iconv', '~> 1.0', '>= 1.0.4'
 
-# 跨域访问
-gem 'rack-cors', :require => 'rack/cors'
-
 #weixin
 gem "weixin_rails_middleware", '~> 1.3', '>= 1.3.1'
 gem 'weixin_authorize', '1.6.3'
@@ -116,6 +113,16 @@ gem 'sidekiq'
 # Markdown markup for doc
 gem 'redcarpet', '~> 3.4.0'
 gem 'github-markup'
+
+# Grape API
+# gem 'api', path: 'api'
+gem 'grape', '~> 0.19.1'
+gem 'grape-route-helpers', '~> 2.0'
+gem 'grape-entity', '~> 0.6.1'
+gem 'grape-swagger'
+gem 'grape-swagger-entity', '~> 0.2.0'
+gem 'grape-swagger-rails', group: [:development]
+gem 'rack-cors', '~> 0.4.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
