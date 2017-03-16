@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170314032012) do
+ActiveRecord::Schema.define(version: 20170316132007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,17 @@ ActiveRecord::Schema.define(version: 20170314032012) do
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.index ["owner_type", "owner_id"], name: "index_accounts_on_owner_type_and_owner_id", using: :btree
+  end
+
+  create_table "api_tokens", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "token",      limit: 64
+    t.string   "device"
+    t.datetime "expired_at"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.index ["token"], name: "index_api_tokens_on_token", using: :btree
+    t.index ["user_id"], name: "index_api_tokens_on_user_id", using: :btree
   end
 
   create_table "attachment_relations", force: :cascade do |t|
@@ -258,7 +269,6 @@ ActiveRecord::Schema.define(version: 20170314032012) do
     t.text     "form_source"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.jsonb    "features"
     t.index ["catalog_id"], name: "index_market_templates_on_catalog_id", using: :btree
   end
 
@@ -344,6 +354,7 @@ ActiveRecord::Schema.define(version: 20170314032012) do
     t.integer  "site_id"
     t.string   "name"
     t.date     "birth"
+    t.string   "qq"
     t.string   "email"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
@@ -354,7 +365,6 @@ ActiveRecord::Schema.define(version: 20170314032012) do
     t.string   "address"
     t.string   "note"
     t.jsonb    "features"
-    t.string   "qq"
     t.string   "typo"
     t.string   "from"
     t.string   "owned"

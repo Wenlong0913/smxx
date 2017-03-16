@@ -30,6 +30,7 @@ class User < ApplicationRecord
     :recoverable, :rememberable, :trackable, :validatable,
     :omniauthable
   audited
+  has_many :api_tokens, dependent: :destroy
   has_one :mobile, dependent: :destroy
   has_one :weixin, dependent: :destroy
   has_many :image_items, dependent: :destroy, as: :owner
