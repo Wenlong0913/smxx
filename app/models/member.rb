@@ -1,3 +1,28 @@
+# == Schema Information
+#
+# Table name: members
+#
+#  id           :integer          not null, primary key
+#  user_id      :integer
+#  site_id      :integer
+#  name         :string
+#  birth        :date
+#  email        :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  mobile_phone :string
+#  tel_phone    :string
+#  wechat       :string
+#  firm         :string
+#  address      :string
+#  note         :string
+#  features     :jsonb
+#  qq           :string
+#  typo         :string
+#  from         :string
+#  owned        :string
+#
+
 class Member < ApplicationRecord
   audited
   belongs_to :user

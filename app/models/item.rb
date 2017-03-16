@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: items
+#
+#  id         :integer          not null, primary key
+#  site_id    :integer
+#  name       :string
+#  features   :jsonb
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  type       :string
+#  name_py    :string
+#  catalog_id :integer
+#
+
 # 物件：抽象所有的物品，包含多个特征
 class Item < ApplicationRecord
   store_accessor :features, :description

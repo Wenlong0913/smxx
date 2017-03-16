@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: orders
+#
+#  id                       :integer          not null, primary key
+#  code                     :string
+#  user_id                  :integer
+#  site_id                  :integer
+#  price                    :integer
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  description              :text
+#  status                   :integer
+#  internal_status          :integer
+#  member_id                :integer
+#  preorder_conversition_id :integer
+#  create_by                :integer
+#  update_by                :integer
+#
+
 class Order < ApplicationRecord
   audited
 

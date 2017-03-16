@@ -17,6 +17,7 @@
 #  current_sign_in_ip     :string
 #  last_sign_in_ip        :string
 #  username               :string
+#  headshot               :string
 #
 
 class User < ApplicationRecord

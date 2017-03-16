@@ -1,3 +1,11 @@
+# == Schema Information
+#
+# Table name: item_relations
+#
+#  master_id :integer
+#  slave_id  :integer
+#
+
 class ItemRelation < ApplicationRecord
   belongs_to :master, class_name: 'Item'
   belongs_to :slave, class_name: 'Item'

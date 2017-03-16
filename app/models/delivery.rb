@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: items
+#
+#  id         :integer          not null, primary key
+#  site_id    :integer
+#  name       :string
+#  features   :jsonb
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  type       :string
+#  name_py    :string
+#  catalog_id :integer
+#
+
 class Delivery < Item
   audited
   store_accessor :features, :phone_number, :address

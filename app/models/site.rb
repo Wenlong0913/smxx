@@ -2,12 +2,13 @@
 #
 # Table name: sites
 #
-#  id          :integer          not null, primary key
-#  user_id     :integer
-#  title       :string
-#  description :text
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id         :integer          not null, primary key
+#  user_id    :integer
+#  title      :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  features   :jsonb
+#  type       :string
 #
 
 class Site < ApplicationRecord

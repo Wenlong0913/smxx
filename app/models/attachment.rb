@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: attachments
+#
+#  id         :integer          not null, primary key
+#  owner_type :string
+#  owner_id   :integer
+#  name       :string
+#  file_size  :integer
+#  data       :jsonb
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class Attachment < ApplicationRecord
   audited
   belongs_to :owner, polymorphic: true

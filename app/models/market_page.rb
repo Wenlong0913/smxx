@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: market_pages
+#
+#  id                 :integer          not null, primary key
+#  site_id            :integer
+#  market_template_id :integer
+#  name               :string
+#  description        :string
+#  features           :jsonb
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#
+
 class MarketPage <  ApplicationRecord
   audited
   belongs_to :market_template

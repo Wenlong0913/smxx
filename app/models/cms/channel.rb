@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: cms_channels
+#
+#  id          :integer          not null, primary key
+#  site_id     :integer          not null
+#  parent_id   :integer
+#  title       :string           not null
+#  short_title :string           not null
+#  properties  :string
+#  tmp_index   :string           not null
+#  tmp_detail  :string           not null
+#  keywords    :string
+#  description :string
+#  image_path  :string
+#  content     :text
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 class Cms::Channel < ApplicationRecord
   belongs_to :site
   has_many :pages, -> { order(updated_at: :asc) }, dependent: :destroy

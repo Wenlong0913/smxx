@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170310040900) do
+ActiveRecord::Schema.define(version: 20170314032012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -291,6 +291,7 @@ ActiveRecord::Schema.define(version: 20170310040900) do
     t.decimal  "price",                precision: 8, scale: 2
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
+    t.jsonb    "features"
     t.index ["material_purchase_id"], name: "index_material_purchase_details_on_material_purchase_id", using: :btree
   end
 
@@ -387,6 +388,7 @@ ActiveRecord::Schema.define(version: 20170310040900) do
     t.datetime "updated_at",              null: false
     t.integer  "factory_expected_number"
     t.integer  "practical_number"
+    t.integer  "purchase_status"
     t.index ["order_id"], name: "index_order_materials_on_order_id", using: :btree
   end
 
@@ -419,6 +421,17 @@ ActiveRecord::Schema.define(version: 20170310040900) do
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
   end
 
+  create_table "permissions", force: :cascade do |t|
+    t.string   "symbol_name"
+    t.string   "name"
+    t.string   "group_name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["name"], name: "index_permissions_on_name", using: :btree
+    t.index ["symbol_name"], name: "index_permissions_on_symbol_name", using: :btree
+  end
+
   create_table "produces", force: :cascade do |t|
     t.integer  "order_id"
     t.integer  "status"
@@ -436,6 +449,12 @@ ActiveRecord::Schema.define(version: 20170310040900) do
     t.datetime "updated_at"
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
     t.index ["name"], name: "index_roles_on_name", using: :btree
+  end
+
+  create_table "roles_permissions", force: :cascade do |t|
+    t.integer "role_id"
+    t.integer "permission_id"
+    t.index ["role_id", "permission_id"], name: "index_roles_permissions_on_role_id_and_permission_id", using: :btree
   end
 
   create_table "sites", force: :cascade do |t|
@@ -597,6 +616,12 @@ ActiveRecord::Schema.define(version: 20170310040900) do
     t.string   "username"
     t.string   "headshot"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  end
+
+  create_table "users_permissions", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "permission_id"
+    t.index ["user_id", "permission_id"], name: "index_users_permissions_on_user_id_and_permission_id", using: :btree
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|

@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: tickets
+#
+#  id         :integer          not null, primary key
+#  site_id    :integer
+#  user_id    :integer
+#  title      :string
+#  content    :string
+#  type       :string
+#  features   :jsonb
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class PreorderConversition < Ticket
   audited
   store_accessor :features, :offer, :member_id, :member_name, :member_phone, :member_address, :site_confirm, :factory_confirm

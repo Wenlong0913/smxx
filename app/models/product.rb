@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: items
+#
+#  id         :integer          not null, primary key
+#  site_id    :integer
+#  name       :string
+#  features   :jsonb
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  type       :string
+#  name_py    :string
+#  catalog_id :integer
+#
+
 class Product < Item
   store_accessor :features, :price, :unit, :stock, :description, :discount, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values, :is_shelves, :is_fee, :shopping_fee
   validates_numericality_of :price, allow_blank: true

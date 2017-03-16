@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: image_items
+#
+#  id         :integer          not null, primary key
+#  owner_type :string
+#  owner_id   :integer
+#  name       :string
+#  file_size  :integer
+#  width      :integer
+#  height     :integer
+#  data       :jsonb
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class ImageItem < ApplicationRecord
   belongs_to :owner, polymorphic: true
   validates_presence_of :owner, :data

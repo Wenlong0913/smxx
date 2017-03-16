@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: cms_pages
+#
+#  id          :integer          not null, primary key
+#  channel_id  :integer          not null
+#  title       :string           not null
+#  short_title :string           not null
+#  properties  :string
+#  keywords    :string
+#  description :string
+#  image_path  :string
+#  content     :text
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 class Cms::Page < ApplicationRecord
   belongs_to :channel
   has_one :site, through: :channel
