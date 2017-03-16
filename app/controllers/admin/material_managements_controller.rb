@@ -8,16 +8,16 @@ class Admin::MaterialManagementsController < Admin::BaseController
     authorize MaterialManagement
     @filter_colums = %w(id)
     return redirect_to admin_root_path, alert: "访问的页面不存在" unless @type
-    @material_managements = MaterialManagement.all.send(@type)
+    @material_managements_all = MaterialManagement.all.send(@type)
     if params[:search] && params[:search][:keywords]
-      if params[:search][:keywords] =~ /^\d{4}-\d{1,2}-\d{1,2}$/
-        @material_managements = @material_managements.where(operate_date: params[:search][:keywords])
-      else
-        material_id = Material.where("name like ?", ['%', params[:search][:keywords], '%'].join).pluck(:id)
-        @material_managements = @material_managements.joins("join material_management_details on material_management_details.material_management_id = material_managements.id").where("material_management_details.material_id in (?)", material_id)
-      end
+      material_id = Material.where("name_py like :key OR name like :key", {key: ['%',params['search']['keywords'].upcase, '%'].join}).pluck(:id)
+      @material_managements_all = @material_managements_all.joins("join material_management_details on material_management_details.material_management_id = material_managements.id").where("material_management_details.material_id in (?)", material_id)
     end
-    @material_managements = @material_managements.page(params[:page])
+    if params["daterange"].present?
+      date_range = params["daterange"].split(' - ').map(&:strip).map(&:to_date)
+      @material_managements_all = @material_managements_all.where("operate_date in (?)", date_range[0]..date_range[1])
+    end
+    @material_managements = @material_managements_all.page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@material_managements.to_json, filename: "material_managements-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
@@ -25,7 +25,7 @@ class Admin::MaterialManagementsController < Admin::BaseController
         format.html { send_data(@material_managements.to_xml, filename: "material_managements-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@material_managements.as_csv(only: []), filename: "material_managements-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(to_csv(@material_managements_all), filename: "material_managements-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end
@@ -91,6 +91,30 @@ class Admin::MaterialManagementsController < Admin::BaseController
         @operate_type_name = enum_i18n(MaterialManagement, :operate_type, @type)
       else
         raise "unknown operate_type"
+      end
+    end
+
+    def to_csv(objects)
+      return [] if objects.nil?
+      # make excel using utf8 to open csv file
+      head = 'EF BB BF'.split(' ').map{|a|a.hex.chr}.join()
+      CSV.generate(head) do |csv|
+        csv << ['出库总量', objects.sum{ |p| p.material_management_details.sum(:number) }, '出库总金额', objects.sum{ |p| p.material_management_details.sum{|mmd| mmd.number * mmd.material.price } }]
+        # 获取字段名称
+        column_names = [enum_i18n(MaterialManagement, :operate_type, @type) + '日期','物料名称', '编码', '价格', '数量', '总金额']
+        csv << column_names        
+        objects.each do |obj|
+          obj.material_management_details.each do |mmd|
+            values = []
+            values << obj.operate_date
+            values << mmd.material.name
+            values << mmd.material.name_py
+            values << mmd.material.price
+            values << mmd.number
+            values << mmd.material.price * mmd.number
+            csv << values
+          end
+        end
       end
     end
 

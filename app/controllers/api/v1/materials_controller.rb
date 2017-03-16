@@ -108,6 +108,19 @@ class Api::V1::MaterialsController < Api::V1::BaseController
     }    
   end
 
+  def get_csv
+    authorize Material
+    materials = params['search_content'].present? ? Material.where("name_py like :key OR name like :key", {key: ['%',params['search_content'].upcase, '%'].join}) : Material.includes(:catalog).all
+    if params["catalog_id"].present?
+      catalog = MaterialCatalog.find_by_id(params[:catalog_id])
+      catalog_ids = [catalog.id] + catalog.children.map(&:id)
+      materials = materials.where(catalog_id: catalog_ids)
+    end
+    render json: {
+      status: 'ok', materials: materials.as_json(only: %w(name name_py), methods: %w(stock price unit), include: {catalog: { only: %w(id name)} })
+    }
+  end
+
   private
 
   def set_order
