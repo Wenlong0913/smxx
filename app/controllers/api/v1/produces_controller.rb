@@ -91,13 +91,13 @@ class Api::V1::ProducesController < Api::V1::BaseController
   end
 
   def update
-    authorize Produce
     produce = Produce.find(params[:id])
+    authorize produce
     flag, produce = Produce::Update.(produce, permitted_attributes(produce))
     if flag
       render json: {status: 'ok', produce: produce}
     else
-      render json: {status: 'failed', error_message: produce.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
+      render json: {status: 'failed', error_message: order.errors.full_messages.join(', ') }
     end
   end
 

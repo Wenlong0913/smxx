@@ -14,7 +14,7 @@ class OrderPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    if user.super_admin_or_admin?
+    if user.super_admin_or_admin? || user.permission?(:create_order)
       [:user_id, :site_id, :member_id, :preorder_conversition_id, :price, :description, :status, :internal_status, :member_name, :mobile_phone, :image_item_ids => [], :attachment_ids => []]
     else
       [:status, :internal_status]
