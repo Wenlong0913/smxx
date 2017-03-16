@@ -11,6 +11,7 @@ module ApiRoute
           resources :materials, only: [:index, :create, :update, :show] do
             collection do
               post :batch_create
+              get  :get_csv
             end
             member do
               get :audit
