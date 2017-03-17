@@ -28,7 +28,12 @@ module API
       permission?(*symbol_names, any: any) || error!({ error: '没有权限' }, 403)
     end
 
-    # 生产分页数据
+    # 分页数据
+    def paginate_collection(collection, params)
+      collection.page(params[:_page]).per(params[:_per_page])
+    end
+    
+    # 生产分页数据的JSON
     def wrap_collection(collection, with_entity, options={})
       present meta: {
         current_page: collection.current_page,
