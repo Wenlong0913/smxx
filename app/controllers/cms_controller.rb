@@ -54,7 +54,8 @@ class CmsController < ApplicationController
     @title = params[:title] if params[:title].present?
 
     #统计channel
-    #impressionist(@channel, "channel_#{@channel.id}")
+    impressionist(@channel, "channel_#{@channel.id}")
+    impressionist(@page, "page_#{@page.id}") if @page # 2nd argument is optional
 
     #respond_with @page || @channel
     respond_to do |format|

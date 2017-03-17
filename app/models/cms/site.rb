@@ -15,6 +15,7 @@
 #
 
 class Cms::Site < ApplicationRecord
+  audited
   has_many :channels, dependent: :destroy
   has_many :pages, through: :channels
   belongs_to :site, class_name: '::Site'

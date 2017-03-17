@@ -100,3 +100,10 @@ Nginx config:
 `server_name *.dagle.cn;`
 
 那么，如果在Cms中修改一个站点(site)的域名(domain)值为： cms, 则可以通过如下二级域名访问： [cms.dagle.cn](http://cms.dagle.cn)
+
+## 添加访问统计
+
+IP次数：  <%= cms_page.impressions_count %>
+PV次数：  <%= cms_page.impressionist_count %>
+更新次数： <%= cms_page.audits.count %><br/>
+最后更新： <%= cms_page.try(:audits).try(:last).try(:user).try(:nickname) %>

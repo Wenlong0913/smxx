@@ -16,6 +16,8 @@
 #
 
 class Cms::Page < ApplicationRecord
+  audited
+  is_impressionable :counter_cache => true
   belongs_to :channel
   has_one :site, through: :channel
   default_scope {order('updated_at DESC')}
@@ -66,7 +68,7 @@ class Cms::Page < ApplicationRecord
   end
 
   def show_image
-    image_path.blank? ? 'http://pic.wedxt.com/placeholder-300x225.jpg' : image_path
+    image_path.blank? ? 'http://song-dev.qiniudn.com/placeholder-300x225.jpg' : thumb_image_path
   end
 
   private

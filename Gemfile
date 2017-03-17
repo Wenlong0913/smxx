@@ -83,6 +83,7 @@ gem 'paperclip'
 #   and associate models related to the changes.
 gem "audited", "~> 4.3"
 gem "rails-observers", github: 'rails/rails-observers'
+gem 'impressionist'
 
 gem 'rails-i18n', '~> 5.0.0'
 gem 'rails-i18n-generator'
