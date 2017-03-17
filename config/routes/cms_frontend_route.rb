@@ -1,3 +1,4 @@
+require 'cms_subdomain'
 module CmsFrontendRoute
   def self.extended(router)
     router.instance_exec do
@@ -5,8 +6,8 @@ module CmsFrontendRoute
         get '(page-:page)', :as => ''
       end
 
-      constraints(Subdomain) do
-        scope path: 's', as: :cms_frontend do
+      constraints(CmsSubdomain) do
+        scope as: :cms_frontend do
           root :to => "cms#index"
           match '/search(/:search(/page/:page))', to: "cms#search", via: :get, as: 'search'
           match '/tag/:tag(/page/:page)', to: "cms#tag", as: 'tag', via: :get

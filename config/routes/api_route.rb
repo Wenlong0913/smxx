@@ -1,6 +1,16 @@
+require 'api_subdomain'
 module ApiRoute
   def self.extended(router)
     router.instance_exec do
+      # Grape API
+      constraints ApiSubdomain do
+        mount AppAPI::Root => '/'
+        if Rails.env.development?
+          mount GrapeSwaggerRails::Engine => '/'
+        else
+          root to: redirect('/not_found')
+        end
+      end
       namespace :api do
         get '/', to: "home#index"
         namespace :v1 do

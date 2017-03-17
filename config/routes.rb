@@ -1,3 +1,4 @@
+
 Rails.application.routes.draw do
 
   namespace :admin do
@@ -23,16 +24,6 @@ Rails.application.routes.draw do
   resources :attachments, only: [:index, :create, :destroy]
 
   # === Extend partial routes ===
-
-  # Grape API
-  constraints subdomain: 'api' do
-    mount AppAPI::Root => '/'
-    if Rails.env.development?
-      mount GrapeSwaggerRails::Engine => '/'
-    else
-      root to: redirect('/not_found')
-    end
-  end
 
   extend FrontendRoute
   extend ApiRoute

@@ -2,6 +2,7 @@ class CmsController < ApplicationController
   layout 'cms'
   helper Cms::ApplicationHelper
   include Cms::ApplicationHelper
+  before_action :check_subdomain!
 
   #{"controller"=>"welcome", "action"=>"index", "channel"=>"fw", "id"=>"2", "tag" => "tagkey"}
   #params
@@ -13,9 +14,6 @@ class CmsController < ApplicationController
   # 1. a URL query must has channel except root
   # 2. If has page, the channel is page.channel, not care the params
   def index
-    if @cms_site.nil?
-      return redirect_to admin_root_path
-    end
     #page first, then channel ?
     if params[:id]
       @page = Cms::Page.joins(:channel).where("cms_channels.site_id = ? and cms_pages.id = ?", @cms_site.id, params[:id]).first
@@ -87,4 +85,8 @@ class CmsController < ApplicationController
 
   private
 
+  def check_subdomain!
+    @cms_site = Cms::Site.find_by(domain: request.subdomain)
+    redirect_to root_url(subdomain: nil) if @cms_site.nil? || !@cms_site.is_published
+  end
 end
