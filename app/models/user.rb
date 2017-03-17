@@ -43,7 +43,7 @@ class User < ApplicationRecord
   has_many :update_order, class_name: 'Order', foreign_key: :update_by
   attr_accessor :mobile_phone
   validates :mobile_phone, mobile_phone: true, allow_blank: true
-  validates_presence_of :nickname
+
   # Find user by phone number
   # @param [String] phone_number
   # @return [User]
@@ -57,6 +57,10 @@ class User < ApplicationRecord
           roles.joins(:permissions).exists?(Permission.table_name => { symbol_name: symbol_name })
       end
     symbol_names.send(any ? :find : :all?, &finder).present?
+  end
+
+  def nickname
+    attributes['nickname'] || "匿名"
   end
 
   ##
