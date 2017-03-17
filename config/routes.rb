@@ -1,10 +1,6 @@
 
 Rails.application.routes.draw do
 
-  namespace :admin do
-    get 'order_deliveries/index'
-  end
-
   # === Common methods ===
   def catalog_resources_for(klass, options = {})
     resources klass.name.underscore.pluralize, options.merge(controller: 'catalogs', klass: klass.name)
@@ -24,7 +20,6 @@ Rails.application.routes.draw do
   resources :attachments, only: [:index, :create, :destroy]
 
   # === Extend partial routes ===
-
   extend FrontendRoute
   extend ApiRoute
   extend AdminRoute
