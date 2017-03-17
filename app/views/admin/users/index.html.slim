@@ -32,5 +32,4 @@ h1.page-header
               => link_to '修改', edit_admin_user_path(d_user), class: 'btn btn-xs btn-warning' if policy(user).edit?
               => link_to '删除', admin_user_path(d_user), data: {confirm: '你确定吗？'}, method: :delete, class: 'btn btn-xs btn-danger' if policy(user).destroy?
               => link_to '模仿', impersonate_session_path(d_user), method: :post, class: 'btn btn-xs btn-info', target: :_blank if policy(user).impersonate?
-              => link_to '修改权限', edit_permission_admin_user_path(d_user), class: 'btn btn-xs btn-primary' if (d_user.try{roles.pluck(:name)} & ['super_admin', 'admin']).size < 1
 = paginate @admin_users
