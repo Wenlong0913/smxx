@@ -88,11 +88,11 @@ module API::V1
       end
       params do
         use :pagination
-        use :sort, fields: [:id]
+        use :sort, fields: [:id, :created_at, :updated_at]
       end
       get do
         permission! :api_admin
-        users = sort_collection(::User.all).page(1)
+        users = paginate_collection(sort_collection(::User.all))
         wrap_collection users, API::Entities::User
       end
 
