@@ -10,9 +10,9 @@ module AppAPI
 
       # private attributes
       with_options if: ->(user, options) { options[:type] == :private || options[:current_user].try(:id) == user.id } do |f|
-        expose :username, if: { type: :private }, documentation: { desc: '用户名：私有数据，自己或有特定权限的账号才能获得' }
-        expose :email, if: { type: :private }, documentation: { desc: '电子邮件：私有数据，自己或有特定权限的账号才能获得' }
-        expose :mobile_phone, if: { type: :private }, documentation: { desc: '私有数据，自己或有特定权限的账号才能获得' }
+        expose :username, documentation: { desc: '用户名：私有数据，自己或有特定权限的账号才能获得' }
+        expose :email, documentation: { desc: '电子邮件：私有数据，自己或有特定权限的账号才能获得' }
+        expose :mobile_phone, documentation: { desc: '私有数据，自己或有特定权限的账号才能获得' }
       end
 
       expose :access_token, if: :access_token, documentation: { desc: '用户身份，在注册或登录时返回' } do |user, options|

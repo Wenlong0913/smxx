@@ -9,7 +9,7 @@ class Api::V1::OrderCvsController < Api::BaseController
   end
 
   def create
-    authorize OrderCvs
+    authorize OrderCv
     flag, message, order_cvs = parse_order_cv_upload_file
     if flag
       @order.update(internal_status: 'packing', update_by: current_user.id)
