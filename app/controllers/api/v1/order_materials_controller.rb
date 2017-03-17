@@ -27,10 +27,11 @@ class Api::V1::OrderMaterialsController < Api::BaseController
     authorize OrderMaterial
     order_material = OrderMaterial.find(params[:id])
     authorize order_material
-    if order_material.update(permitted_attributes(OrderMaterial))
+    if permitted_attributes(OrderMaterial).any? && order_material.update(permitted_attributes(OrderMaterial))
       render json: {status: 'ok', order_material: order_materials_json(order_material)}
     else
-      render json: {status: 'failed', error_message:  order_material.errors.full_messages }
+      error_message = permitted_attributes(OrderMaterial).any? ? order_material.errors.full_messages : '没有权限'
+      render json: {status: 'failed', error_message: error_message}
     end
   end
 
