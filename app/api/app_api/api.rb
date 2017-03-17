@@ -1,7 +1,7 @@
-class API::Root < Grape::API
-  helpers API::Helpers
+class AppAPI::Root < Grape::API
+  helpers AppAPI::Helpers
   rescue_from ActiveRecord::RecordNotFound, ->() { error!({error: 'Record not found'}, 404) }
-  include API::V1
+  include AppAPI::V1
   add_swagger_documentation \
     info: {
       title: "TMF API",

@@ -1,4 +1,4 @@
-module API
+module AppAPI
   module Helpers
     # 通过Header的Authorization获取当前用户
     def current_user
@@ -6,7 +6,7 @@ module API
         token_str = headers['Authorization']
         return @current_user=false if token_str.blank?
         token_str = token_str.sub(/^Bearer /, '')
-        api_token = Account::ApiToken.find_by(token: token_str)
+        api_token = ApiToken.find_by(token: token_str)
         return @current_user=false if api_token.nil? || api_token.expired?
         @current_user = api_token.user
       end

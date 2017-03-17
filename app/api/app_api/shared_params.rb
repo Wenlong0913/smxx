@@ -1,4 +1,4 @@
-module API::SharedParams
+module AppAPI::SharedParams
   extend Grape::API::Helpers
 
   # 分页参数
@@ -16,8 +16,8 @@ module API::SharedParams
   params :sort do |options|
     fail "missing :fields" unless options.include?(:fields)
     optional :_sort,
-             type: API::Params::Sort,
-             coerce_with: ->(c) { API::Params::Sort.new(fields: options[:fields], default: options[:default], value: c) },
+             type: AppAPI::Params::Sort,
+             coerce_with: ->(c) { AppAPI::Params::Sort.new(fields: options[:fields], default: options[:default], value: c) },
              desc: "支持排序的字段：#{options[:fields].join(', ')}"
   end
 end

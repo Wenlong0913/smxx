@@ -1,4 +1,4 @@
-module API::Params
+module AppAPI::Params
   # API中可以附带排序参数
   class Sort
     attr_reader :value, :fields

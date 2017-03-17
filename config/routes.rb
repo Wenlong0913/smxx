@@ -26,7 +26,7 @@ Rails.application.routes.draw do
 
   # Grape API
   constraints subdomain: 'api' do
-    mount API::Root => '/'
+    mount AppAPI::Root => '/'
     if Rails.env.development?
       mount GrapeSwaggerRails::Engine => '/'
     else

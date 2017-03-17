@@ -1,4 +1,4 @@
-module API
+module AppAPI
   module Entities
     class Base < Grape::Entity
 

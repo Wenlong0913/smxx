@@ -1,6 +1,6 @@
-module API::V1
+module AppAPI::V1
   class User < Grape::API
-    helpers API::SharedParams
+    helpers AppAPI::SharedParams
     resources :users do
       desc 'Ping status'
       get :ping do
@@ -11,7 +11,7 @@ module API::V1
         detail <<-DOC
 目前只能够手机号+验证码注册
         DOC
-        success API::Entities::User
+        success AppAPI::Entities::User
       end
       params do
         requires :mobile_phone, type: String, desc: '手机号', documentation: { example: 'Jim' }
@@ -27,7 +27,7 @@ module API::V1
         api_token = user.api_tokens.find_or_initialize_by(device: params[:device])
         api_token.expired_at = 30.days.since
         api_token.save
-        present user, with: API::Entities::User, access_token: api_token.token, type: :private
+        present user, with: AppAPI::Entities::User, access_token: api_token.token, type: :private
       end
 
       desc '登录认证' do
@@ -36,7 +36,7 @@ module API::V1
 - 如果登录账号是手机号，需要传入手机验证码 mobile_phone_code
 - 如果是其他登录账号，需要传入密码 passwrod
         DOC
-        success API::Entities::User
+        success AppAPI::Entities::User
       end
       params do
         optional :username, type: String, desc: '用户名'
@@ -62,29 +62,29 @@ module API::V1
         api_token = user.api_tokens.find_or_initialize_by(device: params[:device])
         api_token.expired_at = 30.days.since
         api_token.save
-        present user, with: API::Entities::User, access_token: api_token.token, type: :private
+        present user, with: AppAPI::Entities::User, access_token: api_token.token, type: :private
       end
 
       desc '获取自己的用户信息' do
-        success API::Entities::User
+        success AppAPI::Entities::User
       end
       get 'me' do
         authenticate!
-        present current_user, with: API::Entities::User, type: :private
+        present current_user, with: AppAPI::Entities::User, type: :private
       end
 
       desc '获取用户信息' do
-        success API::Entities::User
+        success AppAPI::Entities::User
       end
       params do
         requires :id, type: Integer, desc: '用户ID'
       end
       get ':id' do
-        present ::User.find(params[:id]), with: API::Entities::User
+        present ::User.find(params[:id]), with: AppAPI::Entities::User
       end
 
       desc '获取用户列表' do
-        success API::Entities::User.collection
+        success AppAPI::Entities::User.collection
       end
       params do
         use :pagination
@@ -93,7 +93,7 @@ module API::V1
       get do
         permission! :api_admin
         users = sort_collection(::User.all).page(1)
-        wrap_collection users, API::Entities::User
+        wrap_collection users, AppAPI::Entities::User
       end
 
     end # end of resources
