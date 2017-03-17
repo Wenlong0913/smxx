@@ -6,7 +6,7 @@
 #  channel_id  :integer          not null
 #  title       :string           not null
 #  short_title :string           not null
-#  properties  :string
+#  properties  :array
 #  keywords    :string
 #  description :string
 #  image_path  :string
@@ -29,13 +29,16 @@ class Cms::Page < ApplicationRecord
   before_save :set_content_image
   before_save :set_thumb_image_path
 
-  enum properties: {
-    hot: 0,
-    recommend: 1,
-    slider: 2,
-    scroll: 3,
-    redirect: 4,
-    hide: 5
+  # pg array
+  # Cms::Page.where("'hot' = ANY (properties)")
+  # @channel.pages.where("'recommend' = ANY(properties)")
+  PROPERTIES = {
+    hot: "头条",
+    recommend: "推荐",
+    slider: "幻灯",
+    scroll: "滚动",
+    redirect: "跳转",
+    hide: "隐藏"
   }
 
   #最近新闻

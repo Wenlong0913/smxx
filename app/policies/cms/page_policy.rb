@@ -36,7 +36,7 @@ class Cms::PagePolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.super_admin_or_admin?  || user.has_role?(:agent)
-      [:channel_id, :title, :short_title, :properties, :keywords, :description, :image_path, :content]
+      [:channel_id, :title, :short_title, :keywords, :description, :image_path, :content, :properties => []]
     else
       []
     end

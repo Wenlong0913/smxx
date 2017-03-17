@@ -25,5 +25,5 @@
           = f.input :keywords, placeholder: '关键词用逗号隔开'
           = f.input :description, placeholder: '文章摘要，用于SEO描述'
       = f.input :content, as: :ckeditor, input_html: { ckeditor: {toolbar: 'custom', height: '600px'}}
-      = f.collection_check_boxes :properties, enum_options_for_select(Cms::Page, :properties), :last, :first
+      = f.collection_check_boxes :properties, Cms::Page::PROPERTIES, :first, :last, checked: @cms_page.try(:properties)
       = f.submit class: 'btn btn-success btn-block'
