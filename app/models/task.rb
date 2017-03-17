@@ -29,6 +29,7 @@ class Task < ApplicationRecord
   belongs_to :site
   belongs_to :task_type
   belongs_to :resource, polymorphic: true
+  belongs_to :user, foreign_key: :assignee_id, class_name: 'User'
   validates_uniqueness_of :task_type_id, scope: [:resource_type, :resource_id]
   validates_presence_of :task_type_id, :site_id, :creator_id, :title
 
