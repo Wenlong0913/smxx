@@ -35,7 +35,7 @@ Keystore.put('cms_template_names', "['default','dagle']")
 
 # init Cms
 # visit: http://localhost:3000/cms_1/
-cms_site = Cms::Site.create!(site_id: site.id, name: '企业官网', domain: 'home', template: 'default', description: '这是用CMS搭建的官网')
+cms_site = Cms::Site.create!(site_id: site.id, name: '企业官网', domain: 'www', template: 'default', description: '这是用CMS搭建的官网')
 # Cms::Site after_create :initialize_channel　已经存在，会自动创建一个首页
 # cms_channel = Cms::Channel.create!(site_id: cms_site.reload.id, title: '首页', description: '这里是首页的栏目描述', short_title: 'index', tmp_index: 'temp_index.html.erb', tmp_detail: 'temp_detail.html.erb')
 cms_channel = Cms::Channel.create!(site_id: cms_site.reload.id, title: '新闻列表', description: '这里是新闻的栏目描述', short_title: 'news', tmp_index: 'temp_news_list.html.erb', tmp_detail: 'temp_detail.html.erb')
