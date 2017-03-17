@@ -38,7 +38,13 @@ class Users::SessionsController < Devise::SessionsController
     user = User.find(params[:id])
     authorize user
     impersonate_user(user)
-    redirect_to root_path
+    if user.super_admin_or_admin?
+      redirect_to admin_root_url
+    elsif user.has_role?(:agent)
+      redirect_to agent_root_url
+    else
+      redirect_to root_path
+    end
   end
 
   def stop_impersonating
@@ -54,6 +60,9 @@ class Users::SessionsController < Devise::SessionsController
     # @return [JSON] return json data, if user verification failed, renturn json data with :error option.
     #
     def login_with_mobile(mobile, code)
+      if current_user != true_user
+        stop_impersonating_user
+      end
       user = User::Mobile.find_by(phone_number: mobile).try(:user)
       if user
         t = Sms::Token.new(mobile)

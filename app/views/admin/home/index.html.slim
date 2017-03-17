@@ -1,3 +1,10 @@
+- if current_user != true_user
+  span 你 (
+  span = true_user.nickname
+  span )正在
+  span 模仿登录 
+  span = current_user.nickname
+  span = link_to "退出模仿", stop_impersonating_sessions_path, method: :post
 /! begin #content
 /! begin breadcrumb
 ol.breadcrumb.pull-right
