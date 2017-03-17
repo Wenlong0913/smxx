@@ -4,8 +4,8 @@ module API::SharedParams
   # 分页参数
   params :pagination do |options|
     max_per_page = options[:max_per_page] || 50
-    optional :page, type: Integer, default: 1, desc: '需要显示的页码'
-    optional :per_page,
+    optional :_page, type: Integer, default: 1, desc: '需要显示的页码'
+    optional :_per_page,
              type: Integer,
              values: { value: 1..max_per_page, message: "不能超过#{max_per_page}" },
              default: 10,
