@@ -10,7 +10,7 @@
   <h1><%= @product.name %>
   <div class="pull-right">
     <button class="btn btn-success btn-lg" type="submit" data-toggle="modal" data-target="#editModal" type="submit">调价</button>
-    <%= link_to "编辑信息", edit_agent_product_path(@product), class: 'btn btn-info btn-lg'%>
+    <%= link_to "编辑信息", edit_agent_product_path(@product), class: 'btn btn-info btn-lg', 'data-turbolinks': false%>
     <span class="process_shelves" data-url="<%= process_shelves_agent_product_path(@product) %>">
       <% if @product.is_shelves == '1' %>
       <button class="btn btn-inverse btn-lg" type="submit" data-status='0'>取消上架</button>

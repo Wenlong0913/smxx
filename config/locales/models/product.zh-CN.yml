@@ -14,7 +14,8 @@ zh-CN:
         discount: 促销价
         weight: 产品重量
         weight_unit: 重量单位
-        description: 介绍
+        description: 简要描述
+        content: 内容展示
         hot: 热卖
         recommend: 推荐
         event: 活动
