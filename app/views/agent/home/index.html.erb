@@ -1,3 +1,7 @@
+<% if current_user != true_user %>
+  你 (<%= true_user.nickname %>) 正在模仿登录 <%= current_user.nickname %>
+  <%= link_to "退出模仿", stop_impersonating_sessions_path, method: :post %>
+<% end %>
 <div class="container">
 <!-- begin #content -->
 <div id="content" class="content">
