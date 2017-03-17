@@ -97,7 +97,7 @@ class Api::V1::ProducesController < Api::V1::BaseController
     if flag
       render json: {status: 'ok', produce: produce}
     else
-      render json: {status: 'failed', error_message: order.errors.full_messages.join(', ') }
+      render json: {status: 'failed', error_message: produce.errors.full_messages.join(', ') }
     end
   end
 
