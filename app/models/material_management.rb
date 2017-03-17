@@ -34,6 +34,9 @@ class MaterialManagement < ApplicationRecord
               order_material.practical_number = order_material.practical_number.to_i - mmd.number
             else
               order_material.practical_number = order_material.practical_number.to_i + mmd.number
+              if order_material.practical_number == order_material.factory_expected_number
+                order_material.purchase_status = 'storage'
+              end
             end
             order_material.save!
           end

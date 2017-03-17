@@ -114,12 +114,12 @@ class Order < ApplicationRecord
   # end
 
   def generate_code
-    order_code = Time.now.strftime('%Y%m%d')
+    prefix = Time.now.strftime('%Y%m%d')
+    number = self.class.where("code LIKE ?", prefix+'%').count
     loop do
-      number = self.class.where("code LIKE ?", order_code+'%').count
-      number = (number + 1).to_s.rjust(3, '0')
-      self.code = "#{order_code}#{number}"
+      self.code = "#{prefix}#{(number + 1).to_s.rjust(3, '0')}"
       break unless self.class.where(code: self.code).exists?
+      number += 1
     end
   end
 end

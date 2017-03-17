@@ -23,8 +23,9 @@ class OrderMaterial < ApplicationRecord
 
   enum purchase_status: {
     no_need: 0, # 不需要采购 
-    purchasing: 1,  #采购中,
-    purchased: 2
+    purchasing: 1,  #开始采购,
+    purchased: 2, #采购中
+    storage: 3, #已领取
   }
 
   before_validation do
