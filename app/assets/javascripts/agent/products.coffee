@@ -33,40 +33,6 @@ $(document).ready ->
         if request.hasOwnProperty('error')
           $(this).find('.modal-body .alert.alert-danger').removeClass('hide').find('span.title').text(request.error)
           $('#editModal').scrollTop(0)
-    container = bodyShow.find('.catalog-list')
-    editProducts = new Vue
-      el: "div[rel='edit-modal']"
-      data:
-        defaultvalues: {}
-        defaultkeys: {}
-        id: container[0].dataset["catalogId"]
-        showCatalog: false
-        catalogs: container[0].dataset["catalogName"]
-        lists: []
-        count: 1
-      methods:
-        selected: (catalogs)->
-          this.catalog =  catalogs[catalogs.length-1]
-          this.id = this.catalog.id
-          this.showCatalog = false
-          this.catalogs = catalogs.map((cata)-> cata.name).join('/')
-        addInputList: ->
-          this.count++
-          this.lists.push({key: '', value: '', name: this.count})
-        removeInputList: (index)->
-          this.lists.splice(index, 1)
-    editProductsData = editProducts._data
-    defaultkeys = bodyShow.find('#editModal').data('keys')
-    defaultvalues = bodyShow.find('#editModal').data('values')
-    editProductsData.lists = []
-    max = 0
-    for name, v of defaultkeys
-      if parseInt(name) > 0
-        max = parseInt(name) if max < parseInt(name)
-        editProductsData.lists.push {key: v, name: parseInt(name), value: defaultvalues[name]}
-        editProductsData.count = max+1
-    editProductsData.lists.push {key: ' ', name: editProductsData.count, value: ' '}
-
   # new
   bodyNew = $('body.agent-products.new')
   if bodyNew.length > 0
@@ -135,3 +101,50 @@ $(document).ready ->
           if $('#last').text().length > 0
             window.location.href = request.url
       , 1000
+
+  # edit
+  bodyEdit
+  bodyEdit = $('body.agent-products.edit')
+  if bodyEdit.length > 0
+    # 商品单位切换显示
+    setTimeout ->
+      bodyEdit.find('.weight-input-group .input-group-btn ul.dropdown-menu li a').on 'click', ->
+        selectedVal = $(this).data('val')
+        selectedText = $(this).text()
+        $(this).parents('.weight-input-group').find('.input-group-btn .dropdown-toggle small').text(selectedText)
+        $(this).parents('.weight-input-group').find('input.hidden-input').val(selectedVal)
+    , 500
+    # 分类 图片 - Vue
+    container = bodyEdit.find('.catalog-list')
+    editProducts = new Vue
+      el: "div[rel='vue-dom']"
+      data:
+        defaultvalues: {}
+        defaultkeys: {}
+        id: container[0].dataset["catalogId"]
+        showCatalog: false
+        catalogs: container[0].dataset["catalogName"]
+        lists: []
+        count: 1
+      methods:
+        selected: (catalogs)->
+          this.catalog =  catalogs[catalogs.length-1]
+          this.id = this.catalog.id
+          this.showCatalog = false
+          this.catalogs = catalogs.map((cata)-> cata.name).join('/')
+        addInputList: ->
+          this.count++
+          this.lists.push({key: '', value: '', name: this.count})
+        removeInputList: (index)->
+          this.lists.splice(index, 1)
+    editProductsData = editProducts._data
+    defaultkeys = bodyEdit.find(".product-body[rel='vue-dom']").data('keys')
+    defaultvalues = bodyEdit.find(".product-body[rel='vue-dom']").data('values')
+    editProductsData.lists = []
+    max = 0
+    for name, v of defaultkeys
+      if parseInt(name) > 0
+        max = parseInt(name) if max < parseInt(name)
+        editProductsData.lists.push {key: v, name: parseInt(name), value: defaultvalues[name]}
+        editProductsData.count = max+1
+    editProductsData.lists.push {key: ' ', name: editProductsData.count, value: ' '}

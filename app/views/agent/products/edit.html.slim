@@ -1,7 +1,111 @@
-h1 
-  | 编辑 agent_product
-  .pull-right
-    = link_to '查看', agent_product_path(@agent_product), class: 'btn btn-primary'
-    = link_to '返回', agent_products_path, class: 'btn btn-primary'
-
-== render 'form'
+.container
+  .head.h1.text-right
+    = link_to '返回', agent_product_path(@product), class: 'btn btn-default'
+  .edit-product
+    .product-title
+      h4 信息修改
+      hr
+    .product-body[rel='vue-dom' data-values="#{@product.additional_attribute_values.to_json}" data-keys="#{@product.additional_attribute_keys.to_json}"]
+      = simple_form_for @product, url: agent_product_path, method: :put, remote: true do |f|
+        .row
+          .alert.alert-danger.fade.in.m-b-15.hide
+            strong 错误!&nbsp;
+            span.title
+            span.close[data-dismiss="alert"] &times;
+        .row
+          .col-xs-6
+            .form-group
+              = f.input :name
+          .col-xs-6
+            .form-group.catalog-list[data-catalog-name="#{@product.catalog.try(:name)}" data-catalog-id="#{@product.catalog_id}"]
+              label[class="control-label"] 产品分类
+              input[type="hidden" v-model="id" name="product[catalog_id]"]
+              input.form-control[readonly=true @click="showCatalog = true" :value="catalogs" placeholder="点击输入框选择分类"]
+              modal[title="产品分类" :show.sync="showCatalog" @cancel="showCatalog = false"]
+                div
+                  catalog-list[data-url=admin_product_catalogs_path :default="[#{@product.catalog_id}]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false" :editable='false']
+                div[slot="footer"]
+          .col-xs-6
+            .form-group
+              = f.input :price
+          .col-xs-6
+            .form-group
+              = f.input :discount
+          .col-xs-6
+            .form-group.weight-input-group
+              = f.input :weight_unit, vlaue: @product.weight_unit, as: :hidden, input_html: {class: 'hidden-input'}
+              label.control-label.string.optional 产品重量
+              .input-group
+                .input-group-btn
+                  button.btn.btn-default.dropdown-toggle[data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+                    | 单位: 
+                    small
+                      - if @product.weight_unit == 'g'
+                        span g(克)
+                      - else
+                        span KG(千克)
+                    span.caret
+                  ul.dropdown-menu.p-t-5
+                    li
+                      a[href="javascript:void(0)" data-val="Kg"] KG(千克)
+                    li.divider[role="separator"]
+                    li
+                      a[href="javascript:void(0)" data-val="g"] g(克)
+                = f.input :weight, label: false
+          .col-xs-6
+            .form-group
+              label.control-label.string.optional 产品是否存在运费
+              .input-group
+                span.input-group-addon.fee_checkbox
+                  = f.input_field :is_fee, as: :boolean, label: false
+                = f.input :shopping_fee, label: false, input_html: {class: "form-control"}
+          .col-xs-6
+            .form-group.col-xs-8.p-l-0.m-0
+              = f.input :stock
+            .form-group.col-xs-4.p-0.m-0
+              = f.input :unit
+          .col-xs-12
+            .form-group
+              = f.input :description, as: :text
+          .col-xs-12
+            .form-group.check-group
+              label.control-label.string.optional 其他
+              .
+                = f.input_field :hot, as: :boolean
+                = f.label :hot
+                = f.input_field :recommend, as: :boolean, label: '推荐'
+                = f.label :recommend
+                = f.input_field :event, as: :boolean, label: '活动'
+                = f.label :event
+                = f.input_field :promotion, as: :boolean, label: '促销'
+                = f.label :promotion
+                = f.input_field :discount, as: :boolean, label: '折扣'
+                = f.label :discount                
+          .col-xs-12[rel="attr_list_vue"]
+            hr
+            div[rel="additional-attributes_1"]
+              template
+                .form-group.row
+                  label.col-xs-6 属性名称
+                  label.col-xs-6 属性值
+                .additional-item.form-group[v-for="(list, index) in lists"]
+                  .row[:key="index"]
+                    .col-xs-3
+                      .form-group
+                        input.form-control[type="text" v-model="list.key" :name="'product[additional_attribute_keys][' + list.name + ']'"]
+                    .col-xs-8
+                      input.form-control[type="text" v-model="list.value" :name="'product[additional_attribute_values][' + list.name + ']'"]
+                    .col-xs-1
+                      button.btn.btn-danger.delete.btn-xs[type="button" @click="removeInputList(index)"]
+                        i.glyphicon.glyphicon-trash
+                        span 删除
+                span.btn.btn-success.fileinput-button.btn-xs[@click="addInputList"]
+                  i.fa.fa-plus
+                  span 添加其他产品选项
+            hr
+          .col-xs-12
+            .form-group
+              label 商品主图
+              image-select[server="#{image_items_path}" name="product[image_item_ids][]" selected-ids="#{@product.image_item_ids.join(', ')}"]
+        .row.text-right
+          = f.submit '保存修改', class: 'btn btn-primary'

@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
 
-  namespace :admin do
-    get 'order_deliveries/index'
-  end
-
   # === Common methods ===
   def catalog_resources_for(klass, options = {})
     resources klass.name.underscore.pluralize, options.merge(controller: 'catalogs', klass: klass.name)
@@ -25,14 +21,14 @@ Rails.application.routes.draw do
   # === Extend partial routes ===
 
   # Grape API
-  constraints subdomain: 'api' do
-    mount API::Root => '/'
-    if Rails.env.development?
-      mount GrapeSwaggerRails::Engine => '/'
-    else
-      root to: redirect('/not_found')
-    end
-  end
+  # constraints subdomain: 'api' do
+  #   mount API::Root => '/'
+  #   if Rails.env.development?
+  #     mount GrapeSwaggerRails::Engine => '/'
+  #   else
+  #     root to: redirect('/not_found')
+  #   end
+  # end
 
   extend FrontendRoute
   extend ApiRoute

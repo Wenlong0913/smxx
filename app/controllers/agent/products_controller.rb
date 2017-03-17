@@ -70,7 +70,7 @@ class Agent::ProductsController < Agent::BaseController
   end
 
   def edit
-    # authorize @product
+    authorize @product
   end
 
   def create
@@ -91,8 +91,10 @@ class Agent::ProductsController < Agent::BaseController
   def update
     authorize @product
     additional_attribute
-    @product.additional_attribute_keys = params["product"]["additional_attribute_keys"]
-    @product.additional_attribute_values = params["product"]["additional_attribute_values"]
+    if params["product"]["additional_attribute_keys"].present?
+      @product.additional_attribute_keys = params["product"]["additional_attribute_keys"]
+      @product.additional_attribute_values = params["product"]["additional_attribute_values"]
+    end
     if @product.update(permitted_attributes(@product))
       redirect_to agent_product_path(@product), notice: 'Product 更新成功.'
     else
@@ -127,10 +129,12 @@ class Agent::ProductsController < Agent::BaseController
     end
 
     def additional_attribute
-      params["product"]["additional_attribute_keys"].each_pair do |k, v|
-        if v.blank?
-          params["product"]["additional_attribute_keys"].delete(k)
-          params["product"]["additional_attribute_values"].delete(k)
+      if params["product"]["additional_attribute_keys"].present?
+        params["product"]["additional_attribute_keys"].each_pair do |k, v|
+          if v.blank?
+            params["product"]["additional_attribute_keys"].delete(k)
+            params["product"]["additional_attribute_values"].delete(k)
+          end
         end
       end
     end

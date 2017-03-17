@@ -1,0 +1,106 @@
+.modal.fade#editModal.bs-example-modal-lg[tabindex="-1" role="dialog" rel="edit-modal" aria-labelledby="myModalLabel"]
+  .modal-dialog[role="document"]
+    .modal-content
+      .modal-header
+        button.close[type="button" data-dismiss="modal" aria-label="Close"]
+          span[aria-hidden="true"] &times;
+        h4.modal-title#myModalLabel 商品-调价
+      = simple_form_for @product, url: agent_product_path, method: :put, remote: true do |f|
+        .modal-body.p-30
+          .row
+            .alert.alert-danger.fade.in.m-b-15.hide
+							strong 错误!&nbsp;
+							span.title
+							span.close[data-dismiss="alert"] &times;
+          .row
+            / .col-xs-6
+            /   .form-group
+            /     = f.input :name
+            / .col-xs-6
+            /   .form-group.catalog-list[data-catalog-name="#{@product.catalog.try(:name)}" data-catalog-id="#{@product.catalog_id}"]
+            /     label[class="control-label"] 产品分类
+            /     input[type="hidden" v-model="id" name="product[catalog_id]"]
+            /     input.form-control[readonly=true @click="showCatalog = true" :value="catalogs" placeholder="点击输入框选择分类"]
+            /     modal[title="产品分类" :show.sync="showCatalog" @cancel="showCatalog = false"]
+            /       div
+            /         catalog-list[data-url=admin_product_catalogs_path :default="[#{@product.catalog_id}]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false" :editable='false']
+            /       div[slot="footer"]
+            .col-xs-12
+              .form-group
+                = f.input :price
+            / .col-xs-6
+            /   .form-group
+            /     = f.input :discount
+            / .col-xs-6
+              / .form-group.weight-input-group
+              /   = f.input :weight_unit, vlaue: 'Kg', as: :hidden, input_html: {class: 'hidden-input'}
+              /   label.control-label.string.optional 产品重量
+              /   .input-group
+              /     .input-group-btn
+              /       button.btn.btn-default.dropdown-toggle[data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+              /         | 单位: 
+              /         small KG(千克)
+              /         span.caret
+              /       ul.dropdown-menu.p-t-5
+              /         li
+              /           a[href="javascript:void(0)" data-val="Kg"] KG(千克)
+              /         li.divider[role="separator"]
+              /         li
+              /           a[href="javascript:void(0)" data-val="g"] g(克)
+              /     = f.input :weight, label: false
+            .col-xs-12
+              .form-group.col-xs-8.p-l-0.m-0
+                = f.input :stock
+              .form-group.col-xs-4.p-0.m-0
+                = f.input :unit
+            .col-xs-12
+              .form-group
+                label.control-label.string.optional 产品是否存在运费
+                .input-group
+                  span.input-group-addon.fee_checkbox
+                    = f.input_field :is_fee, as: :boolean, label: false
+                  = f.input :shopping_fee, label: false, input_html: {class: "form-control"}
+            / .col-xs-12
+            /   .form-group
+            /     = f.input :description, as: :text
+            / .col-xs-12[rel="attr_list_vue"]
+            /   hr
+            /   div[rel="additional-attributes_1"]
+            /     template
+            /       .form-group.row
+            /         label.col-xs-6 属性名称
+            /         label.col-xs-6 属性值
+            /       .additional-item.form-group[v-for="(list, index) in lists"]
+            /         .row[:key="index"]
+            /           .col-xs-3
+            /             .form-group
+            /               input.form-control[type="text" v-model="list.key" :name="'product[additional_attribute_keys][' + list.name + ']'"]
+            /           .col-xs-8
+            /             input.form-control[type="text" v-model="list.value" :name="'product[additional_attribute_values][' + list.name + ']'"]
+            /           .col-xs-1
+            /             button.btn.btn-danger.delete.btn-xs[type="button" @click="removeInputList(index)"]
+            /               i.glyphicon.glyphicon-trash
+            /               span 删除
+            /       span.btn.btn-success.fileinput-button.btn-xs[@click="addInputList"]
+            /         i.fa.fa-plus
+            /         span 添加其他产品选项
+            /   hr
+            / .col-xs-12
+            /   .form-group
+            /     label 商品主图
+            /     image-select[server="#{image_items_path}" name="product[image_item_ids][]" selected-ids="#{@product.image_item_ids.join(', ')}"]
+        .modal-footer
+          button.btn.btn-default[type="button" data-dismiss="modal"] 取消
+          = f.submit '保存调价', class: 'btn btn-primary'
+javascript:
+  $(function(){
+    $('#editModal').on('shown.bs.modal',function(){
+      $(this).find('.weight-input-group .input-group-btn ul.dropdown-menu li a').off().on('click', function(){
+        selectedVal = $(this).data('val')
+        selectedText = $(this).text()
+        $(this).parents('.weight-input-group').find('.input-group-btn .dropdown-toggle small').text(selectedText)
+        $(this).parents('.weight-input-group').find('input.hidden-input').val(selectedVal)
+      })
+    })
+  })
+  
