@@ -10,22 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170316160833) do
+ActiveRecord::Schema.define(version: 20170316132007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
   enable_extension "pgcrypto"
-
-  create_table "account_api_tokens", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "token"
-    t.string   "device"
-    t.datetime "expired_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["token"], name: "index_account_api_tokens_on_token", using: :btree
-    t.index ["user_id"], name: "index_account_api_tokens_on_user_id", using: :btree
-  end
 
   create_table "account_histories", force: :cascade do |t|
     t.integer  "account_id"
@@ -36,51 +26,6 @@ ActiveRecord::Schema.define(version: 20170316160833) do
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
     t.index ["account_id"], name: "index_account_histories_on_account_id", using: :btree
-  end
-
-  create_table "account_permissions", force: :cascade do |t|
-    t.string   "symbol_name"
-    t.string   "name"
-    t.string   "group_name"
-    t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["name"], name: "index_account_permissions_on_name", using: :btree
-    t.index ["symbol_name"], name: "index_account_permissions_on_symbol_name", using: :btree
-  end
-
-  create_table "account_roles", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "account_roles_permissions", force: :cascade do |t|
-    t.integer "role_id"
-    t.integer "permission_id"
-    t.index ["role_id", "permission_id"], name: "index_account_roles_permissions_on_role_id_and_permission_id", using: :btree
-  end
-
-  create_table "account_roles_users", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "role_id"
-    t.index ["user_id", "role_id"], name: "index_account_roles_users_on_user_id_and_role_id", using: :btree
-  end
-
-  create_table "account_users", force: :cascade do |t|
-    t.string   "username"
-    t.string   "mobile_phone"
-    t.string   "crypted_password"
-    t.string   "salt"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.string   "nickname"
-  end
-
-  create_table "account_users_permissions", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "permission_id"
-    t.index ["user_id", "permission_id"], name: "index_account_users_permissions_on_user_id_and_permission_id", using: :btree
   end
 
   create_table "accounts", force: :cascade do |t|
