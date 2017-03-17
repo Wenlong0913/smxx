@@ -3,7 +3,7 @@ module FrontendRoute
   def self.extended(router)
     router.instance_exec do
       constraints(RootDomain) do
-        root 'home#index'
+        root to: redirect('/', subdomain: 'www')
       end
       devise_for "users", skip: [:sessions, :passwords, :registrations], :controllers => { :omniauth_callbacks => 'users/omniauth_callbacks' }
       devise_scope :user do
