@@ -514,7 +514,7 @@ GEM
     slim (3.0.7)
       temple (~> 0.7.6)
       tilt (>= 1.3.3, < 2.1)
-    slim-rails (3.1.2)
+    slim-rails (3.1.1)
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (~> 3.0)
@@ -617,7 +617,7 @@ DEPENDENCIES
   capistrano-sidekiq
   capybara
   chinese_pinyin
-  ckeditor (~> 4.2)
+  ckeditor (~> 4.2.2)
   closure_tree
   coffee-rails (~> 4.2)
   colorize
@@ -677,7 +677,7 @@ DEPENDENCIES
   sidekiq
   simple_form (~> 3.3.1)
   simplecov
-  slim-rails (~> 3.1.1)
+  slim-rails (= 3.1.1)
   sms!
   spring
   spring-watcher-listen (~> 2.0.0)
@@ -698,4 +698,4 @@ RUBY VERSION
    ruby 2.3.3p222
 
 BUNDLED WITH
-   1.14.5
+   1.14.6
