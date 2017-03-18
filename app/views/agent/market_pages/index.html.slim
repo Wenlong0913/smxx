@@ -38,11 +38,12 @@
                   | 营销效果分析
                 ul.nav.nav-list
                   li
-                    | 访问人次：343
+                    | 访问人次：
+                    = market_page.impressions_count
                   li
-                    | 展示次数： 3433
-                  li
-                    | 获客人数： 5
+                    | 展示次数：
+                    = market_page.impressionist_count
+
                 h4
                   i.fa.fa-universal-access.fa-fw.text-muted
                   | 更多操作

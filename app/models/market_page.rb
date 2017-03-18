@@ -14,6 +14,8 @@
 
 class MarketPage <  ApplicationRecord
   audited
+  is_impressionable :counter_cache => true
+
   belongs_to :market_template
   belongs_to :site
   validates_presence_of :name, :site, :market_template

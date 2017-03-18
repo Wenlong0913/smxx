@@ -101,9 +101,28 @@ Nginx config:
 
 那么，如果在Cms中修改一个站点(site)的域名(domain)值为： cms, 则可以通过如下二级域名访问： [cms.dagle.cn](http://cms.dagle.cn)
 
-## 添加访问统计
+## 添加页面访问统计
+
+1. 给表添加统计字段(migration)
+
+  add_column :cms_pages, :impressions_count, :integer, default: 0
+
+2. 修改Model:
+
+  is_impressionable :counter_cache => true
+
+3. 修改Controller
+
+WidgetsController < ApplicationController
+  impressionist :actions=>[:show,:index]
+end
+
+或者在action里定义：
+
+impressionist(@channel, "channel_#{@channel.id}")
+impressionist(@page, "page_#{@page.id}") if @page # 2nd argument is optional
+
+4. 在View中引用：
 
 IP次数：  <%= cms_page.impressions_count %>
 PV次数：  <%= cms_page.impressionist_count %>
-更新次数： <%= cms_page.audits.count %><br/>
-最后更新： <%= cms_page.try(:audits).try(:last).try(:user).try(:nickname) %>

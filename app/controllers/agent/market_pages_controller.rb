@@ -5,7 +5,7 @@ class Agent::MarketPagesController < Agent::BaseController
 
   def index
     authorize MarketPage
-    @market_pages = MarketPage.all.page(params[:page])
+    @market_pages = @site.market_pages.page(params[:page])
     respond_to do |format|
       format.html
       format.json { render json: @market_pages }

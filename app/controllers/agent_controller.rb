@@ -1,6 +1,5 @@
 class AgentController < ApplicationController
   layout false
-
   def index
   end
 
@@ -8,6 +7,7 @@ class AgentController < ApplicationController
     @market_page = MarketPage.find(params[:id])
     @site = @market_page.site
     @member = Member.new(site_id: @site.id)
+    impressionist(@market_page, "market_page_#{@market_page.id}")
   end
 
   def member_new

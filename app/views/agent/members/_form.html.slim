@@ -35,7 +35,12 @@
           = simple_fields_for :features do |o|
             - @agent_member_catalogs.each do |catalog|
               h4 = catalog.key
-              = o.input catalog.key, collection: catalog.value, as: :radio_buttons, checked: @agent_member.features && @agent_member.features[catalog.key], label: false, item_wrapper_class: 'radio-inline'
+              = o.input catalog.key,
+                collection: catalog.value,
+                as: :radio_buttons,
+                checked: @agent_member.features && @agent_member.features[catalog.key],
+                label: false,
+                item_wrapper_class: 'a radio-inline'
           hr
           = f.input :birth
           = f.input :note, as: :text
@@ -43,3 +48,14 @@
       .form-group
         .col-md-12
           = f.submit '保存', class: 'btn btn-success btn-block'
+
+javascript:
+  var $radios = $('input:radio');
+
+  $radios.change(function () {
+    $($(this).parent().parent().parent()).find('input:radio').parent().removeClass('checked');
+
+    $(this).parent().addClass('checked');
+  });
+
+  $('input:radio').filter(':checked').parent().addClass('checked');
