@@ -2,11 +2,14 @@
 zh-CN:
   activerecord:
     models:
-      order_delivery: Order delivery
+      order_delivery: 发货记录
     attributes:
-      order_delivery: {}
+      order_delivery:
+        delivery_id: 发货部
+        list: 发货清单
+        note: 备注
     errors:
       models:
-        order_delivery: 
+        order_delivery:
   helpers:
-    order_delivery: 
+    order_delivery:

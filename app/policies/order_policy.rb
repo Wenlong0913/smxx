@@ -10,7 +10,7 @@ class OrderPolicy < ApplicationPolicy
   end
 
   def update?
-    user.super_admin_or_admin? || user.permission?(:order_material_split)
+    user.super_admin_or_admin? || user.permission?([:order_material_split, :confirm_delivery])
   end
 
   def permitted_attributes_for_create

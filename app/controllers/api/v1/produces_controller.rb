@@ -20,7 +20,7 @@ class Api::V1::ProducesController < Api::V1::BaseController
         },
         tasks: {
           only: [:id, :assignee_id, :title, :description, :status, :resource_id, :ordinal],
-          include: {task_type: {only: [:id, :name, :ordinal]}}
+          include: {task_type: {only: [:id, :name, :ordinal]}, user: {only: [:nickname]}}
         }
       }
     )
@@ -47,7 +47,7 @@ class Api::V1::ProducesController < Api::V1::BaseController
         },
         tasks: {
           only: [:id, :assignee_id, :title, :description, :status, :resource_id, :ordinal],
-          include: {task_type: {only: [:id, :name, :ordinal]}}
+          include: {task_type: {only: [:id, :name, :ordinal]}, user: {only: [:id, :nickname]}}
         }
       }
     )
