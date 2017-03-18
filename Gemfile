@@ -122,7 +122,7 @@ gem 'grape-route-helpers', '~> 2.0'
 gem 'grape-entity', '~> 0.6.1'
 gem 'grape-swagger'
 gem 'grape-swagger-entity', '~> 0.2.0'
-gem 'grape-swagger-rails', group: [:development]
+gem 'grape-swagger-rails'#, group: [:development]
 gem 'rack-cors', '~> 0.4.1'
 
 group :development, :test do
