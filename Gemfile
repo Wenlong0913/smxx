@@ -151,6 +151,7 @@ group :development do
   gem 'guard-bundler'
   gem 'guard-rails'
   gem 'guard-livereload'
+  gem "rails-erd"
 end
 
 group :development, :doc do
