@@ -1,0 +1,128 @@
+<%= render file: "public/templetes/dagle/shared/_header" %>
+
+<div id="barba-wrapper">
+  <div class="barba-container">
+  
+    <div id="index">
+      <!-- banner -->
+      <section id="headline-cover">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <h1 class="headline-text"  data-aos="fade-up-right" style="font-size: 30px; font-weight: 300; margin-top: 60px; margin-bottom: 35px;">
+                德格·<%= @channel.title %>
+              </h1>
+              <p class="headline-text"  data-aos="fade-up-right" style="font-size: 43px;">
+                <strong>将数字资产有效的管理起来</strong>
+              </p>
+              <p class="subheading-text"  data-aos="fade-up-right">
+                内容管理系统基于Ruby On Rails开发的一款CMS系统，内容是任何类型的素质信息，可以是文本、图形图像、Web页面、业务文档、数据库表单、视频、声音、XML文件等，是一种位于WEB端和后端业务应用系统、办公系统或流程之间的软件系统
+              </p>
+              <div class="buttons-container" data-aos="fade-up-right">
+                <!-- data-toggle="modal" data-target="#purchaseModal" -->
+                <a href="javascript:void(0);" onclick="_MEIQIA._SHOWPANEL();"  class="btn btn-lg btn-primary btn-round btn-main-cta">
+                  申请试用
+                </a>
+                <span class="or">or</span>
+                <a href="<%= get_cms_url("blog") %>" class="btn btn-link">
+                  了解更多 &rarr;
+                </a>
+              </div>
+            </div>
+
+            <div class="col-md-6 hidden-sm hidden-xs" data-aos="fade-up-left">
+              <img class="img-responsive main-img" src="<%= @channel.image_path %>" alt="<%= @channel.keywords %>">
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <%#= raw @channel.content %>
+      <div class="page product-bright">
+        <div class="item-header">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="p-head1" data-aos="fade-down">快速开发</p>
+                <h2>快速市场响应能力，网站开发周期非常短
+                  <br />
+                  <small>RainCMS集成Ruby On Rails最新标准的框架，系统可开发性强、易于使用、可分布式管理、用户接口可编辑性强、快速开发</small></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <img alt="德格RainCms系统；快速建站，强大的模板定制，极大缩短开发周期" class="img-responsive" src="/templetes/dagle/img/bgs/cms1.png" />
+      </div>
+      <div class="page product-dark">
+        <div class="item-header">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="p-head1" data-aos="fade-up">数据信息采集</p>
+                <h2>关键字自动采集，按需求区分和整理
+                  <br />
+                  <small>德格RainCMS系统数据采集功能，根据用户给出的关键字自动采集许多与之匹配的信息，保留与用户需求吻合的信息</small></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <img alt="德格RainCms系统；扩展了数据信息采集功能，根据关键字迅速匹配采集信息。" class="img-responsive" src="/templetes/dagle/img/bgs/cms2.png" />
+      </div>
+      <div class="page product-bright">
+        <div class="item-header">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="p-head1" data-aos="fade-down">模板定制化</p>
+                <h2>个性化模板搭建，强大的表单定制
+                  <br />
+                  <small>RainCMS系统独具开发模板定制，帮助用户快速使用对终端适配技术，直接通过后台设定模板参数定制表单接口</small></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <img alt="德格RainCms模板定制，海量模板选择，多样式表单定制，实现多终端适配" class="img-responsive" src="/templetes/dagle/img/bgs/cms3.png" />
+      </div>
+      <div class="page product-dark">
+        <div class="item-header">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="p-head1" data-aos="fade-up">大数据技术</p>
+                <h2>提炼海量数据信息，高效准确检索
+                  <br />
+                  <small>RainCMS基于大数据平台的高性能计算、分析、检索实现技术，满足大数据应用的时效性、实时性、动态性</small></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <img alt="德格Raincms大数据技术，高性能的计算分析，多维度的数据分析报表，实现了数据动态性和实时性。" class="img-responsive" src="/templetes/dagle/img/bgs/cms4.png" />
+      </div>
+      <%= render file: "public/templetes/dagle/shared/partials/_application_domain.html.erb" %>
+
+      <!-- 客户案例 -->
+      <section id="company-slider" data-aos="fade-up">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <%= render file: "public/templetes/dagle/shared/partials/_logo_slider" %>
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <a href="<%= get_cms_url("case") %>" class='btn btn-bordered btn-lg btn-round btn-primary'>
+                    查看更多客户 &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <%= render file: "public/templetes/dagle/shared/partials/_contact_question.html.erb" %>
+      <%= render file: "public/templetes/dagle/shared/partials/_pay_now.html.erb" %>
+
+    </div>
+
+  </div>
+</div>
+
+<%= render file: "public/templetes/dagle/shared/_footer" %>
