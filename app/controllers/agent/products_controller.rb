@@ -25,9 +25,24 @@ class Agent::ProductsController < Agent::BaseController
         query << "features -> 'price' <= ?"
         conditions << price_to.inspect
       end
+      other_attributes = %w(hot recommend event promotion discount)
+      other_attributes.each do |attr|
+        if params[:search][attr] == '1'
+          query << "features ->> '" + attr + "' like ?"
+          conditions << "1"
+        end
+      end
       conditions.unshift query.join(' and ')
       @products = @site.products.where(conditions)
+      if params[:search][:catalog_id].present?
+        catalog_id = params[:search][:catalog_id]
+      end
     end
+    if params[:catalog].present?
+      catalog_id = params[:catalog]
+    end
+    catalog = ProductCatalog.where(id: catalog_id).first
+    @products = @products.where(catalog_id: catalog.self_and_descendant_ids)
     if params[:reorder].present?
       @products = case params[:reorder]
       # when 'clicks'

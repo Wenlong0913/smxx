@@ -22,7 +22,7 @@
             <div class="col-md-6">
               <h4>商品列表
               <% if params[:search].present? %>
-                <span>: 搜索出 <%= @products.size %> 商品</span>
+                  <span>: 搜索出 <%= @products.size %> 商品</span>
               <% end %>
               </h4>
             </div>
@@ -110,7 +110,7 @@
       <!-- BEGIN search-sidebar -->
       <div class="search-sidebar">
           <h4 class="title">查询</h4>
-          <%= form_for :search, url: agent_products_path, method: :get do |f| %>
+          <%= simple_form_for :search, url: agent_products_path, method: :get do |f| %>
             <div class="form-group">
               <div class="control-label">关键字</div>
               <%= f.text_field :keywords, value: (params[:search][:keywords] if params[:search]), placeholder: "输入查询关键字", class: 'form-control input-sm' %>
@@ -125,6 +125,39 @@
                   <div class="col-md-5">
                     <%= f.text_field :price_to, type: 'number', value: (params[:search][:price_to] if params[:search]),class: 'form-control input-sm', min: '0' %>
                   </div>
+              </div>
+            </div>
+            <div class="form-group catalog-list" rel='catalog-list' data-catalog-name="<%= ProductCatalog.where(id: params[:search][:catalog_id]).first.try(:name) if params[:search].present? %>" data-catalog-id="<%= params[:search][:catalog_id] if params[:search].present? %>">
+              <label class="control-label">产品分类</label>
+              <input type="hidden" name="search[catalog_id]" v-model="id">
+              <input readonly=true @click="showCatalog = true" :value="catalogs" class="form-control" placeholder="点击选择分类">
+              <modal title="产品分类" v-show="showCatalog" @cancel="showCatalog = false">
+                <div>
+                  <catalog-list data-url="<%= agent_product_catalogs_path %>" :default="[]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false" :editable='false'></catalog-list>
+                </div>
+                <div slot="footer"></div>
+              </modal>
+            </div>
+            <div class="form-group">
+              <label class="control-label">其他 <span class="m-l-5"><i class="fa fa-plus"></i></span></label>
+              <div class="row row-space-0 other-attr">
+                  <%= f.input_field :hot, as: :boolean, 'data-val': (params[:search][:hot] if params[:search].present?)%>
+                  <label for="">热卖</label>
+                  <%= f.input_field :recommend, as: :boolean , 'data-val': (params[:search][:recommend] if params[:search].present?)%>
+                  <label for="">推荐</label>
+                  <%= f.input_field :event, as: :boolean , 'data-val': (params[:search][:event] if params[:search].present?)%>
+                  <label for="">活动</label>
+                  <%= f.input_field :promotion, as: :boolean , 'data-val': (params[:search][:promotion] if params[:search].present?)%>
+                  <label for="">促销</label>
+                  <%= f.input_field :discount, as: :boolean , 'data-val': (params[:search][:discount] if params[:search].present?)%>
+                  <label for="">折扣</label>
+                  <!-- <div class="col-md-5">
+                    <%= f.text_field :price_from, type: 'number', value: (params[:search][:price_from] if params[:search]),class: 'form-control input-sm', min: '0' %>
+                  </div>
+                  <div class="col-md-2 text-center p-t-5 f-s-12 text-muted">～</div>
+                  <div class="col-md-5">
+                    <%= f.text_field :price_to, type: 'number', value: (params[:search][:price_to] if params[:search]),class: 'form-control input-sm', min: '0' %>
+                  </div> -->
               </div>
             </div>
             <div class="form-group">
