@@ -1,4 +1,23 @@
 $(document).ready ->
+  # index
+  bodyIndex = $('body.agent-products.index')
+  if bodyIndex.length > 0
+    $(".other-attr input[type='checkbox']").each ->
+      if $(this).data('val') == 1
+        $(this).prop('checked', true)
+    catalogDom = bodyIndex.find(".catalog-list[rel='catalog-list']")
+    catalog = new Vue
+      el: "div[rel='catalog-list']"
+      data:
+        id: catalogDom[0].dataset["catalogId"]
+        showCatalog: false
+        catalogs: catalogDom[0].dataset["catalogName"]
+      methods:
+        selected: (catalogs)->
+          this.catalog =  catalogs[catalogs.length-1]
+          this.id = this.catalog.id
+          this.showCatalog = false
+          this.catalogs = catalogs.map((cata)-> cata.name).join('/')
   # show
   bodyShow = $('body.agent-products.show')
   if bodyShow.length > 0
