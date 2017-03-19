@@ -26,11 +26,11 @@ module Cms::ApplicationHelper
     prefix = cms_frontend_root_url(params)
     case obj
     when Cms::Page
-      prefix.concat("/#{obj.channel.short_title}/#{obj.id}")
+      prefix.concat("#{obj.channel.short_title}/#{obj.id}")
     when Cms::Channel
-      prefix.concat("/#{obj.short_title}")
+      prefix.concat("#{obj.short_title}")
     when String
-      prefix.concat("/#{obj}")
+      prefix.concat("#{obj}")
     else
       prefix
     end
