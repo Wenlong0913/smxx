@@ -1,5 +1,7 @@
-
 Rails.application.routes.draw do
+  namespace :frontend do
+    get 'users/show'
+  end
 
   # === Common methods ===
   def catalog_resources_for(klass, options = {})
