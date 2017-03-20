@@ -1,4 +1,4 @@
-class Frontend::ProductCatalogsController < ApplicationController
+class Frontend::ProductCatalogsController < Frontend::BaseController
   def index
     @product_catalogs = ProductCatalog.all
   end

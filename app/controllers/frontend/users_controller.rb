@@ -1,4 +1,4 @@
-class Frontend::UsersController < ApplicationController
+class Frontend::UsersController < Frontend::BaseController
   def show
   end
 end
