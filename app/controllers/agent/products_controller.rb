@@ -42,7 +42,7 @@ class Agent::ProductsController < Agent::BaseController
       catalog_id = params[:catalog]
     end
     catalog = ProductCatalog.where(id: catalog_id).first
-    @products = @products.where(catalog_id: catalog.self_and_descendant_ids)
+    @products = @products.where(catalog_id: catalog.self_and_descendant_ids) if catalog
     if params[:reorder].present?
       @products = case params[:reorder]
       # when 'clicks'

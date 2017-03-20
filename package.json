@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "license": "MIT",
   "dependencies": {
+    "clipboard": "^1.6.1",
     "lodash": "^4.17.2",
     "sass-loader": "^4.1.1",
     "stats-webpack-plugin": "^0.2.1",

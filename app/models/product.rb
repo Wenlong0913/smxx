@@ -18,6 +18,7 @@ class Product < Item
   validates_numericality_of :price, allow_blank: true
   has_many :image_item_relations, as: :relation
   has_many :image_items, :through => :image_item_relations
+  has_many :sales_distribution_resources, class_name: 'SalesDistribution::Resource', as: 'object'
   belongs_to :catalog
   belongs_to :site
   before_save do

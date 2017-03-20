@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   # file upload
   resources :attachments, only: [:index, :create, :destroy]
 
+  # 分享
+  resources :sales_distribution, only: [:create]
+
   # === Extend partial routes ===
   extend FrontendRoute
   extend ApiRoute

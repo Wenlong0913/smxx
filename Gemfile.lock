@@ -6,6 +6,13 @@ GIT
       activemodel (>= 4.0, < 5.1)
 
 GIT
+  remote: git@gitlab.tanmer.com:tm-framework/sales_distribution.git
+  revision: 4af1bf13555d6a445319f241f70a222631fe47e2
+  specs:
+    sales_distribution (0.1.0)
+      rails (>= 4.3.0)
+
+GIT
   remote: http://gitlab.tanmer.com/tm-themes/theme_color_admin.git
   revision: 234445d456c3fd249061b25f047493cc005df060
   specs:
@@ -669,6 +676,7 @@ DEPENDENCIES
   roo-xls
   rqrcode (~> 0.10.1)
   rspec-rails (~> 3.5)
+  sales_distribution!
   sass-rails (~> 5.0)
   select2-rails
   selenium-webdriver

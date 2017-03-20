@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170318041001) do
+ActiveRecord::Schema.define(version: 20170320015414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
   enable_extension "pgcrypto"
 
   create_table "account_histories", force: :cascade do |t|
@@ -147,19 +148,18 @@ ActiveRecord::Schema.define(version: 20170318041001) do
   end
 
   create_table "cms_pages", force: :cascade do |t|
-    t.integer  "channel_id",                     null: false
-    t.string   "title",                          null: false
-    t.string   "short_title",                    null: false
+    t.integer  "channel_id",                    null: false
+    t.string   "title",                         null: false
+    t.string   "short_title",                   null: false
+    t.string   "properties"
     t.string   "keywords"
     t.string   "description"
     t.string   "image_path"
     t.text     "content"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.string   "properties",        default: [],              array: true
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "impressions_count", default: 0
     t.index ["channel_id"], name: "index_cms_pages_on_channel_id", using: :btree
-    t.index ["properties"], name: "index_cms_pages_on_properties", using: :gin
     t.index ["short_title"], name: "index_cms_pages_on_short_title", using: :btree
   end
 
@@ -495,6 +495,31 @@ ActiveRecord::Schema.define(version: 20170318041001) do
     t.integer "role_id"
     t.integer "permission_id"
     t.index ["role_id", "permission_id"], name: "index_roles_permissions_on_role_id_and_permission_id", using: :btree
+  end
+
+  create_table "sales_distribution_resource_users", force: :cascade do |t|
+    t.integer  "resource_id"
+    t.integer  "user_id"
+    t.string   "ip"
+    t.string   "user_agent"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["resource_id"], name: "idx__sdr_resource_user_resource", using: :btree
+    t.index ["user_id"], name: "idx__sdr_resource_user_user", using: :btree
+  end
+
+  create_table "sales_distribution_resources", force: :cascade do |t|
+    t.string   "type_name"
+    t.string   "url",         limit: 255
+    t.integer  "user_id"
+    t.string   "object_type"
+    t.integer  "object_id"
+    t.string   "code"
+    t.jsonb    "extra"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["object_type", "object_id"], name: "idx__sdr_object", using: :btree
+    t.index ["user_id"], name: "idx__sdr_user", using: :btree
   end
 
   create_table "sites", force: :cascade do |t|
