@@ -44,7 +44,7 @@ class Api::V1::MaterialManagementDetailsController < Api::V1::BaseController
 
   def material_management_detail_json(material_management_details)
     material_management_details.as_json(
-      only: %w(id number),
+      only: %w(id number price),
       include: {
         material_management: { 
           only: %w(id operate_date operate_type note created_by order_code),
