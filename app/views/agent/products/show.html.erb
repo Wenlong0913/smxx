@@ -63,6 +63,10 @@
                             </span>
                           <% end %>
                           <%= @product.name %>
+                          <span class="share" rel="share" data-url="<%= sales_distribution_agent_product_path(@product) %>">
+                            <i class="fa fa-share-alt text-info btn" @click="getSalesDistribution(<%= @product.id %>)" title= '分享' data-toggle= "tooltip" data-trigger= "hover" data-title= "分享" data-placement= "top" data-original-title= "" title= ""></i>
+                            <share-modal title="商品: <%= @product.name%>" :url="url" :show-modal="showSharModal" @close="showSharModal = false"></share-modal>
+                          </span>
                         </h1>
                     </div>
                     <!-- END product-info-header -->
@@ -84,8 +88,6 @@
                           <% end %>
                         </ul>
                     </div>
-
-
 
                     <!-- BEGIN product-info-list 一些主要配置信息列表展示-->
                     <ul class="product-info-list">

@@ -52,6 +52,28 @@ $(document).ready ->
         if request.hasOwnProperty('error')
           $(this).find('.modal-body .alert.alert-danger').removeClass('hide').find('span.title').text(request.error)
           $('#editModal').scrollTop(0)
+    # 请求地址
+    shareUrl = bodyShow.find(".share[rel='share']").data('url')
+    share = new Vue
+      el: ".share[rel='share']"
+      data:
+        showSharModal: false
+        url: ''
+      methods:
+        getSalesDistribution: (product_id)->
+          this.showSharModal = true
+          self = this
+          return if self.url.length > 1
+          $.ajax
+            url: shareUrl
+            type: 'post'
+            success: (data)->
+              if data.code.length > 1
+                self.url = data.share_path
+              else
+                alert('数据获取失败')
+            error: (data)->
+              alert('错误')
   # new
   bodyNew = $('body.agent-products.new')
   if bodyNew.length > 0

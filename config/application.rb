@@ -66,6 +66,11 @@ module Tmf
         resource '*', :headers => :any, :methods => [:get, :post, :options, :put, :update, :delete]
       end
     end
+    config.middleware.insert_after Warden::Manager, SalesDistribution::Middleware do |config|
+      config.route_prefix = 'code-'
+      config.current_user = ->(env) { env['warden'].user }
+      config.user_class_name = 'User'
+    end
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

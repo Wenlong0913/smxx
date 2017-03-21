@@ -9,3 +9,4 @@ Vue.components.ImageSelect = Vue.component('image-select', require('./image_sele
 Vue.components.CatalogList = Vue.component('catalog-list', require('./catalog'))
 Vue.components.MultiImageUpload = Vue.component('multi-image-upload', require('./multi_image_upload'));
 Vue.components.ShowImage = Vue.component('show-image', require('./show_image'));
+Vue.components.ShareModal = Vue.component('share-modal', require('./share_modal'));

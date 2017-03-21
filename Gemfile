@@ -53,7 +53,8 @@ gem 'active_model_serializers' # 不好用，不如直接as_json输出
 
 # gem 'active_model_serializers' # 不好用，不如直接as_json输出
 #
-
+# url-分销
+gem 'sales_distribution', git: 'git@gitlab.tanmer.com:tm-framework/sales_distribution.git'
 # gem 'spreadsheet'
 gem "roo"
 gem 'roo-xls'

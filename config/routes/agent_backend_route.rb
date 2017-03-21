@@ -8,6 +8,7 @@ module AgentBackendRoute
         resources 'products' do
           member do
             post 'process_shelves'
+            post 'sales_distribution'
           end
         end
         resources 'orders'

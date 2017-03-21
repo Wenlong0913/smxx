@@ -1,6 +1,6 @@
 class Agent::ProductsController < Agent::BaseController
   before_action :set_current_user_products
-  before_action :set_product, only: [:show, :edit, :update, :destroy, :process_shelves]
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :process_shelves, :sales_distribution]
 
   def index
     authorize Product
@@ -131,6 +131,19 @@ class Agent::ProductsController < Agent::BaseController
     if @product.update is_shelves: (params[:status] == '1' ? '1' : '0')
       render json: {status: 'ok'}
     end
+  end
+
+  def sales_distribution
+    resource = SalesDistribution::Resource.find_or_create_by(
+      type_name: '产品',
+      user: current_user,
+      url: agent_product_path(@product),
+      object: @product
+    )
+    render json: {
+      code: resource.code,
+      share_path: URI(request.scheme + "://" + request.host + ":" + request.port.to_s).merge(resource.share_path).to_s
+    }
   end
 
   private
