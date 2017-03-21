@@ -63,7 +63,7 @@
                             </span>
                           <% end %>
                           <%= @product.name %>
-                          <span class="share" rel="share" data-url="<%= sales_distribution_index_path %>" destination-url="<%= agent_product_path(@product) %>">
+                          <span class="share" rel="share" data-url="<%= sales_distribution_agent_product_path(@product) %>">
                             <i class="fa fa-share-alt text-info btn" @click="getSalesDistribution(<%= @product.id %>)" title= '分享' data-toggle= "tooltip" data-trigger= "hover" data-title= "分享" data-placement= "top" data-original-title= "" title= ""></i>
                             <share-modal title="商品: <%= @product.name%>" :url="url" :show-modal="showSharModal" @close="showSharModal = false"></share-modal>
                           </span>

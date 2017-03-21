@@ -54,8 +54,6 @@ $(document).ready ->
           $('#editModal').scrollTop(0)
     # 请求地址
     shareUrl = bodyShow.find(".share[rel='share']").data('url')
-    # 分享目标地址
-    destinationUrl = bodyShow.find(".share[rel='share']").attr("destination-url")
     share = new Vue
       el: ".share[rel='share']"
       data:
@@ -68,13 +66,6 @@ $(document).ready ->
           return if self.url.length > 1
           $.ajax
             url: shareUrl
-            data:
-              type_name: '产品',
-              url: destinationUrl,
-              object: {
-                class: 'Product',
-                id: product_id
-              }
             type: 'post'
             success: (data)->
               if data.code.length > 1
