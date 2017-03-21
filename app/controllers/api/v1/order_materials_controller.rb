@@ -55,7 +55,7 @@ class Api::V1::OrderMaterialsController < Api::BaseController
     def order_materials_json(order_materials)
       order_materials.as_json(only: [:id, :amount, :factory_expected_number, :practical_number],
         include: {
-          material: { only: [:id, :name, :name_py], methods: [:price] }
+          material: { only: [:id, :name, :name_py], methods: [:price, :stock] }
         }
       )
     end

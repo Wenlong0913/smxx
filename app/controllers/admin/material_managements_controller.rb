@@ -96,22 +96,24 @@ class Admin::MaterialManagementsController < Admin::BaseController
 
     def to_csv(objects)
       return [] if objects.nil?
+      type = enum_i18n(MaterialManagement, :operate_type, @type)
       # make excel using utf8 to open csv file
       head = 'EF BB BF'.split(' ').map{|a|a.hex.chr}.join()
       CSV.generate(head) do |csv|
-        csv << ['出库总量', objects.sum{ |p| p.material_management_details.sum(:number) }, '出库总金额', objects.sum{ |p| p.material_management_details.sum{|mmd| mmd.number * mmd.material.price } }]
+        csv << [type + '总量', objects.sum{ |p| p.material_management_details.sum(:number) }, type + '总金额', objects.sum{ |p| p.material_management_details.sum{|mmd| mmd.number * (mmd.price || mmd.material.price) } }]
         # 获取字段名称
-        column_names = [enum_i18n(MaterialManagement, :operate_type, @type) + '日期','物料名称', '编码', '价格', '数量', '总金额']
+        column_names = [ type + '日期','物料名称', '编码', '价格', '数量', '总金额']
         csv << column_names        
         objects.each do |obj|
           obj.material_management_details.each do |mmd|
             values = []
+            price = mmd.price || mmd.material.price
             values << obj.operate_date
             values << mmd.material.name
             values << mmd.material.name_py
-            values << mmd.material.price
+            values << price
             values << mmd.number
-            values << mmd.material.price * mmd.number
+            values << price * mmd.number
             csv << values
           end
         end
