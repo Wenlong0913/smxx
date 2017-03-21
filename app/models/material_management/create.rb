@@ -39,6 +39,11 @@ class MaterialManagement
             material_warehouse_item = material_warehouse.material_warehouse_items.find_by(material: mmd.material)
             material_warehouse_item.stock -= mmd.number
           elsif record.input?
+
+            # 价格根据采购价格自动做加权平均，计算物料的成本价格
+            mmd.material.price = (mmd.price * mmd.number + mmd.material.stock * mmd.material.price)/(mmd.number + mmd.material.stock)
+            mmd.material.save!
+
             material_warehouse_item = material_warehouse.material_warehouse_items.find_or_create_by(material: mmd.material)
             material_warehouse_item.stock += mmd.number if mmd.number
           end
