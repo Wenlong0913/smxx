@@ -5,7 +5,8 @@ class Api::V1::VendorsController < Api::BaseController
   def index
     # authorize Vendor
     page_size = params[:page_size].present? ? params[:page_size].to_i : 20
-    vendors = Vendor.all.order(created_at: :desc).page(params[:page] || 1).per(page_size)
+    vendors = params['name'].present? ? Vendor.all.where("name_py like :key OR name like :key", {key: ['%',params['name'].upcase, '%'].join}) : Vendor.all
+    vendors = vendors.order(created_at: :desc).page(params[:page] || 1).per(page_size)
     render json: {
       vendors: vendor_json(vendors),
       page_size: page_size,
