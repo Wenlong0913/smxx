@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170320015414) do
+ActiveRecord::Schema.define(version: 20170322113424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
   enable_extension "pgcrypto"
 
   create_table "account_histories", force: :cascade do |t|
@@ -142,22 +141,23 @@ ActiveRecord::Schema.define(version: 20170320015414) do
     t.text     "content"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.jsonb    "features"
     t.integer  "impressions_count", default: 0
     t.index ["short_title"], name: "index_cms_channels_on_short_title", using: :btree
     t.index ["site_id"], name: "index_cms_channels_on_site_id", using: :btree
   end
 
   create_table "cms_pages", force: :cascade do |t|
-    t.integer  "channel_id",                    null: false
-    t.string   "title",                         null: false
-    t.string   "short_title",                   null: false
-    t.string   "properties"
+    t.integer  "channel_id",                     null: false
+    t.string   "title",                          null: false
+    t.string   "short_title",                    null: false
     t.string   "keywords"
     t.string   "description"
     t.string   "image_path"
     t.text     "content"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "properties",        default: [],              array: true
     t.integer  "impressions_count", default: 0
     t.index ["channel_id"], name: "index_cms_pages_on_channel_id", using: :btree
     t.index ["short_title"], name: "index_cms_pages_on_short_title", using: :btree
@@ -299,6 +299,7 @@ ActiveRecord::Schema.define(version: 20170320015414) do
     t.text     "form_source"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.jsonb    "features"
     t.index ["catalog_id"], name: "index_market_templates_on_catalog_id", using: :btree
   end
 
@@ -384,7 +385,6 @@ ActiveRecord::Schema.define(version: 20170320015414) do
     t.integer  "site_id"
     t.string   "name"
     t.date     "birth"
-    t.string   "qq"
     t.string   "email"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
@@ -395,6 +395,7 @@ ActiveRecord::Schema.define(version: 20170320015414) do
     t.string   "address"
     t.string   "note"
     t.jsonb    "features"
+    t.string   "qq"
     t.string   "typo"
     t.string   "from"
     t.string   "owned"
@@ -530,6 +531,31 @@ ActiveRecord::Schema.define(version: 20170320015414) do
     t.jsonb    "features"
     t.string   "type"
     t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer  "tag_id"
+    t.string   "taggable_type"
+    t.integer  "taggable_id"
+    t.string   "tagger_type"
+    t.integer  "tagger_id"
+    t.string   "context",       limit: 128
+    t.datetime "created_at"
+    t.index ["context"], name: "index_taggings_on_context", using: :btree
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
+    t.index ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
+    t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy", using: :btree
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id", using: :btree
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type", using: :btree
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type", using: :btree
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id", using: :btree
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string  "name"
+    t.integer "taggings_count", default: 0
+    t.index ["name"], name: "index_tags_on_name", unique: true, using: :btree
   end
 
   create_table "task_types", force: :cascade do |t|
