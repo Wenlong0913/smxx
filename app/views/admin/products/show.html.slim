@@ -17,35 +17,48 @@ h1.page-header
         .table-responsive
           table.table.table-profile
             tr
-              td.field 代理商
+              td.field 美容院商家
               td
-                a
-                  =@product.site.title
+                =@product.site.title
             tr.divider
               td[colspan='4']
             tr
               td.field 产品名称
               td
-                a
-                  = @product.name
+                = @product.name
               td.field 产品分类
               td
-                a
-                  =@product.catalog.try(:name)
-            tr.divider
-              td[colspan='2']
+                =@product.catalog.try(:name)
             tr
-              td.field 价格
+              td.field 原价
               td
-                a
-                  = @product.price
-            tr.divider
-              td[colspan='2']
+                = @product.old_price
+              td.field 售价
+              td
+                =@product.price
             tr
+              td.field 月单数
+              td
+                =@product.month_number
+              td.field 适应人群
+              td
+                =@product.responsive_person
+
+            tr
+              td.field 注意事项
+              td
+                =@product.warning_message
               td.field 描述
               td
-                a
-                  = @product.description
+                = @product.description
+
+            tr
+              td.field 适应人群
+              td
+                =@product.responsive_person
+              td.field 服务时长
+              td
+                =@product.service_time
             tr.divider
               td[colspan='2']
           h4 产品图片
