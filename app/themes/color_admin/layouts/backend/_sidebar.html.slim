@@ -155,10 +155,10 @@
           span 帮助文档
         ul.sub-menu
           li
-            = link_to doc_path(page: 'dev_doc.md'), target: '_blank' do
+            = link_to root_url(page: 'dev_doc.md', subdomain: 'doc'), target: '_blank' do
               = fa_icon 'leaf', text: '开发手册'
           li
-            = link_to doc_root_path, target: '_blank' do
+            = link_to root_url(subdomain: 'doc'), target: '_blank' do
               = fa_icon 'leaf', text: '客户使用手册'
       li
         = link_to admin_audits_path do
