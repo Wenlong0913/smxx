@@ -1,9 +1,10 @@
-h1 
+h1
   | 查看用户
   .pull-right
     => link_to '查看微信用户', admin_user_weixin_path(@admin_user.weixin), class: 'btn btn-primary' if @admin_user.weixin
     => link_to '编辑', edit_admin_user_path(@admin_user), class: 'btn btn-primary'
-    = link_to '用户列表', admin_users_path, class: 'btn btn-primary'
+    => link_to '地址簿', admin_user_address_books_path(@admin_user), class: 'btn btn-info'
+    => link_to '用户列表', admin_users_path, class: 'btn btn-default'
 
 .panel
   .panel-heading
@@ -12,7 +13,7 @@ h1
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-    h4 
+    h4
       | 查看用户
 
   .panel-body.bind-user[data-bind-url=new_users_weixins_connects_path data-verify-url=status_users_weixins_connects_path data-qrcode-img-url=new_users_weixins_connects_path(format: 'png')]
@@ -26,7 +27,7 @@ h1
             .m-b-10
               .profile-highlight
                 h4 = d_user.try(:nickname)
-          .profile-right    
+          .profile-right
             .profile-info
               .table-responsive
                 table.table.table-profile
@@ -52,7 +53,7 @@ h1
                     td
                       a
                         = d_user.display_role
-                  tr 
+                  tr
                     td.field
                       |微信
                     td
@@ -63,7 +64,7 @@ h1
                           modal[title="打开微信扫一扫登录" :show="showModal" @cancel="showModal = false"]
                             div
                               div[v-if="showImage" class="text-center"]
-                                h3 
+                                h3
                                   |{{message}}
                                 img[:src="weixinQrcode"]
                             div[slot="footer"]

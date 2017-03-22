@@ -42,6 +42,7 @@ class User < ApplicationRecord
   has_many :create_order, class_name: 'Order', foreign_key: :create_by
   has_many :update_order, class_name: 'Order', foreign_key: :update_by
   has_many :sales_distribution_resources, class_name: 'SalesDistribution::Resource'
+  has_one :address_books, dependent: :destroy
 
   attr_accessor :mobile_phone
   validates :mobile_phone, mobile_phone: true, allow_blank: true

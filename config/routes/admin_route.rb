@@ -48,6 +48,7 @@ module AdminRoute
             get 'edit_permission'
             put 'update_permission'
           end
+          resources :address_books
         end
         namespace :user do
           resources :weixins, only: [:index, :show], :concerns => :paginatable
