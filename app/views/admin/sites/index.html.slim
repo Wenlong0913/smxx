@@ -15,19 +15,22 @@ h1.page-header
       table.table.table-striped
         thead
           tr
-            th 经销商/渠道
             th 姓名
-            th 工作经历
+            th 年龄
+            th 工作年限
+            th 擅长领域
+            th 个人介绍
             th
 
         tbody
           - @sites.each do |site|
             tr
-              td = site.user && decorate(site.user).display_name
               td = site.title
+              td = site.age
+              td = site.work_years
+              td = site.properties
               td = site.description
               td
-                => link_to '客户列表', admin_site_members_path(site), class: 'btn btn-xs btn-success'
-                => link_to '查看', admin_site_path(site), class: 'btn btn-xs btn-default'
-                => link_to '编辑', edit_admin_site_path(site), class: 'btn btn-xs btn-default'
+                => link_to '查看', admin_site_path(site), class: 'btn btn-xs btn-primary'
+                => link_to '编辑', edit_admin_site_path(site), class: 'btn btn-xs btn-warning'
                 => link_to '删除', admin_site_path(site), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger' if policy(site).destroy?

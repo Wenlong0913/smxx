@@ -24,16 +24,55 @@ h1.page-header
             tr.divider
               td[colspan='2']
             tr
-              td.field 名称
+              td.field 姓名
               td
                 a
                   = @site.title
             tr.divider
               td[colspan='2']
             tr
-              td.field 描述
+              td.field 年龄
+              td
+                a
+                  = @site.age
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 工作年限
+              td
+                a
+                  = @site.work_years
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 擅长领域
+              td
+                a
+                  = @site.properties
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 个人介绍
               td
                 a
                   = @site.description
             tr.divider
               td[colspan='2']
+            tr
+              td.field 工作经历
+              td
+                a
+                  = @site.content
+            tr.divider
+              td[colspan='2']
+            tr 
+              td.filed 证书认证
+              td
+              .row
+              -@site.image_items.each do |image|
+                .image.col-sm-6.col-md-4
+                  .image-inner
+                    a[href="javascript:;" data-lightbox="gallery-group-1"]
+                      img[src="#{image.image_url}"]
+                    .image-caption
+                      =image.name
