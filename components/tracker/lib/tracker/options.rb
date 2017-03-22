@@ -27,7 +27,7 @@ module Tracker
       when Symbol
         controller.send(value)
       when Proc
-        controller.instance_eval(&value)
+        controller.instance_exec(&value)
       else
         value
       end
