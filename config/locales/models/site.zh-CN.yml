@@ -6,8 +6,9 @@ zh-CN:
     attributes:
       site:
         user_id: 美容师-所有者
-        title: 标题
-        description: 备注
+        title: 姓名
+        description: 工作经历 
+        age: 年龄
     errors:
       models:
         site:
