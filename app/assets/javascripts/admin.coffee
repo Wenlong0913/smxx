@@ -11,6 +11,7 @@
 #= require admin/audit
 #= require admin/role
 #= require admin/user
+#= require admin/shop
 #= require select2
 #= require tracker
 # can't require tree

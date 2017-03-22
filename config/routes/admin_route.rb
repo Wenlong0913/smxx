@@ -94,6 +94,9 @@ module AdminRoute
         #系统参数
         resources :keystores
         resources :audits, only: [:index], :concerns => :paginatable
+        #美容院
+        resources :shops
+        resources :shop_sites
       end
     end
   end

@@ -105,6 +105,9 @@
           li[class=("active" if page?('admin/sites'))]
             = link_to '经销商', admin_sites_path
 
+      li class=("#{'active' if page?('admin/shops')}") = link_to '美容院', admin_shops_path
+
+
       li class=("has-sub #{'active' if page?('admin/market_catalogs', 'admin/market_templates', 'admin/market_pages')}")
         = link_to dashboard_admin_market_pages_path
           b.caret.pull-right

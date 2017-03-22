@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170320015414) do
+ActiveRecord::Schema.define(version: 20170322075257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
   enable_extension "pgcrypto"
 
   create_table "account_histories", force: :cascade do |t|
@@ -148,18 +147,19 @@ ActiveRecord::Schema.define(version: 20170320015414) do
   end
 
   create_table "cms_pages", force: :cascade do |t|
-    t.integer  "channel_id",                    null: false
-    t.string   "title",                         null: false
-    t.string   "short_title",                   null: false
-    t.string   "properties"
+    t.integer  "channel_id",                     null: false
+    t.string   "title",                          null: false
+    t.string   "short_title",                    null: false
     t.string   "keywords"
     t.string   "description"
     t.string   "image_path"
     t.text     "content"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "properties",        default: [],              array: true
     t.integer  "impressions_count", default: 0
     t.index ["channel_id"], name: "index_cms_pages_on_channel_id", using: :btree
+    t.index ["properties"], name: "index_cms_pages_on_properties", using: :gin
     t.index ["short_title"], name: "index_cms_pages_on_short_title", using: :btree
   end
 
@@ -522,6 +522,32 @@ ActiveRecord::Schema.define(version: 20170320015414) do
     t.index ["user_id"], name: "idx__sdr_user", using: :btree
   end
 
+  create_table "shop_sites", force: :cascade do |t|
+    t.integer  "shop_id"
+    t.integer  "site_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shop_id"], name: "index_shop_sites_on_shop_id", using: :btree
+    t.index ["site_id"], name: "index_shop_sites_on_site_id", using: :btree
+  end
+
+  create_table "shops", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name",                             null: false
+    t.string   "description"
+    t.text     "content"
+    t.string   "contact_name"
+    t.string   "contact_phone"
+    t.boolean  "is_published",      default: true
+    t.text     "note"
+    t.string   "properties",        default: [],                array: true
+    t.jsonb    "features"
+    t.integer  "impressions_count", default: 0
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.index ["user_id"], name: "index_shops_on_user_id", using: :btree
+  end
+
   create_table "sites", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title"
@@ -723,6 +749,9 @@ ActiveRecord::Schema.define(version: 20170320015414) do
   add_foreign_key "orders", "sites"
   add_foreign_key "orders", "users"
   add_foreign_key "produces", "orders"
+  add_foreign_key "shop_sites", "shops"
+  add_foreign_key "shop_sites", "sites"
+  add_foreign_key "shops", "users"
   add_foreign_key "tasks", "sites"
   add_foreign_key "theme_configs", "sites"
   add_foreign_key "theme_configs", "themes"

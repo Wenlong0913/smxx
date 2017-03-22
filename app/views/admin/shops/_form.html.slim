@@ -1,0 +1,33 @@
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+  .panel-body
+    = simple_form_for @shop, url: @shop.new_record? ? admin_shops_path : admin_shop_path(@shop), validate: true do |f|
+      - if @shop.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@shop.errors.count, "error")} prohibited this shop from being saved:"
+          ul
+            - @shop.errors.full_messages.each do |message|
+              li = message
+
+      = f.input :name, required: true
+      = f.input :description
+      = f.input :business_time
+      = f.input :address
+
+      = f.input :contact_name
+      = f.input :contact_phone
+
+      = f.input :is_published
+      = f.collection_check_boxes :properties, Shop::PROPERTIES, :first, :last, checked: @shop.try(:properties)
+      = f.input :content, as: :ckeditor
+      
+      .form-group
+        image-select[server="#{image_items_path}" name="shop[image_item_ids][]" selected-ids="#{@shop.image_item_ids.join(', ')}"]
+
+
+      = f.submit class: 'btn btn-success btn-block'
