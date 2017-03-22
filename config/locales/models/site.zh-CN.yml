@@ -2,10 +2,10 @@
 zh-CN:
   activerecord:
     models:
-      site: 经销商
+      site: 美容师
     attributes:
       site:
-        user_id: 经销商-所有者
+        user_id: 美容师-所有者
         title: 标题
         description: 备注
     errors:
