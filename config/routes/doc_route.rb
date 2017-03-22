@@ -1,3 +1,4 @@
+require 'doc_subdomain'
 module DocRoute
   def self.extended(router)
     router.instance_exec do
