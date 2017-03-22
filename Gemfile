@@ -69,6 +69,7 @@ gem 'roo-xls'
 gem 'pretender' # 模仿另一个用户登录
 
 gem 'ckeditor', '~> 4.2.2'
+gem 'acts-as-taggable-on', '~> 4.0'
 
 #File upload
 gem 'paperclip'

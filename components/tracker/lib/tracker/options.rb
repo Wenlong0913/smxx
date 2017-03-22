@@ -1,10 +1,11 @@
 module Tracker
   class Options
-    attr_accessor :user_id, :resource, :payload
+    attr_accessor :user_id, :resource, :payload, :controller
     attr_reader :origin_options
 
-    def initialize(origin_options)
+    def initialize(origin_options, controller)
       @origin_options = origin_options.freeze
+      @controller = controller
     end
 
     def user_id
@@ -24,9 +25,9 @@ module Tracker
       value = origin_options.fetch(key, default)
       case value
       when Symbol
-        send(value)
+        controller.send(value)
       when Proc
-        value.()
+        controller.instance_exec(&value)
       else
         value
       end

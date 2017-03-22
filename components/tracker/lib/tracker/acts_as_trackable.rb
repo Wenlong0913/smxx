@@ -17,7 +17,7 @@ module Tracker
       def acts_as_trackable(options={})
         around_action :track_visit_wraper, options.except(:user, :resource, :payload)
         define_method :tracker_options do
-          Options.new(options)
+          Options.new(options, self)
         end
       end
     end
