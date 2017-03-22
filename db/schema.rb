@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170322075257) do
+ActiveRecord::Schema.define(version: 20170322113424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,7 +141,6 @@ ActiveRecord::Schema.define(version: 20170322075257) do
     t.text     "content"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
-    t.jsonb    "features"
     t.integer  "impressions_count", default: 0
     t.index ["short_title"], name: "index_cms_channels_on_short_title", using: :btree
     t.index ["site_id"], name: "index_cms_channels_on_site_id", using: :btree
@@ -300,7 +299,6 @@ ActiveRecord::Schema.define(version: 20170322075257) do
     t.text     "form_source"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.jsonb    "features"
     t.index ["catalog_id"], name: "index_market_templates_on_catalog_id", using: :btree
   end
 
@@ -386,6 +384,7 @@ ActiveRecord::Schema.define(version: 20170322075257) do
     t.integer  "site_id"
     t.string   "name"
     t.date     "birth"
+    t.string   "qq"
     t.string   "email"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
@@ -396,7 +395,6 @@ ActiveRecord::Schema.define(version: 20170322075257) do
     t.string   "address"
     t.string   "note"
     t.jsonb    "features"
-    t.string   "qq"
     t.string   "typo"
     t.string   "from"
     t.string   "owned"
