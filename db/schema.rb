@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20170322122542) do
     t.string   "city",         null: false
     t.string   "street",       null: false
     t.string   "house_number"
+    t.jsonb    "features"
     t.string   "note"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
