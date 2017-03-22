@@ -17,5 +17,12 @@
 
       = f.input :user_id, collection: User.all.decorate, label_method: :display_name
       = f.input :title
+      = f.input :age
+      = f.input :work_years
       = f.input :description
+      = f.collection_check_boxes :properties, Site::PROPERTIES, :first, :last, checked: @site.try(:properties)
+      = f.input :content, as: :ckeditor
+      .form-group
+        image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@site.image_item_ids.join(', ')}"]
+        
       = f.submit class: 'btn btn-success btn-block'
