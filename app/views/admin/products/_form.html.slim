@@ -25,8 +25,15 @@
           div
             catalog-list[data-url=admin_product_catalogs_path :default="[#{@product.catalog_id}]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false"]
           div[slot="footer"]
-      = f.input :price
+      = f.input :price, as: :decimal
+      = f.input :old_price, as: :decimal
       = f.input :description, as: :text
+      = f.input :responsive_person, as: :text
+      = f.input :warning_message, as: :text
+      = f.input :service_time
+      = f.input :month_number, as: :integer
+      = f.collection_check_boxes :properties, Product::PROPERTIES, :first, :last, checked: @product.try(:properties)
+      = f.input :content,as: :ckeditor
       .form-group
         image-select[server="#{image_items_path}" name="product[image_item_ids][]" selected-ids="#{@product.image_item_ids.join(', ')}"]
 
