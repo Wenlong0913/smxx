@@ -28,7 +28,7 @@ h1.page-header
               td = site.title
               td = site.age
               td = site.work_years
-              td = site.properties
+              td = site.properties.map{|p| Site::PROPERTIES[p.to_sym] }.compact.join('，') if site.properties.any?
               td = site.description
               td
                 => link_to '查看', admin_site_path(site), class: 'btn btn-xs btn-primary'
