@@ -12,7 +12,6 @@ zh-CN:
         work_years: 工作年限
         certificate: 证书认证
         content: 工作经历
-        properties: 擅长领域
         properties:
           breast_dredge: 乳腺疏通
           slimming_shaping: 瘦身塑形
@@ -30,7 +29,6 @@ zh-CN:
           skin_knowledge: 皮肤知识
           ovary_care: 卵巢护理
           head_physiotherapy: 头部理疗
-        image_path: 缩略图
     errors:
       models:
         site:
