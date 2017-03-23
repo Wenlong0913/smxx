@@ -14,7 +14,7 @@ h1.page-header
       | #{Delivery.model_name.human}列表
   .panel-body
     = form_for :search, url:  admin_deliveries_path, method: :get do |f|
-      .toolbar.row
+      /.toolbar.row
         .col-md-12
           p
             |支持SIMILAR TO查询语法, %代表匹配所有，_代表匹配一个字符
@@ -64,6 +64,7 @@ h1.page-header
       table.table.table-striped.table-bordered
         thead
           tr
+            th 经销商
             th 发货部名称
             th 联系电话
             th 联系地址
@@ -71,6 +72,8 @@ h1.page-header
         tbody
           - @deliveries.each do |delivery|
             tr
+              td
+                = delivery.site.title
               td
                 = delivery.name
               td
