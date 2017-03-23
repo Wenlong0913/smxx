@@ -25,6 +25,8 @@ module AgentBackendRoute
           end
         end
 
+        resources :deliveries, except: [:show]
+
         catalog_resources_for ProductCatalog, only: [:index]
         resources :market_pages, :concerns => :paginatable
       end
