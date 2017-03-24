@@ -39,7 +39,6 @@ $(document).ready ->
         total_pages: 1
         selected_page: 1
         showPage: 0
-        url: ''
       methods:
         redirectTo: (id)->
           if tmp.hasClass('share_two')
@@ -69,4 +68,6 @@ $(document).ready ->
           minute = timeDate.getMinutes()
           second = timeDate.getSeconds()
           return year + '年' + month + '月' + date + '日 ' + hour + '时' + minute + '分' + second + '秒'
+        # shareCode: (code) ->
+        #   return url.substring(0, url.indexOf('tracker')) + "code-" + code
     loadData()

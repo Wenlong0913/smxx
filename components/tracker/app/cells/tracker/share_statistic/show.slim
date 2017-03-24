@@ -13,7 +13,6 @@
                 th RUL
                 th 二级分享数
                 th 三级分享数
-                th 分享链接
                 th 分享时间
                 th
             tbody
@@ -26,8 +25,6 @@
                   | {{ val.two_distribution_count }}
                 td
                   | {{ val.three_distribution_count }}
-                td
-                  | {{ val.root.code }}
                 td
                   | {{ formatDate(val.root.created_at)}}
                 td

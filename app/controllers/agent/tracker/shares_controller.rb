@@ -2,10 +2,9 @@ class Agent::Tracker::SharesController < Agent::BaseController
 
   def index
     authorize :'tracker/home', :index?
-    page = params[:page] ||= 1
     respond_to do |format|
       format.html
-      format.json {render json: Tracker::Share.records(page, current_user)}
+      format.json {render json: Tracker::Share.records(current_user, params[:page])}
     end
   end
 
