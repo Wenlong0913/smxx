@@ -1,4 +1,4 @@
-class Admin::Tracker::HomeController < Admin::BaseController
+class Agent::Tracker::HomeController < Agent::BaseController
 
   # 汇总
   def index

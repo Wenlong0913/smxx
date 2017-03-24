@@ -27,6 +27,19 @@ module AgentBackendRoute
 
         catalog_resources_for ProductCatalog, only: [:index]
         resources :market_pages, :concerns => :paginatable
+
+        namespace :tracker do
+          get '/', to: 'home#index'
+          namespace :visits do
+            resource :statistics, only: [:show]
+            resource :details, only: [:show]
+          end
+          resources :shares, only: [:index] do
+            resources :two_shares, only: [:index] do
+              resources :three_shares, only: [:index]
+            end
+          end
+        end
       end
     end
   end

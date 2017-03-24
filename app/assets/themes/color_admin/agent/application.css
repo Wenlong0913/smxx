@@ -5,6 +5,7 @@
 *= require color_admin/css/animate
 *= require color_admin/css/agent/style
 *= require color_admin/css/style-responsive
+*= require color_admin/plugins/nvd3/build/nv.d3
 *= require agent
 *= require font-awesome
 */

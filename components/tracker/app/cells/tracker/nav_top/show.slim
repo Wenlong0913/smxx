@@ -1,7 +1,7 @@
 / haead
 ul.nav.nav-pills.tracker_head_nav
   li.first-floor[role="presentation" class== ("active" if options[:summary].present?)]
-    = link_to admin_tracker_path
+    = link_to options[:home]
       i.fa.fa-circle.fa-fw.m-r-5.text-danger
       | 数据总览
 
@@ -12,11 +12,10 @@ ul.nav.nav-pills.tracker_head_nav
       span.caret
     ul.dropdown-menu#menu1[role="menu" aria-labelledby="drop4"]
       li[role="presentation"]
-        = link_to '访问明细', admin_tracker_visits_details_path
+        = link_to '访问明细', options[:visits_details]
       li[role="presentation"]
-        = link_to '受访页面', admin_tracker_visits_statistics_path
-
+        = link_to '受访页面', options[:visits_statistics]
   li.first-floor[role="presentation" class== ("active" if options[:share].present?)]
-    = link_to admin_tracker_shares_path
+    = link_to options[:shares_show]
       i.fa.fa-circle.fa-fw.m-r-5.text-success
       | 分销统计

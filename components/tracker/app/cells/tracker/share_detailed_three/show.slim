@@ -1,40 +1,36 @@
-/ content
-.row.share_statistic[data-url=options[:path]]
+.row.share_statistic.share_three[data-url=options[:path]]
   .col-md-12
     .panel.panel-default
       .panel-heading
-        h4 分享记录
+        h4 
+          span 三级分享记录 - 
+          span.label.label-info[style="vertical-align: top;"]
+            | {{ share_obj.root.url }}
+          = link_to '', class: 'pull-right btn', style: "margin-top: -10px", id: 'reUrl' do
+            i.fa.fa-mail-reply[style="margin-right:5px"]
+            span 返回
       .panel-body.share-list
         .table-responsive
           table.table.table-hover
             thead
               tr
                 th #
-                th RUL
-                th 二级分享数
-                th 三级分享数
-                th 分享链接
+                th 用户
+                th 手机号
                 th 分享时间
-                th
             tbody
-              tr[v-for="val,index in share_list" @click="redirectTo(val.root.id)" style="cursor: pointer;"]
+              tr[v-for="val,index in share_obj.records" style="cursor: pointer;"]
                 td
                   | {{ index+1 }}
                 td
-                  | {{ val.root.url }}
+                  | {{ val.nickname }}
                 td
-                  | {{ val.two_distribution_count }}
+                  | {{ '手机' }}
                 td
-                  | {{ val.three_distribution_count }}
-                td
-                  | {{ val.root.code }}
-                td
-                  | {{ formatDate(val.root.created_at)}}
-                td
-                  a.small.hover-show 查看
+                  | {{ formatDate(val.created_at) }}
         div.white-footer
           span.pull-left.small
-            | {{ share_list.length + '条 -- 记录' }}
+            | {{ share_obj.records.length + '条 -- 记录' }}
           ul.pagination.pagination-sm
             li[v-bind:class="{ 'disabled': selected_page == 1 }"]
               a[href="javascript:;"v-on:click="selected_page == 1 ? false : loadData(--selected_page)"] &laquo;
@@ -47,6 +43,7 @@
               a[href="javascript:;" @click="onNextPageGroup"] ...
             li[v-bind:class="{ 'disabled': selected_page == total_pages }"]
               a[href="javascript:;"v-on:click="selected_page == total_pages ? false : loadData(++selected_page)"] &raquo;
+
 
     / .panel.panel-default
     /   .panel-heading
