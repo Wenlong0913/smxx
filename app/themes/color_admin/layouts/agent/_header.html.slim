@@ -51,6 +51,13 @@
                     | &nbsp;新建任务
             li.dropdown.dropdown-hover
               a data-toggle="dropdown" href="#"
+                | 货运管理
+                i.fa.fa-angle-down
+                span.arrow.top
+              ul.dropdown-menu
+                li = link_to '货运列表', agent_deliveries_path
+            li.dropdown.dropdown-hover
+              a data-toggle="dropdown" href="#"
                 | 客户CRM
                 i.fa.fa-angle-down
                 span.arrow.top
