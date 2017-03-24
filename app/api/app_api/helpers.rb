@@ -13,6 +13,14 @@ module AppAPI
       @current_user
     end
 
+    def error!(msg, *args)
+      if msg.is_a?(ActiveModel::Errors)
+        super({ error: msg.as_json, error_message: msg.full_messages }, *args)
+      else
+        super
+      end
+    end
+
     # 验证用户
     def authenticate!
       error!({ error: '身份验证失败' }, 401) unless current_user

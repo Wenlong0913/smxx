@@ -20,7 +20,7 @@ module AppAPI::V1
       end
       params do
         use :pagination
-        use :sort, fields: [:id, :created_at, :updated_at]
+        # use :sort, fields: [:id, :created_at, :updated_at]
         optional :friends, type: Boolean, desc: '好友店铺'
         optional :favorite, type: String, values: ['private', 'friends', 'all'], desc: '私藏店铺：我的私藏店铺，好友私藏的店铺，被私藏数高的店铺'
       end
@@ -28,11 +28,12 @@ module AppAPI::V1
         authenticate!
         sites = ::Site.all
         if params[:favorite]
-          if params[:favorite] == 'private'
-            sites = sites.where(id: current_user.favorites.where(resource_type: 'Site').map(&:resource_id))
-          elsif params[:favorite] == 'all'
-            sites = ::Site.left_joins(:favorites).group("sites.id").order('COUNT(favorite_entries.id) DESC')
-          end
+          sites = 
+            case params[:favorite]
+            when 'private' then sites.where(id: current_user.favorites.where(resource_type: 'Site').map(&:resource_id))
+            when 'friends' then sites.where(user_id: current_user.favorites.where(resource_type: 'User').map(&:resource_id))
+            when 'all'     then sites.left_joins(:favorites).group("sites.id").order('COUNT(favorite_entries.id) DESC')
+            end
         end
         sites = paginate_collection(sort_collection(sites), params)
         wrap_collection sites, AppAPI::Entities::Site
