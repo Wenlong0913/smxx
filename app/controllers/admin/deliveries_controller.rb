@@ -1,6 +1,7 @@
 # csv support
 require 'csv'
 class Admin::DeliveriesController < Admin::BaseController
+  before_action :set_site, only: [:create]
   before_action :set_delivery, only: [:edit, :update, :destroy]
 
   # GET /admin/deliveries
@@ -36,7 +37,7 @@ class Admin::DeliveriesController < Admin::BaseController
   # POST /admin/deliveries
   def create
     authorize Delivery
-    @delivery = Delivery.new(permitted_attributes(Delivery))
+    @delivery = @site.deliveries.new(permitted_attributes(Delivery))
 
     if @delivery.save
       redirect_to admin_deliveries_path, notice: "#{Delivery.model_name.human} 创建成功."
@@ -66,6 +67,10 @@ class Admin::DeliveriesController < Admin::BaseController
     # Use callbacks to share common setup or constraints between actions.
     def set_delivery
       @delivery = Delivery.find(params[:id])
+    end
+
+    def set_site
+      @site = Site.find(Site::MAIN_ID)
     end
 
     # Only allow a trusted parameter "white list" through.
