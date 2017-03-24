@@ -8,11 +8,4 @@ class Agent::Tracker::SharesController < Agent::BaseController
     end
   end
 
-  # def show
-  #   respond_to do |format|
-  #     format.html
-  #     format.json {render json: Tracker::Share.child_records(params[:id], current_user) }
-  #   end
-  # end
-
 end
