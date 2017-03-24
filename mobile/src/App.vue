@@ -85,6 +85,7 @@
             <f7-block-title>Welcome to my App</f7-block-title>
             <f7-block inner>
               <p>Duis sed erat ac eros ultrices pharetra id ut tellus. Praesent rhoncus enim ornare ipsum aliquet ultricies. Pellentesque sodales erat quis elementum sagittis.</p>
+              <h3>isLoading: </h3>
             </f7-block>
             <f7-block-title>Navigation</f7-block-title>
             <f7-list>
@@ -165,7 +166,6 @@
   </div>
 </template>
 
-
 <script>
 import { mapState } from 'vuex'
 import { CHANGE_LOADING_STATUS } from 'store/modules/common'
@@ -180,12 +180,7 @@ export default {
     this.$store.commit(CHANGE_LOADING_STATUS, {isLoading: true})
     setTimeout(function () {
       this.$store.commit(CHANGE_LOADING_STATUS, {isLoading: false})
-    }.bind(this), 2000)
+    }.bind(this), 5000)
   }
 }
 </script>
-<style>
-body {
-  margin: 0;
-}
-</style>
