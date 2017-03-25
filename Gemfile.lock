@@ -39,6 +39,15 @@ PATH
       rails (~> 5.0.0, >= 5.0.0.1)
 
 PATH
+  remote: components/favorite
+  specs:
+    favorite (0.1.0)
+      cells (~> 4.1.4)
+      cells-rails (~> 0.0.6)
+      cells-slim (~> 0.0.5)
+      rails (~> 5.0.0, >= 5.0.0.1)
+
+PATH
   remote: components/sms
   specs:
     sms (0.1.0)
@@ -637,6 +646,7 @@ DEPENDENCIES
   devise (~> 4.2.0)
   devise-i18n
   factory_girl_rails
+  favorite!
   font-awesome-rails (~> 4.7.0)
   foreman
   github-markup

@@ -108,6 +108,7 @@ gem 'sms', path: 'components/sms'
 gem 'tracker', path: 'components/tracker'
 gem 'decorator', path: 'components/decorator'
 gem 'comment', path: 'components/comment'
+gem 'favorite', path: 'components/favorite'
 
 gem 'themeable', '~> 1.2.0'#, path: '../../gems/themeable'
 gem 'theme_color_admin', git: 'http://gitlab.tanmer.com/tm-themes/theme_color_admin.git'

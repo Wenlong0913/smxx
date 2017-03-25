@@ -37,6 +37,7 @@ class User < ApplicationRecord
   has_many :attachments, dependent: :destroy, as: :owner
   has_many :members, dependent: :destroy
   has_many :orders, dependent: :destroy
+  has_many :shopping_carts, dependent: :destroy
   has_many :sites
   has_many :preorder_conversitions
   has_many :create_order, class_name: 'Order', foreign_key: :create_by
