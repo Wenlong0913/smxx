@@ -37,12 +37,25 @@
 - [营销页](doc_market_page.md)
 - [CRM客户管理](doc_member.md)
 - [Keystore系统参数设置](doc_keystore.md)
+- [部署](#deployment)
+
 <a name="config"></a>
 ## 开发配置
 
     bundle install # 安装Gem
     npm install # 安装nodejs的各种依赖保，Vue+webpack需要这些文件
-    foreman start
+    PROJECT_NAME=dagle foreman start
+
+注意，为了区分不同项目拥有不同特殊的功能，我们加入了环境变量`PROJECT_NAME`，这个值会影响`lib/settings.yml`读取哪个配置文件，如`PROJECT_NAME=dagle`会读取`config/settings.dagle.yml`, 同时，`Settings.project`会返回`POJECT_NAME`的值，请不要用`ENV['PROJECT_NAME']`方式获取，因为我要有一个统一的使用方法：
+
+    ↳ PROJECT_NAME=dagle rails c
+    Loading development environment (Rails 5.0.2)
+    [1] pry(main)> Settings.project
+    => "dagle"
+    [2] pry(main)> Settings.project.dagle?
+    => true
+    [3] pry(main)> Settings.project.sxhop?
+    => false
 
 ### 如果要分别启动
 
@@ -288,3 +301,16 @@ Mac系统必须执行`brew install geckodriver`安装插件`geckodriver`
       login_user
       it { ... }
     end
+
+<a name="deployment"></a>
+## 部署
+
+- Nginx 配置参考tanmer/doc, 值得注意的是，我们需要在nginx配置文件中加入一个环境变量`PROJECT_NAME`
+
+    passenger_env_var PROJECT_NAME dagle;
+
+- 执行`cap`自动部署程序
+
+    PROJECT_NAME=dagle cap production deploy
+
+
