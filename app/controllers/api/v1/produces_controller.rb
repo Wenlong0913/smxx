@@ -34,7 +34,7 @@ class Api::V1::ProducesController < Api::V1::BaseController
       only: [:id, :order_id, :status, :assignee_id, :created_at, :material_status],
       include: {
         order: {
-          only: [:id, :code, :description, :internal_status],
+          only: [:id, :code, :description, :internal_status, :site_id],
           include:{
             member: {only: [:name]},
             site: {only: [:title ]},

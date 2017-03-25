@@ -5,12 +5,34 @@ class DeliveryPolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    user.super_admin_or_admin? || user.has_role?(:agent)
+  end
+
+  def new?
+    index?
+  end
+
+  def edit?
+    index?
+  end
+
+  def create?
+    new?
+  end
+
+  def update?
+    edit?
+  end
+
+  def destroy?
+    create?
+  end
+
   def permitted_attributes_for_create
     # fail "请在#{__FILE__}中添加params的permit属性"
-    if user.has_role? :admin
+    if user.has_role?(:admin) || user.has_role?(:agent)
       [:name, :features, :address, :phone_number]
-    elsif user.permission? :create_produce
-      []
     else
       []
     end
