@@ -52,10 +52,13 @@ user_id is by checking `current_user.id`, won't record resource and payload.
 
   >　在views中引入
 
+  > Tracker::NavTopCell（导航） 最后一个参数为页面之间相互跳转地址
+
   ```
-   .tracker
-     == cell(Tracker::NavTopCell, nil, summary: true)
-     == cell(Tracker::SummaryCell, nil, path: admin_tracker_url
+    .tracker
+      == cell(Tracker::NavTopCell, nil, {summary: true, home: admin_tracker_path, visits_statistics: admin_tracker_visits_statistics_path, visits_details: admin_tracker_visits_details_path, shares_show: admin_tracker_shares_path})
+      == cell(Tracker::SummaryCell, nil, path: admin_tracker_url)
+
   ```
 #### 2. 访问统计－访问明细
 
@@ -67,7 +70,7 @@ user_id is by checking `current_user.id`, won't record resource and payload.
 
   ```
     .tracker
-      == cell(Tracker::NavTopCell, nil, visit: true)
+      == cell(Tracker::NavTopCell, nil, {visit: true, home: admin_tracker_path, visits_statistics: admin_tracker_visits_statistics_path, visits_details: admin_tracker_visits_details_path, shares_show: admin_tracker_shares_path})
       == cell(Tracker::VisitDetailedCell, nil, path: admin_tracker_visits_details_url)
 
   ```
@@ -80,7 +83,7 @@ user_id is by checking `current_user.id`, won't record resource and payload.
 
   ```
   .tracker
-    == cell(Tracker::NavTopCell, nil, visit: true)
+    == cell(Tracker::NavTopCell, nil, {visit: true, home: admin_tracker_path, visits_statistics: admin_tracker_visits_statistics_path, visits_details: admin_tracker_visits_details_path, shares_show: admin_tracker_shares_path})
     == cell(Tracker::VisitStatisticCell, nil, path: admin_tracker_visits_statistics_url)
 
   ```
@@ -91,10 +94,30 @@ user_id is by checking `current_user.id`, won't record resource and payload.
 
   > 在views中引入
 
+  1. 一级分销统计报表页面
+
   ```
   .tracker
-    == cell(Tracker::NavTopCell, nil, share: true)
-    == cell(Tracker::ShareStatisticCell, nil, path: admin_tracker_shares_url)
+    == cell(Tracker::NavTopCell, nil, {summary: true, home: admin_tracker_path, visits_statistics: admin_tracker_visits_statistics_path, visits_details: admin_tracker_visits_details_path, shares_show: admin_tracker_shares_path})
+    == cell(Tracker::SummaryCell, nil, path: admin_tracker_url)
+
+  ```
+
+  2. 二级分销统计报表页面
+
+  ```
+  .tracker
+    == cell(Tracker::NavTopCell, nil, {share: true, home: admin_tracker_path, visits_statistics: admin_tracker_visits_statistics_path, visits_details: admin_tracker_visits_details_path, shares_show: admin_tracker_shares_path})
+    == cell(Tracker::ShareDetailedTwoCell, nil, path: admin_tracker_share_two_shares_url(params[:share_id]))
+
+  ```
+
+  3. 三级分销统计报表页面
+
+  ```
+  .tracker
+    == cell(Tracker::NavTopCell, nil, {share: true, home: admin_tracker_path, visits_statistics: admin_tracker_visits_statistics_path, visits_details: admin_tracker_visits_details_path, shares_show: admin_tracker_shares_path})
+    == cell(Tracker::ShareDetailedThreeCell, nil, path: admin_tracker_share_two_share_three_shares_url(params[:share_id], params[:two_share_id]))
 
   ```
 
@@ -124,6 +147,26 @@ respond_to do |format|
   format.json {render json: Tracker::VisitStatistic.page_statistic}
 end
 
+# 一级分享页面
+
+respond_to do |format|
+  format.html
+  format.json {render json: Tracker::Share.records(current_user, params[:page])}
+end
+
+# 二级分享页面
+
+respond_to do |format|
+  format.html
+  format.json {render json: Tracker::Share.find_child_two_records(params[:share_id], current_user, params[:page])}
+end
+
+# 三级分享页面
+
+respond_to do |format|
+  format.html
+  format.json {render json: Tracker::Share.find_child_three_records(params[:two_share_id], current_user, params[:page])}
+end
 ```
 
 ## Installation
