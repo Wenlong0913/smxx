@@ -4,6 +4,10 @@ export default [
     component: require('./pages/login.vue')
   },
   {
+    path: '/sign-in/',
+    component: require('./pages/sign-in.vue')
+  },
+  {
     path: '/about/',
     component: require('./pages/about.vue')
   },
