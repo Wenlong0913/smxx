@@ -10,5 +10,6 @@
 *= require select2-bootstrap
 *= require common/error_explanation
 *= require agent/comments
+*= require tracker
 *= require_self
 */
