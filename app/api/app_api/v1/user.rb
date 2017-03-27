@@ -57,8 +57,8 @@ module AppAPI::V1
           elsif params[:mobile_phone]
             ::User.find_by_phone_number(params[:mobile_phone])
           end
-        error! "用户不存在", 404 if user.nil?
-        error! "密码错误", 404 unless user.valid_password?(params[:password])
+        error! "用户不存在", 200 if user.nil?
+        error! "密码错误", 200 unless user.valid_password?(params[:password])
         api_token = user.api_tokens.find_or_initialize_by(device: params[:device])
         api_token.expired_at = 30.days.since
         api_token.save

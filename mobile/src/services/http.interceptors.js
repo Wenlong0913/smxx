@@ -1,4 +1,3 @@
-import router from 'router'
 import store from 'store'
 import {GET_USER_TOKEN} from 'store/modules/common'
 
@@ -19,7 +18,8 @@ function AuthResponse (http) {
     return response
   }, (error) => {
     if (error.response.status === 401) {
-      router.push({name: 'login'})
+      // router.push({name: 'login'})
+      console.log('AuthResponse', '401 error')
     }
     return Promise.reject(error)
   })

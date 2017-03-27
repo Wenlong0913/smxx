@@ -7,7 +7,7 @@ let getApiUrl = function (path) {
 }
 
 let http = axios.create({
-  baseURL: getApiUrl('/api/v1/') // ,
+  baseURL: getApiUrl('/v1/') // ,
   // headers: {'X-Custom-Header': 'foobar'}
 })
 

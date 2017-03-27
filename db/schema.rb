@@ -14,7 +14,6 @@ ActiveRecord::Schema.define(version: 20170322122542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pgcrypto"
 
   create_table "account_histories", force: :cascade do |t|
     t.integer  "account_id"
