@@ -4,8 +4,12 @@
       .panel-heading
         h4 
           span 三级分享记录 - 
-          span.label.label-info[style="vertical-align: top;"]
-            | {{ share_obj.root.url }}
+          a[:href="share_obj.root.url" style="vertical-align: top;" target="_Blank"]
+            i.fa.fa-window-restore[style="margin-right: 5px;"]
+            span.text-warning
+              | {{ share_obj.resource.name }}
+            span.small
+              | {{ "  ("+share_obj.root.url+")" }}
           = link_to '', class: 'pull-right btn', style: "margin-top: -10px", id: 'reUrl' do
             i.fa.fa-mail-reply[style="margin-right:5px"]
             span 返回

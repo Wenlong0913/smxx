@@ -4,8 +4,12 @@
       .panel-heading
         h4
           span 二级分享记录 - 
-          span.label.label-info[style="vertical-align: top;"]
-            | {{ share_obj.root.url }}
+          a[:href="share_obj.root.url" style="vertical-align: top;" target="_Blank"]
+            i.fa.fa-window-restore[style="margin-right: 5px;"]
+            span.text-warning
+              | {{ share_obj.resource.name }}
+            span.small
+              | {{ "  ("+share_obj.root.url+")" }}
           = link_to '', class: 'pull-right btn', style: "margin-top: -10px", id: 'reUrl' do
             i.fa.fa-mail-reply[style="margin-right:5px"]
             span 返回
@@ -21,7 +25,7 @@
                 th 分享时间
                 th
             tbody
-              tr[v-for="val,index in share_obj.records" @click="redirectTo(val.record.id)" style="cursor: pointer;"]
+              tr[v-for="val,index in share_obj.records" style="cursor: pointer;"]
                 td
                   | {{ index+1 }}
                 td
@@ -33,7 +37,7 @@
                 td
                   | {{ formatDate(val.record.created_at) }}
                 td
-                  a.small.hover-show 查看
+                  a.small.hover-show[@click="redirectTo(val.record.id)"] 查看下一级分享
         div.white-footer
           span.pull-left.small
             | {{ share_obj.records.length + '条 -- 记录' }}

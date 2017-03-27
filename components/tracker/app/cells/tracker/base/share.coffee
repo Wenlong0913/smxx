@@ -35,6 +35,7 @@ $(document).ready ->
         share_obj: {
           root: {}
           records: []
+          resource: {}
         }
         total_pages: 1
         selected_page: 1

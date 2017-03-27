@@ -7,6 +7,8 @@ module Tracker
       root_share_records.each do |record|
         share_records << {
           root:                     record,
+          resource:                 record.object,
+          visit_count:              get_visit_count(record),
           two_distribution_count:   get_child_record_count(record),
           three_distribution_count: get_last_child_record_count(record)
         }
@@ -18,8 +20,9 @@ module Tracker
       root_share_record = current_user.sales_distribution_resources.where(id: id).first
       child_records = get_child_record(root_share_record, page)
       share_records = {
-        root: root_share_record,
-        records: []
+        root:     root_share_record,
+        resource: root_share_record.object,
+        records:  []
       }
       child_records[:records].each do |record|
         share_records[:records] << {
@@ -36,6 +39,7 @@ module Tracker
       child_records = get_child_record(root_share_record, page)
       share_records = {
         root: root_share_record,
+        resource: root_share_record.object,
         records: child_records[:records]
       }
       return {share_records: share_records, total_pages: child_records[:total_pages], selected_page: page}
@@ -82,6 +86,10 @@ module Tracker
         where r1.id = "+resource['id'].to_s
       record = ActiveRecord::Base.connection.exec_query sql
       return record.first['count']
+    end
+
+    def self.get_visit_count(record)
+      return Tracker::Visit.where("url like ?", ['%', record.url].join).where(resource: record.object).count
     end
 
   end
