@@ -14,5 +14,9 @@ export default [
   {
     path: '/vue-cordova/',
     component: require('./pages/vue-cordova.vue')
+  },
+  {
+    path: '/feature/',
+    component: require('./pages/feature.vue')
   }
 ]
