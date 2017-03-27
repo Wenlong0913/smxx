@@ -9,7 +9,7 @@
   </div>
   <div class="page-content logins hide-bars-on-scroll">
     <div class="loginsimag row">
-      <img  src="/f7-theme/max_solaris/img/icon.png" alt="">
+      <img  src="./../assets/img/icon.png" alt="">
     </div>
     <div class="clear"></div>
     <form>

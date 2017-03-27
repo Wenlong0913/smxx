@@ -21,7 +21,7 @@
           <f7-page>
             <div class="page-content landingpage gradient">
               <div class="logo main col12">
-                <img src="assets/img/icon.png" alt=""> </div>
+                <img src="./assets/img/icon.png" alt=""> </div>
               <div class="introtext">
                 <h1> 美克美<br>定制私人美容</h1>
                 <p>专业优质的社区美容服务</p>
