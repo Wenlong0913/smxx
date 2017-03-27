@@ -38,7 +38,7 @@ class Order < ApplicationRecord
 
   belongs_to :user
   belongs_to :site
-  belongs_to :member
+  # belongs_to :member
   belongs_to :preorder_conversition
   belongs_to :create_user, class_name: 'User', foreign_key: :create_by
   belongs_to :update_user, class_name: 'User', foreign_key: :update_by
@@ -61,10 +61,15 @@ class Order < ApplicationRecord
 
   validates_presence_of :site
   # validates_presence_of :member_name, message: '客户名称错误'
-  validates_presence_of :member
+  # validates_presence_of :member
   validates_uniqueness_of :code
 
   # attr_accessor :mobile_phone, :member_name
+  #
+  if Settings.project.dagle?
+    belongs_to :member
+    validates_presence_of :member
+  end
 
   after_initialize do
     self.status ||= 0
@@ -75,7 +80,10 @@ class Order < ApplicationRecord
     if self.price.blank?
       self.price = 0
     end
-    self.user = self.member.user
+    if Settings.project.dagle?
+      self.user = self.member.user
+    end
+    # self.user = self.member.user
   end
 
   # def member

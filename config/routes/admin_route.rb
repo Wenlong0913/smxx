@@ -11,8 +11,10 @@ module AdminRoute
             resource :statistics, only: [:show]
             resource :details, only: [:show]
           end
-          namespace :shares do
-            get '/', to: 'home#show'
+          resources :shares, only: [:index] do
+            resources :two_shares, only: [:index] do
+              resources :three_shares, only: [:index]
+            end
           end
         end
 

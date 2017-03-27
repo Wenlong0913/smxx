@@ -18,7 +18,8 @@ Bundler.require(*Rails.groups)
 
 module Tmf
   class Application < Rails::Application
-    require 'settings'
+    require "settings"
+
     # We don't want include all helpers to controller
     #   CMS helpers to CMS controllers
     #   Admin helpers to Admin controllers

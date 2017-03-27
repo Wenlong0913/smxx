@@ -5,7 +5,7 @@ module Favorite
     require 'cells-rails'
     require 'cells-slim'
 
-    config.cells.with_assets = ["favorite/base_cell"]
+    config.cells.with_assets += ["favorite/base_cell"]
 
     require 'favorite/acts_as_favoriteable'
     require 'favorite/has_many_favorites'

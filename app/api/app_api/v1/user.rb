@@ -92,7 +92,7 @@ module AppAPI::V1
       end
       get do
         permission! :api_admin
-        users = paginate_collection(sort_collection(::User.all))
+        users = paginate_collection(sort_collection(::User.all), params)
         wrap_collection users, AppAPI::Entities::User
       end
 

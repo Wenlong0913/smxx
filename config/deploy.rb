@@ -12,10 +12,13 @@ def quit(msg)
   exit(1)
 end
 
-quit("项目名PN必须填写在命令行中提供") unless ENV['PN']
-set :application, ENV['PN']
+quit("项目名PROJECT_NAME必须填写在命令行中提供") unless ENV['PROJECT_NAME']
+set :application, ENV['PROJECT_NAME']
+set :default_env, {
+  'PROJECT_NAME' => ENV['PROJECT_NAME']
+}
 
-set :repo_url, "git@gitlab.tanmer.com:tanmer/#{ENV['PN']}.git"
+set :repo_url, "git@gitlab.tanmer.com:tanmer/#{ENV['PROJECT_NAME']}.git"
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :deploy_to, "/data/www/#{fetch(:application)}"
 

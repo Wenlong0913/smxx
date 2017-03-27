@@ -5,7 +5,7 @@ class Admin::Tracker::HomeController < Admin::BaseController
     authorize :'tracker/home'
     respond_to do |format|
       format.html
-      format.json {render json: Tracker::Summary.report}
+      format.json {render json: Tracker::Summary.report(current_user)}
     end
   end
 

@@ -1,38 +1,56 @@
 / content
 .row.share_statistic[data-url=options[:path]]
   .col-md-12
-    / TAB NAV
-    ul.nav.nav-tabs.h5
-      li.active[role='presentation']
-        a[href='#pv_content' role='tab' data-toggle='tab']
-          | PV走势
-      li[role='presentation']
-        a[href='#uv_content' role='tab' data-toggle='tab']
-          | UV走势
-      li[role='presentation']
-        a[href='#share_content' role='tab' data-toggle='tab']
-          | 分享走势
-
-    / TAB CONTENT
-    .tab-content
-      .tab-pane.active#pv_content[role='tabpanel']
-        #chart_pv
-          .check_time_btn.text-center
-            .btn-group.m-t-3
-              button.btn.btn-info[type='button'] 7天
-              button.btn.btn-info[type='button'] 30天
-              button.btn.btn-info.active[type='button'] 全部
-          svg[height='300px' width='100%']
-
-      .tab-pane#uv_content[role='tabpanel']
-        #chart_uv
-          svg[height='300px' width='100%']
-      .tab-pane#share_content[role='tabpanel']
-        #chart_share
-          svg[height='300px' width='100%']
     .panel.panel-default
       .panel-heading
-        h4 传播层级
-      .panel-body
-        #bar_graph
-          svg[height='300px' width='100%']
+        h4 分享记录
+      .panel-body.share-list
+        .table-responsive
+          table.table.table-hover
+            thead
+              tr
+                th #
+                th 名称
+                th RUL
+                th 二级分享数
+                th 三级分享数
+                th 浏览访问数量
+                th 分享时间
+                th
+            tbody
+              tr[v-for="val,index in share_list" style="cursor: pointer;"]
+                td
+                  | {{ index+1 }}
+                th.text-warning
+                  | {{ val.root.type_name }}
+                  span[v-if="val.resource"]
+                    | {{ "("+val.resource.name+")" }}
+                td
+                  a[:href="val.root.url" target="_Blank"]
+                    i.fa.fa-window-restore[style="margin-right: 5px"]
+                    | {{ val.root.url }}
+                td
+                  | {{ val.two_distribution_count }}
+                td
+                  | {{ val.three_distribution_count }}
+                td
+                  | {{ val.visit_count }}
+                td
+                  | {{ formatDate(val.root.created_at)}}
+                td
+                  a.small.hover-show[@click="redirectTo(val.root.id)"] 查看下一级分享
+        div.white-footer
+          span.pull-left.small
+            | {{ share_list.length + '条 -- 记录' }}
+          ul.pagination.pagination-sm
+            li[v-bind:class="{ 'disabled': selected_page == 1 }"]
+              a[href="javascript:;"v-on:click="selected_page == 1 ? false : loadData(--selected_page)"] &laquo;
+            li[v-if="total_pages > 5"]
+              a[href="javascript:;" @click="onPreviousPageGroup"] ...
+            li[v-for="n in (total_pages > 5 ? 5 : total_pages)" v-bind:class="(showPage) == selected_page ? 'active' : false"]
+              a[href="javascript:;" @click="loadData(total_pages > 5 ? showPage+n : n)"]
+                | {{ total_pages > 5 ? showPage+n : n }}
+            li[v-if="total_pages > 5"]
+              a[href="javascript:;" @click="onNextPageGroup"] ...
+            li[v-bind:class="{ 'disabled': selected_page == total_pages }"]
+              a[href="javascript:;"v-on:click="selected_page == total_pages ? false : loadData(++selected_page)"] &raquo;

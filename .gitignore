@@ -3,6 +3,8 @@ tmp/*
 .DS_Store
 
 config/database.yml
+config/settings.yml
+
 db/schema.rb
 # Added by webpack-rails
 /node_modules
