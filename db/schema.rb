@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170322122542) do
+ActiveRecord::Schema.define(version: 20170324060050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pgcrypto"
 
   create_table "account_histories", force: :cascade do |t|
     t.integer  "account_id"
@@ -202,6 +203,16 @@ ActiveRecord::Schema.define(version: 20170322122542) do
     t.integer  "parent_id"
     t.jsonb    "features"
     t.index ["resource_type", "resource_id"], name: "index_comment_entries_on_resource_type_and_resource_id", using: :btree
+  end
+
+  create_table "favorite_entries", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "resource_type"
+    t.integer  "resource_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["resource_type", "resource_id"], name: "index_favorite_entries_on_resource_type_and_resource_id", using: :btree
+    t.index ["user_id"], name: "index_favorite_entries_on_user_id", using: :btree
   end
 
   create_table "image_item_relations", force: :cascade do |t|
@@ -545,6 +556,17 @@ ActiveRecord::Schema.define(version: 20170322122542) do
     t.index ["site_id"], name: "index_shop_sites_on_site_id", using: :btree
   end
 
+  create_table "shopping_carts", force: :cascade do |t|
+    t.integer  "product_id"
+    t.integer  "price"
+    t.integer  "amount"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_shopping_carts_on_product_id", using: :btree
+    t.index ["user_id"], name: "index_shopping_carts_on_user_id", using: :btree
+  end
+
   create_table "shops", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "name",                             null: false
@@ -791,6 +813,7 @@ ActiveRecord::Schema.define(version: 20170322122542) do
   add_foreign_key "produces", "orders"
   add_foreign_key "shop_sites", "shops"
   add_foreign_key "shop_sites", "sites"
+  add_foreign_key "shopping_carts", "users"
   add_foreign_key "shops", "users"
   add_foreign_key "tasks", "sites"
   add_foreign_key "theme_configs", "sites"
