@@ -26,5 +26,9 @@ export default [
   {
     path: '/feature/',
     component: require('./pages/feature.vue')
+  },
+  {
+    path: '/beautician/',
+    component: require('./pages/beautician.vue')
   }
 ]

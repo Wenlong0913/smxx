@@ -29,6 +29,7 @@
               <div class="buttonbar  no-gutter">
                 <a href="/sign-in" class="button-fill button color-indigo col">用户登录</a>
                 <a href="/f7-theme/max_solaris/register.html" class="color2 button col">新人注册</a>
+                <a href="/beautician" class="button-fill button color-indigo col">美容师主页</a>
               </div>
 
             </div>
