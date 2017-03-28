@@ -24,7 +24,7 @@ zh-CN:
           producing: 生产中
           produced: 生产完成
           delivering: 发货中
-          delivered: 发货完成
+          delivered: 已收货
         description: 备注
     errors:
       models:
