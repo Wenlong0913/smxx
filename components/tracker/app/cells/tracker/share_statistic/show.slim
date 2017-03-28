@@ -1,10 +1,27 @@
 / content
-.row.share_statistic[data-url=options[:path]]
+.row.share_statistic.share_home[data-url=options[:path]]
   .col-md-12
-    .panel.panel-default
-      .panel-heading
-        h4 分享记录
-      .panel-body.share-list
+    .white-content
+      .head.h5
+        span 分享记录
+        a.btn.pull-right[@click="showShareChart = !showShareChart" data-toggle="tooltip" data-placement="bottom" title="报表/图表"]
+          i.fa.fa-exchange
+      .head-nav.row
+        .col-md-4
+          .input-group.datetimepicker-group[id="default-daterange"]
+            input.form-control.datetimepicker[style="margin-top: 0px" placeholder="点击选择时间范围查询" type="text" data-date-format="yyyy-mm" readonly]
+            span.input-group-btn
+              button.btn.btn-default[type="button"]
+                i.fa.fa-search
+        ul.col-md-8.zone-time[type='none']
+          li.active
+            a 当月
+          li
+            a 上月
+      .panel-body.share-chart[v-if="showShareChart"]
+        #chart_pv
+          svg[height='300px' width='100%']
+      .panel-body.share-list[v-else]
         .table-responsive
           table.table.table-hover
             thead

@@ -8,4 +8,8 @@ class Admin::Tracker::SharesController < Admin::BaseController
     end
   end
 
+  def chart_data
+    authorize :'tracker/home', :index?
+    render json: Tracker::Share.chart_data(current_user, params[:date])
+  end
 end
