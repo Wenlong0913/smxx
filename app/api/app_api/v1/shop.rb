@@ -11,7 +11,7 @@ module AppAPI::V1
       end
       get ':id' do
         authenticate!
-        present ::Shop.find(params[:id]), with: AppAPI::Entities::Shop, includes: [:products]
+        present ::Shop.find(params[:id]), with: AppAPI::Entities::Shop #, includes: [:products]
         # AppAPI::Entities::Shop.represent(::Shop.find(params[:id]), only: [:title])
       end
 

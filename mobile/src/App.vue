@@ -27,8 +27,10 @@
                 <p>专业优质的社区美容服务</p>
               </div>
               <div class="buttonbar  no-gutter">
+                <a href="/login" class="button-fill button color-indigo col">用户登录</a>
                 <a href="/sign-in" class="button-fill button color-indigo col">用户登录</a>
-                <a href="/f7-theme/max_solaris/register.html" class="color2 button col">新人注册</a>
+                <a href="/shops" class="color2 button col">Shops美容院</a>
+                <a href="/sites" class="color2 button col">Sites美容师</a>
               </div>
 
             </div>
