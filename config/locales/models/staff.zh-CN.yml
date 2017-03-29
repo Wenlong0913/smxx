@@ -1,0 +1,12 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      staff: Staff
+    attributes:
+      staff: {}
+    errors:
+      models:
+        staff: 
+  helpers:
+    staff: 
