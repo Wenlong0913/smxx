@@ -34,7 +34,7 @@ $(document).ready ->
         data:
           date: date
         success: (data)->
-          share._data.shareChartData[0].values = data
+          share._data.shareChartData[0].values = data.chart_data
           share_chart(share._data.shareChartData)
           documentLoadAnimation(true)
         error: ->
@@ -58,6 +58,16 @@ $(document).ready ->
         nv.utils.windowResize(chart.update)
         chart
       )
+    bindDatetimepicker = ->
+      $('.tracker .datetimepicker-group .datetimepicker').datetimepicker('remove');
+      $('.tracker .datetimepicker-group .datetimepicker').datetimepicker({
+        autoclose: true
+        startView: 3
+        minView: 3
+      }).on('changeDate', ->
+        share._data.chartSelectDate = $(this).val()
+      )
+
     share = new Vue
       el: tmp[0]
       data:
@@ -74,6 +84,7 @@ $(document).ready ->
           records: []
           resource: {}
         }
+        chartSelectDate: ""
         total_pages: 1
         selected_page: 1
         showPage: 0
@@ -112,14 +123,25 @@ $(document).ready ->
           minute = timeDate.getMinutes()
           second = timeDate.getSeconds()
           return year + '年' + month + '月' + date + '日 ' + hour + '时' + minute + '分' + second + '秒'
+        changeDate: ->
+          # if this.chartSelectDate
+          # console.log this.chartSelectDate.length
+            # body...
+          loadShareChartData(this.chartSelectDate)
+        onMonth: ->
+          date = new Date()
+          this.chartSelectDate = date.getFullYear()+"-"+(parseInt(date.getMonth())+1)
+          this.changeDate()
         # shareCode: (code) ->
         #   return url.substring(0, url.indexOf('tracker')) + "code-" + code
+        thinkTime: ->
+          date = new Date()
+          chartSelectDate = new Date(this.chartSelectDate)
+          if (date.getFullYear() == chartSelectDate.getFullYear()) && (date.getMonth() == chartSelectDate.getMonth())
+            return "active"
       mounted: ->
-        $('.tracker .datetimepicker-group .datetimepicker').datetimepicker({
-          autoclose: true
-          startView: 3
-          minView: 3
-        })
+        bindDatetimepicker()
+        this.onMonth()
         $('.tracker .datetimepicker-group .datetimepicker').datetimepicker('setStartDate', '2012-01-01');
 
     if tmp.hasClass("share_home")

@@ -10,6 +10,6 @@ class Admin::Tracker::SharesController < Admin::BaseController
 
   def chart_data
     authorize :'tracker/home', :index?
-    render json: Tracker::Share.chart_data(current_user, params[:date])
+    render json: {chart_data: Tracker::Share.chart_data(current_user, params[:date])}
   end
 end

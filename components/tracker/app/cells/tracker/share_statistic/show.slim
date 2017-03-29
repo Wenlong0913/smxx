@@ -6,22 +6,20 @@
         span 分享记录
         a.btn.pull-right[@click="showShareChart = !showShareChart" data-toggle="tooltip" data-placement="bottom" title="报表/图表"]
           i.fa.fa-exchange
-      .head-nav.row
-        .col-md-4
-          .input-group.datetimepicker-group[id="default-daterange"]
-            input.form-control.datetimepicker[style="margin-top: 0px" placeholder="点击选择时间范围查询" type="text" data-date-format="yyyy-mm" readonly]
-            span.input-group-btn
-              button.btn.btn-default[type="button"]
-                i.fa.fa-search
-        ul.col-md-8.zone-time[type='none']
-          li.active
-            a 当月
-          li
-            a 上月
-      .panel-body.share-chart[v-if="showShareChart"]
+      .panel-body.share-chart[v-show="showShareChart"]
+        .head-nav.row[style="margin-top: -15px;margin-left: -25px;"]
+          .col-md-4
+            .input-group.datetimepicker-group[id="default-daterange"]
+              input.form-control.datetimepicker[style="margin-top: 0px" placeholder="点击选择时间范围查询" type="text" v-model="chartSelectDate" data-date-format="yyyy-mm" readonly]
+              span.input-group-btn
+                button.btn.btn-default[type="button" @click="changeDate"]
+                  i.fa.fa-search
+          ul.col-md-8.zone-time[type='none']
+            li[:class="thinkTime()"]
+              a[@click="onMonth"] 当月
         #chart_pv
           svg[height='300px' width='100%']
-      .panel-body.share-list[v-else]
+      .panel-body.share-list[v-show="!showShareChart"]
         .table-responsive
           table.table.table-hover
             thead

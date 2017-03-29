@@ -2,7 +2,7 @@ module Tracker
   class Share
 
     def self.chart_data(current_user, date)
-      date = date.present? ? Date.parse(date) : Date.today
+      date = date.present? ? Date.strptime(date, "%Y-%m") : Date.today
       # 某月的每天记录
       chart_data = []
       (date.beginning_of_month..date.end_of_month).each do |x|
