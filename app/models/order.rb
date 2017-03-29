@@ -65,10 +65,10 @@ class Order < ApplicationRecord
   validates_uniqueness_of :code
 
   # attr_accessor :mobile_phone, :member_name
-  # 
-  if ENV['PROJECT_NAME'] == 'dagle'
+  #
+  if Settings.project.dagle?
     belongs_to :member
-    validates_presence_of :member    
+    validates_presence_of :member
   end
 
   after_initialize do
@@ -80,8 +80,8 @@ class Order < ApplicationRecord
     if self.price.blank?
       self.price = 0
     end
-    if ENV['PROJECT_NAME'] == 'dagle'
-      self.user = self.member.user 
+    if Settings.project.dagle?
+      self.user = self.member.user
     end
     # self.user = self.member.user
   end

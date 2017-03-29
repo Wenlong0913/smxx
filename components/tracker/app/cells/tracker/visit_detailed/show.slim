@@ -54,8 +54,8 @@
           li[v-if="total_pages > 5"]
             a[href="javascript:;" @click="onPreviousPageGroup"] ...
           li[v-for="n in (total_pages > 5 ? 5 : total_pages)" v-bind:class="(showPage + n) == selected_page ? 'active' : false"]
-            a[href="javascript:;" v-on:click="loadDetailed(showPage + n)"]
-              | {{ showPage + n }}
+            a[href="javascript:;" v-on:click="loadDetailed(total_pages > 5 ? showPage+n : n)"]
+              | {{ total_pages > 5 ? showPage+n : n }}
           li[v-if="total_pages > 5"]
             a[href="javascript:;" @click="onNextPageGroup"] ...
           li[v-bind:class="{ 'disabled': selected_page == total_pages }"]

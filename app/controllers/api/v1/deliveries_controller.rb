@@ -3,8 +3,8 @@ class  Api::V1::DeliveriesController < Api::V1::BaseController
 
   def index
     # authorize Attachment
-    deliveries = Delivery.all
-    render json: deliveries.as_json(only: %w(name id), methods: %w(phone_number address))
+    deliveries = Delivery.where(site_id: [params[:site_id], Site::MAIN_ID])
+    render json: deliveries.as_json(only: %w(name id), methods: %w(phone_number address), include: { site: { only: [:title] } })
   end
 
   private
