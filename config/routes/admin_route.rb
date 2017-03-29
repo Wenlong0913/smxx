@@ -67,6 +67,12 @@ module AdminRoute
             get 'dashboard', to: 'sites#dashboard'
           end
         end
+        resources :staffs, :concerns => :paginatable do
+          resources :members, :concerns => :paginatable
+          collection do
+            get 'dashboard', to: 'staffs#dashboard'
+          end
+        end
 
         resources :produces, only: [:index] do
           resources :tasks, only: [:create, :update]
