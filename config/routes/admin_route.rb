@@ -12,6 +12,9 @@ module AdminRoute
             resource :details, only: [:show]
           end
           resources :shares, only: [:index] do
+            collection do
+              post "chart_data"
+            end
             resources :two_shares, only: [:index] do
               resources :three_shares, only: [:index]
             end

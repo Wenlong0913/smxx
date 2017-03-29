@@ -37,7 +37,7 @@ $(document).ready ->
             d3.time.format('%Y/%m/%d')(new Date(parseInt(d+'000')))
         chart.yAxis
           .axisLabel('访问量 (v)')
-          .tickFormat(d3.format('.02f'))
+          .tickFormat(d3.format('d'))
         myData = encChartLinesDate data
         d3.select('.tracker .summary .chart_line svg')
           .datum(myData)
