@@ -20,12 +20,22 @@
 
 class Order < ApplicationRecord
   audited
-
-  enum status: {
-    processing: 0, # 处理中
-    cancelled: 1,  # 已取消
-    completed: 2   # 已完成
-  }
+  if Settings.project.sxhop?
+    enum status: {
+      open: 0,      # 未付款
+      pending: 1,   # 付款中
+      paid: 2,      # 已付款
+      delivering: 4,# 发货中
+      cancelled: 3, # 已取消
+      completed: 4  # 已完成
+    } 
+  else
+    enum status: {
+      processing: 0, # 处理中
+      cancelled: 1,  # 已取消
+      completed: 2   # 已完成
+    }  
+  end
 
   enum internal_status: {
     packing: 0,    # 拆分物料

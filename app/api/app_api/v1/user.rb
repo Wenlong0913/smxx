@@ -20,10 +20,15 @@ module AppAPI::V1
         optional :device, type: String, desc: '设备信息，可以是UserAgent，也可以是自定义的名字。目的是让一个设备只生成一个access token'
       end
       post do
-        flag, user = ::User::Create.(mobile_phone: params[:mobile_phone], nickname: params[:nickname])
-        # flag = true
-        # user = ::User.new(mobile_phone: params[:mobile_phone])
+        t = Sms::Token.new(params[:mobile_phone])
+        error! '验证码不正确！' unless t.valid?(params[:mobile_phone_code])
+
+        user_attributes = {}
+        user_attributes[:mobile_phone] = params[:mobile_phone]
+        user_attributes[:nickname] = params[:nickname] if params[:nickname]
+        flag, user = ::User::Create.(user_attributes)
         error! user.errors unless flag
+
         api_token = user.api_tokens.find_or_initialize_by(device: params[:device])
         api_token.expired_at = 30.days.since
         api_token.save
@@ -71,11 +76,11 @@ module AppAPI::V1
         present user, with: AppAPI::Entities::User, access_token: api_token.token, type: :private
       end
 
-      desc '获取验证吗' do
+      desc '获取验证码' do
         detail <<-DOC
           输入手机号，获取验证码
         DOC
-        success AppAPI::Entities::User
+        # success AppAPI::Entities::User
       end
       params do
         requires :mobile_phone, type: String, desc: '手机号'
