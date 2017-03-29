@@ -5,13 +5,27 @@
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
+    h4 admin_staff
   .panel-body
     = simple_form_for @staff, url: @staff.new_record? ? admin_staffs_path : admin_staff_path(@staff), validate: true do |f|
       - if @staff.errors.any?
         #error_explanation
-          h2 = "#{pluralize(@staff.errors.count, "error")} prohibited this staff from being saved:"
+          
           ul
             - @staff.errors.full_messages.each do |message|
               li = message
+
+      = f.input :user_id, collection: User.all.decorate, label_method: :display_name
+      = f.input :title, required: true
+      = f.input :age
+      = f.input :work_years
+      = f.input :description
+      p 擅长领域（可多选）
+      = f.collection_check_boxes :properties, Staff::PROPERTIES, :first, :last, checked: @staff.try(:properties)
+      = f.input :content, as: :ckeditor
+      p 证书认证（最多上传4张）
+      .form-group
+        image-select[server="#{image_items_path}" name="staff[image_item_ids][]" selected-ids="#{@staff.image_item_ids.join(', ')}"]
+        
 
       = f.submit class: 'btn btn-success btn-block'

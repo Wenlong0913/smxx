@@ -42,9 +42,9 @@ class Admin::StaffsController < Admin::BaseController
   def create
     authorize Staff
     @staff = Staff.new(permitted_attributes(Staff))
-
+    
     if @staff.save
-      redirect_to admin_staff_path(@staff), notice: "#{Staff.model_name.human} 创建成功."
+      redirect_to admin_staff_path(@staff), notice: "美容师 创建成功."
     else
       render :new
     end
@@ -54,7 +54,7 @@ class Admin::StaffsController < Admin::BaseController
   def update
     authorize @staff
     if @staff.update(permitted_attributes(@staff))
-      redirect_to admin_staff_path(@staff), notice: "#{Staff.model_name.human} 更新成功."
+      redirect_to admin_staff_path(@staff), notice: "美容师 更新成功."
     else
       render :edit
     end
@@ -64,7 +64,7 @@ class Admin::StaffsController < Admin::BaseController
   def destroy
     authorize @staff
     @staff.destroy
-    redirect_to admin_staffs_url, notice: "#{Staff.model_name.human} 删除成功."
+    redirect_to admin_staffs_url, notice: "美容师 删除成功."
   end
 
   private

@@ -13,6 +13,7 @@
 #= require admin/user
 #= require admin/shop
 #= require admin/sites
+#= require admin/staffs
 #= require select2
 #= require tracker
 # can't require tree
