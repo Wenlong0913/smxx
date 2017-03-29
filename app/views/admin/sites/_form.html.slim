@@ -17,13 +17,16 @@
 
       = f.input :user_id, collection: User.all.decorate, label_method: :display_name
       = f.input :title, required: true
-      = f.input :age
-      = f.input :work_years
-      = f.input :description
-      p 擅长领域（可多选）
+      = f.input :contact_name, required: true
+      = f.input :contact_number, required: true
+      = f.input :address, required: true
+      = f.input :is_sign, required: true
+      = f.input :comment, as: :text
+      = f.input :site_hours
+      p 标签备注（可多选）
       = f.collection_check_boxes :properties, Site::PROPERTIES, :first, :last, checked: @site.try(:properties)
       = f.input :content, as: :ckeditor
-      p 证书认证（最多上传4张）
+      p 背景图片
       .form-group
         image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@site.image_item_ids.join(', ')}"]
         
