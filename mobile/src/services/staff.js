@@ -2,7 +2,7 @@ import http from 'services/http'
 
 function list () {
   return new Promise(function (resolve, reject) {
-    http.get('/shops')
+    http.get('/staffs')
       .then(function (response) {
         resolve(response.data)
       }).catch(function (error) {
@@ -13,7 +13,7 @@ function list () {
 
 function get (id) {
   return new Promise(function (resolve, reject) {
-    http.get('/shops/' + id)
+    http.get('/staffs/' + id)
       .then(function (response) {
         resolve(response)
       }).catch(function (error) {
@@ -22,9 +22,9 @@ function get (id) {
   })
 }
 
-let Shop = {
+let Staff = {
   list,
   get
 }
 
-export default Shop
+export default Staff

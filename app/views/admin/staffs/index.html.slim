@@ -28,7 +28,7 @@ h1.page-header
               td = staff.title
               td = staff.age
               td = staff.work_years
-              td = staff.properties.map{|p| staff::PROPERTIES[p.to_sym] }.compact.join('，') if staff.properties.any?
+              td = staff.properties.map{|p| Staff::PROPERTIES[p.to_sym] }.compact.join('，') if staff.properties.any?
               td = staff.description
               td
                 => link_to '查看', admin_staff_path(staff), class: 'btn btn-xs btn-primary'

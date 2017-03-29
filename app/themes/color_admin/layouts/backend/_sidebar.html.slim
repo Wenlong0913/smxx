@@ -43,10 +43,6 @@
           li class="#{'active' if page?('admin/deliveries')}"
             = link_to "#{Delivery.model_name.human}管理", admin_deliveries_path
 
-      li class=("#{'active' if page?('admin/shops')}")
-        = link_to admin_shops_path do
-          i.fa.fa-inbox
-          = Shop.model_name.human
       li class=("#{'active' if page?('admin/sites')}")
         = link_to admin_sites_path do
           i.fa.fa-inbox

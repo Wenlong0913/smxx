@@ -8,12 +8,12 @@ export default [
     component: require('./pages/sign-in.vue')
   },
   {
-    path: '/shops/',
-    component: require('./pages/shops.vue')
+    path: '/staffs/',
+    component: require('./pages/staffs.vue')
   },
   {
-    path: '/shops/:id/',
-    component: require('./pages/shop_detail.vue')
+    path: '/staffs/:id/',
+    component: require('./pages/staff_detail.vue')
   },
   {
     path: '/sites/',

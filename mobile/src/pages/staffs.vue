@@ -1,28 +1,27 @@
 <template>
-  <div data-page="shopping_category" class="page navbar-fixed" >
+  <div data-page="staffping_category" class="page navbar-fixed" >
     <div class="navbar">
       <div class="navbar-inner">
         <div class="left sliding"><a href="/f7-theme/max_solaris/home.html" class="back link"><i class="icon icon-back"></i></a></div>
-        <div class="center ">Shoping category </div>
+        <div class="center ">美容师 </div>
           <div class="right"><a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a></div>
       </div>
     </div>
     <div class="page-content hide-bars-on-scroll">
       <div class="prductlist category ">
-          <div class="row" v-for="item in shops">
+          <div class="row" v-for="item in staffs">
             <div class="card col-100 tablet-50">
-                <f7-link :href="'/shops/' + item.id" class="card-content">
+                <f7-link :href="'/staffs/' + item.id" class="card-content">
                     <div class="content-block productdata ">
-                        <h2 class="maintitle col-100 ">{{item.id}}</h2>
+                        <h2 class="maintitle col-100 ">{{item.title}}</h2>
                         <p class="col-100">{{item.description}}</p>
-                        <div class="cl  ear"></div>
+                        <div class="clear"></div>
                     </div>
                     <div class="clear"></div>
                 </f7-link>
-                <img :src="item.images[0].image_url" :alt="item.name" class="categoryimg">
+                <img :src="item.images[0].image_url" :alt="item.title" class="categoryimg">
             </div>
           </div>
-          <button @click="get_list">Get my info</button>
       </div>
       <hr>
       <div class="content-block">
@@ -45,28 +44,18 @@
 </template>
 
 <script>
-import Shop from 'services/shop'
+import Staff from 'services/staff'
 export default {
   data () {
     return {
-      shops: []
+      staffs: []
     }
   },
   mounted: function () {
-    // this.get_list()
     var _this = this
-    Shop.list().then(function (response) {
-      _this.shops = response.data
+    Staff.list().then(function (response) {
+      _this.staffs = response.data
     })
-  },
-  methods: {
-    get_list () {
-      var _this = this
-      Shop.list().then(function (data) {
-        _this.shops = data
-        console.log('shops info', data)
-      })
-    }
   }
 }
 </script>

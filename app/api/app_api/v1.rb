@@ -8,6 +8,6 @@ module AppAPI::V1
     mount AppAPI::V1::Product
     mount AppAPI::V1::Site
     mount AppAPI::V1::User
-    mount AppAPI::V1::Shop
+    mount AppAPI::V1::Staff
   end
 end

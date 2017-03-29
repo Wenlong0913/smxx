@@ -1,15 +1,15 @@
 module AppAPI
   module Entities
-    class Shop < Base
+    class Staff < Base
 
       # public attributes
       expose_id
-      expose :name, documentation: { desc: '美容院名称' }
+      expose :title, documentation: { desc: '美容师名称' }
       expose :description, documentation: { desc: '描述' }
       expose :content, documentation: { desc: '详细介绍' }
       expose :image_items, using: AppAPI::Entities::ImageItem, as: :images
 
-      expose :products, using: AppAPI::Entities::Product, if: ->(shop, options) { (options[:includes] || []).include?(:products) }
+      #expose :products, using: AppAPI::Entities::Product, if: ->(shop, options) { (options[:includes] || []).include?(:products) }
       # # product detail
       # with_options if: ->(site, options) { options[:type] == :full_site } do |f|
       #   expose :products, using: AppAPI::Entities::Product
