@@ -16,3 +16,55 @@ h1.page-header
       .profile-info
         .table-responsive
           table.table.table-profile
+            tr
+              td.field 用户名
+              td
+                =decorate(@staff.user).display_name
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 姓名
+              td
+                = @staff.title
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 年龄
+              td
+                = @staff.age
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 工作年限
+              td
+                = @staff.work_years
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 擅长领域
+              td
+                = @staff.properties.map{|p| Staff::PROPERTIES[p.to_sym] }.compact.join('，') if @staff.properties.any?
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 个人介绍
+              td
+                = @staff.description
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 工作经历
+              td
+                = @staff.content
+            tr.divider
+              td[colspan='2']
+          p 证书认证
+          .gallery#gallery
+            .row
+            -@staff.image_items.each do |image|
+              .image.col-sm-6.col-md-4
+                .image-inner
+                  a[href="javascript:;" data-lightbox="gallery-group-1"]
+                    img[src="#{image.image_url}"]
+                  .image-caption
+                    =image.name

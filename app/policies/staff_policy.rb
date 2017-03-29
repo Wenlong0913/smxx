@@ -5,12 +5,39 @@ class StaffPolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    user.super_admin_or_admin?
+  end
+
+  def show?
+    user.super_admin_or_admin? || user.id == record.user_id
+  end
+
+  def new?
+    user.super_admin_or_admin? || user.has_role?(:agent)
+  end
+
+  def create?
+    user.super_admin_or_admin? || user.has_role?(:agent)
+  end
+
+  def edit?
+    user.super_admin_or_admin? || user.id == record.user_id
+  end
+
+  def update?
+    user.super_admin_or_admin? || user.id == record.user_id
+  end
+
+  def destroy?
+    record.id != Staff::MAIN_ID && user.super_admin_or_admin?
+  end
+
   def permitted_attributes_for_create
-    fail "请在#{__FILE__}中添加params的permit属性"
-    if user.has_role? :admin
-      []
+    if user.super_admin_or_admin?
+      [:user_id, :title, :description, :age, :work_years, :content, :certificate, :image_item_ids => [], :properties => []]
     else
-      []
+      [:title, :description]
     end
   end
 

@@ -1,3 +1,52 @@
+# == Schema Information
+#
+# Table name: sites
+#
+#  id         :integer          not null, primary key
+#  user_id    :integer
+#  title      :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  features   :jsonb
+#  type       :string
+#
+
 class Staff < ApplicationRecord
-  audited
+  MAIN_ID = 1
+  belongs_to :user
+  has_many :theme_configs
+  has_one :active_theme_config, -> { where(active: true) }, class_name: 'ThemeConfig'
+  has_many :items, dependent: :destroy
+  has_many :image_items, dependent: :destroy, as: :owner
+  has_many :members, dependent: :destroy
+  has_many :products, dependent: :destroy
+  has_many :orders, dependent: :destroy
+  has_many :preorder_conversitions, dependent: :destroy
+  has_many :market_pages, dependent: :destroy
+  has_many_favorites
+  has_many :deliveries, dependent: :destroy
+  has_one :cms_site, class_name: '::Cms::Site', dependent: :destroy
+  store_accessor :features, :description, :age, :work_years, :content, :certificate, :properties
+  validates_presence_of :title, :user_id
+  validates_uniqueness_of :title, scope: [:type, :user_id]
+
+  PROPERTIES = {
+    breast_dredge: "乳腺疏通",
+    slimming_shaping: "瘦身塑形",
+    meridian_dredging: "经络疏通",
+    health_conditioning: "健康调理",
+    neck_physiotherapy: "颈肩理疗",
+    waist_nursing: "腰背护理",
+    facial_muscle: "面部拔筋",
+    facial_fever: "面部挂痧",
+    pox_conditioning: "痘肌调理",
+    lymphatic_drainage: "淋巴排毒",
+    five_organs: "五脏调理",
+    gastrointestinal_health: "肠胃保健",
+    health_knowledge: "养身知识",
+    skin_knowledge: "皮肤知识",
+    ovary_care: "卵巢护理",
+    head_physiotherapy: "头部理疗"
+  }
+
 end
