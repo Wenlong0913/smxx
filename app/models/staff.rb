@@ -14,21 +14,14 @@
 class Staff < ApplicationRecord
   MAIN_ID = 1
   belongs_to :user
+  belongs_to :site
   has_many :theme_configs
   has_one :active_theme_config, -> { where(active: true) }, class_name: 'ThemeConfig'
-  has_many :items, dependent: :destroy
   has_many :image_items, dependent: :destroy, as: :owner
-  has_many :members, dependent: :destroy
-  has_many :products, dependent: :destroy
-  has_many :orders, dependent: :destroy
-  has_many :preorder_conversitions, dependent: :destroy
-  has_many :market_pages, dependent: :destroy
   has_many_favorites
-  has_many :deliveries, dependent: :destroy
-  has_one :cms_site, class_name: '::Cms::Site', dependent: :destroy
   store_accessor :features, :description, :age, :work_years, :content, :certificate, :properties
   validates_presence_of :title, :user_id
-  validates_uniqueness_of :title, scope: [:type, :user_id]
+  validates_uniqueness_of :title, scope: [:user_id]
 
   PROPERTIES = {
     breast_dredge: "乳腺疏通",

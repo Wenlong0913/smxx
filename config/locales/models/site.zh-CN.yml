@@ -2,12 +2,12 @@
 zh-CN:
   activerecord:
     models:
-      site: 美容师
+      site: 美容院
     attributes:
       site:
-        user_id: 美容师-所有者
+        user_id: 美容院-所有者
         title: 姓名
-        description: 个人介绍 
+        description: 个人介绍
         age: 年龄
         work_years: 工作年限
         certificate: 证书认证
