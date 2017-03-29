@@ -52,7 +52,7 @@ module AppAPI::V1
       params do
         use :pagination
         use :sort, fields: [:id, :created_at, :updated_at]
-        optional :status, type: String, values: ['processing', 'cancelled', 'completed'], desc: '订单状态：付款中，已付款，已取消，已完成'
+        optional :status, type: String, values: ['open', 'pending', 'paid', 'delivering', 'cancelled', 'completed'], desc: '订单状态：未付款，付款中，已付款，发货中，已取消，已完成'
       end
       get do
         authenticate!

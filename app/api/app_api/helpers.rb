@@ -15,7 +15,9 @@ module AppAPI
 
     def error!(msg, *args)
       if msg.is_a?(ActiveModel::Errors)
-        super({ error: msg.as_json, error_message: msg.full_messages }, *args)
+        super({ error: msg.as_json, error_message: msg.full_messages.join(', ') }, *args)
+      elsif msg.is_a?(String)
+        super({ error: msg, error_message: msg }, *args)
       else
         super
       end
