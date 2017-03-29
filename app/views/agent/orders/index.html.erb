@@ -54,7 +54,7 @@
                   <div class="info-container" style="height:65px">
                     <div class="info">
                       <h4 class="title" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                        <%= link_to order.description, '' %>
+                        <%= order.description.slice(0, 10) %><%= '...' unless order.description.blank? %>
                       </h4>
                       <ul class="info-start-end">
                         <li class="row">
@@ -67,7 +67,9 @@
                             <a href=""><%= order.member.try(:name)%></a>
                           </div>
                           <div class="col-xs-6">
-                            物流: 格兰货运
+                            <% unless order.delivery.blank? %>
+                              物流: <strong class=" text-primary"><%= order.delivery.name + '(' + order.delivery.phone_number + ')' %></strong>
+                            <% end %>
                           </div>
                           <div class="col-xs-6">
                             订单总价(含运费)：
@@ -84,9 +86,12 @@
                         <%= order.created_at.strftime("%H:%M:%S") %>
                       </div>
                       <div class="order-status-display">
-                        <% if order.internal_status == 'delivering' %>
-                          <%= link_to '确认收货', agent_order_path(order), method: :put, remote: true, data: {confirm: '确定收货吗?'}, class: 'label label-info order-status', style: 'padding: 8px 10px' %>
-                          <!-- <a class="label label-info" style="padding: 8px 10px" >确认收货</a> -->
+                        <% if order.cancelled? %>
+                          <span class="label label-warning" style="padding: 8px 10px">
+                            <%= decorate(order).display_status %>
+                          </span>
+                        <% elsif order.internal_status == 'delivering' %>
+                          <%= link_to '点击确认收货', agent_order_path(order), method: :put, remote: true, data: {confirm: '确定收货吗?'}, class: 'label label-danger order-status', style: 'padding: 8px 10px' %>
                         <% else %>
                           <span class="label label-info" style="padding: 8px 10px">
                             <%= decorate(order).display_internal_status %>

@@ -66,6 +66,7 @@ class Order < ApplicationRecord
   has_many :order_cvs, dependent: :destroy
   has_one :produce, dependent: :destroy
   has_one :order_delivery, dependent: :destroy
+  has_one :delivery, through: :order_delivery
 
   before_create :generate_code
   # before_validation :check_member
