@@ -1,9 +1,9 @@
 <template>
   <f7-page>
-    <div class="navbar header">
+    <div class="navbar">
       <div class="navbar-inner">
-        <div class="left sliding"><a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a></div>
-        <div class="center"></div>
+        <div class="left sliding"><a href="" class="back link"><i class="icon icon-back"></i></a></div>
+        <div class="center">美容师详情</div>
       </div>
     </div>
 
@@ -52,19 +52,19 @@
             <ul>
               <li class="item-content">
                 <div class="item-media">年龄：</div>
-                <div class="item-inner">37岁</div>
+                <div class="item-inner">{{staff.age}}岁</div>
               </li>
               <li class="item-content">
                 <div class="item-media">工作年限：</div>
-                <div class="item-inner">7年</div>
+                <div class="item-inner">{{staff.work_years}}年</div>
               </li>
               <li class="item-content">
                 <div class="item-media">擅长领域：</div>
-                <div class="item-inner">瘦身塑形，经络疏通，健康调理，腰背护理</div>
+                <div class="item-inner">{{staff.properties}}</div>
               </li>
               <li class="item-content">
                 <div class="item-media">个人介绍：</div>
-                <div class="item-inner">我是美容师向利君，从事美容行业一路走来已经有7年之余，从美容师到顾问，到技术督导到店长，有着丰富的皮肤管理和经络养生经验，也服务过上千爱美女性！希望在美客美与您邂逅！！！</div>
+                <div class="item-inner">{{staff.description}}</div>
               </li>
             </ul>
           </div>
@@ -189,7 +189,7 @@
         console.log(response.data.images.unshift())
         console.log(response.data.images[0].image_url)
         _this.headshot = response.data.images[0].image_url
-        if(_this.headshot === nil){
+        if (_this.headshot === null) {
           _this.headshot = 'placeholder.jpg'
         }
         _this.staff = response.data
