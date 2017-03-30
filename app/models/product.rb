@@ -14,6 +14,8 @@
 #
 
 class Product < Item
+  acts_as_taggable
+  acts_as_taggable_on :skills, :interests
   store_accessor :features, :price, :unit, :stock, :description, :content, :discount, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values, :is_shelves, :is_fee, :shopping_fee, :hot, :recommend, :event, :promotion, :discount
   validates_numericality_of :price, allow_blank: true
   has_many :image_item_relations, as: :relation

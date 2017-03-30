@@ -7,7 +7,7 @@
       hr
     .product-body
       = simple_form_for @product, url: agent_product_path, method: :put, remote: true do |f|
-        .[rel='vue-dom' data-values="#{@product.additional_attribute_values.to_json}" data-keys="#{@product.additional_attribute_keys.to_json}"]
+        div
           .row
             .alert.alert-danger.fade.in.m-b-15.hide
               strong 错误!&nbsp;
@@ -38,7 +38,7 @@
                 label.control-label.string.optional 产品重量
                 .input-group
                   .input-group-btn
-                    button.btn.btn-default.dropdown-toggle[data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+                    button.btn.btn-default.dropdown-toggle[data-toggle="dropdown"]
                       | 单位: 
                       small
                         - if @product.weight_unit == 'g'
@@ -66,6 +66,12 @@
               .form-group.col-xs-4.p-0.m-0
                 = f.input :unit
             .col-xs-12
+              .form-group.string.optional.product_tag
+                label.control-label.string.optional 商品标签
+                ul.product-tags
+                  - @product.tag_list.each do |tag|
+                    li = tag
+            .col-xs-12
               .form-group
                 = f.input :description, as: :text
             .col-xs-12
@@ -82,30 +88,29 @@
                   = f.label :promotion
                   = f.input_field :discount, as: :boolean, label: '折扣'
                   = f.label :discount
-            .col-xs-12[rel="attr_list_vue"]
+            .col-xs-12
               hr
-              div[rel="additional-attributes_1"]
-                template
-                  .form-group.row
-                    label.col-xs-6 属性名称
-                    label.col-xs-6 属性值
-                  .additional-item.form-group[v-for="(list, index) in lists"]
-                    .row[:key="index"]
-                      .col-xs-3
-                        .form-group
-                          input.form-control[type="text" v-model="list.key" :name="'product[additional_attribute_keys][' + list.name + ']'"]
-                      .col-xs-8
-                        input.form-control[type="text" v-model="list.value" :name="'product[additional_attribute_values][' + list.name + ']'"]
-                      .col-xs-1
-                        button.btn.btn-danger.delete.btn-xs[type="button" @click="removeInputList(index)"]
-                          i.glyphicon.glyphicon-trash
-                          span 删除
-                  span.btn.btn-success.fileinput-button.btn-xs[@click="addInputList"]
-                    i.fa.fa-plus
-                    span 添加其他产品选项
+              div[rel="attr_list_vue" data-values="#{@product.additional_attribute_values.to_json}" data-keys="#{@product.additional_attribute_keys.to_json}"]
+                .form-group.row
+                  label.col-xs-6 属性名称
+                  label.col-xs-6 属性值
+                .additional-item.form-group[v-for="(list, index) in lists"]
+                  .row[:key="index"]
+                    .col-xs-3
+                      .form-group
+                        input.form-control[type="text" v-model="list.key" :name="'product[additional_attribute_keys][' + list.name + ']'"]
+                    .col-xs-8
+                      input.form-control[type="text" v-model="list.value" :name="'product[additional_attribute_values][' + list.name + ']'"]
+                    .col-xs-1
+                      button.btn.btn-danger.delete.btn-xs[type="button" @click="removeInputList(index)"]
+                        i.glyphicon.glyphicon-trash
+                        span 删除
+                span.btn.btn-success.fileinput-button.btn-xs[@click="addInputList"]
+                  i.fa.fa-plus
+                  span 添加其他产品选项
               hr
             .col-xs-12
-              .form-group
+              .form-group[rel="image-select"]
                 label 商品主图
                 image-select[server="#{image_items_path}" name="product[image_item_ids][]" selected-ids="#{@product.image_item_ids.join(', ')}"]
         .product-content.row

@@ -77,6 +77,10 @@ $(document).ready ->
   # new
   bodyNew = $('body.agent-products.new')
   if bodyNew.length > 0
+    # tags
+    bodyNew.find('.product-tags').tagit({
+      fieldName: "product[tag_list][]"
+    })
     # 检测名称是否填写
     bodyNew.find('input#product_name').val('')
     $("#basicInformation a[href='#configurationInformation']").on　'show.bs.tab', ->
@@ -147,6 +151,10 @@ $(document).ready ->
   bodyEdit
   bodyEdit = $('body.agent-products.edit')
   if bodyEdit.length > 0
+    # tags
+    bodyEdit.find('.product-tags').tagit({
+      fieldName: "product[tag_list][]"
+    })
     # 商品单位切换显示
     setTimeout ->
       bodyEdit.find('.weight-input-group .input-group-btn ul.dropdown-menu li a').on 'click', ->
@@ -155,37 +163,46 @@ $(document).ready ->
         $(this).parents('.weight-input-group').find('.input-group-btn .dropdown-toggle small').text(selectedText)
         $(this).parents('.weight-input-group').find('input.hidden-input').val(selectedVal)
     , 500
-    # 分类 图片 - Vue
+    # 图片- Vue
+    imageSelectDom = bodyEdit.find(".form-group[rel='image-select']")
+    imageSelect = new Vue
+      el: imageSelectDom[0]
+    # 分类 - Vue
     container = bodyEdit.find('.catalog-list')
-    editProducts = new Vue
-      el: "div[rel='vue-dom']"
+    catalogListDom = new Vue
+      el: container[0]
       data:
-        defaultvalues: {}
-        defaultkeys: {}
         id: container[0].dataset["catalogId"]
         showCatalog: false
         catalogs: container[0].dataset["catalogName"]
-        lists: []
-        count: 1
       methods:
         selected: (catalogs)->
           this.catalog =  catalogs[catalogs.length-1]
           this.id = this.catalog.id
           this.showCatalog = false
           this.catalogs = catalogs.map((cata)-> cata.name).join('/')
+    # 附加属性添加
+    attrListDom = bodyEdit.find("div[rel='attr_list_vue']")
+    attrList = new Vue
+      el: attrListDom[0]
+      data:
+        defaultvalues: {}
+        defaultkeys: {}
+        lists: []
+        count: 1
+      methods:
         addInputList: ->
           this.count++
           this.lists.push({key: '', value: '', name: this.count})
         removeInputList: (index)->
           this.lists.splice(index, 1)
-    editProductsData = editProducts._data
-    defaultkeys = bodyEdit.find(".product-body[rel='vue-dom']").data('keys')
-    defaultvalues = bodyEdit.find(".product-body[rel='vue-dom']").data('values')
-    editProductsData.lists = []
+    defaultkeys = bodyEdit.find(".div[rel='attr_list_vue']").data('keys')
+    defaultvalues = bodyEdit.find(".div[rel='attr_list_vue']").data('values')
+    attrList.lists = []
     max = 0
     for name, v of defaultkeys
       if parseInt(name) > 0
         max = parseInt(name) if max < parseInt(name)
-        editProductsData.lists.push {key: v, name: parseInt(name), value: defaultvalues[name]}
-        editProductsData.count = max+1
-    editProductsData.lists.push {key: ' ', name: editProductsData.count, value: ' '}
+        attrList.lists.push {key: v, name: parseInt(name), value: defaultvalues[name]}
+        attrList.count = max+1
+    attrList.lists.push {key: ' ', name: attrList.count, value: ' '}
