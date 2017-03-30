@@ -1,5 +1,5 @@
 <template>
-  <div data-page="sites" class="page">
+  <div data-page="staff_detail" class="page">
     <div class="navbar header">
       <div class="navbar-inner">
         <div class="left sliding"><a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a></div>
@@ -10,7 +10,7 @@
     <div class="page-content">
       <div class="item-content userprofile">
         <div class="item-media">
-          <img src="./../assets/img/pic1.png" width="44"  alt="">
+          <img :src="staff.images[0].image_url" :alt="staff.title" width="80" height="70" >
         </div>
         <div class="item-inner">
           <div class="item-title-row">
