@@ -6,6 +6,15 @@ GIT
       activemodel (>= 4.0, < 5.1)
 
 GIT
+  remote: git://github.com/xiaohui-zhangxh/activerecord-postgres-earthdistance.git
+  revision: 231260b5acb99d02e24f8746ca82c81c7c301e85
+  specs:
+    activerecord-postgres-earthdistance (0.5.1)
+      activerecord (>= 3.1)
+      pg
+      rake
+
+GIT
   remote: git@gitlab.tanmer.com:tm-framework/sales_distribution.git
   revision: 4af1bf13555d6a445319f241f70a222631fe47e2
   specs:
@@ -46,6 +55,15 @@ PATH
       cells-rails (~> 0.0.6)
       cells-slim (~> 0.0.5)
       rails (~> 5.0.0, >= 5.0.0.1)
+
+PATH
+  remote: components/gnomon
+  specs:
+    gnomon (0.1.0)
+      activerecord-postgres-earthdistance (~> 0.5.1)
+      baidu_api-geocoding (~> 1.0.0)
+      kaminari (~> 1.0, >= 1.0.1)
+      rails (~> 5.0.1)
 
 PATH
   remote: components/sms
@@ -135,6 +153,7 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
+    baidu_api-geocoding (1.0.0)
     bcrypt (3.1.11)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
@@ -329,9 +348,18 @@ GEM
     json (2.0.3)
     jsonapi-renderer (0.1.2)
     jwt (1.5.6)
-    kaminari (0.17.0)
-      actionpack (>= 3.0.0)
-      activesupport (>= 3.0.0)
+    kaminari (1.0.1)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.0.1)
+      kaminari-activerecord (= 1.0.1)
+      kaminari-core (= 1.0.1)
+    kaminari-actionview (1.0.1)
+      actionview
+      kaminari-core (= 1.0.1)
+    kaminari-activerecord (1.0.1)
+      activerecord
+      kaminari-core (= 1.0.1)
+    kaminari-core (1.0.1)
     kaminari-i18n (0.4.0)
       kaminari
       rails
@@ -364,7 +392,7 @@ GEM
     net-ssh (4.1.0)
     netrc (0.11.0)
     nio4r (2.0.0)
-    nokogiri (1.7.0.1)
+    nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
@@ -564,7 +592,7 @@ GEM
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.0)
-    tzinfo (1.2.2)
+    tzinfo (1.2.3)
       thread_safe (~> 0.1)
     uber (0.1.0)
     uglifier (3.1.8)
@@ -623,6 +651,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   activemodel-serializers-xml
+  activerecord-postgres-earthdistance!
   acts-as-taggable-on (~> 4.0)
   annotate
   audited (~> 4.3)
@@ -650,6 +679,7 @@ DEPENDENCIES
   font-awesome-rails (~> 4.7.0)
   foreman
   github-markup
+  gnomon!
   grape (~> 0.19.1)
   grape-entity (~> 0.6.1)
   grape-route-helpers (~> 2.0)
@@ -666,7 +696,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   jwt (~> 1.5.6)
-  kaminari (~> 0.17.0)
+  kaminari (~> 1.0, >= 1.0.1)
   kaminari-i18n (~> 0.4.0)
   listen (~> 3.0.5)
   omniauth-wechat-oauth2 (~> 0.1.0)

@@ -27,7 +27,10 @@ class Site < ApplicationRecord
   has_many_favorites
   has_many :deliveries, dependent: :destroy
   has_one :cms_site, class_name: '::Cms::Site', dependent: :destroy
-  store_accessor :features, :site_hours, :address, :content, :contact_number, :contact_name, :is_sign, :comment, :properties
+  store_accessor :features, :site_hours, :content, :contact_number, :contact_name, :is_sign, :comment, :properties
+
+  acts_as_address
+
   validates_presence_of :title, :user_id
   validates_uniqueness_of :title, scope: [:type, :user_id]
 

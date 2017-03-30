@@ -1,0 +1,13 @@
+default: &default
+  geocoding:
+    ak: zgHfFDLzrx04Wbijh5yPYNQO
+    sk:
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
