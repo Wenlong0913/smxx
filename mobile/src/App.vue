@@ -29,19 +29,26 @@
                     <div class="accordion-item-content">
                       <div class="content-block">
                         <ul>
-                          <li><a href="/f7-theme/max_solaris/f7-theme/max_solaris/home.html" class="item-link close-panel"><span>面部</span></a>
-                          </li>
-                          <li><a href="/f7-theme/max_solaris/home_classic.html" class="item-link close-panel"><span>养生</span></a>
-                          </li>
-                          <li><a href="/f7-theme/max_solaris/home_dashboard.html" class="item-link close-panel"><span>身体</span></a>
-                          </li>
-                          <li><a href="/f7-theme/max_solaris/home_reader.html" class="item-link close-panel"><span>美发</span></a>
+                          <li v-for="catalog in product_catalogs">
+                            <f7-link :href="/product_catalogs/ + catalog.id" class="item-link close-panel"><span>{{catalog.name}}</span></f7-link>
                           </li>
                         </ul>
                       </div>
                     </div>
                   </li>
 
+                  <li>
+                    <a href="/staffs/" class="item-link close-panel item-content ">
+                      <div class="itemmeniinner"><i class="fa fa-music"></i><span>美容师</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/sites/" class="item-link close-panel item-content ">
+                      <div class="itemmeniinner"><i class="fa fa-music"></i><span>美容院</span>
+                      </div>
+                    </a>
+                  </li>
 
                   <li class="accordion-item">
                     <a href="#" class="item-content item-link">
@@ -81,19 +88,13 @@
                     </div>
                   </li>
                   <li>
-                    <a href="/f7-theme/max_solaris/contacts.html" class="item-link close-panel item-content ">
+                    <a href="/about/" class="item-link close-panel item-content ">
                       <div class="itemmeniinner"><i class="fa fa-user"></i><span>关于我们</span>
                       </div>
                     </a>
                   </li>
                   <li>
-                    <a href="/f7-theme/max_solaris/messages.html" class="item-link close-panel item-content ">
-                      <div class="itemmeniinner"><i class="fa fa-comment-o"></i><span>在线客服</span>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/f7-theme/max_solaris/lists.html" class="item-link close-panel item-content ">
+                    <a href="/contact/" class="item-link close-panel item-content ">
                       <div class="itemmeniinner"><i class="fa fa-music"></i><span>联系我们</span>
                       </div>
                     </a>
@@ -207,17 +208,19 @@
 
     <!-- Main Views -->
     <f7-views>
-      <f7-view id="main-view" :dynamic-navbar="false" main>
+      <f7-view id="main-view" :dynamic-navbar="true" main>
         <!-- Navbar -->
-        <!-- <f7-navbar>
+        <f7-navbar>
           <f7-nav-left>
             <f7-link icon="icon-bars" open-panel="left"></f7-link>
           </f7-nav-left>
-          <f7-nav-center sliding>Framework7</f7-nav-center>
+          <f7-nav-center>
+            <small>  mokomo---美容O2O新概念</small>
+          </f7-nav-center>
           <f7-nav-right>
-            <f7-link icon="icon-bars" open-panel="right"></f7-link>
+            <f7-link icon="fa fa-user" href="/about/"></f7-link>
           </f7-nav-right>
-        </f7-navbar> -->
+        </f7-navbar>
         <!-- Pages -->
         <f7-pages>
           <f7-page>
@@ -245,19 +248,31 @@
 import { mapState } from 'vuex'
 import { CHANGE_LOADING_STATUS } from 'store/modules/common'
 import main from './components/main'
+import ProductCatalog from 'services/product_catalog'
 
 export default {
   components: { 'my-main': main },
+
+  data () {
+    return {
+      product_catalogs: []
+    }
+  },
   computed: {
     ...mapState({
       isLoading: state => state.common.isLoading
     })
   },
   mounted () {
+    let _this = this
     this.$store.commit(CHANGE_LOADING_STATUS, {isLoading: true})
     setTimeout(function () {
       this.$store.commit(CHANGE_LOADING_STATUS, {isLoading: false})
     }.bind(this), 5000)
+    // get product_catalogs
+    ProductCatalog.list().then(function (response) {
+      _this.product_catalogs = response.data
+    })
   }
 }
 </script>

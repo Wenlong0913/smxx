@@ -5,6 +5,7 @@ module AppAPI::V1
     format :json
     mount AppAPI::V1::Order
     mount AppAPI::V1::ShoppingCart
+    mount AppAPI::V1::ProductCatalog
     mount AppAPI::V1::Product
     mount AppAPI::V1::Site
     mount AppAPI::V1::User

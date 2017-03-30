@@ -189,7 +189,7 @@
         console.log(response.data.images.unshift())
         console.log(response.data.images[0].image_url)
         _this.headshot = response.data.images[0].image_url
-        if(_this.headshot === nil){
+        if (_this.headshot === null) {
           _this.headshot = 'placeholder.jpg'
         }
         _this.staff = response.data

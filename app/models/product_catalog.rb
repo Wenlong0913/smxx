@@ -13,5 +13,4 @@
 #
 
 class ProductCatalog < Catalog
-
 end
