@@ -15,21 +15,23 @@ h1.page-header
       table.table.table-striped
         thead
           tr
-            th 姓名
-            th 年龄
-            th 工作年限
-            th 擅长领域
-            th 个人介绍
+            th 名称
+            th 联系人
+            th 联系人电话
+            th 是否签约
+            th 营业时间
+            th 营销备注
             th
 
         tbody
           - @sites.each do |site|
             tr
               td = site.title
-              td = site.age
-              td = site.work_years
-              td = site.properties.map{|p| Site::PROPERTIES[p.to_sym] }.compact.join('，') if site.properties && site.properties.any?
-              td = site.description
+              td = site.contact_name
+              td = site.contact_number
+              td = site.is_sign
+              td = site.site_hours
+              td = site.comment
               td
                 => link_to '查看', admin_site_path(site), class: 'btn btn-xs btn-primary'
                 => link_to '编辑', edit_admin_site_path(site), class: 'btn btn-xs btn-warning'
