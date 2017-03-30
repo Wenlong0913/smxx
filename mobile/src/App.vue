@@ -42,7 +42,6 @@
                     </div>
                   </li>
 
-
                   <li class="accordion-item">
                     <a href="#" class="item-content item-link">
                       <div class="item-inner">
@@ -80,18 +79,35 @@
                       </div>
                     </div>
                   </li>
+
                   <li>
                     <a href="/f7-theme/max_solaris/contacts.html" class="item-link close-panel item-content ">
                       <div class="itemmeniinner"><i class="fa fa-user"></i><span>关于我们</span>
                       </div>
                     </a>
                   </li>
+
+                  <li>
+                    <a href="" class="item-link close-panel item-content ">
+                      <div class="itemmeniinner"><i class="fa fa-user"></i><span>美容院</span>
+                      </div>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="/staffs" class="item-link close-panel item-content ">
+                      <div class="itemmeniinner"><i class="fa fa-user"></i><span>美容师</span>
+                      </div>
+                    </a>
+                  </li>
+
                   <li>
                     <a href="/f7-theme/max_solaris/messages.html" class="item-link close-panel item-content ">
                       <div class="itemmeniinner"><i class="fa fa-comment-o"></i><span>在线客服</span>
                       </div>
                     </a>
                   </li>
+                  
                   <li>
                     <a href="/f7-theme/max_solaris/lists.html" class="item-link close-panel item-content ">
                       <div class="itemmeniinner"><i class="fa fa-music"></i><span>联系我们</span>
