@@ -1,5 +1,5 @@
 <template>
-  <div data-page="staffping_category" class="page navbar-fixed" >
+  <div data-page="staffs" class="page navbar-fixed" >
     <div class="navbar">
       <div class="navbar-inner">
         <div class="left sliding"><a href="/f7-theme/max_solaris/home.html" class="back link"><i class="icon icon-back"></i></a></div>
@@ -7,23 +7,25 @@
           <div class="right"><a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a></div>
       </div>
     </div>
+
     <div class="page-content hide-bars-on-scroll">
-      <div class="prductlist category">
-          <div class="row" v-for="item in staffs">
-            <div class="card col-100 tablet-50">
-                <f7-link :href="'/staffs/' + item.id" class="card-content">
-                    <div class="content-block productdata ">
-                      <h2 class="maintitle col-100 ">{{item.title}}</h2>
-                      <p class="col-100">{{item.description}}</p>
-                      <div class="clear"></div>
-                    </div>
-                    <div class="clear"></div>
-                </f7-link>
-                <img :src="item.images[0].image_url" :alt="item.title" class="categoryimg">
+      <div class="list-block media-list">
+        <ul>
+          <li class="item-content" v-for="staff in staffs">
+            <div class="item-media">
+              <f7-link :href="'/staffs/' + staff.id">
+                <img :src="staff.images[0].image_url" :alt="staff.title" width="80" height="80" />
+              </f7-link>
             </div>
-          </div>
+            <div class="item-inner">
+              <div class="item-subtitle"><f7-link :href="'/staffs/' + staff.id">{{staff.title}}</f7-link></div>
+              <div class="item-title-row">
+                <div class="item-title">{{staff.description}}</div>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
-      <hr>
     </div>
   </div>
 </template>
