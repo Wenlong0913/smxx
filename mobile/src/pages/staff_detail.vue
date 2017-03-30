@@ -1,5 +1,5 @@
 <template>
-  <div data-page="staff_detail" class="page">
+  <f7-page>
     <div class="navbar header">
       <div class="navbar-inner">
         <div class="left sliding"><a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a></div>
@@ -10,7 +10,7 @@
     <div class="page-content">
       <div class="item-content userprofile">
         <div class="item-media">
-          <img :src="staff.images[0].image_url" :alt="staff.title" width="80" height="70" >
+          <img :src='headshot' :alt="staff.title" width="80" height="70" >
         </div>
         <div class="item-inner">
           <div class="item-title-row">
@@ -169,7 +169,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </f7-page>
 </template>
 
 <script>
@@ -177,13 +177,21 @@
   export default {
     data () {
       return {
-        staff: []
+        staff: [],
+        headshot: null
       }
     },
     mounted: function () {
       var _this = this
       Staff.get(_this.$route.params.id).then(function (response) {
         console.log(response)
+        console.log(response.data)
+        console.log(response.data.images.unshift())
+        console.log(response.data.images[0].image_url)
+        _this.headshot = response.data.images[0].image_url
+        if(_this.headshot === nil){
+          _this.headshot = 'placeholder.jpg'
+        }
         _this.staff = response.data
       })
     }
