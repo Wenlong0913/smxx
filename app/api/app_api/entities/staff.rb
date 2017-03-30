@@ -7,6 +7,9 @@ module AppAPI
       expose :title, documentation: { desc: '美容师名称' }
       expose :description, documentation: { desc: '描述' }
       expose :content, documentation: { desc: '详细介绍' }
+      expose :age, documentation: { desc: '年龄' }
+      expose :work_years, documentation: { desc: '工作年限' }
+      expose :properties, documentation: { desc: '擅长领域' }
       expose :image_items, using: AppAPI::Entities::ImageItem, as: :images
 
       #expose :products, using: AppAPI::Entities::Product, if: ->(shop, options) { (options[:includes] || []).include?(:products) }

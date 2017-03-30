@@ -58,7 +58,7 @@ export default {
       var _this = this
       User.login(this.form).then(function (data) {
         console.log('login success', data)
-        _this.$router.load({ url: '/staffs' })
+        _this.$router.load({ url: '/home' })
       }).catch(function (error) {
         window.alert(error)
       })

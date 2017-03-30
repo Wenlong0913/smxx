@@ -37,6 +37,7 @@
                     </div>
                   </li>
 
+<<<<<<< HEAD
                   <li>
                     <a href="/staffs/" class="item-link close-panel item-content ">
                       <div class="itemmeniinner"><i class="fa fa-music"></i><span>美容师</span>
@@ -50,6 +51,8 @@
                     </a>
                   </li>
 
+=======
+>>>>>>> b73adf5d429618d1944559f7cfd051fbd0b2865c
                   <li class="accordion-item">
                     <a href="#" class="item-content item-link">
                       <div class="item-inner">
@@ -87,14 +90,41 @@
                       </div>
                     </div>
                   </li>
+
                   <li>
                     <a href="/about/" class="item-link close-panel item-content ">
                       <div class="itemmeniinner"><i class="fa fa-user"></i><span>关于我们</span>
                       </div>
                     </a>
                   </li>
+
                   <li>
+                    <a href="" class="item-link close-panel item-content ">
+                      <div class="itemmeniinner"><i class="fa fa-user"></i><span>美容院</span>
+                      </div>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="/staffs" class="item-link close-panel item-content ">
+                      <div class="itemmeniinner"><i class="fa fa-user"></i><span>美容师</span>
+                      </div>
+                    </a>
+                  </li>
+
+                  <li>
+<<<<<<< HEAD
                     <a href="/contact/" class="item-link close-panel item-content ">
+=======
+                    <a href="/f7-theme/max_solaris/messages.html" class="item-link close-panel item-content ">
+                      <div class="itemmeniinner"><i class="fa fa-comment-o"></i><span>在线客服</span>
+                      </div>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href="/f7-theme/max_solaris/lists.html" class="item-link close-panel item-content ">
+>>>>>>> b73adf5d429618d1944559f7cfd051fbd0b2865c
                       <div class="itemmeniinner"><i class="fa fa-music"></i><span>联系我们</span>
                       </div>
                     </a>
@@ -119,22 +149,22 @@
               </div>
               <div class="item-inner">
                 <div class="item-title-row">
-                  <div class="item-title">Max Smith</div>
+                  <div class="item-title">美客美美容</div>
                 </div>
                 <div class="item-subtitle">India</div>
               </div>
             </div>
             <div class="page-content">
               <div class="inputs-list content-block">
-                <h2 class="maintitle  center">Contact us</h2>
-                <p class="center">We will be back on your provided email address</p>
+                <h2 class="maintitle  center">联系我们</h2>
+                <p class="center">我们将回复您提供的电子邮件地址</p>
               </div>
               <div class="list-block inputs-list">
                 <ul>
                   <li>
                     <div class="item-content">
                       <div class="item-inner">
-                        <div class="item-title">Your name</div>
+                        <div class="item-title">姓名</div>
                         <div class="item-input item-input-field">
                           <input type="text" placeholder="" />
                         </div>
@@ -144,7 +174,7 @@
                   <li>
                     <div class="item-content">
                       <div class="item-inner">
-                        <div class="item-title">E-mail</div>
+                        <div class="item-title">邮箱</div>
                         <div class="item-input item-input-field">
                           <input type="email" placeholder="" />
                         </div>
@@ -154,7 +184,7 @@
                   <li>
                     <div class="item-content">
                       <div class="item-inner">
-                        <div class="item-title ">Phone</div>
+                        <div class="item-title ">电话</div>
                         <div class="item-input item-input-field">
                           <input type="tel" placeholder="" />
                         </div>
@@ -164,7 +194,7 @@
                   <li class="align-top">
                     <div class="item-content">
                       <div class="item-inner">
-                        <div class="item-title">Message/Queries</div>
+                        <div class="item-title">留言备注</div>
                         <div class="item-input item-input-field">
                           <textarea class="resizable"></textarea>
                         </div>
@@ -173,14 +203,7 @@
                   </li>
                 </ul>
               </div>
-              <div class="content-block"> <a href="/f7-theme/max_solaris/home.html" class="button button-fill ">Get in touch</a> </div>
-              <hr>
-              <div class="center content-block ">
-                <div class=""><img src="/f7-theme/max_solaris/img/phone.png" alt="">
-                </div>
-                <h2 class=""> 000 000 000 </h2>
-                <p class=""> Call Us </p>
-              </div>
+              <div class="content-block"> <a href="/f7-theme/max_solaris/home.html" class="button button-fill ">发给我们</a> </div>
               <hr>
               <div class="content-block">
                 <h2 class="center">We are at social</h2>
@@ -196,10 +219,6 @@
                   </li>
                 </ul>
               </div>
-
-            </div>
-            <div class="buttonbar row no-gutter">
-              <a href="/f7-theme/max_solaris/contactus.html" class=" button button-fill col-100 close-panel">Locate Us</a>
             </div>
           </div>
         </div>
@@ -234,7 +253,6 @@
               <div class="buttonbar  no-gutter">
                 <a href="/login" class="button-fill button color-pink col">用户登录</a>
               </div>
-
             </div>
           </f7-page>
         </f7-pages>
