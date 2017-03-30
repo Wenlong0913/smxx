@@ -1,27 +1,43 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Log me in" back-link="Back" sliding></f7-navbar>
-    <h1>Login</h1>
+<f7-page name="login">
+  <f7-navbar back-link="Back" class="header">
+    <div class="navbar-inner">
+      <div class="left sliding">
+        <a href="/" class="link icon-only"><i class="fa fa-chevron-left"></i></a>
+      </div>
+    </div>
+  </f7-navbar>
 
-    <f7-list>
-      <f7-list-item>
-        {{user.mobile_phone}}
-      </f7-list-item>
-      <f7-list-item>
-        {{user.access_token}}
-      </f7-list-item>
-      <f7-list-item>
-        Username: <input type="text" name="" v-model="form.username">
-      </f7-list-item>
-      <f7-list-item>
-        password: <input type="text" name="" v-model="form.password">
-      </f7-list-item>
-      <f7-list-item>
-        <button @click="submit">Login</button>
-        <button @click="get_my_info">Get my info</button>
-      </f7-list-item>
+  <div class="page-content logins hide-bars-on-scroll">
+    <div class="loginsimag row">
+      <img  src="./../assets/img/icon.png" alt="">
+    </div>
+    <div class="clear"></div>
+    <f7-list form class="list-block">
+        <ul>
+          <li class="item-content">
+            <div class="item-inner">
+              <div class="item-title label">用户名/手机号/邮箱</div>
+              <div class="item-input">
+                <f7-input class="style login3" type="text" name="email" placeholder="用户名/邮箱/密码" v-model="form.username" />
+              </div>
+            </div>
+          </li>
+          <li class="item-content">
+            <div class="item-inner">
+              <div class="item-title label">密码</div>
+              <div class="item-input">
+                <f7-input class="style login3" type="password" name="password" placeholder="" v-model="form.password" />
+              </div>
+            </div>
+          </li>
+        </ul>
     </f7-list>
-  </f7-page>
+    <div class="buttonbar row no-gutter">
+      <button @click="submit" class="button-fill button col-100">提 交</button>
+    </div>
+  </div>
+</f7-page>
 </template>
 
 <script>
@@ -41,7 +57,8 @@ export default {
     submit () {
       var _this = this
       User.login(this.form).then(function (data) {
-        _this.$router.load({ url: '/about' })
+        console.log('login success', data)
+        _this.$router.load({ url: '/staffs' })
       }).catch(function (error) {
         window.alert(error)
       })

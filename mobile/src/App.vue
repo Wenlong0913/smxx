@@ -1,13 +1,215 @@
 <template>
   <!-- App -->
   <div id="app">
+    <div class="statusbar-overlay"></div>
+    <div class="panel-overlay"></div>
+    <div class="panel panel-left panel-reveal sidebar">
+      <div class="view">
+        <div class=" ">
+          <div data-page="panel-left" class="sidemenu leftmenusmall ">
+            <div class="item-content userprofile">
+              <div class="item-media"><img src="./assets/img/pic1.png" width="44" />
+              </div>
+              <div class="item-inner">
+                <div class="item-title-row">
+                  <div class="item-title">宋学江</div>
+                </div>
+                <div class="item-subtitle">成都</div>
+              </div>
+            </div>
+            <div class="page-content">
+              <div class="list-block accordion-list">
+                <ul class="menu">
+                  <li class="accordion-item">
+                    <a href="#" class="item-content item-link">
+                      <div class="item-inner">
+                        <div class="item-title"><i class="fa fa-home"></i>项目</div>
+                      </div>
+                    </a>
+                    <div class="accordion-item-content">
+                      <div class="content-block">
+                        <ul>
+                          <li><a href="/f7-theme/max_solaris/f7-theme/max_solaris/home.html" class="item-link close-panel"><span>面部</span></a>
+                          </li>
+                          <li><a href="/f7-theme/max_solaris/home_classic.html" class="item-link close-panel"><span>养生</span></a>
+                          </li>
+                          <li><a href="/f7-theme/max_solaris/home_dashboard.html" class="item-link close-panel"><span>身体</span></a>
+                          </li>
+                          <li><a href="/f7-theme/max_solaris/home_reader.html" class="item-link close-panel"><span>美发</span></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
 
+
+                  <li class="accordion-item">
+                    <a href="#" class="item-content item-link">
+                      <div class="item-inner">
+                        <div class="item-title"><i class="fa fa-briefcase"></i>订单</div>
+                      </div>
+                    </a>
+                    <div class="accordion-item-content">
+                      <div class="content-block">
+                        <ul>
+                          <li><a href="/services.html" class="item-link close-panel"><span>未完成</span></a>
+                          </li>
+                          <li><a href="/services.html" class="item-link close-panel"><span>已使用</span></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li class="accordion-item">
+                    <a href="#" class="item-content item-link">
+                      <div class="item-inner">
+                        <div class="item-title"><i class="fa fa-briefcase"></i>我的</div>
+                      </div>
+                    </a>
+                    <div class="accordion-item-content">
+                      <div class="content-block">
+                        <ul>
+                          <li><a href="/services.html" class="item-link close-panel"><span>预约人管理</span></a>
+                          </li>
+                          <li><a href="/services.html" class="item-link close-panel"><span>信息中心</span></a>
+                          </li>
+                          <li><a href="/services.html" class="item-link close-panel"><span>邀请码</span></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <a href="/f7-theme/max_solaris/contacts.html" class="item-link close-panel item-content ">
+                      <div class="itemmeniinner"><i class="fa fa-user"></i><span>关于我们</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/f7-theme/max_solaris/messages.html" class="item-link close-panel item-content ">
+                      <div class="itemmeniinner"><i class="fa fa-comment-o"></i><span>在线客服</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/f7-theme/max_solaris/lists.html" class="item-link close-panel item-content ">
+                      <div class="itemmeniinner"><i class="fa fa-music"></i><span>联系我们</span>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="buttonbar row no-gutter">
+              <a href="/f7-theme/max_solaris/sign-in.html" class=" button color2 col-100">在线预约</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-right panel-cover sidebar">
+      <div class="view">
+        <div class=" ">
+          <div data-page="panel-left" class="sidemenu leftmenusmall ">
+            <div class="item-content userprofile">
+              <div class="item-media"><img src="./assets/img/pic1.png" width="44" alt="" />
+              </div>
+              <div class="item-inner">
+                <div class="item-title-row">
+                  <div class="item-title">Max Smith</div>
+                </div>
+                <div class="item-subtitle">India</div>
+              </div>
+            </div>
+            <div class="page-content">
+              <div class="inputs-list content-block">
+                <h2 class="maintitle  center">Contact us</h2>
+                <p class="center">We will be back on your provided email address</p>
+              </div>
+              <div class="list-block inputs-list">
+                <ul>
+                  <li>
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title">Your name</div>
+                        <div class="item-input item-input-field">
+                          <input type="text" placeholder="" />
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title">E-mail</div>
+                        <div class="item-input item-input-field">
+                          <input type="email" placeholder="" />
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title ">Phone</div>
+                        <div class="item-input item-input-field">
+                          <input type="tel" placeholder="" />
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="align-top">
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title">Message/Queries</div>
+                        <div class="item-input item-input-field">
+                          <textarea class="resizable"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="content-block"> <a href="/f7-theme/max_solaris/home.html" class="button button-fill ">Get in touch</a> </div>
+              <hr>
+              <div class="center content-block ">
+                <div class=""><img src="/f7-theme/max_solaris/img/phone.png" alt="">
+                </div>
+                <h2 class=""> 000 000 000 </h2>
+                <p class=""> Call Us </p>
+              </div>
+              <hr>
+              <div class="content-block">
+                <h2 class="center">We are at social</h2>
+                <p class="center">Get connected with us on social</p>
+                <ul class="socials">
+                  <li><a href="" class="fb"><i class="fa fa-facebook"></i></a>
+                  </li>
+                  <li><a href="" class="tw"><i class="fa fa-twitter"></i></a>
+                  </li>
+                  <li><a href="" class="gp"><i class="fa fa-google-plus"></i></a>
+                  </li>
+                  <li><a href="" class="pin"><i class="fa fa-pinterest"></i></a>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+            <div class="buttonbar row no-gutter">
+              <a href="/f7-theme/max_solaris/contactus.html" class=" button button-fill col-100 close-panel">Locate Us</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Main Views -->
     <f7-views>
-      <f7-view id="main-view" navbar-through :dynamic-navbar="true" main>
+      <f7-view id="main-view" :dynamic-navbar="false" main>
         <!-- Navbar -->
-        <f7-navbar>
+        <!-- <f7-navbar>
           <f7-nav-left>
             <f7-link icon="icon-bars" open-panel="left"></f7-link>
           </f7-nav-left>
@@ -15,7 +217,7 @@
           <f7-nav-right>
             <f7-link icon="icon-bars" open-panel="right"></f7-link>
           </f7-nav-right>
-        </f7-navbar>
+        </f7-navbar> -->
         <!-- Pages -->
         <f7-pages>
           <f7-page>
@@ -27,10 +229,7 @@
                 <p>专业优质的社区美容服务</p>
               </div>
               <div class="buttonbar  no-gutter">
-                <a href="/login" class="button-fill button color-indigo col">用户登录</a>
-                <a href="/sign-in" class="button-fill button color-indigo col">用户登录</a>
-                <a href="/staffs" class="color2 button col">Staffs美容师</a>
-                <a href="/sites" class="color2 button col">Sites美容院</a>
+                <a href="/login" class="button-fill button color-pink col">用户登录</a>
               </div>
 
             </div>
@@ -39,52 +238,6 @@
 
       </f7-view>
     </f7-views>
-
-    <!-- Popup -->
-    <f7-popup id="popup">
-      <f7-view navbar-fixed>
-        <f7-pages>
-          <f7-page>
-            <f7-navbar title="Popup">
-              <f7-nav-right>
-                <f7-link close-popup class="close-popup">关闭</f7-link>
-              </f7-nav-right>
-            </f7-navbar>
-            <f7-block>Close无效，需要手动添加一个class="close-popup", consectetur adipisicing elit. Neque, architecto. Cupiditate laudantium rem nesciunt numquam, ipsam. Voluptates omnis, a inventore atque ratione aliquam. Omnis iusto nemo quos ullam obcaecati, quod.
-              <f7-link @click="$router.back()">Go back via Router API</f7-link>
-            </f7-block>
-          </f7-page>
-        </f7-pages>
-      </f7-view>
-    </f7-popup>
-
-    <!-- Login Screen -->
-    <f7-login-screen id="login-screen">
-      <f7-view>
-        <f7-pages>
-          <f7-page login-screen>
-            <f7-login-screen-title>Login</f7-login-screen-title>
-            <f7-list form>
-              <f7-list-item>
-                <f7-label>Username</f7-label>
-                <f7-input name="username" placeholder="Username" type="text"></f7-input>
-              </f7-list-item>
-              <f7-list-item>
-                <f7-label>Password</f7-label>
-                <f7-input name="password" type="password" placeholder="Password"></f7-input>
-              </f7-list-item>
-            </f7-list>
-            <f7-list>
-              <f7-list-button title="Sign In" close-login-screen></f7-list-button>
-              <f7-list-label>
-                <p>Click Sign In to close Login Screen</p>
-              </f7-list-label>
-            </f7-list>
-          </f7-page>
-        </f7-pages>
-      </f7-view>
-    </f7-login-screen>
-
   </div>
 </template>
 
