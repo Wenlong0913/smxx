@@ -88,7 +88,12 @@
                           <% end %>
                         </ul>
                     </div>
-
+                    <div class="product-attr-info">
+                      <span>产品标签：</span>
+                      <% @product.tag_list.each do|tag| %>
+                        <span class="label label-success"><%= tag %></span>
+                      <% end %>
+                    </div>
                     <!-- BEGIN product-info-list 一些主要配置信息列表展示-->
                     <ul class="product-info-list">
                       <li>

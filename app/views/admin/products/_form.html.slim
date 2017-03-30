@@ -26,6 +26,11 @@
             catalog-list[data-url=admin_product_catalogs_path :default="[#{@product.catalog_id}]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false"]
           div[slot="footer"]
       = f.input :price
+      .form-group.string.optional.product_tag
+        label.control-label.string.optional 商品标签
+        ul.product-tags
+          - @product.tag_list.each do |tag|
+            li = tag
       = f.input :description, as: :text
       .form-group
         image-select[server="#{image_items_path}" name="product[image_item_ids][]" selected-ids="#{@product.image_item_ids.join(', ')}"]

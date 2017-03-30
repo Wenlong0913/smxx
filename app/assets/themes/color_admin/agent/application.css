@@ -7,6 +7,7 @@
 *= require color_admin/css/style-responsive
 *= require color_admin/plugins/nvd3/build/nv.d3
 *= require color_admin/plugins/bootstrap-datetimepicker/css/datetimepicker
+*= require color_admin/plugins/jquery-tag-it/css/jquery.tagit
 *= require agent
 *= require font-awesome
 */
