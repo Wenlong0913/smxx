@@ -35,7 +35,7 @@ class SitePolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.super_admin_or_admin?
-      [:user_id, :title, :description]
+      [:user_id, :title, :description, :image_item_ids => []]
     else
       [:title, :description]
     end
