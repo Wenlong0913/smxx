@@ -9,5 +9,6 @@ module AppAPI::V1
     mount AppAPI::V1::Site
     mount AppAPI::V1::User
     mount AppAPI::V1::Staff
+    mount AppAPI::V1::ProductCatalog
   end
 end
