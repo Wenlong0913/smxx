@@ -18,9 +18,14 @@
               </f7-link>
             </div>
             <div class="item-inner">
-              <div class="item-subtitle"><f7-link :href="'/staffs/' + staff.id">{{staff.title}}</f7-link></div>
+              <div class="item-subtitle">
+                <f7-link :href="'/staffs/' + staff.id">
+                  <span>姓名：{{staff.title}}</span>
+                  <span>工作年限：{{staff.work_years}}</span>
+                </f7-link>
+              </div>
               <div class="item-title-row">
-                <div class="item-title">{{staff.description}}</div>
+                <div class="item-title">个人介绍：{{staff.description}}</div>
               </div>
             </div>
           </li>
