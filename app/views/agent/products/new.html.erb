@@ -64,11 +64,17 @@
                     </div>
                     <div class="form-group string optional product_tag">
                       <label class="　control-label　string　optional">商品标签</label>
-                      <ul class="product-tags">
+                      <ul class="product-tags" data-site-tags="<%= @site_tags %>">
                         <% @product.tag_list.each do |tag|%>
                           <li><%= tag %></li>
                         <% end %>
                       </ul>
+                      <div class="most-tag-list">
+                        <span class="small">常用标签：</span>
+                        <% @site_most_tags.each do |val| %>
+                          <span class="label m-r-5"><%= val %></span>
+                        <% end %>
+                      </div>
                     </div>
                     <div rel="catalog-list">
                       <div class="form-group catalog-list" data-catalog-name="<%= @product.catalog.try(:name) %>" data-catalog-id="<%= @product.catalog_id %>">

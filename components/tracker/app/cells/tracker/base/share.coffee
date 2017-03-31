@@ -14,15 +14,15 @@ $(document).ready ->
         url: url
         data:
           page: selected_page || 1
-        success: (data)->
+        success: (res)->
           if tmp.hasClass('share_two') || tmp.hasClass('share_three')
-            share._data.share_obj = data.share_records
+            share._data.share_obj = res.data.share_records
           else
-            share._data.share_list = data.share_records
-          share._data.share = data.share_records[0]
-          share._data.total_pages = data.total_pages
-          share._data.selected_page = data.selected_page
-          share._data.showPage = parseInt(data.selected_page)
+            share._data.share_list = res.data.share_records
+          share._data.share = res.data.share_records[0]
+          share._data.total_pages = res.data.total_pages
+          share._data.selected_page = res.data.selected_page
+          share._data.showPage = parseInt(res.data.selected_page)
           documentLoadAnimation(true)
         error: ->
           documentLoadAnimation(false, '数据加载失败，请刷新页面')
