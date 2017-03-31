@@ -7,7 +7,9 @@ module AppAPI::V1
         success AppAPI::Entities::Site
       end
       params do
-        requires :id, type: Integer, desc: '店铺ID'
+        requires :id, type: Integer, desc: '店铺ID', values: [1,2,3]
+        optional :name, type: String, desc: '名字'
+        optional :email, type: String, allow_blank: false
       end
       get ':id' do
         authenticate!
