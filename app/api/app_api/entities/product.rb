@@ -6,6 +6,13 @@ module AppAPI
       expose_id
       expose :name, documentation: { desc: '产品名称' }
       expose :sell_price, documentation: {desc: '产品卖价'}
+      expose :month_number, documentation: {desc: '月单数'}
+      expose :month_number, documentation: {desc: '月单数'}
+      expose :content, documentation: {desc: '项目介绍'}
+      expose :service_time, documentation: {desc: '服务时长'}
+      expose :description, documentation: {desc: '简要描述'}
+      expose :properties, documentation: {desc: '标签活动'}
+      
       expose :site, using: AppAPI::Entities::Site, if: lambda { |instance, options| (options[:includes] || []).include?(:site) }
       # expose :site, using: AppAPI::Entities::Site, if: lambda { |instance, options| options[:type] != :full_site }
       expose :image_items, using: AppAPI::Entities::ImageItem, as: :images
