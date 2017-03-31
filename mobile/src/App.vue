@@ -11,10 +11,10 @@
               <div class="item-media"><img src="./assets/img/pic1.png" width="44" />
               </div>
               <div class="item-inner">
-                <div class="item-title-row">
-                  <div class="item-title">宋学江</div>
+                <div class="item-title-row">                  
+                  <div class="item-title">请先登录</div>
                 </div>
-                <div class="item-subtitle">成都</div>
+                <div class="item-subtitle"></div>
               </div>
             </div>
             <div class="page-content">
@@ -39,7 +39,7 @@
 
                   <li>
                     <a href="/staffs/" class="item-link close-panel item-content ">
-                      <div class="itemmeniinner"><i class="fa fa-music"></i><span>美容师</span>
+                      <div class="itemmeniinner"><i class="fa fa-female"></i><span>美容师</span>
                       </div>
                     </a>
                   </li>
@@ -53,7 +53,7 @@
                   <li class="accordion-item">
                     <a href="#" class="item-content item-link">
                       <div class="item-inner">
-                        <div class="item-title"><i class="fa fa-briefcase"></i>订单</div>
+                        <div class="item-title"><i class="fa fa-shopping-bag"></i>订单</div>
                       </div>
                     </a>
                     <div class="accordion-item-content">
@@ -90,7 +90,7 @@
 
                   <li>
                     <a href="/about/" class="item-link close-panel item-content ">
-                      <div class="itemmeniinner"><i class="fa fa-user"></i><span>关于我们</span>
+                      <div class="itemmeniinner"><i class="fa fa-users"></i><span>关于我们</span>
                       </div>
                     </a>
                   </li>
