@@ -60,7 +60,7 @@
               </li>
               <li class="item-content">
                 <div class="item-media">擅长领域：</div>
-                <div class="item-inner">{{staff.properties}}</div>
+                <div class="item-inner">{{staff.pro}}</div>
               </li>
               <li class="item-content">
                 <div class="item-media">个人介绍：</div>
@@ -73,17 +73,10 @@
           <div class="prductlist content-block">
             <p>证书认证：</p>
             <div class="row">
-              <div class="card col-50">
+              <div class="card col-50" v-for="images in staff.images">
                 <div class="card-content">
                   <div class="banner productblock">
-                    <img src="./../assets/img/team1.jpg" class="col-100" alt="">
-                  </div>
-                </div>
-              </div>
-              <div class="card col-50">
-                <div class="card-content">
-                  <div class="banner productblock">
-                    <img src="./../assets/img/team1.jpg" class="col-100" alt="">
+                    <img :src="images.image_url" class="col-100" alt="">
                   </div>
                 </div>
               </div>
@@ -177,17 +170,13 @@
   export default {
     data () {
       return {
-        staff: [],
+        staff: {images: []},
         headshot: null
       }
     },
     mounted: function () {
       var _this = this
       Staff.get(_this.$route.params.id).then(function (response) {
-        console.log(response)
-        console.log(response.data)
-        console.log(response.data.images.unshift())
-        console.log(response.data.images[0].image_url)
         _this.headshot = response.data.images[0].image_url
         if (_this.headshot === null) {
           _this.headshot = 'placeholder.jpg'
