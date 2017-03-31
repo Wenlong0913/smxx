@@ -3,13 +3,14 @@
     | 客户列表
     .pull-right
       = link_to '添加客户', new_agent_member_path, class: 'btn btn-primary'
-  .panel
+  .panel.panel-default
     .panel-heading
       .panel-heading-btn
         a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
           i class="fa fa-expand"
         a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
           i class="fa fa-minus"
+      h3.panel-title &nbsp;
     .panel-body
       .table-responsive
         table.table.table-striped
