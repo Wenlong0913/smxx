@@ -2,9 +2,13 @@
   <div data-page="staffs" class="page navbar-fixed" >
     <div class="navbar">
       <div class="navbar-inner">
-        <div class="left sliding"><a href="/f7-theme/max_solaris/home.html" class="back link"><i class="icon icon-back"></i></a></div>
+        <div class="left sliding">
+          <a href="/f7-theme/max_solaris/home.html" class="back link"><i class="icon icon-back"></i></a>
+        </div>
         <div class="center ">美容师</div>
-          <div class="right"><a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a></div>
+        <div class="right">
+          <a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a>
+        </div>
       </div>
     </div>
 
@@ -13,8 +17,8 @@
         <ul>
           <li class="item-content" v-for="staff in staffs">
             <div class="item-media">
-              <f7-link :href="'/staffs/' + staff.id">
-                <img :src="staff.images[0].image_url" :alt="staff.title" width="80" height="80" />
+              <f7-link :href="'/staffs/' + staff.id" v-for="images in staff.images">
+                <img :src="images.image_url" :alt="images.title" width="80" height="80" />
               </f7-link>
             </div>
             <div class="item-inner">

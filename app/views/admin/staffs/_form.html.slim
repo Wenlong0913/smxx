@@ -16,9 +16,9 @@
               li = message
 
       = f.input :user_id, collection: User.all.decorate, label_method: :display_name
-      = f.input :title, required: true
-      = f.input :age
-      = f.input :work_years
+      = f.input :title, required: true, input_html: { maxlength: 4 }
+      = f.input :age, input_html: { maxlength: 2 }
+      = f.input :work_years,input_html: { maxlength: 2 }
       = f.input :description
       p 擅长领域（可多选）
       = f.collection_check_boxes :properties, Staff::PROPERTIES, :first, :last, checked: @staff.try(:properties)
