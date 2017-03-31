@@ -19,7 +19,12 @@
             </div>
           </div>
           <div class="image-info">
-
+            <div class="input-group">
+              <input type="text" class="form-control" v-model="image.tags" placeholder="图片标签，用逗号分开">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" @click="save_tag(image)">保存</button>
+              </span>
+            </div>
           </div>
         </div>
       </transition-group>
@@ -111,6 +116,14 @@
             return i;
           }
         return -1;
+      },
+      save_tag (image) {
+        var vm = this
+        vm.$http.put(vm.server+'/'+image.id, {tag: image.tags}).then((data) => {
+          console.log(data)
+        }, (response) => {
+            // error callback
+        });        
       }
     }
   }
@@ -155,7 +168,7 @@
     text-align: center;
     overflow: hidden;
     width: 100%;
-    height: 250px;
+    /*height: 250px;*/
   }
 
   .gallery .image-inner .selected{
