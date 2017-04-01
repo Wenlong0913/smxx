@@ -6,10 +6,11 @@ module Tracker
       # 某月的每天记录
       chart_data = []
       (date.beginning_of_month..date.end_of_month).each do |x|
-        break if x > Date.today
+        count = 0
+        count = SalesDistribution::Resource.where(object: current_user.sales_distribution_resources.map(&:object)).where("created_at between ? and ?", x.beginning_of_day, x.end_of_day).count unless x > Date.today
         chart_data << {
           label: x.to_s,
-          value: SalesDistribution::Resource.where(object: current_user.sales_distribution_resources.map(&:object)).where("created_at between ? and ?", x.beginning_of_day, x.end_of_day).count
+          value: count
         }
       end
       return chart_data

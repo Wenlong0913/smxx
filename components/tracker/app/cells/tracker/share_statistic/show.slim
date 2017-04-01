@@ -19,6 +19,9 @@
               a[@click="onMonth"] 当月
         #chart_pv
           svg[height='300px' width='100%']
+          div.text-center
+            strong.small
+              | {{chartSelectDate+"月"}}
       .panel-body.share-list[v-show="!showShareChart"]
         .table-responsive
           table.table.table-hover
