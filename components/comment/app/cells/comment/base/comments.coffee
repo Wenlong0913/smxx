@@ -93,7 +93,7 @@ $(document).ready ->
         content: ''
         replyContent: ''
         pageCount: null
-        currentPage: 1
+        currentPage: null
         currentUserId: ''
         features:
           files: []
