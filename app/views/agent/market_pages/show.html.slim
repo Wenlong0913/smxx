@@ -19,14 +19,14 @@
           div style="margin-top:50px;"
             h2
               = @market_page.name
-            img src="http://qr.liantu.com/api.php?text=#{agent_frontend_market_page_url(@site, @market_page)}&w=200" /
+            img src="http://qr.liantu.com/api.php?text=#{@share_path}&w=200" /
             br 营销页二维码，用手机扫描打开
 
             h4
               |链接地址：
               br
-              a href= agent_frontend_market_page_url(@site, @market_page, subdomain: request.subdomain) target="_blank"
-                = agent_frontend_market_page_url(@site, @market_page)
+              a href= @share_path target="_blank"
+                = @share_path
 
             h4 style="margin-top:50px;"
               | 分享到社交网络：
