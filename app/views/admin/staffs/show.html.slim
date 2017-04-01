@@ -41,6 +41,24 @@ h1.page-header
             tr.divider
               td[colspan='2']
             tr
+              td.field 总评分
+              td
+                = @staff.score
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 总服务数
+              td
+                = @staff.total_service
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 周服务数
+              td
+                = @staff.week_service
+            tr.divider
+              td[colspan='2']
+            tr
               td.field 擅长领域
               td
                 = @staff.properties.map{|p| Staff::PROPERTIES[p.to_sym] }.compact.join('，') if @staff.properties.any?
