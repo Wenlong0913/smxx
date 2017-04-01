@@ -77,6 +77,8 @@ h1.page-header
                 => link_to '查看', <%= singular_table_name %>_path(<%= model_var_name %>), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_<%= singular_table_name %>_path(<%= model_var_name %>), class: 'btn btn-xs btn-default'
                 = link_to '删除', <%= singular_table_name %>_path(<%= model_var_name %>), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+      = paginate @<%= plural_model_var_name %>
+
 / TODO: move this code to application.js
 javascript:
   $(document).ready(function(){

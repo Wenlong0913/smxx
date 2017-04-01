@@ -160,20 +160,10 @@
                   </div> -->
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group text-right">
               <button type="submit" class="btn btn-sm btn-inverse"><i class="fa fa-search"></i> 查询</button>
             </div>
           <% end %>
-          <h4 class="title m-b-0">分类</h4>
-          <ul class="search-category-list">
-            <% @catalogs.each do |catalog| %>
-              <li>
-                <%= link_to agent_products_path+"?catalog=#{catalog.id}" do %>
-                  <%= catalog.name %>
-                  <span class="pull-right"><%= @products.where(catalog_id: catalog.id).size%></span>
-                <% end %>
-            <% end %>
-          </ul>
       </div>
       <!-- END search-sidebar -->
     </div>

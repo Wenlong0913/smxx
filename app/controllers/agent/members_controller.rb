@@ -4,7 +4,13 @@ class Agent::MembersController < Agent::BaseController
 
   def index
     authorize Member
-    @agent_members = Member.where(site_id: @site.id).page(params[:page])
+    @agent_members = @site.members
+    if params[:search].present?
+      # keyword = params[:search][:keywords]
+      @filter_colums = %w(mobile_phone name)
+      @agent_members = build_query_filter(Member.all, only: @filter_colums)
+    end
+    @agent_members = @agent_members.page(params[:page]).per(1)
     respond_to do |format|
       format.html
       format.json { render json: @agent_members }
