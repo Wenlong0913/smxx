@@ -4,7 +4,7 @@ class Admin::Tracker::SharesController < Admin::BaseController
     authorize :'tracker/home', :index?
     respond_to do |format|
       format.html
-      format.json {render json: Tracker::Share.records(current_user, params[:page])}
+      format.json {render json: {data: Tracker::Share.records(current_user, params[:page])}}
     end
   end
 

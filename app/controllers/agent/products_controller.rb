@@ -1,7 +1,7 @@
 class Agent::ProductsController < Agent::BaseController
   before_action :set_current_user_products
   before_action :set_product, only: [:show, :edit, :update, :destroy, :process_shelves, :sales_distribution]
-
+  before_action :set_site_tags, only: [:edit, :new]
   def index
     authorize Product
     @catalogs = ProductCatalog.roots
@@ -167,4 +167,8 @@ class Agent::ProductsController < Agent::BaseController
       end
     end
 
+    def set_site_tags
+      @site_tags      = @site.tags.pluck(:name).uniq
+      @site_most_tags = @site.tags.most_used(5).uniq.map(&:name)
+    end
 end

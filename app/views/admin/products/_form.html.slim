@@ -28,9 +28,13 @@
       = f.input :price
       .form-group.string.optional.product_tag
         label.control-label.string.optional 商品标签
-        ul.product-tags
+        ul.product-tags[data-site-tags=@site_tags]
           - @product.tag_list.each do |tag|
             li = tag
+        .most-tag-list
+          span.small 常用标签：
+          - @site_most_tags.each do |val|
+            span.label.m-r-5 = val
       = f.input :description, as: :text
       .form-group
         image-select[server="#{image_items_path}" name="product[image_item_ids][]" selected-ids="#{@product.image_item_ids.join(', ')}"]

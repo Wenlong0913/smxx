@@ -2,9 +2,13 @@ $(document).ready ()->
   pages = $('body.admin-products')
   if pages.length > 0
     # tags
-    pages.find('.product-tags').tagit({
-      fieldName: "product[tag_list][]"
+    default_site_tags = pages.find('.product-tags').data('site-tags')
+    tags = pages.find('.product-tags').tagit({
+      fieldName: "product[tag_list][]",
+      availableTags: default_site_tags
     })
+    pages.find(".most-tag-list span.label").on 'click', ->
+      pages.find('.product-tags').tagit 'createTag', $(this).text()
     container = pages.find('.catalog-list')
     if container.length > 0
       catalog = new Vue

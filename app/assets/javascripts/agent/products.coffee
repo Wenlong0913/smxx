@@ -1,4 +1,14 @@
 $(document).ready ->
+  pages = $('body.agent-products')
+  if pages.length > 0
+    # tags
+    default_site_tags = pages.find('.product-tags').data('site-tags')
+    pages.find('.product-tags').tagit({
+      fieldName: "product[tag_list][]",
+      availableTags: default_site_tags
+    })
+    pages.find(".most-tag-list span.label").on 'click', ->
+      pages.find('.product-tags').tagit 'createTag', $(this).text()
   # index
   bodyIndex = $('body.agent-products.index')
   if bodyIndex.length > 0
@@ -77,10 +87,6 @@ $(document).ready ->
   # new
   bodyNew = $('body.agent-products.new')
   if bodyNew.length > 0
-    # tags
-    bodyNew.find('.product-tags').tagit({
-      fieldName: "product[tag_list][]"
-    })
     # 检测名称是否填写
     bodyNew.find('input#product_name').val('')
     $("#basicInformation a[href='#configurationInformation']").on　'show.bs.tab', ->
@@ -151,10 +157,6 @@ $(document).ready ->
   bodyEdit
   bodyEdit = $('body.agent-products.edit')
   if bodyEdit.length > 0
-    # tags
-    bodyEdit.find('.product-tags').tagit({
-      fieldName: "product[tag_list][]"
-    })
     # 商品单位切换显示
     setTimeout ->
       bodyEdit.find('.weight-input-group .input-group-btn ul.dropdown-menu li a').on 'click', ->

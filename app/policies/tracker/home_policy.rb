@@ -5,6 +5,10 @@ class Tracker::HomePolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    user.super_admin_or_admin? || user.has_role?(:agent)
+  end
+
   def permitted_attributes_for_create
     if user.has_role? :admin
       []

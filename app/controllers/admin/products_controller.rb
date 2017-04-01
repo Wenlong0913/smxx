@@ -2,6 +2,7 @@
 require 'csv'
 class Admin::ProductsController < Admin::BaseController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_site_tags, only: [:edit, :new]
 
   def dashboard
     authorize Product
@@ -81,4 +82,9 @@ class Admin::ProductsController < Admin::BaseController
     # def admin_product_params
     #       #   params.require(:admin_product).permit(policy(@admin_product).permitted_attributes)
     #       # end
+
+    def set_site_tags
+      @site_tags      = current_user.sites.first.tags.pluck(:name).uniq
+      @site_most_tags = current_user.sites.first.tags.most_used(5).uniq.map(&:name)
+    end
 end

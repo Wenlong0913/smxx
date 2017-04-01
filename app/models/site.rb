@@ -21,6 +21,7 @@ class Site < ApplicationRecord
   has_many :image_items, :through => :image_item_relations
   has_many :members, dependent: :destroy
   has_many :products, dependent: :destroy
+  has_many :tags, through: :products
   has_many :orders, dependent: :destroy
   has_many :preorder_conversitions, dependent: :destroy
   has_many :market_pages, dependent: :destroy

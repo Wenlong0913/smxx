@@ -3,6 +3,7 @@
 *= require tracker
 *= require admin/catalogs
 *= require admin/produces
+*= require admin/products
 *= require admin/home
 *= require select2-bootstrap
 *= require common/error_explanation

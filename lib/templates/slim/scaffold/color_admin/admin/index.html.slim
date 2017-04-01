@@ -10,6 +10,8 @@ h1.page-header
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
+    h3.panel-title
+      | #{<%= model_class_name %>.model_name.human}
   .panel-body
     = form_for :search, url:  <%= table_name %>_path, method: :get do |f|
       .toolbar.row
@@ -32,7 +34,7 @@ h1.page-header
             ul.dropdown-menu#search_column[role='menu']
               - @filter_colums.each do |filter_colum|
                 li
-                  a[href='javascript:;' data-key=filter_colum] = filter_colum
+                  a[href='javascript:;' data-key=filter_colum] = <%= model_class_name %>.human_attribute_name(:<%= filter_colum %>)
           .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
             button.btn.btn-default[type='submit'name='json'value='json'] json
             button.btn.btn-default[type='submit'name='xml'value='xml'] xml
@@ -43,7 +45,7 @@ h1.page-header
             .form-group
               label.col-xs-1.control-label
                 i.fa.fa-trash-o.m-r-5
-                b = key
+                b = <%= model_class_name %>.human_attribute_name(:<%= key %>)
               - input_name = "filters["+key+"]"
               .col-xs-5
                 input.form-control[type="text"name==input_name value==params[:filters][key]]
