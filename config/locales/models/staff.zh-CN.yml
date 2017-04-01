@@ -12,6 +12,9 @@ zh-CN:
         work_years: 工作年限
         certificate: 证书认证
         content: 工作经历
+        score: 总评分
+        total_service: 总服务数
+        week_service: 周服务数
         properties:
           breast_dredge: 乳腺疏通
           slimming_shaping: 瘦身塑形
