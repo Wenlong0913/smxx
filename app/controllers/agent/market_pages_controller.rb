@@ -44,7 +44,7 @@ class Agent::MarketPagesController < Agent::BaseController
           resource = SalesDistribution::Resource.find_or_create_by(
             type_name: '营销活动',
             user: current_user,
-            url: agent_frontend_market_page_url(@site, @market_page),
+            url: agent_frontend_market_page_path(@site, @market_page),
             object: @market_page
           )
           redirect_to agent_market_page_path(@market_page), notice: 'Market page 创建成功.'

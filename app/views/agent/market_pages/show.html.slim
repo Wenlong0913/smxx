@@ -30,7 +30,7 @@
 
             h4 style="margin-top:50px;"
               | 分享到社交网络：
-              == render partial: 'layouts/baidu_share', locals: {title: @market_page.name, description: @market_page.description, url: agent_frontend_market_page_path(@site, @market_page), image: @market_page.market_template.image_path}
+              == render partial: 'layouts/baidu_share', locals: {title: @market_page.name, description: @market_page.description, url: @share_path, image: @market_page.market_template.image_path}
 
         .col-sm-12.col-md-2.col-md-offset-1.hidden-sm.hidden-xs
           div style="margin-top: 240px; margin-right: 20px; color: #f2f2f2;"
