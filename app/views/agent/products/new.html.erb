@@ -168,7 +168,12 @@
                     </div>
                     <div class="col-xs-12">
                       <div class="form-group">
-                        <%= f.input :description, as: :ckeditor %>
+                        <%= f.input :description, as: :text %>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group">
+                        <%= f.input :content, as: :ckeditor %>
                       </div>
                     </div>
                     <div class="col-xs-12">
