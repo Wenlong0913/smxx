@@ -2,8 +2,10 @@
 <div data-page="site_detail" class="page navbar-fixed">
   <div class="navbar">
     <div class="navbar-inner">
-      <div class="left sliding"><a href="/f7-theme/max_solaris/home.html" class="back link"><i class="icon icon-back"></i></a></div>
-      <div class="center ">Services list </div>
+      <div class="left sliding">
+        <a href="#" class="back link"><i class="icon icon-back"></i></a>
+      </div>
+      <div class="center "> {{ site.title }} | 美容院</div>
       <div class="right">
         <a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a>
       </div>
@@ -46,7 +48,7 @@
           </div>
           <hr>
           <article>
-            <div class="list-block media-list">
+            <div class="list-block media-list shop">
               <ul>
                 <li v-for="product in products">
                   <a href="#" class="item-link item-content">
@@ -54,15 +56,10 @@
                       <img src="./../assets/img/pic1.png" width="80" alt="">
                     </div>
                     <div class="item-inner">
-                      <div class="item-title">{{ product.name }}</div>
+                      <div class="item-title" style="font-size: 16px;">{{ product.name }}</div>
                       <div class="item-text" style="text-align: center;">{{ product.description }}</div>
                       <div class="color-amber" style="text-align: center;">￥{{ product.sell_price }}</div>
-                      <div class="row profile stats">
-                        <div class="col-20 profile stats"></div>
-                        <div class="col-30 profile stats">{{ product.service_time }}</div>
-                        <div class="col-30 profile stats">月售{{ product.month_number }}</div>
-                        <div class="col-20 profile stats"></div>
-                      </div>
+                      <div class="item-text" style="text-align: center;">{{ product.service_time }} 月售{{ product.month_number }}</div>
                     </div>
                   </a>
                 </li>
@@ -99,17 +96,35 @@
         <div id="tab3" class=" page-content tab">
           <div class="list-block media-list">
             <ul>
-              <li v-for="">
-                <a href="#" class="item-link item-content">
-                  <div class="item-media">
-                    <img src="/f7-theme/max_solaris/img/pic1.png" width="80" alt=""></div>
-                  <div class="item-inner">
-                    <div class="item-title-row">
-                      <div class="item-title">Yellow Submarine</div>
-                      <div class="item-after">$15</div></div>
-                    <div class="item-subtitle">Beatles</div>
-                    <div class="item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus.</div></div>
-                </a>
+              <li class="item-content">
+                <div class="item-media">
+                  <a href="/staffs/1" class="link">
+                    <img src="http://localhost:5000/photos/2017/3/31/3/original.?2017" width="80" height="80"></a>
+                </div>
+                <div class="item-inner">
+                  <div class="item-subtitle">
+                    <a href="/staffs/1" class="link">
+                      <span>姓名：张小姐</span>
+                      <span>工作年限：9年</span></a>
+                  </div>
+                  <div class="item-title-row">
+                    <div class="item-title">个人介绍：专业的手法和经验</div></div>
+                </div>
+              </li>
+              <li class="item-content">
+                <div class="item-media">
+                  <a href="/staffs/2" class="link">
+                    <img src="http://localhost:5000/photos/2017/3/31/4/original.?2017" width="80" height="80"></a>
+                </div>
+                <div class="item-inner">
+                  <div class="item-subtitle">
+                    <a href="/staffs/2" class="link">
+                      <span>姓名：美立方</span>
+                      <span>工作年限：5年</span></a>
+                  </div>
+                  <div class="item-title-row">
+                    <div class="item-title">个人介绍：大家好我叫美立方</div></div>
+                </div>
               </li>
             </ul>
           </div>
