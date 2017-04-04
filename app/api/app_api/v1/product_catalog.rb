@@ -11,7 +11,7 @@ module AppAPI::V1
       end
       get ':id' do
         authenticate!
-        present ::ProductCatalog.find(params[:id]), with: AppAPI::Entities::ProductCatalog, type: :full_product_catalog
+        present ::ProductCatalog.find(params[:id]), with: AppAPI::Entities::ProductCatalog, includes: [:products]
       end
 
       desc '获取分类列表' do
