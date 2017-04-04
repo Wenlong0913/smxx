@@ -15,11 +15,9 @@
         <div class="item-inner">
           <div class="item-title-row">
             <div class="item-title">{{staff.title}} | 美容师</div>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
+            <div>
+              <i class="fa fa-star" v-for="s in staff.sco"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -36,9 +34,9 @@
         <div id="tab1" class="tab active">
           <div class="content-block text-center">
             <div class="row profiles">
-              <div class="col-33 profiles" style="color: #ff9500;">5</div>
-              <div class="col-33 profiles" style="color: #ff9500;">1188</div>
-              <div class="col-33 profiles" style="color: #ff9500;">4.9</div>
+              <div class="col-33 profiles" style="color: #ff9500;">{{staff.week_service}}</div>
+              <div class="col-33 profiles" style="color: #ff9500;">{{staff.total_service}}</div>
+              <div class="col-33 profiles" style="color: #ff9500;">{{staff.score}}</div>
             </div>
             <div class="row profile stats">
               <div class="col-33 profile stats">周服务数</div>
