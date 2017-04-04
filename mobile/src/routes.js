@@ -23,11 +23,10 @@ export default [
     path: '/sites/:id/',
     component: require('./pages/site_detail.vue')
   },
-
-  // {
-  //   path: '/product_catalogs/:id/',
-  //   component: require('./pages/product_catalog_detail.vue')
-  // },
+  {
+    path: '/product_catalogs/:id/',
+    component: require('./pages/product_catalogs.vue')
+  },
   {
     path: '/about/',
     component: require('./pages/about.vue')
