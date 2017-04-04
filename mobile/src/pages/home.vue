@@ -18,10 +18,10 @@
 	        <div class="swiper-slide gradient">
 	          <div class="textblock">
 	            <img src="./../assets/img/icon.png" alt="" class="iconimg">
-	            <h2 class="maintitle col-100">Fast and Fluid</h2>
-	            <h5 class="col-100">Cell no: +91 000 000 0000</h5>
-	            <div class="item-subtitle star ">★★★★☆</div>
-	            <a href="#" class="button button-fill">read More...</a>
+	            <h2 class="maintitle col-100">水逆大作战</h2>
+	            <h5 class="col-100">12星座的指尖魔法，美甲×星座</h5>
+              <h5 class="col-100">4月1日—4月9日</h5>
+	            <a href="#" class="button button-fill">立即查看</a>
             </div>
 	          <img src="./../assets/img/banner1.png" alt="">
 	          <img src="./../assets/img/banner_top.png" alt="" class="bottomoverlay">
@@ -29,10 +29,10 @@
 	        <div class="swiper-slide gradient">
 	          <div class="textblock">
 	            <img src="./../assets/img/icon.png" alt="" class="iconimg">
-	            <h2 class="maintitle col-100 ">Device Optimized</h2>
-	            <h5 class="col-100">Cell no: +91 000 000 0000</h5>
-	            <div class="item-subtitle star ">★★★★☆</div>
-	            <a href="#" class="button button-fill">read More...</a>
+	            <h2 class="maintitle col-100 ">春季补水限定款</h2>
+	            <h5 class="col-100">让整个假期都水润满分</h5>	
+              <h5 class="col-100">全场138元起</h5> 
+	            <a href="#" class="button button-fill">立即查看</a>
             </div>
 	          <img src="./../assets/img/banner3.png" alt="">
 	          <img src="./../assets/img/banner_top.png" alt="" class="bottomoverlay">
@@ -40,10 +40,9 @@
 	        <div class="swiper-slide gradient" >
 	          <div class="textblock">
 	            <img src="./../assets/img/icon.png" alt="" class="iconimg">
-	            <h2 class="maintitle col-100 ">Touch friendly</h2>
-	            <h5 class="col-100">Cell no: +91 000 000 0000</h5>
-	            <div class="item-subtitle star ">★★★★☆</div>
-	            <a href="#" class="button button-fill">read More...</a>
+	            <h2 class="maintitle col-100 ">新人专享28元起</h2>
+	            <h5 class="col-100">更有免单机会每天抽</h5>
+	            <a href="#" class="button button-fill">立即注册</a>
             </div>
             <img src="./../assets/img/banner2.png" alt="">
 	          <img src="./../assets/img/banner_top.png" alt="" class="bottomoverlay">
