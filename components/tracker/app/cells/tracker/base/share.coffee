@@ -65,7 +65,9 @@ $(document).ready ->
         startView: 3
         minView: 3
       }).on('changeDate', ->
+        documentLoadAnimation(false)
         share._data.chartSelectDate = $(this).val()
+        loadShareChartData($(this).val())
       )
 
     share = new Vue
@@ -124,9 +126,7 @@ $(document).ready ->
           second = timeDate.getSeconds()
           return year + '年' + month + '月' + date + '日 ' + hour + '时' + minute + '分' + second + '秒'
         changeDate: ->
-          # if this.chartSelectDate
-          # console.log this.chartSelectDate.length
-            # body...
+          documentLoadAnimation(false)
           loadShareChartData(this.chartSelectDate)
         onMonth: ->
           date = new Date()
@@ -142,9 +142,9 @@ $(document).ready ->
       mounted: ->
         bindDatetimepicker()
         this.onMonth()
-        $('.tracker .datetimepicker-group .datetimepicker').datetimepicker('setStartDate', '2012-01-01');
 
     if tmp.hasClass("share_home")
+      documentLoadAnimation(false)
       loadShareChartData()
     else
       loadData()

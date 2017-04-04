@@ -65,5 +65,6 @@
                   | 营销页二维码
                 ul.nav.nav-list
                   li
-                    img src="http://qr.liantu.com/api.php?text=#{agent_frontend_market_page_url(@site, market_page)}&w=200" /
+                    - share_path = URI(request.scheme + "://" + request.host + ":" + request.port.to_s).merge(market_page.sales_distribution_resources.first.share_path).to_s
+                    img src="http://qr.liantu.com/api.php?text=#{share_path}&w=200" /
                     br
