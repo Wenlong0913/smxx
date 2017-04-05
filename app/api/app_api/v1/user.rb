@@ -86,9 +86,7 @@ module AppAPI::V1
         requires :mobile_phone, type: String, desc: '手机号'
       end
       post :sms do
-        user = ::User.find_by_phone_number(params[:mobile_phone])
-        error! "用户不存在" if user.nil?
-
+        # TODO: 须验证用户发送短信的频率，方式短信轰炸
         t = Sms::Token.new(params[:mobile_phone])
         is_dev = !(Rails.env.staging? || Rails.env.production?)
         code = is_dev ? '1234' : (10000 + SecureRandom.random_number(10**8)).to_s[-5..-1]
