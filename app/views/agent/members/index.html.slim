@@ -11,25 +11,31 @@
         a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
           i class="fa fa-minus"
       h3.panel-title.row.search-panel-title
-        .col-md-5.col-xs-12
-          .col-xs-8.p-0
-            = form_for :search, url: agent_members_path, method: :get do |f|
+        .hide[class="#{'open' if params[:search]&&params[:search].length > 1}"]
+        = simple_form_for :search, url: agent_members_path, method: :get do |f|
+          .col-md-5.col-xs-12
+            .col-xs-8.p-0
               .input-group
                 = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '输入用户名或手机号'
-                span.input-group-btn
+                span.input-group-btn.keyword-search-btn
                   button.btn.btn-default[type="submit"]
                     i.fa.fa-search
-          .col-xs-4
-            span.btn.btn-default
-              i.fa.fa-ellipsis-v.m-r-5
-              span 更多筛选
-        .col-xs-12
-          .radio-inline
-            input[name="optionsRadios" value="option1" checked="" type="radio"]
-              | Radio option 1
-          .radio-inline
-            input[name="optionsRadios" value="option2" checked="" type="radio"]
-              | Radio option 1
+            .col-xs-4
+              span.btn.btn-default.open-more
+                i.fa.fa-ellipsis-v.m-r-5
+                span 更多筛选
+          .col-xs-12.more-choices
+            - @agent_member_catalogs.each do |catalog|
+              .col-xs-6
+                label.text-muted = catalog.key
+                = f.input catalog.key,
+                  collection: catalog.value,
+                  label: false,
+                  as: :radio_buttons,
+                  checked: params[:search]&&params[:search][catalog.key],
+                  item_wrapper_class: 'a radio-inline features-key'
+            .footer-btn.text-right
+              button.btn.btn-sm.btn-info[type="submit"] 筛选搜索
     / .more-dom
     /   .more-filter
     /
@@ -77,4 +83,31 @@ javascript:
         $.gritter.add({title: '提示', text: notice})
       }
     }
+    var moreChoicesDom = $(".more-choices").clone()
+    $(".search-panel-title .hide").append(moreChoicesDom)
+    if(!$(".search-panel-title .hide").hasClass("open")){
+      $(".search-panel-title form .more-choices").remove()
+    }else{
+      $("#search_keywords").parent().removeClass("input-group")
+      $(".keyword-search-btn").hide()
+    }
+    $(".open-more").on("click", function(){
+      if($("#search_keywords").parent().hasClass("input-group")){
+        $("#search_keywords").parent().removeClass("input-group")
+        $(".search-panel-title form").append(moreChoicesDom)
+        $(".keyword-search-btn").hide()
+        $(".search-panel-title form .more-choices").hide().slideDown()
+      }else{
+        $("#search_keywords").parent().addClass("input-group")
+        $(".keyword-search-btn").show()
+        $(".search-panel-title form .more-choices").slideUp(function(){
+          $(this).remove()
+        })
+      }
+    })
+    var $radios = $('input:radio');
+    $radios.change(function () {
+      $($(this).parent().parent().parent()).find('input:radio').parent().removeClass('checked');
+      $(this).parent().addClass('checked');
+    });
   })
