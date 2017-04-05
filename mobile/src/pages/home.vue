@@ -42,7 +42,7 @@
 	            <img src="./../assets/img/icon.png" alt="" class="iconimg">
 	            <h2 class="maintitle col-100 ">新人专享28元起</h2>
 	            <h5 class="col-100">更有免单机会每天抽</h5>
-	            <a href="#" class="button button-fill">立即注册</a>
+	            <a href="#" class="button button-fill">立即抽奖</a>
             </div>
             <img src="./../assets/img/banner2.png" alt="">
 	          <img src="./../assets/img/banner_top.png" alt="" class="bottomoverlay">
