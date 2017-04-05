@@ -1,0 +1,16 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      finance_history: Finance history
+    attributes:
+      finance_history:
+        operate_date: Operate date
+        amount: Amount
+        operate_type: Operate type
+        owner: Owner
+    errors:
+      models:
+        finance_history: 
+  helpers:
+    finance_history: 
