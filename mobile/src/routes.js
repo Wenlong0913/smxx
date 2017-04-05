@@ -54,5 +54,13 @@ export default [
   {
     path: '/feature/',
     component: require('./pages/feature.vue')
+  },
+  {
+    path: '/information_center/',
+    component: require('./pages/information_center.vue')
+  },
+  {
+    path: '/invitation_code/',
+    component: require('./pages/invitation_code.vue')
   }
 ]

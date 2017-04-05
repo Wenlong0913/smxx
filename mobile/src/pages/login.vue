@@ -3,7 +3,7 @@
   <f7-navbar back-link="Back" class="header">
     <div class="navbar-inner">
       <div class="left sliding">
-        <a href="/" class="link icon-only"><i class="fa fa-chevron-left"></i></a>
+        <a href="/" class="link icon-only back"><i class="fa fa-chevron-left"></i></a>
       </div>
     </div>
   </f7-navbar>
@@ -14,24 +14,24 @@
     </div>
     <div class="clear"></div>
     <f7-list form class="list-block">
-        <ul>
-          <li class="item-content">
-            <div class="item-inner">
-              <div class="item-title label">用户名/手机号/邮箱</div>
-              <div class="item-input">
-                <f7-input class="style login3" type="text" name="email" placeholder="用户名/邮箱/密码" v-model="form.username" />
-              </div>
+      <ul>
+        <li class="item-content">
+          <div class="item-inner">
+            <div class="item-title label">用户名/手机号/邮箱</div>
+            <div class="item-input">
+              <f7-input class="style login3" type="text" name="email" placeholder="用户名/邮箱/密码" v-model="form.username" />
             </div>
-          </li>
-          <li class="item-content">
-            <div class="item-inner">
-              <div class="item-title label">密码</div>
-              <div class="item-input">
-                <f7-input class="style login3" type="password" name="password" placeholder="" v-model="form.password" />
-              </div>
+          </div>
+        </li>
+        <li class="item-content">
+          <div class="item-inner">
+            <div class="item-title label">密码</div>
+            <div class="item-input">
+              <f7-input class="style login3" type="password" name="password" placeholder="" v-model="form.password" />
             </div>
-          </li>
-        </ul>
+          </div>
+        </li>
+      </ul>
     </f7-list>
     <div class="buttonbar row no-gutter">
       <button @click="submit" class="button-fill button col-100">提 交</button>
