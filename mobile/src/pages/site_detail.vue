@@ -51,7 +51,7 @@
             <div class="list-block media-list shop">
               <ul>
                 <li v-for="product in products">
-                  <a href="#" class="item-link item-content">
+                  <a :href="/product_catalog_detail/ + product.id" class="item-link item-content">
                     <div class="item-media">
                       <img src="./../assets/img/pic1.png" width="80" alt="">
                     </div>
