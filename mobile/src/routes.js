@@ -28,6 +28,10 @@ export default [
     component: require('./pages/product_catalogs.vue')
   },
   {
+    path: '/product_catalog_detail/:id/',
+    component: require('./pages/product_catalog_detail.vue')
+  },
+  {
     path: '/about/',
     component: require('./pages/about.vue')
   },
