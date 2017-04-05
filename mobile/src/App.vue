@@ -11,7 +11,7 @@
               <div class="item-media"><img src="./assets/img/pic1.png" width="44" />
               </div>
               <div class="item-inner">
-                <div class="item-title-row">                  
+                <div class="item-title-row">            
                   <div class="item-title">请先登录</div>
                 </div>
                 <div class="item-subtitle"></div>
@@ -77,11 +77,9 @@
                     <div class="accordion-item-content">
                       <div class="content-block">
                         <ul>
-                          <li><a href="/services.html" class="item-link close-panel"><span>预约人管理</span></a>
+                          <li><a href="/information_center/" class="item-link close-panel"><span>信息中心</span></a>
                           </li>
-                          <li><a href="/services.html" class="item-link close-panel"><span>信息中心</span></a>
-                          </li>
-                          <li><a href="/services.html" class="item-link close-panel"><span>邀请码</span></a>
+                          <li><a href="/invitation_code/" class="item-link close-panel"><span>邀请码</span></a>
                           </li>
                         </ul>
                       </div>
@@ -115,7 +113,7 @@
     <div class="panel panel-right panel-cover sidebar">
       <div class="view">
         <div class=" ">
-          <div data-page="panel-left" class="sidemenu leftmenusmall ">
+          <div data-page="about" class="sidemenu leftmenusmall ">
             <div class="item-content userprofile">
               <div class="item-media"><img src="./assets/img/pic1.png" width="44" alt="" />
               </div>
@@ -200,21 +198,22 @@
     <!-- Main Views -->
     <f7-views>
       <f7-view id="main-view" :dynamic-navbar="true" main>
-        <!-- Navbar -->
-        <f7-navbar>
-          <f7-nav-left>
-            <f7-link icon="icon-bars" open-panel="left"></f7-link>
-          </f7-nav-left>
-          <f7-nav-center>
-            <small>  mokomo---美容O2O新概念</small>
-          </f7-nav-center>
-          <f7-nav-right>
-            <f7-link icon="fa fa-user" href="/about/"></f7-link>
-          </f7-nav-right>
-        </f7-navbar>
         <!-- Pages -->
         <f7-pages>
           <f7-page>
+            <!-- Navbar -->
+            <f7-navbar>
+              <f7-nav-left>
+                <f7-link icon="icon-bars" open-panel="left"></f7-link>
+              </f7-nav-left>
+              <f7-nav-center>
+                <small>  mokomo---美容O2O新概念</small>
+              </f7-nav-center>
+              <f7-nav-right>
+                <f7-link icon="fa fa-user" href="/about/"></f7-link>
+              </f7-nav-right>
+            </f7-navbar>
+
             <div class="page-content landingpage gradient">
               <div class="logo main col12">
                 <img src="./assets/img/icon.png" alt=""> </div>
@@ -222,13 +221,12 @@
                 <h1> 美客美<br>定制私人美容</h1>
                 <p>专业优质的社区美容服务</p>
               </div>
-              <div class="buttonbar  no-gutter">
+              <div class="buttonbar no-gutter">
                 <a href="/login" class="button-fill button color-pink col">用户登录</a>
               </div>
             </div>
           </f7-page>
         </f7-pages>
-
       </f7-view>
     </f7-views>
   </div>
