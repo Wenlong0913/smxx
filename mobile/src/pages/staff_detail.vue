@@ -85,7 +85,7 @@
         <div id="tab2" class="tab">
           <div class="prductlist content-block">
             <div class="row">
-              {{staff.content}}
+              <p v-html="staff.content"></p>
             </div>
           </div>
         </div>
