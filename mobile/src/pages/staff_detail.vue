@@ -25,7 +25,7 @@
       <div class="toolbar tabbar" style="top: 0;">
         <div class="toolbar-inner">
           <a href="#tab1" class="tab-link active button">个人主页</a>
-          <a href="#tab2" class="tab-link button">全部项目</a>
+          <a href="#tab2" class="tab-link button">工作经历</a>
           <a href="#tab3" class="tab-link button">顾客评价</a>
         </div>
       </div>
@@ -85,38 +85,7 @@
         <div id="tab2" class="tab">
           <div class="prductlist content-block">
             <div class="row">
-              <div class="card col-50">
-                <div class="card-content">
-                  <div class="banner productblock">
-                    <img src="./../assets/img/team1.jpg" class="col-100" alt="">
-                  </div>
-                  <div class="content-block productdata">
-                    <p style="line-height: 1.5;">春季滋养补水+舒筋美背活络SPA</p>
-                    <p>
-                      <span style="color: #ff9500;">￥199元</span>
-                      <span style="color: #949090;float: right;">11人购买</span>
-                    </p>
-                    <div class="clear"></div>
-                  </div>
-                  <div class="clear"></div>
-                </div>
-              </div>
-              <div class="card col-50">
-                <div class="card-content">
-                  <div class="banner productblock">
-                    <img src="./../assets/img/team1.jpg" class="col-100" alt="">
-                  </div>
-                  <div class="content-block productdata">
-                    <p style="line-height: 1.5;">春季滋养补水+舒筋美背活络SPA</p>
-                    <p>
-                      <span style="color: #ff9500;">￥199元</span>
-                      <span style="color: #949090;float: right;">11人购买</span>
-                    </p>
-                    <div class="clear"></div>
-                  </div>
-                  <div class="clear"></div>
-                </div>
-              </div>
+              <p v-html="staff.content"></p>
             </div>
           </div>
         </div>

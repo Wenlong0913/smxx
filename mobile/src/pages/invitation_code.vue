@@ -1,0 +1,32 @@
+<template>
+  <f7-page>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="left sliding"><a href="" class="back link"><i class="icon icon-back"></i></a></div>
+        <div class="center">美客美邀请码</div>
+      </div>
+    </div>
+
+    <div class="page-content" style="margin-top: 10px;">
+      <div class="item-content text-center">
+        <div class="item-media">
+          <img src="./../assets/img/gift-box.svg" alt="" width="80" height="70" >
+        </div>
+        <f7-list form>
+          <f7-list-item>
+            <f7-input type="text" placeholder="请输入您获得的邀请码"></f7-input>
+          </f7-list-item>
+        </f7-list>
+        <div class="row">
+          <button class="button-fill button col-100"> 立 即 使 用 </button>
+        </div>
+        <p class="text-center">邀请码使用规则</p>
+        <p class="text-center">输入您的邀请码，可立即获得一份超值大礼包。</p>
+      </div>
+    </div>
+  </f7-page>
+</template>
+
+<script>
+  export default {}
+</script>

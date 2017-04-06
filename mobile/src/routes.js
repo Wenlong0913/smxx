@@ -23,11 +23,14 @@ export default [
     path: '/sites/:id/',
     component: require('./pages/site_detail.vue')
   },
-
-  // {
-  //   path: '/product_catalogs/:id/',
-  //   component: require('./pages/product_catalog_detail.vue')
-  // },
+  {
+    path: '/product_catalogs/:id/',
+    component: require('./pages/product_catalogs.vue')
+  },
+  {
+    path: '/product_catalog_detail/:id/',
+    component: require('./pages/product_catalog_detail.vue')
+  },
   {
     path: '/about/',
     component: require('./pages/about.vue')
@@ -51,5 +54,13 @@ export default [
   {
     path: '/feature/',
     component: require('./pages/feature.vue')
+  },
+  {
+    path: '/information_center/',
+    component: require('./pages/information_center.vue')
+  },
+  {
+    path: '/invitation_code/',
+    component: require('./pages/invitation_code.vue')
   }
 ]

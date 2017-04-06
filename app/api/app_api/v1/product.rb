@@ -25,7 +25,7 @@ module AppAPI::V1
       get do
         authenticate!
         # 查看所有上架商品
-        products = ::Product.where("features ->> 'is_shelves' = '1'")
+        products = ::Product.all
         if params[:type]
           products = 
             case params[:type]

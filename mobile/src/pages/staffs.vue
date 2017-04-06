@@ -1,11 +1,11 @@
 <template>
-  <div data-page="staffs" class="page navbar-fixed" >
+  <f7-page>
     <div class="navbar">
       <div class="navbar-inner">
         <div class="left sliding">
           <a href="/f7-theme/max_solaris/home.html" class="back link"><i class="icon icon-back"></i></a>
         </div>
-        <div class="center ">美容师</div>
+        <div class="center ">美容师列表</div>
         <div class="right">
           <a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a>
         </div>
@@ -25,8 +25,13 @@
               <div class="item-subtitle">
                 <f7-link :href="'/staffs/' + staff.id">
                   <span>姓名：{{staff.title}}</span>
-                  <span>工作年限：{{staff.work_years}}</span>
                 </f7-link>
+              </div>
+              <div class="item-title-row">
+                <div class="item-title">
+                  <span>年龄：{{staff.age}}</span>
+                  <span>工作年限：{{staff.work_years}}</span>
+                </div>
               </div>
               <div class="item-title-row">
                 <div class="item-title">个人介绍：{{staff.description}}</div>
@@ -36,7 +41,7 @@
         </ul>
       </div>
     </div>
-  </div>
+  </f7-page>
 </template>
 
 <script>
