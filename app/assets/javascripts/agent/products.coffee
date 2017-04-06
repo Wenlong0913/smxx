@@ -198,8 +198,8 @@ $(document).ready ->
           this.lists.push({key: '', value: '', name: this.count})
         removeInputList: (index)->
           this.lists.splice(index, 1)
-    defaultkeys = bodyEdit.find(".div[rel='attr_list_vue']").data('keys')
-    defaultvalues = bodyEdit.find(".div[rel='attr_list_vue']").data('values')
+    defaultkeys = bodyEdit.find("div[rel='attr_list_vue']").data('keys')
+    defaultvalues = bodyEdit.find("div[rel='attr_list_vue']").data('values')
     attrList.lists = []
     max = 0
     for name, v of defaultkeys
