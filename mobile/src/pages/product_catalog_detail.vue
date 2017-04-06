@@ -27,7 +27,7 @@
     <hr>
     <div class="content-block">
       <h3 class="col-100">项目介绍</h3>
-      <p class="item-text">{{ product_detail.content }}</p>
+      <p class="item-text" v-html="product_detail.content"></p>
     </div>
     <hr>
     <div class="content-block">

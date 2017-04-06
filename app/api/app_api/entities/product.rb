@@ -31,6 +31,10 @@ module AppAPI
       #   expose :weight_unit, documentation: { desc: '重量单位'}
       #   expose :product_special_attributes, documentation: { desc: '该产品信息特有的属性和值'}
       # end
+      
+      def properties
+        object.properties.map{|p| ::Product::PROPERTIES[p.to_sym]}.compact.join('，')
+      end
 
       def product_special_attributes
         psa = {}

@@ -68,29 +68,87 @@
           </article>
         </div>
         <div id="tab2" class="tab page-content">
-          <div class="center content-block">
-            <h2>Your photo album</h2>
-            <p>2016-2017</p>
+          <div data-pagination=".swiper-pagination" data-effect="coverflow" data-slidesPerView="auto" data-centeredSlides="true" class="swiper-container swiper-init ks-demo-slider ks-coverflow-slider">
+            <div class="swiper-pagination"></div>
+            <div class="swiper-wrapper">
+              <div style="background-image:url(../assets/img/pic1.png)" class="swiper-slide">Slide 1</div>
+              <div style="background-image:url(./../img/banner2.png)" class="swiper-slide">Slide 2</div>
+              <div style="background-image:url(./../img/banner3.png)" class="swiper-slide">Slide 3</div>
+              <div style="background-image:url(./../img/banner4.png)" class="swiper-slide">Slide 4</div>
+            </div>
           </div>
-          <div class="gallery row no-gutter"> 
-              <a href="/f7-theme/max_solaris/img/banner1.png" rel="gallery-1" class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner1.png" alt="image" class="col-100"> </a>
-              <a href="/f7-theme/max_solaris/img/banner2.png" rel="gallery-1"  class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner2.png" alt="image" class="col-100"> </a> 
-              <a href="/f7-theme/max_solaris/img/banner3.png"  rel="gallery-1"  class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner3.png" alt="image" class="col-100"> </a>
-              <a href="/f7-theme/max_solaris/img/banner4.png"  rel="gallery-1"  class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner4.png" alt="image" class="col-100"> </a>
-              <a href="/f7-theme/max_solaris/img/banner2.png"  rel="gallery-1"  class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner2.png" alt="image" class="col-100"> </a>
-              <a href="/f7-theme/max_solaris/img/banner1.png"  rel="gallery-1"  class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner1.png" alt="image" class="col-100"> </a>
-              <a href="/f7-theme/max_solaris/img/banner2.png"  rel="gallery-1"  class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner2.png" alt="image" class="col-100"> </a>
-              <a href="/f7-theme/max_solaris/img/banner3.png"  rel="gallery-1"  class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner3.png" alt="image" class="col-100"> </a>
-              <a href="/f7-theme/max_solaris/img/banner4.png"  rel="gallery-1"  class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner4.png" alt="image" class="col-100"> </a>
-              <a href="/f7-theme/max_solaris/img/banner1.png" rel="gallery-1" class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner1.png" alt="image" class="col-100"> </a>
-              <a href="/f7-theme/max_solaris/img/banner2.png" rel="gallery-1"  class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner2.png" alt="image" class="col-100"> </a> 
-              <a href="/f7-theme/max_solaris/img/banner3.png"  rel="gallery-1"  class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner3.png" alt="image" class="col-100"> </a>
-              <a href="/f7-theme/max_solaris/img/banner4.png"  rel="gallery-1"  class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner4.png" alt="image" class="col-100"> </a>
-              <a href="/f7-theme/max_solaris/img/banner2.png"  rel="gallery-1"  class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner2.png" alt="image" class="col-100"> </a>
-              <a href="/f7-theme/max_solaris/img/banner1.png"  rel="gallery-1"  class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner1.png" alt="image" class="col-100"> </a>
-              <a href="/f7-theme/max_solaris/img/banner2.png"  rel="gallery-1"  class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner2.png" alt="image" class="col-100"> </a>
-              <a href="/f7-theme/max_solaris/img/banner3.png"  rel="gallery-1"  class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner3.png" alt="image" class="col-100"> </a>
-              <a href="/f7-theme/max_solaris/img/banner4.png"  rel="gallery-1"  class="swipebox col-33" title="My Caption"> <img src="/f7-theme/max_solaris/img/banner4.png" alt="image" class="col-100"> </a>
+          <div class="col-100 content-block">
+            <h2>We provide our best services with 100% result</h2>
+            <p class="col-100 textcenter"><i>Creative, User centric, new trend and royal feel with this appliaion design. Customer centric product and design is our main focus</i> </p>
+          </div>
+          <div class="col-100 ">
+            <div class="list-block accordion-list">
+              <ul>
+                <li class="accordion-item accordion-item-expanded"><a href="#" class="item-link item-content">
+                  <div class="item-inner">
+                    <div class="item-title">Mobile Tablet UI</div>
+                  </div>
+                  </a>
+                  <div class="accordion-item-content">
+                    <div class="content-block">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean elementum id neque nec commodo. Sed vel justo at turpis laoreet pellentesque quis sed lorem. Integer semper arcu nibh, non mollis arcu tempor vel. Sed pharetra tortor vitae est rhoncus, vel congue dui sollicitudin. Donec eu arcu dignissim felis viverra blandit suscipit eget ipsum.</p>
+                    </div>
+                  </div>
+                </li>
+                <li class="accordion-item"><a href="#" class="item-link item-content">
+                  <div class="item-inner">
+                    <div class="item-title">Spot Trendy</div>
+                  </div>
+                  </a>
+                  <div class="accordion-item-content">
+                    <div class="content-block">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean elementum id neque nec commodo. Sed vel justo at turpis laoreet pellentesque quis sed lorem. Integer semper arcu nibh, non mollis arcu tempor vel. Sed pharetra tortor vitae est rhoncus, vel congue dui sollicitudin. Donec eu arcu dignissim felis viverra blandit suscipit eget ipsum.</p>
+                    </div>
+                  </div>
+                </li>
+                <li class="accordion-item"><a href="#" class="item-link item-content">
+                  <div class="item-inner">
+                    <div class="item-title">Wordpress</div>
+                  </div>
+                  </a>
+                  <div class="accordion-item-content">
+                    <div class="content-block">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean elementum id neque nec commodo. Sed vel justo at turpis laoreet pellentesque quis sed lorem. Integer semper arcu nibh, non mollis arcu tempor vel. Sed pharetra tortor vitae est rhoncus, vel congue dui sollicitudin. Donec eu arcu dignissim felis viverra blandit suscipit eget ipsum.</p>
+                    </div>
+                  </div>
+                </li>
+                <li class="accordion-item"><a href="#" class="item-link item-content">
+                  <div class="item-inner">
+                    <div class="item-title">Website HTML/CSS</div>
+                  </div>
+                  </a>
+                  <div class="accordion-item-content">
+                    <div class="content-block">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean elementum id neque nec commodo. Sed vel justo at turpis laoreet pellentesque quis sed lorem. Integer semper arcu nibh, non mollis arcu tempor vel. Sed pharetra tortor vitae est rhoncus, vel congue dui sollicitudin. Donec eu arcu dignissim felis viverra blandit suscipit eget ipsum.</p>
+                    </div>
+                  </div>
+                </li>
+                <li class="accordion-item"><a href="#" class="item-link item-content">
+                  <div class="item-inner">
+                    <div class="item-title">Mobile UI/UX</div>
+                  </div>
+                  </a>
+                  <div class="accordion-item-content">
+                    <div class="content-block">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean elementum id neque nec commodo. Sed vel justo at turpis laoreet pellentesque quis sed lorem. Integer semper arcu nibh, non mollis arcu tempor vel. Sed pharetra tortor vitae est rhoncus, vel congue dui sollicitudin. Donec eu arcu dignissim felis viverra blandit suscipit eget ipsum.</p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-100 content-block">
+            <p class="col-100 textcenter">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean elementum id neque nec commodo. Sed vel justo at turpis laoreet pellentesque quis sed lorem. Integer semper arcu nibh, non mollis arcu tempor vel. Sed pharetra tortor vitae est rhoncus, vel congue dui sollicitudin. Donec eu arcu dignissim felis viverra blandit suscipit eget ipsum.</p>
+          </div>
+          <div class="center content-block ">
+            <div class=""><img src="./../assets/img/phone.png" alt=""></div>
+            <a :href="'tel:' + site.contact_number ">(Tel) :{{ site.contact_number }}</a>
+            <p class="">联系我们</p>
           </div>
         </div>
         <div id="tab3" class=" page-content tab">
@@ -140,14 +198,15 @@
     data () {
       return {
         site: [],
-        products: []
+        products: [],
+        image_list: []
       }
     },
     mounted () {
       var _this = this
       Site.get(_this.$route.params.id).then(function (response) {
         _this.site = response.data
-
+        _this.image_list = response.data.images
         _this.products = response.data.products
       })
     }
