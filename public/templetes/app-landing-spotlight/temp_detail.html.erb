@@ -1,0 +1,31 @@
+<%= render file: 'public/templetes/app-landing-spotlight/_header.html' %>
+
+<div class="" style="height: 80px; background-color: #6e6e6e;"></div>
+
+<!-- Sections 右 -->
+<div id="news_detail">
+  <!-- Welcome -->
+  <section data-anchor="<%= @page.short_title %>">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-md-12">
+          <h2 class="heading animated animateUp" data-animate-in="animateUp">
+            <%= @page.title %>
+          </h2>
+          <p class="features">
+            <span>发布时间：<%= @page.format_date %></span>
+            <span>阅读量：<%= @page.impressions_count %></span>
+            <span><%= link_to '返回', get_cms_url(@page.channel) %></span>
+          </p>
+          <div class="">
+            <%= raw @page.content %>
+          </div>
+        </div>
+      </div> <!-- / .row -->
+    </div><!-- / .container -->
+  </section>
+</div> <!-- / #fullpage -->
+
+<%= render file: 'public/templetes/app-landing-spotlight/_footer.html' %>
+
+<!-- Mirrored from simpleqode.com/preview/spotlight/1.0.2/index_coloured.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 05 Apr 2017 02:55:28 GMT -->
