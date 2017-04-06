@@ -2,8 +2,13 @@
   <f7-page>
     <div class="navbar">
       <div class="navbar-inner">
-        <div class="left sliding"><a href="" class="back link"><i class="icon icon-back"></i></a></div>
-        <div class="center">美容师详情</div>
+        <div class="left sliding">
+          <a href="/" class="link icon-only back"><i class="fa fa-chevron-left"></i></a>
+        </div>
+        <div class="center ">{{staff.title}} | 美容师</div>
+        <div class="right">
+          <a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a>
+        </div>
       </div>
     </div>
 

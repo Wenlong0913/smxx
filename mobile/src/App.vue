@@ -20,10 +20,17 @@
             <div class="page-content">
               <div class="list-block accordion-list">
                 <ul class="menu">
+                  <li>
+                    <a href="/home/" class="item-link close-panel item-content ">
+                      <div class="itemmeniinner"><i class="fa fa-home"></i><span>首页</span>
+                      </div>
+                    </a>
+                  </li>
+
                   <li class="accordion-item">
                     <a href="#" class="item-content item-link">
                       <div class="item-inner">
-                        <div class="item-title"><i class="fa fa-home"></i>项目</div>
+                        <div class="item-title"><i class="fa fa-th-list"></i>项目</div>
                       </div>
                     </a>
                     <div class="accordion-item-content">
@@ -95,7 +102,13 @@
 
                   <li>
                     <a href="/contact/" class="item-link close-panel item-content ">
-                      <div class="itemmeniinner"><i class="fa fa-music"></i><span>联系我们</span>
+                      <div class="itemmeniinner"><i class="fa fa-phone"></i><span>联系我们</span>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/login/" class="item-link close-panel item-content ">
+                      <div class="itemmeniinner"><i class="fa fa-undo"></i><span>退出登录</span>
                       </div>
                     </a>
                   </li>
@@ -103,7 +116,7 @@
               </div>
             </div>
             <div class="buttonbar row no-gutter">
-              <a href="/f7-theme/max_solaris/sign-in.html" class=" button color2 col-100">在线预约</a>
+              <a href="" class=" button color2 col-100">在线预约</a>
             </div>
           </div>
         </div>

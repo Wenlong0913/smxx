@@ -4,6 +4,9 @@
       <div class="navbar-inner">
         <div class="left sliding"><a href="" class="back link"><i class="icon icon-back"></i></a></div>
         <div class="center">关于美客美</div>
+        <div class="right">
+          <a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a>
+        </div>
       </div>
     </div>
 
