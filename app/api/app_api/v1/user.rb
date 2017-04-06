@@ -16,6 +16,7 @@ module AppAPI::V1
       params do
         requires :mobile_phone, type: String, desc: '手机号', documentation: { example: 'Jim' }
         requires :mobile_phone_code, type: String, desc: '手机验证码'
+        optional :shared_code, type: String, desc: '邀请码'
         optional :nickname, type: String, desc: '用户昵称'
         optional :device, type: String, desc: '设备信息，可以是UserAgent，也可以是自定义的名字。目的是让一个设备只生成一个access token'
       end
@@ -26,8 +27,17 @@ module AppAPI::V1
         user_attributes = {}
         user_attributes[:mobile_phone] = params[:mobile_phone]
         user_attributes[:nickname] = params[:nickname] if params[:nickname]
+        if params[:shared_code]
+          sale_resource = ::SalesDistribution::Resource.where(code: params[:shared_code]).first
+        end
         flag, user = ::User::Create.(user_attributes)
-        error! user.errors unless flag
+        if flag
+          # 如果输入了邀请码，创建好友的关系（在分销系统中体现，就是给分销resource创建一条访问记录）
+          ::SalesDistribution::ResourceUser.create(resource: sale_resource, user: user) if sale_resource
+        else
+          error! user.errors
+        end
+
 
         api_token = user.api_tokens.find_or_initialize_by(device: params[:device])
         api_token.expired_at = 30.days.since
