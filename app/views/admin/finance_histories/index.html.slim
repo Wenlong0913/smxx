@@ -1,7 +1,7 @@
 h1.page-header
-  | #{<%= model_class_name %>.model_name.human}列表
+  | #{FinanceHistory.model_name.human}列表
   .pull-right
-    = link_to "新建#{<%= model_class_name %>.model_name.human}", new_<%= singular_table_name %>_path, class: 'btn btn-primary'
+    = link_to "新建#{FinanceHistory.model_name.human}", new_admin_finance_history_path, class: 'btn btn-primary'
 
 .panel.panel-default
   .panel-heading
@@ -11,9 +11,9 @@ h1.page-header
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
     h3.panel-title
-      | #{<%= model_class_name %>.model_name.human}
+      | #{FinanceHistory.model_name.human}
   .panel-body
-    = form_for :search, url:  <%= table_name %>_path, method: :get do |f|
+    = form_for :search, url:  admin_finance_histories_path, method: :get do |f|
       .toolbar.row
         .col-md-12
           p
@@ -34,7 +34,7 @@ h1.page-header
             ul.dropdown-menu#search_column[role='menu']
               - @filter_colums.each do |filter_colum|
                 li
-                  a[href='javascript:;' data-key=filter_colum] = <%= model_class_name %>.human_attribute_name(:filter_colum)
+                  a[href='javascript:;' data-key=filter_colum] = FinanceHistory.human_attribute_name(:filter_colum)
           .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
             button.btn.btn-default[type='submit'name='json'value='json'] json
             button.btn.btn-default[type='submit'name='xml'value='xml'] xml
@@ -45,7 +45,7 @@ h1.page-header
             .form-group
               label.col-xs-1.control-label
                 i.fa.fa-trash-o.m-r-5
-                b = <%= model_class_name %>.human_attribute_name(:key)
+                b = FinanceHistory.human_attribute_name(:key)
               - input_name = "filters["+key+"]"
               .col-xs-5
                 input.form-control[type="text"name==input_name value==params[:filters][key]]
@@ -56,28 +56,30 @@ h1.page-header
         strong
           = "查询："
         span
-          = @<%= plural_model_var_name %>.size.to_s + "条记录"
+          = @finance_histories.size.to_s + "条记录"
         span.close[data-dismiss="alert"]
           | ×
     .table-responsive.row.m-0
       table.table.table-striped.table-bordered
         thead
           tr
-<% attributes.each do |attribute| -%>
-            th = <%= model_class_name %>.human_attribute_name(:<%= attribute.name %>)
-<% end -%>
+            th = FinanceHistory.human_attribute_name(:operate_type)
+            th = FinanceHistory.human_attribute_name(:operate_date)
+            th = FinanceHistory.human_attribute_name(:amount)
+            th = FinanceHistory.human_attribute_name(:note)
             th
         tbody
-          - @<%= plural_model_var_name %>.each do |<%= model_var_name %>|
+          - @finance_histories.each do |finance_history|
             tr
-<% attributes.each do |attribute| -%>
-              td = <%= model_var_name %>.<%= attribute.name %>
-<% end -%>
+              td = finance_history.operate_type
+              td = finance_history.operate_date
+              td = finance_history.amount
+              td = finance_history.note
               td
-                => link_to '查看', <%= singular_table_name %>_path(<%= model_var_name %>), class: 'btn btn-xs btn-default'
-                => link_to '编辑', edit_<%= singular_table_name %>_path(<%= model_var_name %>), class: 'btn btn-xs btn-default'
-                = link_to '删除', <%= singular_table_name %>_path(<%= model_var_name %>), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
-      = paginate @<%= plural_model_var_name %>
+                => link_to '查看', admin_finance_history_path(finance_history), class: 'btn btn-xs btn-default'
+                => link_to '编辑', edit_admin_finance_history_path(finance_history), class: 'btn btn-xs btn-default'
+                = link_to '删除', admin_finance_history_path(finance_history), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+      = paginate @finance_histories
 
 / TODO: move this code to application.js
 javascript:

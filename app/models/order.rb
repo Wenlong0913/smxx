@@ -67,6 +67,7 @@ class Order < ApplicationRecord
   has_one :produce, dependent: :destroy
   has_one :order_delivery, dependent: :destroy
   has_one :delivery, through: :order_delivery
+  has_many :finance_histories, as: :owner, dependent: :destroy
 
   before_create :generate_code
   # before_validation :check_member
@@ -96,6 +97,14 @@ class Order < ApplicationRecord
       self.user = self.member.user
     end
     # self.user = self.member.user
+  end
+
+  def paid
+    finance_histories.sum(&:amount)
+  end
+  
+  def paid_status
+    paid > (price/100) ? '已结清' : '未结清'
   end
 
   # def member

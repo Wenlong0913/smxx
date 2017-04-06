@@ -73,6 +73,7 @@ module ApiRoute
           end
           resources :order_cvs, only: [:index, :create]
           resources :audits, only: [:index]
+          resources :finance_histories, only: [:index, :create]
         end
       end
     end
