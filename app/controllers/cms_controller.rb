@@ -35,7 +35,7 @@ class CmsController < ApplicationController
     elsif params[:tag]
       @pages = Cms::Page.tagged_with(params[:tag]).order("updated_at DESC").page(params[:page])
     else
-      @pages = Cms::Page.joins(:channel).where(["cms_channels.site_id = ? AND (cms_channels.id = ? OR cms_channels.parent_id = ?)", @cms_site.id, @channel.id, @channel.id]).order("cms_pages.updated_at DESC").page(params[:page])
+      @pages = Cms::Page.joins(:channel).where(["cms_channels.site_id = ? AND (cms_channels.id = ? OR cms_channels.parent_id = ?)", @cms_site.id, @channel.id, @channel.id]).order("cms_pages.updated_at DESC").page(params[:page]).per(6)
     end
     #tag cloud
     #@tags = Cms::Page.tag_counts_on(:tags)
