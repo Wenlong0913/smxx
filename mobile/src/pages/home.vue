@@ -6,7 +6,7 @@
           <a href="#" data-panel="left" class="open-panel link icon-only"><i class="fa fa-bars"></i></a>
         </div>
 	      <div class="center ">mokomo---美容O2O新概念</div>
-	        <div class="right sliding"><a href="#"  data-panel="right" class="open-panel link icon-only"><i class="fa fa-envelope"></i></a>
+	        <div class="right sliding"><a href="/about/"  class=" link icon-only"><i class="fa fa-user"></i></a>
         </div>
 	    </div>
 	  </div>
