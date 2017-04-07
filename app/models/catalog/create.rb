@@ -1,7 +1,11 @@
 class Catalog
   Create =
     lambda do |attributes, user: nil|
-      attributes["settings"] = attributes["settings"].split(/[,，]/).map(&:strip) if attributes["settings"].present?
+      if attributes["settings"].blank?
+        attributes["settings"] = nil
+      else
+        attributes["settings"] = attributes["settings"].split(/[,，]/).map(&:strip)
+      end
       record = Catalog.new(attributes)
       [record.save, record]
     end

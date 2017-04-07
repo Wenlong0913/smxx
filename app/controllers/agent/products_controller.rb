@@ -89,20 +89,14 @@ class Agent::ProductsController < Agent::BaseController
   end
 
   def create
+    additional_attribute
     @product = Product.new(permitted_attributes(Product))
     @product.site = @site
-    unless params["product"]["additional_attribute_keys"].blank?
-      params["product"]["additional_attribute_keys"].each do |k, v|
-        if v.blank?
-          params["product"]["additional_attribute_keys"].delete(k)
-          params["product"]["additional_attribute_values"].delete(k)
-        end
-      end
-    end
-    @product.additional_attribute_keys = params["product"]["additional_attribute_keys"]
-    @product.additional_attribute_values = params["product"]["additional_attribute_values"]
     authorize @product
-
+    if params["product"]["additional_attribute_keys"].present?
+      @product.additional_attribute_keys = params["product"]["additional_attribute_keys"]
+      @product.additional_attribute_values = params["product"]["additional_attribute_values"]
+    end
     if @product.save
       # redirect_to agent_product_path(@product), notice: 'Product 创建成功.'
       render json: {url: agent_product_path(@product)}
@@ -115,12 +109,6 @@ class Agent::ProductsController < Agent::BaseController
     authorize @product
     additional_attribute
     if params["product"]["additional_attribute_keys"].present?
-      params["product"]["additional_attribute_keys"].each do |k, v|
-        if v.blank?
-          params["product"]["additional_attribute_keys"].delete(k)
-          params["product"]["additional_attribute_values"].delete(k)
-        end
-      end
       @product.additional_attribute_keys = params["product"]["additional_attribute_keys"]
       @product.additional_attribute_values = params["product"]["additional_attribute_values"]
     end
