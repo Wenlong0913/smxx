@@ -20,8 +20,14 @@
           </div>
           <div class="content-block productdata">
             <h2 class="maintitle col-100 ">{{ site.title }}</h2>
-            <h3 class="col-100"><i class="fa fa-thumb-tack"></i>{{ site.address }}</h3>
-            <div class="item-subtitle star color-amber ">★★★★☆</div>
+            <p class="item-subtitle">
+              <span class="fa fa-star color-amber"></span>
+              <span class="fa fa-star color-amber"></span>
+              <span class="fa fa-star color-amber"></span>
+              <span class="fa fa-star-half-o color-amber"></span>
+              <span class="fa fa-star-o color-amber"></span>
+            </p>
+            
             <div class="clear"></div>
           </div>
           <div class="clear"></div>

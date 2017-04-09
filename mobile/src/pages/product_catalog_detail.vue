@@ -23,7 +23,8 @@
       <h2 class="maintitle col-100">{{ product_detail.name }}</h2>
       <h3 class="col-100 color-green">￥ {{ product_detail.sell_price }}</h3>
       <div class="item-subtitle star color-amber ">★★★★☆</div>
-      <p class="">{{ product_detail.description }}</p></div>
+      <p class="">{{ product_detail.description }}</p>
+    </div>
     <hr>
     <div class="content-block">
       <h3 class="col-100">项目介绍</h3>

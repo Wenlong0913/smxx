@@ -9,6 +9,7 @@ module AppAPI
       expose :contact_number, documentation: { desc: '联系电话' }
       expose :is_sign, documentation: { desc: '是否签约' }
       expose :site_hours, documentation: { desc: '营业时间' }
+      expose :content, documentation: { desc: '美容院介绍' }
 
       expose :address, documentation: { desc: '地址' }
       expose :image_items, using: AppAPI::Entities::ImageItem, as: :images
@@ -16,6 +17,7 @@ module AppAPI
         site.image_items.last.try(:image_url)
       end
       expose :properties, documentation: { desc: '标签备注' }
+      expose :staffs, using: AppAPI::Entities::Staff, if: ->(site, options) { (options[:includes] || []).include?(:staffs) }
       expose :products, using: AppAPI::Entities::Product, if: ->(site, options) { (options[:includes] || []).include?(:products) }
       # # product detail
       # with_options if: ->(site, options) { options[:type] == :full_site } do |f|
