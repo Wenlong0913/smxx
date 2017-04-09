@@ -13,7 +13,7 @@ module AppAPI::V1
       end
       get ':id' do
         authenticate!
-        present ::Site.find(params[:id]), with: AppAPI::Entities::Site, includes: [:products]
+        present ::Site.find(params[:id]), with: AppAPI::Entities::Site, includes: [:products, :staffs]
         # AppAPI::Entities::Site.represent(::Site.find(params[:id]), only: [:title])
       end
 
