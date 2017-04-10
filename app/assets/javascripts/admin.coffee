@@ -13,6 +13,8 @@
 #= require admin/user
 #= require admin/site
 #= require select2
+#= require select2_locale_zh-CN
+#= require select2_js
 #= require tracker
 # can't require tree
 # require_tree .
