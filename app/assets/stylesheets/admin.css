@@ -5,6 +5,8 @@
 *= require admin/produces
 *= require admin/products
 *= require admin/home
+*= require admin/public
+*= require select2
 *= require select2-bootstrap
 *= require common/error_explanation
 *= require_self

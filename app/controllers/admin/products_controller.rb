@@ -47,7 +47,7 @@ class Admin::ProductsController < Admin::BaseController
   def create
     authorize Product
     @product = Product.new(permitted_attributes(Product))
-
+    filter_additional_attribute
     if @product.save
       redirect_to admin_product_path(@product), notice: 'Product 创建成功.'
     else
@@ -58,6 +58,7 @@ class Admin::ProductsController < Admin::BaseController
   # PATCH/PUT /admin/products/1
   def update
     authorize @product
+    filter_additional_attribute
     if @product.update(permitted_attributes(@product))
       redirect_to admin_product_path(@product), notice: 'Product 更新成功.'
     else
@@ -84,7 +85,22 @@ class Admin::ProductsController < Admin::BaseController
     #       # end
 
     def set_site_tags
-      @site_tags      = current_user.sites.first.tags.pluck(:name).uniq
-      @site_most_tags = current_user.sites.first.tags.most_used(5).uniq.map(&:name)
+      @tags_all = current_user.sites.first.tags.pluck(:name).uniq
+      @most_used_tags = current_user.sites.first.tags.most_used(5).uniq.map(&:name)
+    end
+
+    def filter_additional_attribute
+      if params[:product][:additional_attribute_keys].present?
+        params[:product][:additional_attribute_keys].each_pair do |k, v|
+          if v.blank?
+            params[:product][:additional_attribute_keys].delete(k)
+            params[:product][:additional_attribute_values].delete(k)
+          end
+        end
+      end
+      if params[:product][:additional_attribute_keys].present?
+        @product.additional_attribute_keys = params[:product][:additional_attribute_keys]
+        @product.additional_attribute_values = params[:product][:additional_attribute_values]
+      end
     end
 end
