@@ -42,7 +42,7 @@
     </div>
     <hr/>
     <div class="buttonbar no-gutter">
-      <a href="/login" class="button-fill button color-pink col-100">马上预约</a>
+      <a :href="/pay-message/ + product_detail.id" class="button-fill button color-pink col-100">马上预约</a>
     </div>
   </div>
 </div>
