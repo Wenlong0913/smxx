@@ -44,7 +44,7 @@ module AppAPI
       end
 
       def headshot
-        (object.avatar && Settings.site.host + object.avatar.url(:thumb)) || object.headshot
+        (object.avatar && (Settings.site.host + object.avatar.url(:thumb))) || object.headshot
       end
     end
   end
