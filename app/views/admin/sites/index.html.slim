@@ -21,7 +21,7 @@ h1.page-header
             th 是否签约
             th 营业时间
             th 营销备注
-            th
+            th 操作
 
         tbody
           - @sites.each do |site|
@@ -35,4 +35,5 @@ h1.page-header
               td
                 => link_to '查看', admin_site_path(site), class: 'btn btn-xs btn-primary'
                 => link_to '编辑', edit_admin_site_path(site), class: 'btn btn-xs btn-warning'
+                => link_to '重新定位', edit_admin_site_path(site, {map: true}), class: 'btn btn-xs btn-warning', 'data-turbolinks': false
                 => link_to '删除', admin_site_path(site), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger' if policy(site).destroy?

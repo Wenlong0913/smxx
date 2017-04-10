@@ -32,6 +32,10 @@ export default [
     component: require('./pages/product_catalog_detail.vue')
   },
   {
+    path: '/pay-message/:id/',
+    component: require('./pages/pay-message.vue')
+  },
+  {
     path: '/about/',
     component: require('./pages/about.vue')
   },

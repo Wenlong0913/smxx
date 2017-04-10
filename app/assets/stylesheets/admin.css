@@ -4,6 +4,7 @@
 *= require admin/catalogs
 *= require admin/produces
 *= require admin/home
+*= require admin/map
 *= require select2-bootstrap
 *= require common/error_explanation
 *= require_self

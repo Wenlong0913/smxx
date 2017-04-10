@@ -42,6 +42,11 @@ class Admin::SitesController < Admin::BaseController
   # PATCH/PUT /admin/sites/1
   def update
     authorize @site
+    if params[:site][:lat].present? &&  params[:site][:lat].present?
+      address = Gnomon::Address.resolve(lat: params[:site][:lat], lng: params[:site][:lng])
+      @site.address = address
+      @site.address_line = address.name if address
+    end
     if @site.update(permitted_attributes(@site))
       redirect_to admin_site_path(@site), notice: '美容师 更新成功.'
     else
