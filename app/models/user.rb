@@ -44,6 +44,12 @@ class User < ApplicationRecord
   has_many :update_order, class_name: 'Order', foreign_key: :update_by
   has_many :sales_distribution_resources, class_name: 'SalesDistribution::Resource'
   has_one :address_books, dependent: :destroy
+  # 收藏的店铺
+  has_many :site_favorites, -> { where(resource_type: 'Site') }, class_name: 'Favorite::Entry'
+  #  收藏的产品
+  has_many :product_favorites, -> { where(resource_type: 'Product') }, class_name: 'Favorite::Entry'
+  # 产品分销
+  has_many :product_sales_dists, -> { where(type_name: '产品') }, class_name: 'SalesDistribution::Resource'
 
   attr_accessor :mobile_phone
   validates :mobile_phone, mobile_phone: true, allow_blank: true
