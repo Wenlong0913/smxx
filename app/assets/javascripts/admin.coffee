@@ -14,6 +14,7 @@
 #= require admin/shop
 #= require admin/sites
 #= require admin/staffs
+#= require admin/baidu_map
 #= require select2
 #= require tracker
 # can't require tree
