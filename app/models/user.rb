@@ -77,10 +77,6 @@ class User < ApplicationRecord
     attributes['nickname'] || "匿名"
   end
 
-  def headshot
-    avatar && avatar.url
-  end
-
   ##
   # Devise default required email, if you don't want it , need to define this method.
   #

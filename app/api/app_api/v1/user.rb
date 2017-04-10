@@ -126,9 +126,11 @@ module AppAPI::V1
       get 'me' do
         authenticate!
         opts = { with: AppAPI::Entities::User, type: :private }
-        opts[:site_favorites_count] = true if params[:site_favorites_count]
-        opts[:product_favorites_count] = true if params[:product_favorites_count]
-        opts[:article_shares_count] = true if params[:article_shares_count]
+        if params[:stats]
+          opts[:site_favorites_count] = true
+          opts[:product_favorites_count] = true
+          opts[:article_shares_count] = true
+        end
         present current_user, opts
       end
 
