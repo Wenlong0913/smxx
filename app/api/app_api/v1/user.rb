@@ -120,9 +120,16 @@ module AppAPI::V1
       desc '获取自己的用户信息' do
         success AppAPI::Entities::User
       end
+      params do
+        optional :stats, type: Boolean, desc: '是否显示统计数据，包括：收藏的店铺数量和产品数量，分享的帖子数量'
+      end
       get 'me' do
         authenticate!
-        present current_user, with: AppAPI::Entities::User, type: :private
+        opts = { with: AppAPI::Entities::User, type: :private }
+        opts[:site_favorites_count] = true if params[:site_favorites_count]
+        opts[:product_favorites_count] = true if params[:product_favorites_count]
+        opts[:article_shares_count] = true if params[:article_shares_count]
+        present current_user, opts
       end
 
       desc '修改自己的用户信息' do
