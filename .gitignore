@@ -10,3 +10,4 @@ db/schema.rb
 /node_modules
 /public/webpack
 /coverage/
+public/system/

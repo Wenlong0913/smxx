@@ -14,7 +14,7 @@ module AppAPI::V1
         success AppAPI::Entities::User
       end
       params do
-        requires :mobile_phone, type: String, desc: '手机号', documentation: { example: 'Jim' }
+        requires :mobile_phone, type: String, desc: '手机号'
         requires :mobile_phone_code, type: String, desc: '手机验证码'
         optional :shared_code, type: String, desc: '邀请码'
         optional :nickname, type: String, desc: '用户昵称'
@@ -120,8 +120,40 @@ module AppAPI::V1
       desc '获取自己的用户信息' do
         success AppAPI::Entities::User
       end
+      params do
+        optional :stats, type: Boolean, desc: '是否显示统计数据，包括：收藏的店铺数量和产品数量，分享的帖子数量'
+      end
       get 'me' do
         authenticate!
+        opts = { with: AppAPI::Entities::User, type: :private }
+        if params[:stats]
+          opts[:site_favorites_count] = true
+          opts[:product_favorites_count] = true
+          opts[:article_shares_count] = true
+        end
+        present current_user, opts
+      end
+
+      desc '修改自己的用户信息' do
+        success AppAPI::Entities::User
+      end
+      params do
+        optional :nickname, type: String, desc: '昵称'
+        optional :avatar, type: Rack::Multipart::UploadedFile, desc: '上传头像'
+      end
+      put 'me' do
+        authenticate!
+        if params[:avatar]
+          current_user.avatar = ActionDispatch::Http::UploadedFile.new(params[:avatar])
+        end
+        if params[:nickname].present?
+          current_user.nickname = params[:nickname].strip
+        end
+        if current_user.changed?
+          unless current_user.save
+            error! error: current_user.errors.messages, error_message: '保存失败'
+          end
+        end
         present current_user, with: AppAPI::Entities::User, type: :private
       end
 
