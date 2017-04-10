@@ -93,7 +93,7 @@ class Admin::ProductsController < Admin::BaseController
     #       # end
 
     def set_site_tags
-      @most_used_tags = current_user.sites.first.tags.pluck(:name).uniq
+      @tags_all = current_user.sites.first.tags.pluck(:name).uniq
       @most_used_tags = current_user.sites.first.tags.most_used(5).uniq.map(&:name)
     end
 
