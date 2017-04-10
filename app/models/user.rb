@@ -17,7 +17,6 @@
 #  current_sign_in_ip     :string
 #  last_sign_in_ip        :string
 #  username               :string
-#  headshot               :string
 #
 
 class User < ApplicationRecord
@@ -45,6 +44,11 @@ class User < ApplicationRecord
   has_many :sales_distribution_resources, class_name: 'SalesDistribution::Resource'
   has_one :address_books, dependent: :destroy
 
+  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
+  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
+  validates_attachment_file_name :avatar, matches: [/png\z/, /jpe?g\z/]
+  validates_with AttachmentSizeValidator, attributes: :avatar, less_than: 10.megabytes
+
   attr_accessor :mobile_phone
   validates :mobile_phone, mobile_phone: true, allow_blank: true
 
@@ -65,6 +69,10 @@ class User < ApplicationRecord
 
   def nickname
     attributes['nickname'] || "匿名"
+  end
+
+  def headshot
+    avatar && avatar.url
   end
 
   ##

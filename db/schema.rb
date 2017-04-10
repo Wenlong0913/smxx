@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170322122542) do
+ActiveRecord::Schema.define(version: 20170410024013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20170322122542) do
     t.string   "city",         null: false
     t.string   "street",       null: false
     t.string   "house_number"
+    t.jsonb    "features"
     t.string   "note"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
@@ -155,7 +156,6 @@ ActiveRecord::Schema.define(version: 20170322122542) do
     t.text     "content"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
-    t.jsonb    "features"
     t.integer  "impressions_count", default: 0
     t.index ["short_title"], name: "index_cms_channels_on_short_title", using: :btree
     t.index ["site_id"], name: "index_cms_channels_on_site_id", using: :btree
@@ -174,6 +174,7 @@ ActiveRecord::Schema.define(version: 20170322122542) do
     t.string   "properties",        default: [],              array: true
     t.integer  "impressions_count", default: 0
     t.index ["channel_id"], name: "index_cms_pages_on_channel_id", using: :btree
+    t.index ["properties"], name: "index_cms_pages_on_properties", using: :gin
     t.index ["short_title"], name: "index_cms_pages_on_short_title", using: :btree
   end
 
@@ -202,6 +203,29 @@ ActiveRecord::Schema.define(version: 20170322122542) do
     t.integer  "parent_id"
     t.jsonb    "features"
     t.index ["resource_type", "resource_id"], name: "index_comment_entries_on_resource_type_and_resource_id", using: :btree
+  end
+
+  create_table "favorite_entries", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "resource_type"
+    t.integer  "resource_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["resource_type", "resource_id"], name: "index_favorite_entries_on_resource_type_and_resource_id", using: :btree
+    t.index ["user_id"], name: "index_favorite_entries_on_user_id", using: :btree
+  end
+
+  create_table "finance_histories", force: :cascade do |t|
+    t.date     "operate_date"
+    t.decimal  "amount",       precision: 8, scale: 2
+    t.integer  "operate_type"
+    t.string   "owner_type"
+    t.integer  "owner_id"
+    t.integer  "created_by"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.jsonb    "features"
+    t.index ["owner_type", "owner_id"], name: "index_finance_histories_on_owner_type_and_owner_id", using: :btree
   end
 
   create_table "image_item_relations", force: :cascade do |t|
@@ -313,7 +337,6 @@ ActiveRecord::Schema.define(version: 20170322122542) do
     t.text     "form_source"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.jsonb    "features"
     t.index ["catalog_id"], name: "index_market_templates_on_catalog_id", using: :btree
   end
 
@@ -399,6 +422,7 @@ ActiveRecord::Schema.define(version: 20170322122542) do
     t.integer  "site_id"
     t.string   "name"
     t.date     "birth"
+    t.string   "qq"
     t.string   "email"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
@@ -409,7 +433,6 @@ ActiveRecord::Schema.define(version: 20170322122542) do
     t.string   "address"
     t.string   "note"
     t.jsonb    "features"
-    t.string   "qq"
     t.string   "typo"
     t.string   "from"
     t.string   "owned"
@@ -535,6 +558,17 @@ ActiveRecord::Schema.define(version: 20170322122542) do
     t.datetime "updated_at",              null: false
     t.index ["object_type", "object_id"], name: "idx__sdr_object", using: :btree
     t.index ["user_id"], name: "idx__sdr_user", using: :btree
+  end
+
+  create_table "shopping_carts", force: :cascade do |t|
+    t.integer  "product_id"
+    t.integer  "price"
+    t.integer  "amount"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_shopping_carts_on_product_id", using: :btree
+    t.index ["user_id"], name: "index_shopping_carts_on_user_id", using: :btree
   end
 
   create_table "sites", force: :cascade do |t|
@@ -719,7 +753,10 @@ ActiveRecord::Schema.define(version: 20170322122542) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "username"
-    t.string   "headshot"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
@@ -764,6 +801,7 @@ ActiveRecord::Schema.define(version: 20170322122542) do
   add_foreign_key "orders", "sites"
   add_foreign_key "orders", "users"
   add_foreign_key "produces", "orders"
+  add_foreign_key "shopping_carts", "users"
   add_foreign_key "tasks", "sites"
   add_foreign_key "theme_configs", "sites"
   add_foreign_key "theme_configs", "themes"
