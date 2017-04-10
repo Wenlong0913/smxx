@@ -31,9 +31,13 @@ export default [
     path: '/product_catalog_detail/:id/',
     component: require('./pages/product_catalog_detail.vue')
   },
+  // {
+  //   path: '/pay-message/:id/',
+  //   component: require('./pages/pay-message.vue')
+  // },
   {
-    path: '/pay-message/:id/',
-    component: require('./pages/pay-message.vue')
+    path: '/shopping-cart/',
+    component: require('./pages/shopping-cart.vue')
   },
   {
     path: '/about/',
