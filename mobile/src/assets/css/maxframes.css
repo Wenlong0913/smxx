@@ -448,7 +448,31 @@ body.theme-bluegray  {background: url("../img/page_bg_bottom_light.png") repeat-
 body.theme-black  {background: url("../img/page_bg_bottom_light.png") repeat-x bottom center #000000; background-size:auto 150px }
 
 
-
+/* add shopping-cart css style*/
+.card_border{
+  border: 1px solid #ddd;
+  box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+}
+.padding_auto_16{
+  padding: 0px 16px;
+}
+.font_title_size{
+  font-size: 14px;
+}
+.cart_after{
+  padding: 6px 0px 0px 16px;
+  font-size: 14px;
+}
+.change_btn_pay{
+  margin:0px;
+  border-radius: 0;
+}
+.item_cart{
+  margin-top: 10px;
+}
+.item_cart:first-child{
+  margin-top: 0px;
+}
 
 
 

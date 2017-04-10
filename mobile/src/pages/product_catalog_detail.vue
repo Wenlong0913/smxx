@@ -8,9 +8,9 @@
         </a>
       </div>
       <div class="center">美客美</div>
-      <div class="right sliding">
-        <a href="#" data-panel="left" class="open-panel link icon-only">
-          <i class="fa fa-bars"></i>
+      <div class="right">
+        <a  @click="input" class="link icon-only">
+          <i class="fa fa-cart-plus"></i>
         </a>
       </div>
     </div>
@@ -42,7 +42,9 @@
     </div>
     <hr/>
     <div class="buttonbar no-gutter">
-      <a :href="/pay-message/ + product_detail.id" class="button-fill button color-pink col-100">马上预约</a>
+      <a class="cartfloating floating-button" @click="input">
+        <i class="fa fa-cart-plus"></i>
+      </a>
     </div>
   </div>
 </div>
@@ -50,12 +52,18 @@
 
 <script>
   import Product from 'services/product'
+  import ShoppingCart from 'services/shopping_cart'
   export default {
     data () {
       return {
         product_detail: [],
         to_site: {},
-        image1: {}
+        image1: {},
+        shopping_product: {
+          product_id: null,
+          amount: 1,
+          price: ''
+        }
       }
     },
     mounted () {
@@ -64,7 +72,17 @@
         _this.product_detail = response.data
         _this.to_site = response.data.site
         _this.image1 = response.data.images[0].image_url
+        _this.shopping_product.product_id = response.data.id
+        _this.shopping_product.price = response.data.sell_price
       })
+    },
+    methods: {
+      input: function () {
+        var _this = this
+        ShoppingCart.input(_this.shopping_product).then(function (response) {
+          _this.$router.load({ url: '/shopping-cart' })
+        })
+      }
     }
   }
 </script>
