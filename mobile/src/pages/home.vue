@@ -12,7 +12,7 @@
 	  </div>
 
 	  <div class="page-content hide-bars-on-scroll">
-	    <div data-pagination=".swiper-pagination" data-paginationHide="true" class="swiper-container largebanner  swiper-init">
+	    <div data-pagination=".swiper-pagination" data-paginationHide="true" class="swiper-container largebanner swiper-init">
 	      <div class="swiper-pagination"></div>
 	      <div class="swiper-wrapper">
 	        <div class="swiper-slide gradient">
@@ -46,95 +46,96 @@
             </div>
             <img src="./../assets/img/banner2.png" alt="">
 	          <img src="./../assets/img/banner_top.png" alt="" class="bottomoverlay">
-	         </div>
+          </div>
 	      </div>
 	    </div>
 
-      <div class="prductlist  content-block center">
-        <span class="fa fa-mobile titleicon"></span>
-        <h2>100+ Multiple pages</h2>
-        <p>Creative, User centric, new trend and royal feel with this appliaion design. Customer centric product and design is our main focus.</p>
+      <div class="content-block text-center">
+        <div class="row">
+          <div class="col-25">
+            <div class="prductlist content-block center">
+              <span class="fa fa-child titleicon"></span>面部
+            </div>
+          </div>
+          <div class="col-25">
+            <div class="prductlist content-block center">
+              <span class="fa fa-user-md titleicon"></span>养生
+            </div>
+          </div>
+          <div class="col-25">
+            <div class="prductlist content-block center">
+              <span class="fa fa-female titleicon"></span>按摩
+            </div>
+          </div>
+          <div class="col-25">
+            <div class="prductlist content-block center">
+              <span class="fa fa-street-view titleicon"></span>美发
+            </div>
+          </div>
+          <div class="col-25">
+            <div class="prductlist content-block center">
+              <span class="fa fa-flag titleicon"></span>活动
+            </div>
+          </div>
+          <div class="col-25">
+            <div class="prductlist content-block center">
+              <span class="fa fa-hourglass-end titleicon"></span>积分
+            </div>
+          </div>
+          <div class="col-25">
+            <div class="prductlist content-block center">
+              <span class="fa fa-coffee titleicon"></span>热搜
+            </div>
+          </div>
+          <div class="col-25">
+            <div class="prductlist content-block center">
+              <span class="fa fa-list titleicon"></span>分类
+            </div>
+          </div>
+        </div>
       </div>
-
       <hr>
-      <div class="prductlist  content-block  center">
-        <span class="fa fa-dot-circle-o titleicon"></span>
-        <h2>20+ Color scheme</h2>
-        <p>Best suited color combination and mutiple pages are avialble for implementaion. All are in just click away from you.</p>
-      </div>
 
+      <div class="content-block">
+        <div class="col-100 text-center">
+          <h4>今日必抢</h4>
+        </div>
+        <div class="row">
+          <div class="col-50">
+            <img src="./../assets/img/product1.jpg" class="col-100">
+            <p>描述说明</p>
+            <small><span>￥45</span><s>￥123</s></small>
+          </div>
+          <div class="col-50">
+            <img src="./../assets/img/product1.jpg" class="col-100">
+            <p>描述说明</p>
+            <small><span>￥45</span><s>￥123</s></small>
+          </div>
+        </div>
+      </div>
       <hr>
-      <div class="prductlist  content-block center">
-        <span class="fa fa-bolt titleicon"></span>
-        <h2>Powerful</h2>
-        <p>Powered by framework7 and has large veriety of contrls and components to create new things with it.</p>
-      </div>
 
-      <hr>
-      <div class="prductlist  content-block  center">
-        <span class="fa fa-hand-peace-o titleicon"></span>
-        <h2>Creative</h2>
-        <p>We design with samrt material design cocet with flat UI to stay tued with trend and business markets of our customers.</p>
-      </div>
-
-      <div class="inputs-list content-block" >
-				<h2 class="maintitle  center">Contact us</h2>
-				<p class="center" >We will be back on your provided email address</p>
-      </div>
-
-      <div class="list-block">
-        <ul>
-          <li>
-            <div class="item-content">
-              <div class="item-inner">
-                <div class="item-title label">Your name</div>
-                <div class="item-input">
-                  <input type="text" placeholder=""/>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="item-content">
-              <div class="item-inner">
-                <div class="item-title label">E-mail</div>
-                <div class="item-input">
-                  <input type="email" placeholder=""/>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="item-content">
-              <div class="item-inner">
-                <div class="item-title label">Phone</div>
-                <div class="item-input">
-                  <input type="tel" placeholder=""/>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="align-top">
-            <div class="item-content">
-              <div class="item-inner">
-                <div class="item-title label">Message/Queries</div>
-                <div class="item-input">
-                  <textarea class="resizable"></textarea>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
+      <div class="content-block">
+        <div class="col-100 text-center">
+          <h4>好店推荐</h4>
+        </div>
+        <div class="row">
+          <div class="col-33">
+            <p>美客美</p>
+            <img src="./../assets/img/product2.jpg" class="col-100">
+          </div>
+          <div class="col-33">
+            <p>墨客陌</p>
+            <img src="./../assets/img/product2.jpg" class="col-100">
+          </div>
+          <div class="col-33">
+            <p>淘美客</p>
+            <img src="./../assets/img/product2.jpg" class="col-100">
+          </div>
+        </div>
       </div>
 
 	    <div class="content-block">
-        <a href="./../assets/home.html" class="button button-fill ">Get in touch</a>
-      </div>
-	    <hr>
-
-	    <div class="content-block">
-        <h2 class="center">We are at social</h2>
-        <p class="center">Get connected with us on social</p>
         <ul class="socials">
           <li><a href="" class="fb"><i class="fa fa-weixin"></i></a></li>
           <li><a href="" class="tw"><i class="fa fa-qq"></i></a></li>

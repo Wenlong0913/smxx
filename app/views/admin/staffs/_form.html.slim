@@ -18,10 +18,10 @@
       = f.input :user_id, collection: User.all.decorate, label_method: :display_name
       = f.input :title, required: true, input_html: { maxlength: 4 }
       = f.input :age, as: :integer
-      = f.input :work_years, as: :integer
-      = f.input :score, as: :integer
-      = f.input :total_service, as: :integer
-      = f.input :week_service, as: :integer
+      = f.input :work_years, as: :integer, input_html: { value: '1' }
+      = f.input :score, as: :integer, input_html: { value: '1' }
+      = f.input :total_service, as: :integer, input_html: { value: '1' }
+      = f.input :week_service, as: :integer, input_html: { value: '1' }
       = f.input :description
       p 擅长领域（可多选）
       = f.collection_check_boxes :properties, Staff::PROPERTIES, :first, :last, checked: @staff.try(:properties)

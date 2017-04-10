@@ -34,7 +34,7 @@
                 </div>
               </div>
               <div class="item-title-row">
-                <div class="item-title">个人介绍：{{staff.description}}</div>
+                <div style="font-size: 13px;">个人介绍：{{staff.description}}</div>
               </div>
             </div>
           </li>

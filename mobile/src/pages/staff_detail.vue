@@ -88,7 +88,7 @@
         </div>
 
         <div id="tab2" class="tab">
-          <div class="prductlist content-block">
+          <div class="prductlist">
             <div class="row">
               <p v-html="staff.content"></p>
             </div>
@@ -98,17 +98,17 @@
         <div id="tab3" class="tab">
           <div class="list-block media-list comment">
             <ul class="comment">
-              <li>
+              <li v-for="c in comments">
                 <div class="item-link item-content">
                   <div class="item-media">
-                    <img src="./../assets/img/pic1.png" style="border-radius:100%" width="40" height="40" alt="">
+                    <img src="./../assets/img/comment_dude.svg" style="border-radius:100%" width="40" height="40" alt="">
                   </div>
                   <div class="item-inner">
                     <div class="item-title-row">
-                      <div class="item-title author-comment">匿名用户</div>
+                      <div class="item-title author-comment">{{c.name}}</div>
                     </div>
-                    <div class="time">28分钟前</div>
-                    <div class="item-text comment">朋友推荐的向利君技师，真的很喜欢，手法服务都是一流的，真没想到这个价钱能享受到这种服务！</div>
+                    <div class="time">{{c.time}}前</div>
+                    <div class="comment" style="font-size: 13px;">{{c.content}}</div>
                   </div>
                 </div>
               </li>
@@ -143,7 +143,29 @@
     data () {
       return {
         staff: {images: []},
-        headshot: null
+        headshot: null,
+        comments: [
+          {
+            name: '匿名用户',
+            time: '2分钟',
+            content: '哈哈，又发现了一个手法不错的妹子，而且还住这么近，真是太好了，妹子按得很仔细，还讲解了很多养生的小知识，已办套餐'
+          },
+          {
+            name: '匿名用户',
+            time: '12分钟',
+            content: '做完之后感觉皮肤都白些了。还免费帮我修了杂乱的眉毛。超级感谢'
+          },
+          {
+            name: '匿名用户',
+            time: '32分钟',
+            content: '很不错的美容师，细节做得也很到位，超出期待！'
+          },
+          {
+            name: '匿名用户',
+            time: '1小时',
+            content: '太好了，实在太舒服，谁做谁知道。太好了，实在太舒服，谁做谁知道。太好了，实在太舒服，谁做谁知道。'
+          }
+        ]
       }
     },
     mounted: function () {
