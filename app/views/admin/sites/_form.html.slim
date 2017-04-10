@@ -5,7 +5,7 @@
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-    h4 admin_site
+    h4 美容院
   .panel-body
     = simple_form_for @site, url: @site.new_record? ? admin_sites_path : admin_site_path(@site), validate: true do |f|
       - if @site.errors.any?
@@ -15,20 +15,59 @@
             - @site.errors.full_messages.each do |message|
               li = message
 
-      = f.input :user_id, collection: User.all.decorate, label_method: :display_name
-      = f.input :title, required: true
-      = f.input :contact_name, required: true
-      = f.input :contact_number, required: true
-      = f.input :address, required: true
-      = f.input :is_sign, required: true
-      = f.input :comment, as: :text
-      = f.input :site_hours
-      p 标签备注（可多选）
-      = f.collection_check_boxes :properties, Site::PROPERTIES, :first, :last, checked: @site.try(:properties)
-      = f.input :content, as: :ckeditor
-      p 背景图片
-      .form-group
-        image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@site.image_item_ids.join(', ')}"]
-        
+      - if params[:map]
+        .div class="row"
+          .div class="col-md-3 col-sm-12"
+            = f.input :lat, readonly: false, placeholder: '自动填充', input_html: {value: @site.address_lat || params[:lat]}
+            = f.input :lng, readonly: false, placeholder: '自动填充', input_html: {value: @site.address_lng || params[:lng]}
+          .div class="col-md-9 col-sm-12"
+            .form-group
+              label.control-label 搜索地图，找到准确位置，通过在地图上标上红点，自动设置经纬度。
+              input#search-address.form-control
+            #baidu-map
+      - else
+        = f.input :user_id, collection: User.all.decorate, label_method: :display_name
+        = f.input :title, required: true
+        = f.input :contact_name, required: true
+        = f.input :contact_number, required: true
+        = f.input :address_line, required: true
+        = f.input :is_sign, required: true
+        = f.input :comment, as: :text
+        = f.input :site_hours
+        p 标签备注（可多选）
+        = f.collection_check_boxes :properties, Site::PROPERTIES, :first, :last, checked: @site.try(:properties)
+        = f.input :content, as: :ckeditor
+        p 背景图片
+        .form-group
+          image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@site.image_item_ids.join(', ')}"]
+          
 
       = f.submit class: 'btn btn-success btn-block'
+
+script data-turbolinks="false" type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=#{Rails.application.config_for(:baidu_lbs_api)['geocoding']["ak"]}"
+javascript:
+    var options = { autocomplete_input: 'search-address' };
+    options['center_point'] = "#{@site.city_name}" || '成都' ;
+    var current_point = null;
+    var current_marker = null;
+    if($('#site_lat').val() != "" && $('#site_lng').val() != ""){
+      current_point = new BMap.Point($('#site_lng').val(), $('#site_lat').val());
+      current_marker = new BMap.Marker(current_point);  // 创建标注
+      options['center_point'] = current_point;
+      options['zoom'] = 18;
+    }
+    var map_obj = new BaiduMap('baidu-map', options);
+    var map = map_obj.map;
+    map.setDefaultCursor("default");   //设置地图默认的鼠标指针样式
+    map_obj.pickLatLng(function(point){
+      $('#site_lat').val(point.lat);
+      $('#site_lng').val(point.lng);
+      map.clearOverlays();
+      map.addOverlay(new BMap.Marker(point));
+    });
+    map_obj.bindAutocomplete('search-address', function(location){
+      map_obj.setPlace(location);
+    })
+    if(current_marker){
+      map.addOverlay(current_marker);              // 将标注添加到地图中
+    }
