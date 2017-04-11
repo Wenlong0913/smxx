@@ -1,7 +1,7 @@
 module AppAPI::V1
-  class WaveImage < Grape::API
+  class Banner < Grape::API
     helpers AppAPI::SharedParams
-    resources :wave_images do
+    resources :banners do
 
       desc '轮波图'
       params do
