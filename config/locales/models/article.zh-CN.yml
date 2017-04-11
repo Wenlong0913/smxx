@@ -1,0 +1,14 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      article: Article
+    attributes:
+      article:
+        title: Title
+        description: Description
+    errors:
+      models:
+        article: 
+  helpers:
+    article: 

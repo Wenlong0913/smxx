@@ -8,5 +8,7 @@ module AppAPI::V1
     mount AppAPI::V1::Product
     mount AppAPI::V1::Site
     mount AppAPI::V1::User
+    mount AppAPI::V1::Article
+    mount AppAPI::V1::ImageItem
   end
 end
