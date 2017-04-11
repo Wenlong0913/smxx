@@ -49,6 +49,7 @@ class User < ApplicationRecord
   has_many :product_favorites, -> { where(resource_type: 'Product') }, class_name: 'Favorite::Entry'
   # 产品分销
   has_many :product_sales_dists, -> { where(type_name: '产品') }, class_name: 'SalesDistribution::Resource'
+  has_many :comments, class_name: 'Comment::Entry'
 
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
