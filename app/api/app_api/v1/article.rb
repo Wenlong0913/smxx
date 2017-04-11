@@ -19,7 +19,7 @@ module AppAPI::V1
         article.image_item_ids = params[:image_item_ids]
         article.product_ids = params[:product_ids]
         error! article.errors unless article.save
-        present article, with: AppAPI::Entities::Article        
+        present article, with: AppAPI::Entities::Article, type: :full_article   
       end
 
       desc "文章列表" do
@@ -33,7 +33,7 @@ module AppAPI::V1
         authenticate!
         articles = ::Article.all
         articles = paginate_collection(sort_collection(articles), params)
-        wrap_collection articles, AppAPI::Entities::Article
+        wrap_collection articles, AppAPI::Entities::Article, type: :full_article
       end
 
       desc '查看文章详细' do
@@ -44,7 +44,7 @@ module AppAPI::V1
       end
       get ':id' do
         authenticate!
-        present ::Article.find(params[:id]), with: AppAPI::Entities::Article
+        present ::Article.find(params[:id]), with: AppAPI::Entities::Article, type: :full_article 
       end
 
       desc '删除文章' do
@@ -53,7 +53,7 @@ module AppAPI::V1
       params do
         requires :id, type: Integer, desc: '文章ID'
       end
-      get ':id' do
+      delete ':id' do
         authenticate!
         article = ::Article.find(params[:id]).destroy
         present article, with: AppAPI::Entities::Article
