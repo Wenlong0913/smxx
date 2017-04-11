@@ -50,8 +50,8 @@
 	      </div>
 	    </div>
 
-      <div class="content-block text-center">
-        <div class="row">
+      <div class="content-block">
+        <div class="row no-gutter">
           <div class="col-25">
             <div class="prductlist content-block center">
               <span class="fa fa-child titleicon"></span>面部
@@ -96,43 +96,59 @@
       </div>
       <hr>
 
-      <div class="content-block">
-        <div class="col-100 text-center">
-          <h4>今日必抢</h4>
-        </div>
-        <div class="row">
-          <div class="col-50">
-            <img src="./../assets/img/product1.jpg" class="col-100">
-            <p>描述说明</p>
-            <small><span>￥45</span><s>￥123</s></small>
-          </div>
-          <div class="col-50">
-            <img src="./../assets/img/product1.jpg" class="col-100">
-            <p>描述说明</p>
-            <small><span>￥45</span><s>￥123</s></small>
-          </div>
+      <div class="center content-block">
+        <h2><i class="fa fa-diamond"></i>今日必抢</h2>
+        <p>每一款产品都是精心打造</p>
+      </div>
+      <div class="gallery row"> 
+        <div class="gallery row no-gutter"> 
+          <a href="" rel="gallery-1" class="swipebox col-33" title="My Caption">
+            <img src="./../assets/img/banner1.png" alt="image" class="col-100">
+          </a>
+          <a href="" rel="gallery-1"  class="swipebox col-33" title="My Caption">
+            <img src="./../assets/img/banner2.png" alt="image" class="col-100">
+          </a> 
+          <a href=""  rel="gallery-1"  class="swipebox col-33" title="My Caption">
+            <img src="./../assets/img/banner3.png" alt="image" class="col-100">
+          </a>
+          <a href=""  rel="gallery-1"  class="swipebox col-33" title="My Caption">
+            <img src="./../assets/img/banner4.png" alt="image" class="col-100">
+          </a>
+          <a href=""  rel="gallery-1"  class="swipebox col-33" title="My Caption">
+            <img src="./../assets/img/banner2.png" alt="image" class="col-100">
+          </a>
+          <a href=""  rel="gallery-1"  class="swipebox col-33" title="My Caption">
+            <img src="./../assets/img/banner1.png" alt="image" class="col-100">
+          </a>
+          <a href=""  rel="gallery-1"  class="swipebox col-33" title="My Caption">
+            <img src="./../assets/img/banner2.png" alt="image" class="col-100">
+          </a>
+          <a href=""  rel="gallery-1"  class="swipebox col-33" title="My Caption">
+            <img src="./../assets/img/banner3.png" alt="image" class="col-100">
+          </a>
+          <a href=""  rel="gallery-1"  class="swipebox col-33" title="My Caption">
+            <img src="./../assets/img/banner4.png" alt="image" class="col-100">
+          </a>
         </div>
       </div>
       <hr>
 
-      <div class="content-block">
-        <div class="col-100 text-center">
-          <h4>好店推荐</h4>
-        </div>
-        <div class="row">
-          <div class="col-33">
-            <p>美客美</p>
-            <img src="./../assets/img/product2.jpg" class="col-100">
-          </div>
-          <div class="col-33">
-            <p>墨客陌</p>
-            <img src="./../assets/img/product2.jpg" class="col-100">
-          </div>
-          <div class="col-33">
-            <p>淘美客</p>
-            <img src="./../assets/img/product2.jpg" class="col-100">
-          </div>
-        </div>
+      <div class="center content-block">
+        <h2>好店推荐</h2>
+      </div>
+      <div class="gallery row"> 
+        <a href="" rel="gallery-1" class="swipebox col-50" title="My Caption">
+          <img src="./../assets/img/banner1.png" alt="image" class="col-100">
+        </a>
+        <a href="" rel="gallery-1"  class="swipebox col-50" title="My Caption">
+          <img src="./../assets/img/banner2.png" alt="image" class="col-100">
+        </a> 
+        <a href=""  rel="gallery-1"  class="swipebox col-50" title="My Caption">
+          <img src="./../assets/img/banner3.png" alt="image" class="col-100">
+        </a>
+        <a href=""  rel="gallery-1"  class="swipebox col-50" title="My Caption">
+          <img src="./../assets/img/banner4.png" alt="image" class="col-100">
+        </a>
       </div>
 
 	    <div class="content-block">
