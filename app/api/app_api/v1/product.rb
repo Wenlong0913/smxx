@@ -40,8 +40,7 @@ module AppAPI::V1
           products = products.where("name like ?", "%#{params[:name]}%")
         end
         if params[:search_type] && params[:search_type] == 'bought'
-          product_ids = current_user.orders.joins(:products).pluck(:product_id).uniq
-          products = products.where(id: product_ids)
+          products = products.joins(:orders).where("orders.user_id =  ?", current_user.id)
         end
         products = paginate_collection(sort_collection(products), params)
         wrap_collection products, AppAPI::Entities::Product, includes: [:site]
