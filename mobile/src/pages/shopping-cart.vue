@@ -20,29 +20,35 @@
       <div class="prductlist content-block">
         <div class="list-block media-list shop">
           <ul>
-            <li class="card_border item_cart" v-for="order in orders.data">
+            <li class="card_border item_cart" v-for="order in orders">
               <div class="item-title-row padding_auto_16">
-                <div class="item-title font_title_size">
+                <div class="item-title font_title_size" style="font-size: 18px;">
                   <i class="fa fa-home"></i>
                   {{ order.product.site.title }}
                 </div>
-                <div class="item-after">未支付</div>
+                <div class="item-after" style="padding-top: 4px;">
+                  <a href="">订单修改</a>
+                </div>
               </div>
               <div class="item-content">
                 <div class="item-media">
-                  <img src="./../assets/img/product1.jpg" width="80">
+                  <img :src="order.product.images[0].image_url" width="80">
                 </div>
                 <div class="item-inner">
                   <div class="item-title-row">
                     <div class="item-title" style="font-size: 14px;">{{ order.product.name }}</div>
                   </div>
-                  <div class="item-text" style="margin-top: 6px;">预约时间：9:00-22:00</div>
-                  <div class="item-text" style="margin-top: 6px;">地址：{{ order.product.site.address}}</div>
+                  <div class="item-text">预约时间：9:00-22:00</div>
+                  <div class="item-text">地址：{{ order.product.site.address}}</div>
+                  <div class="item-text">数量：{{ order.amount }}</div>
                 </div>
               </div>
               <div class="row" style="">
-                <div class="col-70 cart_after">
-                  等待付款 <span class="color-amber">￥ {{ order.price }}</span>
+                <div class="col-40 cart_after">
+                  待支付<span class="color-amber">￥{{ order.price }}</span>
+                </div>
+                <div class="col-30">
+                  <a href="" class="button button-fill button-raised color-pink change_btn_pay">取消订单</a>
                 </div>
                 <div class="col-30">
                   <a href="" class="button button-fill button-raised color-pink change_btn_pay">去支付</a>
@@ -66,7 +72,7 @@
     },
     mounted () {
       var _this = this
-      ShoppingCart.get(this).then(function (response) {
+      ShoppingCart.get().then(function (response) {
         _this.orders = response.data
       })
     }

@@ -15,7 +15,18 @@ function get () {
   return new Promise(function (resolve, reject) {
     http.get('/shopping_carts')
     .then(function (response) {
-      resolve(response)
+      resolve(response.data)
+    }).catch(function (error) {
+      reject(error)
+    })
+  })
+}
+
+function del (params) {
+  return new Promise(function (resolve, reject) {
+    http.delete('/shopping_carts', params)
+    .then(function (response) {
+      resolve(response.data)
     }).catch(function (error) {
       reject(error)
     })
@@ -24,7 +35,8 @@ function get () {
 
 let ShoppingCart = {
   input,
-  get
+  get,
+  del
 }
 
 export default ShoppingCart

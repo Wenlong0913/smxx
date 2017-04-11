@@ -5,6 +5,7 @@ module AppAPI
       # public attributes
       expose_id
       expose :name, documentation: { desc: '产品名称' }
+      expose :old_price, documentation: {desc: '产品原价'}
       expose :sell_price, documentation: {desc: '产品卖价'}
       expose :month_number, documentation: {desc: '月单数'}
       expose :responsive_person, documentation: {desc: '适用人群'}
