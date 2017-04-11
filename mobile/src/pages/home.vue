@@ -131,7 +131,14 @@
           </a>
         </div>
       </div>
-      <hr>
+
+      <div class="darkbgblock center content-block gradient">
+        <span class="fa fa-diamond titleicon"></span>
+        <h2>淘美客新人注册有礼啦！</h2>
+        <p>现在起立即注册加入会员，即可获得淘美客送出的超值大礼包！悄悄告诉你，邀请好友注册还有返现红包哦！</p>
+        <a href="#" class="button button-raised button-fill color-blue">立 即 注 册</a>
+        <img class="imgdevidertext" src="./../assets/img/banner4.png" alt="">
+      </div>
 
       <div class="center content-block">
         <h2>好店推荐</h2>
