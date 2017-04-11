@@ -13,5 +13,5 @@
 #
 
 class ProductCatalog < Catalog
-
+  has_many :products, foreign_key: :catalog_id
 end

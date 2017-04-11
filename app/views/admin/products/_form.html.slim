@@ -5,7 +5,6 @@
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
-    h3.panel-title &nbsp;
   .panel-body
     = simple_form_for @product, url: @product.new_record? ? (@site ? admin_site_products_path(@site): admin_products_path) : (@site ? admin_site_product_path(@site, @product) : admin_product_path(@product)) do |f|
       div

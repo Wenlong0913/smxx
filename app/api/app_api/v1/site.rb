@@ -3,11 +3,11 @@ module AppAPI::V1
     helpers AppAPI::SharedParams
     resources :sites do
 
-      desc '获取店铺信息' do
+      desc "获取#{::Site.model_name.human}信息" do
         success AppAPI::Entities::Site
       end
       params do
-        requires :id, type: Integer, desc: '店铺ID'
+        requires :id, type: Integer, desc: "#{::Site.model_name.human}ID"
       end
       get ':id' do
         authenticate!
@@ -15,20 +15,20 @@ module AppAPI::V1
         # AppAPI::Entities::Site.represent(::Site.find(params[:id]), only: [:title])
       end
 
-      desc '获取店铺列表' do
+      desc "获取#{::Site.model_name.human}列表" do
         success AppAPI::Entities::Site.collection
       end
       params do
         use :pagination
         # use :sort, fields: [:id, :created_at, :updated_at]
-        optional :friends, type: Boolean, desc: '好友店铺'
-        optional :favorite, type: String, values: ['private', 'friends', 'all'], desc: '私藏店铺：我的私藏店铺，好友私藏的店铺，被私藏数高的店铺'
+        optional :friends, type: Boolean, desc: "好友#{::Site.model_name.human}"
+        optional :favorite, type: String, values: ['private', 'friends', 'all'], desc: "私藏#{::Site.model_name.human}：我的私藏#{::Site.model_name.human}，好友私藏的#{::Site.model_name.human}，被私藏数高的#{::Site.model_name.human}"
       end
       get do
         authenticate!
         sites = ::Site.all
         if params[:favorite]
-          sites = 
+          sites =
             case params[:favorite]
             when 'private' then sites.where(id: current_user.favorites.where(resource_type: 'Site').map(&:resource_id))
             when 'friends' then sites.where(user_id: current_user.favorites.where(resource_type: 'User').map(&:resource_id))
