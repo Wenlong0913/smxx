@@ -33,6 +33,12 @@ module FrontendRoute
           end
         end
       end
+
+      if Rails.env.development?
+        get '/test-room', to: 'test_room#index'
+        post '/test-room', to: 'test_room#create'
+        delete '/test-room/:id', to: 'test_room#destroy'
+      end
     end
   end
 end
