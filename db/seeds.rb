@@ -10,19 +10,19 @@
   Role.find_or_create_by name: name
 end
 
-_, admin = User::Create.(mobile_phone: '15328077520', nickname: '管理员', password: 'abcd1234')
+_, admin = User::Create.(mobile_phone: '18080810818', nickname: '管理员', password: 'abcd1234')
 
 raise "创建的第一个用户ID不等于1!!!" unless admin.id == 1
 
-_, agent = User::Create.(mobile_phone: '15328077521', nickname: '商家', password: 'abcd1234')
-_, user = User::Create.(mobile_phone: '18080810818', nickname: '用户', password: 'abcd1234')
+_, agent = User::Create.(mobile_phone: '15983288999', nickname: '商家', password: 'abcd1234')
+_, user = User::Create.(mobile_phone: '15328077520', nickname: '用户', password: 'abcd1234')
 
 admin.add_role :admin
 admin.add_role :super_admin
 agent.add_role :agent
 
-site = Site.create(title: '本公司', user: admin)
-raise "创建的第一个代理商ID不等于1!!!" unless site.id == 1
+site = Site.create(title: '陌邻官方', user: admin)
+raise "创建的第一个商家ID不等于1!!!" unless site.id == 1
 
 # 德格角色
 # 总经销商，厂长，库管员，设计，工人，拆单员（物料分配）, 采购
@@ -31,7 +31,7 @@ raise "创建的第一个代理商ID不等于1!!!" unless site.id == 1
 end
 
 #系统参数
-Keystore.put('cms_template_names', "['default','dagle']")
+Keystore.put('cms_template_names', "['default','app-landing-spotlight']")
 
 # init Cms
 # visit: http://localhost:3000/cms_1/
@@ -45,24 +45,32 @@ content = ''
   cms_page = Cms::Page.create!(channel_id: cms_channel.reload.id, title: '这是新闻标题', description: '这里是页面的描述', content: content)
 end
 
-# names = %w(日用品
-# 生鲜食品
-# 海外商品
-# 旅游
-# 运功
-# 娱乐
-# 电子
-# 电器
-# )
+names = %w(维修
+保洁
+家电清洗
+衣物护理
+搬家
+超市
+外卖
+美容
+)
 
-# names.each do |name|
-#   Catalog.find_or_create_by(name: name)
-# end
+names.each do |name|
+  SiteCatalog.find_or_create_by(name: name)
+end
 
+names = %w(饮品
+餐饮
+副食品
+)
 
-# 德格供应商
-puts "创建供应商"
-vendor_names = ["自购", "康鑫", "联利达五金", "友达", "锐丰", "壹佰", "盛世百龙", "义力", "山森科技", "精工", "申康", "同乐", "上海画宇", "大家木业", "蒙友", "朋诚心", "尚好佳", "同鑫", "君子兰", "银冠", "爱格", "恒泰"]
+names.each do |name|
+  ProductCatalog.find_or_create_by(name: name)
+end
+
+# 德格商家
+puts "创建商家"
+vendor_names = ["自购", "舞东风", "联合100", "友达", "顺丰", "壹佰", "盛世百龙", "义力"]
 vendor_names.each do |vendor_name|
   _, vendor_user = Vendor::Create.(name: vendor_name, contact_name: vendor_name + '联系人', phone_number: '152133643' + (10..99).to_a.sample(1).join)
 end
@@ -129,3 +137,53 @@ MarketTemplate.create!(
       </body>
     </html>'
 )
+
+require 'roo'
+file_path= './db/init_data/communities.xlsx'
+worksheet = nil
+worksheet = Roo::Excelx.new(file_path)
+# ["uid", "name", "province", "city", "district", "street", "address", "telephone", "lat", "lng", "tags", "image", "keyword"]
+worksheet.row(1)
+2.upto worksheet.last_row do |index|
+  c = Community.find_or_initialize_by(name: worksheet.row(index)[1])
+  c.uid = worksheet.row(index)[0]
+  c.province = worksheet.row(index)[2]
+  c.city = worksheet.row(index)[3]
+  c.district = worksheet.row(index)[4]
+  c.street = worksheet.row(index)[5]
+  c.address_str = worksheet.row(index)[6]
+  c.telephone = worksheet.row(index)[7]
+  c.lat = worksheet.row(index)[8]
+  c.lng = worksheet.row(index)[9]
+  c.tags = worksheet.row(index)[10]
+  c.image = worksheet.row(index)[11]
+  c.keyword = worksheet.row(index)[12]
+  c.address_line = c.address_str.include?(c.name) ? c.address_str : c.address_str + ' ' + c.name
+  c.save!
+end
+
+site_file_path= './db/init_data/site.xlsx'
+site_worksheet = nil
+site_worksheet = Roo::Excelx.new(site_file_path)
+# [shop_id, mall_id, verified, is_published, name, alias, province, city, city_pinyin, city_id, area, big_cate, big_cate_id, small_cate, small_cate_id, address, business_area, phone, hours, avg_price, stars, photos, description, tags, map_type, latitude, longitude, navigation, traffic, parking, characteristics, product_rating, environment_rating, service_rating, default_remarks, all_remarks, very_good_remarks, good_remarks, common_remarks, bad_remarks, very_bad_remarks, recommended_dishes, recommended_products, nearby_shops, is_chains, take-away, group, card, latest_comment_date]
+head = site_worksheet.row(1)
+2.upto site_worksheet.last_row do |index|
+  c = Site.find_or_initialize_by(title: site_worksheet.row(index)[head.find_index('name')])
+  c.is_published = !site_worksheet.row(index)[head.find_index('is_closed')]
+  c.province = site_worksheet.row(index)[head.find_index('province')]
+  c.city = site_worksheet.row(index)[head.find_index('city')]
+  c.area = site_worksheet.row(index)[head.find_index('area')]
+  c.catalog = SiteCatalog.find_or_create_by_path([{name: site_worksheet.row(index)[head.find_index('big_cate')]},{name: site_worksheet.row(index)[head.find_index('small_cate')]}])
+  c.address_line = c.province + c.city + c.area + site_worksheet.row(index)[head.find_index('address')] + ' ' + c.title
+  c.business_area = site_worksheet.row(index)[head.find_index('business_area')]
+  c.phone = site_worksheet.row(index)[head.find_index('phone')]
+  c.business_hours = site_worksheet.row(index)[head.find_index('hours')]
+  c.avg_price = site_worksheet.row(index)[head.find_index('avg_price')]
+  c.photos = site_worksheet.row(index)[head.find_index('photos')]
+  c.parking = site_worksheet.row(index)[head.find_index('parking')]
+  c.recommendation = site_worksheet.row(index)[head.find_index('recommended_products')]
+  c.good_summary = site_worksheet.row(index)[head.find_index('good_remarks')]
+  c.bad_summary = site_worksheet.row(index)[head.find_index('bad_remarks')]
+  c.properties = site_worksheet.row(index)[head.find_index('tags')]
+  c.save!
+end

@@ -1,0 +1,19 @@
+td
+  h4 style="margin:0px;"
+    => link_to "#{product.id}. #{product.name}", @site ? admin_site_product_path(@site, product) : admin_product_path(product)
+    small
+      = product.catalog.try(:name)
+  span style="margin-left:30px;"
+  => link_to product.site.title, admin_site_products_path(product.site)
+td = product.price
+td
+  - product.tags.each do |tag|
+    => link_to tag.name, '#', class: 'btn btn-xs btn-success'
+td
+  - if product.is_shelves == '1'
+    => link_to '上架中', '#', class: 'btn btn-xs btn-success'
+  - else
+    => link_to '已下架', '#', class: 'btn btn-xs btn-default'
+td
+  => link_to '编辑', @site ? edit_admin_site_product_path(@site, product) : edit_admin_product_path(product), class: 'btn btn-xs btn-default'
+  = link_to '删除', @site ? admin_site_product_path(@site, product) : admin_product_path(product), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'

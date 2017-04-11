@@ -5,7 +5,7 @@ zh-CN:
       product: 产品
     attributes:
       product:
-        site: 代理商
+        site: 商家
         catalog: 产品分类
         name: 产品名称
         price: 单价
