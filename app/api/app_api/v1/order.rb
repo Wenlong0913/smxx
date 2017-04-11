@@ -15,10 +15,10 @@ module AppAPI::V1
       end
 
       desc "订单创建" do
-        success AppAPI::Entities::Order 
+        success AppAPI::Entities::Order
       end
       params do
-        requires :site_id, type: Integer, desc: '店铺ID'
+        requires :site_id, type: Integer, desc: "#{::Site.model_name.human}ID"
         requires :shopping_cart_ids, type: Array[Integer], coerce_with: ->(val) { val.split(/,|，/).map(&:to_i) }, desc: '购物车ID列表'
       end
       post do
@@ -35,7 +35,7 @@ module AppAPI::V1
       end
 
       desc "删除订单" do
-        success AppAPI::Entities::Order 
+        success AppAPI::Entities::Order
       end
       params do
         requires :id, type: Integer, desc: '订单ID'
@@ -44,7 +44,7 @@ module AppAPI::V1
         authenticate!
         order = current_user.orders.find(params[:id]).destroy
         present order, with: AppAPI::Entities::Order
-      end 
+      end
 
       desc '获取订单列表' do
         success AppAPI::Entities::Order.collection

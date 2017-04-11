@@ -20,11 +20,14 @@ class Product < Item
   has_many :image_item_relations, as: :relation
   has_many :image_items, :through => :image_item_relations
   has_many :sales_distribution_resources, class_name: 'SalesDistribution::Resource', as: 'object'
+  has_many_comments
   has_many_favorites
   belongs_to :catalog
   belongs_to :site
   has_many :article_products, dependent: :destroy
   has_many :articles, :through => :article_products
+  has_many :order_products, dependent: :destroy
+  has_many :orders, through: :order_products
   before_save do
     self.price = price.to_f.round(2)
     self.discount = (discount.to_f == 0 || discount.to_f > price.to_f ) ? price.to_f.round(2) : discount.to_f.round(2)

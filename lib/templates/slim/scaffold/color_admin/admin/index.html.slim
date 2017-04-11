@@ -34,18 +34,19 @@ h1.page-header
             ul.dropdown-menu#search_column[role='menu']
               - @filter_colums.each do |filter_colum|
                 li
-                  a[href='javascript:;' data-key=filter_colum] = <%= model_class_name %>.human_attribute_name(:filter_colum)
+                  a[href='javascript:;' data-key=filter_colum] = <%= model_class_name %>.human_attribute_name(filter_colum.to_sym)
           .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
             button.btn.btn-default[type='submit'name='json'value='json'] json
             button.btn.btn-default[type='submit'name='xml'value='xml'] xml
             button.btn.btn-default[type='submit'name='csv'value='csv'] csv
       .well.form-horizontal.filter_search[class==params[:filters]?'show':'hidden']
         - if params[:filters] && !params[:filters].keys.blank?
+          .top.small.m-b-10 * 以下输入值将完全匹配字段对应值
           - params[:filters].keys.each do |key|
             .form-group
               label.col-xs-1.control-label
                 i.fa.fa-trash-o.m-r-5
-                b = <%= model_class_name %>.human_attribute_name(:key)
+                b = <%= model_class_name %>.human_attribute_name(key.to_sym)
               - input_name = "filters["+key+"]"
               .col-xs-5
                 input.form-control[type="text"name==input_name value==params[:filters][key]]
@@ -83,7 +84,7 @@ h1.page-header
 javascript:
   $(document).ready(function(){
     bindRemoveLabel('.well.filter_search label.control-label');
-    $('form #search_column li a').on('click', function(){
+    $('form #search_column li a').off().on('click', function(){
       if($('.well.filter_search .form-group').length == 0){
         $('.well.form-horizontal.filter_search').removeClass('hidden').addClass('show');
       }

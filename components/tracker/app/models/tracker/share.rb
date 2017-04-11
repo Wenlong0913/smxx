@@ -7,7 +7,15 @@ module Tracker
       chart_data = []
       (date.beginning_of_month..date.end_of_month).each do |x|
         count = 0
-        count = SalesDistribution::Resource.where(object: current_user.sales_distribution_resources.map(&:object)).where("created_at between ? and ?", x.beginning_of_day, x.end_of_day).count unless x > Date.today
+        unless x > Date.today
+          sql = "
+            select count(s2.*) from sales_distribution_resources s
+            join users u on u.id = s.user_id
+            join sales_distribution_resources s2 on s.object_type = s2.object_type and s.object_id = s2.object_id
+            where u.id = '"+current_user.id.to_s+"' and s2.created_at between '"+ x.beginning_of_day.to_s+"' and '"+x.end_of_day.to_s+"'"
+          record = ActiveRecord::Base.connection.exec_query sql
+          count  = record.first['count']
+        end
         chart_data << {
           label: x.to_s,
           value: count

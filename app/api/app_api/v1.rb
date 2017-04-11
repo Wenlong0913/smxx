@@ -6,7 +6,10 @@ module AppAPI::V1
     mount AppAPI::V1::Order
     mount AppAPI::V1::ShoppingCart
     mount AppAPI::V1::Product
+    mount AppAPI::V1::Comment
     mount AppAPI::V1::Site
     mount AppAPI::V1::User
+    mount AppAPI::V1::Article
+    mount AppAPI::V1::ImageItem
   end
 end
