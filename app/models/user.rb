@@ -46,7 +46,7 @@ class User < ApplicationRecord
   # 收藏的店铺
   has_many :site_favorites, -> { where(resource_type: 'Site') }, class_name: 'Favorite::Entry'
   #  收藏的产品
-  has_many :product_favorites, -> { where(resource_type: 'Product') }, class_name: 'Favorite::Entry'
+  has_many :product_favorites, -> { joins("join items on items.id = favorite_entries.resource_id").where("items.type = ?", 'Product') }, class_name: 'Favorite::Entry'
   # 产品分销
   has_many :product_sales_dists, -> { where(type_name: '产品') }, class_name: 'SalesDistribution::Resource'
 
