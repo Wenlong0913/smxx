@@ -37,9 +37,8 @@ module AppAPI::V1
         end
         if params[:friends]
           # 获取好友店铺
-          sites = Site.where(user_id: current_user.friends)
+          sites = ::Site.where(user_id: current_user.friends)
         end
-
         sites = paginate_collection(sort_collection(sites), params)
         wrap_collection sites, AppAPI::Entities::Site
       end
