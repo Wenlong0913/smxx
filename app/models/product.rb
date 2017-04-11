@@ -23,6 +23,8 @@ class Product < Item
   has_many_favorites
   belongs_to :catalog
   belongs_to :site
+  has_many :article_products, dependent: :destroy
+  has_many :articles, :through => :article_products
   before_save do
     self.price = price.to_f.round(2)
     self.discount = (discount.to_f == 0 || discount.to_f > price.to_f ) ? price.to_f.round(2) : discount.to_f.round(2)
