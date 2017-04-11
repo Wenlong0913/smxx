@@ -5,7 +5,7 @@
         <div class="left sliding">
           <a href="/" class="link icon-only back"><i class="fa fa-chevron-left"></i></a>
         </div>
-        <div class="center ">{{staff.title}} | 美容师</div>
+        <div class="center">{{staff.title}} | 美容师</div>
         <div class="right">
           <a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a>
         </div>
@@ -13,16 +13,13 @@
     </div>
 
     <div class="page-content">
-      <div class="item-content userprofile">
-        <div class="item-media">
-          <img :src='headshot' :alt="staff.title" width="80" height="70" >
-        </div>
+      <div class="item-content userprofile" :style="'background: url('+headshot+') no-repeat center;'">
         <div class="item-inner">
           <div class="item-title-row">
             <div class="item-title">{{staff.title}} | 美容师</div>
-            <div>
-              <i class="fa fa-star" v-for="s in staff.sco"></i>
-            </div>
+          </div>
+          <div class="star color-amber ">
+            <i class="fa fa-star" v-for="star in staff.sco"></i>
           </div>
         </div>
       </div>
@@ -39,9 +36,15 @@
         <div id="tab1" class="tab active">
           <div class="content-block text-center">
             <div class="row profiles">
-              <div class="col-33 profiles" style="color: #ff9500;">{{staff.week_service}}</div>
-              <div class="col-33 profiles" style="color: #ff9500;">{{staff.total_service}}</div>
-              <div class="col-33 profiles" style="color: #ff9500;">{{staff.score}}</div>
+              <div class="col-33 profiles">
+                <div class="color-amber">{{staff.week_service}}</div>
+              </div>
+              <div class="col-33 profiles">
+                <div class="color-amber">{{staff.total_service}}</div>
+              </div>
+              <div class="col-33 profiles">
+                <div class="color-amber">{{staff.score}}</div>
+              </div>
             </div>
             <div class="row profile stats">
               <div class="col-33 profile stats">周服务数</div>
@@ -88,7 +91,7 @@
         </div>
 
         <div id="tab2" class="tab">
-          <div class="prductlist">
+          <div class="content-block">
             <div class="row">
               <p v-html="staff.content"></p>
             </div>
