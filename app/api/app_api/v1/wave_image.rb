@@ -11,15 +11,15 @@ module AppAPI::V1
         # 首页轮波图
         # 这是是写死的，需要确定怎么存储首页的图片
         app_data = {data: [
-          {image_url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2900910847,1546390952&fm=11&gp=0.jpg'},
-          {image_url: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2710676342,4147765701&fm=23&gp=0.jpg'},
-          {image_url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1990445434,3520255841&fm=23&gp=0.jpg'}
+          {image_url: 'http://img0.imgtn.bdimg.com/it/u=3819177557,2233233617&fm=23&gp=0.jpg'},
+          {image_url: 'http://img1.imgtn.bdimg.com/it/u=3919432552,641803243&fm=23&gp=0.jpg'},
+          {image_url: 'http://img3.imgtn.bdimg.com/it/u=1283854745,2431185040&fm=23&gp=0.jpg'}
         ]}
         # 发现界面轮波图，需要确定显示哪方面的图片
         find_data = {data: [
-          {image_url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2900910847,1546390952&fm=11&gp=0.jpg'},
-          {image_url: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2710676342,4147765701&fm=23&gp=0.jpg'},
-          {image_url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1990445434,3520255841&fm=23&gp=0.jpg'}
+          {image_url: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2663089414,714422026&fm=23&gp=0.jpg'},
+          {image_url: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=312855977,259299819&fm=23&gp=0.jpg'},
+          {image_url: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=4147180806,1939837096&fm=23&gp=0.jpg'}
         ]}
         # 私藏界面轮波图
         private_data = {data: [
