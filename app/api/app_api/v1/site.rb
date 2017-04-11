@@ -31,10 +31,15 @@ module AppAPI::V1
           sites =
             case params[:favorite]
             when 'private' then sites.where(id: current_user.favorites.where(resource_type: 'Site').map(&:resource_id))
-            when 'friends' then sites.where(user_id: current_user.favorites.where(resource_type: 'User').map(&:resource_id))
+            when 'friends' then sites.where(id: User.joins(:favorites).where(resource_type: 'Site').where("users.id in ?", current_user.friends).pluck("resource_id"))
             when 'all'     then sites.left_joins(:favorites).group("sites.id").order('COUNT(favorite_entries.id) DESC')
             end
         end
+        if params[:friends]
+          # 获取好友店铺
+          sites = Site.where(user_id: current_user.friends)
+        end
+
         sites = paginate_collection(sort_collection(sites), params)
         wrap_collection sites, AppAPI::Entities::Site
       end

@@ -20,9 +20,8 @@ module AppAPI
         object.products.joins(:articles).count
       end
 
-      # TODO: 获取好友数量, 如何定义好友?, 如何获取好友?
       def friends_count
-        0
+        object.friends.count
       end
 
       def favorite_count
