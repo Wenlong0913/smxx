@@ -6,24 +6,24 @@ class ProductPolicy < ApplicationPolicy
   end
 
   def index?
-    user.super_admin_or_admin? || user.has_role?(:agent)
+    user.super_admin_or_admin? || user.has_role?(:agent) || user.has_role?(:worker)
   end
 
   def show?
-    return true if user.super_admin_or_admin?
+    return true if user.super_admin_or_admin? || user.has_role?(:worker)
     user.has_role?(:agent) && record.site.try(:user_id) == user.id
   end
 
   def new?
-    user.super_admin_or_admin? || user.has_role?(:agent)
+    user.super_admin_or_admin? || user.has_role?(:agent) || user.permission?(:product_insert)
   end
 
   def create?
-    user.super_admin_or_admin? || (user.has_role?(:agent) && record.site.try(:user_id) == user.id)
+    user.super_admin_or_admin? || (user.has_role?(:agent) && record.site.try(:user_id) == user.id) || user.permission?(:product_insert)
   end
 
   def edit?
-    create?
+    user.super_admin_or_admin? || (user.has_role?(:agent) && record.site.try(:user_id) == user.id) || user.permission?(:product_update)
   end
 
   def update?
@@ -31,7 +31,7 @@ class ProductPolicy < ApplicationPolicy
   end
 
   def destroy?
-    create?
+    user.super_admin_or_admin? || (user.has_role?(:agent) && record.site.try(:user_id) == user.id) || user.permission?(:product_delete)
   end
 
   def permitted_attributes_for_create

@@ -1,0 +1,59 @@
+  <%= render file: 'public/templetes/app-landing-spotlight/_header.html' %>
+  <!-- button -->
+  <div class="side-menu hidden-xs hidden-sm">
+    <ul class="menu">
+      <% @pages.each do |page|  %>
+      <li data-menuanchor="<%= page.short_title %>" >
+        <a href="#<%= page.short_title %>"></a>
+      </li>
+      <% end %>
+      <li data-menuanchor="last">
+        <a href="#last"></a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- content -->
+  <div id="fullpage">
+    <% @pages.each do |page|  %>
+    <section data-anchor="<%= page.short_title %>">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6 col-md-3 col-md-offset-1">
+            <div class="new-img">
+              <img src="<%= page.image_path.blank? ? '/templetes/app-landing-spotlight/assets/img/app-screenshots/quest_1.png' : page.image_path %>" alt="" class="img-responsive">
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-6 col-md-offset-1">
+            <h1 class="heading" data-animate-in="animateUpDown">
+             <%= page.title %>
+            </h1>
+            <p class="delay_1" data-animate-in="animateUpDown">
+              <%= page.description.truncate(100) %>
+            </p>
+            <a href="<%= get_cms_url(page) %>" class="btn btn-lg btn-primary delay_2" data-animate-in="animateUpDown">
+              <i class="fa fa-share-alt"></i> 查看详情
+            </a>
+          </div>
+        </div> <!-- / .row -->
+      </div><!-- / .container -->
+    </section>
+    <% end %>
+
+    <section data-anchor="last">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6 col-sm-offset-6 col-md-5 col-md-offset-6">
+            <h3 data-animate-in="animateUpDown">
+              了解更多？
+            </h3>
+            <%= link_to_prev_page @pages, '上一页', class: 'paginate-btn' %>
+            <%= link_to_next_page @pages, '下一页', class: 'paginate-btn' %>
+          </div>
+        </div> <!-- / .row -->
+      </div><!-- / .container -->
+    </section>
+    
+  </div>
+  
+<%= render file: 'public/templetes/app-landing-spotlight/_footer.html' %>

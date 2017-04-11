@@ -1,10 +1,10 @@
 default: &default
   site:
-    name: 德格智慧工厂
+    name: 私享荟
     host: http://localhost:5000
     copyright: © TMF All Right Reserved 2015
-    description: Dagle是一个工厂SaaS软件管理系统。Dagle提供产品管理，库存管理，订单流程管理，经销商分店Web和会员营销管理系统
-    slogan: Dagle智慧工厂
+    description: 私享荟
+    slogan: 私享荟
   email:
     sender: sender@tmf.com
   weixin:

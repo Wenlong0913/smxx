@@ -7,7 +7,7 @@ module AppAPI::V1
         success AppAPI::Entities::Product
       end
       params do
-        requires :id, type: Integer, desc: '店铺ID'
+        requires :id, type: Integer, desc: "#{::Site.model_name.human}ID"
       end
       get ':id' do
         authenticate!
@@ -27,7 +27,7 @@ module AppAPI::V1
         # 查看所有上架商品
         products = ::Product.where("features ->> 'is_shelves' = '1'")
         if params[:type]
-          products = 
+          products =
             case params[:type]
             when 'hot' then products
             when 'new' then products.order("created_at DESC")
