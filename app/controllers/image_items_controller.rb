@@ -45,7 +45,6 @@ class ImageItemsController < ApplicationController
   end
 
   def update
-    binding.pry
     @image_item = ImageItem.find(params[:id])
     params[:tag].split(/,|，/).compact.each do |t|
       image_item_tag = @image_item.image_item_tags.new
