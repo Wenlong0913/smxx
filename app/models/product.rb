@@ -22,6 +22,7 @@ class Product < Item
   has_many :sales_distribution_resources, class_name: 'SalesDistribution::Resource', as: 'object'
   has_many_comments
   has_many_favorites
+  has_many_likes
   belongs_to :catalog
   belongs_to :site
   has_many :article_products, dependent: :destroy
@@ -34,5 +35,4 @@ class Product < Item
     self.weight = weight.to_f.round(2)
     self.stock = stock.to_i
   end
-
 end

@@ -111,6 +111,7 @@ gem 'comment', path: 'components/comment'
 gem 'favorite', path: 'components/favorite'
 gem 'gnomon', git: 'git@gitlab.tanmer.com:tm-framework/gnomon.git'
 gem 'activerecord-postgres-earthdistance', github: 'xiaohui-zhangxh/activerecord-postgres-earthdistance'
+gem 'like', path: 'components/like'
 
 
 gem 'themeable', '~> 1.2.0'#, path: '../../gems/themeable'
