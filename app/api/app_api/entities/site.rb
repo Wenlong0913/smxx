@@ -4,7 +4,7 @@ module AppAPI
       expose :products, using: AppAPI::Entities::Product, documentation: { is_array: true }, if: ->(site, options) { (options[:includes] || []).include?(:products) }
       expose :shares_count, documentation: { desc: '分享帖', type: Integer }
       expose :friends_count, documentation: { desc: '好友数', type: Integer }
-      expose :favorites_count, documentation: { desc: '被分享数', type: Integer }
+      expose :favorites_count, documentation: { desc: '被私藏数', type: Integer }
 
       private
       def shares_count

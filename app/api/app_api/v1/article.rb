@@ -9,8 +9,8 @@ module AppAPI::V1
       params do
         requires :description, type: String, desc: '文章内容'
         requires :title, type: String, desc: '文章标题'
-        requires :image_item_ids, type: Array[Integer], coerce_with: ->(val) { val.split(/,|，/).map(&:to_i) }, desc: '图片IDs'
-        requires :product_ids, type: Array[Integer], coerce_with: ->(val) { val.split(/,|，/).map(&:to_i) }, desc: '产品ID列表'
+        optional :image_item_ids, type: Array[Integer], coerce_with: ->(val) { val.split(/,|，/).map(&:to_i) }, desc: '图片IDs'
+        optional :product_ids, type: Array[Integer], coerce_with: ->(val) { val.split(/,|，/).map(&:to_i) }, desc: '产品ID列表'
       end
       post do
         authenticate!
@@ -19,11 +19,11 @@ module AppAPI::V1
         article.image_item_ids = params[:image_item_ids]
         article.product_ids = params[:product_ids]
         error! article.errors unless article.save
-        present article, with: AppAPI::Entities::Article, type: :full_article   
+        present article, with: AppAPI::Entities::Article
       end
 
       desc "文章列表" do
-        success AppAPI::Entities::Article 
+        success AppAPI::Entities::ArticleSimple
       end
       params do
         use :pagination
@@ -33,7 +33,7 @@ module AppAPI::V1
         authenticate!
         articles = ::Article.all
         articles = paginate_collection(sort_collection(articles), params)
-        wrap_collection articles, AppAPI::Entities::Article, type: :full_article
+        wrap_collection articles, AppAPI::Entities::ArticleSimple
       end
 
       desc '查看文章详细' do
@@ -44,7 +44,7 @@ module AppAPI::V1
       end
       get ':id' do
         authenticate!
-        present ::Article.find(params[:id]), with: AppAPI::Entities::Article, type: :full_article 
+        present ::Article.find(params[:id]), with: AppAPI::Entities::Article
       end
 
       desc '删除文章' do

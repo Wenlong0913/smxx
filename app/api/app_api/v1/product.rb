@@ -11,11 +11,11 @@ module AppAPI::V1
       end
       get ':id' do
         authenticate!
-        present ::Product.find(params[:id]), with: AppAPI::Entities::Product, type: :full_product, includes: [:site]
+        present ::Product.find(params[:id]), with: AppAPI::Entities::Product, type: :full_product
       end
 
       desc '获取商品列表' do
-        success AppAPI::Entities::Product.collection
+        success AppAPI::Entities::ProductSimple.collection
       end
       params do
         use :pagination
@@ -45,7 +45,7 @@ module AppAPI::V1
           products = products.joins(:orders).where("orders.user_id =  ?", current_user.id)
         end
         products = paginate_collection(sort_collection(products), params)
-        wrap_collection products, AppAPI::Entities::Product, includes: [:site]
+        wrap_collection products, AppAPI::Entities::ProductSimple
       end
 
       desc '收藏商品'
