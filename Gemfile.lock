@@ -31,7 +31,7 @@ GIT
     sales_distribution (0.1.0)
 
 GIT
-  remote: http://gitlab.tanmer.com/tm-themes/theme_color_admin.git
+  remote: git@gitlab.tanmer.com:tm-themes/theme_color_admin.git
   revision: e5e67f3ccf6adebb77fbead33670b3b93655ed95
   specs:
     theme_color_admin (0.0.5)

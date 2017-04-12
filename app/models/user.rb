@@ -93,4 +93,12 @@ class User < ApplicationRecord
     AuthToken.encode(user_id: self.id)
   end
 
+  if Settings.project.sxhop?
+    def friends
+      SalesDistribution::ResourceUser.joins(:resource).
+      where("sales_distribution_resource_users.user_id = ? and sales_distribution_resources.object_type in ('Site', 'Product')",self.id).
+      pluck("sales_distribution_resources.user_id")
+    end
+  end
+
 end

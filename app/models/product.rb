@@ -24,6 +24,8 @@ class Product < Item
   has_many_favorites
   belongs_to :catalog
   belongs_to :site
+  has_many :article_products, dependent: :destroy
+  has_many :articles, :through => :article_products
   has_many :order_products, dependent: :destroy
   has_many :orders, through: :order_products
   before_save do
