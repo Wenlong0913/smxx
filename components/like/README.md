@@ -41,6 +41,10 @@
     product.likes.untag_to! user # 取消点赞
     product.likes.tagged_by? user # 查询资源是否被用户点赞
 
+定制用户model的类名, 默认用户model类为User. 如果需要改变,
+
+则在initialize/setup_like.rb 中加入类名
+    Like.user_model_class = "***"
 
 ```ruby
 gem 'like'
