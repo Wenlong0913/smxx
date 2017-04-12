@@ -18,59 +18,43 @@ h1.page-header
         .table-responsive
           table.table.table-profile
             tr
-              td.field 用户名
+              td.field 用户名：
               td
                 =decorate(@site.user).display_name
-            tr.divider
-              td[colspan='2']
-            tr
-              td.field 名称
+              td.field 美容院：
               td
                 = @site.title
-            tr.divider
-              td[colspan='2']
             tr
-              td.field 联系人
+              td.field 联系人：
               td
                 = @site.contact_name
-            tr.divider
-              td[colspan='2']
-            tr
-              td.field 联系电话
+              td.field 联系电话：
               td
                 = @site.contact_number
-            tr.divider
-              td[colspan='2']
             tr
-              td.field 营业时间
+              td.field 营业时间：
               td
                 = @site.site_hours
-            tr.divider
-              td[colspan='2']
-            tr
-              td.field 是否签约
+              td.field 是否签约：
               td
-                = @site.is_sign
-            tr.divider
-              td[colspan='2']
+                - if @site.is_sign == 'true'
+                  | 已签约
+                - else
+                  | 未签约
             tr
-              td.field 标签备注
+              td.field 标签备注：
               td
                 = @site.properties.map{|p| Site::PROPERTIES[p.to_sym] }.compact.join('，') if @site.properties && @site.properties.any?
-            tr.divider
-              td[colspan='2']
-            tr
-              td.field 地址
+              td.field 地址：
               td
                 = @site.address_line
-            tr.divider
-              td[colspan='2']
             tr
-              td.field 美容院介绍
+              td.field 美容院介绍：
               td
                 = @site.content
-            tr.divider
-              td[colspan='2']
+              td.field 签约备注：
+              td
+                = @site.sign_note
           p 背景图片
           .gallery#gallery
             .row

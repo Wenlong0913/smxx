@@ -13,26 +13,39 @@
           ul
             - @product.errors.full_messages.each do |message|
               li = message
-
-      = f.association :site
       = f.input :name
-      .form-group.catalog-list[data-catalog-name="#{@product.catalog.try(:name)}" data-catalog-id="#{@product.catalog_id}"]
-        label[class="control-label"] 产品分类
-        input[type="hidden" v-model="id" name="product[catalog_id]"]
-        input.form-control[readonly=true @click="showCatalog = true" :value="catalogs"]
-        span.hint 点击输入框选择分类
-        modal[title="产品分类" :show.sync="showCatalog" @cancel="showCatalog = false"]
-          div
-            catalog-list[data-url=admin_product_catalogs_path :default="[#{@product.catalog_id}]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false"]
-          div[slot="footer"]
-      = f.input :price, as: :decimal
-      = f.input :old_price, as: :decimal
-      = f.input :description, as: :text
-      = f.input :responsive_person, as: :text
-      = f.input :warning_message, as: :text
-      = f.input :service_time
-      = f.input :month_number, as: :integer
-      = f.collection_check_boxes :properties, Product::PROPERTIES, :first, :last, checked: @product.try(:properties)
+      .div class="row"
+        .div class="col-md-6"
+          = f.association :site
+        .div class="col-md-6"
+          .form-group.catalog-list[data-catalog-name="#{@product.catalog.try(:name)}" data-catalog-id="#{@product.catalog_id}"]
+            label[class="control-label"] 产品分类
+            input[type="hidden" v-model="id" name="product[catalog_id]"]
+            input.form-control[readonly=true @click="showCatalog = true" :value="catalogs"]
+            span.hint 点击输入框选择分类
+            modal[title="产品分类" :show.sync="showCatalog" @cancel="showCatalog = false"]
+              div
+                catalog-list[data-url=admin_product_catalogs_path :default="[#{@product.catalog_id}]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false"]
+              div[slot="footer"]
+      .div class="row"
+        .div class="col-md-6"
+          = f.input :old_price, as: :decimal
+        .div class="col-md-6"
+          = f.input :price, as: :decimal
+      .div class="row"
+        .div class="col-md-6"
+          = f.input :description, as: :text
+        .div class="col-md-6"
+          = f.input :responsive_person, as: :text
+      .div class="row"
+        .div class="col-md-6"
+          = f.input :warning_message, as: :text, input_html: {rows: 9}
+        .div class="col-md-6"
+          = f.input :service_time
+          = f.input :month_number, as: :integer
+          .p 标签（可多选）
+          = f.collection_check_boxes :properties, Product::PROPERTIES, :first, :last, checked: @product.try(:properties)
+      
       = f.input :content,as: :ckeditor
       .form-group
         image-select[server="#{image_items_path}" name="product[image_item_ids][]" selected-ids="#{@product.image_item_ids.join(', ')}"]
