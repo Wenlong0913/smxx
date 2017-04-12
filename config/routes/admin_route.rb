@@ -102,6 +102,8 @@ module AdminRoute
         #系统参数
         resources :keystores
         resources :audits, only: [:index], :concerns => :paginatable
+        # 轮波图
+        resources :banners
       end
     end
   end
