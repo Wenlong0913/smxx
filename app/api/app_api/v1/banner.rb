@@ -23,8 +23,8 @@ module AppAPI::V1
         ]}
         # 私藏界面轮波图
         private_data = {data: [
-          {id: 9, image_url: 'http://api-dev.sxhop.com/photos/2017/3/29/5/original.?2017', redirect_web_url: 'http://www.baidu.com', redirect_app_url: 'http://www.baidu.com'}
-          {id: 9, image_url: 'http://api-dev.sxhop.com/photos/2017/3/29/6/original.?2017', redirect_web_url: 'http://www.baidu.com', redirect_app_url: 'http://www.baidu.com'}
+          {id: 9, image_url: 'http://api-dev.sxhop.com/photos/2017/3/29/5/original.?2017', redirect_web_url: 'http://www.baidu.com', redirect_app_url: 'http://www.baidu.com'},
+          {id: 9, image_url: 'http://api-dev.sxhop.com/photos/2017/3/29/6/original.?2017', redirect_web_url: 'http://www.baidu.com', redirect_app_url: 'http://www.baidu.com'},
           {id: 9, image_url: 'http://api-dev.sxhop.com/photos/2017/4/12/14/original.?2017', redirect_web_url: 'http://www.baidu.com', redirect_app_url: 'http://www.baidu.com'}
         ]}
         images = if params[:diaplay_type] == 'privated'
