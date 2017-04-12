@@ -5,7 +5,7 @@ module Like
     initializer "like.initialize" do
       ActiveSupport.on_load(:active_record) do
         ActiveRecord::Base.send :include, Like::HasManyLikes
-        User.has_many :likes, class_name: 'Like::Base', dependent: :destroy do
+        Like.user_model_class.constantize.has_many :likes, class_name: 'Like::Base', foreign_key: :user_id, dependent: :destroy do
           def tag_to!(resource)
             find_or_create_by(resource: resource)
           end
