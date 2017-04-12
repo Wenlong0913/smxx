@@ -59,7 +59,7 @@ module AppAPI::V1
         if current_user.favorites.tagged_to? product
           message = '已经收藏了此产品!'
         else
-          current_user.favorites.tag_to! product 
+          current_user.favorites.tag_to! product
           message = '产品收藏成功!'
         end
         present message: message
@@ -77,7 +77,7 @@ module AppAPI::V1
         end
         present message: '产品取消收藏成功!'
       end
-      
+
     end # end of resources
   end
 end
