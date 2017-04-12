@@ -24,9 +24,12 @@ module AppAPI
       # with_options if: ->(site, options) { options[:type] == :full_site } do |f|
       #   expose :products, using: AppAPI::Entities::Product
       # end
+      def score
+        BigDecimal(object.score.to_s).ceil
+      end
 
       def properties
-        object.properties.map{|p| ::Site::PROPERTIES[p.to_sym]}.compact.join('，')
+        object.properties.map{|p| ::Site::PROPERTIES[p.to_sym]}.compact
       end
     end
   end
