@@ -7,12 +7,6 @@
         i class="fa fa-minus"
   .panel-body
     = simple_form_for @banner, url: @banner.new_record? ? admin_banners_path : admin_banner_path(@banner), validate: true do |f|
-      - if @banner.errors.any?
-        #error_explanation
-          h2 = "#{pluralize(@banner.errors.count, "error")} prohibited this banner from being saved:"
-          ul
-            - @banner.errors.full_messages.each do |message|
-              li = message
       = f.input :title
       = f.input :banner_type, collection: enum_options_for_select(Banner, :banner_type), as: :radio_buttons, selected: 'main'
       = f.input :image_url

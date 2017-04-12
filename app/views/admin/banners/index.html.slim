@@ -14,12 +14,12 @@ h1.page-header
       | #{Banner.model_name.human}
   .panel-body
     = form_for :search, url:  admin_banners_path, method: :get do |f|
-      .toolbar.row
+      /.toolbar.row
         .col-md-12
           p
             |支持SIMILAR TO查询语法, %代表匹配所有，_代表匹配一个字符
             a<[href="https://www.postgresql.org/docs/current/static/functions-matching.html" target="_blank"]查看详情说明
-      .toolbar.row
+      /.toolbar.row
         .col-md-6.m-b-15
           .input-group.search_all
             = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '关键字搜索...'
@@ -39,7 +39,7 @@ h1.page-header
             button.btn.btn-default[type='submit'name='json'value='json'] json
             button.btn.btn-default[type='submit'name='xml'value='xml'] xml
             button.btn.btn-default[type='submit'name='csv'value='csv'] csv
-      .well.form-horizontal.filter_search[class==params[:filters]?'show':'hidden']
+      /.well.form-horizontal.filter_search[class==params[:filters]?'show':'hidden']
         - if params[:filters] && !params[:filters].keys.blank?
           .top.small.m-b-10 * 以下输入值将完全匹配字段对应值
           - params[:filters].keys.each do |key|
@@ -52,7 +52,7 @@ h1.page-header
                 input.form-control[type="text"name==input_name value==params[:filters][key]]
         hr.filters_box
         button.btn.btn-inverse.p-l-20.p-r-20.pull-center[type='submit'] 搜索
-    - if params[:search]
+    /- if params[:search]
       .alert.alert-success.m-b-15
         strong
           = "查询："
@@ -64,13 +64,18 @@ h1.page-header
       table.table.table-striped.table-bordered
         thead
           tr
-            th 标题
-            th 
-            th 标题
-            th 标题
+            th = Banner.human_attribute_name(:id)
+            th = Banner.human_attribute_name(:title)
+            th = Banner.human_attribute_name(:banner_type)
+            th = Banner.human_attribute_name(:image_url)
+            th 操作
         tbody
           - @banners.each do |banner|
             tr
+              td = banner.id
+              td = banner.title
+              td = enum_l(banner, :banner_type)
+              td = banner.image_url
               td
                 => link_to '查看', admin_banner_path(banner), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_banner_path(banner), class: 'btn btn-xs btn-default'
