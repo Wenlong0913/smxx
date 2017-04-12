@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170411054052) do
+ActiveRecord::Schema.define(version: 20170412073751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "cube"
   enable_extension "earthdistance"
@@ -475,6 +476,16 @@ ActiveRecord::Schema.define(version: 20170411054052) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["key"], name: "index_keystores_on_key", using: :btree
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "resource_type"
+    t.integer  "resource_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["resource_type", "resource_id"], name: "index_likes_on_resource_type_and_resource_id", using: :btree
+    t.index ["user_id"], name: "index_likes_on_user_id", using: :btree
   end
 
   create_table "market_pages", force: :cascade do |t|

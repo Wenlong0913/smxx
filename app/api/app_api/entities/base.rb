@@ -39,8 +39,6 @@ module AppAPI
             #{self}.represent instance, options
           end
         RUBY
-        puts "==== #{klass_name} ===="
-        puts code
         klass.instance_eval code
         self.const_set klass_name, klass
         klass
