@@ -47,7 +47,7 @@ module AppAPI::V1
       params do
         requires :id, type: Integer, desc: "#{::Site.model_name.human}ID"
       end
-      get 'favorite/:id' do
+      post ':id/favorite' do
         authenticate!
         site = ::Site.find(params[:id])
         message = ''
@@ -64,7 +64,7 @@ module AppAPI::V1
       params do
         requires :id, type: Integer, desc: "#{::Site.model_name.human}ID"
       end
-      get 'unfavorite/:id' do
+      delete ':id/favorite' do
         authenticate!
         site = ::Site.find(params[:id])
         if current_user.favorites.tagged_to? site
