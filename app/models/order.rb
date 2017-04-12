@@ -69,7 +69,9 @@ class Order < ApplicationRecord
   has_one :delivery, through: :order_delivery
   has_many :finance_histories, as: :owner, dependent: :destroy
 
-  before_create :generate_code
+  if Settings.project.sxhop?
+    before_create :generate_code
+  end
   # before_validation :check_member
 
   validates_presence_of :site
