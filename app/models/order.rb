@@ -69,7 +69,7 @@ class Order < ApplicationRecord
   has_one :delivery, through: :order_delivery
   has_many :finance_histories, as: :owner, dependent: :destroy
 
-  if Settings.project.sxhop?
+  unless Settings.project.dagle?
     before_create :generate_code
   end
   # before_validation :check_member
