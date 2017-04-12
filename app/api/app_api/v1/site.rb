@@ -30,9 +30,9 @@ module AppAPI::V1
         if params[:favorite]
           sites =
             case params[:favorite]
-            when 'mine' then sites.where(id: current_user.favorites.where(resource_type: 'Site').map(&:resource_id))
-            when 'friends' then sites.where(id: User.joins(:favorites).where(resource_type: 'Site').where("users.id in ?", current_user.friends).pluck("resource_id"))
-            when 'top3'     then sites.joins(:favorites).group("sites.id").order('COUNT(favorite_entries.id) DESC').limit(3)
+            when 'mine'    then sites.joins(:favorites).where(favorite_entries: {user_id: current_user.id})
+            when 'friends' then sites.joins(:favorites).where(favorite_entries: {user_id: current_user.friends})
+            when 'top3'    then sites.joins(:favorites).group("sites.id").order('COUNT(favorite_entries.id) DESC').limit(3)
             end
         end
         if params[:friends]
@@ -41,6 +41,36 @@ module AppAPI::V1
         end
         sites = paginate_collection(sort_collection(sites), params)
         wrap_collection sites, AppAPI::Entities::Site
+      end
+
+      desc '收藏店铺'
+      params do
+        requires :id, type: Integer, desc: "#{::Site.model_name.human}ID"
+      end
+      post ':id/favorite' do
+        authenticate!
+        site = ::Site.find(params[:id])
+        message = ''
+        if current_user.favorites.tagged_to? site
+          message = '已经收藏了此店铺!'
+        else
+          current_user.favorites.tag_to! site 
+          message = '店铺收藏成功!'
+        end
+        present message: message
+      end
+
+      desc '取消收藏店铺'
+      params do
+        requires :id, type: Integer, desc: "#{::Site.model_name.human}ID"
+      end
+      delete ':id/favorite' do
+        authenticate!
+        site = ::Site.find(params[:id])
+        if current_user.favorites.tagged_to? site
+          current_user.favorites.untag_to! site
+        end
+        present message: '店铺取消收藏成功!'
       end
 
     end # end of resources
