@@ -78,6 +78,37 @@ module AppAPI::V1
         present message: '产品取消收藏成功!'
       end
       
+      desc '商品点赞'
+      params do
+        requires :id, type: Integer, desc: "#{::Product.model_name.human}ID"
+      end
+      post ':id/like' do
+        authenticate!
+        product = ::Product.find(params[:id])
+        message = ''
+        if current_user.likes.tagged_to? product
+          message = '已经点赞了此产品!'
+        else
+          current_user.likes.tag_to! product
+          message = '产品点赞成功!'
+        end
+        present message: message
+      end
+
+      desc '取消点赞商品'
+      params do
+        requires :id, type: Integer, desc: "#{::Product.model_name.human}ID"
+      end
+      delete ':id/like' do
+        authenticate!
+        product = ::Product.find(params[:id])
+        if current_user.likes.tagged_to? product
+          current_user.likes.untag_to! product
+        end
+        present message: '产品取消点赞成功!'
+      end
+
+
     end # end of resources
   end
 end
