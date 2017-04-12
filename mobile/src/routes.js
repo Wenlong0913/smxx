@@ -4,10 +4,6 @@ export default [
     component: require('./pages/login.vue')
   },
   {
-    path: '/home/',
-    component: require('./pages/home.vue')
-  },
-  {
     path: '/staffs/',
     component: require('./pages/staffs.vue')
   },
