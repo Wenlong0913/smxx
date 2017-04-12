@@ -1,11 +1,8 @@
 module AppAPI
   module Entities
-    class ImageItem < Base
-
-      # public attributes
+    class ImageItem < ImageItemSimple
       expose_id
-      expose :image_url, documentation: { desc: '图片链接' }
-
+      expose_created_at
     end
   end
 end

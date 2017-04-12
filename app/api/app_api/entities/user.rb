@@ -1,13 +1,6 @@
 module AppAPI
   module Entities
-    class User < Base
-
-      # public attributes
-      expose_id
-      expose_created_at
-      expose :nickname, documentation: { desc: '用户昵称' }
-      expose :headshot, documentation: { desc: '头像' }
-
+    class User < UserSimple
       # private attributes
       with_options if: ->(user, options) { options[:type] == :private || options[:current_user].try(:id) == user.id } do |f|
         expose :username, documentation: { desc: '用户名：私有数据，自己或有特定权限的账号才能获得' }
@@ -43,10 +36,6 @@ module AppAPI
 
       def mobile_phone
         object.mobile.try(:phone_number)
-      end
-
-      def headshot
-        (object.avatar && (Settings.site.host + object.avatar.url(:thumb))) || object.headshot
       end
     end
   end
