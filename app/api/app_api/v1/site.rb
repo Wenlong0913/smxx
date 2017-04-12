@@ -32,7 +32,7 @@ module AppAPI::V1
             case params[:favorite]
             when 'mine' then sites.where(id: current_user.favorites.where(resource_type: 'Site').map(&:resource_id))
             when 'friends' then sites.where(id: User.joins(:favorites).where(resource_type: 'Site').where("users.id in ?", current_user.friends).pluck("resource_id"))
-            when 'top3'     then sites.left_joins(:favorites).group("sites.id").order('COUNT(favorite_entries.id) DESC').limit(3)
+            when 'top3'     then sites.joins(:favorites).group("sites.id").order('COUNT(favorite_entries.id) DESC').limit(3)
             end
         end
         if params[:friends]
