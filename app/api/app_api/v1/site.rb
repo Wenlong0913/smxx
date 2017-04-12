@@ -16,7 +16,7 @@ module AppAPI::V1
       end
 
       desc "获取#{::Site.model_name.human}列表" do
-        success AppAPI::Entities::Site.collection
+        success AppAPI::Entities::SiteSimple.collection
       end
       params do
         use :pagination
@@ -40,7 +40,7 @@ module AppAPI::V1
           sites = ::Site.where(user_id: current_user.friends)
         end
         sites = paginate_collection(sort_collection(sites), params)
-        wrap_collection sites, AppAPI::Entities::Site
+        wrap_collection sites, AppAPI::Entities::SiteSimple
       end
 
       desc '收藏店铺'
