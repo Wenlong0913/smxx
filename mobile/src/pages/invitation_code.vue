@@ -35,12 +35,37 @@
           </div>
         </div>
         <div class="row">
-          <button class="button-fill button col-100"> 立 即 分 享 </button>
+          <a href="#" data-picker=".picker-1" class=" open-picker button-fill button col-100"> 立 即 分 享 </a>
         </div>
         <p class="text-center">邀请码分享规则</p>
         <p class="text-center">分享您的邀请码，通过您的邀请码注册成功，您可立即获得一份超值大礼包。</p>
       </div>
+
+      <div class="picker-modal picker-1">
+        <div class="toolbar">
+          <div class="toolbar-inner">
+            <div class="left"></div>
+            <div class="right"><a href="#" class="close-picker" style="color: #fff;">取  消  </a></div>
+          </div>
+        </div>
+        <div class="picker-modal-inner">
+          <div class="content-block">
+            <ul class="socials">
+              <li><a href="" class="fb"><i class="fa fa-facebook"></i></a>
+              </li>
+              <li><a href="" class="tw"><i class="fa fa-twitter"></i></a>
+              </li>
+              <li><a href="" class="gp"><i class="fa fa-google-plus"></i></a>
+              </li>
+              <li><a href="" class="pin"><i class="fa fa-pinterest"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
     </div>
+
   </f7-page>
 </template>
 
