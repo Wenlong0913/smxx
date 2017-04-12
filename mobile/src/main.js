@@ -12,7 +12,7 @@ require('assets/css/maxframes.css')
 // require('assets/css/swipebox.min.css')
 // require('assets/js/jquery.min.js')
 // require('assets/js/jquery.swipebox.js')
-// require('assets/js/masonry.pkgd.min.js')
+require('assets/js/masonry.pkgd.min.js')
 // require('assets/js/maxframes.js')
 
 /* setup cordova */

@@ -10,12 +10,12 @@
     = simple_form_for @staff, url: @staff.new_record? ? admin_staffs_path : admin_staff_path(@staff), validate: true do |f|
       - if @staff.errors.any?
         #error_explanation
-          
+
           ul
             - @staff.errors.full_messages.each do |message|
               li = message
 
-      = f.input :user_id, collection: User.all.decorate, label_method: :display_name
+      = f.association :site, collection: Site.all, input_html: {class: 'select2'}
       = f.input :title, required: true, input_html: { maxlength: 4 }
       = f.input :age, as: :integer
       = f.input :work_years, as: :integer, input_html: { value: '1' }
@@ -29,6 +29,6 @@
       p 证书认证（最多上传4张）
       .form-group
         image-select[server="#{image_items_path}" name="staff[image_item_ids][]" selected-ids="#{@staff.image_item_ids.join(', ')}"]
-        
+
 
       = f.submit class: 'btn btn-success btn-block'

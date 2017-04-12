@@ -31,8 +31,8 @@ class Site < ApplicationRecord
 
   acts_as_address
 
-  validates_presence_of :title, :user_id
-  validates_uniqueness_of :title, scope: [:type, :user_id]
+  validates_presence_of :title, :address_line
+  validates_uniqueness_of :title, scope: [:address_line]
 
   PROPERTIES = {
     assure: "正品保障",
