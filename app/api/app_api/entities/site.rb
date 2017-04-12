@@ -11,12 +11,12 @@ module AppAPI
 
       expose :user, using: AppAPI::Entities::User
 
-      expose :share_count, documentation: { desc: '分享帖' }
+      expose :shares_count, documentation: { desc: '分享帖' }
       expose :friends_count, documentation: { desc: '好友数' }
-      expose :favorite_count
+      expose :favorites_count
 
       private
-      def share_count
+      def shares_count
         object.products.joins(:articles).count
       end
 
@@ -24,7 +24,7 @@ module AppAPI
         object.friends.count
       end
 
-      def favorite_count
+      def favorites_count
         object.favorites.count
       end
 
