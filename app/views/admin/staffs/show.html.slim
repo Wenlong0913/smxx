@@ -17,15 +17,15 @@ h1.page-header
         .table-responsive
           table.table.table-profile
             tr
-              td.field 用户名
-              td
-                =decorate(@staff.user).display_name
-            tr.divider
-              td[colspan='2']
-            tr
               td.field 姓名
               td
                 = @staff.title
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field 所属美容院
+              td
+                =decorate(@staff.site).title
             tr.divider
               td[colspan='2']
             tr

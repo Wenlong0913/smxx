@@ -3,7 +3,7 @@
 # Table name: sites
 #
 #  id         :integer          not null, primary key
-#  user_id    :integer
+#  site_id    :integer
 #  title      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -13,15 +13,14 @@
 
 class Staff < ApplicationRecord
   MAIN_ID = 1
-  belongs_to :user
   belongs_to :site
   has_many :theme_configs
   has_one :active_theme_config, -> { where(active: true) }, class_name: 'ThemeConfig'
   has_many :image_items, dependent: :destroy, as: :owner
   has_many_favorites
   store_accessor :features, :description, :age, :work_years, :content, :certificate, :properties, :score, :total_service, :week_service
-  validates_presence_of :title, :user_id
-  validates_uniqueness_of :title, scope: [:user_id]
+  validates_presence_of :title, :site_id
+  validates_uniqueness_of :title, scope: [:site_id]
 
   PROPERTIES = {
     breast_dredge: "乳腺疏通",
