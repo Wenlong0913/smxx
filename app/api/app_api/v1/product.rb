@@ -20,7 +20,7 @@ module AppAPI::V1
       params do
         use :pagination
         # use :sort, fields: [:id, :created_at, :updated_at]
-        optional :type, type: String, values: ['hot', 'new', 'favorites', 'mine_favorites', 'friends_favorites'], desc: '产品分类排行：最热门产品，最新上架产品，最私藏产品, 我私藏的产品, 好友们棒场(私藏)的商品'
+        optional :type, type: String, values: ['hot', 'new', 'favorites', 'favorites_of_mine', 'favorites_of_friends'], desc: '产品分类排行：最热门产品，最新上架产品，最私藏产品, 我私藏的产品, 好友们棒场(私藏)的商品'
         optional :name, type: String, desc: '根据名字搜索产品'
         optional :search_type, type: String, values: ['bought', 'all'], desc: '产品搜索类型: 我买过的产品, 所有产品, 默认为所有产品'
       end
@@ -34,8 +34,8 @@ module AppAPI::V1
             when 'hot' then products
             when 'new' then products.order("created_at DESC")
             when 'favorites' then products.joins(:favorites).group("items.id").order('COUNT(favorite_entries.id) DESC')
-            when 'mine_favorites' then products.joins(:favorites).where(favorite_entries: {user_id: current_user.id})
-            when 'friends_favorites' then products.joins(:favorites).where(favorite_entries: {user_id: current_user.friends})
+            when 'favorites_of_mine' then products.joins(:favorites).where(favorite_entries: {user_id: current_user.id})
+            when 'favorites_of_friends' then products.joins(:favorites).where(favorite_entries: {user_id: current_user.friends})
             end
         end
         if params[:name]
@@ -52,7 +52,7 @@ module AppAPI::V1
       params do
         requires :id, type: Integer, desc: "#{::Product.model_name.human}ID"
       end
-      get 'favorite/:id' do
+      post ':id/favorite' do
         authenticate!
         product = ::Product.find(params[:id])
         message = ''
@@ -69,7 +69,7 @@ module AppAPI::V1
       params do
         requires :id, type: Integer, desc: "#{::Product.model_name.human}ID"
       end
-      get 'unfavorite/:id' do
+      delete ':id/favorite' do
         authenticate!
         product = ::Product.find(params[:id])
         if current_user.favorites.tagged_to? product
