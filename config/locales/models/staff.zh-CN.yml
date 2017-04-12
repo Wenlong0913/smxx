@@ -5,7 +5,7 @@ zh-CN:
       staff: 美容师
     attributes:
       staff:
-        user_id: 美容师-所有者
+        site_id: 所属美容院
         title: 姓名
         description: 个人介绍
         age: 年龄
