@@ -16,7 +16,7 @@ module AppAPI::V1
       params do
         requires :mobile_phone, type: String, desc: '手机号'
         requires :mobile_phone_code, type: String, desc: '手机验证码'
-        optional :shared_code, type: String, desc: '邀请码'
+        optional :shared_code, type: String, desc: '邀请码, 注册时输入下面中任一邀请码就能和相应的店铺成为好友（"j1etq2qc", "j1ezcpy5", "j1ezhry5"）'
         optional :nickname, type: String, desc: '用户昵称'
         optional :device, type: String, desc: '设备信息，可以是UserAgent，也可以是自定义的名字。目的是让一个设备只生成一个access token'
       end
