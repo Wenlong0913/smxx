@@ -34,7 +34,7 @@ module AppAPI
       # end
       
       def properties
-        object.properties.map{|p| ::Product::PROPERTIES[p.to_sym]}.compact.join('，')
+        object.properties.map{|p| ::Product::PROPERTIES[p.to_sym]}.compact
       end
 
       def product_special_attributes
