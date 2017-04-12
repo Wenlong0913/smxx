@@ -9,8 +9,8 @@ module AppAPI::V1
     mount AppAPI::V1::Comment
     mount AppAPI::V1::Site
     mount AppAPI::V1::User
-    mount AppAPI::V1::WaveImage
     mount AppAPI::V1::Article
+    mount AppAPI::V1::ImageItem
     mount AppAPI::V1::Banner
   end
 end

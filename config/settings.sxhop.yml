@@ -1,7 +1,7 @@
 default: &default
   site:
     name: 私享荟
-    host: http://localhost:5000
+    host: http://api-dev.sxhop.com
     copyright: © TMF All Right Reserved 2015
     description: 私享荟
     slogan: 私享荟
