@@ -680,6 +680,7 @@ DEPENDENCIES
   devise (~> 4.2.0)
   devise-i18n
   factory_girl_rails
+  faraday (~> 0.11.0)
   favorite!
   font-awesome-rails (~> 4.7.0)
   foreman
