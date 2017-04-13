@@ -45,4 +45,7 @@ class ImageItem < ApplicationRecord
     Settings.site.host + image.url(:thumd)
   end
 
+  def tags
+    image_item_tags.pluck(:name).join(', ')
+  end
 end

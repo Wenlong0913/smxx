@@ -48,7 +48,8 @@ class Api::V1::PreorderConversitionsController < Api::BaseController
 
   def comments_index
     page_size = params[:page_size] ? params[:page_size].to_i : 20
-    preorder_conversition_comments = @preorder_conversition.comments.order(created_at: :asc).page(params[:page] || 1).per(page_size)
+    total_pages = @preorder_conversition.comments.page(1).per(page_size).total_pages
+    preorder_conversition_comments = @preorder_conversition.comments.order(created_at: :asc).page(params[:page] || total_pages).per(page_size)
     render json: {comments: preorder_conversition_comment_json(preorder_conversition_comments), current_page: preorder_conversition_comments.current_page, total_pages: preorder_conversition_comments.total_pages, total_count: preorder_conversition_comments.total_count}
   end
 
@@ -76,7 +77,7 @@ class Api::V1::PreorderConversitionsController < Api::BaseController
       comment.as_json(
         only: [:content, :created_at], methods: [:offer],
         include: {
-          user: {only: [:nickname]},
+          user: { only: [:nickname, :id]},
           image_items: {only: [:id], methods: [:image_url, :image_file_name]},
           attachments: {only: [:id, :name], methods: [:attachment_url, :attachment_file_name]}
         }

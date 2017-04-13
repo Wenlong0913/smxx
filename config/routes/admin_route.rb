@@ -12,22 +12,26 @@ module AdminRoute
             resource :details, only: [:show]
           end
           resources :shares, only: [:index] do
+            collection do
+              post "chart_data"
+            end
             resources :two_shares, only: [:index] do
               resources :three_shares, only: [:index]
             end
           end
         end
-
+        resources :communities, :concerns => :paginatable # 小区
         resources :catalogs # 分类管理
         catalog_resources_for ProductCatalog # 产品分类管理
         catalog_resources_for MaterialCatalog # 物料分类管理
+        catalog_resources_for SiteCatalog # 物料分类管理
 
         resources :materials do # 物料管理
           collection do
             get 'dashboard', to: 'materials#dashboard'
           end
         end
-        resources :vendors # 供应商管理
+        resources :vendors # 商家管理
 
         resources :material_managements #物料出库/入库
         resources :material_warehouses # 物料仓库
@@ -63,6 +67,7 @@ module AdminRoute
         end
         resources :sites, :concerns => :paginatable do
           resources :members, :concerns => :paginatable
+          resources :products, :concerns => :paginatable
           collection do
             get 'dashboard', to: 'sites#dashboard'
           end

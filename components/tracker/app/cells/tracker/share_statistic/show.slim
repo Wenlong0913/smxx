@@ -1,10 +1,28 @@
 / content
-.row.share_statistic[data-url=options[:path]]
+.row.share_statistic.share_home[data-url=options[:path]]
   .col-md-12
-    .panel.panel-default
-      .panel-heading
-        h4 分享记录
-      .panel-body.share-list
+    .white-content
+      .head.h5
+        span 分享记录
+        a.btn.pull-right[@click="showShareChart = !showShareChart" data-toggle="tooltip" data-placement="bottom" title="报表/图表"]
+          i.fa.fa-exchange
+      .panel-body.share-chart[v-show="showShareChart"]
+        .head-nav.row[style="margin-top: -15px;margin-left: -25px;"]
+          .col-md-4
+            .input-group.datetimepicker-group[id="default-daterange"]
+              input.form-control.datetimepicker[style="margin-top: 0px" placeholder="点击选择时间范围查询" type="text" v-model="chartSelectDate" data-date-format="yyyy-mm" readonly]
+              span.input-group-btn
+                button.btn.btn-default[type="button" @click="changeDate"]
+                  i.fa.fa-search
+          ul.col-md-8.zone-time[type='none']
+            li[:class="thinkTime()"]
+              a[@click="onMonth"] 当月
+        #chart_pv
+          svg[height='300px' width='100%']
+          div.text-center
+            strong.small
+              | {{chartSelectDate+"月"}}
+      .panel-body.share-list[v-show="!showShareChart"]
         .table-responsive
           table.table.table-hover
             thead

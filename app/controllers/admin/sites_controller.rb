@@ -1,19 +1,34 @@
 class Admin::SitesController < Admin::BaseController
   before_action :set_site, only: [:show, :edit, :update, :destroy]
 
-  def dashboard 
+  def dashboard
     authorize Site
   end
 
   # GET /admin/sites
   def index
     authorize Site
-    @sites = Site.all.page(params[:page])
+    @filter_colums = %w(id title)
+    @sites = build_query_filter(Site.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
+    respond_to do |format|
+      if params[:json].present?
+        format.html { send_data(@sites.to_json, filename: "products-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
+      elsif params[:xml].present?
+        format.html { send_data(@sites.to_xml, filename: "products-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
+      elsif params[:csv].present?
+        # as_csv =>  () | only: [] | except: []
+        format.html { send_data(@sites.as_csv(only: []), filename: "sites-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+      else
+        format.html
+      end
+    end
   end
 
   # GET /admin/sites/1
   def show
     authorize @site
+    #TODO: 查找商家(site)发布的产品, 最新发布排序
+    @products = @site.products.order(updated_at: :desc).page(params[:page]) if params[:products]
   end
 
   # GET /admin/sites/new
@@ -30,10 +45,9 @@ class Admin::SitesController < Admin::BaseController
   # POST /admin/sites
   def create
     authorize Site
-    @site = Site.new(permitted_attributes(Site))
-
-    if @site.save
-      redirect_to admin_site_path(@site), notice: '美容师 创建成功.'
+    flag, @site = Site::Create.(permitted_attributes(Site).merge(updated_by: current_user.id))
+    if flag
+      redirect_to admin_site_path(@site), notice: '创建成功.'
     else
       render :new
     end
@@ -47,8 +61,10 @@ class Admin::SitesController < Admin::BaseController
       @site.address = address
       @site.address_line = address.name if address
     end
-    if @site.update(permitted_attributes(@site))
-      redirect_to admin_site_path(@site), notice: '美容师 更新成功.'
+
+    flag, @site = Site::Update.(@site, permitted_attributes(@site).merge(updated_by: current_user.id))
+    if flag
+      redirect_to admin_site_path(@site), notice: '经销商 更新成功.'
     else
       render :edit
     end

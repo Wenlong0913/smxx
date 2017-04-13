@@ -1,7 +1,7 @@
 class Agent::ProductsController < Agent::BaseController
   before_action :set_current_user_products
   before_action :set_product, only: [:show, :edit, :update, :destroy, :process_shelves, :sales_distribution]
-
+  before_action :set_site_tags, only: [:edit, :new]
   def index
     authorize Product
     @catalogs = ProductCatalog.roots
@@ -91,10 +91,8 @@ class Agent::ProductsController < Agent::BaseController
   def create
     @product = Product.new(permitted_attributes(Product))
     @product.site = @site
-    @product.additional_attribute_keys = params["product"]["additional_attribute_keys"]
-    @product.additional_attribute_values = params["product"]["additional_attribute_values"]
     authorize @product
-
+    filter_additional_attribute
     if @product.save
       # redirect_to agent_product_path(@product), notice: 'Product 创建成功.'
       render json: {url: agent_product_path(@product)}
@@ -105,11 +103,7 @@ class Agent::ProductsController < Agent::BaseController
 
   def update
     authorize @product
-    additional_attribute
-    if params["product"]["additional_attribute_keys"].present?
-      @product.additional_attribute_keys = params["product"]["additional_attribute_keys"]
-      @product.additional_attribute_values = params["product"]["additional_attribute_values"]
-    end
+    filter_additional_attribute
     if @product.update(permitted_attributes(@product))
       redirect_to agent_product_path(@product), notice: 'Product 更新成功.'
     else
@@ -156,15 +150,23 @@ class Agent::ProductsController < Agent::BaseController
       @products = @site.products
     end
 
-    def additional_attribute
-      if params["product"]["additional_attribute_keys"].present?
-        params["product"]["additional_attribute_keys"].each_pair do |k, v|
+    def filter_additional_attribute
+      if params[:product][:additional_attribute_keys].present?
+        params[:product][:additional_attribute_keys].each_pair do |k, v|
           if v.blank?
-            params["product"]["additional_attribute_keys"].delete(k)
-            params["product"]["additional_attribute_values"].delete(k)
+            params[:product][:additional_attribute_keys].delete(k)
+            params[:product][:additional_attribute_values].delete(k)
           end
         end
       end
+      if params[:product][:additional_attribute_keys].present?
+        @product.additional_attribute_keys = params[:product][:additional_attribute_keys]
+        @product.additional_attribute_values = params[:product][:additional_attribute_values]
+      end
     end
 
+    def set_site_tags
+      @site_tags      = @site.tags.pluck(:name).uniq
+      @site_most_tags = @site.tags.most_used(5).uniq.map(&:name)
+    end
 end

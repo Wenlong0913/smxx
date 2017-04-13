@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/rails/rails-observers.git
-  revision: cefffa51343ba402fc336e98432e7805c1905306
+  revision: 7d3c9c331242d58ed8ebdbd2eff1f7d6f68a1b2c
   specs:
     rails-observers (0.1.3.alpha)
       activemodel (>= 4.0, < 5.1)
@@ -16,7 +16,11 @@ GIT
 
 GIT
   remote: git@gitlab.tanmer.com:tm-framework/gnomon.git
+<<<<<<< HEAD
   revision: 1fa6634b1edf1ad7ec958be4d41747113c5c3f2f
+=======
+  revision: bfce6f7bd559ae200238158e415026e3e1e2889d
+>>>>>>> dagle-master
   specs:
     gnomon (0.1.0)
       activerecord-postgres-earthdistance (~> 0.5.1)
@@ -26,14 +30,13 @@ GIT
 
 GIT
   remote: git@gitlab.tanmer.com:tm-framework/sales_distribution.git
-  revision: 4af1bf13555d6a445319f241f70a222631fe47e2
+  revision: dc46b4647c9db84bb014cc97b06ad92524c7fd04
   specs:
     sales_distribution (0.1.0)
-      rails (>= 4.3.0)
 
 GIT
   remote: http://gitlab.tanmer.com/tm-themes/theme_color_admin.git
-  revision: 234445d456c3fd249061b25f047493cc005df060
+  revision: e5e67f3ccf6adebb77fbead33670b3b93655ed95
   specs:
     theme_color_admin (0.0.5)
       rails (>= 4.2.7)
@@ -137,7 +140,7 @@ GEM
       tzinfo (~> 1.1)
     acts-as-taggable-on (4.0.0)
       activerecord (>= 4.0)
-    addressable (2.5.0)
+    addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
     airbrussh (1.1.2)
       sshkit (>= 1.6.1, != 1.7.0)
@@ -145,10 +148,9 @@ GEM
       activerecord (>= 3.2, < 6.0)
       rake (>= 10.4, < 12.0)
     arel (7.1.4)
-    audited (4.3.0)
-      activerecord (>= 4.0, < 5.1)
-      rails-observers (~> 0.1.2)
-    autoprefixer-rails (6.7.7)
+    audited (4.4.1)
+      activerecord (>= 4.0, < 5.2)
+    autoprefixer-rails (6.7.7.1)
       execjs
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
@@ -156,6 +158,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     baidu_api-geocoding (1.0.0)
     bcrypt (3.1.11)
+    bindex (0.5.0)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
@@ -208,7 +211,7 @@ GEM
     cells-slim (0.0.5)
       cells (>= 4.0.1, < 6.0.0)
       slim (~> 3.0)
-    childprocess (0.6.2)
+    childprocess (0.6.3)
       ffi (~> 1.0, >= 1.0.11)
     chinese_pinyin (1.0.1)
     choice (0.2.0)
@@ -238,7 +241,6 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     database_cleaner (1.5.3)
-    debug_inspector (0.0.2)
     declarative-builder (0.1.0)
       declarative-option (< 0.2.0)
     declarative-option (0.1.0)
@@ -250,10 +252,10 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
-    devise-i18n (1.1.1)
+    devise-i18n (1.1.2)
     diff-lcs (1.3)
     docile (1.1.5)
-    domain_name (0.5.20170223)
+    domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
@@ -272,10 +274,10 @@ GEM
     ffi (1.9.18)
     font-awesome-rails (4.7.0.1)
       railties (>= 3.2, < 5.1)
-    foreman (0.83.0)
+    foreman (0.84.0)
       thor (~> 0.19.1)
     formatador (0.2.5)
-    github-markup (1.4.4)
+    github-markup (1.6.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     grape (0.19.1)
@@ -295,7 +297,7 @@ GEM
       activesupport
       grape (~> 0.16, >= 0.16.0)
       rake
-    grape-swagger (0.26.1)
+    grape-swagger (0.27.0)
       grape (>= 0.16.2)
     grape-swagger-entity (0.2.0)
       grape-entity (>= 0.5.0)
@@ -342,7 +344,7 @@ GEM
     jbuilder (2.6.3)
       activesupport (>= 3.0.0, < 5.2)
       multi_json (~> 1.2)
-    jquery-rails (4.2.2)
+    jquery-rails (4.3.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
@@ -377,7 +379,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     mimemagic (0.3.2)
-    mini_magick (4.6.1)
+    mini_magick (4.7.0)
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     multi_json (1.12.1)
@@ -427,8 +429,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    pry-rails (0.3.5)
-      pry (>= 0.9.10)
+    pry-rails (0.3.6)
+      pry (>= 0.10.4)
     public_suffix (2.0.5)
     puma (3.8.2)
     pundit (1.1.0)
@@ -524,7 +526,7 @@ GEM
       rspec-mocks (~> 3.5.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
-    ruby-graphviz (1.2.2)
+    ruby-graphviz (1.2.3)
     ruby-ole (1.2.12.1)
     rubyzip (1.2.1)
     safe_yaml (1.0.4)
@@ -553,7 +555,7 @@ GEM
     simple_form (3.3.1)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
-    simplecov (0.14.0)
+    simplecov (0.14.1)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
@@ -580,7 +582,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sshkit (1.12.0)
+    sshkit (1.13.1)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     temple (0.7.7)
@@ -588,7 +590,7 @@ GEM
       rails (>= 4.0)
     thor (0.19.4)
     thread_safe (0.3.6)
-    tilt (2.0.6)
+    tilt (2.0.7)
     tool (0.2.3)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
@@ -596,11 +598,11 @@ GEM
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
     uber (0.1.0)
-    uglifier (3.1.8)
+    uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.2)
+    unf_ext (0.0.7.3)
     virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -611,10 +613,10 @@ GEM
       webpack-rails (>= 0.9.9)
     warden (1.2.7)
       rack (>= 1.0)
-    web-console (3.4.0)
+    web-console (3.5.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
-      debug_inspector
+      bindex (>= 0.4.0)
       railties (>= 5.0)
     webmock (2.3.2)
       addressable (>= 2.3.6)

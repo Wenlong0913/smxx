@@ -11,3 +11,5 @@ db/schema.rb
 /public/webpack
 /public/photos
 /coverage/
+public/system/
+public/attachments/

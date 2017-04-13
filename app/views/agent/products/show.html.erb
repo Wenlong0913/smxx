@@ -1,35 +1,36 @@
 <div class="container">
-  <!-- BEGIN breadcrumb -->
-  <ul class="breadcrumb m-b-10 f-s-12">
-    <li>分类:&nbsp;</li>
-    <% @catalog_ancestors.each do |catalog| %>
-    <li><a href="#"><%= catalog.name %></a></li>
-    <% end %>
-  </ul>
-  <!-- END breadcrumb -->
-  <h1><%= @product.name %>
-  <div class="pull-right">
-    <button class="btn btn-success btn-lg" type="submit" data-toggle="modal" data-target="#editModal" type="submit">调价</button>
-    <%= link_to "编辑信息", edit_agent_product_path(@product), class: 'btn btn-info btn-lg', 'data-turbolinks': false%>
-    <span class="process_shelves" data-url="<%= process_shelves_agent_product_path(@product) %>">
-      <% if @product.is_shelves == '1' %>
-      <button class="btn btn-inverse btn-lg" type="submit" data-status='0'>取消上架</button>
-      <% else %>
-      <button class="btn btn-warning btn-lg" type="submit" data-status='1'>产品上架</button>
+  <h1 class="m-b-0">
+    <%= @product.name %>
+    <div class="pull-right">
+      <button class="btn btn-success btn-lg" type="submit" data-toggle="modal" data-target="#editModal" type="submit">调价</button>
+      <%= link_to "编辑信息", edit_agent_product_path(@product), class: 'btn btn-info btn-lg', 'data-turbolinks': false%>
+      <span class="process_shelves" data-url="<%= process_shelves_agent_product_path(@product) %>">
+        <% if @product.is_shelves == '1' %>
+        <button class="btn btn-inverse btn-lg" type="submit" data-status='0'>取消上架</button>
+        <% else %>
+        <button class="btn btn-warning btn-lg" type="submit" data-status='1'>产品上架</button>
+        <% end %>
+      </span>
+      <%= link_to '返回', agent_products_path, class: 'btn btn-default' %>
+    </div>
+    <!-- BEGIN breadcrumb -->
+    <ul class="breadcrumb small f-s-12">
+      <li>分类:&nbsp;</li>
+      <% @catalog_ancestors.each do |catalog| %>
+      <li><a href="#"><%= catalog.name %></a></li>
       <% end %>
-    </span>
-    <%= link_to '返回', agent_products_path, class: 'btn btn-default' %>
-  </div>
+    </ul>
+    <!-- END breadcrumb -->
   </h1>
 </div>
 <!-- BEGIN #product -->
-<div id="product" class="section-container p-t-20">
+<div id="product" class="section-container p-0">
     <!-- BEGIN container -->
     <div class="container">
 
 
         <!-- BEGIN product -->
-        <div class="product p-t-25">
+        <div class="product p-t-25 m-b-20">
             <!-- BEGIN product-detail -->
             <div class="product-detail">
                 <!-- BEGIN product-image -->
@@ -88,7 +89,12 @@
                           <% end %>
                         </ul>
                     </div>
-
+                    <div class="product-attr-info">
+                      <span>产品标签：</span>
+                      <% @product.tag_list.each do|tag| %>
+                        <span class="label label-success"><%= tag %></span>
+                      <% end %>
+                    </div>
                     <!-- BEGIN product-info-list 一些主要配置信息列表展示-->
                     <ul class="product-info-list">
                       <li>
@@ -129,19 +135,34 @@
                 <!-- END product-info -->
             </div>
             <!-- END product-detail -->
-            <!-- 暂时注释 产品评论/产品统计报表 -->
+            <!-- 内容展示/产品评论/产品统计报表 -->
             <!-- BEGIN product-tab -->
             <div class="product-tab">
                 <!-- BEGIN #product-tab -->
-                <!-- <ul id="product-tab" class="nav nav-tabs">
+                <ul id="product-tab" class="nav nav-tabs">
+                  <li class="active"><a href="#product-content" data-toggle="tab">内容展示</a></li>
                   <li class=""><a href="#product-info" data-toggle="tab">统计信息</a></li>
-                  <li class="active"><a href="#product-reviews" data-toggle="tab">用户评论</a></li>
-                </ul> -->
+                  <li class=""><a href="#product-reviews" data-toggle="tab">用户评论</a></li>
+                </ul>
                 <!-- END #product-tab -->
                 <!-- BEGIN #product-tab-content -->
                 <div id="product-tab-content" class="tab-content">
+                  <!-- BEGIN #product-info -->
+                  <div class="tab-pane fade active in" id="product-content">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h3 class="panel-title">内容展示-预览</h3>
+                      </div>
+                      <div class="panel-body p-l-0 p-r-0">
+                        <div class="show-conten p-10" style="border: 1px solid #ccc;overflow-x: scroll;">
+                          <%= raw(@product.content)%>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END #product-info -->
                     <!-- BEGIN #product-info -->
-                    <!-- <div class="tab-pane fade" id="product-info">
+                    <div class="tab-pane fade" id="product-info">
                       <div class="panel panel-default">
                         <div class="panel-heading">
                           <h3 class="panel-title">销量统计</h3>
@@ -153,16 +174,16 @@
                           </div>
                         </div>
                       </div>
-                    </div> -->
+                    </div>
                     <!-- END #product-info -->
                     <!-- BEGIN #product-reviews -->
-                    <div class="tab-pane fade active in" id="product-reviews">
+                    <div class="tab-pane fade" id="product-reviews">
                         <!-- BEGIN row -->
                         <div class="row row-space-30">
                             <!-- BEGIN col-7 -->
                             <div class="col-md-7">
                                 <!-- BEGIN review -->
-                                <!-- <div class="review">
+                                <div class="review">
                                     <div class="review-info">
                                         <div class="review-icon"><img src="assets/img/user-4.jpg" alt="" /></div>
                                         <div class="review-rate">
@@ -184,10 +205,10 @@
                                     <div class="review-message">
                                         Donec vel fermentum quam. Vivamus scelerisque enim eget tristique auctor. Vivamus tempus, turpis iaculis tempus egestas, leo augue hendrerit tellus, et efficitur neque massa at neque. Aenean efficitur eleifend orci at ornare.
                                     </div>
-                                </div> -->
+                                </div>
                                 <!-- END review -->
                                 <!-- BEGIN review -->
-                                <!-- <div class="review">
+                                <div class="review">
                                     <div class="review-info">
                                         <div class="review-icon"><img src="assets/img/user-5.jpg" alt="" /></div>
                                         <div class="review-rate">
@@ -209,14 +230,14 @@
                                     <div class="review-message">
                                         Aliquam consequat ut turpis non interdum. Integer blandit erat nec sapien sollicitudin, a fermentum dui venenatis. Nullam consequat at enim et aliquet. Cras mattis turpis quis eros volutpat tristique vel a ligula. Proin aliquet leo mi, et euismod metus placerat sit amet.
                                     </div>
-                                </div> -->
+                                </div>
                                 <!-- END review -->
                             </div>
                             <!-- END col-7 -->
                             <!-- BEGIN col-5 -->
                             <div class="col-md-5">
                                 <!-- BEGIN review-form -->
-                                <!-- <div class="review-form">
+                                <div class="review-form">
                                     <form action="product_detail.html" name="review_form" method="POST">
                                         <h2>Write a review</h2>
                                         <div class="form-group">
@@ -253,7 +274,7 @@
                                         </div>
                                         <button type="submit" class="btn btn-inverse btn-lg">Submit Review</button>
                                     </form>
-                                </div> -->
+                                </div>
                                 <!-- END review-form -->
                             </div>
                             <!-- END col-5 -->

@@ -7,7 +7,7 @@ module AppAPI::V1
         success AppAPI::Entities::Product
       end
       params do
-        requires :id, type: Integer, desc: '店铺ID'
+        requires :id, type: Integer, desc: "#{::Site.model_name.human}ID"
       end
       get ':id' do
         authenticate!
@@ -21,18 +21,26 @@ module AppAPI::V1
         use :pagination
         # use :sort, fields: [:id, :created_at, :updated_at]
         optional :type, type: String, values: ['hot', 'new', 'favorite'], desc: '产品分类排行：最热门产品，最新上架产品，最私藏产品'
+        optional :name, type: String, desc: '根据名字搜索产品'
+        optional :search_type, type: String, values: ['bought', 'all'], desc: '产品搜索类型: 我买过的产品, 所有产品, 默认为所有产品'
       end
       get do
         authenticate!
         # 查看所有上架商品
         products = ::Product.all
         if params[:type]
-          products = 
+          products =
             case params[:type]
             when 'hot' then products
             when 'new' then products.order("created_at DESC")
             when 'favorite' then products.left_joins(:favorites).group("items.id").order('COUNT(favorite_entries.id) DESC')
             end
+        end
+        if params[:name]
+          products = products.where("name like ?", "%#{params[:name]}%")
+        end
+        if params[:search_type] && params[:search_type] == 'bought'
+          products = products.joins(:orders).where("orders.user_id =  ?", current_user.id)
         end
         products = paginate_collection(sort_collection(products), params)
         wrap_collection products, AppAPI::Entities::Product, includes: [:site]

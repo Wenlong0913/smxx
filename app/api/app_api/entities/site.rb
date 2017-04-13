@@ -1,18 +1,18 @@
 module AppAPI
   module Entities
     class Site < Base
-
       # public attributes
       expose_id
-      expose :title, documentation: { desc: '店铺名称' }
+
       expose :contact_name, documentation: { desc: '联系人' }
       expose :contact_number, documentation: { desc: '联系电话' }
       expose :is_sign, documentation: { desc: '是否签约' }
       expose :site_hours, documentation: { desc: '营业时间' }
       expose :content, documentation: { desc: '美容院介绍' }
-
-      expose :address, documentation: { desc: '地址' }
+      expose :title, documentation: { desc: "#{::Site.model_name.human}名称" }
+      expose :description, documentation: { desc: "#{::Site.model_name.human}详细描述" }, if: ->(site, options) { options[:type] == :full_site}
       expose :image_items, using: AppAPI::Entities::ImageItem, as: :images
+      expose :address, documentation: { desc: '地址' }
       expose :last_image do |site, options|
         site.image_items.last.try(:image_url)
       end

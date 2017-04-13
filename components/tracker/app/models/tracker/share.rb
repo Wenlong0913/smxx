@@ -1,6 +1,29 @@
 module Tracker
   class Share
 
+    def self.chart_data(current_user, date)
+      date = date.present? ? Date.strptime(date, "%Y-%m") : Date.today
+      # 某月的每天记录
+      chart_data = []
+      (date.beginning_of_month..date.end_of_month).each do |x|
+        count = 0
+        unless x > Date.today
+          sql = "
+            select count(s2.*) from sales_distribution_resources s
+            join users u on u.id = s.user_id
+            join sales_distribution_resources s2 on s.object_type = s2.object_type and s.object_id = s2.object_id
+            where u.id = '"+current_user.id.to_s+"' and s2.created_at between '"+ x.beginning_of_day.to_s+"' and '"+x.end_of_day.to_s+"'"
+          record = ActiveRecord::Base.connection.exec_query sql
+          count  = record.first['count']
+        end
+        chart_data << {
+          label: x.to_s,
+          value: count
+        }
+      end
+      return chart_data
+    end
+
     def self.records(current_user, page = 1)
       root_share_records = current_user.sales_distribution_resources.order(created_at: :desc).page(page)
       share_records = []

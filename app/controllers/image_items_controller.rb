@@ -18,9 +18,9 @@ class ImageItemsController < ApplicationController
       @image_items = @image_items.where(id: params[:ids].split(/[,]/))
     end
     @image_item_tags = @image_items.joins(:image_item_tags).select("image_item_tags.name").distinct.map(&:name)
-    @image_items = @image_items.page(params[:page]).order(updated_at: :desc)
+    @image_items = @image_items.page(params[:page]).per(15).order(updated_at: :desc)
     #render json: {image_items: ActiveModelSerializers::SerializableResource.new(@image_items, {}).as_json, total_page: @image_items.total_pages, tags: @image_item_tags}
-    render json: {image_items: @image_items.as_json(only: %w(id name),methods: %w(image_url image_file_name)), total_page: @image_items.total_pages, tags: @image_item_tags}
+    render json: {image_items: @image_items.as_json(only: %w(id name),methods: %w(image_url image_file_name tags)), total_page: @image_items.total_pages, tags: @image_item_tags}
   end
 
   def create
@@ -41,6 +41,15 @@ class ImageItemsController < ApplicationController
       render json: @image_item.id
     else
       render json: @image_item.errors, status: :failed
+    end
+  end
+
+  def update
+    @image_item = ImageItem.find(params[:id])
+    params[:tag].split(/,|，/).compact.each do |t|
+      image_item_tag = @image_item.image_item_tags.new
+      image_item_tag.name = t.strip
+      image_item_tag.save!
     end
   end
 

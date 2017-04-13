@@ -4,15 +4,15 @@ $(document).ready ->
     load_url = tmp.data('url')
 
     loadSummary = ->
-      $.get load_url, (data)->
-        visits_count = data.visits_count
+      $.get load_url, (res)->
+        visits_count = res.data.visits_count
         app1._data.total_browse  = visits_count.total_browse
         app1._data.today_browse  = visits_count.today_browse
         app1._data.session_count = visits_count.session_count
         app1._data.today_session = visits_count.today_session
         app1._data.share_count   = visits_count.share_count
         app1._data.today_share   = visits_count.today_share
-        linesChart data.chart_data
+        linesChart res.data.chart_data
         documentLoadAnimation(true)
       ,'json'
       .error ->
@@ -37,7 +37,7 @@ $(document).ready ->
             d3.time.format('%Y/%m/%d')(new Date(parseInt(d+'000')))
         chart.yAxis
           .axisLabel('访问量 (v)')
-          .tickFormat(d3.format('.02f'))
+          .tickFormat(d3.format('d'))
         myData = encChartLinesDate data
         d3.select('.tracker .summary .chart_line svg')
           .datum(myData)

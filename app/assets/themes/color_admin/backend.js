@@ -12,6 +12,8 @@
 //= require color_admin/plugins/nvd3/build/nv.d3
 //= require color_admin/plugins/bootstrap-daterangepicker/moment
 //= require color_admin/plugins/bootstrap-daterangepicker/daterangepicker
+//= require color_admin/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker
+//= require color_admin/plugins/jquery-tag-it/js/tag-it
 //= require color_admin/js/apps
 
 // dashboard

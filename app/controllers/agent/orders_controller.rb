@@ -36,7 +36,7 @@ class Agent::OrdersController < Agent::BaseController
   end
 
   def update
-    if @order.delivered!
+    if @order.delivered! && @order.completed!
       render json: {status: 'ok'}
     else
       render json: {status: 'failed', message: @order.errors.full_messages.join(', ')}

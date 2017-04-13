@@ -1,8 +1,8 @@
 h1.page-header
   | 查看#{Product.model_name.human}
   .pull-right
-    => link_to '编辑', edit_admin_product_path(@product), class: 'btn btn-primary'
-    = link_to '返回', admin_products_path, class: 'btn btn-primary'
+    => link_to '编辑', @site ? edit_admin_site_product_path(@site, @product) : edit_admin_product_path(@product), class: 'btn btn-primary'
+    = link_to '返回', @site ? admin_site_products_path(@site) : admin_products_path, class: 'btn btn-primary'
 
 .panel
   .panel-heading
@@ -14,18 +14,38 @@ h1.page-header
   .panel-body
     .profile-container
       .profile-info
+        h4 产品信息
         .table-responsive
           table.table.table-profile
             tr
               td.field 美容院商家
               td
                 =@product.site.title
+
+              td.field 产品名称
+              td
+                a
+                  = @product.name
+                - if @product.is_shelves == '1'
+                  => link_to '上架中', '#', class: 'm-l-5 btn btn-xs btn-success'
+                - else
+                  => link_to '已下架', '#', class: 'm-l-5 btn btn-xs btn-default'
+                - %w(hot recommend event promotion).each do |v|
+                  - if @product.features[v] == '1'
+                      span.label.label-warning => Product.human_attribute_name(v.to_sym)
+              td.field 商家
+              td
+                a
+                  = @product.site.title
+
             tr.divider
               td[colspan='4']
             tr
-              td.field 产品名称
+              td.field 库存
               td
+
                 = @product.name
+
               td.field 产品分类
               td
                 =@product.catalog.try(:name)
@@ -49,6 +69,7 @@ h1.page-header
               td
                 =@product.warning_message
               td.field 描述
+
               td
                 = @product.description
 
@@ -61,13 +82,18 @@ h1.page-header
                 =@product.service_time
             tr.divider
               td[colspan='2']
-          h4 产品图片
-          .gallery#gallery
-            .row
-            -@product.image_items.each do |image|
+        h4 产品图片
+        .gallery#gallery.p-20
+          .row
+            - unless @product.image_items.blank?
+              .col-xs-12 没有产品图片
+            - @product.image_items.each do |image|
               .image.col-sm-6.col-md-4
                 .image-inner
                   a[href="javascript:;" data-lightbox="gallery-group-1"]
                     img[src="#{image.image_url}"]
                   .image-caption
                     =image.name
+        h4 详细信息展示
+        .p-20[style="border: 1px solid #ccc"]
+          = raw(@product.content)

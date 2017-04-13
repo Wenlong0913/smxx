@@ -107,17 +107,17 @@
           li class=("has-sub #{'active' if page?('admin/sites')}")
             = link_to '客户列表', admin_sites_path
 
-      li class=("has-sub")
+      li class=("has-sub #{'active' if page?('admin/cms/sites', "admin/cms/channels")}")
         a href="javascript:;"
           b.caret.pull-right
           i.fa.fa-leaf
           span 网站管理系统
         ul.sub-menu
-          li
+          li class=("#{'active' if page?('admin/cms/sites')}")
             = link_to '站点列表', admin_cms_sites_path
           - if ::Cms::Site.count < 5
             - ::Cms::Site.all.each do |cms_site|
-              li
+              li class=("#{'active' if page?('admin/cms/channels')}")
                 = link_to cms_site.name, admin_cms_site_channels_path(cms_site)
 
       li class=("has-sub #{'active' if page?('admin/tracker/home', 'admin/tracker/shares/home')}")

@@ -7,13 +7,13 @@ zh-CN:
   roles:
     super_admin: '超级管理员'
     admin: "管理员"
-    agent: '代理商'
+    agent: '商家'
     user: '用户'
     factory_manager: "厂长"
     product_manager: "总经销商"
     storekeeper: "库管员"
     designer: "设计"
-    worker: "工人"
+    worker: "操作员"
     allocator: "拆单员"
     purchase: "采购"
   will_paginate:

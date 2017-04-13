@@ -4,8 +4,12 @@ class Agent::Tracker::SharesController < Agent::BaseController
     authorize :'tracker/home', :index?
     respond_to do |format|
       format.html
-      format.json {render json: Tracker::Share.records(current_user, params[:page])}
+      format.json {render json: {data: Tracker::Share.records(current_user, params[:page])}}
     end
   end
 
+  def chart_data
+    authorize :'tracker/home', :index?
+    render json: {chart_data: Tracker::Share.chart_data(current_user, params[:date])}
+  end
 end

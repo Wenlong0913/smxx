@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   # === Common routes ===
 
   # image upload
-  resources :image_items, only: [:index, :create, :destroy]
+  resources :image_items, only: [:index, :create, :destroy, :update]
 
   # file upload
   resources :attachments, only: [:index, :create, :destroy]

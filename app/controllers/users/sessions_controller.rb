@@ -68,7 +68,7 @@ class Users::SessionsController < Devise::SessionsController
         t = Sms::Token.new(mobile)
         if t.valid?(code)
           sign_in user
-          url = if user.super_admin_or_admin?
+          url = if user.super_admin_or_admin? || user.permission?(:login_admin)
             admin_root_url
           elsif user.has_role?(:agent)
             agent_root_url

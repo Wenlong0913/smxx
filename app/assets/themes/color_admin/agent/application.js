@@ -8,6 +8,8 @@
 //= require color_admin/plugins/bootstrap/js/bootstrap
 //= require color_admin/plugins/d3/d3
 //= require color_admin/plugins/nvd3/build/nv.d3
+//= require color_admin/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker
+//= require color_admin/plugins/jquery-tag-it/js/tag-it
 //= require color_admin/js/apps
 //= require agent
 

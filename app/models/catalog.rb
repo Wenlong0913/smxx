@@ -17,5 +17,16 @@ class Catalog < ApplicationRecord
   has_closure_tree dependent: :destroy
   store_accessor :features, :settings
 
-  validates :name, uniqueness: {scope: :parent_id}, presence: true
+  validates :name, uniqueness: {scope: [:parent_id, :type]}, presence: true
+  before_validation :sanitize_settings
+
+  private
+
+  def sanitize_settings
+    if settings.present?
+      self.settings = settings.split(/[,，]/).map(&:strip)
+    else
+      self.settings = []
+    end
+  end
 end

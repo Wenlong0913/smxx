@@ -4,7 +4,22 @@ class Agent::MembersController < Agent::BaseController
 
   def index
     authorize Member
-    @agent_members = Member.where(site_id: @site.id).page(params[:page])
+    @agent_members = @site.members
+    if params[:search].present?
+      @filter_colums = %w(mobile_phone name)
+      @agent_members = build_query_filter(Member.all, only: @filter_colums)
+      conditions = []
+      query = []
+      @agent_member_catalogs.each do |catalog|
+        if params[:search][catalog.key].present?
+          query << "(features ->> '"+catalog.key+"' like ?)"
+          conditions << params[:search][catalog.key]
+        end
+      end
+      conditions.unshift query.join(' and ')
+      @agent_members = @agent_members.where(conditions)
+    end
+    @agent_members = @agent_members.page(params[:page])
     respond_to do |format|
       format.html
       format.json { render json: @agent_members }
