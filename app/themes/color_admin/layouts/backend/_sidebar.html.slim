@@ -124,7 +124,14 @@
           li class=("#{'active' if page?('admin/member_catalogs')}") = link_to '分类管理', admin_member_catalogs_path
           li class=("has-sub #{'active' if page?('admin/sites')}")
             = link_to '客户列表', admin_sites_path
-
+      li class=("has-sub #{'active' if page?('admin/finance_histories')}")
+        a href="javascript:;"
+          b.caret.pull-right
+          i.fa.fa-inbox
+          span 财务流水
+        ul.sub-menu
+          li class=("#{'active' if page?('admin/finance_histories?type=out')}") = link_to '财务出账管理', admin_finance_histories_path(type: 'out')
+          li class=("#{'active' if page?('admin/finance_histories?type=in')}") = link_to '财务入账管理', admin_finance_histories_path(type: 'in')
       li class=("has-sub #{'active' if page?('admin/banners')}")
         a href="javascript:;"
           b.caret.pull-right

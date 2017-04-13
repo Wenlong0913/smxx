@@ -14,30 +14,39 @@ h1.page-header
       | #{FinanceHistory.model_name.human}
   .panel-body
     = form_for :search, url:  admin_finance_histories_path, method: :get do |f|
-      .toolbar.row
-        .col-md-12
-          p
-            |支持SIMILAR TO查询语法, %代表匹配所有，_代表匹配一个字符
-            a<[href="https://www.postgresql.org/docs/current/static/functions-matching.html" target="_blank"]查看详情说明
-      .toolbar.row
-        .col-md-6.m-b-15
-          .input-group.search_all
-            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '关键字搜索...'
-            span.input-group-btn
-              button.btn.btn-inverse[type='submit']
-                i.fa.fa-search
-        .col-md-6.m-b-15
-          .btn-group
-            button.btn.btn-default.dropdown-toggle[type='button'data-toggle='dropdown']
-              | 筛选列名
-              span.caret
-            ul.dropdown-menu#search_column[role='menu']
-              - @filter_colums.each do |filter_colum|
-                li
-                  a[href='javascript:;' data-key=filter_colum] = FinanceHistory.human_attribute_name(:filter_colum)
+      / .toolbar.row
+      /   .col-md-12
+      /     p
+      /       |支持SIMILAR TO查询语法, %代表匹配所有，_代表匹配一个字符
+      /       a<[href="https://www.postgresql.org/docs/current/static/functions-matching.html" target="_blank"]查看详情说明
+      / / .toolbar.row
+      /   .col-md-6.m-b-15
+      /     .input-group.search_all
+      /       = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '关键字搜索...'
+      /       span.input-group-btn
+      /         button.btn.btn-inverse[type='submit']
+      /           i.fa.fa-search
+      /   .col-md-6.m-b-15
+      /     .btn-group
+      /       button.btn.btn-default.dropdown-toggle[type='button'data-toggle='dropdown']
+      /         | 筛选列名
+      /         span.caret
+      /       ul.dropdown-menu#search_column[role='menu']
+      /         - @filter_colums.each do |filter_colum|
+      /           li
+      /             a[href='javascript:;' data-key=filter_colum] = FinanceHistory.human_attribute_name(:filter_colum)
+      /     .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
+      /       button.btn.btn-default[type='submit'name='json'value='json'] json
+      /       button.btn.btn-default[type='submit'name='xml'value='xml'] xml
+      /       button.btn.btn-default[type='submit'name='csv'value='csv'] csv
+      .toolbar.row.m-b-15
+        .col-md-6
+        .col-md-4
+          input[type="text" name="daterange" class="form-control" placeholder="请选择日期范围" value="#{params['daterange']}"]
+        .col-md-1
+          button.btn.btn-inverse[type='submit'] 搜索
+        .col-md-1
           .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
-            button.btn.btn-default[type='submit'name='json'value='json'] json
-            button.btn.btn-default[type='submit'name='xml'value='xml'] xml
             button.btn.btn-default[type='submit'name='csv'value='csv'] csv
       .well.form-horizontal.filter_search[class==params[:filters]?'show':'hidden']
         - if params[:filters] && !params[:filters].keys.blank?
@@ -63,17 +72,17 @@ h1.page-header
       table.table.table-striped.table-bordered
         thead
           tr
-            th = FinanceHistory.human_attribute_name(:operate_type)
             th = FinanceHistory.human_attribute_name(:operate_date)
             th = FinanceHistory.human_attribute_name(:amount)
+            th = FinanceHistory.human_attribute_name(:owner)
             th = FinanceHistory.human_attribute_name(:note)
             th
         tbody
           - @finance_histories.each do |finance_history|
             tr
-              td = finance_history.operate_type
               td = finance_history.operate_date
               td = finance_history.amount
+              td = finance_history.owner.try(:code)
               td = finance_history.note
               td
                 => link_to '查看', admin_finance_history_path(finance_history), class: 'btn btn-xs btn-default'
