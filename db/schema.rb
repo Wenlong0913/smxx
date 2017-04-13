@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 20170413144345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "cube"
   enable_extension "earthdistance"
