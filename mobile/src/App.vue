@@ -221,7 +221,7 @@
             </f7-navbar>
 
             <div class="page-content hide-bars-on-scroll">
-              <div data-pagination=".swiper-pagination" data-paginationHide="true" class="swiper-container largebanner swiper-init">
+              <div data-pagination=".swiper-pagination" data-paginationHide="true" class="swiper-container largebanner swiper-init" style="height: 70%;">
                 <div class="swiper-pagination"></div>
                 <div class="swiper-wrapper">
                   <div class="swiper-slide gradient">
@@ -306,7 +306,7 @@
               <hr>
 
               <div class="center content-block">
-                <h2><i class="fa fa-diamond"></i>今日必抢</h2>
+                <h2><i class="fa fa-bullhorn">&nbsp;</i>今日必抢</h2>
                 <p>每一款产品都是精心打造</p>
               </div>
               <div class="gallery row"> 
@@ -350,7 +350,8 @@
               </div>
 
               <div class="center content-block">
-                <h2>好店推荐</h2>
+                <h2><i class="fa fa-gift">&nbsp;</i>好店推荐</h2>
+                <p>每一家门店都是细心筛选</p>
               </div>
               <div class="gallery row"> 
                 <a href="" rel="gallery-1" class="swipebox col-50" title="My Caption">
@@ -366,20 +367,10 @@
                   <img src="./assets/img/banner4.png" alt="image" class="col-100">
                 </a>
               </div>
-
-              <div class="content-block">
-                <ul class="socials">
-                  <li><a href="" class="fb"><i class="fa fa-weixin"></i></a></li>
-                  <li><a href="" class="tw"><i class="fa fa-qq"></i></a></li>
-                  <li><a href="" class="gp"><i class="fa fa-weibo"></i></a></li>
-                  <li><a href="" class="pin"><i class="fa fa-pinterest"></i></a></li>
-                  <li><a href="" class="env"><i class="fa fa-envelope"></i></a></li>
-                </ul>
-              </div>
-              
               <hr>
+
               <div class="content-block  center">
-                <span class="">Copyright 2016. All Rights Reserved. </span>
+                <span class="">Copyright 2017. All Rights Reserved. </span>
               </div>
             </div>
           </f7-page>

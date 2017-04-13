@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <div class="page-content" style="margin-top: 10px;">
+    <div class="page-content close-picker" style="margin-top: 10px;">
       <div class="item-content text-center">
         <div class="item-media">
           <img src="./../assets/img/gift-box.svg" alt="" width="80" height="70" >
@@ -43,29 +43,31 @@
 
       <div class="picker-modal picker-1">
         <div class="toolbar">
-          <div class="toolbar-inner">
-            <div class="left"></div>
-            <div class="right"><a href="#" class="close-picker" style="color: #fff;">取  消  </a></div>
+          <div class="toolbar-inner row">
+            <div class="left col-33"></div>
+            <div class="center col-33">分 享</div>
+            <div class="right col-33"><a href="#" class="close-picker button button-sm button-raised">取  消  </a></div>
           </div>
         </div>
         <div class="picker-modal-inner">
           <div class="content-block">
-            <ul class="socials">
-              <li><a href="" class="fb"><i class="fa fa-facebook"></i></a>
+            <ul class="socials row">
+              <li class="col-25">
+                <a href="" class="fb"><i class="fa fa-bluetooth"></i>
+                </a>
               </li>
-              <li><a href="" class="tw"><i class="fa fa-twitter"></i></a>
+              <li class="col-25">
+                <a href="" class="tw"><i class="fa fa-qq"></i></a>
               </li>
-              <li><a href="" class="gp"><i class="fa fa-google-plus"></i></a>
+              <li class="col-25"><a href="" class="gp"><i class="fa fa-weixin"></i></a>
               </li>
-              <li><a href="" class="pin"><i class="fa fa-pinterest"></i></a>
+              <li class="col-25"><a href="" class="pin"><i class="fa fa-weibo"></i></a>
               </li>
             </ul>
           </div>
         </div>
       </div>
-
     </div>
-
   </f7-page>
 </template>
 

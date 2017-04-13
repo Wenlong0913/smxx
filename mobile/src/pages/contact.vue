@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <div class="page-content hide-bars-on-scroll" >
+    <div class="page-content hide-bars-on-scroll" style="margin-top: 10px;">
       <div class="item-content text-center">
         <div class="item-media">
           <img src="./../assets/img/trimed.png" alt="" width="80" height="70" >
@@ -26,10 +26,9 @@
           <li>
             <div class="item-content">
               <div class="item-media">
-                <i class="fa fa-whatsapp fa-lg"></i>
+                <i class="fa fa-mobile fa-lg"></i>
               </div>
-              <div class="item-inner">
-                <div class="item-title">联系电话：15008221711</div>
+              <div class="item-inner">联系电话（同微信）：15008221711
               </div>
             </div>
           </li>
@@ -40,7 +39,7 @@
                 <i class="fa fa-wechat fa-lg"></i>
               </div>
               <div class="item-inner">
-                <div class="item-title">微信搜索：美客美</div>
+                微信公众号：美客美
               </div>
             </div>
           </li>
@@ -51,7 +50,7 @@
                 <i class="fa fa-qq fa-lg"></i>
               </div>
               <div class="item-inner">
-                <div class="item-title">QQ搜索：123123121</div>
+                QQ：123123121
               </div>
             </div>
           </li>
@@ -59,10 +58,9 @@
           <li>
             <div class="item-content">
               <div class="item-media">
-                <i class="fa fa-map fa-lg"></i>
+                <i class="fa fa-map-marker fa-lg"></i>
               </div>
-              <div class="item-inner">
-                <div class="item-title">地址：成都市高新区天府大道北段1700号2栋1单元15楼</div>
+              <div class="item-inner">地址：成都市高新区天府大道北段1700号2栋1单元15楼
               </div>
             </div>
           </li>
