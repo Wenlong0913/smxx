@@ -52,11 +52,11 @@
               </div>
               <div class="col-33 profile">
                 <i class="fa fa-clock-o color-green" aria-hidden="true"></i>
-                {{ site.site_hours }}
+                {{ site.business_hours }}
               </div>
               <div class="col-36 profile">
                 <i class="fa fa-phone color-green" aria-hidden="true"></i>
-                {{ site.contact_number }}
+                {{ site.contact_phone }}
               </div>
             </div>
             <div class="row profile stats">
@@ -79,7 +79,7 @@
             <div class="">
               <img src="./../assets/img/phone.png" alt="">
             </div>
-            <a :href="'tel:' + site.contact_number ">(Tel) :{{ site.contact_number }}</a>
+            <a :href="'tel:' + site.contact_phone ">(Tel) :{{ site.contact_phone }}</a>
             <p class="">联系我们</p>
           </div>
         </div>

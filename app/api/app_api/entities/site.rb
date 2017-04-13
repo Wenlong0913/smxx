@@ -5,10 +5,10 @@ module AppAPI
       expose_id
 
       expose :contact_name, documentation: { desc: '联系人' }
-      expose :contact_number, documentation: { desc: '联系电话' }
+      expose :contact_phone, documentation: { desc: '联系电话' }
       expose :is_sign, documentation: { desc: '是否签约' }
       expose :score, documentation: { desc: '星级评分' }
-      expose :site_hours, documentation: { desc: '营业时间' }
+      expose :business_hours, documentation: { desc: '营业时间' }
       expose :content, documentation: { desc: '美容院介绍' }
       expose :title, documentation: { desc: "#{::Site.model_name.human}名称" }
       expose :description, documentation: { desc: "#{::Site.model_name.human}详细描述" }, if: ->(site, options) { options[:type] == :full_site}

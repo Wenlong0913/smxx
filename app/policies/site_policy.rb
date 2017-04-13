@@ -37,7 +37,7 @@ class SitePolicy < ApplicationPolicy
     if user.super_admin_or_admin?
 
       [:user_id, :title, :business_hours, :content,
-        :contact_phone, :contact_name, :contact_name, :is_sign, :sign_note, :score, :comment,
+        :contact_phone, :contact_name, :is_sign, :sign_note, :score, :comment,
         :lat, :lng, :address_line, :updated_by, :has_contract, :is_published, :phone,
         :image_item_ids => [], :properties => []]
 

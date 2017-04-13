@@ -36,11 +36,11 @@ h1.page-header
                 = @site.contact_name
               td.field 联系电话：
               td
-                = @site.contact_number
+                = @site.contact_phone
             tr
               td.field 营业时间：
               td
-                = @site.site_hours
+                = @site.business_hours
               td.field 是否签约：
               td
                 - if @site.is_sign == 'true'

@@ -7,9 +7,9 @@ zh-CN:
       site:
         user_id: 美容院-所有者
         title: 名称
-        site_hours: 营业时间
+        business_hours: 营业时间
         address_line: 地址
-        contact_number: 联系电话
+        contact_phone: 联系电话
         contact_name: 联系人
         is_sign: 是否签约
         sign_note: 签约备注

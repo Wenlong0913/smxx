@@ -72,13 +72,13 @@ h1.page-header
             tr
               td = site.title
               td = site.contact_name
-              td = site.contact_number
+              td = site.contact_phone
               td
                 - if site.is_sign == "true"
                   => link_to "已签约", '#', class: 'btn btn-xs btn-success'
                 - else
                   => link_to "未签约", '#', class: 'btn btn-xs btn-warning'
-              td = site.site_hours
+              td = site.business_hours
               td = site.comment
               td
                 h4 style="margin:0px;"
