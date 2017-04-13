@@ -13,9 +13,13 @@
           ul
             - @finance_history.errors.full_messages.each do |message|
               li = message
-
-      = f.input :operate_type
+      
+      = f.input :operate_type, as: :hidden
       = f.input :operate_date
       = f.input :amount
       = f.input :note
+      .col-xs-12
+        .form-group[rel="image-select"]
+          label 财务凭证
+          image-select[server="#{image_items_path}" name="finance_history[image_item_ids][]" selected-ids="#{@finance_history.image_item_ids.join(', ')}"]
       = f.submit class: 'btn btn-success btn-block'

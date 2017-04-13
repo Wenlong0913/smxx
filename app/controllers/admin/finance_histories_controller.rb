@@ -35,12 +35,7 @@ class Admin::FinanceHistoriesController < Admin::BaseController
   # GET /admin/finance_histories/new
   def new
     authorize FinanceHistory
-    @finance_history = FinanceHistory.new
-  end
-
-  # GET /admin/finance_histories/1/edit
-  def edit
-    authorize @finance_history
+    @finance_history = FinanceHistory.new(operate_type: 'in')
   end
 
   # POST /admin/finance_histories
@@ -49,27 +44,10 @@ class Admin::FinanceHistoriesController < Admin::BaseController
     @finance_history = FinanceHistory.new(permitted_attributes(FinanceHistory))
 
     if @finance_history.save
-      redirect_to admin_finance_history_path(@finance_history), notice: "#{FinanceHistory.model_name.human} 创建成功."
+      redirect_to admin_finance_histories_path, notice: "#{FinanceHistory.model_name.human} 创建成功."
     else
       render :new
     end
-  end
-
-  # PATCH/PUT /admin/finance_histories/1
-  def update
-    authorize @finance_history
-    if @finance_history.update(permitted_attributes(@finance_history))
-      redirect_to admin_finance_history_path(@finance_history), notice: "#{FinanceHistory.model_name.human} 更新成功."
-    else
-      render :edit
-    end
-  end
-
-  # DELETE /admin/finance_histories/1
-  def destroy
-    authorize @finance_history
-    @finance_history.destroy
-    redirect_to admin_finance_histories_url, notice: "#{FinanceHistory.model_name.human} 删除成功."
   end
 
   private
