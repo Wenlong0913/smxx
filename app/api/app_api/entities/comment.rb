@@ -8,6 +8,7 @@ module AppAPI
       expose_updated_at
       expose :content, documentation: { desc: '内容' }
       expose :user, using: AppAPI::Entities::UserSimple
+      expose :parent_id, documentation: { desc: '父级评论ID' }
     end
   end
 end

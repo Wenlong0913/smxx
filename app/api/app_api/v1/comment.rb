@@ -29,6 +29,30 @@ module AppAPI::V1
         end
       end
 
+      desc '商品评论列表' do
+        success AppAPI::Entities::Comment.collection
+      end
+      params do
+        requires :id, type: Integer, desc: '产品ID'
+        use :pagination
+        use :sort, fields: [:created_at]
+      end
+      get do
+        product = ::Product.find_by(id: params[:id])
+        error! '该产品不存在' unless product
+
+        # 该商品的所有评论
+        comments = product.comments
+        # 当前页的评论
+        comments = paginate_collection(sort_collection(comments), params)
+        # 获取需要额外加载的父级评论类容
+        extra_ids = (comments.pluck(:parent_id).uniq - comments.pluck(:id)).compact
+        extra_comments = ::Comment::Entry.where("id in (?)", extra_ids)
+        
+        wrap_collection(comments, AppAPI::Entities::Comment, options={})
+        present :parents, extra_comments, with: AppAPI::Entities::Comment
+      end
+
     end # end of resources
   end
 end
