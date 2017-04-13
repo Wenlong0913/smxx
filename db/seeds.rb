@@ -11,7 +11,7 @@
 end
 
 _, admin = User::Create.(mobile_phone: '18080810818', nickname: '管理员', password: 'abcd1234')
-
+puts admin.save!
 raise "创建的第一个用户ID不等于1!!!" unless admin.id == 1
 
 _, agent = User::Create.(mobile_phone: '15983288999', nickname: '商家', password: 'abcd1234')
@@ -21,7 +21,7 @@ admin.add_role :admin
 admin.add_role :super_admin
 agent.add_role :agent
 
-site = Site.create(title: '陌邻官方', user: admin)
+site = Site.create!(title: '陌邻官方', user: admin, address_line: '成都市成华区二环路东二段龙湖三千')
 raise "创建的第一个商家ID不等于1!!!" unless site.id == 1
 
 # 德格角色
@@ -162,28 +162,30 @@ worksheet.row(1)
   c.save!
 end
 
-site_file_path= './db/init_data/site.xlsx'
-site_worksheet = nil
-site_worksheet = Roo::Excelx.new(site_file_path)
-# [shop_id, mall_id, verified, is_published, name, alias, province, city, city_pinyin, city_id, area, big_cate, big_cate_id, small_cate, small_cate_id, address, business_area, phone, hours, avg_price, stars, photos, description, tags, map_type, latitude, longitude, navigation, traffic, parking, characteristics, product_rating, environment_rating, service_rating, default_remarks, all_remarks, very_good_remarks, good_remarks, common_remarks, bad_remarks, very_bad_remarks, recommended_dishes, recommended_products, nearby_shops, is_chains, take-away, group, card, latest_comment_date]
-head = site_worksheet.row(1)
-2.upto site_worksheet.last_row do |index|
-  c = Site.find_or_initialize_by(title: site_worksheet.row(index)[head.find_index('name')])
-  c.is_published = !site_worksheet.row(index)[head.find_index('is_closed')]
-  c.province = site_worksheet.row(index)[head.find_index('province')]
-  c.city = site_worksheet.row(index)[head.find_index('city')]
-  c.area = site_worksheet.row(index)[head.find_index('area')]
-  c.catalog = SiteCatalog.find_or_create_by_path([{name: site_worksheet.row(index)[head.find_index('big_cate')]},{name: site_worksheet.row(index)[head.find_index('small_cate')]}])
-  c.address_line = c.province + c.city + c.area + site_worksheet.row(index)[head.find_index('address')] + ' ' + c.title
-  c.business_area = site_worksheet.row(index)[head.find_index('business_area')]
-  c.phone = site_worksheet.row(index)[head.find_index('phone')]
-  c.business_hours = site_worksheet.row(index)[head.find_index('hours')]
-  c.avg_price = site_worksheet.row(index)[head.find_index('avg_price')]
-  c.photos = site_worksheet.row(index)[head.find_index('photos')]
-  c.parking = site_worksheet.row(index)[head.find_index('parking')]
-  c.recommendation = site_worksheet.row(index)[head.find_index('recommended_products')]
-  c.good_summary = site_worksheet.row(index)[head.find_index('good_remarks')]
-  c.bad_summary = site_worksheet.row(index)[head.find_index('bad_remarks')]
-  c.properties = site_worksheet.row(index)[head.find_index('tags')]
-  c.save!
+if Settings.project.imolin?
+  site_file_path= './db/init_data/site.xlsx'
+  site_worksheet = nil
+  site_worksheet = Roo::Excelx.new(site_file_path)
+  # [shop_id, mall_id, verified, is_published, name, alias, province, city, city_pinyin, city_id, area, big_cate, big_cate_id, small_cate, small_cate_id, address, business_area, phone, hours, avg_price, stars, photos, description, tags, map_type, latitude, longitude, navigation, traffic, parking, characteristics, product_rating, environment_rating, service_rating, default_remarks, all_remarks, very_good_remarks, good_remarks, common_remarks, bad_remarks, very_bad_remarks, recommended_dishes, recommended_products, nearby_shops, is_chains, take-away, group, card, latest_comment_date]
+  head = site_worksheet.row(1)
+  2.upto site_worksheet.last_row do |index|
+    c = Site.find_or_initialize_by(title: site_worksheet.row(index)[head.find_index('name')])
+    c.is_published = !site_worksheet.row(index)[head.find_index('is_closed')]
+    c.province = site_worksheet.row(index)[head.find_index('province')]
+    c.city = site_worksheet.row(index)[head.find_index('city')]
+    c.area = site_worksheet.row(index)[head.find_index('area')]
+    c.catalog = SiteCatalog.find_or_create_by_path([{name: site_worksheet.row(index)[head.find_index('big_cate')]},{name: site_worksheet.row(index)[head.find_index('small_cate')]}])
+    c.address_line = c.province + c.city + c.area + site_worksheet.row(index)[head.find_index('address')] + ' ' + c.title
+    c.business_area = site_worksheet.row(index)[head.find_index('business_area')]
+    c.phone = site_worksheet.row(index)[head.find_index('phone')]
+    c.business_hours = site_worksheet.row(index)[head.find_index('hours')]
+    c.avg_price = site_worksheet.row(index)[head.find_index('avg_price')]
+    c.photos = site_worksheet.row(index)[head.find_index('photos')]
+    c.parking = site_worksheet.row(index)[head.find_index('parking')]
+    c.recommendation = site_worksheet.row(index)[head.find_index('recommended_products')]
+    c.good_summary = site_worksheet.row(index)[head.find_index('good_remarks')]
+    c.bad_summary = site_worksheet.row(index)[head.find_index('bad_remarks')]
+    c.properties = site_worksheet.row(index)[head.find_index('tags')]
+    c.save!
+  end
 end

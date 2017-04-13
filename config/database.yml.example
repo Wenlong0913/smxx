@@ -23,7 +23,7 @@ default: &default
 
 development:
   <<: *default
-  database: tmf_dev
+  database: meikemei_dev2
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -81,5 +81,3 @@ test:
 production:
   <<: *default
   database: tmf_production
-  username: tmf
-  password: <%= ENV['RAILS_POSTGRESQL_DATABASE_PASSWORD'] %>
