@@ -32,6 +32,7 @@ class Site < ApplicationRecord
   has_one :cms_site, class_name: '::Cms::Site', dependent: :destroy
   store_accessor :features, :business_hours, :content, :contact_phone, :contact_name, :contact_name, :is_sign, :sign_note,
   :score, :comment, :properties, :updated_by, :has_contract, :is_published, :phone
+  #store_accessor :features, :site_hours, :content, :contact_number, :contact_name, :is_sign, :sign_note, :score, :comment, :properties, :updated_by, :lat, :lng
 
   PROPERTIES = {
     assure: "正品保障",
