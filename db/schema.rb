@@ -9,8 +9,7 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-
-ActiveRecord::Schema.define(version: 20170413140338) do
+ActiveRecord::Schema.define(version: 20170413144345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -942,11 +941,14 @@ ActiveRecord::Schema.define(version: 20170413140338) do
     t.string   "province"
     t.string   "country"
     t.integer  "gender"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.string   "access_token"
     t.string   "refresh_token"
     t.string   "unionid"
+    t.datetime "access_token_expired_at"
+    t.datetime "refresh_token_expired_at"
     t.index ["user_id"], name: "index_user_weixins_on_user_id", using: :btree
   end
 
