@@ -57,4 +57,52 @@ class User::Weixin < ApplicationRecord
     weixin_user
   end
 
+  def check_access_token
+    url = 'https://api.weixin.qq.com/sns/auth?access_token=%s&openid=%s' % [
+      access_token,
+      uid
+    ]
+    response = Faraday.get(url)
+    data = JSON.parse(response.body)
+    return if data['errcode'] == 0
+    refresh_access_token!
+  end
+
+  def refresh_access_token!
+    return if refresh_token.blank?
+    url = 'https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=%s&grant_type=refresh_token&refresh_token=%s' % [
+      Settings.weixin_open_app.app_id,
+      refresh_token
+    ]
+    response = Faraday.get(url)
+    data = JSON.parse(response.body)
+    if data['openid'] == uid
+      self.access_token = data['access_token']
+      self.refresh_token = data['refresh_token']
+      self.access_token_expired_at = data['expires_in'].seconds.since
+    else
+      self.access_token = nil
+      self.refresh_token = nil
+    end
+    self.save!
+  end
+
+  def sync!
+    return if access_token.blank?
+
+    url = 'https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s' % [
+      access_token,
+      uid
+    ]
+    response = Faraday.get(url)
+    data = JSON.parse(response.body)
+    self.name = data['nickname']
+    self.gender = data['sex']
+    self.city = data['city']
+    self.province = data['province']
+    self.country = data['country']
+    self.headshot = data['headimgurl']
+    save!
+  end
+
 end

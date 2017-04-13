@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170412073751) do
+ActiveRecord::Schema.define(version: 20170413144345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "cube"
   enable_extension "earthdistance"
@@ -126,6 +125,17 @@ ActiveRecord::Schema.define(version: 20170412073751) do
     t.index ["user_id", "user_type"], name: "user_index", using: :btree
   end
 
+  create_table "banners", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "banner_type"
+    t.string   "image_url"
+    t.string   "redirect_web_url"
+    t.string   "redirect_app_url"
+    t.jsonb    "features"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
   create_table "catalog_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id",   null: false
     t.integer "descendant_id", null: false
@@ -143,6 +153,16 @@ ActiveRecord::Schema.define(version: 20170412073751) do
     t.string   "type"
     t.jsonb    "features"
     t.index ["parent_id"], name: "index_catalogs_on_parent_id", using: :btree
+  end
+
+  create_table "chat_messages", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "room_id"
+    t.text     "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_chat_messages_on_room_id", using: :btree
+    t.index ["user_id"], name: "index_chat_messages_on_user_id", using: :btree
   end
 
   create_table "chat_rooms", force: :cascade do |t|
@@ -911,8 +931,13 @@ ActiveRecord::Schema.define(version: 20170412073751) do
     t.string   "province"
     t.string   "country"
     t.integer  "gender"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "access_token"
+    t.string   "refresh_token"
+    t.string   "unionid"
+    t.datetime "access_token_expired_at"
+    t.datetime "refresh_token_expired_at"
     t.index ["user_id"], name: "index_user_weixins_on_user_id", using: :btree
   end
 

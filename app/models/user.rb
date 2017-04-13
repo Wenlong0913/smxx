@@ -93,6 +93,13 @@ class User < ApplicationRecord
     AuthToken.encode(user_id: self.id)
   end
 
+  def issue_api_token(device)
+    api_token = api_tokens.find_or_initialize_by(device: device)
+    api_token.expired_at = 30.days.since
+    api_token.save
+    api_token.token
+  end
+
   if Settings.project.sxhop?
     def friends
       SalesDistribution::ResourceUser.joins(:resource).
