@@ -40,7 +40,7 @@ class Api::V1::FinanceHistoriesController < Api::V1::BaseController
     end
     flag, finance = FinanceHistory::Create.(permitted_attributes(FinanceHistory).merge(owner: owner))
     if flag
-      render json: {status: 'ok', finance: finance_json(finance)}
+      render json: {status: 'ok', finance: order_finance_json(finance)}
     else
       render json: {status: 'failed', error_message:  finance.errors.full_messages.join(', ')}
     end
