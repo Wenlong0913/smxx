@@ -7,6 +7,7 @@ module AppAPI
       expose :contact_name, documentation: { desc: '联系人' }
       expose :contact_number, documentation: { desc: '联系电话' }
       expose :is_sign, documentation: { desc: '是否签约' }
+      expose :score, documentation: { desc: '星级评分' }
       expose :site_hours, documentation: { desc: '营业时间' }
       expose :content, documentation: { desc: '美容院介绍' }
       expose :title, documentation: { desc: "#{::Site.model_name.human}名称" }
@@ -23,9 +24,12 @@ module AppAPI
       # with_options if: ->(site, options) { options[:type] == :full_site } do |f|
       #   expose :products, using: AppAPI::Entities::Product
       # end
+      def score
+        BigDecimal(object.score.to_s).ceil
+      end
 
       def properties
-        object.properties.map{|p| ::Site::PROPERTIES[p.to_sym]}.compact.join('，')
+        object.properties.map{|p| ::Site::PROPERTIES[p.to_sym]}.compact
       end
     end
   end

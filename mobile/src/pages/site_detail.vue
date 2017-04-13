@@ -25,33 +25,23 @@
           <div data-pagination=".swiper-pagination" data-effect="coverflow" data-slidesPerView="auto" data-centeredSlides="true" class="swiper-container swiper-init ks-demo-slider ks-coverflow-slider">
             <div class="swiper-pagination"></div>
             <div class="swiper-wrapper">
-              <div style="background-image:url(../assets/img/pic1.png)" class="swiper-slide">Slide 1</div>
+              <div style="background-image:url(./../img/pic1.png)" class="swiper-slide">Slide 1</div>
               <div style="background-image:url(./../img/banner2.png)" class="swiper-slide">Slide 2</div>
               <div style="background-image:url(./../img/banner3.png)" class="swiper-slide">Slide 3</div>
               <div style="background-image:url(./../img/banner4.png)" class="swiper-slide">Slide 4</div>
             </div>
           </div>
-          <!-- <div class="item-content userprofile">
-            <div class="item-media">
-              <img src="./../assets/img/pic1.png" width="44"  alt="">
-            </div>
-            <div class="item-inner">
-              <div class="item-title-row">
-                <div class="item-title">{{ site.title }}</div>
-              </div>
-            </div>
-          </div> -->
           <div class="prductlist content-block text-center">
             <h2 class="maintitle col-100">
               {{ site.title }}
             </h2>
-            <span class="item-subtitle star">
-              <span class="fa fa-star color-amber"></span>
-              <span class="fa fa-star color-amber"></span>
-              <span class="fa fa-star color-amber"></span>
-              <span class="fa fa-star-half-o color-amber"></span>
-              <span class="fa fa-star-o color-amber"></span>
-            </span>
+            <p class="item-subtitle margin_start_5 item_star" v-if="site.score == 5">
+              <span class="fa fa-star color_pink" v-for="s in site.score"></span>
+              <span class="color_pink">顶级</span>
+            </p>
+            <p class="item-subtitle item_star margin_start_5" v-else>
+              <span class="fa fa-star color_pink" v-for="s in site.score"></span>
+            </p>
           </div>
           <hr>
           <div class="content-block text-center" >
@@ -64,7 +54,7 @@
                 <i class="fa fa-clock-o color-green" aria-hidden="true"></i>
                 {{ site.site_hours }}
               </div>
-              <div class="col-33 profile">
+              <div class="col-36 profile">
                 <i class="fa fa-phone color-green" aria-hidden="true"></i>
                 {{ site.contact_number }}
               </div>
@@ -86,41 +76,42 @@
             <p class="item-text" v-html="site.content"></p>
           </div>
           <div class="center content-block ">
-            <div class=""><img src="./../assets/img/phone.png" alt=""></div>
+            <div class="">
+              <img src="./../assets/img/phone.png" alt="">
+            </div>
             <a :href="'tel:' + site.contact_number ">(Tel) :{{ site.contact_number }}</a>
             <p class="">联系我们</p>
           </div>
         </div>
         <!-- 美容师 -->
         <div id="tab2" class="tab page-content">
-          <div class="list-block media-list">
-            <ul>
-              <li class="item-content" v-for="staff in staffs">
-                <div class="item-media">
-                  <f7-link :href="'/staffs/' + staff.id" v-for="images in staffs.images">
-                    <img :src="images.image_url" :alt="images.title" width="80" height="80" />
-                  </f7-link>
-                </div>
-                <div class="item-inner">
-                  <div class="item-subtitle">
-                    <f7-link :href="'/staffs/' + staff.id">
-                      <span>姓名：{{ staff.title }}</span>
+          <div class="content-block">
+            <div class="row">
+              <div class="card tablet-50" v-for="staff in staffs">
+                <div class="card-content"> 
+                  <div class="banner productblock">
+                    <f7-link :href="'/staffs/' + staff.id" v-for="images in staff.images">
+                      <img :src="images.image_url" :alt="images.title" class="col-100" />
                     </f7-link>
+                    <a class="cartfloating floating-button" :href="'/staffs/' + staff.id"><i class="fa fa-magic"></i></a>
                   </div>
-                  <div class="item-title-row">
-                    <div class="item-title">
-                      <span>年龄：{{ staff.age }}</span>
-                      <span>工作年限：{{ staff.work_years }}</span>
+                  <div class="content-block productdata">
+                    <h2 class="maintitle col-100">美容师：{{staff.title}}</h2>
+                    <div class="item-subtitle star color-amber ">
+                      <i class="fa fa-star" v-for="star in staff.sco"></i>
                     </div>
+                    <p class="col-100">
+                      <span>年龄：{{staff.age}}岁</span>
+                      <span>工作年限：{{staff.work_years}}年</span>
+                    </p>
+                    <p class="col-100">擅长领域：{{staff.pro}}</p>
+                    <div class="clear"></div>
                   </div>
-                  <div class="item-title-row">
-                    <div class="item-title">个人介绍：{{ staff.description }}</div>
-                  </div>
+                  <div class="clear"></div>
                 </div>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
-          
         </div>
         <div id="tab3" class=" page-content tab">
           <div class="list-block media-list shop">
@@ -128,7 +119,7 @@
               <li v-for="product in products">
                 <a :href="/product_catalog_detail/ + product.id" class="item-link item-content">
                   <div class="item-media">
-                    <img src="./../assets/img/pic1.png" width="80" alt="">
+                    <img :src="product.images[0].image_url" width="80" :alt="product.name">
                   </div>
                   <div class="item-inner">
                     <div class="item-title" style="font-size: 16px;">{{ product.name }}</div>

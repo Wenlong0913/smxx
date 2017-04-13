@@ -36,9 +36,9 @@
           <div class="item-link item-content">
             <div class="item-inner">
               <div class="item-title-row">
-                <div class="author" style="font-size: 16px;">{{ product_detail.name }}</div>
+                <div class="author font_size_16">{{ product_detail.name }}</div>
               </div>
-              <div class="time" style="margin-top: -25px; font-size: 16px;">
+              <div class="time service_timte_right">
                 <time datetime="2015-08-30">
                   <i class="fa fa-clock-o"></i> {{ product_detail.service_time }}
                 </time>
@@ -50,15 +50,19 @@
           <p style="margin: 5px 0;">服务：{{ product_detail.description }}</p>
           <!-- 价格 -->
           <div class="row">
-            <p class="col-50 color-default" style="margin: 5px 0; font-size: 16px;"> 
-              原价: <span style=" text-decoration:line-through;">￥{{ product_detail.old_price }}</span>
+            <p class="col-100 color_pink price">
+              现价: ￥{{ product_detail.sell_price }}
+              <span class="service_color text_decoration_line">【￥{{ product_detail.old_price }}】</span>
             </p>
-            <p class="col-50 color-amber  text-right" style="margin: 5px 0; font-weight: 700; font-size: 16px;">现价: ￥{{ product_detail.sell_price }}</p>
           </div>
            <!-- tags -->
           <div class="row">
-            <div class="col-25">
-              <i class="fa fa-check-circle-o color-green"></i> {{ product_detail.properties }}
+            <div class="col-100">
+              <ul class="socials">
+                <li v-for="pro in product_detail.properties" class="item_li">
+                  <i class="fa fa-tags color-green"></i>{{ pro }}
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -79,8 +83,40 @@
         </div>
       </div>
       <div id="tab2" class=" tab">
-        <div class="content-block">
-          <h2>评价</h2>  
+        <div class="list-block media-list comment">
+          <ul class="comment">
+            <li v-for="c in comments">
+              <div class="item-link item-content">
+                <div class="item-media">
+                  <img src="./../assets/img/comment_dude.svg" style="border-radius:100%" width="40" height="40" alt="">
+                </div>
+                <div class="item-inner">
+                  <div class="item-title-row">
+                    <div class="item-title author-comment">{{c.name}}</div>
+                  </div>
+                  <div class="time">{{c.time}}前</div>
+                  <div class="comment" style="font-size: 13px;">{{c.content}}</div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <hr>
+        <div class="list-block ">
+          <ul class="message-comment">
+            <li class="align-top">
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-input">
+                    <textarea placeholder="请在这里写下您的评价"></textarea>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="content-block">
+              <a href="#" class="button button-fill">提交评价</a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -89,7 +125,7 @@
   <!-- toolbar -->
   <div class="toolbar toolbar-bottom">
     <div class="toolbar-inner">
-      <div class="col-100" style="height: 48px; line-height: 48px; padding: 0 16px;">需支付 ￥{{ product_detail.sell_price }}</div>
+      <div class="col-100 toolbar_bottom_left">价格 ￥{{ product_detail.sell_price }}</div>
       <a href="#" class="link" @click="input">加入购物车</a>
     </div>
   </div>
@@ -109,7 +145,29 @@
           product_id: null,
           amount: 1,
           price: ''
-        }
+        },
+        comments: [
+          {
+            name: '匿名用户',
+            time: '2分钟',
+            content: '哈哈，又发现了一个手法不错的妹子，而且还住这么近，真是太好了，妹子按得很仔细，还讲解了很多养生的小知识，已办套餐'
+          },
+          {
+            name: '匿名用户',
+            time: '12分钟',
+            content: '做完之后感觉皮肤都白些了。还免费帮我修了杂乱的眉毛。超级感谢'
+          },
+          {
+            name: '匿名用户',
+            time: '32分钟',
+            content: '很不错的美容师，细节做得也很到位，超出期待！'
+          },
+          {
+            name: '匿名用户',
+            time: '1小时',
+            content: '太好了，实在太舒服，谁做谁知道。太好了，实在太舒服，谁做谁知道。太好了，实在太舒服，谁做谁知道。'
+          }
+        ]
       }
     },
     mounted () {

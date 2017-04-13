@@ -12,6 +12,8 @@ zh-CN:
         contact_number: 联系电话
         contact_name: 联系人
         is_sign: 是否签约
+        sign_note: 签约备注
+        score: 星级评分
         comment: 营销备注
         description: 描述
         content: 美容院介绍

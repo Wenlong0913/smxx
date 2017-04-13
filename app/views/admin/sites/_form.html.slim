@@ -72,16 +72,33 @@
               input#search-address.form-control
             #baidu-map
       - else
-        = f.input :user_id, collection: User.all.decorate, label_method: :display_name
-        = f.input :title, required: true
-        = f.input :contact_name, required: true
-        = f.input :contact_number, required: true
-        = f.input :address_line, required: true
-        = f.input :is_sign, required: true
-        = f.input :comment, as: :text
-        = f.input :site_hours
-        p 标签备注（可多选）
-        = f.collection_check_boxes :properties, Site::PROPERTIES, :first, :last, checked: @site.try(:properties)
+        .div class="row"
+          .div class="col-md-6 col-sm-12"
+            = f.input :user_id, collection: User.all.decorate, label_method: :display_name
+          .div class="col-md-6 col-sm-12"
+            = f.input :title, required: true
+        .div class="row"
+          .div class="col-md-6 col-sm-12"
+            = f.input :contact_name, required: true
+          .div class="col-md-6 col-sm-12"
+            = f.input :contact_number, required: true
+        .div class="row"
+          .div class="col-md-6 col-sm-12"
+            = f.input :address_line, required: true
+          .div class="col-md-6 col-sm-12"
+            = f.input :site_hours, collection: ['9:00-22:00', '8:00-22:00'], selected: '9:00-22:00'
+        .div class="row"
+          .div class="col-md-6 col-sm-12"
+            = f.input :comment, as: :text
+          .div class="col-md-6 col-sm-12"
+            = f.input :is_sign, as: :select
+        .div class="row"
+          .div class="col-md-6 col-sm-12"
+            = f.input :score, collection: ['1', '2', '3', '4', '5']
+            p 标签备注（可多选）
+            = f.collection_check_boxes :properties, Site::PROPERTIES, :first, :last, checked: @site.try(:properties)
+          .div class="col-md-6 col-sm-12"
+            = f.input :sign_note, as: :text, input_html: {rows: 5}
         = f.input :content, as: :ckeditor
         p 背景图片
         .form-group
