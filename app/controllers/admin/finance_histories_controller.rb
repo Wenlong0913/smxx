@@ -35,7 +35,7 @@ class Admin::FinanceHistoriesController < Admin::BaseController
   # GET /admin/finance_histories/new
   def new
     authorize FinanceHistory
-    @finance_history = FinanceHistory.new
+    @finance_history = FinanceHistory.new(operate_type: 'in')
   end
 
   # GET /admin/finance_histories/1/edit
@@ -49,7 +49,7 @@ class Admin::FinanceHistoriesController < Admin::BaseController
     @finance_history = FinanceHistory.new(permitted_attributes(FinanceHistory))
 
     if @finance_history.save
-      redirect_to admin_finance_history_path(@finance_history), notice: "#{FinanceHistory.model_name.human} 创建成功."
+      redirect_to admin_finance_histories_path, notice: "#{FinanceHistory.model_name.human} 创建成功."
     else
       render :new
     end

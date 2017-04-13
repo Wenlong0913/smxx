@@ -1,7 +1,7 @@
 h1.page-header
   | #{FinanceHistory.model_name.human}列表
   .pull-right
-    = link_to "新建#{FinanceHistory.model_name.human}", new_admin_finance_history_path, class: 'btn btn-primary'
+    / = link_to "新建#{FinanceHistory.model_name.human}", new_admin_finance_history_path, class: 'btn btn-primary'
 
 .panel.panel-default
   .panel-heading
@@ -86,7 +86,6 @@ h1.page-header
               td = finance_history.note
               td
                 => link_to '查看', admin_finance_history_path(finance_history), class: 'btn btn-xs btn-default'
-                => link_to '编辑', edit_admin_finance_history_path(finance_history), class: 'btn btn-xs btn-default'
                 = link_to '删除', admin_finance_history_path(finance_history), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
       = paginate @finance_histories
 
