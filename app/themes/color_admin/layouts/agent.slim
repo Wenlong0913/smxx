@@ -19,15 +19,8 @@ html
       = render 'layouts/agent/header'
       = yield
       = render 'layouts/agent/footer'
-    div[rel="back_to_top"]
-      back-to-top
     / / 信息提示ｊｓ
-    javascript:
-      $(function(){
-        new Vue({
-        el: "div[rel='back_to_top']"
-        })
-      })
+    / javascript:
     /   var flashMessages = #{raw flash.to_json};
     /   for(i = 0; i < flashMessages.length; i++){
     /     var k = flashMessages[i][0], v = flashMessages[i][1];
