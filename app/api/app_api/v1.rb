@@ -14,7 +14,7 @@ module AppAPI::V1
     mount AppAPI::V1::Staff
     mount AppAPI::V1::ProductCatalog
 
-    mount AppAPI::V1::WaveImage
+    # mount AppAPI::V1::WaveImage
     mount AppAPI::V1::Article
     mount AppAPI::V1::Banner
 
