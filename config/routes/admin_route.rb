@@ -104,6 +104,7 @@ module AdminRoute
         resources :audits, only: [:index], :concerns => :paginatable
         # 轮波图
         resources :banners
+        resources :finance_histories, :concerns => :paginatable
       end
     end
   end
