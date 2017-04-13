@@ -5,7 +5,7 @@ class UserDecorator < ApplicationDecorator
   end
 
   def display_headshot
-    headshot || weixin.try(:headshot) || 'logo.png'
+    (avatar ? (Settings.site.host + object.avatar.url(:thumb)) : nil) || weixin.try(:headshot) || 'logo.png'
   end
 
   def display_name
