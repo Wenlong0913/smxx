@@ -45,19 +45,17 @@
           div class="col-md-3 col-sm-12"
             = f.input :phone
             = f.input :business_hours
-            = f.input :avg_price
           div class="col-md-3 col-sm-12"
-            = f.input :good_summary
-            = f.input :bad_summary
-            = f.input :properties
+            / = f.input :good_summary
+            / = f.input :bad_summary
+            / = f.input :properties
             = f.input :is_published, as: :boolean, label: false, label: '是否发布'
           div class="col-md-3 col-sm-12"
-            = f.input :contact_name
             = f.input :contact_phone
-            = f.input :contract_note
+            = f.input :contact_name
             = f.input :has_contract, as: :boolean, label: false, label: '是否签约'
           div class="col-md-3 col-sm-12"
-            = f.input :description, as: :text, input_html: {rows: 10}
+            / = f.input :description, as: :text, input_html: {rows: 10}
         .form-group
           image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@site.image_item_ids.join(', ')}"]
 

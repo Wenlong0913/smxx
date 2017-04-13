@@ -10,11 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170410143443) do
+ActiveRecord::Schema.define(version: 20170411054052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
+  enable_extension "cube"
+  enable_extension "earthdistance"
 
   create_table "account_histories", force: :cascade do |t|
     t.integer  "account_id"
@@ -61,6 +63,23 @@ ActiveRecord::Schema.define(version: 20170410143443) do
     t.datetime "updated_at",            null: false
     t.index ["token"], name: "index_api_tokens_on_token", using: :btree
     t.index ["user_id"], name: "index_api_tokens_on_user_id", using: :btree
+  end
+
+  create_table "article_products", force: :cascade do |t|
+    t.integer  "article_id"
+    t.integer  "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_article_products_on_article_id", using: :btree
+    t.index ["product_id"], name: "index_article_products_on_product_id", using: :btree
+  end
+
+  create_table "articles", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "author"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "attachment_relations", force: :cascade do |t|
@@ -211,6 +230,22 @@ ActiveRecord::Schema.define(version: 20170410143443) do
     t.index ["resource_type", "resource_id"], name: "index_comment_entries_on_resource_type_and_resource_id", using: :btree
   end
 
+  create_table "communities", force: :cascade do |t|
+    t.string   "name"
+    t.jsonb    "features"
+    t.string   "address_line"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "address_alias_id"
+    t.boolean  "is_published",     default: true
+    t.integer  "updated_by"
+    t.integer  "owned_by"
+    t.string   "contact_info"
+    t.text     "note"
+    t.index ["owned_by"], name: "index_communities_on_owned_by", using: :btree
+    t.index ["updated_by"], name: "index_communities_on_updated_by", using: :btree
+  end
+
   create_table "favorite_entries", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "resource_type"
@@ -232,6 +267,104 @@ ActiveRecord::Schema.define(version: 20170410143443) do
     t.datetime "updated_at",                           null: false
     t.jsonb    "features"
     t.index ["owner_type", "owner_id"], name: "index_finance_histories_on_owner_type_and_owner_id", using: :btree
+  end
+
+  create_table "gnomon_address_aliases", force: :cascade do |t|
+    t.integer  "address_id"
+    t.string   "alias"
+    t.boolean  "precise"
+    t.integer  "confidence"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["address_id"], name: "index_gnomon_address_aliases_on_address_id", using: :btree
+    t.index ["alias"], name: "index_gnomon_address_aliases_on_alias", using: :btree
+  end
+
+  create_table "gnomon_addresses", force: :cascade do |t|
+    t.integer  "district_id"
+    t.integer  "street_id"
+    t.string   "street_number"
+    t.string   "name"
+    t.decimal  "lng",           precision: 20, scale: 14
+    t.decimal  "lat",           precision: 20, scale: 14
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.index "ll_to_earth((lat)::double precision, (lng)::double precision)", name: "idx__gnomon_address_geo", using: :gist
+    t.index ["district_id"], name: "index_gnomon_addresses_on_district_id", using: :btree
+    t.index ["name"], name: "index_gnomon_addresses_on_name", using: :btree
+    t.index ["street_id"], name: "index_gnomon_addresses_on_street_id", using: :btree
+  end
+
+  create_table "gnomon_businesses", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_gnomon_businesses_on_name", using: :btree
+  end
+
+  create_table "gnomon_cities", force: :cascade do |t|
+    t.integer  "province_id"
+    t.string   "name"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["name"], name: "index_gnomon_cities_on_name", using: :btree
+    t.index ["province_id"], name: "index_gnomon_cities_on_province_id", using: :btree
+  end
+
+  create_table "gnomon_districts", force: :cascade do |t|
+    t.integer  "city_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_gnomon_districts_on_city_id", using: :btree
+    t.index ["name"], name: "index_gnomon_districts_on_name", using: :btree
+  end
+
+  create_table "gnomon_districts_businiesses", id: false, force: :cascade do |t|
+    t.integer "district_id"
+    t.integer "business_id"
+    t.index ["business_id"], name: "index_gnomon_districts_businiesses_on_business_id", using: :btree
+    t.index ["district_id"], name: "index_gnomon_districts_businiesses_on_district_id", using: :btree
+  end
+
+  create_table "gnomon_districts_streets", id: false, force: :cascade do |t|
+    t.integer "district_id"
+    t.integer "street_id"
+    t.index ["district_id"], name: "index_gnomon_districts_streets_on_district_id", using: :btree
+    t.index ["street_id"], name: "index_gnomon_districts_streets_on_street_id", using: :btree
+  end
+
+  create_table "gnomon_provinces", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "is_city"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_gnomon_provinces_on_name", using: :btree
+  end
+
+  create_table "gnomon_regions", force: :cascade do |t|
+    t.integer  "district_id"
+    t.string   "name"
+    t.string   "tag"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["district_id"], name: "index_gnomon_regions_on_district_id", using: :btree
+    t.index ["name"], name: "index_gnomon_regions_on_name", using: :btree
+    t.index ["tag"], name: "index_gnomon_regions_on_tag", using: :btree
+  end
+
+  create_table "gnomon_regions_addresses", id: false, force: :cascade do |t|
+    t.integer "region_id"
+    t.integer "address_id"
+    t.index ["address_id"], name: "index_gnomon_regions_addresses_on_address_id", using: :btree
+    t.index ["region_id"], name: "index_gnomon_regions_addresses_on_region_id", using: :btree
+  end
+
+  create_table "gnomon_streets", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_gnomon_streets_on_name", using: :btree
   end
 
   create_table "image_item_relations", force: :cascade do |t|
@@ -263,6 +396,31 @@ ActiveRecord::Schema.define(version: 20170410143443) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["owner_type", "owner_id"], name: "index_image_items_on_owner_type_and_owner_id", using: :btree
+  end
+
+  create_table "import_failed_informations", force: :cascade do |t|
+    t.string   "origin_type"
+    t.string   "file_name"
+    t.integer  "line"
+    t.string   "name"
+    t.jsonb    "features"
+    t.string   "is_processed", default: "n"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["is_processed"], name: "index_import_failed_informations_on_is_processed", using: :btree
+    t.index ["origin_type"], name: "index_import_failed_informations_on_origin_type", using: :btree
+  end
+
+  create_table "import_informations", force: :cascade do |t|
+    t.string   "origin_type"
+    t.string   "file_name"
+    t.integer  "line"
+    t.string   "name"
+    t.jsonb    "features"
+    t.string   "is_parsed"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["origin_type"], name: "index_import_informations_on_origin_type", using: :btree
   end
 
   create_table "impressions", force: :cascade do |t|
@@ -566,6 +724,15 @@ ActiveRecord::Schema.define(version: 20170410143443) do
     t.index ["user_id"], name: "idx__sdr_user", using: :btree
   end
 
+  create_table "shop_sites", force: :cascade do |t|
+    t.integer  "shop_id"
+    t.integer  "site_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shop_id"], name: "index_shop_sites_on_shop_id", using: :btree
+    t.index ["site_id"], name: "index_shop_sites_on_site_id", using: :btree
+  end
+
   create_table "shopping_carts", force: :cascade do |t|
     t.integer  "product_id"
     t.integer  "price"
@@ -577,14 +744,45 @@ ActiveRecord::Schema.define(version: 20170410143443) do
     t.index ["user_id"], name: "index_shopping_carts_on_user_id", using: :btree
   end
 
+  create_table "shops", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name",                             null: false
+    t.string   "description"
+    t.text     "content"
+    t.string   "contact_name"
+    t.string   "contact_phone"
+    t.boolean  "is_published",      default: true
+    t.text     "note"
+    t.string   "properties",        default: [],                array: true
+    t.jsonb    "features"
+    t.integer  "impressions_count", default: 0
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.index ["user_id"], name: "index_shops_on_user_id", using: :btree
+  end
+
   create_table "sites", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.jsonb    "features"
+    t.string   "type"
+    t.integer  "address_alias_id"
+    t.string   "address_line"
+    t.integer  "catalog_id"
+    t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
+  end
+
+  create_table "staffs", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb    "features"
     t.string   "type"
-    t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
+    t.integer  "site_id"
+    t.index ["user_id"], name: "index_staffs_on_user_id", using: :btree
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -759,6 +957,7 @@ ActiveRecord::Schema.define(version: 20170410143443) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "username"
+    t.string   "headshot"
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
@@ -790,6 +989,7 @@ ActiveRecord::Schema.define(version: 20170410143443) do
 
   add_foreign_key "account_histories", "accounts"
   add_foreign_key "address_books", "users"
+  add_foreign_key "article_products", "articles"
   add_foreign_key "attachment_relations", "attachments"
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
@@ -808,7 +1008,10 @@ ActiveRecord::Schema.define(version: 20170410143443) do
   add_foreign_key "orders", "sites"
   add_foreign_key "orders", "users"
   add_foreign_key "produces", "orders"
+  add_foreign_key "shop_sites", "shops"
+  add_foreign_key "shop_sites", "sites"
   add_foreign_key "shopping_carts", "users"
+  add_foreign_key "shops", "users"
   add_foreign_key "tasks", "sites"
   add_foreign_key "theme_configs", "sites"
   add_foreign_key "theme_configs", "themes"
