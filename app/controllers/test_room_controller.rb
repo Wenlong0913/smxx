@@ -3,6 +3,10 @@ class TestRoomController < ApplicationController
   skip_before_action :verify_authenticity_token
   def index
     @rooms = Chat::Room.all
+    respond_to do |format|
+      format.html
+      format.json {render json: {rooms: @rooms}}
+    end
   end
 
   def create

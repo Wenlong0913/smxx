@@ -74,7 +74,7 @@ export default {
       new Clipboard('.copy')
       // require qrcode js
       require ('../share_modal/jquery.qrcode.min.js')
-     })
+    })
   }
 }
 </script>
