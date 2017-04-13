@@ -69,9 +69,8 @@ class Order < ApplicationRecord
   has_one :delivery, through: :order_delivery
   has_many :finance_histories, as: :owner, dependent: :destroy
 
-  unless Settings.project.dagle?
-    before_create :generate_code
-  end
+  
+  before_create :generate_code
   # before_validation :check_member
 
   validates_presence_of :site
@@ -145,12 +144,14 @@ class Order < ApplicationRecord
   # end
 
   def generate_code
-    prefix = Time.now.strftime('%Y%m%d')
-    number = self.class.where("code LIKE ?", prefix+'%').count
-    loop do
-      self.code = "#{prefix}#{(number + 1).to_s.rjust(3, '0')}"
-      break unless self.class.where(code: self.code).exists?
-      number += 1
+    unless Settings.project.dagle? && self.code.present?
+      prefix = Time.now.strftime('%Y%m%d')
+      number = self.class.where("code LIKE ?", prefix+'%').count
+      loop do
+        self.code = "#{prefix}#{(number + 1).to_s.rjust(3, '0')}"
+        break unless self.class.where(code: self.code).exists?
+        number += 1
+      end
     end
   end
 end
