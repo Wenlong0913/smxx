@@ -16,11 +16,7 @@ GIT
 
 GIT
   remote: git@gitlab.tanmer.com:tm-framework/gnomon.git
-<<<<<<< HEAD
-  revision: 1fa6634b1edf1ad7ec958be4d41747113c5c3f2f
-=======
   revision: bfce6f7bd559ae200238158e415026e3e1e2889d
->>>>>>> dagle-master
   specs:
     gnomon (0.1.0)
       activerecord-postgres-earthdistance (~> 0.5.1)

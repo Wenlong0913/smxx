@@ -25,53 +25,6 @@
               input#search-address.form-control
             #baidu-map
       - else
-        .row
-          div class="col-md-6 col-sm-12"
-            = f.input :user_id, collection: User.all.decorate, label_method: :display_name, include_blank: true, input_html: {class: 'select2'}
-          div class="col-md-6 col-sm-12"
-            .form-group.catalog-list[data-catalog-name="#{@site.catalog.try(:name)}" data-catalog-id="#{@site.catalog_id}"]
-              label[class="control-label"] 商家分类
-              input[type="hidden" v-model="id" name="site[catalog_id]"]
-              input.form-control[readonly=true @click="showCatalog = true" :value="catalogs"]
-              span.hint 点击输入框选择分类
-              modal[title="产品分类" :show.sync="showCatalog" @cancel="showCatalog = false"]
-                div
-                  catalog-list[data-url=admin_site_catalogs_path :default="[#{@site.catalog_id}]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false"]
-                div[slot="footer"]
-        = f.input :title
-
-        = f.input :address_line
-        div class="row"
-          div class="col-md-3 col-sm-12"
-            = f.input :phone
-            = f.input :business_hours
-            = f.input :avg_price
-          div class="col-md-3 col-sm-12"
-            = f.input :good_summary
-            = f.input :bad_summary
-            = f.input :properties
-            = f.input :is_published, as: :boolean, label: false, label: '是否发布'
-          div class="col-md-3 col-sm-12"
-            = f.input :contact_name
-            = f.input :contact_phone
-            = f.input :contract_note
-            = f.input :has_contract, as: :boolean, label: false, label: '是否签约'
-          div class="col-md-3 col-sm-12"
-            = f.input :description, as: :text, input_html: {rows: 10}
-        .form-group
-          image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@site.image_item_ids.join(', ')}"]
-
-      - if params[:map]
-        .div class="row"
-          .div class="col-md-3 col-sm-12"
-            = f.input :lat, readonly: false, placeholder: '自动填充', input_html: {value: @site.address_lat || params[:lat]}
-            = f.input :lng, readonly: false, placeholder: '自动填充', input_html: {value: @site.address_lng || params[:lng]}
-          .div class="col-md-9 col-sm-12"
-            .form-group
-              label.control-label 搜索地图，找到准确位置，通过在地图上标上红点，自动设置经纬度。
-              input#search-address.form-control
-            #baidu-map
-      - else
         .div class="row"
           .div class="col-md-6 col-sm-12"
             = f.input :user_id, collection: User.all.decorate, label_method: :display_name
