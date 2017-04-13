@@ -21,7 +21,7 @@ admin.add_role :admin
 admin.add_role :super_admin
 agent.add_role :agent
 
-site = Site.create(title: '陌邻官方', user: admin)
+site = Site.create(title: '陌邻官方', user: admin, address_line: '成都市成华区二环路东二段龙湖三千城')
 raise "创建的第一个商家ID不等于1!!!" unless site.id == 1
 
 # 德格角色
@@ -147,14 +147,14 @@ worksheet.row(1)
 2.upto worksheet.last_row do |index|
   c = Community.find_or_initialize_by(name: worksheet.row(index)[1])
   c.uid = worksheet.row(index)[0]
-  c.province = worksheet.row(index)[2]
-  c.city = worksheet.row(index)[3]
-  c.district = worksheet.row(index)[4]
-  c.street = worksheet.row(index)[5]
-  c.address_str = worksheet.row(index)[6]
+  # c.province = worksheet.row(index)[2]
+  # c.city = worksheet.row(index)[3]
+  # c.district = worksheet.row(index)[4]
+  # c.street = worksheet.row(index)[5]
+  # c.address_str = worksheet.row(index)[6]
   c.telephone = worksheet.row(index)[7]
-  c.lat = worksheet.row(index)[8]
-  c.lng = worksheet.row(index)[9]
+  # c.lat = worksheet.row(index)[8]
+  # c.lng = worksheet.row(index)[9]
   c.tags = worksheet.row(index)[10]
   c.image = worksheet.row(index)[11]
   c.keyword = worksheet.row(index)[12]
@@ -170,9 +170,9 @@ head = site_worksheet.row(1)
 2.upto site_worksheet.last_row do |index|
   c = Site.find_or_initialize_by(title: site_worksheet.row(index)[head.find_index('name')])
   c.is_published = !site_worksheet.row(index)[head.find_index('is_closed')]
-  c.province = site_worksheet.row(index)[head.find_index('province')]
-  c.city = site_worksheet.row(index)[head.find_index('city')]
-  c.area = site_worksheet.row(index)[head.find_index('area')]
+  # c.province = site_worksheet.row(index)[head.find_index('province')]
+  # c.city = site_worksheet.row(index)[head.find_index('city')]
+  # c.area = site_worksheet.row(index)[head.find_index('area')]
   c.catalog = SiteCatalog.find_or_create_by_path([{name: site_worksheet.row(index)[head.find_index('big_cate')]},{name: site_worksheet.row(index)[head.find_index('small_cate')]}])
   c.address_line = c.province + c.city + c.area + site_worksheet.row(index)[head.find_index('address')] + ' ' + c.title
   c.business_area = site_worksheet.row(index)[head.find_index('business_area')]
