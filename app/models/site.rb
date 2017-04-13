@@ -50,4 +50,15 @@ class Site < ApplicationRecord
   validates_uniqueness_of :title, scope: [:address_line]
   acts_as_address
   audited
+  validates_presence_of :title, :user_id
+  validates_uniqueness_of :title, scope: [:type, :user_id]
+
+  if Settings.project.sxhop?
+    def friends
+      SalesDistribution::ResourceUser.joins(:resource).
+      where("sales_distribution_resources.object_type = 'Site' and sales_distribution_resources.object_id = ?", self.id).
+      pluck("sales_distribution_resource_users.user_id")
+    end
+  end
+
 end

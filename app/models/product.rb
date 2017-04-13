@@ -24,14 +24,20 @@ class Product < Item
   has_many :sales_distribution_resources, class_name: 'SalesDistribution::Resource', as: 'object'
   has_many_comments
   has_many_favorites
+  has_many_likes
   belongs_to :catalog
   belongs_to :site
+
   PROPERTIES = {
     recommend: "推荐",
     event: "活动",
     promotion: "促销",
     discount: "折扣"
   }
+
+  has_many :article_products, dependent: :destroy
+  has_many :articles, :through => :article_products
+
   has_many :order_products, dependent: :destroy
   has_many :orders, through: :order_products
   before_save do
@@ -41,5 +47,4 @@ class Product < Item
     self.weight = weight.to_f.round(2)
     self.stock = stock.to_i
   end
-
 end

@@ -91,19 +91,21 @@ h1.page-header
                 = '在'+ distance_of_time_in_words_to_now(site.updated_at) + '前更新'
                 p style="margin:4px;"
                 => link_to '更新历史', admin_audits_path(auditable_type: 'Site', auditable_id: site.id), class: 'btn btn-xs btn-default', target: :_blank
+              - if Settings.project.imolin?
+                td
+                  - if site.has_contract == '1'
+                    => link_to "已签约", '#', class: 'btn btn-xs btn-success'
+                  - else
+                    => link_to "未签约", '#', class: 'btn btn-xs btn-warning'
+                  - if site.is_published == '1'
+                    => link_to "已发布", '#', class: 'btn btn-xs btn-success'
+                  - else
+                    => link_to "未发布", '#', class: 'btn btn-xs btn-warning'
+                  => link_to "商品数：#{site.products.count}", admin_site_products_path(site), class: 'btn btn-xs btn-info'
               td
-                - if site.has_contract == '1'
-                  => link_to "已签约", '#', class: 'btn btn-xs btn-success'
-                - else
-                  => link_to "未签约", '#', class: 'btn btn-xs btn-warning'
-                - if site.is_published == '1'
-                  => link_to "已发布", '#', class: 'btn btn-xs btn-success'
-                - else
-                  => link_to "未发布", '#', class: 'btn btn-xs btn-warning'
-                => link_to "商品数：#{site.products.count}", admin_site_products_path(site), class: 'btn btn-xs btn-info'
-              td
-                => link_to '信息修改', edit_admin_site_path(site), class: 'btn btn-xs btn-primary', 'data-turbolinks': false
-                => link_to '重新定位', edit_admin_site_path(site, map: true), class: 'btn btn-xs btn-primary', 'data-turbolinks': false
+                - if Settings.project.imolin?
+                  => link_to '信息修改', edit_admin_site_path(site), class: 'btn btn-xs btn-primary', 'data-turbolinks': false
+                  => link_to '重新定位', edit_admin_site_path(site, map: true), class: 'btn btn-xs btn-primary', 'data-turbolinks': false
                 => link_to '删除', admin_site_path(site), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
     .pull-right
       = paginate @sites

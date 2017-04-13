@@ -11,7 +11,7 @@ module AppAPI::V1
       end
       get ':id' do
         authenticate!
-        present current_user.orders.find(params[:id]), with: AppAPI::Entities::Order, includes: [:order_products, :products]
+        present current_user.orders.find(params[:id]), with: AppAPI::Entities::Order
       end
 
       desc "订单创建" do
@@ -31,7 +31,7 @@ module AppAPI::V1
         end
         order.price = order.order_products.map{|op| op.price * op.amount }.sum
         error! order.errors unless order.save && shopping_carts.destroy_all
-        present order, with: AppAPI::Entities::Order, includes: [:order_products, :products]
+        present order, with: AppAPI::Entities::Order
       end
 
       desc "删除订单" do
@@ -61,7 +61,7 @@ module AppAPI::V1
           orders = orders.send(params[:status])
         end
         orders = paginate_collection(sort_collection(orders), params)
-        wrap_collection orders, AppAPI::Entities::Order, includes: [:order_products, :products]
+        wrap_collection orders, AppAPI::Entities::Order
       end
 
     end # end of resources

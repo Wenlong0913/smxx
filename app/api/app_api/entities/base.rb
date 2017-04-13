@@ -19,11 +19,11 @@ module AppAPI
       end
 
       def self.collection
-        klass_name = 'Collection'
+        klass_name = "#{self.name.split('::').last}Collection"
         return self.const_get(klass_name) if self.const_defined? klass_name
         klass = Class.new(Grape::Entity)
 
-        klass.instance_eval <<-RUBY.strip_heredoc
+        code = <<-RUBY.strip_heredoc
           def self.name
             "#{klass_name}"
           end
@@ -39,6 +39,7 @@ module AppAPI
             #{self}.represent instance, options
           end
         RUBY
+        klass.instance_eval code
         self.const_set klass_name, klass
         klass
       end
