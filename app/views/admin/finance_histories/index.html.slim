@@ -86,7 +86,6 @@ h1.page-header
               td = finance_history.note
               td
                 => link_to '查看', admin_finance_history_path(finance_history), class: 'btn btn-xs btn-default'
-                = link_to '删除', admin_finance_history_path(finance_history), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
       = paginate @finance_histories
 
 / TODO: move this code to application.js
