@@ -19,7 +19,7 @@ class RoomChannel < ApplicationCable::Channel
 
   def say(data)
     Rails.logger.debug '%s say - %s' % [current_user, data]
-    @room.message.new(text: data['message'], user_id: current_user.id) if current_user
+    @room.messages.create(text: data['message'], user: current_user) if current_user
     RoomChannel.broadcast_to @room, message: data['message'], type: 'message', user: user
   end
 
