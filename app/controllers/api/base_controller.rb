@@ -1,5 +1,8 @@
 class Api::BaseController < ActionController::API
   include Pundit
+  include EnumI18nHelper
+  helper :enum_i18n
+
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def current_user
@@ -47,5 +50,18 @@ class Api::BaseController < ActionController::API
       total_count: base_data.total_count,
       list_type: list_type
     }
+  end
+
+  def sms_site(mobile, order_code, messages)
+    token_body = Sms::Token.new(mobile)
+    body = Settings.desktop.auth_token_template.gsub('#order#', order_code).gsub('#message#', messages)
+    token_body.create code: order_code, message: body
+    begin
+      response = token_body.post!
+      response.valid!
+      return true
+    rescue Sms::Services::YunPianService::SentFailed
+      return false
+    end
   end
 end
