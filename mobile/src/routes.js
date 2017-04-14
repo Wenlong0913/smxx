@@ -1,5 +1,9 @@
 export default [
   {
+    path: '/chat_rooms',
+    component: require('./pages/chat/message.vue')
+  },
+  {
     path: '/login/',
     component: require('./pages/login.vue')
   },
