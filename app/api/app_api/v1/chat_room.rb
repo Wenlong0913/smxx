@@ -4,15 +4,15 @@ module AppAPI::V1
     resources :rooms do
 
       desc '频道列表' do
-        success AppAPI::Entities::ChatRoom
+        success AppAPI::Entities::ChatRoom.collection
       end
       params do
         use :pagination
       end
       get do
         # authenticate!
-        rooms = ::Chat::Room.all
-        present rooms, with: AppAPI::Entities::ChatRoom
+        rooms = paginate_collection(::Chat::Room.all, params)
+        wrap_collection rooms, AppAPI::Entities::ChatRoom
       end
 
     end # end of resources
