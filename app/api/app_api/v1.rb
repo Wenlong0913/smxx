@@ -13,5 +13,7 @@ module AppAPI::V1
     mount AppAPI::V1::Article
     mount AppAPI::V1::ImageItem
     mount AppAPI::V1::Banner
+    mount AppAPI::V1::ChatRoom
+    mount AppAPI::V1::ChatMessage
   end
 end
