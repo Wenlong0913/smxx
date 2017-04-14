@@ -95,13 +95,19 @@ class User < ApplicationRecord
   if Settings.project.sxhop?
     def friends
       SalesDistribution::ResourceUser.joins(:resource).
-      where("sales_distribution_resource_users.user_id = ? and sales_distribution_resources.self_type in ('Site', 'Product')",self.id).
+      where("sales_distribution_resource_users.user_id = ? and sales_distribution_resources.object_type in ('Site', 'Product')",self.id).
       pluck("sales_distribution_resources.user_id")
     end
   end
 
-  def headshot
-    Settings.site.host + self.avatar.url(:thumb)
+  def display_headshot
+    unless avatar.url == "/images/original/missing.png"
+      (URI(Settings.site.host).merge(self.avatar.url(:thumb)).to_s)
+    elsif weixin && weixin.headshot
+      weixin.try(:headshot)
+    else
+      headshot || 'logo.png'
+    end
   end
 
 end

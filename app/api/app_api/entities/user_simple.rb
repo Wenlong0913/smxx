@@ -5,7 +5,7 @@ module AppAPI
       expose_id
       expose_created_at
       expose :nickname, documentation: { desc: '用户昵称' }
-      expose :headshot, documentation: { desc: '头像' }
+      expose :display_headshot, as: :headshot, documentation: { desc: '头像' }
     end
   end
 end
