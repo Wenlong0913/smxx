@@ -175,9 +175,14 @@
           li
             = link_to root_url(subdomain: 'doc'), target: '_blank' do
               = fa_icon 'leaf', text: '客户使用手册'
-      li
-        = link_to admin_audits_path do
-          = fa_icon 'leaf', text: '操作日志'
+      li class=("has-sub #{'active' if page?('admin/audits', 'admin/audits/statistics')}")
+        a href="javascript:;"
+          b.leaf.pull-right
+          i.fa.fa-inbox
+          span 操作日志
+        ul.sub-menu
+          li class=("#{'active' if page?('admin/audits#index')}") = link_to '操作日志', admin_audits_path
+          li class=("#{'active' if page?('admin/audits#statistics')}") = link_to '统计报表', statistics_admin_audits_path
       li
         = link_to admin_keystores_path do
           = fa_icon 'key', text: '参数管理'

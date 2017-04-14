@@ -27,7 +27,9 @@
       - else
         .row
           div class="col-md-6 col-sm-12"
-            = f.input :user_id, collection: User.all.decorate, label_method: :display_name, include_blank: true, input_html: {class: 'select2'}
+            label[class="control-label"] 商家所有者
+            / = f.input :user_id, collection: User.all.decorate, label_method: :display_name, include_blank: true, input_html: {class: 'select2'}
+            select.select2.form-control[id="dropdown" name="site[user_id]" data-url="#{admin_users_url}"  data-id="#{params['username']}" data-name="#{User.find_by(id: params['username']).try(:nickname)}" ]
           div class="col-md-6 col-sm-12"
             .form-group.catalog-list[data-catalog-name="#{@site.catalog.try(:name)}" data-catalog-id="#{@site.catalog_id}"]
               label[class="control-label"] 商家分类
