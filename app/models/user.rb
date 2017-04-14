@@ -104,7 +104,7 @@ class User < ApplicationRecord
     if !(avatar.url == "/images/original/missing.png")
       URI(Settings.site.host).merge(self.avatar.url(:thumb)).to_s
     elsif weixin && weixin.headshot
-      weixin.try(:headshot)
+      weixin.headshot
     else
       headshot
     end
