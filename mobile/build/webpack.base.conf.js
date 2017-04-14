@@ -21,7 +21,7 @@ module.exports = {
     filename: '[name].js'
   },
   resolve: {
-    extensions: ['', '.js', '.vue', '.json'],
+    extensions: ['', '.js', '.vue', '.json', '.coffee'],
     fallback: [path.join(__dirname, '../node_modules')],
     alias: {
       'vue$': 'vue/dist/vue.common.js',
@@ -88,6 +88,10 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash].[ext]')
         }
+      },
+      {
+        test: /\.coffee$/,
+        loader: 'coffee-loader'
       }
     ]
   },

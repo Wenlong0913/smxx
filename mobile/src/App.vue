@@ -11,7 +11,7 @@
               <div class="item-media"><img src="./assets/img/pic1.png" width="44" />
               </div>
               <div class="item-inner">
-                <div class="item-title-row">            
+                <div class="item-title-row">
                   <div class="item-title">请先登录</div>
                 </div>
                 <div class="item-subtitle"></div>
@@ -42,6 +42,13 @@
                         </ul>
                       </div>
                     </div>
+                  </li>
+
+                  <li>
+                    <a href="/chat_rooms" class="item-link close-panel item-content ">
+                      <div class="itemmeniinner"><i class="fa fa-female"></i><span>聊天室</span>
+                      </div>
+                    </a>
                   </li>
 
                   <li>
