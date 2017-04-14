@@ -17,7 +17,7 @@ class Agent::MembersController < Agent::BaseController
         end
       end
       conditions.unshift query.join(' and ')
-      @agent_members = @agent_members.where(conditions)
+      @agent_members = @agent_members.where(conditions) unless conditions == [""]
     end
     @agent_members = @agent_members.page(params[:page])
     respond_to do |format|

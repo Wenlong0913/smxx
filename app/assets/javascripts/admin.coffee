@@ -12,6 +12,7 @@
 #= require admin/role
 #= require admin/user
 #= require admin/site
+#= require admin/finance_history
 #= require admin/baidu_map
 #= require select2
 #= require select2_locale_zh-CN

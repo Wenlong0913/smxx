@@ -12,7 +12,10 @@ Rails.application.config.assets.version = '1.0'
 
 Rails.application.config.assets.precompile += %w( test_room.js cable.js )
 Rails.application.config.assets.precompile += %w( docs.js docs.css ) # for doc
-Rails.application.config.assets.precompile += %w( ckeditor/* )
+# Rails.application.config.assets.precompile += %w( ckeditor/* )
 
 types = %w(*.png *.gif *.jpg *.eot *.woff *.ttf *.svg)
 Rails.application.config.assets.precompile += types
+
+Rails.application.config.assets.enabled = true
+Rails.application.config.assets.precompile += Ckeditor.assets

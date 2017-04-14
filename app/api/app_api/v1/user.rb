@@ -80,10 +80,7 @@ module AppAPI::V1
           t = Sms::Token.new(params[:mobile_phone])
           error! "验证码错误" unless t.valid?(params[:mobile_phone_code])
         end
-        api_token = user.api_tokens.find_or_initialize_by(device: params[:device])
-        api_token.expired_at = 30.days.since
-        api_token.save
-        present user, with: AppAPI::Entities::User, access_token: api_token.token, type: :private
+        present user, with: AppAPI::Entities::User, access_token: user.issue_api_token(params[:device]), type: :private
       end
 
       desc '获取验证码' do

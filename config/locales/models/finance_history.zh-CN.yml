@@ -2,13 +2,16 @@
 zh-CN:
   activerecord:
     models:
-      finance_history: Finance history
+      finance_history: 财务流水
     attributes:
       finance_history:
-        operate_date: Operate date
-        amount: Amount
-        operate_type: Operate type
-        owner: Owner
+        operate_date: 操作日期
+        amount: 金额
+        operate_types:
+          in: 入账
+          out: 出账
+        owner: 关联单号
+        note: 备注
     errors:
       models:
         finance_history: 

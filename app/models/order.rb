@@ -69,6 +69,7 @@ class Order < ApplicationRecord
   has_one :delivery, through: :order_delivery
   has_many :finance_histories, as: :owner, dependent: :destroy
 
+  
   before_create :generate_code
   # before_validation :check_member
 
@@ -143,6 +144,7 @@ class Order < ApplicationRecord
   # end
 
   def generate_code
+    return if Settings.project.dagle? && self.code.present?
     prefix = Time.now.strftime('%Y%m%d')
     number = self.class.where("code LIKE ?", prefix+'%').count
     loop do
