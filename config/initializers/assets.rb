@@ -19,4 +19,3 @@ Rails.application.config.assets.precompile += types
 
 Rails.application.config.assets.enabled = true
 Rails.application.config.assets.precompile += Ckeditor.assets
-Rails.application.config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
