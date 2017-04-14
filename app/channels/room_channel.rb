@@ -3,14 +3,14 @@ class RoomChannel < ApplicationCable::Channel
   def subscribed
     # stream_from "some_channel"
     @room = Chat::Room.find(params[:id])
-    RoomChannel.broadcast_to @room, message: "#{nickname}加入房间", type: 'system'
+    RoomChannel.broadcast_to @room, message: "#{user[:nickname]}加入房间", type: 'system'
     stream_for @room
   end
 
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
     stop_all_streams
-    RoomChannel.broadcast_to @room, message: "#{nickname}离开房间", type: 'system'
+    RoomChannel.broadcast_to @room, message: "#{user[:nickname]}离开房间", type: 'system'
   end
 
   def unsubscribe_from_channel
@@ -19,10 +19,11 @@ class RoomChannel < ApplicationCable::Channel
 
   def say(data)
     Rails.logger.debug '%s say - %s' % [current_user, data]
-    RoomChannel.broadcast_to @room, message: data['message'], type: 'message', nickname: nickname
+    @room.message.new(text: data['message'], user_id: current_user.id) if current_user
+    RoomChannel.broadcast_to @room, message: data['message'], type: 'message', user: user
   end
 
-  def nickname
-    current_user ? current_user.nickname : '游客'
+  def user
+    current_user ? {nickname: current_user.nickname, id: current_user.id, avatar: current_user.headshot} : {nickname: '游客'}
   end
 end
