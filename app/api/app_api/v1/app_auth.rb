@@ -18,9 +18,9 @@ module AppAPI::V1
         response = Faraday.get(url)
         data = JSON.parse(response.body)
         error! data if data['errmsg']
-        wx_user = User::Weixin.find_by("uid = ? OR unionid = ?", data['openid'], data['unionid'])
+        wx_user = ::User::Weixin.find_by("uid = ? OR unionid = ?", data['openid'], data['unionid'])
         if wx_user.nil?
-          wx_user = User::Weixin.create!(uid: data['openid'], unionid: data['unionid'])
+          wx_user = ::User::Weixin.create!(uid: data['openid'], unionid: data['unionid'])
         end
         wx_user.access_token = data['access_token']
         wx_user.access_token_expired_at = data['expires_in'].seconds.since
@@ -28,7 +28,7 @@ module AppAPI::V1
         wx_user.refresh_token_expired_at = 30.days.since
         wx_user.sync!
         unless wx_user.user
-          wx_user.user = User.create!(headshot: wx_user.headshot, nickname: wx_user.name, password: SecureRandom.hex(5))
+          wx_user.user = ::User.create!(headshot: wx_user.headshot, nickname: wx_user.name, password: SecureRandom.hex(5))
           wx_user.save!
         end
         present wx_user.user, with: AppAPI::Entities::User, access_token: wx_user.user.issue_api_token(params[:device]), type: :private

@@ -207,6 +207,17 @@ ActiveRecord::Schema.define(version: 20170413144345) do
     t.index ["site_id"], name: "index_cms_channels_on_site_id", using: :btree
   end
 
+  create_table "cms_keystores", force: :cascade do |t|
+    t.integer  "site_id"
+    t.string   "key",         null: false
+    t.string   "value",       null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["key"], name: "index_cms_keystores_on_key", using: :btree
+    t.index ["site_id"], name: "index_cms_keystores_on_site_id", using: :btree
+  end
+
   create_table "cms_pages", force: :cascade do |t|
     t.integer  "channel_id",                     null: false
     t.string   "title",                          null: false
@@ -990,6 +1001,7 @@ ActiveRecord::Schema.define(version: 20170413144345) do
   add_foreign_key "address_books", "users"
   add_foreign_key "article_products", "articles"
   add_foreign_key "attachment_relations", "attachments"
+  add_foreign_key "cms_keystores", "sites"
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
   add_foreign_key "items", "sites"

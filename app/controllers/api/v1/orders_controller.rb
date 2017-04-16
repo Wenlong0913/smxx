@@ -30,7 +30,14 @@ class Api::V1::OrdersController < Api::BaseController
   def update
     authorize @order
     if @order.update(permitted_attributes(Order))
-      render json: {status: 'ok', order: order_json(@order)}
+      if ['packed'].include?(@order.internal_status)
+        if sms_site(@order.site.user.mobile.phone_number, @order.code, enum_l(@order, :internal_status))
+          sms_message = '已经用短信提示对方现在的订单状态'
+        else
+          sms_message = '短信提示发送失败'
+        end
+      end
+      render json: {status: 'ok', order: order_json(@order), sms_message: sms_message}
     else
       render json: {status: 'failed', error_message:  @order.errors.full_messages.join(', ') }
     end

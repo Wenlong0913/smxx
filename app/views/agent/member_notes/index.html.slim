@@ -21,24 +21,7 @@
       == render 'agent/member_notes/list'
       /! begin pagination
       .text-right
-        ul.pagination.m-t-0
-          li.active
-            a href="#"  1
-          li
-            a href="#"  2
-          li
-            a href="#"  3
-          li
-            a href="#"  4
-          li
-            a href="#"  5
-          li.text
-            span ...
-          li
-            a href="#"  10
-          li.right
-            a href="#"
-              i.fa.fa-chevron-right
+        = paginate @agent_member_notes
       /! end pagination
 
     /! end col-9
@@ -50,40 +33,15 @@
           h4.panel-title 最新动态
         /! begin threads-list
         ul.threads-list
-          li
-            h4.title
-              a href="detail.html"  张三
-            a href="#"  管理员
-            | 1分钟前更新了日志
-          li
-            h4.title
-              a href="detail.html"  李四
-            a href="#"  管理员
-            | 8分钟前新增的客户
-          li
-            h4.title
-              a href="detail.html"  Help! How to fire an ajax call while bootstrap modal is loading.
-            | last reply by
-            a href="#"  Ural
-            | 15 minutes ago
-          li
-            h4.title
-              a href="detail.html"  Migrate from jQuery 1.9.x to 2.x.x
-            | last reply by
-            a href="#"  Arnold
-            | 1 hour ago
-          li
-            h4.title
-              a href="detail.html"  Angular JS IE8 compatibility issues
-            | last reply by
-            a href="#"  Mayeso
-            | 4 hours ago
-          li
-            h4.title
-              a href="detail.html"  How to use FontAwesome Cheatsheet?
-            | last reply by
-            a href="#"  Cepheus Herman
-            | 1 day ago
+          - MemberNote.recent.each do |agent_member_note|
+            li
+              h4.title
+                a href="#"
+                  = agent_member_note.message
+              a href="#"
+                = agent_member_note.user.nickname
+              = distance_of_time_in_words_to_now(agent_member_note.created_at) + '前更新'
+
         /! end threads-list
       /! end panel-forum
     /! end col-3
