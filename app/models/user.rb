@@ -113,7 +113,7 @@ class User < ApplicationRecord
     elsif weixin && weixin.headshot
       weixin.headshot
     else
-      headshot
+      headshot || 'logo.png'
     end
   end
 
