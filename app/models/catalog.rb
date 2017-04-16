@@ -24,7 +24,7 @@ class Catalog < ApplicationRecord
 
   def sanitize_settings
     if settings.present?
-      self.settings = settings.split(/[,，]/).map(&:strip) if settings.as_a?(String)
+      self.settings = settings.split(/[,，]/).map(&:strip) if settings.is_a?(String)
     else
       self.settings = []
     end
