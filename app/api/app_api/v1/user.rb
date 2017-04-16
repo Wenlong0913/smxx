@@ -79,6 +79,7 @@ module AppAPI::V1
         if params[:mobile_phone_code] && params[:mobile_phone]
           t = Sms::Token.new(params[:mobile_phone])
           error! "验证码错误" unless t.valid?(params[:mobile_phone_code])
+          t.destroy!
         end
         present user, with: AppAPI::Entities::User, access_token: user.issue_api_token(params[:device]), type: :private
       end
