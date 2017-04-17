@@ -70,7 +70,8 @@ gem 'roo-xls'
 gem 'pretender' # 模仿另一个用户登录
 
 gem 'ckeditor', '~> 4.2.2'
-#gem 'ckeditor', github: 'galetahub/ckeditor'
+# 解决ckeditor资源无法加载的问题
+gem 'non-stupid-digest-assets', '~> 1.0', '>= 1.0.9'
 
 gem 'acts-as-taggable-on', '~> 4.0'
 
