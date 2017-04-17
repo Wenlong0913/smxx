@@ -3,6 +3,9 @@
     <ol class="breadcrumb samll">
       <li>选择：</li>
       <li v-for="value in breadcrumb">{{ value.name }}</li>
+      <span class='empty' v-if='breadcrumb.length > 0'>
+        <span @click='onEmpty'><i class="fa fa-remove text-danger"></i></span>
+      </span>
     </ol>
     <div class="well well-sm table-responsive">
       <!-- <ol class="list-inline"> -->
@@ -91,6 +94,13 @@ export default {
           _this.recursive(value.children, selectedArray, ++i)
         }
       })
+    },
+    onEmpty () {
+      this.defaultSelected([])
+      this.catalogGroups[0][1].forEach(function (v) {
+        v.selected = false
+      })
+      $('.black-classify.black-classify .active').removeClass('active')
     }
   },
   mounted () {
@@ -126,5 +136,9 @@ export default {
   background: #fff;
   padding: 0px;
   box-shadow: 0px 0px 5px 0px #c0c7c9;
+}
+.empty{
+  margin: 0px 5px;
+  cursor: pointer;
 }
 </style>

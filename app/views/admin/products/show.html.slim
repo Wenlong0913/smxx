@@ -45,7 +45,7 @@ h1.page-header
               td.field 产品分类
               td
                 a
-                  =@product.catalog.try(:name)
+                  = @product.catalog.self_and_ancestors.pluck(:name).reverse.join('/ ') if @product.catalog
             tr.divider
               td[colspan='2']
             tr

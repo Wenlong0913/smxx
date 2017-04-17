@@ -127,13 +127,14 @@
                   </div>
               </div>
             </div>
-            <div class="form-group catalog-list" rel='catalog-list' data-catalog-name="<%= ProductCatalog.where(id: params[:search][:catalog_id]).first.try(:name) if params[:search].present? %>" data-catalog-id="<%= params[:search][:catalog_id] if params[:search].present? %>">
+            <% catalog = ProductCatalog.where(id: params[:search][:catalog_id]).first if params[:search].present? %>
+            <div class="form-group catalog-list" rel='catalog-list' data-catalog-name="<%= catalog.self_and_ancestors.pluck(:name).reverse.join('/') if catalog %>" data-catalog-id="<%= catalog.id if catalog%>" data-catalog-ids="<%= catalog.self_and_ancestor_ids.reverse.join(',') if catalog %>">
               <label class="control-label">产品分类</label>
               <input type="hidden" name="search[catalog_id]" v-model="id">
               <input readonly=true @click="showCatalog = true" :value="catalogs" class="form-control" placeholder="点击选择分类">
               <modal title="产品分类" v-show="showCatalog" @cancel="showCatalog = false">
                 <div>
-                  <catalog-list data-url="<%= agent_product_catalogs_path %>" :default="[]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false" :editable='false'></catalog-list>
+                  <catalog-list data-url="<%= agent_product_catalogs_path %>" :default="selecteDefault" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false" :editable='false'></catalog-list>
                 </div>
                 <div slot="footer"></div>
               </modal>
