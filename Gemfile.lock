@@ -1,12 +1,4 @@
 GIT
-  remote: git://github.com/galetahub/ckeditor.git
-  revision: 11d3a5b905646c6fd397f7710f95fb9eb29f0865
-  specs:
-    ckeditor (4.2.2)
-      cocaine
-      orm_adapter (~> 0.5.0)
-
-GIT
   remote: git://github.com/rails/rails-observers.git
   revision: 7d3c9c331242d58ed8ebdbd2eff1f7d6f68a1b2c
   specs:
@@ -226,6 +218,9 @@ GEM
     chinese_pinyin (1.0.1)
     choice (0.2.0)
     chunky_png (1.3.8)
+    ckeditor (4.2.2)
+      cocaine
+      orm_adapter (~> 0.5.0)
     climate_control (0.1.0)
     closure_tree (6.5.0)
       activerecord (>= 4.1.0)
@@ -675,7 +670,7 @@ DEPENDENCIES
   capistrano-sidekiq
   capybara
   chinese_pinyin
-  ckeditor!
+  ckeditor (~> 4.2.2)
   closure_tree
   coffee-rails (~> 4.2)
   colorize

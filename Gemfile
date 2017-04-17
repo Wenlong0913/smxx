@@ -69,8 +69,8 @@ gem 'roo-xls'
 
 gem 'pretender' # 模仿另一个用户登录
 
-#gem 'ckeditor', '~> 4.2.2'
-gem 'ckeditor', github: 'galetahub/ckeditor'
+gem 'ckeditor', '~> 4.2.2'
+#gem 'ckeditor', github: 'galetahub/ckeditor'
 
 gem 'acts-as-taggable-on', '~> 4.0'
 
