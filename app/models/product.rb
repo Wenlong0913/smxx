@@ -23,6 +23,7 @@ class Product < Item
   has_many_comments
   has_many_favorites
   has_many_likes
+  has_many_visits
   belongs_to :catalog
   belongs_to :site
   has_many :article_products, dependent: :destroy
