@@ -95,6 +95,7 @@ module AppAPI::V1
       end
       post :sms do
         # TODO: 须验证用户发送短信的频率，方式短信轰炸
+        error! '请输入手机号' if params[:mobile_phone].blank?
         t = Sms::Token.new(params[:mobile_phone])
         is_dev = !(Rails.env.staging? || Rails.env.production?)
         code = is_dev ? '1234' : (10000 + SecureRandom.random_number(10**8)).to_s[-5..-1]
