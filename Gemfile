@@ -50,6 +50,7 @@ gem 'settingslogic', '~> 2.0.9'
 gem 'font-awesome-rails', '~> 4.7.0'
 gem 'simple_form', '~> 3.3.1'
 gem 'active_model_serializers' # 不好用，不如直接as_json输出
+gem 'like', path: 'components/like'
 
 # gem 'active_model_serializers' # 不好用，不如直接as_json输出
 #
@@ -111,7 +112,6 @@ gem 'comment', path: 'components/comment'
 gem 'favorite', path: 'components/favorite'
 gem 'gnomon', git: 'git@gitlab.tanmer.com:tm-framework/gnomon.git'
 gem 'activerecord-postgres-earthdistance', github: 'xiaohui-zhangxh/activerecord-postgres-earthdistance'
-gem 'like', path: 'components/like'
 
 gem 'themeable', '~> 1.2.0'#, path: '../../gems/themeable'
 gem 'theme_color_admin', git: 'git@gitlab.tanmer.com:tm-themes/theme_color_admin.git'
