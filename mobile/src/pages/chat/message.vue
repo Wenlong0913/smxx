@@ -183,7 +183,7 @@
       getChannelList () {
         let self = this
         RoomService.all().then(function (response) {
-          self.channelList = response.data
+          self.channelList = response.data.data
           self.loadMessage = false
         })
       },
