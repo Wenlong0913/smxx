@@ -110,7 +110,7 @@ class User < ApplicationRecord
   def display_headshot
     url =
       if !(avatar.url == "/images/original/missing.png")
-        avatar.url(:thumb))
+        avatar.url(:thumb)
       elsif weixin && weixin.headshot
         weixin.headshot
       else
