@@ -7,7 +7,7 @@ class Admin::AuditsController < Admin::BaseController
       date_range = params["daterange"].split(' - ').map(&:strip).map(&:to_date)
       conditions.push "Date(created_at) in (?)"
     end
-    if params["username"].present?
+    if params["username"].present? && params["username"] != '/'
       conditions.push "user_id = #{params["username"]}"
     end
     if params["auditable_type"].present?

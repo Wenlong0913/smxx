@@ -143,15 +143,15 @@
         .div class="row"
           .div class="col-md-6"
             = f.association :site
-          .div class="col-md-6"
-            .form-group.catalog-list[data-catalog-name="#{@product.catalog.try(:name)}" data-catalog-id="#{@product.catalog_id}"]
+          .col-xs-6
+            .form-group.catalog-list[data-catalog-name="#{@product.catalog.self_and_ancestors.pluck(:name).reverse.join('/') if @product.catalog}" data-catalog-id="#{@product.catalog_id}" data-catalog-ids="#{@product.catalog.self_and_ancestor_ids.reverse.join(',') if @product.catalog}"]
               label[class="control-label"] 产品分类
               input[type="hidden" v-model="id" name="product[catalog_id]"]
               input.form-control[readonly=true @click="showCatalog = true" :value="catalogs"]
               span.hint 点击输入框选择分类
               modal[title="产品分类" :show.sync="showCatalog" @cancel="showCatalog = false"]
                 div
-                  catalog-list[data-url=admin_product_catalogs_path :default="[#{@product.catalog_id}]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false"]
+                  catalog-list[data-url=admin_product_catalogs_path :default="selecteDefault" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false" :editable='false']
                 div[slot="footer"]
         .div class="row"
           .div class="col-md-6"

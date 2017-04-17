@@ -14,12 +14,22 @@ class Api::V1::OrdersController < Api::BaseController
 
   def create
     authorize Order
-    flag, order = Order::Create.(permitted_attributes(Order).merge({create_by: current_user.id}))
+    flag = false
+    order = nil
+    finance = nil
+    Order.transaction do
+      flag, order = Order::Create.(permitted_attributes(Order).merge({create_by: current_user.id}))
+      if params[:order][:deposit].to_i > 0
+        finance_flag, finance = FinanceHistory::Create.(operate_date: Date.today, amount: params[:order][:deposit], operate_type: 'in', owner: order, created_by: current_user.id)
+        flag = flag && finance_flag
+      end
+      raise ActiveRecord::Rollback unless flag
+    end
     if flag
       render json: {status: 'ok', order: order_json(order)}
     else
       # order.errors.messages.delete(:member)
-      render json: {status: 'failed', error_message:  order.errors.full_messages.join(', ') }
+      render json: {status: 'failed', error_message:  order.errors.full_messages.join(', ')  + '.' +  (finance ? finance.errors.full_messages.join(',') : '')}
     end
   end
 

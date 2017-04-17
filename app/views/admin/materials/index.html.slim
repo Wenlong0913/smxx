@@ -16,7 +16,7 @@ h1.page-header
         .col-md-4
           input[type="text" value="#{params[:keywords]}" name="keywords" placeholder='物料名称/编码', class="form-control"]
           - mc = MaterialCatalog.find_by(id: params['catalog_id'])
-        .col-md-4.catalog-list[data-catalog-name="#{mc.try(:name)}" data-catalog-id="#{mc.try(:id)}"]
+        .col-md-4.catalog-list[data-catalog-name="#{mc.self_and_ancestors.pluck(:name).reverse.join('/') if mc}" data-catalog-id="#{mc.try(:id)}" data-catalog-ids="#{mc.self_and_ancestor_ids.reverse.join(',') if mc}"]
           input[type="hidden" v-model="id" name="catalog_id"]
           input.form-control[@click="showCatalog = true" :value="catalogs" placeholder="点击选择分类"]
           modal[title="产品分类" :show.sync="showCatalog" @cancel="showCatalog = false"]

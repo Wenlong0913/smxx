@@ -95,19 +95,19 @@ module AppAPI::V1
       end
       post :sms do
         # TODO: 须验证用户发送短信的频率，方式短信轰炸
+        error! '请输入手机号' if params[:mobile_phone].blank?
         t = Sms::Token.new(params[:mobile_phone])
         is_dev = !(Rails.env.staging? || Rails.env.production?)
-        code = is_dev ? '1234' : (10000 + SecureRandom.random_number(10**8)).to_s[-5..-1]
+        code = is_dev ? '123456' : (10000 + SecureRandom.random_number(10**8)).to_s[-5..-1]
         body = Settings.mobile.auth_token_template.gsub('#code#', code)
         t.create code: code, message: body
         begin
           response = t.post!
           response.valid!
-          present message: "验证码发送成功！#{is_dev ? '非生成环境虚拟验证码[1234]' : ''}"
+          present message: "验证码发送成功！#{is_dev ? '非生成环境虚拟验证码[123456]' : ''}"
         rescue Sms::Services::YunPianService::SentFailed
           error! '服务器出问题啦，请稍候在试！'
         end
-
         # error! "密码错误" unless user.valid_password?(params[:password])
         # api_token = user.api_tokens.find_or_initialize_by(device: params[:device])
         # api_token.expired_at = 30.days.since
