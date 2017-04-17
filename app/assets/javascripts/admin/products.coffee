@@ -49,12 +49,19 @@ $(document).ready ()->
           id: container[0].dataset["catalogId"]
           showCatalog: false
           catalogs: container[0].dataset["catalogName"]
+          selecteDefault: container[0].dataset["catalogIds"].split(',')
         methods:
           selected: (catalogs)->
-            this.catalog =  catalogs[catalogs.length-1]
-            this.id = this.catalog.id
-            this.showCatalog = false
-            this.catalogs = catalogs.map((cata)-> cata.name).join('/')
+            _this = this
+            _this.selecteDefault = []
+            catalogs.map (i)->
+              _this.selecteDefault.push i.id
+            if catalogs.length-1 >= 0
+              _this.id = catalogs[catalogs.length-1].id
+            else
+              _this.id = null
+            _this.showCatalog = false
+            _this.catalogs = catalogs.map((cata)-> cata.name).join('/')
 
       image_container = pages.find('image-select')
       image = new Vue
