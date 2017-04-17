@@ -40,7 +40,7 @@ module AppAPI::V1
           sites = ::Site.where(user_id: current_user.friends)
         end
         sites = paginate_collection(sort_collection(sites), params)
-        wrap_collection sites, AppAPI::Entities::SiteSimple
+        wrap_collection sites, AppAPI::Entities::Site
       end
 
       desc '收藏店铺'
