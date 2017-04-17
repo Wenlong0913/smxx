@@ -21,7 +21,7 @@ admin.add_role :admin
 admin.add_role :super_admin
 agent.add_role :agent
 
-site = Site.create!(title: '陌邻官方', user: admin, address_line: '成都市成华区二环路东二段龙湖三千')
+site = Site.create_with(user: admin, address_line: '成都市成华区二环路东二段龙湖三千城').find_or_create_by!(title: '官网')
 raise "创建的第一个商家ID不等于1!!!" unless site.id == 1
 
 # 德格角色
@@ -138,31 +138,32 @@ MarketTemplate.create!(
     </html>'
 )
 
-require 'roo'
-file_path= './db/init_data/communities.xlsx'
-worksheet = nil
-worksheet = Roo::Excelx.new(file_path)
-# ["uid", "name", "province", "city", "district", "street", "address", "telephone", "lat", "lng", "tags", "image", "keyword"]
-worksheet.row(1)
-2.upto worksheet.last_row do |index|
-  c = Community.find_or_initialize_by(name: worksheet.row(index)[1])
-  c.uid = worksheet.row(index)[0]
-  c.province = worksheet.row(index)[2]
-  c.city = worksheet.row(index)[3]
-  c.district = worksheet.row(index)[4]
-  c.street = worksheet.row(index)[5]
-  c.address_str = worksheet.row(index)[6]
-  c.telephone = worksheet.row(index)[7]
-  c.lat = worksheet.row(index)[8]
-  c.lng = worksheet.row(index)[9]
-  c.tags = worksheet.row(index)[10]
-  c.image = worksheet.row(index)[11]
-  c.keyword = worksheet.row(index)[12]
-  c.address_line = c.address_str.include?(c.name) ? c.address_str : c.address_str + ' ' + c.name
-  c.save!
-end
-
 if Settings.project.imolin?
+
+  require 'roo'
+  file_path= './db/init_data/communities.xlsx'
+  worksheet = nil
+  worksheet = Roo::Excelx.new(file_path)
+  # ["uid", "name", "province", "city", "district", "street", "address", "telephone", "lat", "lng", "tags", "image", "keyword"]
+  worksheet.row(1)
+  2.upto worksheet.last_row do |index|
+    c = Community.find_or_initialize_by(name: worksheet.row(index)[1])
+    c.uid = worksheet.row(index)[0]
+    c.province = worksheet.row(index)[2]
+    c.city = worksheet.row(index)[3]
+    c.district = worksheet.row(index)[4]
+    c.street = worksheet.row(index)[5]
+    c.address_str = worksheet.row(index)[6]
+    c.telephone = worksheet.row(index)[7]
+    c.lat = worksheet.row(index)[8]
+    c.lng = worksheet.row(index)[9]
+    c.tags = worksheet.row(index)[10]
+    c.image = worksheet.row(index)[11]
+    c.keyword = worksheet.row(index)[12]
+    c.address_line = c.address_str.include?(c.name) ? c.address_str : c.address_str + ' ' + c.name
+    c.save!
+  end
+
   site_file_path= './db/init_data/site.xlsx'
   site_worksheet = nil
   site_worksheet = Roo::Excelx.new(site_file_path)

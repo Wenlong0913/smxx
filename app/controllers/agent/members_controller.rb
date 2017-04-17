@@ -16,8 +16,10 @@ class Agent::MembersController < Agent::BaseController
           conditions << params[:search][catalog.key]
         end
       end
-      conditions.unshift query.join(' and ')
-      @agent_members = @agent_members.where(conditions)
+      if query.any?
+        conditions.unshift query.join(' and ')
+        @agent_members = @agent_members.where(conditions)
+      end
     end
     @agent_members = @agent_members.page(params[:page])
     respond_to do |format|

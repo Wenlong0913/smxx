@@ -14,8 +14,8 @@
           <div class="image">
             <div class="image-inner">
               <img :src="image.image_url" alt="" @click="choose_image(image)"/>
-              <span class="glyphicon glyphicon-ok selected" v-show="selectedList.indexOf(image.id) != -1"></span>
-              <span class="glyphicon glyphicon-remove remove" @click="delete_image(image.id)"></span>
+              <span class="fa fa-check selected" v-show="selectedList.indexOf(image.id) != -1"></span>
+              <span class="fa fa-close remove" @click="delete_image(image.id)"></span>
             </div>
           </div>
           <div class="image-info">
@@ -53,8 +53,8 @@
           </div>
         </div>
       </div>
-    </div>  
-  </div>  
+    </div>
+  </div>
 </template>
 
 <script>
@@ -78,7 +78,7 @@
       }
     },
     mounted() {
-      this.load_images(1);   
+      this.load_images(1);
     },
     methods: {
       load_images(page,tag_name=null) {
@@ -123,7 +123,7 @@
           console.log(data)
         }, (response) => {
             // error callback
-        });        
+        });
       }
     }
   }

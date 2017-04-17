@@ -107,11 +107,19 @@ module AdminRoute
         end
         #系统参数
         resources :keystores
-        resources :audits, only: [:index], :concerns => :paginatable
 
         #美容院
-        resources :shops
-        resources :shop_sites
+        Settings.project.meikemei?
+          resources :shops
+          resources :shop_sites
+        end
+
+        resources :audits, only: [:index], :concerns => :paginatable do
+          collection do
+            get 'statistics'
+          end
+        end
+
         # 轮波图
         resources :banners
         resources :finance_histories, :concerns => :paginatable

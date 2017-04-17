@@ -17,7 +17,7 @@ $(document).ready ->
     }
   })
   $('#dropdown').select2(
-    data: [{'id': $('#dropdown').data('id'),'nickname': $('#dropdown').data('name')}],
+    data: [{'id': $('#dropdown').data('id'),'nickname': $('#dropdown').data('name')}]
     ajax:
       url: $("#dropdown").data('url')
       dataType: 'json'

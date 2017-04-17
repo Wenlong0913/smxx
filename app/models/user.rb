@@ -50,7 +50,6 @@ class User < ApplicationRecord
   # 产品分销
   has_many :product_sales_dists, -> { where(type_name: '产品') }, class_name: 'SalesDistribution::Resource'
   has_many :comments, class_name: 'Comment::Entry'
-
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
   validates_attachment_file_name :avatar, matches: [/png\z/i, /jpe?g\z/i]
@@ -93,11 +92,28 @@ class User < ApplicationRecord
     AuthToken.encode(user_id: self.id)
   end
 
+  def issue_api_token(device)
+    api_token = api_tokens.find_or_initialize_by(device: device)
+    api_token.expired_at = 30.days.since
+    api_token.save
+    api_token.token
+  end
+
   if Settings.project.sxhop?
     def friends
       SalesDistribution::ResourceUser.joins(:resource).
       where("sales_distribution_resource_users.user_id = ? and sales_distribution_resources.object_type in ('Site', 'Product')",self.id).
       pluck("sales_distribution_resources.user_id")
+    end
+  end
+
+  def display_headshot
+    if !(avatar.url == "/images/original/missing.png")
+      URI(Settings.site.host).merge(self.avatar.url(:thumb)).to_s
+    elsif weixin && weixin.headshot
+      weixin.headshot
+    else
+      headshot || 'logo.png'
     end
   end
 

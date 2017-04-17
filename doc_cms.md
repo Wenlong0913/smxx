@@ -70,6 +70,29 @@ CMS站点是一个独立的网站内容管理系统， 每一个站点，对应p
     <li>[内容页]保存一些特殊定义的页面, 如about.html(关于我们), contact.html(联系我们)</li>
   </ul>
 
+# 模板页面设计
+
+模板页面中，可以访问的方法见app/controllers/cms_controller.rb
+
+公共实例：
+
+    @cms_site
+    @channel
+    @page
+    @pages
+
+公共方法：
+
+    get_date(date)
+    get_cms_url(obj, params = {}) #obj: Cms::Page, Cms::Channel, String(short_title)
+
+引用实例：
+
+    <%= @cms_site.name %>
+    <%= @cms_site.keystores.value_for('contact_name') %>
+    <%= raw @channel.description  %>
+    <% @channel.pages.where("'recommend' = ANY(properties)").each do |page| %>
+    <%= paginate @pages, remote: true %>
 
 # 如何添加二级域名
 

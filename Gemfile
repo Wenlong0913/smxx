@@ -38,6 +38,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'high_voltage', '~> 3.0.0'
 gem "rolify", '~> 5.1.0'
 gem "pundit", '~> 1.1.0'
+gem 'faraday', '~> 0.11.0'
 # slim-rails 3.1.2 ckeditor会出错
 #   https://github.com/slim-template/slim-rails/issues/140
 #   https://github.com/galetahub/ckeditor/issues/734
@@ -70,6 +71,8 @@ gem 'roo-xls'
 gem 'pretender' # 模仿另一个用户登录
 
 gem 'ckeditor', '~> 4.2.2'
+# gem 'ckeditor', github: 'galetahub/ckeditor'
+
 gem 'acts-as-taggable-on', '~> 4.0'
 
 #File upload
