@@ -73,7 +73,7 @@ module AdminRoute
           end
         end
 
-        Settings.project.meikemei?
+        if Settings.project.meikemei?
           resources :staffs, :concerns => :paginatable do
             resources :members, :concerns => :paginatable
             collection do
@@ -112,7 +112,7 @@ module AdminRoute
         resources :keystores
 
         #美容院
-        Settings.project.meikemei?
+        if Settings.project.meikemei?
           resources :shops
           resources :shop_sites
         end

@@ -6,7 +6,7 @@ module AppAPI
       expose :friends_count, documentation: { desc: '好友数', type: Integer }
       expose :favorites_count, documentation: { desc: '被私藏数', type: Integer }
 
-      Settings.project.meikemei?
+      if Settings.project.meikemei?
         expose :contact_name, documentation: { desc: '联系人' }
         expose :contact_phone, documentation: { desc: '联系电话' }
         expose :is_sign, documentation: { desc: '是否签约' }
@@ -20,7 +20,7 @@ module AppAPI
         expose :last_image do |site, options|
           site.image_items.last.try(:image_url)
         end
-        expose :properties, documentation: { desc: '标签备注' }, documentation: { is_array: true }
+        expose :properties, documentation: { desc: '标签备注', is_array: true }
         expose :staffs, using: AppAPI::Entities::Staff, if: ->(site, options) { (options[:includes] || []).include?(:staffs) }, documentation: { is_array: true }
       end
       # # product detail
@@ -47,7 +47,6 @@ module AppAPI
       def favorites_count
         object.favorites.count
       end
-
 
     end
   end
