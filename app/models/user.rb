@@ -113,7 +113,7 @@ class User < ApplicationRecord
     elsif weixin && weixin.headshot
       weixin.headshot
     else
-      headshot || 'logo.png'
+      headshot || Settings.site.host + "/assets/no-picture.png"
     end
   end
 
