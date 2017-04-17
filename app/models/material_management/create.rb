@@ -41,7 +41,7 @@ class MaterialManagement
           elsif record.input?
 
             # 价格根据采购价格自动做加权平均，计算物料的成本价格
-            mmd.material.price = (mmd.price * mmd.number + mmd.material.stock * mmd.material.price)/(mmd.number + mmd.material.stock)
+            mmd.material.price = (mmd.price * mmd.number + mmd.material.stock * mmd.material.price.try(:to_f))/(mmd.number + mmd.material.stock)
             mmd.material.save!
 
             material_warehouse_item = material_warehouse.material_warehouse_items.find_or_create_by(material: mmd.material)
