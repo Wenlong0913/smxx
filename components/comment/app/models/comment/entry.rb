@@ -1,7 +1,7 @@
 module Comment
   class Entry < ApplicationRecord
     store_accessor :features, :offer, :images, :files
-    belongs_to :resource, polymorphic: true
+    belongs_to :resource, polymorphic: true, counter_cache: :comments_count
     belongs_to :user, optional: true
     belongs_to :parent, class_name: 'Comment::Entry'
     has_many :children, class_name: 'Comment::Entry', foreign_key: :parent_id, dependent: :destroy
