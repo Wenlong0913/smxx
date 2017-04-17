@@ -1,3 +1,11 @@
+_, data = IO.read(__FILE__).split(/^__END__$/, 2)
+
+site_name = Settings.project.meikemei? ? '美容院商家' : '商家'
+
+YAML.load(ERB.new(data).result(binding))
+
+__END__
+
 ---
 zh-CN:
   activerecord:
@@ -5,7 +13,7 @@ zh-CN:
       product: 产品
     attributes:
       product:
-        site: 美容院商家
+        site: <%= site_name %>
         catalog: 产品分类
         name: 产品名称
         image: 图片
@@ -21,7 +29,7 @@ zh-CN:
         weight: 产品重量
         weight_unit: 重量单位
         description: 简要描述
-        content: 项目介绍
+        content: 介绍
         hot: 热卖
         recommend: 推荐
         event: 活动

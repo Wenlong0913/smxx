@@ -64,7 +64,7 @@ class Admin::SitesController < Admin::BaseController
 
     flag, @site = Site::Update.(@site, permitted_attributes(@site).merge(updated_by: current_user.id))
     if flag
-      redirect_to admin_site_path(@site), notice: '经销商 更新成功.'
+      redirect_to admin_site_path(@site), notice: '更新成功.'
     else
       render :edit
     end
@@ -74,7 +74,7 @@ class Admin::SitesController < Admin::BaseController
   def destroy
     authorize @site
     @site.destroy
-    redirect_to admin_sites_url, notice: '美容师 删除成功.'
+    redirect_to admin_sites_url, notice: '删除成功.'
   end
 
   private

@@ -28,6 +28,7 @@ module AppAPI::V1
         authenticate!
         # 查看所有上架商品
         products = ::Product.all
+        products = products.where("features ->> 'is_shelves' = '1'") if Settings.project.sxhop?
         if params[:type]
           products =
             case params[:type]
@@ -77,7 +78,7 @@ module AppAPI::V1
         end
         present message: '产品取消收藏成功!'
       end
-      
+
       desc '商品点赞'
       params do
         requires :id, type: Integer, desc: "#{::Product.model_name.human}ID"

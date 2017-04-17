@@ -16,7 +16,7 @@ class Site < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :catalog
   has_many :theme_configs
-  has_many :staffs, foreign_key: :site_id
+  has_many :staffs if Settings.project.meikemei?
   has_one :active_theme_config, -> { where(active: true) }, class_name: 'ThemeConfig'
   has_many :items, dependent: :destroy
   has_many :image_item_relations, as: :relation
@@ -31,15 +31,16 @@ class Site < ApplicationRecord
   has_many :deliveries, dependent: :destroy
   has_one :cms_site, class_name: '::Cms::Site', dependent: :destroy
   store_accessor :features, :business_hours, :content, :contact_phone, :contact_name, :contact_name, :is_sign, :sign_note,
-  :score, :comment, :properties, :updated_by, :has_contract, :is_published, :phone
-  #store_accessor :features, :business_hours, :content, :contact_phone, :contact_name, :is_sign, :sign_note, :score, :comment, :properties, :updated_by, :lat, :lng
+  :score, :comment, :properties, :updated_by, :has_contract, :is_published, :phone, :lat, :lng
 
-  PROPERTIES = {
-    assure: "正品保障",
-    cleaning: "卫生清洁",
-    hidden_consumption: "无隐性消费",
-    standard_procedure: "标准流程"
-  }
+  if Settings.project.meikemei?
+    PROPERTIES = {
+      assure: "正品保障",
+      cleaning: "卫生清洁",
+      hidden_consumption: "无隐性消费",
+      standard_procedure: "标准流程"
+    }
+  end
 
 #store_accessor :features, :description, :properties, :business_hours,
 #                :recommendation, :good_summary, :bad_summary, :parking,

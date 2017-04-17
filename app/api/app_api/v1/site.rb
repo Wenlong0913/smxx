@@ -7,9 +7,7 @@ module AppAPI::V1
         success AppAPI::Entities::Site
       end
       params do
-        requires :id, type: Integer, desc: '店铺ID', values: [1,2,3]
-        optional :name, type: String, desc: '名字'
-        optional :email, type: String, allow_blank: false
+        requires :id, type: Integer, desc: "#{::Site.model_name.human}ID"
       end
       get ':id' do
         authenticate!
@@ -57,7 +55,7 @@ module AppAPI::V1
         if current_user.favorites.tagged_to? site
           message = '已经收藏了此店铺!'
         else
-          current_user.favorites.tag_to! site 
+          current_user.favorites.tag_to! site
           message = '店铺收藏成功!'
         end
         present message: message

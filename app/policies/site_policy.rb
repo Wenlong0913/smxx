@@ -35,18 +35,12 @@ class SitePolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.super_admin_or_admin?
-
-      [:user_id, :title, :business_hours, :content,
-        :contact_phone, :contact_name, :is_sign, :sign_note, :score, :comment,
-        :lat, :lng, :address_line, :updated_by, :has_contract, :is_published, :phone,
-        :image_item_ids => [], :properties => []]
-
-# [:user_id, :title, :description, :properties, :business_hours,
-#     :recommendation, :good_summary, :bad_summary, :parking,
-#      :wifi, :contact_name, :contact_phone, :has_contract, :contract_note,
-#     :avg_price, :is_published, :phone, :photos, :province, :city, :area, :business_area,
-      #      :lat, :lng, :catalog_id, :address_line, :image_item_ids => []]
-
+      [:user_id, :title, :description, :properties, :business_hours
+        :recommendation, :good_summary, :bad_summary, :parking,
+        :wifi, :contact_name, :contact_phone, :has_contract, :contract_note,
+        :avg_price, :is_published, :phone, :photos, :province, :city, :area, :business_area,
+        :lat, :lng, :catalog_id, :address_line, :content, :is_sign, :sign_note, :score, :comment,
+        :image_item_ids => []]
     else
 
     end

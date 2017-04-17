@@ -19,6 +19,32 @@
         = link_to admin_root_path do
           = fa_icon 'laptop', text: '首页'
 
+      - Settings.project.dagle?
+        li class=("has-sub #{'active' if page?('admin/materials', admin_material_catalogs_path, 'admin/material_managements', 'admin/material_warehouses', 'admin/material_management_histories', 'admin/material_stock_alerts')}")
+          = link_to dashboard_admin_materials_path
+            b.caret.pull-right
+            i.fa.fa-inbox
+            span 物料进销存
+          ul.sub-menu
+            li[class= ('active' if page?('admin/materials#index'))]
+              = link_to '物料列表', admin_materials_path
+            li[class= ('active' if page?('/admin/material_managements?type=output'))]
+              = link_to '物料出库', admin_material_managements_path(type: 'output')
+            li[class= ('active' if page?('/admin/material_managements?type=input'))]
+              = link_to '物料入库', admin_material_managements_path(type: 'input')
+            li[class= ('active' if page?(admin_material_catalogs_path))]
+              = link_to '物料分类', admin_material_catalogs_path
+            li[class= ('active' if page?('admin/material_warehouses'))]
+              = link_to '物料仓库', admin_material_warehouses_path
+            li class=("has-sub #{'active' if page?('admin/material_warehouse_stock_managements', 'admin/material_management_histories', 'admin/material_stock_alerts')}")
+              a href="javascript:;"
+                b.caret.pull-right
+                span 物料库存
+              ul.sub-menu
+                li[class=('active' if page?('admin/material_management_histories'))]
+                  = link_to '库存流水', admin_material_management_histories_path
+                / li[class=('active' if page?('admin/material_stock_alerts'))]
+                  = link_to '库存警报', admin_material_stock_alerts_path
       / 订单管理
       li class=("has-sub #{'active' if page?('admin/orders', 'admin/produces', 'admin/orders/:order_id/produces/:id', 'admin/task_types', 'admin/deliveries', 'admin/order_deliveries')}")
         a href="javascript:;"
@@ -74,8 +100,9 @@
           li[class= ('active' if page?('admin/catalogs#index?klass='))]
             = link_to '所有分类', admin_catalogs_path
 
-
-      li class=("has-sub #{'active' if page?('admin/vendors', 'admin/users', 'admin/roles', 'admin/user/weixins')}")
+      - paths = ['admin/vendors', 'admin/users', 'admin/roles', 'admin/user/weixins']
+      - paths << 'admin/sites' if Settings.project.dagle?
+      li class=("has-sub #{'active' if page?(*paths)}")
         = link_to dashboard_admin_users_path
           b.caret.pull-right
           i.fa.fa-inbox
@@ -86,7 +113,10 @@
           li class=("#{'active' if page?('admin/roles')}") = link_to '角色', admin_roles_path
           li[class= ('active' if page?('admin/vendors'))]
             = link_to '供应商', admin_vendors_path
-
+          - Settings.project.dagle?
+            li[class=("active" if page?('admin/sites'))]
+              = link_to '经销商', admin_sites_path
+                        
       li class=("has-sub #{'active' if page?('admin/market_catalogs', 'admin/market_templates', 'admin/market_pages')}")
         = link_to dashboard_admin_market_pages_path
           b.caret.pull-right

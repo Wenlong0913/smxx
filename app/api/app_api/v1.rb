@@ -16,7 +16,7 @@ module AppAPI::V1
     mount AppAPI::V1::Banner
     mount AppAPI::V1::ChatRoom
     mount AppAPI::V1::ChatMessage
-    mount AppAPI::V1::Staff
+    mount AppAPI::V1::Staff if Settings.project.meikemei?
     mount AppAPI::V1::ProductCatalog
   end
 end
