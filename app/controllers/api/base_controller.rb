@@ -53,11 +53,9 @@ class Api::BaseController < ActionController::API
   end
 
   def sms_site(mobile, order_code, messages)
-    token_body = Sms::Token.new(mobile)
-    body = Settings.desktop.auth_token_template.gsub('#order#', order_code).gsub('#message#', messages)
-    token_body.create code: order_code, message: body
+    body = OpenStruct.new(mobile_phone: mobile, message: Settings.sms.templates_order_notification.gsub('#order#', order_code).gsub('#message#', messages))
     begin
-      response = Sms.service.(token_body)
+      response = Sms.service.(body)
       response.valid!
       return true
     rescue Sms::Services::YunPianService::SentFailed
