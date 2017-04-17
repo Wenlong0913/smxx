@@ -5,7 +5,7 @@
     form.form-inline.pull-right.pt-10[action="#{admin_audits_path}" method="get"]
       .form-group
         / input[type="text" class="form-control" name="username" id="username" placeholder="输入操作用户" value="#{params['username']}"]
-        select.select2.form-control[id="dropdown" data-url="#{admin_users_url}" data-id="#{params['username']}" data-name="#{User.find_by(id: params['username']).try(:nickname)}"  style="width: 200px;"]
+        select.select2.form-control[id="dropdown" data-url="#{admin_users_url}"  data-id="#{params['username']}" data-name="#{User.find_by(id: params['username']).try(:nickname)}"  style="width: 200px;"]
       .form-group
         input[type="text" name="daterange" class="form-control" placeholder="请选择日期范围" value="#{params['daterange']}"]
       button[type="submit" class="btn btn-primary"] 搜索

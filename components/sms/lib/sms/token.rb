@@ -24,6 +24,10 @@ module Sms
       Sms.redis.get(redis_key) == code.to_s.strip
     end
 
+    def destroy!
+      Sms.redis.del redis_key
+    end
+
     private
     def redis_key
       "#{Sms.key_prefix}#{mobile_phone}"

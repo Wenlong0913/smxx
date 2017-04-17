@@ -59,7 +59,12 @@ class Api::V1::ProducesController < Api::V1::BaseController
     produce = Produce.new(order: @order)
     if produce.save
       @order.update(internal_status: 'producing', update_by: current_user.id)
-      render json: {status: 'ok', produce: produce.as_json(only: [:id])}
+      if sms_site(@order.site.user.mobile.phone_number, @order.code, enum_l(@order, :internal_status))
+        sms_message = '已经用短信提示对方现在的生产状态'
+      else
+        sms_message = '短信提示发送失败'
+      end
+      render json: {status: 'ok', produce: produce.as_json(only: [:id]), sms_message: sms_message}
     else
       render json: {status: 'failed', error_message: produce.errors.messages.inject(''){ |k, v| k += v.join(':') + '. '} }
     end
@@ -95,7 +100,14 @@ class Api::V1::ProducesController < Api::V1::BaseController
     authorize produce
     flag, produce = Produce::Update.(produce, permitted_attributes(produce))
     if flag
-      render json: {status: 'ok', produce: produce}
+      if ['produced', 'delivering'].include?(produce.order.internal_status)
+        if sms_site(produce.order.site.user.mobile.phone_number, produce.order.code, enum_l(produce.order, :internal_status))
+          sms_message = '已经用短信提示对方现在的订单状态'
+        else
+          sms_message = '短信提示发送失败'
+        end
+      end
+      render json: {status: 'ok', produce: produce, sms_message: sms_message}
     else
       render json: {status: 'failed', error_message: produce.errors.full_messages.join(', ') }
     end

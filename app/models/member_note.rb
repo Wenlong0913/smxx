@@ -14,4 +14,8 @@ class MemberNote < ApplicationRecord
   audited
   belongs_to :member
   belongs_to :user
+
+  def self.recent(count = 10)
+    self.order("created_at DESC").limit(count)
+  end
 end

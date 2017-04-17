@@ -79,6 +79,7 @@ module AppAPI::V1
         if params[:mobile_phone_code] && params[:mobile_phone]
           t = Sms::Token.new(params[:mobile_phone])
           error! "验证码错误" unless t.valid?(params[:mobile_phone_code])
+          t.destroy!
         end
         present user, with: AppAPI::Entities::User, access_token: user.issue_api_token(params[:device]), type: :private
       end
@@ -94,6 +95,7 @@ module AppAPI::V1
       end
       post :sms do
         # TODO: 须验证用户发送短信的频率，方式短信轰炸
+        error! '请输入手机号' if params[:mobile_phone].blank?
         t = Sms::Token.new(params[:mobile_phone])
         is_dev = !(Rails.env.staging? || Rails.env.production?)
         code = is_dev ? '123456' : (10000 + SecureRandom.random_number(10**8)).to_s[-5..-1]

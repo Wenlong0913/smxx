@@ -14,12 +14,22 @@ class Api::V1::OrdersController < Api::BaseController
 
   def create
     authorize Order
-    flag, order = Order::Create.(permitted_attributes(Order).merge({create_by: current_user.id}))
+    flag = false
+    order = nil
+    finance = nil
+    Order.transaction do
+      flag, order = Order::Create.(permitted_attributes(Order).merge({create_by: current_user.id}))
+      if params[:order][:deposit].to_i > 0
+        finance_flag, finance = FinanceHistory::Create.(operate_date: Date.today, amount: params[:order][:deposit], operate_type: 'in', owner: order, created_by: current_user.id)
+        flag = flag && finance_flag
+      end
+      raise ActiveRecord::Rollback unless flag
+    end
     if flag
       render json: {status: 'ok', order: order_json(order)}
     else
       # order.errors.messages.delete(:member)
-      render json: {status: 'failed', error_message:  order.errors.full_messages.join(', ') }
+      render json: {status: 'failed', error_message:  order.errors.full_messages.join(', ')  + '.' +  (finance ? finance.errors.full_messages.join(',') : '')}
     end
   end
 
@@ -30,7 +40,14 @@ class Api::V1::OrdersController < Api::BaseController
   def update
     authorize @order
     if @order.update(permitted_attributes(Order))
-      render json: {status: 'ok', order: order_json(@order)}
+      if ['packed'].include?(@order.internal_status)
+        if sms_site(@order.site.user.mobile.phone_number, @order.code, enum_l(@order, :internal_status))
+          sms_message = '已经用短信提示对方现在的订单状态'
+        else
+          sms_message = '短信提示发送失败'
+        end
+      end
+      render json: {status: 'ok', order: order_json(@order), sms_message: sms_message}
     else
       render json: {status: 'failed', error_message:  @order.errors.full_messages.join(', ') }
     end

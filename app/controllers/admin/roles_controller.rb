@@ -4,6 +4,9 @@ class Admin::RolesController < Admin::BaseController
   def index
     authorize Role
     @admin_roles = Role.all.page params[:page]
+    if params[:format] == 'json'
+      render json: {admin_roles: @admin_roles.as_json(only: [:id], methods: [:role_name])}  
+    end
   end
 
   def edit_permission
