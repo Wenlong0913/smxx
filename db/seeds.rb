@@ -151,7 +151,7 @@ worksheet.row(1)
   # c.city = worksheet.row(index)[3]
   # c.district = worksheet.row(index)[4]
   # c.street = worksheet.row(index)[5]
-  # c.address_str = worksheet.row(index)[6]
+  c.address_str = worksheet.row(index)[6]
   c.telephone = worksheet.row(index)[7]
   # c.lat = worksheet.row(index)[8]
   # c.lng = worksheet.row(index)[9]
@@ -170,11 +170,11 @@ head = site_worksheet.row(1)
 2.upto site_worksheet.last_row do |index|
   c = Site.find_or_initialize_by(title: site_worksheet.row(index)[head.find_index('name')])
   c.is_published = !site_worksheet.row(index)[head.find_index('is_closed')]
-  # c.province = site_worksheet.row(index)[head.find_index('province')]
-  # c.city = site_worksheet.row(index)[head.find_index('city')]
-  # c.area = site_worksheet.row(index)[head.find_index('area')]
+  province = site_worksheet.row(index)[head.find_index('province')]
+  city = site_worksheet.row(index)[head.find_index('city')]
+  area = site_worksheet.row(index)[head.find_index('area')]
   c.catalog = SiteCatalog.find_or_create_by_path([{name: site_worksheet.row(index)[head.find_index('big_cate')]},{name: site_worksheet.row(index)[head.find_index('small_cate')]}])
-  c.address_line = c.province + c.city + c.area + site_worksheet.row(index)[head.find_index('address')] + ' ' + c.title
+  c.address_line = province + city + area + site_worksheet.row(index)[head.find_index('address')] + ' ' + c.title
   c.business_area = site_worksheet.row(index)[head.find_index('business_area')]
   c.phone = site_worksheet.row(index)[head.find_index('phone')]
   c.business_hours = site_worksheet.row(index)[head.find_index('hours')]
@@ -185,5 +185,6 @@ head = site_worksheet.row(1)
   c.good_summary = site_worksheet.row(index)[head.find_index('good_remarks')]
   c.bad_summary = site_worksheet.row(index)[head.find_index('bad_remarks')]
   c.properties = site_worksheet.row(index)[head.find_index('tags')]
+  c.user = User.first
   c.save!
 end
