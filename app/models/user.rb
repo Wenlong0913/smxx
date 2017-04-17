@@ -108,13 +108,15 @@ class User < ApplicationRecord
   end
 
   def display_headshot
-    if !(avatar.url == "/images/original/missing.png")
-      URI(Settings.site.host).merge(self.avatar.url(:thumb)).to_s
-    elsif weixin && weixin.headshot
-      weixin.headshot
-    else
-      headshot || Settings.site.host + "/assets/no-picture.png"
-    end
+    url =
+      if !(avatar.url == "/images/original/missing.png")
+        avatar.url(:thumb))
+      elsif weixin && weixin.headshot
+        weixin.headshot
+      else
+        headshot
+      end
+    URI(Settings.site.host).merge( url || "/assets/no-picture.png")
   end
 
 end
