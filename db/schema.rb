@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170413144345) do
+ActiveRecord::Schema.define(version: 20170417051044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "cube"
   enable_extension "earthdistance"
@@ -492,11 +493,15 @@ ActiveRecord::Schema.define(version: 20170413144345) do
     t.integer  "site_id"
     t.string   "name"
     t.jsonb    "features"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "type"
     t.string   "name_py"
     t.integer  "catalog_id"
+    t.integer  "comments_count",  default: 0
+    t.integer  "favorites_count", default: 0
+    t.integer  "visits_count",    default: 0
+    t.integer  "likes_count",     default: 0
     t.index ["site_id"], name: "index_items_on_site_id", using: :btree
   end
 
