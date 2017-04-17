@@ -18,7 +18,7 @@ default: &default
     yun_pian_v1:
       api_key: c97380fa188341572c1bcdadf383dfc2
   mobile:
-    auth_token_template: "【私享荟】您的验证码是#code#。如非本人操作，请忽略本短信。"
+    auth_token_template: "【德格SaaS】您的验证码是#code#。如非本人操作，请忽略本短信。"
   desktop:
     auth_token_template: "【格兰雅克】您单号为#order#的订单当前的状态为:#message#。我们将时刻提醒您订单的状态"
 
