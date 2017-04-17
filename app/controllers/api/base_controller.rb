@@ -57,7 +57,7 @@ class Api::BaseController < ActionController::API
     body = Settings.desktop.auth_token_template.gsub('#order#', order_code).gsub('#message#', messages)
     token_body.create code: order_code, message: body
     begin
-      response = token_body.post!
+      response = Sms.service.(token_body)
       response.valid!
       return true
     rescue Sms::Services::YunPianService::SentFailed
