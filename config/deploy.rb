@@ -18,7 +18,7 @@ set :default_env, {
   'PROJECT_NAME' => ENV['PROJECT_NAME']
 }
 
-set :repo_url, "git@gitlab.tanmer.com:tanmer/#{ENV['PROJECT_NAME']}.git"
+set :repo_url, "git@gitlab.tanmer.com:tanmer/#{ENV['REPO'] || ENV['PROJECT_NAME']}.git"
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :deploy_to, "/data/www/#{fetch(:application)}"
 
@@ -33,9 +33,13 @@ before "deploy", :check_branch do
   end
 
   puts <<-MSG.green
+real repo url is: #{fetch(:repo_url)}
+  real branch is: #{fetch(:branch)}
+  MSG
 
-    real repo url is: #{fetch(:repo_url)}
-      real branch is: #{fetch(:branch)}
+  puts <<-MSG.yellow
+如果要修改git仓库的名字，请在命令行中提供REPO，如：
+REPO=dagle PROJECT_NAME=sxhop cap production deploy
   MSG
 
   ask(:is_start_to_deploy, 'start to deploy? (y/n, default=n)', 'n')
