@@ -44,25 +44,61 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
 
   def update
     authorize @material_purchase
-    import_flag = true
-    if params["material_management"]
-      import_flag, import_record = process_material_purchase_import
-    end
-    if import_flag
+    flag = true
+    material_purchase = nil
+    messages = []
+    MaterialPurchase.transaction do
+      # 物料入库
+      if params["material_management"]
+        import_flag, import_record = process_material_purchase_import
+        messages.push(import_record.errors.full_messages.join(', '))
+        flag = flag && import_flag
+      end
+      # 更新付款信息及财务流水
       if params[:material_purchase][:paying].present?
         @material_purchase.paid = @material_purchase.paid.to_f + params[:material_purchase][:paying].to_f
-        finance_history = FinanceHistory.new(operate_type: 'out', operate_date: Date.today, amount: params[:material_purchase][:paying], owner: @material_purchase)
+        finance_flag, finance_history = FinanceHistory::Create.(operate_type: 'out', operate_date: Date.today, amount: params[:material_purchase][:paying], owner: @material_purchase)
+        messages.push(finance_history.errors.full_messages.join(', '))
+        flag = flag && finance_flag
       end
-      flag, material_purchase = MaterialPurchase::Update.(@material_purchase, permitted_attributes(@material_purchase))
-      if flag && finance_history.save
-        render json: {status: 'ok', material_purchase: material_purchase_json(material_purchase)}
-      else
-        render json: {status: 'failed', error_message:  material_purchase.errors.full_messages.join(', ') }
-      end
+      # 更新采购信息
+      purchase_flag, material_purchase = MaterialPurchase::Update.(@material_purchase, permitted_attributes(@material_purchase))
+      messages.push(material_purchase.errors.full_messages.join(', '))
+
+      material_purchase.storage! if flag && material_purchase.material_purchase_details.detect{|mpd| mpd.number != mpd.input_number}.nil?
+
+      flag = flag && purchase_flag
+      raise ActiveRecord::Rollback unless flag
+    end
+    if flag
+      render json: {status: 'ok', material_purchase: material_purchase_json(material_purchase)}
     else
-      render json: {status: 'failed', error_message:  import_record.errors.full_messages.join(', ') }
+      render json: {status: 'failed', error_message:  messages.compact.join('.') }
     end
   end
+  
+
+  # def update
+  #   authorize @material_purchase
+  #   import_flag = true
+  #   if params["material_management"]
+  #     import_flag, import_record = process_material_purchase_import
+  #   end
+  #   if import_flag
+  #     if params[:material_purchase][:paying].present?
+  #       @material_purchase.paid = @material_purchase.paid.to_f + params[:material_purchase][:paying].to_f
+  #       finance_history = FinanceHistory.new(operate_type: 'out', operate_date: Date.today, amount: params[:material_purchase][:paying], owner: @material_purchase)
+  #     end
+  #     flag, material_purchase = MaterialPurchase::Update.(@material_purchase, permitted_attributes(@material_purchase))
+  #     if flag && finance_history.save
+  #       render json: {status: 'ok', material_purchase: material_purchase_json(material_purchase)}
+  #     else
+  #       render json: {status: 'failed', error_message:  material_purchase.errors.full_messages.join(', ') }
+  #     end
+  #   else
+  #     render json: {status: 'failed', error_message:  import_record.errors.full_messages.join(', ') }
+  #   end
+  # end
 
   def destroy
     authorize @material_purchase

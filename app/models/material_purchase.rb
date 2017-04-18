@@ -39,11 +39,12 @@ class MaterialPurchase < ApplicationRecord
 
   def generate_code
     purchase_code = 'CG'+Time.now.strftime('%Y%m%d')
+    number = self.class.where("code LIKE ?", purchase_code+'%').count
     loop do
-      number = self.class.where("code LIKE ?", purchase_code+'%').count
       number = (number + 1).to_s.rjust(4, '0') 
       self.code = "#{purchase_code}#{number}"
       break unless self.class.where(code: self.code).exists?
+      number += 1
     end
   end
 
