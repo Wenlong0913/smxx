@@ -53,7 +53,7 @@ class Api::BaseController < ActionController::API
   end
 
   def sms_site(mobile, order_code, messages)
-    body = OpenStruct.new(mobile_phone: mobile, message: Settings.sms.templates_order_notification.gsub('#order#', order_code).gsub('#message#', messages))
+    body = OpenStruct.new(mobile_phone: mobile, message: Settings.sms.templates.order_notification.gsub('#order#', order_code).gsub('#message#', messages))
     begin
       response = Sms.service.(body)
       response.valid!

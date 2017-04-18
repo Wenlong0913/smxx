@@ -5,7 +5,7 @@ zh-CN:
       order_delivery: 发货记录
     attributes:
       order_delivery:
-        delivery_id: 发货部
+        order_id: 订单
         list: 发货清单
         note: 备注
     errors:
