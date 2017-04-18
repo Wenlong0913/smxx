@@ -7,7 +7,14 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-server 'prod1uc.corp.tanmer.com', user: 'deployer', roles: %w{app db web assets}, ssh_options: { keys: '~/.ssh/id_rsa.deploy.tanmer.prod.key'  }
+host =
+  case ENV['PROJECT_NAME']
+  when 'imolin'
+    'prod2uc.corp.tanmer.com'
+  else
+    'prod1uc.corp.tanmer.com'
+  end
+server host, user: 'deployer', roles: %w{app db web assets}, ssh_options: { keys: '~/.ssh/id_rsa.deploy.tanmer.prod.key'  }
 
 # role-based syntax
 # ==================
