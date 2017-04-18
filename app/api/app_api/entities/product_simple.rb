@@ -8,6 +8,7 @@ module AppAPI
       expose :favorites_count, documentation: {desc: '产品收藏的数量', type: Integer }
       expose :visits_count, documentation: {desc: '产品访问的数量', type: Integer }
       expose :likes_count, documentation: {desc: '产品喜爱的数量', type: Integer }
+      expose :sales_count, documentation: {desc: '产品的销量', type: Integer }
       expose :site, using: AppAPI::Entities::SiteSimple
       expose :image_items, using: AppAPI::Entities::ImageItemSimple, documentation: { is_array: true }, as: :images
 
