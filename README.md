@@ -1,43 +1,25 @@
-# Tanmer Framework
-[![build status](http://gitlab.tanmer.com/tm-framework/tmf/badges/master/build.svg)](http://gitlab.tanmer.com/tm-framework/tmf/commits/master)[![coverage report](http://gitlab.tanmer.com/tm-framework/tmf/badges/master/coverage.svg)](http://gitlab.tanmer.com/tm-framework/tmf/commits/master)
+### 美客美
 
-## [开发文档](dev_doc.md)
+#### 服务器部署地址：
 
-更多内容：http://gitlab.tanmer.com/tanmer/tmf/wikis/home
-
-## 陌邻 是什么？
-
-陌邻是一个小区生活互助交流大数据平台，陌邻APP提供小区邻友社交互动，提供全方位社区便民服务，通过人工智能，让周边服务，呼之即来。
-
-陌邻，让邻里不再陌生！
-
-生活求助，总有邻居能帮到你！
-
-陌邻，你的小区生活服务管家！
+deployer@prod2uc:/data/www/meikemei/
 
 
-## 陌邻特点
+$ PROJECT_NAME=meikemei bundle exec cap meikemei deploy
 
+#### 测试域名：
 
-# LBS
+http://www.cardzhi.cn/
 
+#### 模板访问地址：
 
-大数据定位，基于社区建立圈层
+http://www.cardzhi.cn/f7-theme/max_solaris/
 
+#### APP 访问目录：
 
-# 信任
+/mobile
 
+#### APP 安装教程：
 
-充分发挥邻里天然的信任纽带
+https://github.com/xiaohui-zhangxh/vue-webpack-cordova-f7
 
-
-# 服务
-
-
-全方位一站式构建最后3公里的服务生态
-
-
-# 优选
-
-
-人工编辑+邻居推荐，提升生活品质

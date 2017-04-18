@@ -56,9 +56,30 @@ h1.page-header
           | ×
     .table-responsive
       table.table.table-striped
+
+        thead
+          tr
+            th 名称
+            th 联系人
+            th 联系人电话
+            th 是否签约
+            th 营业时间
+            th 营销备注
+            th 操作
+
         tbody
           - @sites.each do |site|
             tr
+              td = site.title
+              td = site.contact_name
+              td = site.contact_phone
+              td
+                - if site.is_sign == "true"
+                  => link_to "已签约", '#', class: 'btn btn-xs btn-success'
+                - else
+                  => link_to "未签约", '#', class: 'btn btn-xs btn-warning'
+              td = site.business_hours
+              td = site.comment
               td
                 h4 style="margin:0px;"
                   => link_to "#{site.id}. #{site.title}", admin_site_products_path(site)

@@ -9,12 +9,13 @@
 
 host =
   case ENV['PROJECT_NAME']
-  when 'imolin'
+  when 'imolin', 'meikemei'
     'prod2uc.corp.tanmer.com'
   else
     'prod1uc.corp.tanmer.com'
   end
-server host, user: 'deployer', roles: %w{app db web assets}, ssh_options: { keys: '~/.ssh/id_rsa.deploy.tanmer.prod.key'  }
+
+server host, user: 'deployer', roles: %w{app db web assets}, ssh_options: { keys: '~/.ssh/id_rsa.deploy.tanmer.prod.key' }
 
 # role-based syntax
 # ==================

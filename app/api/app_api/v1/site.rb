@@ -11,8 +11,9 @@ module AppAPI::V1
       end
       get ':id' do
         authenticate!
-        present ::Site.find(params[:id]), with: AppAPI::Entities::Site, type: :full_site, includes: [:products]
-        # AppAPI::Entities::Site.represent(::Site.find(params[:id]), only: [:title])
+        present ::Site.find(params[:id]), with: AppAPI::Entities::Site, includes: [:products, :staffs]
+
+        requires :id, type: Integer, desc: "#{::Site.model_name.human}ID"
       end
 
       desc "获取#{::Site.model_name.human}列表" do
@@ -54,7 +55,7 @@ module AppAPI::V1
         if current_user.favorites.tagged_to? site
           message = '已经收藏了此店铺!'
         else
-          current_user.favorites.tag_to! site 
+          current_user.favorites.tag_to! site
           message = '店铺收藏成功!'
         end
         present message: message

@@ -65,7 +65,7 @@ module AppAPI::V1
       get do
         authenticate!
         shopping_carts = paginate_collection(sort_collection(current_user.shopping_carts), params)
-        wrap_collection shopping_carts, AppAPI::Entities::ShoppingCart, includes: [:product]
+        wrap_collection shopping_carts, AppAPI::Entities::ShoppingCart, includes: [:product, :site]
       end
 
     end # end of resources

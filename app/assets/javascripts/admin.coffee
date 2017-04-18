@@ -11,6 +11,9 @@
 #= require admin/audit
 #= require admin/role
 #= require admin/user
+#= require admin/shop
+#= require admin/sites
+#= require admin/staffs
 #= require admin/site
 #= require admin/finance_history
 #= require admin/baidu_map

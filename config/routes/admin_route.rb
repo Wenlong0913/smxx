@@ -73,6 +73,15 @@ module AdminRoute
           end
         end
 
+        if Settings.project.meikemei?
+          resources :staffs, :concerns => :paginatable do
+            resources :members, :concerns => :paginatable
+            collection do
+              get 'dashboard', to: 'staffs#dashboard'
+            end
+          end
+        end
+
         resources :produces, only: [:index] do
           resources :tasks, only: [:create, :update]
         end
@@ -101,12 +110,19 @@ module AdminRoute
         end
         #系统参数
         resources :keystores
+
+        #美容院
+        if Settings.project.meikemei?
+          resources :shops
+          resources :shop_sites
+        end
+
         resources :audits, only: [:index], :concerns => :paginatable do
           collection do
             get 'statistics'
           end
         end
-        
+
         # 轮波图
         resources :banners
         resources :finance_histories, :concerns => :paginatable

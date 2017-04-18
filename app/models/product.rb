@@ -14,9 +14,11 @@
 #
 
 class Product < Item
+  store_accessor :features, :price, :old_price, :image, :responsive_person, :warning_message, :service_time, :month_number, :unit, :stock, :description, :content, :discount, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values, :is_shelves, :is_fee, :shopping_fee, :hot, :recommend, :event, :promotion, :discount, :properties
   acts_as_taggable
-  store_accessor :features, :price, :unit, :stock, :description, :content, :discount, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values, :is_shelves, :is_fee, :shopping_fee, :hot, :recommend, :event, :promotion, :discount
+  #store_accessor :features, :price, :unit, :stock, :description, :content, :discount, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values, :is_shelves, :is_fee, :shopping_fee, :hot, :recommend, :event, :promotion, :discount
   validates_numericality_of :price, allow_blank: true
+  validates_numericality_of :old_price, allow_blank: true
   has_many :image_item_relations, as: :relation
   has_many :image_items, :through => :image_item_relations
   has_many :sales_distribution_resources, class_name: 'SalesDistribution::Resource', as: 'object'
@@ -26,13 +28,23 @@ class Product < Item
   has_many_visits
   belongs_to :catalog
   belongs_to :site
+
+  PROPERTIES = {
+    recommend: "推荐",
+    event: "活动",
+    promotion: "促销",
+    discount: "折扣"
+  }
+
   has_many :article_products, dependent: :destroy
   has_many :articles, :through => :article_products
+
   has_many :order_products, dependent: :destroy
   has_many :orders, through: :order_products
   has_many :discovers, as: :resource, dependent: :destroy
   before_save do
     self.price = price.to_f.round(2)
+    self.old_price = old_price.to_f.round(2)
     self.discount = (discount.to_f == 0 || discount.to_f > price.to_f ) ? price.to_f.round(2) : discount.to_f.round(2)
     self.weight = weight.to_f.round(2)
     self.stock = stock.to_i
