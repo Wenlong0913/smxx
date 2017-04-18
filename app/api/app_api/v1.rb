@@ -15,5 +15,6 @@ module AppAPI::V1
     mount AppAPI::V1::Banner
     mount AppAPI::V1::ChatRoom
     mount AppAPI::V1::ChatMessage
+    mount AppAPI::V1::Discover
   end
 end
