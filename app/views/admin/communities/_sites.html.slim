@@ -25,7 +25,7 @@ h3 附近2公里商家
     - if @sites.any?
       h4 商家地图
       #baidu-map
-
+  = paginate @sites
 script data-turbolinks="false" type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=#{Rails.application.config_for(:baidu_lbs_api)['geocoding']["ak"]}"
 javascript:
     var options = { };
