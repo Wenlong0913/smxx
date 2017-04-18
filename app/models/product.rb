@@ -30,10 +30,16 @@ class Product < Item
   has_many :articles, :through => :article_products
   has_many :order_products, dependent: :destroy
   has_many :orders, through: :order_products
+  has_many :discovers, as: :resource, dependent: :destroy
   before_save do
     self.price = price.to_f.round(2)
     self.discount = (discount.to_f == 0 || discount.to_f > price.to_f ) ? price.to_f.round(2) : discount.to_f.round(2)
     self.weight = weight.to_f.round(2)
     self.stock = stock.to_i
+  end
+
+  after_save do
+    discover = self.discovers.find_or_create_by(resource: self)
+    discover.save!
   end
 end
