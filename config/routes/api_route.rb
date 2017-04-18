@@ -45,7 +45,7 @@ module ApiRoute
             end
           end
           resources :task_types, only: [:index]
-          resources :deliveries, only: [:index]
+          resources :deliveries, only: [:index, :create]
           resources :image_items, only: [:create]
           resources :sites, only: [:index]
           resources :members, only: [:index, :create]

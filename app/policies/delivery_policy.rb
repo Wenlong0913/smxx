@@ -31,8 +31,8 @@ class DeliveryPolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     # fail "请在#{__FILE__}中添加params的permit属性"
-    if user.has_role?(:admin) || user.has_role?(:agent)
-      [:name, :features, :address, :phone_number]
+    if user.has_role?(:admin) || user.has_role?(:agent) || user.premission?('login_desktop')
+      [:name, :features, :address, :phone_number, :site_id]
     else
       []
     end

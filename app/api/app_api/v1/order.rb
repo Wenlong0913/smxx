@@ -64,6 +64,28 @@ module AppAPI::V1
         wrap_collection orders, AppAPI::Entities::Order
       end
 
+      desc '确认收货'
+      params do
+        requires :id, type: Integer, desc: '订单ID'
+      end
+      put do
+        authenticate!
+        order = current_user.orders.where(id: params[:id])
+        error! '你没有这个订单' if order.empty?
+
+        if order.first.completed!
+          order.first.order_products.each do |order_product|
+            product = order_product.product
+            product.sales_count += order_product.amount
+            product.save!
+          end
+          present order, with: AppAPI::Entities::Order
+        else
+          error! '服务器发生错误，请稍后再试'
+        end
+        
+      end
+
     end # end of resources
   end
 end

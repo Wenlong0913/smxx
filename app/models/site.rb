@@ -36,7 +36,9 @@ class Site < ApplicationRecord
                  :lat, :lng, :updated_by
   validates_presence_of :title, :address_line#, :user_id
   validates_uniqueness_of :title, scope: [:address_line]
-  #acts_as_address
+  if Settings.project.imolin?
+    acts_as_address
+  end
   audited
   validates_presence_of :title, :user_id
   validates_uniqueness_of :title, scope: [:type, :user_id]

@@ -28,13 +28,13 @@ class Order < ApplicationRecord
       delivering: 4,# 发货中
       cancelled: 3, # 已取消
       completed: 4  # 已完成
-    } 
+    }
   else
     enum status: {
       processing: 0, # 处理中
       cancelled: 1,  # 已取消
       completed: 2   # 已完成
-    }  
+    }
   end
   if Settings.project.dagle?
     enum internal_status: {
@@ -64,12 +64,11 @@ class Order < ApplicationRecord
   has_many :attachment_relations, as: :relation, dependent: :destroy
   has_many :attachments, :through => :attachment_relations
   has_many :order_cvs, dependent: :destroy
+  has_many :order_deliveries, dependent: :destroy
   has_one :produce, dependent: :destroy
-  has_one :order_delivery, dependent: :destroy
-  has_one :delivery, through: :order_delivery
   has_many :finance_histories, as: :owner, dependent: :destroy
 
-  
+
   before_create :generate_code
   # before_validation :check_member
 
@@ -103,7 +102,7 @@ class Order < ApplicationRecord
   def paid
     finance_histories.sum(&:amount)
   end
-  
+
   def paid_status
     paid > (price/100) ? '已结清' : '未结清'
   end

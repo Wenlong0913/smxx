@@ -1,6 +1,8 @@
 
 Rails.application.routes.draw do
-
+  # === Plugins ===
+  mount Ckeditor::Engine => '/ckeditor'
+  
   # === Common methods ===
   def catalog_resources_for(klass, options = {})
     resources klass.name.underscore.pluralize, options.merge(controller: 'catalogs', klass: klass.name)
@@ -31,6 +33,5 @@ Rails.application.routes.draw do
 
   extend DocRoute
 
-  # === Plugins ===
-  mount Ckeditor::Engine => '/ckeditor'
+
 end

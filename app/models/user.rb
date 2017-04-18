@@ -49,7 +49,8 @@ class User < ApplicationRecord
   has_many :product_favorites, -> { joins("join items on items.id = favorite_entries.resource_id").where("items.type = ?", 'Product') }, class_name: 'Favorite::Entry'
   # 产品分销
   has_many :product_sales_dists, -> { where(type_name: '产品') }, class_name: 'SalesDistribution::Resource'
-  has_many :comments, class_name: 'Comment::Entry'
+  has_many_comments
+  has_many_favorites
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
   validates_attachment_file_name :avatar, matches: [/png\z/i, /jpe?g\z/i]
@@ -108,13 +109,15 @@ class User < ApplicationRecord
   end
 
   def display_headshot
-    if !(avatar.url == "/images/original/missing.png")
-      URI(Settings.site.host).merge(self.avatar.url(:thumb)).to_s
-    elsif weixin && weixin.headshot
-      weixin.headshot
-    else
-      headshot || 'logo.png'
-    end
+    url =
+      if !(avatar.url == "/images/original/missing.png")
+        avatar.url(:thumb)
+      elsif weixin && weixin.headshot
+        weixin.headshot
+      else
+        headshot
+      end
+    URI(Settings.site.host).merge( url || "/assets/no-picture.png")
   end
 
 end

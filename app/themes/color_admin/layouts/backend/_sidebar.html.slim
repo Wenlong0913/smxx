@@ -18,8 +18,13 @@
       li class=("#{'active' if page?('admin/home') }")
         = link_to admin_root_path do
           = fa_icon 'laptop', text: '首页'
-
-      / dagle
+      - if Settings.project.imolin?
+        li[class=("active" if page?('admin/communities'))]
+          = link_to admin_communities_path do
+            = fa_icon 'leaf', text: '小区'
+      li[class=("active" if page?('admin/sites'))]
+          = link_to admin_sites_path do
+             = fa_icon 'leaf', text: '商家'
       - if Settings.project.dagle?
         li class=("has-sub #{'active' if page?('admin/materials', admin_material_catalogs_path, 'admin/material_managements', 'admin/material_warehouses', 'admin/material_management_histories', 'admin/material_stock_alerts')}")
           = link_to dashboard_admin_materials_path
@@ -80,6 +85,18 @@
             li class=("#{'active' if page?('admin/market_catalogs')}") = link_to '分类管理', admin_market_catalogs_path
             li class=("#{'active' if page?('admin/market_templates')}") = link_to '模板管理', admin_market_templates_path
             li class=("#{'active' if page?('admin/market_pages')}") = link_to '营销页', admin_market_pages_path
+
+      li class=("has-sub #{'active' if page?('admin/vendors','admin/users', 'admin/roles', 'admin/user/weixins')}")
+        = link_to dashboard_admin_users_path
+          b.caret.pull-right
+          i.fa.fa-inbox
+          span 账户角色分工
+        ul.sub-menu
+          li class=("#{'active' if page?('admin/users')}") = link_to '用户', admin_users_path
+          li class=("#{'active' if page?('admin/user/weixins')}") = link_to '微信用户', admin_user_weixins_path
+          li class=("#{'active' if page?('admin/roles')}") = link_to '角色', admin_roles_path
+          li[class= ('active' if page?('admin/vendors'))]
+            = link_to '供应商', admin_vendors_path
 
         li class=("has-sub #{'active' if page?('admin/members', 'admin/member_catalogs')}")
           a href="javascript:;"
