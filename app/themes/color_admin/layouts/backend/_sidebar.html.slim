@@ -19,7 +19,7 @@
         = link_to admin_root_path do
           = fa_icon 'laptop', text: '首页'
 
-      - Settings.project.dagle?
+      - if Settings.project.dagle?
         li class=("has-sub #{'active' if page?('admin/materials', admin_material_catalogs_path, 'admin/material_managements', 'admin/material_warehouses', 'admin/material_management_histories', 'admin/material_stock_alerts')}")
           = link_to dashboard_admin_materials_path
             b.caret.pull-right
@@ -68,15 +68,11 @@
 
           li class="#{'active' if page?('admin/deliveries')}"
             = link_to "#{Delivery.model_name.human}管理", admin_deliveries_path
-
-      li class=("#{'active' if page?('admin/sites')}")
-        = link_to admin_sites_path do
-          i.fa.fa-inbox
-          = Site.model_name.human
-      li class=("#{'active' if page?('admin/staffs')}")
-        = link_to admin_staffs_path do
-          i.fa.fa-inbox
-          = Staff.model_name.human
+      - if Settings.project.meikemei?    
+        li class=("#{'active' if page?('admin/staffs')}")
+          = link_to admin_staffs_path do
+            i.fa.fa-inbox
+            = Staff.model_name.human
 
       li class=("has-sub #{'active' if page?('admin/products', 'admin/catalogs#index?klass=ProductCatalog')}")
         = link_to dashboard_admin_products_path
@@ -113,7 +109,7 @@
           li class=("#{'active' if page?('admin/roles')}") = link_to '角色', admin_roles_path
           li[class= ('active' if page?('admin/vendors'))]
             = link_to '供应商', admin_vendors_path
-          - Settings.project.dagle?
+          - if Settings.project.dagle?
             li[class=("active" if page?('admin/sites'))]
               = link_to '经销商', admin_sites_path
                         
