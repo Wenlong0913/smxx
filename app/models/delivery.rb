@@ -19,7 +19,7 @@ class Delivery < Item
   validates_uniqueness_of :name
   validates_presence_of :name, :phone_number
 
-  has_many :order_delivery
+  has_many :logistics
 
   # after_initialize do
   #   self.site_id = Site::MAIN_ID
