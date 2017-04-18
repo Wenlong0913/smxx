@@ -23,6 +23,7 @@ module AppAPI::V1
         optional :type, type: String, values: ['hot', 'new', 'favorites', 'favorites_of_mine', 'favorites_of_friends'], desc: '产品分类排行：最热门产品，最新上架产品，最私藏产品, 我私藏的产品, 好友们棒场(私藏)的商品'
         optional :name, type: String, desc: '根据名字搜索产品'
         optional :search_type, type: String, values: ['bought', 'all'], desc: '产品搜索类型: 我买过的产品, 所有产品, 默认为所有产品'
+        optional :includes, type: String, values: ['favoriters'], desc: '选择favoriters后允许返回捧场者头像'
       end
       get do
         authenticate!
@@ -45,7 +46,7 @@ module AppAPI::V1
           products = products.joins(:orders).where("orders.user_id =  ?", current_user.id)
         end
         products = paginate_collection(sort_collection(products), params)
-        wrap_collection products, AppAPI::Entities::ProductSimple
+        wrap_collection products, AppAPI::Entities::ProductSimple, includes: [params[:includes]]
       end
 
       desc '收藏商品'

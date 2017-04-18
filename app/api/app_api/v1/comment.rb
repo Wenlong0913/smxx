@@ -19,9 +19,9 @@ module AppAPI::V1
         comment_attributes = {}
         comment_attributes[:content]  = params[:content]
         comment_attributes[:parent]   = ::Comment::Entry.where(id: params[:parent_id]).first unless params[:parent_id].blank?
-        comment_attributes[:resource] = product
+        comment_attributes[:user]     = current_user
 
-        comment = current_user.comments.new(comment_attributes)
+        comment = product.comments.new(comment_attributes)
         if comment.save
           present comment, with: AppAPI::Entities::Comment
         else
