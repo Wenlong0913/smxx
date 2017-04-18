@@ -110,6 +110,7 @@ module AdminRoute
         end
         #系统参数
         resources :keystores
+        resources :staffs
 
         #美容院
         if Settings.project.meikemei?

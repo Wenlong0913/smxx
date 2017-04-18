@@ -30,8 +30,21 @@ class Site < ApplicationRecord
   has_many_favorites
   has_many :deliveries, dependent: :destroy
   has_one :cms_site, class_name: '::Cms::Site', dependent: :destroy
-  store_accessor :features, :business_hours, :content, :contact_phone, :contact_name, :contact_name, :is_sign, :sign_note,
-  :score, :comment, :properties, :updated_by, :has_contract, :is_published, :phone, :lat, :lng
+  # store_accessor :features, :business_hours, :content, :contact_phone, :contact_name, :is_sign, :sign_note,
+  # :score, :comment, :properties, :updated_by, :has_contract, :is_published, :phone, :lat, :lng
+
+  if Settings.project.imolin?
+    store_accessor :features, :description, :properties, :business_hours,
+                  :recommendation, :good_summary, :bad_summary, :parking,
+                  :wifi, :contact_name, :contact_phone, :has_contract, :contract_note,
+                  :avg_price, :is_published, :phone, :photos, :province, :real_city, :city, :district, :business_area,
+                  :lat, :lng, :updated_by
+  elsif Settings.project.meikemei?
+    store_accessor :features, :business_hours, :content, :contact_phone, :contact_name, :is_sign, :sign_note,
+      :score, :comment, :properties, :updated_by, :has_contract, :is_published, :phone, :lat, :lng
+  else
+    store_accessor :features, :description, :updated_by
+  end
 
   if Settings.project.meikemei?
     PROPERTIES = {
@@ -41,12 +54,7 @@ class Site < ApplicationRecord
       standard_procedure: "标准流程"
     }
   end
-
-#store_accessor :features, :description, :properties, :business_hours,
-#                :recommendation, :good_summary, :bad_summary, :parking,
-#                 :wifi, :contact_name, :contact_phone, :has_contract, :contract_note,
-#                :avg_price, :is_published, :phone, :photos, :province, :real_city, :city, :district, :business_area,
-#                 :lat, :lng, :updated_by
+  
   validates_presence_of :title, :address_line#, :user_id
   validates_uniqueness_of :title, scope: [:address_line]
   if Settings.project.imolin?
