@@ -7,7 +7,8 @@ class Logistic < ApplicationRecord
 
   belongs_to :order_delivery
   belongs_to :delivery
-
+  belongs_to :create_user, foreign_key: :create_by, class_name: 'User'
+  belongs_to :update_user, foreign_key: :update_by, class_name: 'User'
   validates_presence_of :delivery_id
 
   before_save do

@@ -1,6 +1,25 @@
 class Api::V1::OrderDeliveriesController < Api::V1::BaseController
   before_action :authenticate!
 
+  def index
+    order = Order.find(params[:order_id])
+    order_deliveries = order.order_deliveries.as_json(
+      only: [:id, :created_at],
+      methods: [:list, :note],
+      include: {
+        logistics: {
+          only: [:status, :id, :updated_at],
+          include: {
+            delivery: { only: [:id, :name], methods: [:address, :phone_number] },
+            create_user: { only: [:id, :nickname] },
+            update_user: { only: [:id, :nickname] }
+          }
+        }
+      }
+    )
+    render json: order_deliveries
+  end
+
   def create
     authorize OrderDelivery
     order_delivery = OrderDelivery.new(permitted_attributes(OrderDelivery))
