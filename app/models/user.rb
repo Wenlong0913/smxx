@@ -117,7 +117,7 @@ class User < ApplicationRecord
       else
         headshot
       end
-    URI(Settings.site.host).merge( url || "/assets/no-picture.png").to_s
+    URI(Settings.site.host).merge( url || "/assets/images/no-picture.png").to_s
   end
 
 end
