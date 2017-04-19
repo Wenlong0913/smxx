@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170417051044) do
+ActiveRecord::Schema.define(version: 20170418091430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -278,6 +278,14 @@ ActiveRecord::Schema.define(version: 20170417051044) do
     t.index ["updated_by"], name: "index_communities_on_updated_by", using: :btree
   end
 
+  create_table "discovers", force: :cascade do |t|
+    t.string   "resource_type"
+    t.integer  "resource_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["resource_type", "resource_id"], name: "index_discovers_on_resource_type_and_resource_id", using: :btree
+  end
+
   create_table "favorite_entries", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "resource_type"
@@ -501,6 +509,7 @@ ActiveRecord::Schema.define(version: 20170417051044) do
     t.integer  "favorites_count", default: 0
     t.integer  "visits_count",    default: 0
     t.integer  "likes_count",     default: 0
+    t.integer  "sales_count",     default: 0
     t.index ["site_id"], name: "index_items_on_site_id", using: :btree
   end
 
@@ -521,6 +530,16 @@ ActiveRecord::Schema.define(version: 20170417051044) do
     t.datetime "updated_at",    null: false
     t.index ["resource_type", "resource_id"], name: "index_likes_on_resource_type_and_resource_id", using: :btree
     t.index ["user_id"], name: "index_likes_on_user_id", using: :btree
+  end
+
+  create_table "logistics", force: :cascade do |t|
+    t.integer  "order_delivery_id"
+    t.integer  "delivery_id"
+    t.integer  "status"
+    t.integer  "update_by"
+    t.integer  "create_by"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "market_pages", force: :cascade do |t|
@@ -661,11 +680,10 @@ ActiveRecord::Schema.define(version: 20170417051044) do
   end
 
   create_table "order_deliveries", force: :cascade do |t|
-    t.integer  "delivery_id"
     t.integer  "order_id"
     t.jsonb    "features"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "order_materials", force: :cascade do |t|
@@ -792,6 +810,17 @@ ActiveRecord::Schema.define(version: 20170417051044) do
     t.string   "address_line"
     t.integer  "catalog_id"
     t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
+  end
+
+  create_table "staffs", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb    "features"
+    t.string   "type"
+    t.integer  "site_id"
+    t.index ["user_id"], name: "index_staffs_on_user_id", using: :btree
   end
 
   create_table "taggings", force: :cascade do |t|
