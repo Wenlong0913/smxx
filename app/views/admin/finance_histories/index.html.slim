@@ -36,10 +36,10 @@ h1.page-header
     .well.form-horizontal
       h3.text-success 
         | 总计: 
-        = @type == 'in' ? @orders.sum(&:price)/1000 : @material_purchases.sum{|mp| mp.amount.to_f}.round
+        = @type == 'in' ? @orders.sum(&:price)/100 : @material_purchases.sum{|mp| mp.amount.to_f}.round
         = '元,'
         = @type == 'in' ? '已收款:' : '已付款:'
-        = @finance_histories_all.sum(&:amount).to_s + '元, '
+        = @finance_histories_all.sum(&:amount).to_s + '元 '
     - group_finance_histories = @finance_histories.group_by{|fh| fh.owner}
     .panel-group#accordion[role="tablist" aria-multiselectable="true"]
     - group_finance_histories.each_pair do |owner, finance_histories|
@@ -49,7 +49,7 @@ h1.page-header
             a[role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse#{owner.id}" aria-expanded="true" aria-controls="collapseOne"]
               = owner.try(:code) + '(' + (@type == 'in' ? owner.try(:site).try(:title) : owner.vendor.name) + ')'
               span.pull-right
-                = '总金额: ' + (@type == 'in' ? (owner.try(:price)/1000).to_s : owner.amount) + '元, '
+                = '总金额: ' + (@type == 'in' ? (owner.try(:price)/100).to_s : owner.amount) + '元, '
                 = (@type == 'in' ? '已收: ' : '已付: ') + finance_histories.sum(&:amount).to_s + '元'
         .panel-collapse.collapse[id="collapse#{owner.id}" role="tabpanel" aria-labelledby="heading#{owner.id}"]
           .panel-body

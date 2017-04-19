@@ -14,50 +14,36 @@ h1.page-header
   .panel-body
     = form_for :search, url:  admin_orders_path, method: :get do |f|
       .toolbar.row
-        .col-md-12
-          p
-            |支持SIMILAR TO查询语法, %代表匹配所有，_代表匹配一个字符
-            a<[href="https://www.postgresql.org/docs/current/static/functions-matching.html" target="_blank"]查看详情说明
-      .toolbar.row
-        .col-md-6.m-b-15
-          .input-group.search_all
-            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '关键字搜索...'
-            span.input-group-btn
-              button.btn.btn-inverse[type='submit']
-                i.fa.fa-search
-        .col-md-6.m-b-15
-          .btn-group
-            button.btn.btn-default.dropdown-toggle[type='button'data-toggle='dropdown']
-              | 筛选列名
-              span.caret
-            ul.dropdown-menu#search_column[role='menu']
-              - @filter_colums.each do |filter_colum|
-                li
-                  a[href='javascript:;' data-key=filter_colum] = Order.human_attribute_name(filter_colum.to_sym)
-          .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
-            button.btn.btn-default[type='submit'name='json'value='json'] json
-            button.btn.btn-default[type='submit'name='xml'value='xml'] xml
-            button.btn.btn-default[type='submit'name='csv'value='csv'] csv
-      .well.form-horizontal.filter_search[class==params[:filters]?'show':'hidden']
-        - if params[:filters] && !params[:filters].keys.blank?
-          - params[:filters].keys.each do |key|
-            .form-group
-              label.pull-left.m-l-15.control-label
-                i.fa.fa-trash-o.m-r-5
-                b = Order.human_attribute_name(key.to_sym)
-              - input_name = "filters["+key+"]"
-              .col-xs-5
-                input.form-control[type="text"name==input_name value==params[:filters][key]]
-        hr.filters_box
-        button.btn.btn-inverse.p-l-20.p-r-20.pull-center[type='submit'] 搜索
-    - if params[:search]
-      .alert.alert-success.m-b-15
-        strong
-          = "查询："
-        span
-          = @orders.size.to_s + "条记录"
-        span.close[data-dismiss="alert"]
-          | ×
+        .col-md-2
+          input[type="text" name="code" placeholder="输入订单号" class="form-control" value="#{params[:code]}"]
+        .col-md-2
+          input[type="text" name="site_name" placeholder="经销商名称" class="form-control" value="#{params[:site_name]}"]
+        .col-md-2
+          input[type="text" name="daterange" class="form-control" placeholder="请选择日期范围" value="#{params['daterange']}"]
+        .col-md-2
+          = f.select "status", enum_options_for_select(Order, 'status'), {selected: params[:search] && params[:search][:status], prompt: '所有状态', include_blank: true}, class: 'form-control'
+        .col-md-2
+          - if Settings.project.dagle?
+            = f.select "material", [['实际用料大于计划用料', 'more'], ['实际用料小于计划用料', 'less']], {selected: params[:search] && params[:search][:material], prompt: '所有用料', include_blank: true}, class: 'form-control'
+            span.hint 默认只筛选'已完成'的订单
+        .col-md-2
+          button.btn.btn-success[type="submit"] 搜索
+          button.btn.btn-default[type='submit'name='csv'value='csv'] csv下载
+      .well.form-horizontal
+        .row
+          .col-md-3
+            h4.text-info 
+              | 订单总额: 
+              = (@orders_all.sum(&:price)/100).to_s + '元'
+          - if Settings.project.dagle?
+            .col-md-3
+              h4.text-info 
+                | 计划用料: 
+                = Order.where(id: @orders_all.pluck("orders.id")).joins(:order_materials).pluck("amount").sum
+            .col-md-3
+              h4.text-info
+                | 实际用料: 
+                =  Order.where(id: @orders_all.pluck("orders.id")).joins(:order_materials).pluck("practical_number").sum
     .table-responsive.row.m-0
       table.table.table-striped.table-bordered
         thead
@@ -67,7 +53,9 @@ h1.page-header
             th = Order.human_attribute_name(:price)
             th = Order.human_attribute_name(:status)
             th = Order.human_attribute_name(:internal_status)
-            th
+            - if Settings.project.dagle?
+              th 计划用料/实际用料/差值
+            th 操作
         tbody
           - @orders.each do |order|
             tr
@@ -76,10 +64,21 @@ h1.page-header
               td = order.price.to_f / 100
               td = enum_l(order, :status)
               td = enum_l(order, :internal_status) || '-'
+              - if Settings.project.dagle?
+                th
+                  span.label.label-primary
+                    = order.order_materials.sum(&:amount)
+                  | &nbsp; &nbsp;
+                  span.label.label-info
+                    = order.order_materials.sum(&:practical_number)
+                  | &nbsp; &nbsp;
+                  span.label.label-danger
+                    = order.order_materials.sum(&:practical_number) - order.order_materials.sum(&:amount)
               td
                 => link_to '查看', admin_order_path(order), class: 'btn btn-xs btn-default'
-                => link_to '编辑', edit_admin_order_path(order), class: 'btn btn-xs btn-default'
                 = link_to '删除', admin_order_path(order), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+.pull-right
+  = paginate @orders
 / TODO: move this code to application.js
 javascript:
   $(document).ready(function(){
