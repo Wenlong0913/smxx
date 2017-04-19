@@ -48,6 +48,15 @@
                   = link_to '库存流水', admin_material_management_histories_path
                 / li[class=('active' if page?('admin/material_stock_alerts'))]
                   = link_to '库存警报', admin_material_stock_alerts_path
+        li class=("has-sub #{'active' if page?('admin/market_catalogs', 'admin/market_templates', 'admin/market_pages')}")
+          = link_to dashboard_admin_market_pages_path
+            b.caret.pull-right
+            i.fa.fa-inbox
+            span 营销页
+          ul.sub-menu
+            li class=("#{'active' if page?('admin/market_catalogs')}") = link_to '分类管理', admin_market_catalogs_path
+            li class=("#{'active' if page?('admin/market_templates')}") = link_to '模板管理', admin_market_templates_path
+            li class=("#{'active' if page?('admin/market_pages')}") = link_to '营销页', admin_market_pages_path
 
       li class=("has-sub #{'active' if page?('admin/vendors','admin/users', 'admin/roles', 'admin/user/weixins')}")
         = link_to dashboard_admin_users_path
@@ -63,16 +72,7 @@
           - if Settings.project.dagle?
             li[class=("active" if page?('admin/sites'))]
               = link_to '经销商', admin_sites_path
-                        
-      li class=("has-sub #{'active' if page?('admin/market_catalogs', 'admin/market_templates', 'admin/market_pages')}")
-        = link_to dashboard_admin_market_pages_path
-          b.caret.pull-right
-          i.fa.fa-inbox
-          span 营销页
-        ul.sub-menu
-          li class=("#{'active' if page?('admin/market_catalogs')}") = link_to '分类管理', admin_market_catalogs_path
-          li class=("#{'active' if page?('admin/market_templates')}") = link_to '模板管理', admin_market_templates_path
-          li class=("#{'active' if page?('admin/market_pages')}") = link_to '营销页', admin_market_pages_path
+
 
       / imolin
       - if Settings.project.imolin?
