@@ -37,6 +37,7 @@ module AdminRoute
         resources :material_warehouses # 物料仓库
         resources :material_management_histories, only: [:index] # 库存流水
         resources :material_stock_alerts, only: [:index] # 库存警报
+        resources :material_purchases, only: [:index]
 
         resources :roles, only: [:index], :concerns => :paginatable do
           resources :users, only: [:index], :concerns => :paginatable

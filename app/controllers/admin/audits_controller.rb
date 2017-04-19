@@ -17,7 +17,7 @@ class Admin::AuditsController < Admin::BaseController
       conditions.push "auditable_id = '#{params["auditable_id"]}'"
     end
     
-    @admint_audits = Audit.where(conditions.join(' and '), date_range[0]..date_range[1]).order(created_at: :desc).page(params[:page])
+    @admint_audits = Audit.where(conditions.join(' and '), date_range[0]..date_range[-1]).order(created_at: :desc).page(params[:page])
   end
 
   def statistics

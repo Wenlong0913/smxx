@@ -10,7 +10,7 @@ class Admin::FinanceHistoriesController < Admin::BaseController
     @finance_histories_all = FinanceHistory.all.send(@type)
     if params["daterange"].present?
       date_range = params["daterange"].split(' - ').map(&:strip).map(&:to_date)
-      @finance_histories_all = @finance_histories_all.where("operate_date in (?)", date_range[0]..date_range[1])
+      @finance_histories_all = @finance_histories_all.where("operate_date in (?)", date_range[0]..date_range[-1])
     end
     @orders = Order.all
     @material_purchases = MaterialPurchase.all
@@ -31,7 +31,7 @@ class Admin::FinanceHistoriesController < Admin::BaseController
       end
       @finance_histories_all = @finance_histories_all.where(owner: @material_purchases)
     end
-    @finance_histories = @finance_histories_all.order("updated_at DESC").page(params[:page])
+    @finance_histories = @finance_histories_all.includes(:owner).order("updated_at DESC").page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@finance_histories.to_json, filename: "finance_histories-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

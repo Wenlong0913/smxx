@@ -6,8 +6,36 @@ class Admin::OrdersController < Admin::BaseController
   # GET /admin/orders
   def index
     authorize Order
-    @filter_colums = %w(code)
-    @orders = build_query_filter(Order.all, only: @filter_colums).page(params[:page])
+    # @filter_colums = %w(code)
+    # @orders = build_query_filter(Order.all, only: @filter_colums).page(params[:page])
+    @orders_all = Order.all
+    if params[:code].present?
+      @orders_all = @orders_all.where("code like ?", "%#{params[:code]}%")
+    end
+    if params[:site_name].present?
+      @orders_all = @orders_all.joins(:site).where("sites.title like ?", "%#{params[:site_name]}%")
+    end
+    if params[:search].present?
+      if params[:search][:status].present?
+        @orders_all = @orders_all.where(status: params[:search][:status])
+      end
+      if params[:search][:material].present?
+        params[:search][:status] = 'completed'
+        case params[:search][:material]
+        when 'more'
+          @orders_all = @orders_all.joins(:order_materials).completed.where("order_materials.amount < order_materials.practical_number").distinct
+        when 'less'
+          @orders_all = @orders_all.joins(:order_materials).completed.where("order_materials.amount > order_materials.practical_number").distinct
+        else
+          # do nothing
+        end
+      end
+    end
+    if params[:daterange].present?
+      date_range = params["daterange"].split(' - ').map(&:strip).map(&:to_date)
+      @orders_all = @orders_all.where("Date(orders.created_at) in (?)", date_range[0]..date_range[-1])
+    end
+    @orders = @orders_all.includes(:site, :order_materials).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@orders.to_json, filename: "orders-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

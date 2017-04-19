@@ -227,6 +227,6 @@ class Api::V1::MaterialPurchasesController < Api::BaseController
   end
 
   def process_material_purchase_import
-    MaterialManagement::Create.(permitted_attributes(MaterialManagement))
+    MaterialManagement::Create.(permitted_attributes(MaterialManagement).merge({created_by: current_user.nickname}))
   end
 end
