@@ -7,9 +7,11 @@
         <a href="#<%= page.short_title %>"></a>
       </li>
       <% end %>
+      <% if @pages.length == 6 %>
       <li data-menuanchor="last">
         <a href="#last"></a>
       </li>
+      <% end %>
     </ul>
   </div>
 
@@ -21,12 +23,16 @@
         <div class="row">
           <div class="col-sm-6 col-md-3 col-md-offset-1">
             <div class="new-img">
-              <img src="<%= page.image_path.blank? ? '/templetes/app-landing-spotlight/assets/img/app-screenshots/quest_1.png' : page.image_path %>" alt="" class="img-responsive">
+              <a href="<%= get_cms_url(page)  %>">
+                <img src="<%= page.image_path.blank? ? '/templetes/app-landing-spotlight/assets/img/app-screenshots/default.jpg' : page.image_path %>" alt="" class="img-responsive">
+              </a>
             </div>
           </div>
           <div class="col-sm-6 col-md-6 col-md-offset-1">
             <h1 class="heading" data-animate-in="animateUpDown">
-             <%= page.title %>
+              <a href="<%= get_cms_url(page)  %>">
+                <%= page.title %>   
+              </a>
             </h1>
             <p class="delay_1" data-animate-in="animateUpDown">
               <%= page.description.truncate(100) %>
@@ -39,7 +45,7 @@
       </div><!-- / .container -->
     </section>
     <% end %>
-
+    <% if @pages.length == 6 %>
     <section data-anchor="last">
       <div class="container">
         <div class="row">
@@ -53,6 +59,7 @@
         </div> <!-- / .row -->
       </div><!-- / .container -->
     </section>
+    <% end %>
     
   </div>
   

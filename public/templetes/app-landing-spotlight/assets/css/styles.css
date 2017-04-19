@@ -7614,7 +7614,7 @@ section {
   padding-top: 50px;
   height: 100%;
   position: relative;
-  touch-action: none;
+  /*touch-action: none; 不允许用户进行触摸操作 */
   transform: translate3d(0px, 0px, 0px);
 }
 #news_detail .features{
