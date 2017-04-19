@@ -31,7 +31,12 @@ module ApiRoute
           resources :orders, only: [:index, :create, :show, :update] do
             commentable
           end
-          resources :order_deliveries, only: [:create]
+          resources :logistics, only: [] do
+            member do
+              get :change_status
+            end
+          end
+          resources :order_deliveries, only: [:create, :index]
           resources :material_management_details, only: [:index, :create]
           resources :material_managements, only: [:create]
           resources :material_warehouses, only: [:index, :create]
