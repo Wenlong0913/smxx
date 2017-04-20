@@ -62,7 +62,7 @@ end
 append :linked_files, "config/database.yml", "config/secrets.yml", "config/settings.yml"
 
 # Default value for linked_dirs is []
-append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/assets", "public/ckeditor_assets", 'node_modules', 'public/photos', 'public/attachments'
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/assets", "public/ckeditor_assets", 'node_modules', 'public/photos', 'public/attachments', 'public/templetes'
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
