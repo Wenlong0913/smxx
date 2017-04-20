@@ -77,7 +77,7 @@ class Admin::ProductsController < Admin::BaseController
   private
 
     def set_products
-      if params[:site_id]
+      if params[:site_id].present?
         @products = Product.where(site_id: params[:site_id])
       else
         @products = Product.all

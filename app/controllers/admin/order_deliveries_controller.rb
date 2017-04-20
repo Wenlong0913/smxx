@@ -14,7 +14,6 @@ class Admin::OrderDeliveriesController < Admin::BaseController
     if params[:search] && params[:search][:site_name].present?
       @orders = @orders.joins(:site).where("sites.title like ?", "%#{params[:search][:site_name]}%")
     end
-    @order_deliveries = @order_deliveries.where(order_id: @orders)
-    @order_deliveries = @order_deliveries.page(params[:page])
+    @order_deliveries = @order_deliveries.where(order_id: @orders).page(params[:page])
   end
 end
