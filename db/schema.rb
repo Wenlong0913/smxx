@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 20170418091430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "cube"
   enable_extension "earthdistance"
@@ -219,19 +220,18 @@ ActiveRecord::Schema.define(version: 20170418091430) do
   end
 
   create_table "cms_pages", force: :cascade do |t|
-    t.integer  "channel_id",                     null: false
-    t.string   "title",                          null: false
-    t.string   "short_title",                    null: false
+    t.integer  "channel_id",                    null: false
+    t.string   "title",                         null: false
+    t.string   "short_title",                   null: false
+    t.string   "properties"
     t.string   "keywords"
     t.string   "description"
     t.string   "image_path"
     t.text     "content"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.string   "properties",        default: [],              array: true
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "impressions_count", default: 0
     t.index ["channel_id"], name: "index_cms_pages_on_channel_id", using: :btree
-    t.index ["properties"], name: "index_cms_pages_on_properties", using: :gin
     t.index ["short_title"], name: "index_cms_pages_on_short_title", using: :btree
   end
 
@@ -807,8 +807,8 @@ ActiveRecord::Schema.define(version: 20170418091430) do
     t.jsonb    "features"
     t.string   "type"
     t.integer  "address_alias_id"
-    t.string   "address_line"
     t.integer  "catalog_id"
+    t.string   "address_line"
     t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
   end
 

@@ -9,6 +9,7 @@
 *= require select2-bootstrap
 *= require admin/products
 *= require admin/public
+*= require admin/order_deliveries
 *= require common/error_explanation
 *= require_self
 */
