@@ -14,6 +14,19 @@ module AppAPI::V1
         present ::Product.find(params[:id]), with: AppAPI::Entities::Product, type: :full_product
       end
 
+      desc '商品品的相关商品' do
+        success AppAPI::Entities::ProductSimple.collection
+      end
+      params do
+        requires :id, type: Integer, desc: "#{::Product.model_name.human}ID"
+      end
+      get ':id/relation_product'
+        product = ::Product.find_by(id: params[:id])
+        error! '此商品不存在' unless product
+        products = ::Product.where(catalog: product.catalog).where("id != ?", product.id).sample(4)
+        present products, with: AppAPI::Entities::ProductSimple
+      end
+
       desc '获取商品列表' do
         success AppAPI::Entities::ProductSimple.collection
       end
