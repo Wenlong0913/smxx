@@ -71,7 +71,7 @@
           li class=("#{'active' if page?('admin/roles')}") = link_to '角色', admin_roles_path
           li[class= ('active' if page?('admin/vendors'))]
             = link_to '供应商', admin_vendors_path
-          - if Settings.project.dagle?
+          - unless Settings.project.imolin?
             li[class=("active" if page?('admin/sites'))]
               = link_to '经销商', admin_sites_path
 

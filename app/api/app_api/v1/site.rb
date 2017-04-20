@@ -12,8 +12,6 @@ module AppAPI::V1
       get ':id' do
         authenticate!
         present ::Site.find(params[:id]), with: AppAPI::Entities::Site, includes: [:products, :staffs]
-
-        requires :id, type: Integer, desc: "#{::Site.model_name.human}ID"
       end
 
       desc "获取#{::Site.model_name.human}列表" do
