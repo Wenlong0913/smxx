@@ -39,6 +39,8 @@
               = link_to '物料分类', admin_material_catalogs_path
             li[class= ('active' if page?('admin/material_warehouses'))]
               = link_to '物料仓库', admin_material_warehouses_path
+            li[class=('active' if page?('admin/material_purchases'))]
+              = link_to '物料采购', admin_material_purchases_path
             li class=("has-sub #{'active' if page?('admin/material_warehouse_stock_managements', 'admin/material_management_histories', 'admin/material_stock_alerts')}")
               a href="javascript:;"
                 b.caret.pull-right
