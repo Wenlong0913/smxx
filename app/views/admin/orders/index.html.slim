@@ -39,11 +39,11 @@ h1.page-header
             .col-md-3
               h4.text-info 
                 | 计划用料: 
-                = Order.where(id: @orders_all.pluck("orders.id")).joins(:order_materials).pluck("amount").sum
+                = Order.where(id: @orders_all.pluck("orders.id")).joins(:order_materials).pluck("amount").compact.sum
             .col-md-3
               h4.text-info
                 | 实际用料: 
-                =  Order.where(id: @orders_all.pluck("orders.id")).joins(:order_materials).pluck("practical_number").sum
+                =  Order.where(id: @orders_all.pluck("orders.id")).joins(:order_materials).pluck("practical_number").compact.sum
     .table-responsive.row.m-0
       table.table.table-striped.table-bordered
         thead
