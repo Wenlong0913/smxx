@@ -1,6 +1,7 @@
 # csv support
 require 'csv'
 class Admin::ProductsController < Admin::BaseController
+  before_action :set_products
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   before_action :set_site_tags, only: [:edit, :new]
 
@@ -12,7 +13,7 @@ class Admin::ProductsController < Admin::BaseController
   def index
     authorize Product
     @filter_colums = %w(id)
-    @products = build_query_filter(Product.all, only: @filter_colums).page(params[:page])
+    @products = build_query_filter(@products, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@products.to_json, filename: "products-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
@@ -74,9 +75,17 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
+    def set_products
+      if params[:site_id]
+        @products = Product.where(site_id: params[:site_id])
+      else
+        @products = Product.all
+      end
+    end
+
     def set_product
-      @product = Product.find(params[:id])
+      @product = @products.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
