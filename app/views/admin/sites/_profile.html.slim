@@ -21,3 +21,12 @@
           = @site.description
     tr.divider
       td[colspan='2']
+.gallery#gallery
+  .row
+  -@site.image_items.each do |image|
+    .image.col-sm-6.col-md-4
+      .image-inner
+        a[href="javascript:;" data-lightbox="gallery-group-1"]
+          img[src="#{image.image_url}"]
+        .image-caption
+          =image.name
