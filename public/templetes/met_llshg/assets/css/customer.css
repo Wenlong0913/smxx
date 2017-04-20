@@ -285,3 +285,71 @@
 .clear{
   clear: both;
 }
+
+/* add header css style */
+.header-box {
+  position: relative;
+}
+#topNav {
+  position: absolute;
+  bottom: -65px;
+  left: 0px;
+  z-index: 999;
+}
+#topNav .header-ul {
+  list-style: none;
+  display: inline-block;
+  padding-left: 0px;
+  margin-bottom: 0px;
+}
+#topNav .header-ul:after {
+  content: '';
+  display: inline-block;
+  clear: both;
+}
+#topNav .header-ul .head-li {
+  float: left;
+  color: #fff;
+  margin-left: 50px;
+}
+#topNav .header-ul .head-li:first-child {
+  background-color: #d9534f;
+  border-radius: 2px;
+}
+#topNav .header-ul .head-li a {
+  display: inline-block;
+  padding: 3px 15px;
+  color: #fff;
+}
+
+/*标题H高度*/
+.title_h{
+  height: 0px !important;
+}
+
+.title_h i{
+  color: #d4262c;
+}
+
+.reason_h3{
+  height: 10px;
+  color: #fff;
+}
+
+.reason_col{
+  padding:35px 10px 35px 10px !important;
+}
+
+.theme_white{
+  color: #fff !important;
+}
+
+.theme_white i{
+  color: #de9421 !important;
+}
+
+.dishes_img{
+  border: 2px solid #757070;
+  border-radius: 10px;
+  padding: 10px;
+}
