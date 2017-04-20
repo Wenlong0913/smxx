@@ -67,13 +67,13 @@ h1.page-header
               - if Settings.project.dagle?
                 th
                   span.label.label-primary
-                    = order.order_materials.sum(&:amount)
+                    = order_amount = order.order_materials.sum{|om| om.amount.to_i}
                   | &nbsp; &nbsp;
                   span.label.label-info
-                    = order.order_materials.sum(&:practical_number)
+                    = order_practical = order.order_materials.sum{|om| om.practical_number.to_i}
                   | &nbsp; &nbsp;
                   span.label.label-danger
-                    = order.order_materials.sum(&:practical_number) - order.order_materials.sum(&:amount)
+                    = order_practical - order_amount
               td
                 => link_to '查看', admin_order_path(order), class: 'btn btn-xs btn-default'
                 = link_to '删除', admin_order_path(order), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
