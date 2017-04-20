@@ -26,25 +26,14 @@
                 input#search-address.form-control
               #baidu-map
       - else
-        - unless Settings.project.meikemei?
-          .row
-            div class="col-md-6 col-sm-12"
-              label[class="control-label"] 商家所有者
-              / = f.input :user_id, collection: User.all.decorate, label_method: :display_name, include_blank: true, input_html: {class: 'select2'}
-              select.select2.form-control[id="dropdown" name="site[user_id]" data-url="#{admin_users_url}"  data-id="#{params['username']}" data-name="#{User.find_by(id: params['username']).try(:nickname)}" ]
-            div class="col-md-6 col-sm-12"
-              .form-group.catalog-list[data-catalog-name="#{@site.catalog.try(:name)}" data-catalog-id="#{@site.catalog_id}"]
-                label[class="control-label"] 商家分类
-                input[type="hidden" v-model="id" name="site[catalog_id]"]
-                input.form-control[readonly=true @click="showCatalog = true" :value="catalogs"]
-                span.hint 点击输入框选择分类
-                modal[title="产品分类" :show.sync="showCatalog" @cancel="showCatalog = false"]
-                  div
-                    catalog-list[data-url=admin_site_catalogs_path :default="[#{@site.catalog_id}]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false"]
-                  div[slot="footer"]
-
+        - if Settings.project.dagle?
+          label[class="control-label"] 商家所有者
+          select.select2.form-control[id="dropdown" name="site[user_id]" data-url="#{admin_users_url}"  data-id="#{@site.user_id}" data-name="#{User.find_by(id: @site.user).try(:nickname)}" ]
           = f.input :title
-        - if Settings.project.meikemei?
+          = f.input :description, as: :text, input_html: {rows: 10}
+          .form-group
+            image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@site.image_item_ids.join(', ')}"]
+        - elsif Settings.project.meikemei?
           .div class="row"
             .div class="col-md-6 col-sm-12"
               = f.input :user_id, collection: User.all.decorate, label_method: :display_name
@@ -73,25 +62,48 @@
             .div class="col-md-6 col-sm-12"
               = f.input :sign_note, as: :text, input_html: {rows: 5}
           = f.input :content, as: :ckeditor
-          p 背景图片
-        - else
-          / .row
-          /   div class="col-md-6 col-sm-12"
-          /     label[class="control-label"] 商家所有者
-          /     / = f.input :user_id, collection: User.all.decorate, label_method: :display_name, include_blank: true, input_html: {class: 'select2'}
-          /     select.select2.form-control[id="dropdown" name="site[user_id]" data-url="#{admin_users_url}"  data-id="#{params['username']}" data-name="#{User.find_by(id: params['username']).try(:nickname)}" ]
-          /   div class="col-md-6 col-sm-12"
-          /     .form-group.catalog-list[data-catalog-name="#{@site.catalog.try(:name)}" data-catalog-id="#{@site.catalog_id}"]
-          /       label[class="control-label"] 商家分类
-          /       input[type="hidden" v-model="id" name="site[catalog_id]"]
-          /       input.form-control[readonly=true @click="showCatalog = true" :value="catalogs"]
-          /       span.hint 点击输入框选择分类
-          /       modal[title="产品分类" :show.sync="showCatalog" @cancel="showCatalog = false"]
-          /         div
-          /           catalog-list[data-url=admin_site_catalogs_path :default="[#{@site.catalog_id}]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false"]
-          /         div[slot="footer"]
-          = f.input :title
+          p 背景图片  
+          .form-group
+            image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@site.image_item_ids.join(', ')}"]        
+        - elsif Settings.project.sxhop?
+          .row
+            div class="col-md-6 col-sm-12"
+              label[class="control-label"] 商家所有者
+              / = f.input :user_id, collection: User.all.decorate, label_method: :display_name, include_blank: true, input_html: {class: 'select2'}
+              select.select2.form-control[id="dropdown" name="site[user_id]" data-url="#{admin_users_url}"  data-id="#{@site.user_id}" data-name="#{User.find_by(id: @site.user).try(:nickname)}" ]
+            div class="col-md-6 col-sm-12"
+              .form-group.catalog-list[data-catalog-name="#{@site.catalog.try(:name)}" data-catalog-id="#{@site.catalog_id}"]
+                label[class="control-label"] 商家分类
+                input[type="hidden" v-model="id" name="site[catalog_id]"]
+                input.form-control[readonly=true @click="showCatalog = true" :value="catalogs"]
+                span.hint 点击输入框选择分类
+                modal[title="产品分类" :show.sync="showCatalog" @cancel="showCatalog = false"]
+                  div
+                    catalog-list[data-url=admin_site_catalogs_path :default="[#{@site.catalog_id}]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false"]
+                  div[slot="footer"]
 
+          = f.input :title
+          = f.input :description, as: :text, input_html: {rows: 10}
+          .form-group
+            image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@site.image_item_ids.join(', ')}"]
+        - elsif Settings.project.imolin?
+          .row
+            div class="col-md-6 col-sm-12"
+              label[class="control-label"] 商家所有者
+              / = f.input :user_id, collection: User.all.decorate, label_method: :display_name, include_blank: true, input_html: {class: 'select2'}
+              select.select2.form-control[id="dropdown" name="site[user_id]" data-url="#{admin_users_url}"  data-id="#{@site.user_id}" data-name="#{User.find_by(id: @site.user).try(:nickname)}" ]
+            div class="col-md-6 col-sm-12"
+              .form-group.catalog-list[data-catalog-name="#{@site.catalog.try(:name)}" data-catalog-id="#{@site.catalog_id}"]
+                label[class="control-label"] 商家分类
+                input[type="hidden" v-model="id" name="site[catalog_id]"]
+                input.form-control[readonly=true @click="showCatalog = true" :value="catalogs"]
+                span.hint 点击输入框选择分类
+                modal[title="产品分类" :show.sync="showCatalog" @cancel="showCatalog = false"]
+                  div
+                    catalog-list[data-url=admin_site_catalogs_path :default="[#{@site.catalog_id}]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false"]
+                  div[slot="footer"]
+
+          = f.input :title
           = f.input :address_line
           div class="row"
             div class="col-md-3 col-sm-12"
@@ -110,10 +122,8 @@
               = f.input :has_contract, as: :boolean, label: false, label: '是否签约'
             div class="col-md-3 col-sm-12"
               = f.input :description, as: :text, input_html: {rows: 10}
-
-        .form-group
-          image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@site.image_item_ids.join(', ')}"]
-
+          .form-group
+            image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@site.image_item_ids.join(', ')}"]
       = f.submit class: 'btn btn-success btn-block'
 
 - if Settings.project.imolin?
