@@ -35,6 +35,7 @@ class Api::V1::ProducesController < Api::V1::BaseController
       include: {
         order: {
           only: [:id, :code, :description, :internal_status, :site_id, :status],
+          methods: :bat_file_path,
           include:{
             member: {only: [:name]},
             site: {only: [:title ]},

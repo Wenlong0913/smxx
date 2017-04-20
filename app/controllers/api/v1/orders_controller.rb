@@ -1,4 +1,4 @@
-class Api::V1::OrdersController < Api::BaseController
+class Api::V1::OrdersController < Api::V1::BaseController
   before_action :authenticate!
   before_action :set_orders, only: [:index]
   before_action :set_order, only: [:show, :update]
@@ -53,6 +53,16 @@ class Api::V1::OrdersController < Api::BaseController
     end
   end
 
+  def set_resource_url
+    order = Order.find(params[:id])
+    if order.update(resource_url: params[:resource_url])
+      create_bat_file(order.resource_url, order.code)
+      render json: {status: 'ok'}
+    else
+      render json: {status: 'error'}
+    end
+  end
+
   # def create_comment
   #   authorize Order
   #   order_comment = @order.comments.new(params[:comment].permit(:content, :offer, :image_item_ids => [], :attachment_ids => []))
@@ -71,6 +81,17 @@ class Api::V1::OrdersController < Api::BaseController
   # end
 
   private
+
+    def create_bat_file(source_path, code)
+      dir = File.join(Rails.root, "public/api/CV_migration_script", code)
+      Dir.mkdir(dir) unless File.directory?(dir) #创建文件夹
+      file_name         = code + ".bat"
+      description_path  = "C:\\Users\\%username%\\Desktop\\CV_migration_script"
+      file              = File.open(File.join(dir, file_name), 'w')
+      file.puts("xcopy #{source_path} #{description_path} /s/d \nstart #{description_path} \nmsg %username% /time:5 '已经将所需文件复制到:#{description_path} 目录下．' \ndel %0")
+      file.close
+    end
+
     def set_orders
       @order_list_type = params[:order_list_type]
       @orders = case @order_list_type
@@ -87,7 +108,7 @@ class Api::V1::OrdersController < Api::BaseController
 
     def order_json(orders)
       orders.as_json(
-        only: [:id, :code, :price, :status, :internal_status, :description, :created_at],
+        only: [:id, :code, :resource_url, :price, :status, :internal_status, :description, :created_at],
         include: {
           site: {only: [:id, :title], include: { user: { only: [:nickname], include: { mobile: { only: [:phone_number] } } } }},
           member: {only: [:name]},
