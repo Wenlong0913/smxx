@@ -1,8 +1,8 @@
 formatRepo = (user) ->
-  markup = '<p>' + (user.nickname || user.code) + '</p>'
+  markup = '<p>' + (user.nickname || user.code || ' ') + '</p>'
   markup
 userFormatSelection = (user) ->
-  '<input type=\'hidden\' id=\'user_id\' name=\'username\' value=' + user.id + ' />' + (user.nickname || user.code)
+  '<input type=\'hidden\' id=\'user_id\' name=\'username\' value=' + user.id + ' />' + (user.nickname || user.code || ' ')
 
 $(document).ready ->
   $('input[name="daterange"]').daterangepicker({ 
