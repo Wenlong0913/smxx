@@ -19,6 +19,7 @@ class Cms::Site < ApplicationRecord
   has_many :channels, dependent: :destroy
   has_many :keystores, dependent: :destroy
   has_many :pages, through: :channels
+  has_many :comments, dependent: :destroy
   belongs_to :site, class_name: '::Site'
   after_create :initialize_channel
 
@@ -47,6 +48,11 @@ class Cms::Site < ApplicationRecord
 
   def show_published
     is_published ? '已发布' : '未发布'
+  end
+
+  #methods for keystores
+  def value_for(key)
+    self.keystores.find_by(key: key).try(:value)
   end
 
   private
