@@ -54,16 +54,21 @@ class Admin::FinanceHistoriesController < Admin::BaseController
   # GET /admin/finance_histories/new
   def new
     authorize FinanceHistory
-    @finance_history = FinanceHistory.new(operate_type: 'in')
+    @finance_history = FinanceHistory.new(operate_type: @type)
+    if @finance_history.in?
+      @finance_history.owner_type = 'Order'
+    else
+      @finance_history.owner_type = 'MaterialPurchase'
+    end
   end
 
   # POST /admin/finance_histories
   def create
     authorize FinanceHistory
-    @finance_history = FinanceHistory.new(permitted_attributes(FinanceHistory))
+    @finance_history = FinanceHistory.new(permitted_attributes(FinanceHistory).merge(created_by: current_user.id))
 
     if @finance_history.save
-      redirect_to admin_finance_histories_path, notice: "#{FinanceHistory.model_name.human} 创建成功."
+      redirect_to admin_finance_histories_path(type: @finance_history.operate_type), notice: "#{FinanceHistory.model_name.human} 创建成功."
     else
       render :new
     end
