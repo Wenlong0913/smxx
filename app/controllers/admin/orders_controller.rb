@@ -12,6 +12,9 @@ class Admin::OrdersController < Admin::BaseController
     if params[:code].present?
       @orders_all = @orders_all.where("code like ?", "%#{params[:code]}%")
     end
+    if params[:q].present?
+      @orders_all = @orders_all.where("code like ?", "%#{params[:q]}%")
+    end
     if params[:site_name].present?
       @orders_all = @orders_all.joins(:site).where("sites.title like ?", "%#{params[:site_name]}%")
     end
@@ -38,6 +41,7 @@ class Admin::OrdersController < Admin::BaseController
     @orders = @orders_all.includes(:site, :order_materials).page(params[:page])
     respond_to do |format|
       if params[:json].present?
+        # format.json { render json: {:users => @orders.select(:id, :nickname), :total => @orders.size} }
         format.html { send_data(@orders.to_json, filename: "orders-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
       elsif params[:xml].present?
         format.html { send_data(@orders.to_xml, filename: "orders-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
@@ -46,6 +50,7 @@ class Admin::OrdersController < Admin::BaseController
         format.html { send_data(@orders.as_csv(only: []), filename: "orders-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
+        format.json { render json: {:results => @orders.as_json(only: [:id, :code]), :total => @orders.size} }
       end
     end
   end

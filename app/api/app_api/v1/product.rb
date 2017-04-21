@@ -14,6 +14,19 @@ module AppAPI::V1
         present ::Product.find(params[:id]), with: AppAPI::Entities::Product, type: :full_product
       end
 
+      desc '商品的相关商品' do
+        success AppAPI::Entities::ProductSimple.collection(meta: false)
+      end
+      params do
+        requires :id, type: Integer, desc: "#{::Product.model_name.human}ID"
+      end
+      get ':id/relations' do
+        product = ::Product.find_by(id: params[:id])
+        error! '此商品不存在' unless product
+        products = ::Product.where(catalog: product.catalog).where("id != ?", product.id).order("random()").limit(4)
+        present products, with: AppAPI::Entities::ProductSimple
+      end
+
       desc '获取商品列表' do
         success AppAPI::Entities::ProductSimple.collection
       end
@@ -21,6 +34,7 @@ module AppAPI::V1
         use :pagination
         # use :sort, fields: [:id, :created_at, :updated_at]
         optional :type, type: String, values: ['hot', 'new', 'favorites', 'favorites_of_mine', 'favorites_of_friends'], desc: '产品分类排行：最热门产品，最新上架产品，最私藏产品, 我私藏的产品, 好友们棒场(私藏)的商品'
+        optional :site_id, type: Integer, desc: '店铺ID'
         optional :name, type: String, desc: '根据名字搜索产品'
         optional :search_type, type: String, values: ['bought', 'all'], desc: '产品搜索类型: 我买过的产品, 所有产品, 默认为所有产品'
         optional :includes, type: String, values: ['favoriters'], desc: '选择favoriters后允许返回捧场者头像'
@@ -28,7 +42,13 @@ module AppAPI::V1
       get do
         authenticate!
         # 查看所有上架商品
-        products = ::Product.all
+        site = ::Site.find_by(id: params[:site_id])
+        error! '该产品不存在' unless site
+        products = if site
+          site.products
+        else
+          ::Product.all
+        end
         products = products.where("features ->> 'is_shelves' = '1'") if Settings.project.sxhop?
         if params[:type]
           products =

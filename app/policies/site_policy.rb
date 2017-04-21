@@ -34,15 +34,17 @@ class SitePolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    if user.super_admin_or_admin?
+    if user.super_admin_or_admin? || user.has_role?(:agent)
       [:user_id, :title, :description, :properties, :business_hours,
         :recommendation, :good_summary, :bad_summary, :parking,
         :wifi, :contact_name, :contact_phone, :has_contract, :contract_note,
         :avg_price, :is_published, :phone, :photos, :province, :city, :area, :business_area,
         :lat, :lng, :catalog_id, :address_line, :content, :is_sign, :sign_note, :score, :comment,
         :image_item_ids => []]
+    elsif user.has_role?(:agent) && user.sites.empty?
+      [:title]
     else
-
+      []
     end
   end
 
