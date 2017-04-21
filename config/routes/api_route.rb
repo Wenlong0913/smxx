@@ -30,6 +30,9 @@ module ApiRoute
           end
           resources :orders, only: [:index, :create, :show, :update] do
             commentable
+            member do
+              put 'update_code'
+            end
           end
           resources :logistics, only: [] do
             member do
