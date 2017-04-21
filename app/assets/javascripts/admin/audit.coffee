@@ -1,8 +1,8 @@
-formatRepo = (user) ->
-  markup = '<p>' + (user.nickname || user.code || ' ') + '</p>'
+formatRepo = (resource) ->
+  markup = '<p>' + (resource.nickname || resource.code || ' ') + '</p>'
   markup
-userFormatSelection = (user) ->
-  '<input type=\'hidden\' id=\'user_id\' name=\'username\' value=' + user.id + ' />' + (user.nickname || user.code || ' ')
+userFormatSelection = (resource) ->
+  '<input type=\'hidden\' id=\'user_id\' name=\'username\' value=' + resource.id + ' />' + (resource.nickname || resource.code || ' ')
 
 $(document).ready ->
   $('input[name="daterange"]').daterangepicker({ 
@@ -30,7 +30,7 @@ $(document).ready ->
       processResults: (data, params) ->
         params.page = params.page or 1
         {
-          results: data.users
+          results: data.results
           pagination: more: params.page * 30 < data.total_count
         }
       cache: true
