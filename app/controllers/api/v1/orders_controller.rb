@@ -1,7 +1,7 @@
 class Api::V1::OrdersController < Api::BaseController
   before_action :authenticate!
   before_action :set_orders, only: [:index]
-  before_action :set_order, only: [:show, :update]
+  before_action :set_order, only: [:show, :update, :update_code]
 
   def index
     # authorize Order
@@ -48,6 +48,15 @@ class Api::V1::OrdersController < Api::BaseController
         end
       end
       render json: {status: 'ok', order: order_json(@order), sms_message: sms_message}
+    else
+      render json: {status: 'failed', error_message:  @order.errors.full_messages.join(', ') }
+    end
+  end
+
+  def update_code
+    authorize @order
+    if @order.update_attributes(code: params[:order][:code])
+      render json: {status: 'ok'}
     else
       render json: {status: 'failed', error_message:  @order.errors.full_messages.join(', ') }
     end
