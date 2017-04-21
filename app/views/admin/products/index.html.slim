@@ -14,7 +14,7 @@ h1.page-header
         i class="fa fa-minus"
     h3.panel-title &nbsp;
   .panel-body
-    = form_for :search, url: admin_products_path, method: :get do |f|
+    = form_for :search, url: admin_site_products_path(site_id: params[:site_id]), method: :get do |f|
       .toolbar.row
         .col-md-6.m-b-15
           .input-group.search_all

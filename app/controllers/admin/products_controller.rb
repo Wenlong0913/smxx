@@ -2,6 +2,7 @@
 require 'csv'
 class Admin::ProductsController < Admin::BaseController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_site, only: [:index, :new, :edit, :create, :show, :update, :destroy]
   before_action :set_site_tags, only: [:edit, :new]
 
   def dashboard
@@ -12,7 +13,8 @@ class Admin::ProductsController < Admin::BaseController
   def index
     authorize Product
     @filter_colums = %w(id)
-    @products = build_query_filter(Product.all, only: @filter_colums).page(params[:page])
+    @products = @site.products
+    @products = build_query_filter(@products, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@products.to_json, filename: "products-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
@@ -46,10 +48,10 @@ class Admin::ProductsController < Admin::BaseController
   # POST /admin/products
   def create
     authorize Product
-    @product = Product.new(permitted_attributes(Product))
+    @product = Product.new(permitted_attributes(Product).merge(site_id: @site.id))
     filter_additional_attribute
     if @product.save
-      redirect_to admin_product_path(@product), notice: 'Product 创建成功.'
+      redirect_to admin_site_product_path(@site, @product), notice: 'Product 创建成功.'
     else
       render :new
     end
@@ -60,7 +62,7 @@ class Admin::ProductsController < Admin::BaseController
     authorize @product
     filter_additional_attribute
     if @product.update(permitted_attributes(@product))
-      redirect_to admin_product_path(@product), notice: 'Product 更新成功.'
+      redirect_to admin_site_product_path(@site, @product), notice: 'Product 更新成功.'
     else
       render :edit
     end
@@ -70,7 +72,7 @@ class Admin::ProductsController < Admin::BaseController
   def destroy
     authorize @product
     @product.destroy
-    redirect_to admin_products_url, notice: 'Product 删除成功.'
+    redirect_to admin_site_products_url, notice: 'Product 删除成功.'
   end
 
   private
@@ -89,6 +91,10 @@ class Admin::ProductsController < Admin::BaseController
       @most_used_tags = current_user.sites.first.tags.most_used(5).uniq.map(&:name)
     end
 
+    def set_site
+      @site = Site.find(params[:site_id])
+    end
+    
     def filter_additional_attribute
       if params[:product][:additional_attribute_keys].present?
         params[:product][:additional_attribute_keys].each_pair do |k, v|
