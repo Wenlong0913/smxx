@@ -1,7 +1,8 @@
 h1.page-header
   | #{FinanceHistory.model_name.human}列表
   .pull-right
-    / = link_to "新建#{FinanceHistory.model_name.human}", new_admin_finance_history_path, class: 'btn btn-primary'
+    - if @type == 'in'
+      = link_to "新建#{FinanceHistory.model_name.human}", new_admin_finance_history_path(type: @type), class: 'btn btn-primary'
 
 .panel.panel-default
   .panel-heading
