@@ -116,10 +116,6 @@ class Order < ApplicationRecord
 
   private
 
-    def bat_file_path
-      File.join("", 'api', "CV_migration_script", code, code+".bat").to_s
-    end
-
   # def check_member
   #   if mobile_phone.blank?
   #     create_member
