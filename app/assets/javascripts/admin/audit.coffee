@@ -5,9 +5,9 @@ userFormatSelection = (resource) ->
   '<input type=\'hidden\' id=\'user_id\' name=\'username\' value=' + resource.id + ' />' + (resource.nickname || resource.code || ' ')
 
 $(document).ready ->
-  $('input[name="daterange"]').daterangepicker({ 
+  $('input[name="daterange"], .daterange').daterangepicker({ 
     format: 'YYYY-MM-DD',
-    locale: { 
+    locale: {
       cancelLabel: '取消',
       applyLabel: '确认',
       fromLabel: '从',
