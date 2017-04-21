@@ -52,6 +52,7 @@ module ApiRoute
               get :need_export
             end
           end
+          resources :tasks, only: [:index]
           resources :task_types, only: [:index]
           resources :deliveries, only: [:index, :create]
           resources :image_items, only: [:create]

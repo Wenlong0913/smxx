@@ -4,7 +4,41 @@ class Api::V1::TasksController < Api::V1::BaseController
 
   def index
     # authorize Task
-    render json: task_json(@produce.tasks)
+    if params[:user_id].present?
+      user = User.find(params[:user_id])
+      tasks = user.tasks.joins("join produces on produces.id = tasks.resource_id").where("tasks.resource_type = ?",'Produce').order("produces.created_at asc, tasks.ordinal asc").page(params[:page]).per(params[:page_size])
+      render json: {status: 'ok', tasks: tasks.as_json(
+        only: %w(id title description ordinal status created_at),
+        include: {
+          task_type: {
+            only: %w(name)
+          },
+          user: {
+            only: %w(id nickname)
+          },
+          resource: {
+            only: %w(id created_at),
+            include: {
+              order: {
+                only: %w(id code),
+                include: {
+                  order_materials: {
+                    only: %w(id amount factory_expected_number practical_number material_id),
+                    include: {
+                      material: {
+                        only: [:name]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      )}
+    else
+      render json: task_json(@produce.tasks)
+    end
   end
 
   def create
@@ -30,7 +64,7 @@ class Api::V1::TasksController < Api::V1::BaseController
 
   private
   def set_produce
-    @produce = Produce.find(params["produce_id"])
+    @produce = Produce.find(params["produce_id"]) if params[:produce_id].present?
   end
 
   def task_json(tasks)
