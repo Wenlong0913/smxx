@@ -10,6 +10,9 @@ class Admin::MaterialPurchasesController < Admin::BaseController
     if params[:code].present?
       @material_purchases_all = @material_purchases_all.where("code like ?", "%#{params[:code]}%")
     end
+    if params[:q].present?
+      @material_purchases_all = @material_purchases_all.where("code like ?", "%#{params[:q]}%")
+    end
     if params[:vendor_name].present?
       @material_purchases_all = @material_purchases_all.joins(:vendor).where("items.name like ?", "%#{params[:vendor_name]}%")
     end
@@ -33,6 +36,7 @@ class Admin::MaterialPurchasesController < Admin::BaseController
         format.html { send_data(@material_purchases.as_csv(only: []), filename: "material_purchases-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
+        format.json { render json: {:results => @material_purchases.as_json(only: [:id, :code]), :total => @material_purchases.size} }
       end
     end
   end

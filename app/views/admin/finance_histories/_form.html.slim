@@ -20,7 +20,7 @@
         select.select2.form-control[id="dropdown" name="finance_history[owner_id]" data-url="#{admin_orders_url}"  data-id="#{@finance_history.owner_id}" data-name="输入订单号" ]
       - else
         = f.input :owner_type, as: :hidden
-        select.select2.form-control[id="dropdown" name="finance_history[owner_id]" data-url="#{admin_orders_url}"  data-id="#{@finance_history.owner_id}" data-name="输入采购单号" ]
+        select.select2.form-control[id="dropdown" name="finance_history[owner_id]" data-url="#{admin_material_purchases_url}"  data-id="#{@finance_history.owner_id}" data-name="输入采购单号" ]
       = f.input :operate_type, as: :hidden
       = f.input :operate_date
       = f.input :amount

@@ -66,8 +66,10 @@ class Admin::FinanceHistoriesController < Admin::BaseController
   def create
     authorize FinanceHistory
     @finance_history = FinanceHistory.new(permitted_attributes(FinanceHistory).merge(created_by: current_user.id))
-
-    if @finance_history.save
+    if @finance_history.out?
+      @finance_history.owner.paid = @finance_history.owner.paid.to_f + @finance_history.amount
+    end
+    if @finance_history.save && @finance_history.owner.save
       redirect_to admin_finance_histories_path(type: @finance_history.operate_type), notice: "#{FinanceHistory.model_name.human} 创建成功."
     else
       render :new
