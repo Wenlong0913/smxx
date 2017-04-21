@@ -1,4 +1,4 @@
-class Cms::KeystorePolicy < ApplicationPolicy
+class Cms::CommentPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope
@@ -11,7 +11,7 @@ class Cms::KeystorePolicy < ApplicationPolicy
 
   def show?
     return true if user.super_admin_or_admin?
-    user.has_role?(:agent) && record.site.site.try(:user_id) == user.id
+    user.has_role?(:agent) && record.site.try(:user_id) == user.id
   end
 
   def new?
@@ -19,11 +19,11 @@ class Cms::KeystorePolicy < ApplicationPolicy
   end
 
   def create?
-    user.super_admin_or_admin? || user.has_role?(:agent)
+    user.super_admin_or_admin? || (user.has_role?(:agent) && record.channel.site.site.try(:user_id) == user.id)
   end
 
   def edit?
-    user.super_admin_or_admin? || (user.has_role?(:agent) && record.site.site.try(:user_id) == user.id)
+    create?
   end
 
   def update?
@@ -36,7 +36,8 @@ class Cms::KeystorePolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.super_admin_or_admin?  || user.has_role?(:agent)
-      [:site_id, :key, :value, :description]
+      [:site_id, :contact, :content, :name, :mobile_phone, :tel_phone,:email,:qq,
+      :address,:gender,:birth,:hobby,:content2,:content3,:status,:branch,:datetime]
     else
       []
     end

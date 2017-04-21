@@ -5,6 +5,7 @@ module CmsBackendRoute
       namespace :admin do
         namespace :cms do
           resources :sites do
+            resources :comments
             resources :keystores
             resources :channels do
               resources :pages
@@ -16,6 +17,7 @@ module CmsBackendRoute
       #agent backend
       namespace :cms do
         resources :sites do
+          resources :comments
           resources :keystores
           resources :channels do
             resources :pages

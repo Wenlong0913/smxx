@@ -89,7 +89,7 @@ CMS站点是一个独立的网站内容管理系统， 每一个站点，对应p
 引用实例：
 
     <%= @cms_site.name %>
-    <%= @cms_site.keystores.value_for('contact_name') %>
+    <%= @cms_site.value_for('contact_name') %>
     <%= raw @channel.description  %>
     <% @channel.pages.where("'recommend' = ANY(properties)").each do |page| %>
     <%= paginate @pages, remote: true %>
