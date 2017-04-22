@@ -11,7 +11,7 @@ module AppAPI
       expose :sales_count, documentation: {desc: '产品的销量', type: Integer }
       expose :site, using: AppAPI::Entities::SiteSimple
       expose :image_items, using: AppAPI::Entities::ImageItemSimple, documentation: { is_array: true }, as: :images
-      with_options if: ->(products, options) { options[:includes].include?('favoriters') } do |f|
+      with_options if: ->(products, options) { options.fetch(:includes, []).include?('favoriters') } do |f|
         expose :favoriters, documentation: { desc: "产品的捧场用户", is_array: true }
       end
 
