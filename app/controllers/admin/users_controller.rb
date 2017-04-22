@@ -13,7 +13,7 @@ class Admin::UsersController < Admin::BaseController
     @admin_users = @admin_users.includes(:roles, :mobile).page params[:page]
     respond_to do |format|
       format.html
-      format.json { render json: {:users => @admin_users.select(:id, :nickname), :total => @admin_users.size} }
+      format.json { render json: {:results => @admin_users.select(:id, :nickname), :total => @admin_users.size} }
     end
   end
 

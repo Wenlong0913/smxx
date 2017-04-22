@@ -87,6 +87,8 @@
                 i.fa.fa-angle-down
                 span.arrow.top
               ul.dropdown-menu
+                - if @cms_site.present?
+                  li = link_to '访客留言', cms_site_comments_path(@cms_site)
                 li = link_to '访客统计', agent_tracker_path
                 li = link_to '分销统计', agent_tracker_shares_path
       /! END header-nav

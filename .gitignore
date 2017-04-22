@@ -13,3 +13,4 @@ db/schema.rb
 /coverage/
 public/system/
 public/attachments/
+public/templetes

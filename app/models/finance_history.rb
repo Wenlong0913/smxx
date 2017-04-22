@@ -4,6 +4,7 @@ class FinanceHistory < ApplicationRecord
   has_many :image_item_relations, as: :relation, dependent: :destroy
   has_many :image_items, :through => :image_item_relations
   validates_presence_of :amount
+  validates_presence_of :owner_id, :owner_type
   store_accessor :features, :note
 
   enum operate_type: {
