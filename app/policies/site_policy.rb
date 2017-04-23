@@ -5,6 +5,10 @@ class SitePolicy < ApplicationPolicy
     end
   end
 
+  def dashboard?
+    user.super_admin_or_admin? || user.permission?(:login_admin)
+  end
+
   def index?
     user.super_admin_or_admin? || user.has_role?(:worker)
   end
