@@ -15,14 +15,6 @@ module AppAPI
         expose :favoriters, documentation: { desc: "产品的捧场用户", is_array: true }
       end
 
-      def sell_price
-        if object.discount && object.discount < object.price
-          object.discount
-        else
-          object.price
-        end
-      end
-
       def favoriters
         object.favorites.as_json(only: [], include: { user: {only: [:nickname], methods: [:display_headshot]}})
       end

@@ -54,4 +54,12 @@ class Product < Item
     discover = self.discovers.find_or_create_by(resource: self)
     discover.save!
   end
+
+  def sell_price
+    if discount && discount < price
+      discount
+    else
+      price
+    end
+  end
 end
