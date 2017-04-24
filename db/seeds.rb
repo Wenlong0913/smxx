@@ -102,13 +102,13 @@ material_catalogs = {
   "平开门": [{'五金': []}, {'吸塑': []}]
 }
 material_catalogs.each_pair do |material_catalog, sub_material_catalos|
-  material_catalog = MaterialCatalog.find_by(name: material_catalog)
+  material_catalog = MaterialCatalog.find_or_create_by(name: material_catalog)
   unless material_catalog
     _, material_catalog = MaterialCatalog::Create.(name: material_catalog)
   end
   sub_material_catalos.each do |sub_material|
     sub_material.each_pair do |next_catalog, materials|
-      next_catalog = MaterialCatalog.find_by(name: next_catalog, parent: material_catalog)
+      next_catalog = MaterialCatalog.find_or_create_by(name: next_catalog, parent: material_catalog)
       unless next_catalog
         _, next_catalog = MaterialCatalog::Create.(name: next_catalog, parent: material_catalog)
       end

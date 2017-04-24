@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: git@gitlab.tanmer.com:tm-framework/gnomon.git
-  revision: bfce6f7bd559ae200238158e415026e3e1e2889d
+  revision: 97ba3447a23e4b623c28a2e770751d8e8b4ab178
   specs:
     gnomon (0.1.0)
       activerecord-postgres-earthdistance (~> 0.5.1)
@@ -280,8 +280,8 @@ GEM
       thor (~> 0.19.1)
     formatador (0.2.5)
     github-markup (1.6.0)
-    globalid (0.3.7)
-      activesupport (>= 4.1.0)
+    globalid (0.4.0)
+      activesupport (>= 4.2.0)
     grape (0.19.1)
       activesupport
       builder
