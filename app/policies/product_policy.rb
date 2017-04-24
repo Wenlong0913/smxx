@@ -39,7 +39,7 @@ class ProductPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    if user.super_admin_or_admin? || user.has_role?(:agent)
+    if user.super_admin_or_admin? || user.has_role?(:agent) || user.permission?([:product_insert, :product_update])
 
       [:site_id, :name, :price, :old_price, :responsive_person, :warning_message,
         :service_time, :month_number, :image, :stock, :unit, :discount, :description,
