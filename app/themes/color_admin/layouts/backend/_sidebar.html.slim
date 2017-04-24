@@ -60,7 +60,7 @@
             li class=("#{'active' if page?('admin/market_templates')}") = link_to '模板管理', admin_market_templates_path
             li class=("#{'active' if page?('admin/market_pages')}") = link_to '营销页', admin_market_pages_path
 
-      li class=("has-sub #{'active' if page?('admin/vendors','admin/users', 'admin/roles', 'admin/user/weixins', 'admin/sites')}")
+      li class=("has-sub #{'active' if page?('admin/vendors','admin/users', 'admin/roles', 'admin/user/weixins')}")
         = link_to dashboard_admin_users_path
           b.caret.pull-right
           i.fa.fa-inbox

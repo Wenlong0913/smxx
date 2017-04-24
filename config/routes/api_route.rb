@@ -30,8 +30,10 @@ module ApiRoute
           end
           resources :orders, only: [:index, :create, :show, :update] do
             commentable
+            resources :get_bat_file, only: [:index]
             member do
               put 'update_code'
+              get :set_resource_url
             end
           end
           resources :logistics, only: [] do
@@ -52,6 +54,7 @@ module ApiRoute
               get :need_export
             end
           end
+          resources :tasks, only: [:index]
           resources :task_types, only: [:index]
           resources :deliveries, only: [:index, :create]
           resources :image_items, only: [:create]

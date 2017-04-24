@@ -42,8 +42,11 @@ module AppAPI::V1
       get do
         authenticate!
         # 查看所有上架商品
-        site = ::Site.find_by(id: params[:site_id])
-        error! '该产品不存在' unless site
+        site = nil
+        if params[:site_id]
+          site = ::Site.find_by(id: params[:site_id])
+          error! '该产品不存在' unless site
+        end
         products = if site
           site.products
         else

@@ -58,7 +58,7 @@ module AppAPI::V1
         authenticate!
         orders = current_user.orders
         if params[:status]
-          orders = orders.send(params[:status])
+          orders = orders.where(status: params[:status])
         end
         orders = paginate_collection(sort_collection(orders), params)
         wrap_collection orders, AppAPI::Entities::Order
