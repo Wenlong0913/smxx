@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Contact:
+  = @cms_comment.contact
+p
+  strong Content:
+  = @cms_comment.content
+p
+  strong Features:
+  = @cms_comment.features
+
+= link_to 'Edit', edit_cms_comment_path(@cms_comment)
+'|
+= link_to 'Back', cms_comments_path

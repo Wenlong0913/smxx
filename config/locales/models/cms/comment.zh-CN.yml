@@ -1,0 +1,16 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      cms/comment: Comment
+    attributes:
+      cms/comment:
+        site: Site
+        contact: Contact
+        content: Content
+        features: Features
+    errors:
+      models:
+        comment: 
+  helpers:
+    comment: 

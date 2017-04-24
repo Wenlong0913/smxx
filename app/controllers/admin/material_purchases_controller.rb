@@ -36,7 +36,7 @@ class Admin::MaterialPurchasesController < Admin::BaseController
         format.html { send_data(@material_purchases.as_csv(only: []), filename: "material_purchases-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
-        format.json { render json: {:users => @material_purchases.as_json(only: [:id, :code]), :total => @material_purchases.size} }
+        format.json { render json: {:results => @material_purchases.as_json(only: [:id, :code]), :total => @material_purchases.size} }
       end
     end
   end

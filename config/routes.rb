@@ -2,7 +2,7 @@
 Rails.application.routes.draw do
 
   get 'robots.txt', to: 'robots#index'
-  
+
   # === Plugins ===
   mount Ckeditor::Engine => '/ckeditor'
 

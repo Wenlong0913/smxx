@@ -60,7 +60,7 @@
             li class=("#{'active' if page?('admin/market_templates')}") = link_to '模板管理', admin_market_templates_path
             li class=("#{'active' if page?('admin/market_pages')}") = link_to '营销页', admin_market_pages_path
 
-      li class=("has-sub #{'active' if page?('admin/vendors','admin/users', 'admin/roles', 'admin/user/weixins')}")
+      li class=("has-sub #{'active' if page?('admin/vendors','admin/users', 'admin/roles', 'admin/user/weixins', 'admin/sites')}")
         = link_to dashboard_admin_users_path
           b.caret.pull-right
           i.fa.fa-inbox
@@ -168,9 +168,11 @@
           li class=("#{'active' if page?('admin/cms/sites')}")
             = link_to '站点列表', admin_cms_sites_path
           - if ::Cms::Site.count < 5
-            - ::Cms::Site.all.each do |cms_site|
-              li class=("#{'active' if page?('admin/cms/channels')}")
-                = link_to cms_site.name, admin_cms_site_channels_path(cms_site)
+            li
+              ul.sub-menu[style="display: block;"]
+                - ::Cms::Site.all.each do |cms_site|
+                  li class=("#{'active' if page?('admin/cms/channels') && (cms_site.id == params[:site_id].to_i)}")
+                    = link_to cms_site.name, admin_cms_site_channels_path(cms_site)
 
       li class=("has-sub #{'active' if page?('admin/tracker/home', 'admin/tracker/shares/home')}")
         a href="javascript:;"

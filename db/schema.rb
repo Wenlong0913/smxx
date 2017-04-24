@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418091430) do
+ActiveRecord::Schema.define(version: 20170421072651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "cube"
   enable_extension "earthdistance"
@@ -208,6 +207,16 @@ ActiveRecord::Schema.define(version: 20170418091430) do
     t.index ["site_id"], name: "index_cms_channels_on_site_id", using: :btree
   end
 
+  create_table "cms_comments", force: :cascade do |t|
+    t.integer  "site_id"
+    t.string   "contact"
+    t.text     "content"
+    t.jsonb    "features"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["site_id"], name: "index_cms_comments_on_site_id", using: :btree
+  end
+
   create_table "cms_keystores", force: :cascade do |t|
     t.integer  "site_id"
     t.string   "key",         null: false
@@ -220,18 +229,19 @@ ActiveRecord::Schema.define(version: 20170418091430) do
   end
 
   create_table "cms_pages", force: :cascade do |t|
-    t.integer  "channel_id",                    null: false
-    t.string   "title",                         null: false
-    t.string   "short_title",                   null: false
-    t.string   "properties"
+    t.integer  "channel_id",                     null: false
+    t.string   "title",                          null: false
+    t.string   "short_title",                    null: false
     t.string   "keywords"
     t.string   "description"
     t.string   "image_path"
     t.text     "content"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "properties",        default: [],              array: true
     t.integer  "impressions_count", default: 0
     t.index ["channel_id"], name: "index_cms_pages_on_channel_id", using: :btree
+    t.index ["properties"], name: "index_cms_pages_on_properties", using: :gin
     t.index ["short_title"], name: "index_cms_pages_on_short_title", using: :btree
   end
 
@@ -807,8 +817,8 @@ ActiveRecord::Schema.define(version: 20170418091430) do
     t.jsonb    "features"
     t.string   "type"
     t.integer  "address_alias_id"
-    t.integer  "catalog_id"
     t.string   "address_line"
+    t.integer  "catalog_id"
     t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
   end
 
@@ -1034,6 +1044,7 @@ ActiveRecord::Schema.define(version: 20170418091430) do
   add_foreign_key "address_books", "users"
   add_foreign_key "article_products", "articles"
   add_foreign_key "attachment_relations", "attachments"
+  add_foreign_key "cms_comments", "sites"
   add_foreign_key "cms_keystores", "sites"
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"

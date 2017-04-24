@@ -50,7 +50,7 @@ class Admin::OrdersController < Admin::BaseController
         format.html { send_data(@orders.as_csv(only: []), filename: "orders-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
-        format.json { render json: {:users => @orders.as_json(only: [:id, :code]), :total => @orders.size} }
+        format.json { render json: {:results => @orders.as_json(only: [:id, :code]), :total => @orders.size} }
       end
     end
   end
