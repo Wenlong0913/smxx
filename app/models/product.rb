@@ -14,7 +14,7 @@
 #
 
 class Product < Item
-  store_accessor :features, :price, :old_price, :image, :responsive_person, :warning_message, :service_time, :month_number, :unit, :stock, :description, :content, :discount, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values, :is_shelves, :is_fee, :shopping_fee, :hot, :recommend, :event, :promotion, :discount, :properties
+  store_accessor :features, :price, :old_price, :image, :responsive_person, :warning_message, :service_time, :month_number, :unit, :stock, :description, :content, :discount, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values, :is_shelves, :is_fee, :shopping_fee, :hot, :recommend, :event, :promotion, :discount, :properties, :is_manager_recommend
   acts_as_taggable
   #store_accessor :features, :price, :unit, :stock, :description, :content, :discount, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values, :is_shelves, :is_fee, :shopping_fee, :hot, :recommend, :event, :promotion, :discount
   validates_numericality_of :price, allow_blank: true

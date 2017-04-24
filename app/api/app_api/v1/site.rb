@@ -20,7 +20,7 @@ module AppAPI::V1
       params do
         use :pagination
         # use :sort, fields: [:id, :created_at, :updated_at]
-        optional :friends, type: Boolean, desc: "好友#{::Site.model_name.human}"
+        # optional :friends, type: Boolean, desc: "好友#{::Site.model_name.human}"
         optional :favorite, type: String, values: ['mine', 'friends', 'top3'], desc: "私藏#{::Site.model_name.human}：我的私藏#{::Site.model_name.human}，好友私藏的#{::Site.model_name.human}，被私藏数高的#{::Site.model_name.human}top3"
       end
       get do
@@ -40,6 +40,18 @@ module AppAPI::V1
         end
         sites = paginate_collection(sort_collection(sites), params)
         wrap_collection sites, AppAPI::Entities::SiteSimple
+      end
+
+      desc '店铺站长推荐'
+      params do
+        requires :id, type: Integer, desc: "#{::Site.model_name.human}ID"
+      end
+      get ':id/manager_recommend' do
+        authenticate!
+        site = ::Site.find_by(id: params[:id])
+        error! '店铺不存在' unless site
+        recommend_products = site.products.where("features ->> 'is_manager_recommend' = '1'").where("features ->> 'is_shelves' = '1'").limit(5)
+        present recommend_products, with: AppAPI::Entities::SiteRecommend
       end
 
       desc '收藏店铺'
