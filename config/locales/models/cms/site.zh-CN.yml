@@ -8,7 +8,8 @@ zh-CN:
         site: 经销商
         name: 站点名称
         template: 模板名称
-        domain: 域名(Domain)
+        domain: 二级域名(SubDomain)
+        root_domain: 绑定域名(Domain)
         description: 描述
         is_published: 是否发布
     errors:

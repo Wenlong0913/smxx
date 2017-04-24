@@ -13,6 +13,7 @@
         = f.input :template, collection: eval(Keystore.value_for('cms_template_names'))
         = f.input :name
         = f.input :domain
+        = f.input :root_domain, placeholder: 'tanmer.com'
         = f.input :description
         = f.input :is_published
 
