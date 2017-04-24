@@ -116,7 +116,7 @@ gem 'decorator', path: 'components/decorator'
 gem 'comment', path: 'components/comment'
 gem 'favorite', path: 'components/favorite'
 gem 'gnomon', git: 'git@gitlab.tanmer.com:tm-framework/gnomon.git'
-gem 'activerecord-postgres-earthdistance', github: 'xiaohui-zhangxh/activerecord-postgres-earthdistance'
+gem 'activerecord-postgres-earthdistance', '0.5.2', github: 'xiaohui-zhangxh/activerecord-postgres-earthdistance'
 
 gem 'themeable', '~> 1.2.0'#, path: '../../gems/themeable'
 gem 'theme_color_admin', git: 'git@gitlab.tanmer.com:tm-themes/theme_color_admin.git'

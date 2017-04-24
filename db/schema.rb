@@ -733,6 +733,7 @@ ActiveRecord::Schema.define(version: 20170421072651) do
     t.integer  "preorder_conversition_id"
     t.integer  "create_by"
     t.integer  "update_by"
+    t.string   "resource_url"
     t.index ["site_id"], name: "index_orders_on_site_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
   end
