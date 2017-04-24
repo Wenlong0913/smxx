@@ -20,6 +20,12 @@ module Tmf
   class Application < Rails::Application
     require "settings"
 
+    if Rails.env.development? && !Dir.exists?(Rails.root.join('public/templetes'))
+      puts "第一次运行，正常克隆cms-templates项目到public/templetes"
+      Dir.chdir Rails.root.to_s
+      system "git clone git@gitlab.tanmer.com:tanmer/cms-templates.git public/templetes"
+    end
+
     # We don't want include all helpers to controller
     #   CMS helpers to CMS controllers
     #   Admin helpers to Admin controllers
