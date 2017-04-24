@@ -15,14 +15,15 @@
               span.title
               span.close[data-dismiss="alert"] &times;
           .row
-            .col-xs-6
-              .form-group
-                = f.association :site, collection: Site.all, input_html: {class: 'select2'}
-            .col-xs-6
+            .col-xs-12
               .form-group
                 = f.input :name
+                / = f.association :site, collection: Site.all, input_html: {class: 'select2'}
+            / .col-xs-6
+            /   .form-group
+            /     = f.input :name
             .col-xs-6
-              .form-group.catalog-list[data-catalog-name="#{@product.catalog.try(:name)}" data-catalog-id="#{@product.catalog_id}"]
+              .form-group.catalog-list[data-catalog-name="#{@product.catalog.try(:name)}" data-catalog-id="#{@product.catalog_id}" data-catalog-ids="#{@product.catalog.self_and_ancestor_ids.reverse.join(',') if @product.catalog}"]
                 label[class="control-label"] 产品分类
                 input[type="hidden" v-model="id" name="product[catalog_id]"]
                 input.form-control[readonly=true @click="showCatalog = true" :value="catalogs" placeholder="点击输入框选择分类"]
@@ -132,17 +133,19 @@
         .row.text-right
           = f.submit '保存修改', class: 'btn btn-primary'
     - else
-      = simple_form_for @product, url: @product.new_record? ? admin_products_path : admin_product_path(@product) do |f|
+      = simple_form_for @product, url: @product.new_record? ? admin_site_products_path(site_id: @site.id) : admin_site_product_path(@site, @product) do |f|
         - if @product.errors.any?
           #error_explanation
 
             ul
               - @product.errors.full_messages.each do |message|
                 li = message
-        = f.input :name
+        / = f.input :name
         .div class="row"
           .div class="col-md-6"
-            = f.association :site
+            = f.input :name
+            / = f.association :site
+            / = f.input :site_id, input_html: {value: @site.title}, disabled: true, hint: '商家名称不可修改'
           .col-xs-6
             .form-group.catalog-list[data-catalog-name="#{@product.catalog.self_and_ancestors.pluck(:name).reverse.join('/') if @product.catalog}" data-catalog-id="#{@product.catalog_id}" data-catalog-ids="#{@product.catalog.self_and_ancestor_ids.reverse.join(',') if @product.catalog}"]
               label[class="control-label"] 产品分类

@@ -3,7 +3,8 @@ h1.page-header
   | #{Product.model_name.human}列表
   .pull-right
     => link_to "#{Site.model_name.human}详情", admin_site_path(@site), class: 'btn btn-info' if @site
-    = link_to "新建#{Product.model_name.human}", @site? new_admin_site_product_path(@site) : new_admin_product_path, class: 'btn btn-primary', 'data-turbolinks': false
+    - if @site
+      = link_to "新建#{Product.model_name.human}", @site? new_admin_site_product_path(@site) : new_admin_product_path, class: 'btn btn-primary', 'data-turbolinks': false
 
 .panel.panel-default
   .panel-heading
@@ -14,7 +15,7 @@ h1.page-header
         i class="fa fa-minus"
     h3.panel-title &nbsp;
   .panel-body
-    = form_for :search, url: admin_products_path, method: :get do |f|
+    = form_for :search, url: (params[:site_id].present? ? admin_site_products_path(site_id: params[:site_id]) : admin_products_path), method: :get do |f|
       .toolbar.row
         .col-md-6.m-b-15
           .input-group.search_all

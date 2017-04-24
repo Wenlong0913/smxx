@@ -5,6 +5,10 @@ class SitePolicy < ApplicationPolicy
     end
   end
 
+  def dashboard?
+    user.super_admin_or_admin? || user.permission?(:login_admin)
+  end
+
   def index?
     user.super_admin_or_admin? || user.has_role?(:worker)
   end
@@ -14,7 +18,7 @@ class SitePolicy < ApplicationPolicy
   end
 
   def new?
-    user.super_admin_or_admin? || user.has_role?(:agent) || user.permission?(:communities_insert)
+    user.super_admin_or_admin? || user.has_role?(:agent) || user.permission?(:agent_insert)
   end
 
   def create?
@@ -22,7 +26,7 @@ class SitePolicy < ApplicationPolicy
   end
 
   def edit?
-    user.super_admin_or_admin? || user.id == record.user_id  || user.permission?(:communities_update)
+    user.super_admin_or_admin? || user.id == record.user_id  || user.permission?(:agent_update)
   end
 
   def update?
@@ -30,11 +34,11 @@ class SitePolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.id != Site::MAIN_ID && user.super_admin_or_admin?
+    record.id != Site::MAIN_ID && (user.super_admin_or_admin? || user.permission?(:agent_delete))
   end
 
   def permitted_attributes_for_create
-    if user.super_admin_or_admin? || user.has_role?(:agent)
+    if user.super_admin_or_admin? || user.has_role?(:agent) || user.permission?([:agent_insert, :agent_update])
       [:user_id, :title, :description, :properties, :business_hours,
         :recommendation, :good_summary, :bad_summary, :parking,
         :wifi, :contact_name, :contact_phone, :has_contract, :contract_note,

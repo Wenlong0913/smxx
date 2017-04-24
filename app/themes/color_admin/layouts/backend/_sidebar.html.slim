@@ -60,7 +60,7 @@
             li class=("#{'active' if page?('admin/market_templates')}") = link_to '模板管理', admin_market_templates_path
             li class=("#{'active' if page?('admin/market_pages')}") = link_to '营销页', admin_market_pages_path
 
-      li class=("has-sub #{'active' if page?('admin/vendors','admin/users', 'admin/roles', 'admin/user/weixins', 'admin/sites')}")
+      li class=("has-sub #{'active' if page?('admin/vendors', 'admin/sites','admin/users', 'admin/roles', 'admin/user/weixins')}")
         = link_to dashboard_admin_users_path
           b.caret.pull-right
           i.fa.fa-inbox
@@ -78,7 +78,7 @@
 
       / imolin
       - if Settings.project.imolin?
-        li class=("has-sub #{'active' if page?('admin/sites', 'admin/catalogs#index?klass=SiteCatalog')}")
+        li class=("has-sub #{'active' if page?('admin/sites', 'admin/catalogs#index?klass=SiteCatalog', 'admin/catalogs#index?klass=ProductCatalog')}")
           = link_to dashboard_admin_sites_path
             b.caret.pull-right
             i.fa.fa-inbox
@@ -86,21 +86,25 @@
           ul.sub-menu
             li[class= ('active' if page?('admin/catalogs#index?klass=SiteCatalog'))]
               = link_to '商家分类', admin_site_catalogs_path
+            li[class= ('active' if page?('admin/catalogs#index?klass=ProductCatalog'))]
+              = link_to '产品分类', admin_product_catalogs_path
             li[class=('active' if page?('admin/sites#index'))]
               = link_to "#{Site.model_name.human}列表", admin_sites_path
             /li[class=('active' if page?('admin/sites#new'))]
               = link_to "发布#{Site.model_name.human}", new_admin_site_path
-
-        li class=("has-sub #{'active' if page?('admin/products', 'admin/catalogs#index?klass=ProductCatalog')}")
-          = link_to dashboard_admin_products_path
+      - if params[:site_id].present?
+        li class=("has-sub #{'active' if page?('admin/products')}")
+          / = link_to dashboard_admin_products_path
+          /   b.caret.pull-right
+          /   i.fa.fa-inbox
+          /   span #{Site.find(params[:site_id]).try(:title)}管理
+          a href="javascript:;"
             b.caret.pull-right
-            i.fa.fa-inbox
-            span #{Product.model_name.human}管理
+            i.fa.fa-cube
+            span  #{Site.find(params[:site_id]).try(:title)}管理
           ul.sub-menu
-            li[class= ('active' if page?('admin/catalogs#index?klass=ProductCatalog'))]
-              = link_to '产品分类', admin_product_catalogs_path
-            li[class=('active' if page?('admin/products#index'))]
-              = link_to "#{Product.model_name.human}列表", admin_products_path
+            li[class=('active' if page?('admin/products'))]
+              = link_to "#{Product.model_name.human}列表", admin_site_products_path(site_id: params[:site_id])
             /li[class=('active' if page?('admin/products#new'))]
               = link_to "发布#{Product.model_name.human}", new_admin_product_path
 
