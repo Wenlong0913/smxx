@@ -42,13 +42,14 @@ class User < ApplicationRecord
   has_many :create_order, class_name: 'Order', foreign_key: :create_by
   has_many :update_order, class_name: 'Order', foreign_key: :update_by
   has_many :sales_distribution_resources, class_name: 'SalesDistribution::Resource'
-  has_one :address_books, dependent: :destroy
+  has_one :address_book, dependent: :destroy
   # 收藏的店铺
   has_many :site_favorites, -> { where(resource_type: 'Site') }, class_name: 'Favorite::Entry'
   #  收藏的产品
   has_many :product_favorites, -> { joins("join items on items.id = favorite_entries.resource_id").where("items.type = ?", 'Product') }, class_name: 'Favorite::Entry'
   # 产品分销
   has_many :product_sales_dists, -> { where(type_name: '产品') }, class_name: 'SalesDistribution::Resource'
+  has_many :tasks, foreign_key: :assignee_id
   has_many_comments
   has_many_favorites
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"

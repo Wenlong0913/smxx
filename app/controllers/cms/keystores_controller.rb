@@ -4,7 +4,7 @@ class Cms::KeystoresController < Cms::BaseController
 
   def index
     authorize Cms::Keystore
-    @cms_keystores = Cms::Keystore.all.page(params[:page])
+    @cms_keystores = @cms_site.keystores.page(params[:page])
     respond_to do |format|
       format.html
       format.json { render json: @cms_keystores }
@@ -21,7 +21,7 @@ class Cms::KeystoresController < Cms::BaseController
 
   def new
     authorize Cms::Keystore
-    @cms_keystore = Cms::Keystore.new
+    @cms_keystore = @cms_site.keystores.build
   end
 
   def edit
@@ -31,6 +31,7 @@ class Cms::KeystoresController < Cms::BaseController
   def create
     authorize Cms::Keystore
     @cms_keystore = @cms_site.keystores.new(permitted_attributes(@cms_site.keystores))
+    @cms_keystore.site_id = @cms_site.id
 
     respond_to do |format|
       format.html do

@@ -89,7 +89,7 @@ CMS站点是一个独立的网站内容管理系统， 每一个站点，对应p
 引用实例：
 
     <%= @cms_site.name %>
-    <%= @cms_site.keystores.value_for('contact_name') %>
+    <%= @cms_site.value_for('contact_name') %>
     <%= raw @channel.description  %>
     <% @channel.pages.where("'recommend' = ANY(properties)").each do |page| %>
     <%= paginate @pages, remote: true %>
@@ -149,3 +149,31 @@ impressionist(@page, "page_#{@page.id}") if @page # 2nd argument is optional
 
 IP次数：  <%= cms_page.impressions_count %>
 PV次数：  <%= cms_page.impressionist_count %>
+
+## Dagle CMS项目本地开发教程
+  1.在cms-templates下创建项目文件
+    cms-templates克隆地址：git@gitlab.tanmer.com:tanmer/cms-templates.git
+
+  2.关联本地cms-templates模板到dagle/public/templetes
+    终端输入：ln -sf /home/wen/cms-templates /home/wen/dagle/public/templetes
+
+  3.启动本地服务
+    PROJECT_NAME=cms foreman start
+
+  管理员admin权限操作：
+    4.浏览器登录admin后台：www.lvh.me:5000/admin
+
+    5.参数管理-新增系统参数-编辑['default','对应cms项目名称(met_llshg)']
+
+    6.账户角色分工-用户-创建用户（添加商家姓名、手机号、密码（Kenrome001））
+
+    7.浏览器登录agent后台：www.lvh.me:5000/admin
+
+    8.新建系统名称（CMS采用项目名称(廖老四老火锅)）
+
+    9.网站管理-添加站点-选择cms项目名称-站点名称-域名（llshg）
+
+  用户agent权限操作：
+    10.用户前台访问地址：llshg.lvh.me:5000浏览站点
+
+    11.用户后台访问地址：llshg.lvh.me:5000/agent

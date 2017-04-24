@@ -14,6 +14,19 @@ module AppAPI::V1
         present ::Product.find(params[:id]), with: AppAPI::Entities::Product, type: :full_product
       end
 
+      desc '商品的相关商品' do
+        success AppAPI::Entities::ProductSimple.collection(meta: false)
+      end
+      params do
+        requires :id, type: Integer, desc: "#{::Product.model_name.human}ID"
+      end
+      get ':id/relations' do
+        product = ::Product.find_by(id: params[:id])
+        error! '此商品不存在' unless product
+        products = ::Product.where(catalog: product.catalog).where("id != ?", product.id).order("random()").limit(4)
+        present products, with: AppAPI::Entities::ProductSimple
+      end
+
       desc '获取商品列表' do
         success AppAPI::Entities::ProductSimple.collection
       end
@@ -29,8 +42,11 @@ module AppAPI::V1
       get do
         authenticate!
         # 查看所有上架商品
-        site = ::Site.find_by(id: params[:site_id])
-        error! '该产品不存在' unless site
+        site = nil
+        if params[:site_id]
+          site = ::Site.find_by(id: params[:site_id])
+          error! '该产品不存在' unless site
+        end
         products = if site
           site.products
         else

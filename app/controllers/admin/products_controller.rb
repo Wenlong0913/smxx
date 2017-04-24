@@ -1,6 +1,7 @@
 # csv support
 require 'csv'
 class Admin::ProductsController < Admin::BaseController
+  before_action :set_products
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   before_action :set_site, only: [:new, :edit, :create, :show, :update, :destroy]
   before_action :set_site_tags, only: [:edit, :new]
@@ -81,9 +82,17 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
+    def set_products
+      if params[:site_id].present?
+        @products = Product.where(site_id: params[:site_id])
+      else
+        @products = Product.all
+      end
+    end
+
     def set_product
-      @product = Product.find(params[:id])
+      @product = @products.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

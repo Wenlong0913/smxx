@@ -1,4 +1,4 @@
-class Api::V1::OrdersController < Api::BaseController
+class Api::V1::OrdersController < Api::V1::BaseController
   before_action :authenticate!
   before_action :set_orders, only: [:index]
   before_action :set_order, only: [:show, :update, :update_code]
@@ -62,6 +62,15 @@ class Api::V1::OrdersController < Api::BaseController
     end
   end
 
+  def set_resource_url
+    order = Order.find(params[:id])
+    if order.update(resource_url: params[:resource_url])
+      render json: {status: 'ok'}
+    else
+      render json: {status: 'error'}
+    end
+  end
+
   # def create_comment
   #   authorize Order
   #   order_comment = @order.comments.new(params[:comment].permit(:content, :offer, :image_item_ids => [], :attachment_ids => []))
@@ -80,6 +89,7 @@ class Api::V1::OrdersController < Api::BaseController
   # end
 
   private
+
     def set_orders
       @order_list_type = params[:order_list_type]
       @orders = case @order_list_type
@@ -96,7 +106,7 @@ class Api::V1::OrdersController < Api::BaseController
 
     def order_json(orders)
       orders.as_json(
-        only: [:id, :code, :price, :status, :internal_status, :description, :created_at],
+        only: [:id, :code, :resource_url, :price, :status, :internal_status, :description, :created_at],
         include: {
           site: {only: [:id, :title], include: { user: { only: [:nickname], include: { mobile: { only: [:phone_number] } } } }},
           member: {only: [:name]},
