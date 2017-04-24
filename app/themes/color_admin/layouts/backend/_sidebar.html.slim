@@ -60,7 +60,7 @@
             li class=("#{'active' if page?('admin/market_templates')}") = link_to '模板管理', admin_market_templates_path
             li class=("#{'active' if page?('admin/market_pages')}") = link_to '营销页', admin_market_pages_path
 
-      li class=("has-sub #{'active' if page?('admin/vendors','admin/users', 'admin/roles', 'admin/user/weixins')}")
+      li class=("has-sub #{'active' if page?('admin/vendors', 'admin/sites','admin/users', 'admin/roles', 'admin/user/weixins')}")
         = link_to dashboard_admin_users_path
           b.caret.pull-right
           i.fa.fa-inbox
@@ -92,21 +92,21 @@
               = link_to "#{Site.model_name.human}列表", admin_sites_path
             /li[class=('active' if page?('admin/sites#new'))]
               = link_to "发布#{Site.model_name.human}", new_admin_site_path
-        - if params[:site_id].present?
-          li class=("has-sub #{'active' if page?('/admin/sites/:site_id/products')}")
-            / = link_to dashboard_admin_products_path
-            /   b.caret.pull-right
-            /   i.fa.fa-inbox
-            /   span #{Site.find(params[:site_id]).try(:title)}管理
-            a href="javascript:;"
-              b.caret.pull-right
-              i.fa.fa-cube
-              span  #{Site.find(params[:site_id]).try(:title)}管理
-            ul.sub-menu
-              li[class=('active' if page?('/admin/sites/:site_id/products'))]
-                = link_to "#{Product.model_name.human}列表", admin_site_products_path(site_id: params[:site_id])
-              /li[class=('active' if page?('admin/products#new'))]
-                = link_to "发布#{Product.model_name.human}", new_admin_product_path
+      - if params[:site_id].present?
+        li class=("has-sub #{'active' if page?('admin/products')}")
+          / = link_to dashboard_admin_products_path
+          /   b.caret.pull-right
+          /   i.fa.fa-inbox
+          /   span #{Site.find(params[:site_id]).try(:title)}管理
+          a href="javascript:;"
+            b.caret.pull-right
+            i.fa.fa-cube
+            span  #{Site.find(params[:site_id]).try(:title)}管理
+          ul.sub-menu
+            li[class=('active' if page?('admin/products'))]
+              = link_to "#{Product.model_name.human}列表", admin_site_products_path(site_id: params[:site_id])
+            /li[class=('active' if page?('admin/products#new'))]
+              = link_to "发布#{Product.model_name.human}", new_admin_product_path
 
       / 订单管理
       li class=("has-sub #{'active' if page?('admin/orders', 'admin/produces', 'admin/orders/:order_id/produces/:id', 'admin/task_types', 'admin/deliveries', 'admin/order_deliveries')}")

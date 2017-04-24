@@ -15,14 +15,15 @@
               span.title
               span.close[data-dismiss="alert"] &times;
           .row
-            .col-xs-6
-              .form-group
-                = f.association :site, collection: Site.all, input_html: {class: 'select2'}
-            .col-xs-6
+            .col-xs-12
               .form-group
                 = f.input :name
+                / = f.association :site, collection: Site.all, input_html: {class: 'select2'}
+            / .col-xs-6
+            /   .form-group
+            /     = f.input :name
             .col-xs-6
-              .form-group.catalog-list[data-catalog-name="#{@product.catalog.try(:name)}" data-catalog-id="#{@product.catalog_id}"]
+              .form-group.catalog-list[data-catalog-name="#{@product.catalog.try(:name)}" data-catalog-id="#{@product.catalog_id}" data-catalog-ids="#{@product.catalog.self_and_ancestor_ids.reverse.join(',') if @product.catalog}"]
                 label[class="control-label"] 产品分类
                 input[type="hidden" v-model="id" name="product[catalog_id]"]
                 input.form-control[readonly=true @click="showCatalog = true" :value="catalogs" placeholder="点击输入框选择分类"]

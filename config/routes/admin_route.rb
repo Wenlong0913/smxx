@@ -61,7 +61,7 @@ module AdminRoute
           resources :weixins, only: [:index, :show], :concerns => :paginatable
         end
 
-        resources :products, :concerns => :paginatable do
+        resources :products, :concerns => :paginatable, only: [:index] do
           collection do
             get 'dashboard', to: 'products#dashboard'
           end
