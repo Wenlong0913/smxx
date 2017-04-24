@@ -2,7 +2,7 @@
 require 'csv'
 class Admin::ProductsController < Admin::BaseController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-  before_action :set_site, only: [:index, :new, :edit, :create, :show, :update, :destroy]
+  before_action :set_site, only: [:new, :edit, :create, :show, :update, :destroy]
   before_action :set_site_tags, only: [:edit, :new]
 
   def dashboard
@@ -13,7 +13,12 @@ class Admin::ProductsController < Admin::BaseController
   def index
     authorize Product
     @filter_colums = %w(id)
-    @products = @site.products
+    @products = if params[:site_id]
+                  @site = Site.find(params[:site_id])
+                  @site.products
+                else
+                  Product.all
+                end
     @products = build_query_filter(@products, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?
@@ -87,8 +92,8 @@ class Admin::ProductsController < Admin::BaseController
     #       # end
 
     def set_site_tags
-      @tags_all = current_user.sites.first.tags.pluck(:name).uniq
-      @most_used_tags = current_user.sites.first.tags.most_used(5).uniq.map(&:name)
+      @tags_all = @site.tags.pluck(:name).uniq
+      @most_used_tags = @site.tags.most_used(5).uniq.map(&:name)
     end
 
     def set_site
