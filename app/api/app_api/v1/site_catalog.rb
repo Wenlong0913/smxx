@@ -8,10 +8,13 @@ module AppAPI::V1
       end
       params do
         requires :id, type: Integer, desc: '分类ID'
+        use :pagination
+        use :sort, fields: [:id, :created_at, :updated_at]
       end
       get ':id' do
-        authenticate!
-        present ::SiteCatalog.find(params[:id]), with: AppAPI::Entities::SiteCatalog, includes: [:sites]
+        site_catalog = ::SiteCatalog.find(params[:id])
+        present site_catalog, with: AppAPI::Entities::SiteCatalog
+        wrap_collection site_catalog.sites, AppAPI::Entities::Site
       end
 
       desc '获取分类列表' do
@@ -20,14 +23,19 @@ module AppAPI::V1
       params do
         use :pagination
         use :sort, fields: [:id, :created_at, :updated_at]
-        # optional :type, type: String, values: ['hot', 'new', 'favorite'], desc: '分类排行：最热门产品，最新上架产品，最私藏产品'
+        optional :name, type: String, desc: '分类名称模糊搜索'
       end
       get do
-        authenticate!
         # 查看所有分类
-        product_catalogs = ::SiteCatalog.where(parent_id: nil)
-        product_catalogs = paginate_collection(sort_collection(product_catalogs), params)
-        wrap_collection product_catalogs, AppAPI::Entities::SiteCatalog
+        if params[:name]
+          product_catalogs = ::SiteCatalog.where("name like ?", "%#{params[:name]}%")
+          product_catalogs = paginate_collection(sort_collection(product_catalogs), params)
+          wrap_collection product_catalogs, AppAPI::Entities::SiteCatalog
+        else
+          product_catalogs = ::SiteCatalog.where(parent_id: nil)
+          product_catalogs = paginate_collection(sort_collection(product_catalogs), params)
+          wrap_collection product_catalogs, AppAPI::Entities::SiteCatalog, includes: [:children]
+        end
       end
 
     end # end of resources
