@@ -3,13 +3,74 @@
 /   .pull-right
 /     = link_to '编辑', edit_agent_order_path(@agent_order), class: 'btn btn-primary'
 /     = link_to '返回', agent_orders_path, class: 'btn btn-primary', class: 'btn btn-primary'
+/ .container.member-container.primary-content[data-notice="#{notice}"]
+/   .panel.panel-default
+/     .panel-heading
+/       .panel-heading-btn
+/         a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+/           i class="fa fa-expand"
+/         a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+/           i class="fa fa-minus"
+/       h4 订单详情
+/     .panel-body
+/       
+.section-container.bg-silver.m-b-20.primary-content
+  .container
+    .search-container
+      .search-content
+        .search-toolbar
+          | 订单产品列表
+        .container-list
+          .panel.panel-forum
+            ul.forum-list.forum-topic-list
+              - @order.order_products.each do |order_product|
+                - product = order_product.product
+                li
+                  .media
+                    = image_tag(product.image_items.first.image_url)
+                  .info-container
+                    .info
+                      h4.title
+                        = product.name
+                      ul.info-start-end
+                        li.row
+                          .col-xs-6
+                            | 购买数量：
+                            = order_product.amount
+                          .col-xs-6
+                            | 商品单价：
+                            = order_product.price
+      .search-sidebar
+        h4.title
+          | 订单信息
+        .form-group
+          label.control-label
+            | 订单号：
+          = @order.code
+        .form-group
+          label.control-label
+            | 客户：
+          = @order.user.nickname
+        .form-group
+          label.control-label
+            | 价格：
+          = @order.price
+        .form-group
+          label.control-label
+            | 订单状态：
+          = decorate(@order).display_status
+        .form-group
+          label.control-label
+            | 订单描述：
+          = @order.description
+        
+        .form-group
+          label.control-label
+            | 订单物流：
+          span.display_order_delivery
+            = @order.order_deliveries.first.logistics_name + '(' + @order.order_deliveries.first.logistics_number + ')' unless @order.order_deliveries.first.try(:logistics_name).blank?
+        button.btn.btn-success.btn-sm[data-toggle='modal' data-target='#orderDelivery']
+          = @order.order_deliveries.first.logistics_name.blank? ? '添加物流信息' : '修改物流信息'
 
-.panel
-  .panel-heading
-    .panel-heading-btn
-      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
-        i class="fa fa-expand"
-      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
-        i class="fa fa-minus"
-    h4 查看 agent_order
-  .panel-body
+= render 'order_delivery'
+        

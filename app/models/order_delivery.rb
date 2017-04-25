@@ -12,13 +12,14 @@
 
 class OrderDelivery < ApplicationRecord
   audited
-  store_accessor :features, :list, :note
+  if Settings.project.sxhop?
+    store_accessor :features, :logistics_name, :logistics_number
+  else
+    store_accessor :features, :list, :note
+  end
   belongs_to :order
   has_many :logistics, dependent: :destroy
   accepts_nested_attributes_for :logistics
 
   validates_presence_of :order_id
-
-
-
 end
