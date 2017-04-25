@@ -1,4 +1,6 @@
 # Use this hook to configure ckeditor
+Ckeditor::ApplicationController.send :include, CkeditorConcern
+
 Ckeditor.setup do |config|
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default), :mongo_mapper and

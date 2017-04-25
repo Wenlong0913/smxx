@@ -33,7 +33,7 @@ module AppAPI::V1
       params do
         use :pagination
         # use :sort, fields: [:id, :created_at, :updated_at]
-        optional :type, type: String, values: ['hot', 'new', 'favorites', 'favorites_of_mine', 'favorites_of_friends'], desc: '产品分类排行：最热门产品，最新上架产品，最私藏产品, 我私藏的产品, 好友们棒场(私藏)的商品'
+        optional :type, type: String, values: ['hot', 'new', 'favorites', 'favorites_of_mine', 'favorites_of_friends', 'favorited_in_my_favorite_sites'], desc: '产品分类排行：最热门产品，最新上架产品，最私藏产品, 我私藏的产品, 好友们棒场(私藏)的商品, 收藏店铺下的所有被收藏的产品'
         optional :site_id, type: Integer, desc: '店铺ID'
         optional :name, type: String, desc: '根据名字搜索产品'
         optional :search_type, type: String, values: ['bought', 'all'], desc: '产品搜索类型: 我买过的产品, 所有产品, 默认为所有产品'
@@ -61,6 +61,7 @@ module AppAPI::V1
             when 'favorites' then products.joins(:favorites).group("items.id").order('COUNT(favorite_entries.id) DESC')
             when 'favorites_of_mine' then products.joins(:favorites).where(favorite_entries: {user_id: current_user.id})
             when 'favorites_of_friends' then products.joins(:favorites).where(favorite_entries: {user_id: current_user.friends})
+            when 'favorited_in_my_favorite_sites' then products.where(site: current_user.site_favorites.map(&:resource)).where("favorites_count > 0")
             end
         end
         if params[:name]
