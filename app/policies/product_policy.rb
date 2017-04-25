@@ -44,7 +44,7 @@ class ProductPolicy < ApplicationPolicy
       [:site_id, :name, :price, :old_price, :responsive_person, :warning_message,
         :service_time, :month_number, :image, :stock, :unit, :discount, :description,
         :content, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values,
-        :is_shelves, :is_fee, :shopping_fee, :catalog_id, :hot, :recommend, :event, :promotion, :discount,
+        :is_shelves, :is_fee, :shopping_fee, :catalog_id, :hot, :recommend, :event, :promotion, :discount, :is_manager_recommend,
         :properties => [], :image_item_ids => [], :tag_list => []]
       #=======
       #[:site_id, :name, :price, :stock, :unit, :discount, :description, :content, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values, :is_shelves, :is_fee, :shopping_fee, :catalog_id, :hot, :recommend, :event, :promotion, :discount, :image_item_ids => [], :tag_list => []]

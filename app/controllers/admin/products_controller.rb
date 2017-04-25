@@ -122,5 +122,6 @@ class Admin::ProductsController < Admin::BaseController
         @product.additional_attribute_keys = params[:product][:additional_attribute_keys]
         @product.additional_attribute_values = params[:product][:additional_attribute_values]
       end
+      params[:product][:tag_list] = [] if params[:product][:tag_list].blank?
     end
 end
