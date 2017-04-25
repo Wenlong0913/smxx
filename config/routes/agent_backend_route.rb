@@ -11,7 +11,11 @@ module AgentBackendRoute
             post 'sales_distribution'
           end
         end
-        resources 'orders'
+        resources 'orders' do
+          member do
+            put :order_delivery
+          end
+        end
         resources 'statistics'
 
         resources 'members' do
