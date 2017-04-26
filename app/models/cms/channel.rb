@@ -21,7 +21,7 @@
 class Cms::Channel < ApplicationRecord
   audited
   is_impressionable :counter_cache => true
-  belongs_to :site
+  belongs_to :site, class_name: '::Cms::Site'
   has_many :pages, -> { order(updated_at: :asc) }, dependent: :destroy
   has_many :children, class_name: "Cms::Channel",
                           foreign_key: "parent_id",
