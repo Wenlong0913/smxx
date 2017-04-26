@@ -65,6 +65,12 @@
                 = f.input :stock
               .form-group.col-xs-4.p-0.m-0
                 = f.input :unit
+            .col-xs-6
+              .form-group
+                label.control-label.string.optional 是否设为站长推荐
+                .input-group
+                  span.input-group-addon.fee_checkbox
+                    = f.input_field :is_manager_recommend, as: :boolean, label: false
             .col-xs-12
               .form-group.string.optional.product_tag
                 label.control-label.string.optional 商品标签

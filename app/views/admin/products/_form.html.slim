@@ -70,11 +70,17 @@
                 = f.input :stock
               .form-group.col-xs-4.p-0.m-0
                 = f.input :unit
-            .col-xs-6
+            .col-xs-3
               .form-group
                 label.control-label.string.optional 是否产品上架
                 .
                   = f.input_field :is_shelves, as: :boolean
+            - if Settings.project.sxhop?
+              .col-xs-3
+                .form-group
+                  label.control-label.string.optional 是否设为店长推荐
+                  .
+                    = f.input_field :is_manager_recommend, as: :boolean
             .col-xs-12
               .form-group.string.optional.product_tag
                 label.control-label.string.optional 商品标签
