@@ -1,5 +1,5 @@
 class Agent::OrdersController < Agent::BaseController
-  before_action :set_order, only: [:update]
+  before_action :set_order, only: [:show, :update, :order_delivery]
 
   def index
     @orders = @site.orders.all
@@ -35,11 +35,26 @@ class Agent::OrdersController < Agent::BaseController
     @orders = @orders.page(params[:page]).per(10)
   end
 
+  def show
+    @order_delivery = @order.order_deliveries.blank? ? @order.order_deliveries.new : @order.order_deliveries.first
+  end
+
   def update
     if @order.delivered! && @order.completed!
       render json: {status: 'ok'}
     else
       render json: {status: 'failed', message: @order.errors.full_messages.join(', ')}
+    end
+  end
+
+  def order_delivery
+    @order_delivery = @order.order_deliveries.blank? ? @order.order_deliveries.new : @order.order_deliveries.first
+    @order_delivery.logistics_name = params[:order_delivery][:logistics_name]
+    @order_delivery.logistics_number = params[:order_delivery][:logistics_number]
+    if @order_delivery.save
+      render json: {status: 'ok', message: "#{@order_delivery.logistics_name}(#{@order_delivery.logistics_number})"}
+    else
+      render json: {status: 'failed', message: @order_delivery.errors.full_messages.join(', ')}
     end
   end
 

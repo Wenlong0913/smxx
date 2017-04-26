@@ -8,6 +8,8 @@ zh-CN:
         order_id: 订单
         list: 发货清单
         note: 备注
+        logistics_name: 物流名称
+        logistics_number: 物流编号
     errors:
       models:
         order_delivery:
