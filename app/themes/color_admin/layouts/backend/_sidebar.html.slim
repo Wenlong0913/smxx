@@ -92,7 +92,7 @@
               = link_to "#{Site.model_name.human}列表", admin_sites_path
             /li[class=('active' if page?('admin/sites#new'))]
               = link_to "发布#{Site.model_name.human}", new_admin_site_path
-      - if params[:site_id].present?
+      - if @site.present?
         li class=("has-sub #{'active' if page?('admin/products')}")
           / = link_to dashboard_admin_products_path
           /   b.caret.pull-right
@@ -101,10 +101,10 @@
           a href="javascript:;"
             b.caret.pull-right
             i.fa.fa-cube
-            span  #{Cms::Site.find(params[:site_id]).try(:title)}管理
+            span  #{@site.title}管理
           ul.sub-menu
             li[class=('active' if page?('admin/products'))]
-              = link_to "#{Product.model_name.human}列表", admin_site_products_path(site_id: params[:site_id])
+              = link_to "#{Product.model_name.human}列表", admin_site_products_path(@site)
             /li[class=('active' if page?('admin/products#new'))]
               = link_to "发布#{Product.model_name.human}", new_admin_product_path
 
