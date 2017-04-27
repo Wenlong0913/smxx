@@ -814,13 +814,15 @@ ActiveRecord::Schema.define(version: 20170424100601) do
   create_table "sites", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.jsonb    "features"
     t.string   "type"
     t.integer  "address_alias_id"
     t.string   "address_line"
     t.integer  "catalog_id"
+    t.integer  "favorites_count",  default: 0
+    t.integer  "visits_count",     default: 0
     t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
   end
 
