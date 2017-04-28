@@ -3,6 +3,18 @@ module AppAPI
     class Site < SiteSimple
       expose :products, using: AppAPI::Entities::Product, documentation: { is_array: true }, if: ->(site, options) { (options[:includes] || []).include?(:products) }
 
+      if Settings.project.imolin?
+        expose :title, documentation: { desc: "#{::Site.model_name.human}名称"}
+        expose :description, documentation: { desc: "#{::Site.model_name.human}详细描述" }, if: ->(site, options) { options[:type] == :full_site}
+        expose :image_items, using: AppAPI::Entities::ImageItem, as: :images, documentation: { is_array: true }
+        expose :business_hours, documentation: { desc: '营业时间' }
+        expose :address_line, documentation: { desc: '地址' }
+        expose :phone, documentation: { desc: '联系电话' }
+        expose :is_favorite do |site, options|
+          site.favorites.tagged_by? options[:user_id]
+        end
+      end
+
       if Settings.project.meikemei?
         expose :contact_name, documentation: { desc: '联系人' }
         expose :contact_phone, documentation: { desc: '联系电话' }
