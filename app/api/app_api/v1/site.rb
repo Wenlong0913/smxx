@@ -11,7 +11,12 @@ module AppAPI::V1
       end
       get ':id' do
         authenticate!
-        present ::Site.find(params[:id]), with: AppAPI::Entities::Site, includes: [:products, :staffs]
+        if Settings.project.imolin?
+          site = ::Site.find(params[:id])
+          present site, with: AppAPI::Entities::Site, includes: [:products], type: :full_site, user_id: current_user.id
+        else
+          present ::Site.find(params[:id]), with: AppAPI::Entities::Site, includes: [:products, :staffs]
+        end
       end
 
       desc "获取#{::Site.model_name.human}列表" do
@@ -22,6 +27,7 @@ module AppAPI::V1
         # use :sort, fields: [:id, :created_at, :updated_at]
         # optional :friends, type: Boolean, desc: "好友#{::Site.model_name.human}"
         optional :favorite, type: String, values: ['mine', 'friends', 'top3'], desc: "私藏#{::Site.model_name.human}：我的私藏#{::Site.model_name.human}，好友私藏的#{::Site.model_name.human}，被私藏数高的#{::Site.model_name.human}top3"
+        optional :site_catalog_id, type: Integer, desc: "根据分类显示#{::Site.model_name.human}列表"
       end
       get do
         authenticate!
@@ -37,6 +43,9 @@ module AppAPI::V1
         if params[:friends]
           # 获取好友店铺
           sites = ::Site.where(user_id: current_user.friends)
+        end
+        if params[:site_catalog_id]
+          sites = sites.where("catalog_id = ?", params[:site_catalog_id])
         end
         sites = paginate_collection(sort_collection(sites), params)
         wrap_collection sites, AppAPI::Entities::SiteSimple
