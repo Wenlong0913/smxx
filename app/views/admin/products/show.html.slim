@@ -150,7 +150,7 @@ h1.page-header
         h4 产品图片
         .gallery#gallery.p-20
           .row
-            - unless @product.image_items.blank?
+            - if @product.image_items.blank?
               .col-xs-12 没有产品图片
             - @product.image_items.each do |image|
               .image.col-sm-6.col-md-4
