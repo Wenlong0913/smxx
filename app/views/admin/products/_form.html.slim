@@ -139,7 +139,7 @@
         .row.text-right
           = f.submit '保存修改', class: 'btn btn-primary'
     - else
-      = simple_form_for @product, url: @product.new_record? ? admin_site_products_path(site_id: @site.id) : admin_site_product_path(@site, @product) do |f|
+      = simple_form_for @product, url: @product.new_record? ? admin_site_products_path(@site) : admin_site_product_path(@site, @product) do |f|
         - if @product.errors.any?
           #error_explanation
 
@@ -180,6 +180,17 @@
             = f.input :month_number, as: :integer
             .p 标签（可多选）
             = f.collection_check_boxes :properties, Product::PROPERTIES, :first, :last, checked: @product.try(:properties)
+        .col-xs-12
+          .form-group.string.optional.product_tag
+            label.control-label.string.optional 商品标签
+            ul.product-tags[data-tags-all=@tags_all]
+              - @product.tag_list.each do |tag|
+                li = tag
+            .most-tag-list
+              - if @most_used_tags
+                span.small 常用标签：
+                - @most_used_tags.each do |val|
+                  span.label.m-r-5 = val
 
         = f.input :content,as: :ckeditor
         .form-group
