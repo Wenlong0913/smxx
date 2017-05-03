@@ -15,6 +15,7 @@ module AppAPI
       end
 
       with_options if: ->(product, options) { options[:type] == :full_product } do |f|
+        expose :sales_count, documentation: {desc: '产品的销量', type: Integer }
         expose :stock, documentation: { desc: '产品库存', type: Integer }
         expose :unit, documentation: { desc: '库存单位' }
         expose :price, documentation: { desc: '产品原价', type: Float }
@@ -29,6 +30,7 @@ module AppAPI
       end
 
       def product_special_attributes
+        return {} unless object.additional_attribute_keys
         psa = {}
         return psa if object.additional_attribute_keys.blank?
         object.additional_attribute_keys.each_pair do |k, v|
