@@ -19,6 +19,6 @@ class SiteCatalogPolicy < ApplicationPolicy
   end
 
   def index?
-    user.super_admin_or_admin? || user.has_role?(:agent)
+    user.super_admin_or_admin? || user.has_role?(:agent) || (Settings.project.imolin? && user.has_role?(:worker))
   end
 end
