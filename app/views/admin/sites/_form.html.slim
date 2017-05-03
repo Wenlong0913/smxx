@@ -100,7 +100,7 @@
                 span.hint 点击输入框选择分类
                 modal[title="产品分类" :show.sync="showCatalog" @cancel="showCatalog = false"]
                   div
-                    catalog-list[data-url=admin_site_catalogs_path :default="[#{@site.catalog_id}]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false"]
+                    catalog-list[data-url=admin_site_catalogs_path :default="[#{@site.catalog_id}]" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false" :editable='false']
                   div[slot="footer"]
 
           = f.input :title

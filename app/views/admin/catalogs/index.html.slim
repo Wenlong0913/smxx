@@ -11,4 +11,4 @@ div
       h3.panel-title
         | &nbsp;
     .panel-body
-      catalog-list[data-url=request.fullpath]
+      catalog-list[data-url=request.fullpath :editable="#{(current_user.has_role?(:worker) && Settings.project.imolin?) ? 'false' : 'true'}"]
