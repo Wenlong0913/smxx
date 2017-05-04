@@ -77,6 +77,35 @@ module AppAPI::V1
         present :parents, extra_comments, with: AppAPI::Entities::Comment
       end
 
-    end # end of resources
+      desc '评论点赞'
+      params do
+        requires :id, type: Integer, desc: "评论ID"
+      end
+      post ':id/like' do
+        authenticate!
+        comment = ::Comment::Entry.find(params[:id])
+        message = ''
+        if current_user.likes.tagged_to? comment
+          message = '已经点赞了此评论!'
+        else
+          current_user.likes.tag_to! comment
+          message = '产品点赞成功!'
+        end
+        present message: message
+      end
+
+      desc '取消点赞评论'
+      params do
+        requires :id, type: Integer, desc: "评论ID"
+      end
+      delete ':id/like' do
+        authenticate!
+        comment = ::Comment::Entry.find(params[:id])
+        if current_user.likes.tagged_to? comment
+          current_user.likes.untag_to! comment
+        end
+        present message: '评论取消点赞成功!'
+      end
+    end
   end
 end
