@@ -93,6 +93,21 @@ module AppAPI::V1
         present message: '店铺取消收藏成功!'
       end
 
+      desc '是否收藏了此店铺'
+      params do
+        requires :id, type: Integer, desc: "#{::Site.model_name.human}ID"
+      end
+      get ':id/is_favorited' do
+        authenticate!
+        site = ::Site.find(params[:id])
+        is_favorited = if current_user.favorites.tagged_to? site
+          true
+        else
+          false
+        end
+        present is_favorited: is_favorited
+      end
+
     end # end of resources
   end
 end
