@@ -21,6 +21,8 @@ module AppAPI
         # TODO: 分享的帖子数量，特定条件下才能获得
         expose :article_shares_count, documentation: { desc: '分享的帖子数量，特定条件下才能获得（功能未实现，始终返回0）', type: Integer }, if: ->(user, options) { options[:article_shares_count] }
 
+        expose :shopping_carts_count, documentation: { desc: '购物车里商品的数量' }
+
         def site_favorites_count
           object.site_favorites.count
         end
@@ -31,6 +33,10 @@ module AppAPI
 
         def article_shares_count
           0
+        end
+
+        def shopping_carts_count
+          object.shopping_carts.sum(:amount)
         end
       end
 
