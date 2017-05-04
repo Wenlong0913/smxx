@@ -27,6 +27,7 @@ module AppAPI
         expose :weight, documentation: { desc: '产品重量', type: Float}
         expose :weight_unit, documentation: { desc: '重量单位'}
         expose :product_special_attributes, documentation: { desc: '该产品信息特有的属性和值', type: Hash}
+        expose :like_users, documentation: { desc: '点赞的用户列表'}
       end
 
       def product_special_attributes
@@ -41,6 +42,10 @@ module AppAPI
 
       def properties
         object.properties.map{|p| ::Product::PROPERTIES[p.to_sym]}.compact
+      end
+
+      def like_users
+        object.likes.as_json(only: [], include: { user: {only: [:nickname], methods: [:display_headshot]}})
       end
     end
   end
