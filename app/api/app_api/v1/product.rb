@@ -149,6 +149,21 @@ module AppAPI::V1
         present message: '产品取消点赞成功!'
       end
 
+      desc '是否点赞了此商品'
+      params do
+        requires :id, type: Integer, desc: "#{::Product.model_name.human}ID"
+      end
+      post ':id/is_liked' do
+        authenticate!
+        product = ::Product.find(params[:id])
+        is_liked = if current_user.likes.tagged_to? product
+          true
+        else
+          false
+        end
+        present is_liked: is_liked
+      end
+
     end # end of resources
   end
 end
