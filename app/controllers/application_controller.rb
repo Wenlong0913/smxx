@@ -14,6 +14,11 @@ class ApplicationController < ActionController::Base
   def not_found!
     raise ActionController::RoutingError.new('Not Found')
   end
+  #detect if a mobile device
+  def mobile_device?
+    !!(request.user_agent =~ /Mobile|webOS/i)
+  end
+  helper_method :mobile_device?
 
   private
   def user_not_authorized

@@ -17,7 +17,7 @@
             <div class="info-container">
                 <div class="info">
                     <h4 class="title">
-                      <%=link_to cms_page.title, edit_cms_site_channel_page_path(@cms_site, @cms_channel, cms_page)%></h4>
+                      <%=link_to cms_page.title, edit_cms_site_channel_page_path(@cms_site, cms_page.channel, cms_page)%></h4>
                     <p class="desc">
                       <strong>关键词： <%= cms_page.keywords %></strong><br/>
                       <%= cms_page.description %>
@@ -34,9 +34,9 @@
                       更新次数： <%= cms_page.audits.count %><br/>
                       最后更新： <%= cms_page.try(:audits).try(:last).try(:user).try(:nickname) %></p>
                     <hr/>
-                    <%= link_to '编辑', edit_cms_site_channel_page_path(@cms_site, @cms_channel, cms_page), class: 'btn btn-sm btn-primary m-r-5' %>
+                    <%= link_to '编辑', edit_cms_site_channel_page_path(@cms_site, cms_page.channel, cms_page), class: 'btn btn-sm btn-primary m-r-5' %>
                     <%= link_to '预览', get_cms_url(cms_page, subdomain: @cms_site.domain), class: 'btn btn-sm btn-success', target: '_blank' %>
-                    <%= link_to '删除', cms_site_channel_page_path(@cms_site, @cms_channel, cms_page), method: :delete, data: { confirm: '删除以后无法恢复，请确认要删除?' }, class: 'btn btn-sm btn-default m-r-5' %>
+                    <%= link_to '删除', cms_site_channel_page_path(@cms_site, cms_page.channel, cms_page), method: :delete, data: { confirm: '删除以后无法恢复，请确认要删除?' }, class: 'btn btn-sm btn-default m-r-5' %>
                 </div>
             </div>
             <!-- end info-container -->

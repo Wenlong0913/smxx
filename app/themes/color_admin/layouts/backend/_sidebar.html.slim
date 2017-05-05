@@ -77,7 +77,7 @@
 
 
       / imolin
-      - if Settings.project.imolin?
+      - if Settings.project.imolin? || Settings.project.meikemei?
         li class=("has-sub #{'active' if page?('admin/sites', 'admin/catalogs#index?klass=SiteCatalog', 'admin/catalogs#index?klass=ProductCatalog')}")
           = link_to dashboard_admin_sites_path
             b.caret.pull-right

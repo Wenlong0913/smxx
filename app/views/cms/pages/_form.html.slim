@@ -6,7 +6,7 @@
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
   .panel-body
-    = simple_form_for [@cms_site, @cms_channel, @cms_page], url: @cms_page.new_record? ? cms_site_channel_pages_path(@cms_site, @cms_channel) : cms_site_channel_page_path(@cms_site, @cms_channel, @cms_page), validate: true do |f|
+    = simple_form_for [@cms_site, @cms_page], url: @cms_page.new_record? ? cms_site_pages_path(@cms_site) : cms_site_channel_page_path(@cms_site, @cms_channel, @cms_page), validate: true do |f|
       - if @cms_page.errors.any?
         #error_explanation
 
@@ -14,7 +14,7 @@
             - @cms_page.errors.full_messages.each do |message|
               li = message
 
-      = f.association :channel, collection: @cms_site.channels.order("concat(id, parent_id)"), selected: @cms_channel.id, label: '所属栏目'
+      = f.association :channel, collection: @cms_site.channels.order("concat(id, parent_id)"), selected: @cms_channel.try(:id), label: '所属栏目'
       .row
         .col-md-6
           = f.input :title, placeholder: '美好切题的标题能使文章的关注度大放异彩'
