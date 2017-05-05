@@ -26,7 +26,7 @@ class HandleFailedCommunityAndSite
       address_arr << import_info.city unless import_info.address_str.include?(import_info.city)
       address_arr << import_info.district unless import_info.address_str.include?(import_info.district)
       address_arr << import_info.address_str
-      address_arr << import_info.name unless import_info.address_str.include?(import_info.name)
+      # address_arr << import_info.name unless import_info.address_str.include?(import_info.name)
 
       c = Community.find_or_initialize_by(name: import_info.name, address_line: address_arr.join.strip)
       c.uid         = import_info.uid
@@ -51,7 +51,11 @@ class HandleFailedCommunityAndSite
 
   def migrate_site(import_info)
     begin
-      address_line_str  = [import_info.province, import_info.real_city, import_info.city, import_info.district, import_info.address_str.gsub(/(?:\(|（).*(?:\)|）)$/, ''), import_info.name].join.strip
+      city_arr = []
+      city_arr << import_info.real_city
+      city_arr << import_info.real_city unless import_info.real_city == import_info.real_city
+      city_str = city_arr.join
+      address_line_str  = [import_info.province, city_str, import_info.district, import_info.address_str.gsub(/(?:\(|（).*(?:\)|）)$/, '')].join.strip
       c = Site.find_or_initialize_by(title: import_info.name, address_line: address_line_str)
 
       c.is_published    = import_info.is_published

@@ -53,10 +53,10 @@ class ImportCommunityAndSite
       puts "import site: " + file
       site_worksheet = nil
       site_worksheet = Roo::Excelx.new(file_path)
-      head = site_worksheet.row(1)[0].split(/,\s*\"/).map{|s| s.gsub(/^\"|\"$/, '').strip}
+      head = site_worksheet.row(1)[0].split(/\"\s*,\s*\"/).map{|s| s.gsub(/^\"|\"$/, '').strip}
       2.upto site_worksheet.last_row do |index|
         puts index if index % 10000 == 0
-        info_arr = site_worksheet.row(index)[0].split(/,\s*\"/).map{|s| s.gsub(/^\"|\"$/, '').strip}
+        info_arr = site_worksheet.row(index)[0].split(/\"\s*,\s*\"/).map{|s| s.gsub(/^\"|\"$/, '').strip}
         import_data = ImportInformation.find_or_initialize_by(origin_type: 'site', file_name: file, line: index)
         import_data.name        = info_arr[head.find_index('name')]
         import_data.address_str = info_arr[head.find_index('address')]
