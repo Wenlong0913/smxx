@@ -21,7 +21,7 @@ module AppAPI
 
       def headshots
         if object.favorites.blank?
-          User.all.limit(5).map(&:display_headshot)
+          ::User.all.limit(5).map(&:display_headshot)
         else
           object.favorites.limit(5).map{|favorite| favorite.user.display_headshot}
         end
