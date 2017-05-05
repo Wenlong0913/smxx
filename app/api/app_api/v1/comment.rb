@@ -89,7 +89,7 @@ module AppAPI::V1
           message = '已经点赞了此评论!'
         else
           current_user.likes.tag_to! comment
-          message = '产品点赞成功!'
+          message = '评论点赞成功!'
         end
         present message: message
       end
@@ -105,6 +105,21 @@ module AppAPI::V1
           current_user.likes.untag_to! comment
         end
         present message: '评论取消点赞成功!'
+      end
+
+      desc '是否点赞了此评论'
+      params do
+        requires :id, type: Integer, desc: "#{::Product.model_name.human}ID"
+      end
+      post ':id/is_liked' do
+        authenticate!
+        comment = ::Comment::Entry.find(params[:id])
+        is_liked = if current_user.likes.tagged_to? comment
+          true
+        else
+          false
+        end
+        present is_liked: is_liked
       end
     end
   end
