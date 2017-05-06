@@ -123,6 +123,31 @@ CMS站点是一个独立的网站内容管理系统， 每一个站点，对应p
       <%= get_menu(channel.short_title) %>
     <% end %>
 
+## 添加表单
+
+    <%= simple_form_for(Cms::Comment.new, url: cms_frontend_comment_create_path, html: { class: 'form-theme', id: 'formYue' } ) do |f| %>
+        <input type="phone" name="comment[contact]" class="form-control" id="InputPhone" />
+    <% end %>
+
+可以使用的表单属性：
+
+    contact: 联系方式
+    name: 姓名
+    mobile_phone: 手机号码
+    tel_phone: 电话号码
+    email: 电子邮件
+    qq: QQ
+    address: 地址
+    gender: 性别
+    birth: 出生日期
+    hobby: 爱好
+    content: 详细内容
+    content2: 补充
+    content3: 其它
+    status: 状态
+    branch: 分站
+    datetime: 预订时间
+
 # 如何添加二级域名
 
 ## 本地代码实现：

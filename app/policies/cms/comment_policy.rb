@@ -10,8 +10,7 @@ class Cms::CommentPolicy < ApplicationPolicy
   end
 
   def show?
-    return true if user.super_admin_or_admin?
-    user.has_role?(:agent) && record.site.try(:user_id) == user.id
+    user.super_admin_or_admin? || user.has_role?(:agent)
   end
 
   def new?
@@ -19,7 +18,7 @@ class Cms::CommentPolicy < ApplicationPolicy
   end
 
   def create?
-    user.super_admin_or_admin? || (user.has_role?(:agent) && record.channel.site.site.try(:user_id) == user.id)
+    user.super_admin_or_admin? || (user.has_role?(:agent) && record.site.site.try(:user_id) == user.id)
   end
 
   def edit?

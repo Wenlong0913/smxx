@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170504091152) do
+ActiveRecord::Schema.define(version: 20170506053531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,12 +208,12 @@ ActiveRecord::Schema.define(version: 20170504091152) do
   end
 
   create_table "cms_comments", force: :cascade do |t|
-    t.integer  "site_id"
     t.string   "contact"
     t.text     "content"
     t.jsonb    "features"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "site_id",    null: false
     t.index ["site_id"], name: "index_cms_comments_on_site_id", using: :btree
   end
 
@@ -1050,7 +1050,6 @@ ActiveRecord::Schema.define(version: 20170504091152) do
   add_foreign_key "address_books", "users"
   add_foreign_key "article_products", "articles"
   add_foreign_key "attachment_relations", "attachments"
-  add_foreign_key "cms_comments", "sites"
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
   add_foreign_key "items", "sites"

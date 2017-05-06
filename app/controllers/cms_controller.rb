@@ -84,10 +84,45 @@ class CmsController < ApplicationController
     #comment
   end
 
+  # 添加表单
+  def comment_create
+    return render text: 'failed' unless params[:comment].present?
+
+    @comment = @cms_site.comments.new
+    @comment.site_id = @cms_site.id
+    @comment.contact = params[:comment][:contact]
+    @comment.content = params[:comment][:content]
+    @comment.name = params[:comment][:name]
+    @comment.mobile_phone = params[:comment][:mobile_phone]
+    @comment.tel_phone = params[:comment][:tel_phone]
+    @comment.email = params[:comment][:email]
+    @comment.qq = params[:comment][:qq]
+    @comment.address = params[:comment][:address]
+    @comment.gender = params[:comment][:gender]
+    @comment.birth = params[:comment][:birth]
+    @comment.hobby = params[:comment][:hobby]
+    @comment.content2 = params[:comment][:content2]
+    @comment.content3 = params[:comment][:content3]
+    @comment.status = params[:comment][:status]
+    @comment.branch = params[:comment][:branch]
+    @comment.datetime = params[:comment][:datetime]
+    respond_to do |format|
+      format.html do
+        if @comment.save
+          render text: '提交成功！'
+        else
+          render :new
+        end
+      end
+      format.json { render json: @comment }
+    end
+  end
+
   private
 
   def check_subdomain!
     @cms_site = Cms::Site.where("domain = ? OR root_domain = ?", request.subdomain, request.domain).first
     redirect_to root_url(subdomain: nil) if @cms_site.nil? || !@cms_site.is_published
   end
+
 end

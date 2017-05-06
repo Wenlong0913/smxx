@@ -25,6 +25,7 @@
           p
             = @cms_site.description
         .col-md-4.text-right
+          => link_to '留言管理', cms_site_comments_path(@cms_site), class: 'btn btn-default'
           => link_to '参数配置', cms_site_keystores_path(@cms_site), class: 'btn btn-default'
           a[class="btn btn-default" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"]
             | 其他操作
