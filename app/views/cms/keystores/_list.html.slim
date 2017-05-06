@@ -9,7 +9,6 @@ table.table.table-stripped
   tbody
     - @cms_keystores.each do |cms_keystore|
       tr
-        td = cms_keystore.site_id
         td = cms_keystore.key
         td = cms_keystore.value
         td = cms_keystore.description

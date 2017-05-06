@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170424100601) do
+ActiveRecord::Schema.define(version: 20170504091152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -266,10 +266,11 @@ ActiveRecord::Schema.define(version: 20170424100601) do
     t.text     "content"
     t.integer  "position"
     t.boolean  "deleted"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.integer  "parent_id"
     t.jsonb    "features"
+    t.integer  "likes_count",   default: 0
     t.index ["resource_type", "resource_id"], name: "index_comment_entries_on_resource_type_and_resource_id", using: :btree
   end
 
@@ -914,8 +915,9 @@ ActiveRecord::Schema.define(version: 20170424100601) do
     t.string   "content"
     t.string   "type"
     t.jsonb    "features"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "comments_count", default: 0
     t.index ["site_id"], name: "index_tickets_on_site_id", using: :btree
     t.index ["user_id"], name: "index_tickets_on_user_id", using: :btree
   end
@@ -1049,7 +1051,6 @@ ActiveRecord::Schema.define(version: 20170424100601) do
   add_foreign_key "article_products", "articles"
   add_foreign_key "attachment_relations", "attachments"
   add_foreign_key "cms_comments", "sites"
-  add_foreign_key "cms_keystores", "sites"
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
   add_foreign_key "items", "sites"

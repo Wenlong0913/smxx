@@ -16,12 +16,12 @@
 
 class Cms::Site < ApplicationRecord
   audited
-  has_many :channels, dependent: :destroy
+  has_many :channels, -> { order(id: :asc) }, dependent: :destroy
   has_many :keystores, dependent: :destroy
   has_many :pages, through: :channels
   has_many :comments, dependent: :destroy
   belongs_to :site, class_name: '::Site'
-  after_create :initialize_channel
+  after_create :do_initialize
 
   validates :name, :template, :domain, :description, presence: true
   validates_uniqueness_of :domain
@@ -52,11 +52,12 @@ class Cms::Site < ApplicationRecord
 
   #methods for keystores
   def value_for(key)
-    self.keystores.find_by(key: key).try(:value)
+    self.keystores.find_by(key: key).try(:value) || ''
   end
 
   private
-  def initialize_channel
+  def do_initialize
+    return if db_init
     channel = self.channels.build(
       title: '首页',
       short_title: 'index',
@@ -64,5 +65,10 @@ class Cms::Site < ApplicationRecord
       tmp_detail: 'temp_detail.html.erb'
     )
     channel.save!
+  end
+
+  def db_init
+    return true if eval("@cms_site = Cms::Site.find(#{self.id})") && eval(open(File.join(template_dir,'db_init.rb')).read)
+    return false
   end
 end
