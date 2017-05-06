@@ -49,7 +49,7 @@ module AppAPI::V1
         extra_ids = (comments.pluck(:parent_id).uniq - comments.pluck(:id)).compact
         extra_comments = ::Comment::Entry.where("id in (?)", extra_ids)
         
-        wrap_collection(comments, AppAPI::Entities::Comment, options={})
+        wrap_collection(comments, AppAPI::Entities::Comment, options={user_id: (current_user.id rescue nil)})
         present :parents, extra_comments, with: AppAPI::Entities::Comment
       end
 
