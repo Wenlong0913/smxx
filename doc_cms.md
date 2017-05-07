@@ -114,13 +114,16 @@ CMS站点是一个独立的网站内容管理系统， 每一个站点，对应p
 
     <%= @cms_site.name %>
     <%= @cms_site.value_for('contact_name') %>
+    <%= @cms_site.next_page(@page) %>
+    <%= @cms_site.previous_page(@page) %>
     <%= raw @channel.description  %>
     <% @channel.pages.where("'recommend' = ANY(properties)").each do |page| %>
+
     <%= paginate @pages, remote: true %>
 
 
     <%= @cms_site.channels.where('parent_id is null').each do |channel| %>
-      <%= get_menu(channel.short_title) %>
+      <%= get_menu(@cms_site, channel.short_title) %>
     <% end %>
 
 ## 添加表单

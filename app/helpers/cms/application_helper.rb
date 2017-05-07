@@ -36,34 +36,13 @@ module Cms::ApplicationHelper
     end
   end
 
-  #获得obj的上一个对象
-  def get_prev_obj(obj)
-    the_obj = case obj.class.to_s
-    when "Cms::Page"
-      Cms::Page.order("id desc").where("id < ?", obj.id).limit(1).first
-    when "Cms::Channel"
-      Cms::Channel.order("id desc").where("id < ?", obj.id).limit(1).first
-    end
-    return the_obj.nil? ? obj : the_obj
-  end
-  #获得obj的下一个对象
-  def get_next_obj(obj)
-    the_obj = case obj.class.to_s
-    when "Cms::Page"
-      Cms::Page.where("id > ?", obj.id).limit(1).first
-    when "Cms::Channel"
-      Cms::Channel.where("id > ?", obj.id).limit(1).first
-    end
-    return the_obj.nil? ?  obj : the_obj
-  end
-
   #前台获得下拉列表菜单
-  #默认调用方法：get_menu('product')
-  #level: 显示的层级深度，默认为2级；如果要显示3级，则调用：get_menu('product', 3)
-  def get_menu(channel_title_or_short_title, level = 1)
-    parent_channel = Cms::Channel.find_by(short_title: channel_title_or_short_title)
-    parent_channel ||= Cms::Channel.find_by(title: channel_title_or_short_title)
-    return if parent_channel.nil?
+  #默认调用方法：get_menu(@cms_site, 'product')
+  #level: 显示的层级深度，默认为2级；如果要显示3级，则调用：get_menu(@cms_site, 'product', 3)
+  def get_menu(cms_site, channel_title_or_short_title, level = 1)
+    parent_channel = cms_site.channels.find_by(short_title: channel_title_or_short_title)
+    parent_channel ||= cms_site.channels.find_by(title: channel_title_or_short_title)
+    return [] if parent_channel.nil?
     if parent_channel.children.any? && (level = level - 1) >= 0
       str_arr = []
       str_arr << %{<li class="dropdown">}
@@ -82,6 +61,5 @@ module Cms::ApplicationHelper
       %{<li><a href="#{get_cms_url(parent_channel)}">#{parent_channel.title}</a></li>}.html_safe
     end
   end
-
 
 end

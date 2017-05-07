@@ -55,6 +55,19 @@ class Cms::Site < ApplicationRecord
     self.keystores.find_by(key: key).try(:value) || ''
   end
 
+  #methods for pages helper
+
+  #下一页
+  def next_page(page, pointer = 1)
+    next_page = self.pages.where("cms_pages.id #{pointer > 0 ? '>' : '<'} ?", page.id).order("cms_pages.id #{pointer > 0 ? 'ASC' : 'DESC'}").first
+    next_page = self.pages.order("cms_pages.id #{pointer > 0 ? 'DESC' : 'ASC'}").first if next_page.nil?
+    next_page
+  end
+  #上一页
+  def previous_page(page)
+    next_page(page, -1)
+  end
+
   private
   def do_initialize
     return if db_init
