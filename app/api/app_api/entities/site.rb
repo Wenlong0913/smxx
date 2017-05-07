@@ -9,6 +9,8 @@ module AppAPI
         expose :image_items, using: AppAPI::Entities::ImageItem, as: :images, documentation: { is_array: true }
         expose :business_hours, documentation: { desc: '营业时间' }
         expose :address_line, documentation: { desc: '地址' }
+        expose :address_lat, documentation: {desc: '纬度'}
+        expose :address_lng, documentation: {desc: '经度'}
         expose :phone, documentation: { desc: '联系电话' }
         expose :is_favorite do |site, options|
           site.favorites.tagged_by? options[:user_id]
