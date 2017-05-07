@@ -138,6 +138,7 @@ module AppAPI::V1
       params do
         optional :nickname, type: String, desc: '昵称'
         optional :avatar, type: Rack::Multipart::UploadedFile, desc: '上传头像'
+        optional :community_id, type: String, desc: '小区名称'
       end
       put 'me' do
         authenticate!
@@ -146,6 +147,9 @@ module AppAPI::V1
         end
         if params[:nickname].present?
           current_user.nickname = params[:nickname].strip
+        end
+        if  Settings.project.imolin? && params[:community_id].present?
+          current_user.communities = [::Community.find_by(id: params[:community_id])]
         end
         if current_user.changed?
           unless current_user.save

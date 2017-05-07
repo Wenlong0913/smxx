@@ -6,6 +6,11 @@ module AppAPI
         expose :username, documentation: { desc: '用户名：私有数据，自己或有特定权限的账号才能获得' }
         expose :email, documentation: { desc: '电子邮件：私有数据，自己或有特定权限的账号才能获得' }
         expose :mobile_phone, documentation: { desc: '私有数据，自己或有特定权限的账号才能获得' }
+        expose :nickname, documentation: { desc: '用户名：私有数据，自己或有特定权限的账号才能获得' }
+        if Settings.project.imolin?
+          expose :community_ids, documentation: {desc: '小区ID'}
+        end
+        expose :display_headshot, as: :headshot, documentation: { desc: '头像' }
       end
 
       expose :access_token, if: :access_token, documentation: { desc: '用户身份，在注册或登录时返回' } do |user, options|

@@ -43,6 +43,8 @@ class User < ApplicationRecord
   has_many :update_order, class_name: 'Order', foreign_key: :update_by
   has_many :sales_distribution_resources, class_name: 'SalesDistribution::Resource'
   has_one :address_book, dependent: :destroy
+  has_many :user_communities, dependent: :destroy
+  has_many :communities, dependent: :destroy, through: :user_communities
   # 收藏的店铺
   has_many :site_favorites, -> { where(resource_type: 'Site') }, class_name: 'Favorite::Entry'
   #  收藏的产品
