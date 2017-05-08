@@ -15,7 +15,7 @@
 class Catalog < ApplicationRecord
   audited
   has_closure_tree dependent: :destroy
-  store_accessor :features, :settings
+  store_accessor :features, :settings, :icon_url
 
   validates :name, uniqueness: {scope: [:parent_id, :type]}, presence: true
   before_validation :sanitize_settings
