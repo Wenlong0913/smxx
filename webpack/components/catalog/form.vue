@@ -27,6 +27,12 @@
                 <input type="text" @keyup.enter="submit" v-model='model.settings' class="form-control" placeholder="输入该分类的属性，用逗号隔开！">
               </div>
             </div>
+            <div class="form-group" v-show="editicon">
+              <div class="col-sm-2 control-label">图标地址</div>
+              <div class="col-sm-10">
+                <input type="text" @keyup.enter="submit" v-model='model.icon_url' class="form-control" placeholder="输入该分类的图标地址">
+              </div>
+            </div>
             <!-- 状态提示信息 -->
             <div class="return_messages text-center" :class="options.responseMessage.status ? 'text-success' : 'text-danger' ">
               {{ options.responseMessage.text}}
@@ -53,6 +59,7 @@ export default{
   props: {
     options: { type: Object, required: true },
     value: { type: Boolean, default: true },
+    editicon: { type: Boolean},
     model: { type: Object, required: true }
   },
   data() {
