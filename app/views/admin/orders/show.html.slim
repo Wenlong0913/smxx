@@ -30,12 +30,13 @@ h1.page-header
                 td
                   span
                     = enum_l(@order, :status)
-              tr
-                td.field
-                  | #{Order.human_attribute_name(:internal_status)}
-                td
-                  span
-                    = enum_l(@order, :internal_status)
+              - if Settings.project.dagle?
+                tr
+                  td.field
+                    | #{Order.human_attribute_name(:internal_status)}
+                  td
+                    span
+                      = enum_l(@order, :internal_status)
               tr
                 td.field
                   | #{Order.human_attribute_name(:user)}
