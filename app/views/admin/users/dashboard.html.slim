@@ -38,17 +38,18 @@ h1.page-header
           i.fa.fa-arrow-circle-o-right
   /! end col-3
   /! begin col-3
-  .col-md-3.col-sm-6
-    .widget.widget-stats.bg-purple
-      .stats-icon
-        | 供
-      .stats-info
-        h4 商家
-        p= Vendor.count
-      .stats-link
-        = link_to admin_vendors_path
-          | 查看详细
-          i.fa.fa-arrow-circle-o-right
+  - if Settings.project.dagle?
+    .col-md-3.col-sm-6
+      .widget.widget-stats.bg-purple
+        .stats-icon
+          | 供
+        .stats-info
+          h4 商家
+          p= Vendor.count
+        .stats-link
+          = link_to admin_vendors_path
+            | 查看详细
+            i.fa.fa-arrow-circle-o-right
   /! end col-3
   /! begin col-3
   .col-md-3.col-sm-6
@@ -56,7 +57,8 @@ h1.page-header
       .stats-icon
         | 销
       .stats-info
-        h4 经销商
+        h4 
+          = Site.model_name.human
         p= Site.count
       .stats-link
         = link_to admin_sites_path

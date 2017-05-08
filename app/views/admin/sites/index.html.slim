@@ -77,7 +77,10 @@ h1.page-header
                   => link_to "#{site.id}. #{site.title}", admin_site_products_path(site)
                   small
                     => link_to '详情', admin_site_path(site), class: 'btn btn-xs btn-default'
-                => site.address_line if Settings.project.imolin?
+                - if Settings.project.imolin?
+                  => site.address_line
+                - else
+                  => site.user.nickname
               - if Settings.project.meikemei?
                 td = site.contact_name
                 td = site.contact_phone
@@ -105,8 +108,8 @@ h1.page-header
                     => link_to "未发布", '#', class: 'btn btn-xs btn-warning'
                   => link_to "商品数：#{site.products.count}", admin_site_products_path(site), class: 'btn btn-xs btn-info'
               td
+                => link_to '信息修改', edit_admin_site_path(site), class: 'btn btn-xs btn-primary', 'data-turbolinks': false
                 - if Settings.project.imolin?
-                  => link_to '信息修改', edit_admin_site_path(site), class: 'btn btn-xs btn-primary', 'data-turbolinks': false
                   => link_to '重新定位', edit_admin_site_path(site, map: true), class: 'btn btn-xs btn-primary', 'data-turbolinks': false
                 => link_to '删除', admin_site_path(site), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
     .pull-right
