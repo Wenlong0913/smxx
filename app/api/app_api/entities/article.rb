@@ -7,7 +7,7 @@ module AppAPI
       expose_updated_at
 
       def products_simple
-        object.products.as_json(only: [:name], methods: :price, include: { image_items: { only: [], methods: [:image_url]} })
+        object.products.as_json(only: [:id, :name], methods: :price, include: { image_items: { only: [], methods: [:image_url]} })
       end
     end
   end
