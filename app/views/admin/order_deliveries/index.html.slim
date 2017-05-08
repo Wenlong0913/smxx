@@ -27,7 +27,7 @@
         strong
           = "查询："
         span
-          = @order_deliveries.size.to_s + "条记录"
+          = @order_deliveries.total_count.to_s + "条记录"
         span.close[data-dismiss="alert"]
           | ×
     .list

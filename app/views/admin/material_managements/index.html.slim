@@ -59,7 +59,7 @@ h1.page-header
         strong
           = "查询："
         span
-          = @material_managements.size.to_s + "条记录"
+          = @material_managements.total_count.to_s + "条记录"
         span.close[data-dismiss="alert"]
           | ×
 

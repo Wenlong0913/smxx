@@ -24,7 +24,7 @@ h1.page-header
               catalog-list[data-url=admin_material_catalogs_path :default="selecteDefault" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false"]
             div[slot="footer"]
         .col-md-4
-          button.btn.btn-inverse 搜索 
+          button.btn.btn-inverse 搜索
           .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
             button.btn.btn-default[type='submit'name='csv'value='csv'] csv
   .panel-body
@@ -33,7 +33,7 @@ h1.page-header
         strong
           = "查询："
         span
-          = @materials.size.to_s + "条记录"
+          = @materials.total_count.to_s + "条记录"
         span.close[data-dismiss="alert"]
           | ×
     .table-responsive.row.m-0
@@ -60,7 +60,7 @@ h1.page-header
                 => link_to '编辑', edit_admin_material_path(material), class: 'btn btn-xs btn-default'
                 = link_to '删除', admin_material_path(material), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
     = paginate @materials
-  
+
 / TODO: move this code to application.js
 javascript:
   $(document).ready(function(){

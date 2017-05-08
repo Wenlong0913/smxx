@@ -51,7 +51,7 @@ h1.page-header
         strong
           = "查询："
         span
-          = @sites.size.to_s + "条记录"
+          = @sites.total_count.to_s + "条记录"
         span.close[data-dismiss="alert"]
           | ×
     .table-responsive
