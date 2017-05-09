@@ -72,6 +72,10 @@ module AppAPI::V1
           elsif params[:mobile_phone]
             ::User.find_by_phone_number(params[:mobile_phone])
           end
+        if user.nil? && Settings.project.imolin? && params[:mobile_phone]
+          _ , user = ::User::Create.(mobile_phone: params[:mobile_phone])
+          api_token = user.api_tokens.find_or_initialize_by(device: params[:device])
+        end
         error! "用户不存在" if user.nil?
         if params[:password]
           error! "密码错误" unless user.valid_password?(params[:password])
@@ -137,6 +141,7 @@ module AppAPI::V1
       end
       params do
         optional :nickname, type: String, desc: '昵称'
+        optional :username, type: String, desc: '名称'
         optional :avatar, type: Rack::Multipart::UploadedFile, desc: '上传头像'
         optional :community_id, type: String, desc: '小区名称'
       end
@@ -148,8 +153,13 @@ module AppAPI::V1
         if params[:nickname].present?
           current_user.nickname = params[:nickname].strip
         end
+        if params[:username].present?
+          current_user.username = params[:username].strip
+        end
         if  Settings.project.imolin? && params[:community_id].present?
-          current_user.communities = [::Community.find_by(id: params[:community_id])]
+          current_user.communities << ::Community.find_by(id: params[:community_id])
+          current_user.user_communites.update_all(is_current: false)
+          current_user.user_communites.where(community_id: params[:community_id]).update_all(is_current: true)
         end
         if current_user.changed?
           unless current_user.save

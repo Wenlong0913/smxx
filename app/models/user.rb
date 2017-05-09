@@ -123,4 +123,10 @@ class User < ApplicationRecord
     URI(Settings.site.host).merge( url || "/assets/no-picture.png").to_s
   end
 
+  if Settings.project.imolin?
+    def current_community_id
+      user_communities.where(is_current: true).first.try(:community_id)
+    end
+  end
+
 end
