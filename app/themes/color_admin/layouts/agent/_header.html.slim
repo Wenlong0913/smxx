@@ -97,6 +97,10 @@
       /! BEGIN header-nav
       .header-nav
         ul.nav.pull-right
+          li
+            a
+              span 
+                = current_user.nickname
           li.dropdown.dropdown-hover
             a.header-cart data-toggle="dropdown" href="#"
               span.total 2
@@ -108,7 +112,7 @@
                 ul.cart-item
                   li
                     | 无
-              .cart-footer
+              /.cart-footer
                 .row.row-space-10
                   .col-xs-12
                     a.btn.btn-default.btn-block href="#"  查看更多
