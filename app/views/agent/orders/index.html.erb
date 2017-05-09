@@ -48,7 +48,7 @@
                   <!-- begin media -->
                   <div class="media">
                     <% if Settings.project.sxhop? %>
-                      <%= link_to image_tag(order.order_products.first.product.image_items.first.image_url), agent_order_path(order) %>
+                      <%= link_to image_tag(order.order_products.first.product.image_items.first.try(:image_url) || 'no-picture.png'), agent_order_path(order) %>
                     <% else %>
                       <%= image_tag ('gelan.jpg') %>
                     <% end %>
@@ -151,11 +151,11 @@
               <label class="control-label">价格</label>
               <div class="row row-space-0">
                   <div class="col-md-5">
-                    <%= f.text_field :price_from, type: 'number', value: (params[:search][:price_from] if params[:search]),class: 'form-control input-sm', min: '0' %>
+                    <%= f.text_field :price_from, type: 'number', value: (params[:search][:price_from].to_f / 100 if params[:search]),class: 'form-control input-sm', min: '0' %>
                   </div>
                   <div class="col-md-2 text-center p-t-5 f-s-12 text-muted">～</div>
                   <div class="col-md-5">
-                    <%= f.text_field :price_to, type: 'number', value: (params[:search][:price_to] if params[:search]),class: 'form-control input-sm', min: '0' %>
+                    <%= f.text_field :price_to, type: 'number', value: (params[:search][:price_to].to_f / 100 if params[:search]),class: 'form-control input-sm', min: '0' %>
                   </div>
               </div>
             </div>

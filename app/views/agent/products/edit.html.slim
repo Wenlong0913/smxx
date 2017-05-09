@@ -28,10 +28,10 @@
                   div[slot="footer"]
             .col-xs-6
               .form-group
-                = f.input :price
+                = f.input :price, input_html: { value: @product.price.to_f / 100 }
             .col-xs-6
               .form-group
-                = f.input :discount
+                = f.input :discount, input_html: { value: @product.discount.to_f / 100 }
             .col-xs-6
               .form-group.weight-input-group
                 = f.input :weight_unit, vlaue: @product.weight_unit, as: :hidden, input_html: {class: 'hidden-input'}
@@ -68,8 +68,9 @@
             .col-xs-6
               .form-group
                 label.control-label.string.optional 是否设为站长推荐
-                .
-                    = f.input_field :is_manager_recommend, as: :boolean
+                .input-group
+                  span.input-group-addon.fee_checkbox
+                    = f.input_field :is_manager_recommend, as: :boolean, label: false
             .col-xs-12
               .form-group.string.optional.product_tag
                 label.control-label.string.optional 商品标签
@@ -95,6 +96,8 @@
                   = f.label :event
                   = f.input_field :promotion, as: :boolean, label: '促销'
                   = f.label :promotion
+                  / = f.input_field :discount, as: :boolean, label: '折扣'
+                  / = f.label :discount
             .col-xs-12
               hr
               div[rel="attr_list_vue" data-values="#{@product.additional_attribute_values.to_json}" data-keys="#{@product.additional_attribute_keys.to_json}"]

@@ -1,5 +1,6 @@
 class Agent::OrdersController < Agent::BaseController
   before_action :set_order, only: [:show, :update, :order_delivery]
+  before_action :set_product_price, only: [:index]
 
   def index
     @orders = @site.orders.all
@@ -61,5 +62,12 @@ class Agent::OrdersController < Agent::BaseController
   private
     def set_order
       @order = Order.find(params[:id])
+    end
+
+    def set_product_price
+      if params[:search].present?
+        params[:search][:price_from] = params[:search][:price_from].to_f * 100 unless params[:search][:price_from].blank?
+        params[:search][:price_to] = params[:search][:price_to].to_f * 100 unless params[:search][:price_to].blank?
+      end
     end
 end

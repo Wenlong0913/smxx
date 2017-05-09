@@ -77,14 +77,14 @@
                           <% if @product.discount.to_f > 0 && @product.discount.to_f < @product.price.to_f %>
 
                             <li class='col-sm-12 col-md-4'>
-                              售价：<span class="discount text-danger">￥<%= @product.price %></span>
+                              售价：<span class="discount text-danger">￥<%= @product.price.to_f / 100 %></span>
                             </li>
                             <li class='col-sm-12 col-md-4'>
-                              折扣：<span class="price text-primary">￥<%= @product.discount %></span>
+                              折扣：<span class="price text-primary">￥<%= @product.discount.to_f / 100 %></span>
                             </li>
                           <% else %>
                             <li class='col-sm-12 col-md-4'>
-                              售价：<span class="price text-primary">￥<%= @product.price %></span>
+                              售价：<span class="price text-primary">￥<%= @product.price.to_f / 100 %></span>
                             </li>
                           <% end %>
                         </ul>

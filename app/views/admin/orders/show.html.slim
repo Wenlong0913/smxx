@@ -95,36 +95,36 @@ h1.page-header
               - @order.order_products.each do |order_product|
                 tr
                   td = order_product.product.name
-                  td = order_product.product.price
+                  td = order_product.product.discount.to_f / 100 || order_product.product.price.to_f / 100
                   td = "#{order_product.amount}#{order_product.product.unit}"
-                  td = order_product.price
-          
-.panel
-  .panel-heading
-    .panel-heading-btn
-      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
-        i class="fa fa-expand"
-      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
-        i class="fa fa-minus"
-    h5 #{Material.model_name.human}列表
-  .panel-body
-    .profile-container
-      .profile-info
-        - if @order.order_materials.any?
-          .table-responsive
-            table.table
-              tr
-                th = Material.human_attribute_name(:catalog)
-                th = Material.human_attribute_name(:name)
-                th = OrderMaterial.human_attribute_name(:amount)
-                th
-                
-              - @order.order_materials.each do |order_material|
+                  td = order_product.price.to_f / 100
+- if Settings.project.dagle?
+  .panel
+    .panel-heading
+      .panel-heading-btn
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+          i class="fa fa-expand"
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+          i class="fa fa-minus"
+      h5 #{Material.model_name.human}列表
+    .panel-body
+      .profile-container
+        .profile-info
+          - if @order.order_materials.any?
+            .table-responsive
+              table.table
                 tr
-                  td = order_material.material.catalog.name
-                  td = order_material.material.name
-                  td = "#{order_material.amount}#{order_material.material.unit}"
-                  td
-                    => link_to '修改', edit_admin_order_material_path(@order, order_material), class: 'btn btn-xs btn-default'
-                    => link_to '删除', admin_order_material_path(@order, order_material), class: 'btn btn-xs btn-danger', method: :delete
-        = link_to "添加物料", new_admin_order_material_path(@order)
+                  th = Material.human_attribute_name(:catalog)
+                  th = Material.human_attribute_name(:name)
+                  th = OrderMaterial.human_attribute_name(:amount)
+                  th
+                  
+                - @order.order_materials.each do |order_material|
+                  tr
+                    td = order_material.material.catalog.name
+                    td = order_material.material.name
+                    td = "#{order_material.amount}#{order_material.material.unit}"
+                    td
+                      => link_to '修改', edit_admin_order_material_path(@order, order_material), class: 'btn btn-xs btn-default'
+                      => link_to '删除', admin_order_material_path(@order, order_material), class: 'btn btn-xs btn-danger', method: :delete
+          = link_to "添加物料", new_admin_order_material_path(@order)
