@@ -9,6 +9,7 @@ module Comment
     has_many :image_items, :through => :image_item_relations
     has_many :attachment_relations, as: :relation, dependent: :destroy
     has_many :attachments, :through => :attachment_relations
+    has_many_likes
 
     validates_presence_of :content
     validate :check_parent_id

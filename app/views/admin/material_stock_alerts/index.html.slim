@@ -53,7 +53,7 @@ h1.page-header
         strong
           = "查询："
         span
-          = @material_stock_alerts.size.to_s + "条记录"
+          = @material_stock_alerts.total_count.to_s + "条记录"
         span.close[data-dismiss="alert"]
           | ×
     .table-responsive.row.m-0

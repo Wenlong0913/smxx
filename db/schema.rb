@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170424100601) do
+ActiveRecord::Schema.define(version: 20170507072643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,12 +208,12 @@ ActiveRecord::Schema.define(version: 20170424100601) do
   end
 
   create_table "cms_comments", force: :cascade do |t|
-    t.integer  "site_id"
     t.string   "contact"
     t.text     "content"
     t.jsonb    "features"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "site_id",    null: false
     t.index ["site_id"], name: "index_cms_comments_on_site_id", using: :btree
   end
 
@@ -266,10 +266,11 @@ ActiveRecord::Schema.define(version: 20170424100601) do
     t.text     "content"
     t.integer  "position"
     t.boolean  "deleted"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.integer  "parent_id"
     t.jsonb    "features"
+    t.integer  "likes_count",   default: 0
     t.index ["resource_type", "resource_id"], name: "index_comment_entries_on_resource_type_and_resource_id", using: :btree
   end
 
@@ -914,8 +915,9 @@ ActiveRecord::Schema.define(version: 20170424100601) do
     t.string   "content"
     t.string   "type"
     t.jsonb    "features"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "comments_count", default: 0
     t.index ["site_id"], name: "index_tickets_on_site_id", using: :btree
     t.index ["user_id"], name: "index_tickets_on_user_id", using: :btree
   end
@@ -970,6 +972,15 @@ ActiveRecord::Schema.define(version: 20170424100601) do
     t.index ["resource_type", "resource_id"], name: "index_tracker_visits_on_resource_type_and_resource_id", using: :btree
     t.index ["session_id"], name: "index_tracker_visits_on_session_id", using: :btree
     t.index ["user_id"], name: "index_tracker_visits_on_user_id", using: :btree
+  end
+
+  create_table "user_communities", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "community_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["community_id"], name: "index_user_communities_on_community_id", using: :btree
+    t.index ["user_id"], name: "index_user_communities_on_user_id", using: :btree
   end
 
   create_table "user_mobiles", force: :cascade do |t|
@@ -1048,8 +1059,6 @@ ActiveRecord::Schema.define(version: 20170424100601) do
   add_foreign_key "address_books", "users"
   add_foreign_key "article_products", "articles"
   add_foreign_key "attachment_relations", "attachments"
-  add_foreign_key "cms_comments", "sites"
-  add_foreign_key "cms_keystores", "sites"
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
   add_foreign_key "items", "sites"
@@ -1075,6 +1084,8 @@ ActiveRecord::Schema.define(version: 20170424100601) do
   add_foreign_key "tickets", "users"
   add_foreign_key "tracker_visits", "tracker_actions", column: "action_id"
   add_foreign_key "tracker_visits", "tracker_sessions", column: "session_id"
+  add_foreign_key "user_communities", "communities"
+  add_foreign_key "user_communities", "users"
   add_foreign_key "user_mobiles", "users"
   add_foreign_key "user_weixins", "users"
 end

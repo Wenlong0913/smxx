@@ -20,11 +20,11 @@
                 span.input-group-btn.keyword-search-btn
                   button.btn.btn-default[type="submit"]
                     i.fa.fa-search
-            .col-xs-4
+            /.col-xs-4
               span.btn.btn-default.open-more
                 i.fa.fa-ellipsis-v.m-r-5
                 span 更多筛选
-          .col-xs-12.more-choices
+          /.col-xs-12.more-choices
             - @agent_member_catalogs.each do |catalog|
               .col-xs-6
                 label.text-muted = catalog.key

@@ -1,10 +1,23 @@
-= simple_form_for(@cms_comment) do |f|
+= simple_form_for([@cms_site, @cms_comment], url: cms_site_comment_path(@cms_site, @cms_comment)) do |f|
   = f.error_notification
 
   .form-inputs
     = f.input :contact
     = f.input :content
-    = f.input :features
+    = f.input :name
+    = f.input :mobile_phone
+    = f.input :tel_phone
+    = f.input :email
+    = f.input :qq
+    = f.input :address
+    = f.input :gender
+    = f.input :birth
+    = f.input :hobby
+    = f.input :content2
+    = f.input :content3
+    = f.input :status
+    = f.input :branch
+    = f.input :datetime
 
   .form-actions
-    = f.button :submit
+    = f.button :submit, '提交', class: 'btn btn-primary'

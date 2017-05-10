@@ -2,6 +2,8 @@ class Agent::ProductsController < Agent::BaseController
   before_action :set_current_user_products
   before_action :set_product, only: [:show, :edit, :update, :destroy, :process_shelves, :sales_distribution]
   before_action :set_site_tags, only: [:edit, :new]
+  before_action :set_product_price, only: [:create, :update, :index]
+
   def index
     authorize Product
     @catalogs = ProductCatalog.roots
@@ -168,5 +170,16 @@ class Agent::ProductsController < Agent::BaseController
     def set_site_tags
       @site_tags      = @site.tags.pluck(:name).uniq
       @site_most_tags = @site.tags.most_used(5).uniq.map(&:name)
+    end
+
+    def set_product_price
+      if params[:product].present?
+        params[:product][:price] = params[:product][:price].to_f * 100 unless params[:product][:price].blank?
+        params[:product][:discount] = params[:product][:discount].to_f * 100 unless params[:product][:discount].blank?
+      end
+      if params[:search].present?
+        params[:search][:price_from] = params[:search][:price_from].to_f * 100 unless params[:search][:price_from].blank?
+        params[:search][:price_to] = params[:search][:price_to].to_f * 100 unless params[:search][:price_to].blank?
+      end
     end
 end

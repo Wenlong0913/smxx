@@ -2,7 +2,7 @@
   <h1> 产品管理
     <div class="pull-right">
       <%= link_to '添加产品', new_agent_product_path, class: 'btn btn-primary' %>
-      <%= link_to '分类搜索', '#', class: 'btn btn-info' %>
+      <%#= link_to '分类搜索', '#', class: 'btn btn-info' %>
     </div>
   </h1>
 </div>
@@ -34,17 +34,17 @@
                 <li class="<%= 'sign' unless params[:reorder].present? %>">
                   <%= link_to '默认', agent_products_path %>
                 </li>
-                <li class="<%= 'sign' unless params[:reorder] == 'clicks' %>">
+                <!-- <li class="<%= 'sign' unless params[:reorder] == 'clicks' %>">
                   <s>点击</s>
-                  <!-- <#%= link_to '点击', agent_products_path+"?reorder=clicks" %> -->
-                </li>
+                  <#%= link_to '点击', agent_products_path+"?reorder=clicks" %>
+                </li> -->
                 <li class="<%= 'sign' if params[:reorder] == 'newest' %>">
                   <%= link_to '最新', agent_products_path+"?reorder=newest" %>
                 </li>
-                <li class="<%= 'sign' if params[:reorder] == 'sales' %>">
+                <!-- <li class="<%= 'sign' if params[:reorder] == 'sales' %>">
                   <s>销量</s>
-                  <!-- <#%= link_to '销量', agent_products_path+"?reorder=sales" %> -->
-                </li>
+                  <#%= link_to '销量', agent_products_path+"?reorder=sales" %>
+                </li> -->
                 <li class="<%= 'sign' if params[:reorder] == 'price' %>">
                   <%= link_to '价格', agent_products_path+"?reorder=price" %>
                 </li>
@@ -78,14 +78,14 @@
                     <div class="m-t-10">
                       <% if product.discount.to_f > 0 && product.discount.to_f < product.price.to_f %>
                         <small class="item-desc">
-                          <s>￥<%= product.price %></s>
+                          <s>￥<%= product.price.to_f / 100 %></s>
                         </small>
                         <span class="text-danger h3">
-                          <small class="text-danger">￥</small><%= product.discount %>
+                          <small class="text-danger">￥</small><%= product.discount.to_f / 100 %>
                         </span>
                       <% else %>
                         <span class="text-danger h3">
-                          <small class="text-danger">￥</small><%= product.price %>
+                          <small class="text-danger">￥</small><%= product.price.to_f / 100 %>
                         </span>
                       <% end %>
                     </div>
@@ -119,11 +119,11 @@
               <label class="control-label">价格</label>
               <div class="row row-space-0">
                   <div class="col-md-5">
-                    <%= f.text_field :price_from, type: 'number', value: (params[:search][:price_from] if params[:search]),class: 'form-control input-sm', min: '0' %>
+                    <%= f.text_field :price_from, type: 'number', value: (params[:search][:price_from].to_f / 100 if params[:search]),class: 'form-control input-sm', min: '0' %>
                   </div>
                   <div class="col-md-2 text-center p-t-5 f-s-12 text-muted">～</div>
                   <div class="col-md-5">
-                    <%= f.text_field :price_to, type: 'number', value: (params[:search][:price_to] if params[:search]),class: 'form-control input-sm', min: '0' %>
+                    <%= f.text_field :price_to, type: 'number', value: (params[:search][:price_to].to_f / 100 if params[:search]),class: 'form-control input-sm', min: '0' %>
                   </div>
               </div>
             </div>

@@ -1,5 +1,5 @@
 class Cms::PagesController < Cms::BaseController
-  before_action :set_cms_site_and_channel
+  before_action :set_cms_site
   before_action :set_cms_page, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -20,7 +20,8 @@ class Cms::PagesController < Cms::BaseController
   end
 
   def new
-    @cms_page = @cms_channel.pages.new
+    @cms_channel = @cms_site.channels.find_by(id: params[:channel_id])
+    @cms_page = Cms::Page.new
     authorize @cms_page
   end
 
@@ -29,6 +30,7 @@ class Cms::PagesController < Cms::BaseController
   end
 
   def create
+    @cms_channel = @cms_site.channels.find_by(id: params[:cms_page][:channel_id])
     @cms_page = @cms_channel.pages.new(permitted_attributes(@cms_channel.pages))
     authorize @cms_page
     respond_to do |format|
@@ -69,14 +71,13 @@ class Cms::PagesController < Cms::BaseController
   end
 
   private
-    def set_cms_site_and_channel
+    def set_cms_site
       @cms_site = Cms::Site.find(params[:site_id])
-      @cms_channel = @cms_site.channels.find_by(id: params[:channel_id])
-      @cms_channel ||= @cms_site.channels.first
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_cms_page
-      @cms_page = @cms_channel.pages.find(params[:id])
+      @cms_page = Cms::Page.find(params[:id])
+      @cms_channel = @cms_page.channel
     end
 
     # Only allow a trusted parameter "white list" through.

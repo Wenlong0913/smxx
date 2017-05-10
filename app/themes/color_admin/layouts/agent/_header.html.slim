@@ -38,24 +38,25 @@
                 /! sxhop/dagle 订单不同
                 li = link_to '订单列表', agent_orders_path
                 / li = link_to '订单创建', new_agent_order_path
-            li.dropdown.dropdown-hover
-              a data-toggle="dropdown" href="#"
-                | 生产设计
-                i.fa.fa-angle-down
-                span.arrow.top
-              ul.dropdown-menu
-                li = link_to '任务管理', agent_preorder_conversitions_path
-                li
-                  a[href="#" data-toggle="modal" data-target="#newPreorderConversitionModal"]
-                    i class="fa fa-plus-circle"
-                    | &nbsp;新建任务
-            li.dropdown.dropdown-hover
-              a data-toggle="dropdown" href="#"
-                | 货运管理
-                i.fa.fa-angle-down
-                span.arrow.top
-              ul.dropdown-menu
-                li = link_to '货运列表', agent_deliveries_path
+            - if Settings.project.dagle?
+              li.dropdown.dropdown-hover
+                a data-toggle="dropdown" href="#"
+                  | 生产设计
+                  i.fa.fa-angle-down
+                  span.arrow.top
+                ul.dropdown-menu
+                  li = link_to '任务管理', agent_preorder_conversitions_path
+                  li
+                    a[href="#" data-toggle="modal" data-target="#newPreorderConversitionModal"]
+                      i class="fa fa-plus-circle"
+                      | &nbsp;新建任务
+              li.dropdown.dropdown-hover
+                a data-toggle="dropdown" href="#"
+                  | 货运管理
+                  i.fa.fa-angle-down
+                  span.arrow.top
+                ul.dropdown-menu
+                  li = link_to '货运列表', agent_deliveries_path
             li.dropdown.dropdown-hover
               a data-toggle="dropdown" href="#"
                 | 客户CRM
@@ -89,13 +90,17 @@
               ul.dropdown-menu
                 - if @cms_site && @cms_site.id?
                   li = link_to '访客留言', cms_site_comments_path(@cms_site)
-                  
+
                 li = link_to '访客统计', agent_tracker_path
                 li = link_to '分销统计', agent_tracker_shares_path
       /! END header-nav
       /! BEGIN header-nav
       .header-nav
         ul.nav.pull-right
+          li
+            a
+              span 
+                = current_user.nickname
           li.dropdown.dropdown-hover
             a.header-cart data-toggle="dropdown" href="#"
               span.total 2
@@ -107,7 +112,7 @@
                 ul.cart-item
                   li
                     | 无
-              .cart-footer
+              /.cart-footer
                 .row.row-space-10
                   .col-xs-12
                     a.btn.btn-default.btn-block href="#"  查看更多

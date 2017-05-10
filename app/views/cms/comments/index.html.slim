@@ -1,23 +1,33 @@
-h1 Listing cms_comments
+.container
+  h2
+    | 站点管理
+    .pull-right
+      => link_to '返回', cms_site_path(@cms_site), class: 'btn btn-default'
+  .panel
+    .panel-heading
+      .panel-heading-btn
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+          i class="fa fa-expand"
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+          i class="fa fa-minus"
+    .panel-body
+      table.table.table-stripped
+        thead
+          tr
+            th 联系方式
+            th 留言内容
+            th 其他
+            th 操作
 
-table
-  thead
-    tr
-      th Contact
-      th Content
-      th Features
-      th
-      th
-      th
+        tbody
+          - @cms_comments.each do |cms_comment|
+            tr
+              td = cms_comment.contact
+              td = cms_comment.content
+              td = cms_comment.features
+              td.text-right
+                => link_to '详情', cms_site_comment_path(@cms_site, cms_comment)
+                => link_to '修改', edit_cms_site_comment_path(@cms_site, cms_comment)
+                => link_to '删除', cms_site_comment_path(@cms_site, cms_comment), data: { confirm: '确定要删除吗?' }, method: :delete
 
-  tbody
-    - @cms_comments.each do |cms_comment|
-      tr
-        td = cms_comment.contact
-        td = cms_comment.content
-        td = cms_comment.features
-        td = link_to 'Show', cms_site_comment(@cms_site)
-        td = link_to 'Edit', edit_cms_sie_comment_path(@cms_site, cms_comment)
-        td = link_to 'Destroy', cms_comment, data: { confirm: 'Are you sure?' }, method: :delete
-
-br
+      br

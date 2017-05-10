@@ -8,9 +8,9 @@ module AppAPI
       private
       def resource_data
         if object.resource.class.to_s == 'Product'
-          object.resource.as_json(only: [:id, :name], include: { image_items: { only: [:name], methods: [:image_url] } }).merge(discover_type: '商品')
+          object.resource.as_json(only: [:id, :name, :updated_at, :comments_count, :favorites_count, :visits_count, :likes_count, :sales_count], methods: [:first_image], include: { site: { only: [:title] } }).merge(discover_type: 'product')
         else
-          object.resource.as_json(only: [:id, :url, :object_type, :object_id], include: { user: { only: [:nickname] } }).merge(discover_type: '分享贴')
+          object.resource.as_json(only: [:id, :title, :description], include: { user: { only: [:nickname] }, image_items: { only: [], methods: [:image_url] }, products: { only: [:id, :name], methods: [:first_image] } }).merge(discover_type: 'article')
         end
       end
     end

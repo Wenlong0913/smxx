@@ -104,6 +104,21 @@ module AppAPI::V1
         present message: '产品取消收藏成功!'
       end
 
+      desc '是否收藏了此产品'
+      params do
+        requires :id, type: Integer, desc: "#{::Site.model_name.human}ID"
+      end
+      get ':id/is_favorited' do
+        authenticate!
+        product = ::Product.find(params[:id])
+        is_favorited = if current_user.favorites.tagged_to? product
+          true
+        else
+          false
+        end
+        present is_favorited: is_favorited
+      end
+
       desc '商品点赞'
       params do
         requires :id, type: Integer, desc: "#{::Product.model_name.human}ID"
@@ -132,6 +147,21 @@ module AppAPI::V1
           current_user.likes.untag_to! product
         end
         present message: '产品取消点赞成功!'
+      end
+
+      desc '是否点赞了此商品'
+      params do
+        requires :id, type: Integer, desc: "#{::Product.model_name.human}ID"
+      end
+      post ':id/is_liked' do
+        authenticate!
+        product = ::Product.find(params[:id])
+        is_liked = if current_user.likes.tagged_to? product
+          true
+        else
+          false
+        end
+        present is_liked: is_liked
       end
 
     end # end of resources

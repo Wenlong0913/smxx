@@ -29,7 +29,7 @@ module AppAPI::V1
         shopping_carts.each do |sc|
           order.order_products.new(product_id: sc.product_id, price: sc.price, amount: sc.amount)
         end
-        order.price = order.order_products.map{|op| op.price * op.amount }.sum
+        order.price = order.order_products.map(&:price).sum
         error! order.errors unless order.save && shopping_carts.destroy_all
         present order, with: AppAPI::Entities::Order
       end

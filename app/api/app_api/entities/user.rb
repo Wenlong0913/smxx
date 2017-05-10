@@ -6,6 +6,11 @@ module AppAPI
         expose :username, documentation: { desc: '用户名：私有数据，自己或有特定权限的账号才能获得' }
         expose :email, documentation: { desc: '电子邮件：私有数据，自己或有特定权限的账号才能获得' }
         expose :mobile_phone, documentation: { desc: '私有数据，自己或有特定权限的账号才能获得' }
+        expose :nickname, documentation: { desc: '用户名：私有数据，自己或有特定权限的账号才能获得' }
+        if Settings.project.imolin?
+          expose :community_ids, documentation: {desc: '小区ID'}
+        end
+        expose :display_headshot, as: :headshot, documentation: { desc: '头像' }
       end
 
       expose :access_token, if: :access_token, documentation: { desc: '用户身份，在注册或登录时返回' } do |user, options|
@@ -21,6 +26,8 @@ module AppAPI
         # TODO: 分享的帖子数量，特定条件下才能获得
         expose :article_shares_count, documentation: { desc: '分享的帖子数量，特定条件下才能获得（功能未实现，始终返回0）', type: Integer }, if: ->(user, options) { options[:article_shares_count] }
 
+        expose :shopping_carts_count, documentation: { desc: '购物车里商品的数量' }
+
         def site_favorites_count
           object.site_favorites.count
         end
@@ -31,6 +38,10 @@ module AppAPI
 
         def article_shares_count
           0
+        end
+
+        def shopping_carts_count
+          object.shopping_carts.sum(:amount)
         end
       end
 

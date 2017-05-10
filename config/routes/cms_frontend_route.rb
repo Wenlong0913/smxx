@@ -11,6 +11,7 @@ module CmsFrontendRoute
           root :to => "cms#index"
           match '/search(/:search(/page/:page))', to: "cms#search", via: :get, as: 'search'
           match '/tag/:tag(/page/:page)', to: "cms#tag", as: 'tag', via: :get
+          match '/comment/create', to: "cms#comment_create", as: 'comment_create', via: :post
           match '/:channel(/:id)', to: "cms#index", via: :get
           match '/:channel(/page/:page)', to: "cms#index", via: :get
         end

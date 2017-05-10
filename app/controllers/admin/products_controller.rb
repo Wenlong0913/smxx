@@ -5,6 +5,7 @@ class Admin::ProductsController < Admin::BaseController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   before_action :set_site, only: [:new, :edit, :create, :show, :update, :destroy]
   before_action :set_site_tags, only: [:edit, :new]
+  before_action :set_product_price, only: [:create, :update]
 
   def dashboard
     authorize Product
@@ -123,5 +124,10 @@ class Admin::ProductsController < Admin::BaseController
         @product.additional_attribute_values = params[:product][:additional_attribute_values]
       end
       params[:product][:tag_list] = [] if params[:product][:tag_list].blank?
+    end
+
+    def set_product_price
+      params[:product][:price] = params[:product][:price].to_f * 100 unless params[:product][:price].blank?
+      params[:product][:discount] = params[:product][:discount].to_f * 100 unless params[:product][:discount].blank?
     end
 end

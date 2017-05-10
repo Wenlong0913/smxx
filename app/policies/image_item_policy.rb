@@ -19,6 +19,6 @@ class ImageItemPolicy < ApplicationPolicy
   end
 
   def create?
-    user.super_admin_or_admin? || user.has_role?(:agent)
+    user.super_admin_or_admin? || user.has_role?(:agent) || user.permission?(:login_admin)
   end
 end

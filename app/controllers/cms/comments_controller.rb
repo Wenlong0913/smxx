@@ -35,7 +35,7 @@ class Cms::CommentsController < Cms::BaseController
     respond_to do |format|
       format.html do
         if @cms_comment.save
-          redirect_to cms_comment_path(@cms_comment), notice: 'Comment 创建成功.'
+          redirect_to cms_site_comments_url(@cms_site), notice: ' 创建成功.'
         else
           render :new
         end
@@ -50,7 +50,7 @@ class Cms::CommentsController < Cms::BaseController
     respond_to do |format|
       format.html do
         if @cms_comment.update(permitted_attributes(@cms_comment))
-          redirect_to cms_comment_path(@cms_comment), notice: 'Comment 更新成功.'
+          redirect_to cms_site_comments_url(@cms_site), notice: ' 更新成功.'
         else
           render :edit
         end
@@ -63,7 +63,7 @@ class Cms::CommentsController < Cms::BaseController
     authorize @cms_comment
     @cms_comment.destroy
     respond_to do |format|
-      format.html { redirect_to cms_comments_url, notice: 'Comment 删除成功.' }
+      format.html { redirect_to cms_site_comments_url(@cms_site), notice: ' 删除成功.' }
       format.json { head 200 }
     end
 
@@ -79,7 +79,5 @@ class Cms::CommentsController < Cms::BaseController
       @cms_site = Cms::Site.find(params[:site_id])
     end
     # Only allow a trusted parameter "white list" through.
-    def cms_comment_params
-      params.require(:cms_comment).permit(:contact, :content, :features)
-    end
+
 end

@@ -53,10 +53,10 @@ h1.page-header
               tr
                 td.field 原价
                 td
-                  = @product.old_price
+                  = @product.old_price.to_f / 100
                 td.field 售价
                 td
-                  =@product.price
+                  =@product.price.to_f / 100
               tr
                 td.field 月单数
                 td
@@ -120,7 +120,7 @@ h1.page-header
                 td.field 价格
                 td
                   a
-                    = @product.price
+                    = @product.price.to_f / 100
                 td.field 产品标签
                 td
                   - @product.tag_list.each do |tag|
@@ -150,7 +150,7 @@ h1.page-header
         h4 产品图片
         .gallery#gallery.p-20
           .row
-            - unless @product.image_items.blank?
+            - if @product.image_items.blank?
               .col-xs-12 没有产品图片
             - @product.image_items.each do |image|
               .image.col-sm-6.col-md-4

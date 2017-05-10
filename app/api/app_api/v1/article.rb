@@ -26,6 +26,7 @@ module AppAPI::V1
         success AppAPI::Entities::ArticleSimple
       end
       params do
+        optional :includes, type: String, values: ['description'], desc: '选择description后会返回文章类容'
         use :pagination
         use :sort, fields: [:id, :created_at, :updated_at]
       end
@@ -33,7 +34,7 @@ module AppAPI::V1
         authenticate!
         articles = ::Article.all
         articles = paginate_collection(sort_collection(articles), params)
-        wrap_collection articles, AppAPI::Entities::ArticleSimple
+        wrap_collection articles, AppAPI::Entities::Article, type: :list, includes: [params[:includes]]
       end
 
       desc '查看文章详细' do
@@ -44,7 +45,7 @@ module AppAPI::V1
       end
       get ':id' do
         authenticate!
-        present ::Article.find(params[:id]), with: AppAPI::Entities::Article
+        present ::Article.find(params[:id]), with: AppAPI::Entities::Article, includes: ['description']
       end
 
       desc '删除文章' do

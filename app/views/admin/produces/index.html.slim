@@ -56,7 +56,7 @@
         strong
           = "查询："
         span
-          = @produces.size.to_s + "条记录"
+          = @produces.total_count.to_s + "条记录"
         span.close[data-dismiss="alert"]
           | ×
     .table-responsive.row.m-0

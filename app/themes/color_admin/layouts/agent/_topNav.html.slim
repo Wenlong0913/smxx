@@ -5,13 +5,9 @@
     .collapse.navbar-collapse
       ul.nav.navbar-nav
         li
-          a[href="#" data-toggle="modal" data-target="#newPreorderConversitionModal"]
+          = link_to '#' do
             i class="fa fa-plus-circle"
-            | &nbsp;创建生产设计
-        li
-          = link_to new_agent_member_path do
-            i class="fa fa-plus-circle"
-            | &nbsp;添加新客户
+            => current_user.username
 
       ul.nav.navbar-nav.navbar-right
         li

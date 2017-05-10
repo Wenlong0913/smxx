@@ -20,7 +20,6 @@ class Cms::Page < ApplicationRecord
   is_impressionable :counter_cache => true
   belongs_to :channel
   has_one :site, through: :channel
-  default_scope {order('updated_at DESC')}
   before_validation :sanitize_short_title
   before_validation :create_unique_short_title
   validates :channel, :title, :content, presence: true

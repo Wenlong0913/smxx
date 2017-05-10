@@ -35,6 +35,7 @@ zh-CN:
         event: 活动
         promotion: 促销
         discount: 折扣
+        is_manager_recommend: 是否设为站长推荐
     errors:
       models:
         product:

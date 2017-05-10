@@ -1,6 +1,6 @@
 # 什么是CMS站点
 
-CMS站点是一个独立的网站内容管理系统， 每一个站点，对应public/templetes/下面的一个目录， 站点的所有资源（js/css/html/image/video）都放在这个目录。
+CMS站点是一个独立的网站内容管理系统， 每一个站点，对应public/templetes/下面的一个目录， 站点的所有资源（js/css.html.erb/image/video）都放在这个目录。
 
 # 如何创建一个CMS站点
 
@@ -14,11 +14,11 @@ CMS站点是一个独立的网站内容管理系统， 每一个站点，对应p
                     |font
                     |img
               |images
-              |index.html
-              |about.html
+              |index.html.erb
+              |about.html.erb
   </pre>
 
-  2. 修改index.html
+  2. 修改index.html.erb
   <p>首页作为模版的统一入口，所有公共的css、js、导航、页脚等部分都从首页里面提取出来。</p>
     <ul>
       <li>
@@ -54,21 +54,45 @@ CMS站点是一个独立的网站内容管理系统， 每一个站点，对应p
 
     generate_templetes.rb实现了以下几个功能：
 
-  - 拆分 index.html为：
-    - _head.html.erb
-    - _foot.html.erb
-    - _header.html.erb
-    - _footer.html.erb
-    - temp_index.html.erb
+  - 拆分 index.html.erb为：
+    - _head.html.erb.erb
+    - _foot.html.erb.erb
+    - _header.html.erb.erb
+    - _footer.html.erb.erb
+    - temp_index.html.erb.erb
   - 修改资源引用路径
 
   创建CMS规则说明：
   <ul>
     <li>模版必须放在/public/templetes/目录下</li>
-    <li>[首页]必须名为: index.html</li>
-    <li>[模版页]必须以"t_"或者"temp_"打头， 如 temp_blog_list.html</li>
-    <li>[内容页]保存一些特殊定义的页面, 如about.html(关于我们), contact.html(联系我们)</li>
+    <li>[首页]必须名为: index.html.erb</li>
+    <li>[模版页]必须以"t_"或者"temp_"打头， 如 temp_blog_list.html.erb</li>
+    <li>[内容页]保存一些特殊定义的页面, 如about.html.erb(关于我们), contact.html.erb(联系我们)</li>
   </ul>
+
+# 数据初始化
+
+  当新建一个网站的时候，可以同时初始化网站参数和栏目信息，具体操作是： 创建一个文件： /public/templetes/xxx/db_init.rb
+  然后按照以下格式添加【网站参数】和【栏目】信息。
+
+  注意： 文件名一定是： db_init.rb
+
+      #/1. 添加网站参数
+      @cms_site.keystores.find_or_create_by(key: 'yue-way', value: '打球', description: '约队中form表单标题')
+
+      #/2. 添加栏目
+      @cms_site.channels.create!(
+        :parent_id    => nil,
+        :title        => '首页',
+        :short_title  => 'index',
+        :properties   => 1,
+        :tmp_index    => 'temp_index.html.erb.erb',
+        :tmp_detail   => 'temp_detail.html.erb.erb',
+        :keywords     => '首页，微场馆名称',
+        :description  => '微场馆名称',
+        :content      => '<p>大家好</p>'
+      )
+
 
 # 模板页面设计
 
@@ -90,9 +114,42 @@ CMS站点是一个独立的网站内容管理系统， 每一个站点，对应p
 
     <%= @cms_site.name %>
     <%= @cms_site.value_for('contact_name') %>
+    <%= @cms_site.next_page(@page) %>
+    <%= @cms_site.previous_page(@page) %>
     <%= raw @channel.description  %>
     <% @channel.pages.where("'recommend' = ANY(properties)").each do |page| %>
+
     <%= paginate @pages, remote: true %>
+
+
+    <%= @cms_site.channels.where('parent_id is null').each do |channel| %>
+      <%= get_menu(@cms_site, channel.short_title) %>
+    <% end %>
+
+## 添加表单
+
+    <%= simple_form_for(Cms::Comment.new, url: cms_frontend_comment_create_path, html: { class: 'form-theme', id: 'formYue' } ) do |f| %>
+        <input type="phone" name="comment[contact]" class="form-control" id="InputPhone" />
+    <% end %>
+
+可以使用的表单属性：
+
+    contact: 联系方式
+    name: 姓名
+    mobile_phone: 手机号码
+    tel_phone: 电话号码
+    email: 电子邮件
+    qq: QQ
+    address: 地址
+    gender: 性别
+    birth: 出生日期
+    hobby: 爱好
+    content: 详细内容
+    content2: 补充
+    content3: 其它
+    status: 状态
+    branch: 分站
+    datetime: 预订时间
 
 # 如何添加二级域名
 

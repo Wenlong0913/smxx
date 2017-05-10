@@ -38,7 +38,7 @@
         <i class="fa fa-plus-square m-r-5"></i>新增
       </span>
     </div>
-    <catalog-form v-model="showModal" :options="options" v-if="showModal" :model="newCatalogModel" @addSubmit="addCatalog" @editSubmit="editCatalog" ></catalog-form>
+    <catalog-form v-model="showModal" :options="options" v-if="showModal" :model="newCatalogModel" @addSubmit="addCatalog" @editSubmit="editCatalog" :editicon="editicon"></catalog-form>
   </li>
 </template>
 <script>
@@ -47,6 +47,7 @@ import 'transitions/fade';
 export default {
   props: {
     editable: { type: Boolean},
+    editicon: { type: Boolean},
     breadcrumb: { type: Array, required: true },
     parent_id: { type: Number },
     catalogs: { type: Array, required: true },

@@ -50,4 +50,6 @@ module ApplicationHelper
       'purple', 'purple-darker', 'purple-lighter',
     ].sample
   end
+
+
 end

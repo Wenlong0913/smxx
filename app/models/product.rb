@@ -62,4 +62,8 @@ class Product < Item
       price
     end
   end
+
+  def first_image
+    image_items.first.try(:image_url)
+  end
 end

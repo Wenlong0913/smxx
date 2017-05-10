@@ -27,7 +27,7 @@
                 - product = order_product.product
                 li
                   .media
-                    = image_tag(product.image_items.first.image_url)
+                    = image_tag(product.image_items.first.try(:image_url) || 'no-picture.png')
                   .info-container
                     .info
                       h4.title
@@ -38,8 +38,8 @@
                             | 购买数量：
                             = order_product.amount
                           .col-xs-6
-                            | 商品单价：
-                            = order_product.price
+                            | 商品金额：
+                            = order_product.price.to_f / 100
       .search-sidebar
         h4.title
           | 订单信息
@@ -54,7 +54,7 @@
         .form-group
           label.control-label
             | 价格：
-          = @order.price
+          = @order.price.to_f / 100
         .form-group
           label.control-label
             | 订单状态：

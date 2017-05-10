@@ -16,6 +16,9 @@ zh-CN:
         statuses:
           open: 未付款
           processing: 处理中
+          pending: 付款中
+          paid: 已付款
+          delivering: 发货中
           cancelled: 已取消
           completed: 已完成
         internal_status: 内部状态

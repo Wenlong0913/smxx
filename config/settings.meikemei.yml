@@ -1,9 +1,9 @@
 default: &default
   site:
-    name: 美客美
+    name: 淘美客
     host: http://localhost:5000
     copyright: © MoKoMo All Right Reserved 2015
-    description: 美客美是一家提供在线美容预约服务的互联网平台，专业打造优质舒适的社区美容服务，拥有丰富多样的美容项目、各有所长的美容技师供您自由选择。
+    description: 淘美客是一家提供在线美容预约服务的互联网平台，专业打造优质舒适的社区美容服务，拥有丰富多样的美容项目、各有所长的美容技师供您自由选择。
     slogan: 定制私人美容，想约就约放心选择
   email:
     sender: sender@tmf.com
@@ -18,7 +18,7 @@ default: &default
     yun_pian_v1:
       api_key: c97380fa188341572c1bcdadf383dfc2
   mobile:
-    auth_token_template: "【美客美】您的验证码是#code#。如非本人操作，请忽略本短信。"
+    auth_token_template: "【淘美客】您的验证码是#code#。如非本人操作，请忽略本短信。"
 
   qiniu: &qiniu_credentials
     access_key: HXrvQOeDfAizpMzdanxSMiotX60zWuDXAseybFcx

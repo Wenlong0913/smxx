@@ -20,5 +20,6 @@ module AppAPI::V1
     mount AppAPI::V1::Staff if Settings.project.meikemei?
     mount AppAPI::V1::ProductCatalog
     mount AppAPI::V1::SiteCatalog
+    mount AppAPI::V1::Community
   end
 end
