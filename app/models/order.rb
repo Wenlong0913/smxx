@@ -20,7 +20,7 @@
 
 class Order < ApplicationRecord
   audited
-  if Settings.project.sxhop?
+  if Settings.project.sxhop? || Settings.project.imolin?
     enum status: {
       open: 0,      # 未付款
       pending: 1,   # 付款中

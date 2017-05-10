@@ -28,6 +28,7 @@ module AppAPI
         expose :weight_unit, documentation: { desc: '重量单位'}
         expose :product_special_attributes, documentation: { desc: '该产品信息特有的属性和值', type: Hash}
         expose :like_users, documentation: { desc: '点赞的用户列表'}
+        expose :site_id, documentation: {desc: '店铺ID'}
       end
 
       def product_special_attributes
