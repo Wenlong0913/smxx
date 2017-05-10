@@ -50,9 +50,15 @@ module AppAPI
       def mobile_phone
         object.mobile.try(:phone_number)
       end
-      
-      def current_community_name
-        ::Community.find_by(id: object.current_community_id).name
+
+      if Settings.project.imolin?
+        def current_community_id
+          object.current_community.try(:id)
+        end
+
+        def current_community_name
+          object.current_community.try(:name)
+        end
       end
     end
   end

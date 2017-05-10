@@ -124,8 +124,8 @@ class User < ApplicationRecord
   end
 
   if Settings.project.imolin?
-    def current_community_id
-      user_communities.where(is_current: true).first.try(:community_id)
+    def current_community
+      @current_comunity ||= user_communities.where(is_current: true).first.try(:community)
     end
   end
 
