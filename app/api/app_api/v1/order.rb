@@ -20,6 +20,11 @@ module AppAPI::V1
       params do
         requires :site_id, type: Integer, desc: "#{::Site.model_name.human}ID"
         requires :shopping_cart_ids, type: Array[Integer], coerce_with: ->(val) { val.split(/,|，/).map(&:to_i) }, desc: '购物车ID列表'
+        optional :address_book, type: Hash do
+          requires :name, type: String
+          requires :mobile_phone, type: String
+          requires :full_address, type: String
+        end
       end
       post do
         authenticate!
@@ -29,7 +34,14 @@ module AppAPI::V1
         shopping_carts.each do |sc|
           order.order_products.new(product_id: sc.product_id, price: sc.price, amount: sc.amount)
         end
-        order.price = order.order_products.map(&:price).sum
+        order.price = order.order_products.map{|op| op.price * op.amount }.sum
+
+        if params[:address_book]
+          order_delivery = order.order_deliveries.new({
+            delivery_username: params[:address_book][:name],
+            delivery_phone: params[:address_book][:mobile_phone],
+            delivery_address: params[:address_book][:full_address]})
+        end
         error! order.errors unless order.save && shopping_carts.destroy_all
         present order, with: AppAPI::Entities::Order
       end
@@ -83,7 +95,7 @@ module AppAPI::V1
         else
           error! '服务器发生错误，请稍后再试'
         end
-        
+
       end
 
     end # end of resources

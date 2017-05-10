@@ -14,8 +14,8 @@ default: &default
     secret_string: 0abcf2c591b0a1b209ca12a20a8eda83 # 微信服务URL配置中，此值用来避免真正使用的Token值暴露在URL上，提高安全性。
     encoding_aes_key:
   weixin_open_app: # 微信开放平台绑定的APP
-    app_id: wxf8b6e9395912dc1b
-    app_secret: 8fde8c876f5240567c13230e8acadfb1
+    app_id: wx62dfc2a79ccc68c2
+    app_secret: 62ce20206028bfd7d2b1720e714ac6c9
   sms:
     provider: yun_pian_v1
     yun_pian_v1:

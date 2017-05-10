@@ -19,6 +19,9 @@ default: &default
       api_key: c97380fa188341572c1bcdadf383dfc2
   mobile:
     auth_token_template: "【陌邻社区】您的验证码是#code#。如非本人操作，请忽略本短信。"
+  weixin_open_app: # 微信开放平台绑定的APP
+    app_id: wxac397d203f8b9e59
+    app_secret: 62ce20206028bfd7d2b1720e714ac6c9
 
   qiniu: &qiniu_credentials
     access_key: HXrvQOeDfAizpMzdanxSMiotX60zWuDXAseybFcx

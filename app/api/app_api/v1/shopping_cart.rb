@@ -38,8 +38,8 @@ module AppAPI::V1
         error! '该产品不存在' unless product
         shopping_cart = current_user.shopping_carts.find_by(product_id: params[:product_id])
         error! '没有找到购物车记录' unless shopping_cart
-        shopping_cart.price = product.sell_price
-        shopping_cart.amount =  product.sell_price * params[:amount]
+        shopping_cart.price = product.sell_price * params[:amount]
+        shopping_cart.amount =  params[:amount]
         error! shopping_cart.errors unless shopping_cart.save
         present shopping_cart, with: AppAPI::Entities::ShoppingCart
       end
@@ -62,10 +62,15 @@ module AppAPI::V1
       params do
         use :pagination
         use :sort, fields: [:id, :created_at, :updated_at]
+        optional :site_id, type: Integer, desc: '店铺ID'
       end
       get do
         authenticate!
-        shopping_carts = paginate_collection(sort_collection(current_user.shopping_carts), params)
+        shopping_carts = current_user.shopping_carts
+        if Settings.project.imolin? && params[:site_id]
+          shopping_carts = shopping_carts.joins(product: [:site]).where("sites.id = ?", params[:site_id])
+        end
+        shopping_carts = paginate_collection(sort_collection(shopping_carts), params)
         wrap_collection shopping_carts, AppAPI::Entities::ShoppingCart, includes: [:product, :site]
       end
 
