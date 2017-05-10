@@ -63,12 +63,14 @@ module AppAPI::V1
         use :pagination
         use :sort, fields: [:id, :created_at, :updated_at]
         optional :site_id, type: Integer, desc: '店铺ID'
+        optional :cart_ids, type: Array
       end
       get do
         authenticate!
         shopping_carts = current_user.shopping_carts
-        if Settings.project.imolin? && params[:site_id]
-          shopping_carts = shopping_carts.joins(product: [:site]).where("sites.id = ?", params[:site_id])
+        if Settings.project.imolin?
+          shopping_carts = shopping_carts.joins(product: [:site]).where("sites.id = ?", params[:site_id]) if params[:site_id]
+          shopping_carts = shopping_carts.where(id: params[:cart_ids]) if params[:cart_ids]
         end
         shopping_carts = paginate_collection(sort_collection(shopping_carts), params)
         wrap_collection shopping_carts, AppAPI::Entities::ShoppingCart, includes: [:product, :site]
