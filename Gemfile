@@ -124,6 +124,7 @@ gem 'theme_color_admin', git: 'git@gitlab.tanmer.com:tm-themes/theme_color_admin
 gem 'closure_tree'
 gem 'select2-rails'
 gem 'sidekiq'
+gem 'redis-namespace'
 
 # Markdown markup for doc
 gem 'redcarpet', '~> 3.4.0'
@@ -187,7 +188,6 @@ end
 gem 'colorize', group: [:development, :test, :deployment]
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'activemodel-serializers-xml'
 gem 'vuejs-webpack-rails'
 
