@@ -121,7 +121,7 @@ class Agent::ProductsController < Agent::BaseController
     authorize @product
     @product.destroy
     respond_to do |format|
-      format.html { redirect_to agent_products_url, notice: '#{Product.model_name.human}删除成功.' }
+      format.html { redirect_to agent_products_url, notice: "#{Product.model_name.human}删除成功." }
       format.json { head 200 }
     end
   end

@@ -31,7 +31,7 @@
           textarea[v-model="replyContent" cols=20 rows=4 rel='reply-block']
           button[v-on:click="postComment('reply')"] 回复
     hr
-    .page-bar
+    .page-bar[v-if="comments.length > 0"]
       nav[aria-label="Page navigation" style='float: right;']
         ul.pagination
           li.disabled[v-if="currentPage == 1"]
