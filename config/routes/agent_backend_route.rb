@@ -6,6 +6,7 @@ module AgentBackendRoute
         get 'sign_in', to: 'sessions#new'
         resources 'sites'
         resources 'products' do
+          commentable
           member do
             post 'process_shelves'
             post 'sales_distribution'

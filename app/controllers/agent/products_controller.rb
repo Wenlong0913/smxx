@@ -3,6 +3,10 @@ class Agent::ProductsController < Agent::BaseController
   before_action :set_product, only: [:show, :edit, :update, :destroy, :process_shelves, :sales_distribution]
   before_action :set_site_tags, only: [:edit, :new]
   before_action :set_product_price, only: [:create, :update, :index]
+  acts_as_trackable user_id: :get_user_id,
+    resource: :get_visit_resource,
+    only: [:show]
+  acts_as_commentable resource: Product
 
   def index
     authorize Product
@@ -107,20 +111,19 @@ class Agent::ProductsController < Agent::BaseController
     authorize @product
     filter_additional_attribute
     if @product.update(permitted_attributes(@product))
-      redirect_to agent_product_path(@product), notice: 'Product 更新成功.'
+      redirect_to agent_product_path(@product), notice: "#{Product.model_name.human}更新成功."
     else
       render json: {error: '名称已经被使用'}
     end
   end
 
   def destroy
-    # authorize @product
-    # @product.destroy
-    # respond_to do |format|
-    #   format.html { redirect_to agent_products_url, notice: 'Product 删除成功.' }
-    #   format.json { head 200 }
-    # end
-
+    authorize @product
+    @product.destroy
+    respond_to do |format|
+      format.html { redirect_to agent_products_url, notice: '#{Product.model_name.human}删除成功.' }
+      format.json { head 200 }
+    end
   end
 
   def process_shelves
@@ -181,5 +184,13 @@ class Agent::ProductsController < Agent::BaseController
         params[:search][:price_from] = params[:search][:price_from].to_f * 100 unless params[:search][:price_from].blank?
         params[:search][:price_to] = params[:search][:price_to].to_f * 100 unless params[:search][:price_to].blank?
       end
+    end
+
+    def get_user_id
+      current_user && current_user.id
+    end
+
+    def get_visit_resource
+      @product
     end
 end
