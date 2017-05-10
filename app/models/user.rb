@@ -45,6 +45,7 @@ class User < ApplicationRecord
   has_one :address_book, dependent: :destroy
   has_many :user_communities, dependent: :destroy
   has_many :communities, dependent: :destroy, through: :user_communities
+  has_many :articles, foreign_key: :author, dependent: :destroy
   # 收藏的店铺
   has_many :site_favorites, -> { where(resource_type: 'Site') }, class_name: 'Favorite::Entry'
   #  收藏的产品
