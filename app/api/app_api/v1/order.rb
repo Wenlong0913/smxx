@@ -19,7 +19,7 @@ module AppAPI::V1
       end
       params do
         requires :site_id, type: Integer, desc: "#{::Site.model_name.human}ID"
-        requires :shopping_cart_ids, type: Array[Integer]#, coerce_with: ->(val) { val.split(/,|，/).map(&:to_i) }, desc: '购物车ID列表'
+        requires :shopping_cart_ids, type: Array[Integer], coerce_with: ->(val) { val.split(/,|，/).map(&:to_i) }, desc: '购物车ID列表'
         optional :address_book, type: Hash do
           requires :name, type: String
           requires :mobile_phone, type: String
