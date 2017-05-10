@@ -27,12 +27,18 @@ module AppAPI::V1
       end
       params do
         optional :includes, type: String, values: ['description'], desc: '选择description后会返回文章类容'
+        optional :type, type: String, values: ['owner'], desc: '选择owner后会返回我的文章类容'
         use :pagination
         use :sort, fields: [:id, :created_at, :updated_at]
       end
       get do
         authenticate!
-        articles = ::Article.all
+        articles = 
+            case params[:type]
+            when 'owner' then current_user.articles
+            else
+              ::Article.all
+            end
         articles = paginate_collection(sort_collection(articles), params)
         wrap_collection articles, AppAPI::Entities::Article, type: :list, includes: [params[:includes]]
       end
