@@ -7,13 +7,17 @@ module AppAPI::V1
         success AppAPI::Entities::ChatRoom.collection
       end
       params do
-        requires :community_id, type: Integer, desc: '小区ID'
+        optional :community_id, type: Integer, desc: '小区ID'
         use :pagination
       end
       get do
         authenticate!
-        community = ::Community.find(params[:community_id])
-        rooms = paginate_collection(::Chat::Room.all.where(owner: community), params)
+        rooms = ::Chat::Room.all
+        if Settings.project.imolin?
+          error!({ error: '小区ID不存在' }, 500) unless params[:community_id]
+          community = ::Community.find(params[:community_id])
+          rooms = paginate_collection(rooms.where(owner: community), params)
+        end
         wrap_collection rooms, AppAPI::Entities::ChatRoom
       end
 
@@ -21,13 +25,17 @@ module AppAPI::V1
         success AppAPI::Entities::ChatRoom 
       end
       params do
-        requires :community_id, type: Integer, desc: '小区ID'
+        optional :community_id, type: Integer, desc: '小区ID'
         requires :name, type: String, desc: '频道名称'
       end
       post do
         authenticate!
-        community = ::Community.find(params[:community_id])
-        chat_room = ::ChatRoom.new(name: params[:name], owner: community)
+        chat_room = ::ChatRoom.new(name: params[:name])
+        if Settings.project.imolin?
+          error!({ error: '小区ID不存在' }, 500) unless params[:community_id]
+          community = ::Community.find(params[:community_id])
+          chat_room.owner = community
+        end
         error! chat_room.errors unless chat_room.save
         present chat_room, with: AppAPI::Entities::ChatRoom
       end

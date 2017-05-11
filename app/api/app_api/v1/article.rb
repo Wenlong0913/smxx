@@ -42,7 +42,7 @@ module AppAPI::V1
             else
               ::Article.all
             end
-        if params[:community_id]
+        if Settings.project.imolin? && params[:community_id]
           community = ::Community.find(params[:community_id])
           articles = articles.where(author: community.users.map(&:id))
         end
