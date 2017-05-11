@@ -98,12 +98,12 @@ module AppAPI::V1
 
       end
 
-      desc '支付订单'
+      desc '创建订单的charge'
       params do
         requires :id, type: Integer, desc: '订单ID'
         requires :channel, type: String, desc: '支付通道'
       end
-      post ':id/pay' do
+      post ':id/charge' do
         authenticate!
         order = current_user.orders.find_by(id: params[:id])
         case order.status
