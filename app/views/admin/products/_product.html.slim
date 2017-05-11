@@ -5,7 +5,9 @@ td
       = product.catalog.try(:name)
   span style="margin-left:30px;"
   => link_to product.site.title, admin_site_products_path(product.site)
-td = product.price
+td = product.price.to_f / 100
+- if Settings.project.sxhop?
+  td = product.discount.to_f / 100
 td
   - product.tags.each do |tag|
     => link_to tag.name, '#', class: 'btn btn-xs btn-success'

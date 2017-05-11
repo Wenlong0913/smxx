@@ -63,6 +63,8 @@ h1.page-header
           tr
             th 产品名称
             th 价格
+            - if Settings.project.sxhop?
+              th 折扣价
             th 标签
             - if Settings.project.sxhop?
               th 状态
