@@ -89,8 +89,8 @@
                         </span>
                       <% end %>
                     </div>
-                    <div class="item-discount-price"></div>
                   </div>
+                  <%= link_to '删除', agent_product_path(product), method: :delete, data: { confirm: '确定要删除吗?' }, class: 'btn btn-sm btn-danger pull-right' %>
               </div>
             <!-- END item-row -->
             <% if index%3 == 2 || index+1 == @products.size %>
@@ -150,8 +150,6 @@
                   <label for="">活动</label>
                   <%= f.input_field :promotion, as: :boolean , 'data-val': (params[:search][:promotion] if params[:search].present?)%>
                   <label for="">促销</label>
-                  <%= f.input_field :discount, as: :boolean , 'data-val': (params[:search][:discount] if params[:search].present?)%>
-                  <label for="">折扣</label>
                   <!-- <div class="col-md-5">
                     <%= f.text_field :price_from, type: 'number', value: (params[:search][:price_from] if params[:search]),class: 'form-control input-sm', min: '0' %>
                   </div>

@@ -48,8 +48,8 @@ module Comment
         only: [:id, :content, :created_at],
         methods: [:offer],
         include: {
-          user: {only: [:id, :nickname]},
-          parent: {only: [:id, :content, :created_at]},
+          user: {only: [:id, :nickname], methods: [:display_headshot]},
+          parent: {only: [:id, :content, :created_at], include: { user: { only: [:nickname], methods: [:display_headshot] } }},
           attachments: {only: [:id], methods: [:attachment_url, :attachment_file_name, :attachment_content_type]},
           image_items: {only: [:id], methods: [:image_url, :image_file_name]}
         }
