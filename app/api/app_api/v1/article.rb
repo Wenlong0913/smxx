@@ -28,7 +28,9 @@ module AppAPI::V1
         success AppAPI::Entities::ArticleSimple
       end
       params do
-        optional :community_id, type: Integer, desc: '小区下的所有文章列表'
+        if Settings.project.imolin?
+          optional :community_id, type: Integer, desc: '小区下的所有文章列表'
+        end
         optional :includes, type: String, values: ['description'], desc: '选择description后会返回文章类容'
         optional :type, type: String, values: ['owner'], desc: '选择owner后会返回我的文章类容'
         use :pagination
@@ -42,7 +44,7 @@ module AppAPI::V1
             else
               ::Article.all
             end
-        if Settings.project.imolin? && params[:community_id]
+        if params[:community_id]
           community = ::Community.find(params[:community_id])
           articles = articles.where(author: community.users.map(&:id))
         end

@@ -45,7 +45,7 @@ module AppAPI::V1
           sites = ::Site.where(user_id: current_user.friends)
         end
         if params[:site_catalog_id]
-          community = ::Community.find_by(id: current_user.current_community_id)
+          community = ::Community.find_by(id: current_user.current_community.id)
           sites = sites.where("catalog_id = ?", params[:site_catalog_id])
           # sites = sites.near_by(lat: community.address_lat, lng: community.address_lng, distance: 2000)
         end
