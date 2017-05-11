@@ -6,7 +6,7 @@ class Article < ApplicationRecord
   has_many :products, :through => :article_products 
   has_many :discovers, as: :resource, dependent: :destroy
   belongs_to :user, foreign_key: :author, class_name: 'User'
-
+  acts_as_taggable
   after_save do
     discover = self.discovers.find_or_create_by(resource: self)
     discover.save!

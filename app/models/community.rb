@@ -6,7 +6,8 @@ class Community < ApplicationRecord
   store_accessor :features, :uid, :province, :city, :district, :street, :address_str, :telephone, :lat, :lng, :tags, :image, :keyword
 
   has_many :chat_rooms, as: :owner, class_name: 'Chat::Room', dependent: :destroy
-
+  has_many :user_communities, dependent: :destroy
+  has_many :users, through: :user_communities
   after_save :create_chat_rooms
 
 
