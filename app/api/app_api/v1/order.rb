@@ -112,8 +112,8 @@ module AppAPI::V1
             order_no: order.code,
             channel: params[:channel],
             amount: order.price,
-            client_ip: env['REMOTE_ADDR'],
-            subject: "购买 #{order.order_products.first.product.site.name} 的产品",
+            client_ip: env['HTTP_X_REAL_IP'] || env['REMOTE_ADDR'],
+            subject: "购买 #{order.order_products.first.product.site.title} 的产品",
             body: order.order_products.map { |op| "#{op.product.name} x #{op.amount}" }.join("\n")
           )
           present charge: charge
