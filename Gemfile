@@ -1,6 +1,9 @@
 source "https://gems.ruby-china.org"
-
 ruby '2.3.3'
+
+source "https://#{ENV['TANMER_GEM_TOKEN']}@gems.tanmer.com" do
+  gem 'payment_core', '0.0.3'
+end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
