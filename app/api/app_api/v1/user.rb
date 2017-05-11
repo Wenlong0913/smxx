@@ -143,7 +143,10 @@ module AppAPI::V1
         optional :nickname, type: String, desc: '昵称'
         optional :username, type: String, desc: '名称'
         optional :avatar, type: Rack::Multipart::UploadedFile, desc: '上传头像'
-        optional :community_id, type: String, desc: '小区名称'
+        optional :mobile_phone, type: String, desc: '手机号'
+        if Settings.project.imolin?
+          optional :community_id, type: String, desc: '小区名称'
+        end
       end
       put 'me' do
         authenticate!
@@ -156,10 +159,13 @@ module AppAPI::V1
         if params[:username].present?
           current_user.username = params[:username].strip
         end
-        if  Settings.project.imolin? && params[:community_id].present?
+        if params[:community_id].present?
           current_user.communities << ::Community.find_by(id: params[:community_id])
           current_user.user_communites.update_all(is_current: false)
           current_user.user_communites.where(community_id: params[:community_id]).update_all(is_current: true)
+        end
+        if params[:mobile_phone]
+          current_user.mobile.phone_number = params[:mobile_phone]
         end
         if current_user.changed?
           unless current_user.save
