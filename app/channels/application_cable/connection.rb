@@ -8,7 +8,7 @@ module ApplicationCable
 
     private
     def find_user
-      User.find_by(username: request.params[:credential]) rescue nil
+      User.find_by(nickname: request.params[:credential]) rescue nil
     end
   end
 end

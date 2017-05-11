@@ -8,9 +8,7 @@ module AppAPI
         expose :mobile_phone, documentation: { desc: '私有数据，自己或有特定权限的账号才能获得' }
         expose :nickname, documentation: { desc: '用户名：私有数据，自己或有特定权限的账号才能获得' }
         if Settings.project.imolin?
-          expose :community_ids, documentation: {desc: '小区ID列表'}
-          expose :current_community_id, documentation: {desc: '当前选中小区ID'}
-          expose :current_community_name, documentation: {desc: '当前选中小区名称'}
+          expose :current_community, using: AppAPI::Entities::CommunitySimple, documentation: {desc: '当前选中小区'}
         end
         expose :display_headshot, as: :headshot, documentation: { desc: '头像' }
       end
