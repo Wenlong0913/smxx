@@ -6,6 +6,9 @@ module AppAPI
         expose :products_simple, as: :products, if: ->(article, options) { options[:type] == :list }
         expose :products, using: AppAPI::Entities::ProductSimple, documentation: { is_array: true }, if: ->(article, options) { options[:type] != :list }
       end
+      if Settings.project.imolin?
+        expose :comments, using: AppAPI::Entities::Comment
+      end
       expose_updated_at
 
       def products_simple

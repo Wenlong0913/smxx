@@ -161,8 +161,8 @@ module AppAPI::V1
         end
         if params[:community_id].present?
           current_user.communities << ::Community.find_by(id: params[:community_id])
-          current_user.user_communites.update_all(is_current: false)
-          current_user.user_communites.where(community_id: params[:community_id]).update_all(is_current: true)
+          current_user.user_communities.update_all(is_current: false)
+          current_user.user_communities.where(community_id: params[:community_id]).update_all(is_current: true)
         end
         if params[:mobile_phone]
           current_user.mobile.phone_number = params[:mobile_phone]
