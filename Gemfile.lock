@@ -92,6 +92,7 @@ PATH
 
 GEM
   remote: https://gems.ruby-china.org/
+  remote: https://gems.tanmer.com/
   specs:
     actioncable (5.0.2)
       actionpack (= 5.0.2)
@@ -426,7 +427,13 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (~> 0.3.0)
+    payment_core (0.0.3)
+      browser (~> 2.0)
+      pingpp (~> 2.1.1)
+      rails (>= 4.2.6, < 6.0)
     pg (0.20.0)
+    pingpp (2.1.1)
+      rest-client (>= 1.4, < 4.0)
     pretender (0.2.1)
       actionpack
     pry (0.10.4)
@@ -713,6 +720,7 @@ DEPENDENCIES
   non-stupid-digest-assets (~> 1.0, >= 1.0.9)
   omniauth-wechat-oauth2 (~> 0.1.0)
   paperclip
+  payment_core (= 0.0.3)!
   pg (~> 0.18)
   pretender
   pry-rails

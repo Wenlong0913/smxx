@@ -78,11 +78,11 @@ module AppAPI::V1
       end
       put do
         authenticate!
-        order = current_user.orders.where(id: params[:id])
-        error! '你没有这个订单' if order.empty?
+        order = current_user.orders.find_by(id: params[:id])
+        error! '你没有这个订单' unless order
 
-        if order.first.completed!
-          order.first.order_products.each do |order_product|
+        if order.completed!
+          order.order_products.each do |order_product|
             product = order_product.product
             product.sales_count += order_product.amount
             product.save!
@@ -92,6 +92,32 @@ module AppAPI::V1
           error! '服务器发生错误，请稍后再试'
         end
 
+      end
+
+      desc '创建订单的charge'
+      params do
+        requires :id, type: Integer, desc: '订单ID'
+        requires :channel, type: String, desc: '支付通道'
+      end
+      post ':id/charge' do
+        authenticate!
+        order = current_user.orders.find_by(id: params[:id])
+        case order.status
+        when 'open'
+          charge = PaymentCore.create_charge(
+            order_no: order.code,
+            channel: params[:channel],
+            amount: order.price,
+            client_ip: env['HTTP_X_REAL_IP'] || env['REMOTE_ADDR'],
+            subject: "购买 #{order.order_products.first.product.site.title} 的产品",
+            body: order.order_products.map { |op| "#{op.product.name} x #{op.amount}" }.join("\n")
+          )
+          present charge: charge
+        when 'paid'
+          error! '请勿重复支付！'
+        else
+          error! '支付失败！'
+        end
       end
 
     end # end of resources

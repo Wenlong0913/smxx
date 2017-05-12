@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
   get 'robots.txt', to: 'robots#index'
 
+  # 支付，通用模块
+  mount PaymentCore::Engine => '/payment'
+
   # === Plugins ===
   mount Ckeditor::Engine => '/ckeditor'
 

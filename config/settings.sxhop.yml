@@ -23,6 +23,14 @@ default: &default
   mobile:
     auth_token_template: "【私享荟】您的验证码是#code#。如非本人操作，请忽略本短信。"
 
+  payment: # Ping++支付
+    api_id: app_zvv1aDOe5aTCuLOm
+    api_key: sk_live_fzf9S0D0CSOSiLCOu1izDSW5
+    channels:
+    - alipay
+    - wx
+    enable_pingpp_one: false
+
   qiniu: &qiniu_credentials
     access_key: HXrvQOeDfAizpMzdanxSMiotX60zWuDXAseybFcx
     secret_key: n886ogK5IGUwYx-M4m-NLSaP0-OTGD2_eCCsqId_
