@@ -5,6 +5,7 @@ class Article < ApplicationRecord
   has_many :article_products, dependent: :destroy
   has_many :products, :through => :article_products 
   has_many :discovers, as: :resource, dependent: :destroy
+  has_many_comments
   belongs_to :user, foreign_key: :author, class_name: 'User'
   acts_as_taggable
   after_save do

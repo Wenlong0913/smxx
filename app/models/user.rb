@@ -42,7 +42,7 @@ class User < ApplicationRecord
   has_many :create_order, class_name: 'Order', foreign_key: :create_by
   has_many :update_order, class_name: 'Order', foreign_key: :update_by
   has_many :sales_distribution_resources, class_name: 'SalesDistribution::Resource'
-  has_one :address_book, dependent: :destroy
+  has_many :address_books, dependent: :destroy
   has_many :user_communities, dependent: :destroy
   has_many :communities, dependent: :destroy, through: :user_communities
   has_many :articles, foreign_key: :author, dependent: :destroy

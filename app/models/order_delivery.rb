@@ -25,19 +25,4 @@ class OrderDelivery < ApplicationRecord
 
   validates_presence_of :order
 
-  if Settings.project.imolin?
-    after_save :update_user_address_book
-  end
-
-  def update_user_address_book
-    user = order.user
-    address_book = user.address_book || user.build_address_book
-    address_book.name = self.delivery_username
-    address_book.mobile_phone = self.delivery_phone
-    address_book.full_address = self.delivery_address
-    address_book.city = ''
-    address_book.street = ''
-    address_book.save!
-  end
-
 end
