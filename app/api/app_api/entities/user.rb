@@ -9,6 +9,8 @@ module AppAPI
         expose :nickname, documentation: { desc: '用户名：私有数据，自己或有特定权限的账号才能获得' }
         if Settings.project.imolin?
           expose :current_community, using: AppAPI::Entities::CommunitySimple, documentation: {desc: '当前选中小区'}
+          expose :gender, documentation: {desc: '性别'}
+          expose :description, documentation: {desc: '个性签名'}
         end
         expose :display_headshot, as: :headshot, documentation: { desc: '头像' }
       end
@@ -49,15 +51,6 @@ module AppAPI
         object.mobile.try(:phone_number)
       end
 
-      if Settings.project.imolin?
-        def current_community_id
-          object.current_community.try(:id)
-        end
-
-        def current_community_name
-          object.current_community.try(:name)
-        end
-      end
     end
   end
 end
