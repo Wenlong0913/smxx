@@ -15,10 +15,10 @@
                 |temp_index.html （修改后的index）
     </pre>
 
-    2. 添加模板market_template
+    2. 添加模板 market_template
     <p>在admin端，创建一个market_template, 其中两个属性来源：
-    <p>html_source: 将静态页面index.html复制一份到temp_index.html中，考虑到需要动态实现的元素，用动态方法写出来</p>
-    <p>form_source: 对应html_source中的动态元素，每个动态元素，对应创建一个表单元素，放到form_source里</p>
+    <p>html_source: 将静态页面index.html复制一份到【temp_index.html.erb】中，考虑到需要动态实现的元素，用动态方法写出来</p>
+    <p>form_source: 对应html_source中的动态元素，在创建market_template的时候会自动生成</p>
 
     3. 创建营销页
 
@@ -35,3 +35,22 @@
       app/controllers/admin/market_page.rb
 
       app/controllers/agent/market_page.rb
+
+## html_source 源文件实例
+
+      <html lang="zh-CN">
+        <head>
+          <meta charset="utf-8"/>
+          <title><%= @market_page.name %></title>
+          <meta content="<%= @market_page.description %>" name="description"/>
+        </head>
+        <body style="text-align: center;">
+          <div style="margin: 0 auto; width:640px;">
+            <h2><%= @market_page.value_for("title", title: "文章标题", typo: "string", default: "文章标题") %></h2><hr/>
+            <div style="text-align:left;"><%= simple_format @market_page.value_for("content", title: "正文", typo: "text", default: "文章内容") %></div>
+            <% @market_page.image_items.each do |img| %>
+             <%= image_tag img.image_url, style: "width:100%;" %>
+            <% end %>
+          </div>
+        </body>
+      </html>
