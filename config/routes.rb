@@ -1,9 +1,6 @@
 Rails.application.routes.draw do
   namespace :frontend do
     get 'users/show'
-  end
-
-  namespace :frontend do
     get 'home/index'
   end
 
@@ -39,9 +36,10 @@ Rails.application.routes.draw do
   extend AdminRoute
   extend AgentBackendRoute
   extend AgentFrontendRoute
-  extend DocRoute
-  extend CmsBackendRoute
-  #put FrontendRoute below
+
   extend CmsFrontendRoute
+  extend CmsBackendRoute
+
+  extend DocRoute
 
 end
