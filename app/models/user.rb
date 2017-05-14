@@ -63,6 +63,12 @@ class User < ApplicationRecord
   attr_accessor :mobile_phone
   validates :mobile_phone, mobile_phone: true, allow_blank: true
 
+  enum gender: {
+    female: 0, # 女
+    male: 1,  # 男
+    secret: 2   #保密
+  }
+
   # Find user by phone number
   # @param [String] phone_number
   # @return [User]

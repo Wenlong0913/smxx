@@ -21,7 +21,7 @@ module AppAPI::V1
         article.product_ids = params[:product_ids] if params[:product_ids]
         article.tag_list = params[:tag_list]  if params[:tag_list]
         error! article.errors unless article.save
-        present article, with: AppAPI::Entities::Article
+        present article, with: AppAPI::Entities::Article, includes: ['description']
       end
 
       desc "文章列表" do
@@ -49,7 +49,7 @@ module AppAPI::V1
           articles = articles.where(author: community.users.map(&:id))
         end
         articles = paginate_collection(sort_collection(articles), params)
-        wrap_collection articles, AppAPI::Entities::Article, type: :list, includes: [params[:includes]]
+        wrap_collection articles, AppAPI::Entities::Article, type: :list, includes: [params[:includes]], user_id: current_user.id
       end
 
       desc '查看文章详细' do
@@ -60,7 +60,7 @@ module AppAPI::V1
       end
       get ':id' do
         authenticate!
-        present ::Article.find(params[:id]), with: AppAPI::Entities::Article, includes: ['description']
+        present ::Article.find(params[:id]), with: AppAPI::Entities::Article, includes: ['description'], user_id: current_user.id
       end
 
       desc '删除文章' do
@@ -74,6 +74,70 @@ module AppAPI::V1
         article = ::Article.find(params[:id]).destroy
         present article, with: AppAPI::Entities::Article
       end
+
+      desc '文章评论' do
+        success AppAPI::Entities::Comment
+      end
+      params do
+        requires :id, type: Integer, desc: '文章ID'
+        requires :content, type: String, desc: '评论或者回复内容'
+        optional :parent_id, type: Integer, desc: '如果填写，parent_id就是回复的某条评论的ID'
+      end
+      post ':id/comment' do
+        authenticate!
+        article = ::Article.find_by(id: params[:id])
+        error! '该文章不存在' unless article
+
+        comment_attributes = {}
+        comment_attributes[:content]  = params[:content]
+        comment_attributes[:parent]   = ::Comment::Entry.where(id: params[:parent_id]).first unless params[:parent_id].blank?
+        comment_attributes[:user]     = current_user
+
+        comment = article.comments.new(comment_attributes)
+        if comment.save
+          present comment, with: AppAPI::Entities::Comment
+        else
+          error! comment.errors
+        end
+      end
+
+      desc '活动报名' do
+        # success AppAPI::Entities::Comment
+      end
+      params do
+        requires :id, type: Integer, desc: '文章ID'
+      end
+      post ':id/apply' do
+        authenticate!
+        article = ::Article.find_by(id: params[:id])
+        error! '该文章不存在' unless article
+
+        article.users << current_user
+        if article.save
+          present status: 'success'
+        else
+          error! article.errors
+        end
+      end
+
+      desc '活动点赞' do
+        # success AppAPI::Entities::Comment
+      end
+      params do
+        requires :id, type: Integer, desc: '文章ID'
+      end
+      post ':id/like' do
+        authenticate!
+        article = ::Article.find_by(id: params[:id])
+        error! '该文章不存在' unless article
+
+        article.likes.tag_by! current_user # 点赞
+        if article.save
+          present status: 'success'
+        else
+          error! article.errors
+        end
+      end  
 
     end # end of resources
   end
