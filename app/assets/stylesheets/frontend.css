@@ -1,0 +1,10 @@
+/*
+ * 前台页面显示
+ *
+ * can't require tree
+ *
+ *= require frontend/product_catalogs
+ *= require frontend/products
+ *= require frontend/users
+ *= require_self
+ */

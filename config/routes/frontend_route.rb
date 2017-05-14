@@ -15,7 +15,7 @@ module FrontendRoute
         get  'sign_up', to: 'users/registrations#new'
       end
 
-        # 微信注册／登录
+      # 微信注册／登录
       namespace :users do
         namespace :weixins do
           resource :registrations, only: [:new, :show]
@@ -38,6 +38,15 @@ module FrontendRoute
         get '/test-room', to: 'test_room#index'
         post '/test-room', to: 'test_room#create'
         delete '/test-room/:id', to: 'test_room#destroy'
+      end
+
+      # 前端页面路由
+      namespace :frontend do
+        resources :products
+        resources :product_catalogs do
+          resources :products
+        end
+
       end
     end
   end

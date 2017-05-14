@@ -1,5 +1,7 @@
-
 Rails.application.routes.draw do
+  namespace :frontend do
+    get 'users/show'
+  end
 
   get 'robots.txt', to: 'robots#index'
 
@@ -33,10 +35,9 @@ Rails.application.routes.draw do
   extend AdminRoute
   extend AgentBackendRoute
   extend AgentFrontendRoute
-
-  extend CmsFrontendRoute
-  extend CmsBackendRoute
-
   extend DocRoute
+  extend CmsBackendRoute
+  #put FrontendRoute below
+  extend CmsFrontendRoute
 
 end
