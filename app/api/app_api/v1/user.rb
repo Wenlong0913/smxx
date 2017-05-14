@@ -145,7 +145,9 @@ module AppAPI::V1
         optional :avatar, type: Rack::Multipart::UploadedFile, desc: '上传头像'
         optional :mobile_phone, type: String, desc: '手机号'
         if Settings.project.imolin?
+          optional :gender, type: String, desc: '性别'
           optional :community_id, type: String, desc: '小区名称'
+          optional :description, type: String, desc: '描述'
         end
       end
       put 'me' do
@@ -167,8 +169,10 @@ module AppAPI::V1
         if params[:mobile_phone]
           current_user.mobile.phone_number = params[:mobile_phone]
         end
+        current_user.gender = params[:gender] if params[:gender]
+        current_user.description = params[:description] if params[:description]
         if current_user.changed?
-          unless current_user.save
+          unless current_user.save && current_user.mobile.save
             error! error: current_user.errors.messages, error_message: '保存失败'
           end
         end

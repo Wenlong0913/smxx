@@ -8,12 +8,16 @@ module AppAPI
       end
       if Settings.project.imolin?
         expose :comments, using: AppAPI::Entities::Comment
+        expose :is_applied do |article, options|
+          article.user_ids.include? options[:user_id]
+        end
       end
       expose_updated_at
 
       def products_simple
         object.products.as_json(only: [:id, :name], methods: :price, include: { image_items: { only: [], methods: [:image_url]} })
       end
+
     end
   end
 end
