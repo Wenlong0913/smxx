@@ -10,7 +10,6 @@ module AppAPI
         if Settings.project.imolin?
           expose :current_community, using: AppAPI::Entities::CommunitySimple, documentation: {desc: '当前选中小区'}
           expose :gender, documentation: {desc: '性别'}
-          expose :description, documentation: {desc: '个性签名'}
         end
         expose :display_headshot, as: :headshot, documentation: { desc: '头像' }
       end

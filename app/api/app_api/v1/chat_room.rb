@@ -26,16 +26,13 @@ module AppAPI::V1
         success AppAPI::Entities::ChatRoom 
       end
       params do
-        if Settings.project.imolin?
-          requires :community_id, type: Integer, desc: '小区ID'
-        end
         requires :name, type: String, desc: '频道名称'
       end
       post do
         authenticate!
-        chat_room = ::ChatRoom.new(name: params[:name])
+        chat_room = ::Chat::Room.new(name: params[:name])
         if Settings.project.imolin?
-          community = ::Community.find(params[:community_id])
+          community = current_user.current_community
           chat_room.owner = community
         end
         error! chat_room.errors unless chat_room.save
