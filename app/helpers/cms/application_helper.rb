@@ -39,7 +39,8 @@ module Cms::ApplicationHelper
   #前台获得下拉列表菜单
   #默认调用方法：get_menu(@cms_site, 'product')
   #level: 显示的层级深度，默认为2级；如果要显示3级，则调用：get_menu(@cms_site, 'product', 3)
-  def get_menu(cms_site, channel_title_or_short_title, level = 1)
+  def get_menu(cms_site, channel_title_or_short_title, opt={})
+    level = opt[:level].to_i || 1
     parent_channel = cms_site.channels.find_by(short_title: channel_title_or_short_title)
     parent_channel ||= cms_site.channels.find_by(title: channel_title_or_short_title)
     return [] if parent_channel.nil?
@@ -53,12 +54,12 @@ module Cms::ApplicationHelper
       end
       str_arr << %{<ul class="dropdown-menu">}
       parent_channel.children.each do |ch|
-        str_arr << get_menu(ch.short_title, level - 1)
+        str_arr << get_menu(cms_site, ch.short_title, level: level - 1)
       end
       str_arr << %{</ul></li>}
       str_arr.join("\n").html_safe
     else
-      %{<li><a href="#{get_cms_url(parent_channel)}">#{parent_channel.title}</a></li>}.html_safe
+      %{<li><a class="#{opt[:css]}" href="#{get_cms_url(parent_channel)}">#{parent_channel.title}</a></li>}.html_safe
     end
   end
 

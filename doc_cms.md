@@ -121,9 +121,27 @@ CMS站点是一个独立的网站内容管理系统， 每一个站点，对应p
 
     <%= paginate @pages, remote: true %>
 
+### helper 方法
 
-    <%= @cms_site.channels.where('parent_id is null').each do |channel| %>
-      <%= get_menu(@cms_site, channel.short_title) %>
+#### get_cms_url(obj, params = {})
+
+  获取链接路径, obj可以是Cms::Channel, Cms::Page, String(short_title)
+
+#### get_menu(cms_site, channel_title_or_short_title, opt={})
+
+  获取网站栏目菜单
+
+  opt可以传：
+
+  - level: 菜单层级，默认2，为两层
+  - css: 菜单a链接的class样式名称
+
+  实例：
+
+    <%= get_menu(@cms_site, channel.short_title, level: 1,  css: 'smooth-scroll') %>
+
+    <% @cms_site.channels.where('parent_id is null').each do |channel| %>
+      <%= get_menu(@cms_site, channel.short_title,  css: 'smooth-scroll') %>
     <% end %>
 
 ## 添加表单
