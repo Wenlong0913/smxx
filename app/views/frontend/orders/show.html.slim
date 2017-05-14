@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong User:
+  = @frontend_order.user
+p
+  strong Product:
+  = @frontend_order.product
+p
+  strong Price:
+  = @frontend_order.price
+p
+  strong Status:
+  = @frontend_order.status
+
+= link_to 'Edit', edit_frontend_order_path(@frontend_order)
+'|
+= link_to 'Back', frontend_orders_path

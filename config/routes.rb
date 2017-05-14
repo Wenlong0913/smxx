@@ -3,6 +3,10 @@ Rails.application.routes.draw do
     get 'users/show'
   end
 
+  namespace :frontend do
+    get 'home/index'
+  end
+
   get 'robots.txt', to: 'robots#index'
 
   # 支付，通用模块
