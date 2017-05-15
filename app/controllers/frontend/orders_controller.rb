@@ -29,7 +29,7 @@ class Frontend::OrdersController < Frontend::BaseController
 
   def create
     authorize Order
-    @order = Order.new(permitted_attributes(Order)))
+    @order = Order.new(permitted_attributes(Order))
 
     respond_to do |format|
       format.html do
