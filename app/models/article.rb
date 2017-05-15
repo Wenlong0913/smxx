@@ -16,4 +16,8 @@ class Article < ApplicationRecord
     discover = self.discovers.find_or_create_by(resource: self)
     discover.save!
   end
+
+  def api_created_at
+    created_at.to_i
+  end
 end
