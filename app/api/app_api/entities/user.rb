@@ -37,7 +37,7 @@ module AppAPI
         end
 
         def article_shares_count
-          0
+          object.articles.count
         end
 
         def shopping_carts_count
