@@ -22,5 +22,6 @@ module AppAPI::V1
     mount AppAPI::V1::SiteCatalog
     mount AppAPI::V1::Community
     mount AppAPI::V1::AddressBook
+    mount AppAPI::V1::SalesDistribution
   end
 end

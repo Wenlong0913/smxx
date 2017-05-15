@@ -29,6 +29,8 @@ module AppAPI
 
         expose :shopping_carts_count, documentation: { desc: '购物车里商品的数量' }
 
+        expose :sales_distribution_code, documentation: { desc: '我的分销码'}
+
         def site_favorites_count
           object.site_favorites.count
         end
@@ -43,6 +45,10 @@ module AppAPI
 
         def shopping_carts_count
           object.shopping_carts.sum(:amount)
+        end
+
+        def sales_distribution_code
+          ::SalesDistribution::Resource.find_by(user_id: object.id, type_name: '用户注册').try(:code)
         end
       end
 

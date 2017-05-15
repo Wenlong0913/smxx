@@ -68,7 +68,9 @@ class User < ApplicationRecord
     male: 1,  # 男
     secret: 2   #保密
   }
-
+  if Settings.project.sxhop?
+    after_create :create_sales_distribution_code
+  end
   # Find user by phone number
   # @param [String] phone_number
   # @return [User]
@@ -115,6 +117,14 @@ class User < ApplicationRecord
       SalesDistribution::ResourceUser.joins(:resource).
       where("sales_distribution_resource_users.user_id = ? and sales_distribution_resources.object_type in ('Site', 'Product')",self.id).
       pluck("sales_distribution_resources.user_id")
+    end
+
+    def create_sales_distribution_code
+      resource = SalesDistribution::Resource.create(
+          type_name: '用户注册', # 必填，声明分销类型
+          user: self, # 分销链接属于谁的
+          url: "http://"
+      )
     end
   end
 
