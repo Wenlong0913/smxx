@@ -114,7 +114,13 @@ class CmsController < ApplicationController
           render :new
         end
       end
-      format.json { render json: @comment }
+      format.json do
+        if @comment.save
+          render text: '提交成功！'
+        else
+          render :new
+        end
+      end
     end
   end
 

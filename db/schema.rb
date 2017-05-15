@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170510085955) do
+ActiveRecord::Schema.define(version: 20170514104415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,12 +74,23 @@ ActiveRecord::Schema.define(version: 20170510085955) do
     t.index ["product_id"], name: "index_article_products_on_product_id", using: :btree
   end
 
+  create_table "article_users", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "article_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_article_users_on_article_id", using: :btree
+    t.index ["user_id"], name: "index_article_users_on_user_id", using: :btree
+  end
+
   create_table "articles", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.integer  "author"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "comments_count"
+    t.integer  "likes_count"
   end
 
   create_table "attachment_relations", force: :cascade do |t|
@@ -1035,6 +1046,7 @@ ActiveRecord::Schema.define(version: 20170510085955) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "description",            limit: 500
+    t.integer  "gender"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
@@ -1062,6 +1074,7 @@ ActiveRecord::Schema.define(version: 20170510085955) do
   add_foreign_key "account_histories", "accounts"
   add_foreign_key "address_books", "users"
   add_foreign_key "article_products", "articles"
+  add_foreign_key "article_users", "articles"
   add_foreign_key "attachment_relations", "attachments"
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
