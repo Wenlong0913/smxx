@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   get 'robots.txt', to: 'robots#index'
 
+  get 'invite-link', to: 'invite_link#show'
+
   # 支付，通用模块
   mount PaymentCore::Engine => '/payment'
 
