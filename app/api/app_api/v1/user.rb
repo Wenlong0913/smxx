@@ -141,9 +141,9 @@ module AppAPI::V1
       end
       params do
         optional :nickname, type: String, desc: '昵称'
-        optional :username, type: String, desc: '名称'
+        # optional :username, type: String, desc: '名称'
         optional :avatar, type: Rack::Multipart::UploadedFile, desc: '上传头像'
-        optional :mobile_phone, type: String, desc: '手机号'
+        # optional :mobile_phone, type: String, desc: '手机号'
         if Settings.project.imolin?
           optional :gender, type: String, desc: '性别'
           optional :community_id, type: String, desc: '小区名称'
@@ -158,17 +158,17 @@ module AppAPI::V1
         if params[:nickname].present?
           current_user.nickname = params[:nickname].strip
         end
-        if params[:username].present?
-          current_user.username = params[:username].strip
-        end
+        # if params[:username].present?
+        #   current_user.username = params[:username].strip
+        # end
         if params[:community_id].present?
           current_user.communities << ::Community.find_by(id: params[:community_id])
           current_user.user_communities.update_all(is_current: false)
           current_user.user_communities.where(community_id: params[:community_id]).update_all(is_current: true)
         end
-        if params[:mobile_phone]
-          current_user.mobile.phone_number = params[:mobile_phone]
-        end
+        # if params[:mobile_phone]
+        #   current_user.mobile.phone_number = params[:mobile_phone]
+        # end
         current_user.gender = params[:gender] if params[:gender]
         current_user.description = params[:description] if params[:description]
         if current_user.changed?
