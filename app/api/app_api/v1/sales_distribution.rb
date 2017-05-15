@@ -9,8 +9,7 @@ module AppAPI::V1
       end
       get do
         sales_distribution = ::SalesDistribution::Resource.find_by(code: params[:code])
-        user = ::User.find(sales_distribution.user_id)
-        present user, with: AppAPI::Entities::UserSimple
+        present sales_distribution, with: AppAPI::Entities::SalesDistribution
       end
 
     end # end of resources
