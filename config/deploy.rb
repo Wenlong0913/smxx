@@ -35,6 +35,7 @@ before "deploy", :check_branch do
   puts <<-MSG.green
 real repo url is: #{fetch(:repo_url)}
   real branch is: #{fetch(:branch)}
+       deploy to: #{fetch(:deploy_to)}
   MSG
 
   puts <<-MSG.yellow

@@ -131,7 +131,7 @@ $(document).ready ->
           _this.showCatalog = false
           _this.catalogs = catalogs.map((cata)-> cata.name).join('/')
     additional = new Vue
-      el: "div[rel='additional-attributes"
+      el: "div[rel='additional-attributes']"
       data:
         lists: [
           {key: '尺寸', value: '', name: '1'}

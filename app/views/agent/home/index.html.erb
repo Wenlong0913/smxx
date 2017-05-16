@@ -33,7 +33,7 @@
       <div class="widget widget-stats bg-blue">
         <div class="stats-icon"><i class="fa fa-chain-broken"></i></div>
         <div class="stats-info">
-          <h4>生产订单</h4>
+          <h4><%= Settings.project.dagle? ? '生产订单' : '订单' %></h4>
           <p><%= @order_total_count%></p>
         </div>
         <div class="stats-link">

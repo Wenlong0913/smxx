@@ -18,14 +18,14 @@ zh-CN:
         name: 产品名称
         image: 图片
         old_price: 原价
-        price: 售价
+        price: 原价
         responsive_person: 适应人群
         warning_message: 注意事项
         service_time: 服务时长
         month_number: 月单数
         unit: 库存单位
         stock: 库存
-        discount: 促销价
+        discount: 优惠价
         weight: 产品重量
         weight_unit: 重量单位
         description: 简要描述
@@ -34,7 +34,6 @@ zh-CN:
         recommend: 推荐
         event: 活动
         promotion: 促销
-        discount: 折扣
         is_manager_recommend: 是否设为站长推荐
     errors:
       models:

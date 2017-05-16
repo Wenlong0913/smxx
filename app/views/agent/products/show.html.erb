@@ -77,10 +77,10 @@
                           <% if @product.discount.to_f > 0 && @product.discount.to_f < @product.price.to_f %>
 
                             <li class='col-sm-12 col-md-4'>
-                              售价：<span class="discount text-danger">￥<%= @product.price.to_f / 100 %></span>
+                              原价：<span class="discount text-danger">￥<%= @product.price.to_f / 100 %></span>
                             </li>
                             <li class='col-sm-12 col-md-4'>
-                              折扣：<span class="price text-primary">￥<%= @product.discount.to_f / 100 %></span>
+                              优惠价：<span class="price text-primary">￥<%= @product.discount.to_f / 100 %></span>
                             </li>
                           <% else %>
                             <li class='col-sm-12 col-md-4'>
@@ -144,7 +144,7 @@
                 <!-- BEGIN #product-tab -->
                 <ul id="product-tab" class="nav nav-tabs">
                   <li class="active"><a href="#product-content" data-toggle="tab">内容展示</a></li>
-                  <!-- <li class=""><a href="#product-info" data-toggle="tab">统计信息</a></li> -->
+                  <li class=""><a href="#product-info" data-toggle="tab">统计信息</a></li>
                   <li class=""><a href="#product-reviews" data-toggle="tab">用户评论</a></li>
                 </ul>
                 <!-- END #product-tab -->
@@ -167,15 +167,55 @@
                     <!-- BEGIN #product-info -->
                     <div class="tab-pane fade" id="product-info">
                       <div class="panel panel-default">
-                        <!-- <div class="panel-heading">
-                          <h3 class="panel-title">销量统计</h3>
-                        </div>
-                        <div class="panel-body p-l-0 p-r-0">
-                          <div class="jumbotron">
-                            <h1>这是一个图!</h1>
-                            <p>...</p>
+                        <div class="row summary">
+                          <div class='collect-top row text-center'>
+                            <div class="col-xs-2 bg-silver col-xs-offset-1">
+                              <div class="h2">
+                                <i class="fa fa-magnet text-primary"></i>
+                                <span></span>
+                                <%= @product.visits_count %>
+                              </div>
+                              <div class="h4 text-muted">总浏览量</div>
+                              <div class="cut_solid"></div>
+                            </div>
+                            <div class="col-xs-2 bg-silver" style="margin-left: 10px">
+                              <div class="h2">
+                                <i class="fa fa-heart text-danger"></i>
+                                <span></span>
+                                <%= @product.favorites_count %>
+                              </div>
+                              <div class="h4 text-muted">收藏数</div>
+                              <div class="cut_solid"></div>
+                            </div>
+                            <div class="col-xs-2 bg-silver" style="margin-left: 10px">
+                              <div class="h2">
+                                <i class="fa fa-thumbs-o-up text-primary"></i>
+                                <span></span>
+                                <%= @product.likes_count %>
+                              </div>
+                              <div class="h4 text-muted">点赞数</div>
+                              <div class="cut_solid"></div>
+                            </div>
+                            <div class="col-xs-2 bg-silver" style="margin-left: 10px">
+                              <div class="h2">
+                                <i class="fa fa-tag text-danger"></i>
+                                <span></span>
+                                <%= @product.sales_count %>
+                              </div>
+                              <div class="h4 text-muted">销量</div>
+                              <div class="cut_solid"></div>
+                            </div>
+                            <div class="col-xs-2 bg-silver" style="margin-left: 10px">
+                              <div class="h2">
+                                <i class="fa fa-share-alt text-primary"></i>
+                                <span></span>
+                                <%= @product.sales_distribution_resources.size %>
+                              </div>
+                              <div class="h4 text-muted">分享数</div>
+                              <div class="cut_solid"></div>
+                            </div>
                           </div>
-                        </div> -->
+                        </div>
                       </div>
                     </div>
                     <!-- END #product-info -->

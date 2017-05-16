@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 20170514104415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "cube"
   enable_extension "earthdistance"
@@ -834,7 +835,6 @@ ActiveRecord::Schema.define(version: 20170514104415) do
     t.jsonb    "features"
     t.string   "type"
     t.integer  "address_alias_id"
-    t.string   "address_line"
     t.integer  "catalog_id"
     t.integer  "favorites_count",  default: 0
     t.integer  "visits_count",     default: 0

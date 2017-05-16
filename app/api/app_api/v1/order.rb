@@ -30,7 +30,11 @@ module AppAPI::V1
         shopping_carts.each do |sc|
           order.order_products.new(product_id: sc.product_id, price: sc.price, amount: sc.amount)
         end
-        order.price = order.order_products.map{|op| op.price * op.amount }.sum
+        # 这里的修改是因为在order_product的model里面price已经被设置为产品价格和数量的乘积了，不要再改回去了
+        # def set_default_price
+        #   self.price ||= product.price * amount
+        # end
+        order.price = order.order_products.map(&:price).sum
         if params[:address_book_id]
           address_book = ::AddressBook.find(params[:address_book_id])
           order_delivery = order.order_deliveries.new({
