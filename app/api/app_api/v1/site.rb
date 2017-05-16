@@ -47,7 +47,7 @@ module AppAPI::V1
         if params[:site_catalog_id]
           community = ::Community.find_by(id: current_user.current_community.id)
           sites = sites.where("catalog_id = ?", params[:site_catalog_id])
-          # sites = sites.near_by(lat: community.address_lat, lng: community.address_lng, distance: 2000)
+          sites = sites.near_by(lat: community.address_lat, lng: community.address_lng, distance: 200000)
         end
         sites = paginate_collection(sort_collection(sites), params)
         wrap_collection sites, AppAPI::Entities::SiteSimple

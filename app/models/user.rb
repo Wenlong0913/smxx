@@ -59,10 +59,9 @@ class User < ApplicationRecord
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
   validates_attachment_file_name :avatar, matches: [/png\z/i, /jpe?g\z/i]
   validates_with AttachmentSizeValidator, attributes: :avatar, less_than: 10.megabytes
-
+  validates_uniqueness_of :nickname, allow_blank: true
   attr_accessor :mobile_phone
   validates :mobile_phone, mobile_phone: true, allow_blank: true
-
   enum gender: {
     female: 0, # 女
     male: 1,  # 男
@@ -87,7 +86,7 @@ class User < ApplicationRecord
   end
 
   def nickname
-    attributes['nickname'] || "匿名"
+    attributes['nickname']
   end
 
   ##

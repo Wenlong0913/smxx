@@ -2,7 +2,7 @@ module AppAPI
   module Entities
     class SalesDistribution < Base
       # public attributes
-      expose_id
+      # expose_id
       expose_created_at
       expose :type_name, documentation: { desc: '分销类型' }
       expose :url, documentation: { desc: '分销链接' }
