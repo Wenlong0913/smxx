@@ -1,4 +1,5 @@
 class InviteLinkController < ApplicationController
+  layout false
   def show
     share_code = params[:sc]
     @resource = SalesDistribution::Resource.find_by(code: share_code)
