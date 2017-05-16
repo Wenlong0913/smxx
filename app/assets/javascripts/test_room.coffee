@@ -39,7 +39,7 @@ class TestRoom
       when 'system'
         ele = $("<li class='system'>#{data.message} <small>#{now}</small</li>")
       when 'message'
-        ele = $("<li class='message'>#{data.nickname} 说：#{data.message} <small>#{now}</small</li>")
+        ele = $("<li class='message'>#{data.user.nickname} 说：#{data.message} <small>#{now}</small</li>")
       else ele = null
     ele.prependTo('#chat-messages') if ele?
   login: ->

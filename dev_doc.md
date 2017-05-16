@@ -38,7 +38,7 @@
 - [CRM客户管理](doc_member.md)
 - [Keystore系统参数设置](doc_keystore.md)
 - [部署](#deployment)
-
+    - [如何配置聊天模块(ActionCable)](#deploy_action_cable)
 <a name="config"></a>
 ## 开发配置
 
@@ -313,4 +313,25 @@ Mac系统必须执行`brew install geckodriver`安装插件`geckodriver`
 
     PROJECT_NAME=dagle cap production deploy
 
+<a name="deploy_action_cable"></a>
+
+    server {
+            listen 80;
+            server_name api-dev.imolin.cn;
+            location / {
+                proxy_pass http://127.0.0.1:3002/;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            }
+            location /cable {
+                    proxy_pass http://127.0.0.1:3002/cable;
+                    proxy_set_header Host $host;
+                    proxy_set_header X-Real-IP $remote_addr;
+                    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                    proxy_http_version 1.1;                 # ...重要部分在这...
+                    proxy_set_header Upgrade $http_upgrade; # ...重要部分在这...
+                    proxy_set_header Connection "Upgrade";  # ...重要部分在这...
+            }
+    }
 
