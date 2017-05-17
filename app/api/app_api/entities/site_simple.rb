@@ -11,7 +11,7 @@ module AppAPI
         expose :comments_count, documentation: { desc: '评论数', type: Integer}
         expose :site_catalog_name, documentation: { desc: '分类名称', type: String}
         expose :avg_price
-        expose :distance, documentation: { desc: '商家与小区之间的距离'}
+        expose :distance, documentation: { desc: '商家与小区之间的距离'}, if: ->(site, options) { options.fetch(:includes, []).map(&:to_s).include?('distance') }
       end
 
       if Settings.project.sxhop?

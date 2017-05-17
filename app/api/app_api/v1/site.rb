@@ -51,7 +51,7 @@ module AppAPI::V1
           sites = sites.selecting_distance_from(community.address_lat, community.address_lng).order_by_distance(community.address_lat, community.address_lng)
         end
         sites = paginate_collection(sort_collection(sites), params)
-        wrap_collection sites, AppAPI::Entities::SiteSimple
+        wrap_collection sites, AppAPI::Entities::SiteSimple, includes: [:distance]
       end
 
       desc '店铺站长推荐'
