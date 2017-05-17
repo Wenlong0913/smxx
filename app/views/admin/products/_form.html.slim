@@ -44,7 +44,7 @@
                 .input-group
                   .input-group-btn
                     button.btn.btn-default.dropdown-toggle[data-toggle="dropdown"]
-                      | 单位: 
+                      | 单位:
                       small
                         - if @product.weight_unit == 'g'
                           span g(克)
@@ -138,6 +138,60 @@
               = f.input :content, as: :ckeditor
         .row.text-right
           = f.submit '保存修改', class: 'btn btn-primary'
+    - if Settings.project.eqxiyi?
+      = simple_form_for @product, url: @product.new_record? ? admin_site_products_path(@site) : admin_site_product_path(@site, @product) do |f|
+        - if @product.errors.any?
+          #error_explanation
+            ul
+              - @product.errors.full_messages.each do |message|
+                li = message
+        / = f.input :name
+        .div class="row"
+          .div class="col-md-6"
+            = f.input :name
+            / = f.association :site
+            / = f.input :site_id, input_html: {value: @site.title}, disabled: true, hint: '商家名称不可修改'
+          .col-xs-6
+            .form-group.catalog-list[data-catalog-name="#{@product.catalog.self_and_ancestors.pluck(:name).reverse.join('/') if @product.catalog}" data-catalog-id="#{@product.catalog_id}" data-catalog-ids="#{@product.catalog.self_and_ancestor_ids.reverse.join(',') if @product.catalog}"]
+              label[class="control-label"] 产品分类
+              input[type="hidden" v-model="id" name="product[catalog_id]"]
+              input.form-control[readonly=true @click="showCatalog = true" :value="catalogs"]
+              span.hint 点击输入框选择分类
+              modal[title="产品分类" :show.sync="showCatalog" @cancel="showCatalog = false"]
+                div
+                  catalog-list[data-url=admin_product_catalogs_path :default="selecteDefault" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false" :editable='false']
+                div[slot="footer"]
+        .div class="row"
+          .div class="col-md-6"
+            = f.input :old_price, as: :decimal, input_html: { value: @product.new_record? ? '' : (@product.old_price.to_f / 100) }
+          .div class="col-md-6"
+            = f.input :price, as: :decimal, input_html: { value: @product.new_record? ? '' : (@product.price.to_f / 100) }
+        .div class="row"
+          .div class="col-md-6"
+            = f.input :description, as: :text
+            = f.input :service_time
+            = f.input :month_number, as: :integer
+            .p 活动标签（可多选）
+            = f.collection_check_boxes :properties, Product::PROPERTIES, :first, :last, checked: @product.try(:properties)
+          .div class="col-md-6"
+            = f.input :warning_message, as: :text, input_html: {rows: 9}
+            = f.input :is_shelves, as: :radio_buttons
+        .col-xs-12
+          .form-group.string.optional.product_tag
+            label.control-label.string.optional 增加标签
+            ul.product-tags[data-tags-all=@tags_all]
+              - @product.tag_list.each do |tag|
+                li = tag
+            .most-tag-list
+              - if @most_used_tags
+                span.small 常用标签：
+                - @most_used_tags.each do |val|
+                  span.label.m-r-5 = val
+        = f.input :content,as: :ckeditor
+        .form-group
+          image-select[server="#{image_items_path}" name="product[image_item_ids][]" selected-ids="#{@product.image_item_ids.join(', ')}"]
+
+        = f.submit class: 'btn btn-success btn-block'
     - else
       = simple_form_for @product, url: @product.new_record? ? admin_site_products_path(@site) : admin_site_product_path(@site, @product) do |f|
         - if @product.errors.any?
@@ -197,5 +251,3 @@
           image-select[server="#{image_items_path}" name="product[image_item_ids][]" selected-ids="#{@product.image_item_ids.join(', ')}"]
 
         = f.submit class: 'btn btn-success btn-block'
-  
-  
