@@ -5,18 +5,34 @@ td
       = product.catalog.try(:name)
   span style="margin-left:30px;"
   => link_to product.site.title, admin_site_products_path(product.site)
-td = product.price.to_f / 100
-- if Settings.project.sxhop?
-  td = product.discount.to_f / 100
-td
-  - product.tags.each do |tag|
-    => link_to tag.name, '#', class: 'btn btn-xs btn-success'
-- if Settings.project.sxhop?
+- if Settings.project.eqxiyi?
   td
-    - if product.is_shelves == '1'
-      => link_to '上架中', '#', class: 'btn btn-xs btn-success'
+    - if product.is_shelves == "true"
+      span class="m-l-5 btn btn-xs btn-success"
+        | 上架中
     - else
-      => link_to '已下架', '#', class: 'btn btn-xs btn-default'
+      span class="m-l-5 btn btn-xs btn-default"
+        | 已下架
+  td = product.old_price.to_f / 100
+  td = product.price.to_f / 100
+  td
+    - product.tags.each do |tag|
+      span class="btn btn-xs btn-success"
+        = tag.name
+- else
+  td = product.price.to_f / 100
+  - if Settings.project.sxhop?
+    td = product.discount.to_f / 100
+  td
+    - product.tags.each do |tag|
+      => link_to tag.name, '#', class: 'btn btn-xs btn-success'
+  - if Settings.project.sxhop?
+    td
+      - if product.is_shelves == '1'
+        => link_to '上架中', '#', class: 'btn btn-xs btn-success'
+      - else
+        => link_to '已下架', '#', class: 'btn btn-xs btn-default'
+
 td
   => link_to '编辑', edit_admin_site_product_path(product.site, product), class: 'btn btn-xs btn-default'
   = link_to '删除', admin_site_product_path(product.site, product), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
