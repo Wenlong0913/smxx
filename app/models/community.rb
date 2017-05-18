@@ -8,6 +8,7 @@ class Community < ApplicationRecord
   has_many :chat_rooms, as: :owner, class_name: 'Chat::Room', dependent: :destroy
   has_many :user_communities, dependent: :destroy
   has_many :users, through: :user_communities
+  has_many :articles, dependent: :destroy
   after_save :create_chat_rooms
 
 

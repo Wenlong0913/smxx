@@ -1,0 +1,42 @@
+h1.page-header
+  | 查看#{Article.model_name.human}
+  .pull-right
+    => link_to '编辑', edit_admin_community_article_path(@community, @article), class: 'btn btn-primary'
+    = link_to '返回', admin_community_articles_path(@community), class: 'btn btn-primary'
+
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+  .panel-body
+    .profile-container
+      .profile-info
+        .table-responsive
+          table.table.table-profile
+            tr
+              td.field 公告标题
+              td
+                =@article.title
+            tr
+              td.field 发布人
+              td
+                =@article.user.try(:nickname)
+            tr
+              td.field 内容
+              td
+                 =@article.description
+        h4 公告图片
+        .gallery#gallery.p-20
+          .row
+            - if @article.image_items.blank?
+              .col-xs-12 没有公告图片
+            - @article.image_items.each do |image|
+              .image.col-sm-6.col-md-4
+                .image-inner
+                  a[href="javascript:;" data-lightbox="gallery-group-1"]
+                    img[src="#{image.image_url}"]
+                  .image-caption
+                    =image.name
