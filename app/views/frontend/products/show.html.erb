@@ -33,8 +33,10 @@
 
               <!-- Post Thumbnail -->
               <div class="blog-image">
-                <video src="movie.ogg" controls="controls" width="100%">
-                  您的浏览器不支持 video 标签。
+                <video controls="controls" width="100%">
+                  <source src="<%= @product.video_url %>" type="video/mp4">
+                  <source src="<%= @product.video_url %>" type="video/ogg">
+                  <source src="<%= @product.video_url %>" type="video/WebM">
                 </video>
               </div>
 

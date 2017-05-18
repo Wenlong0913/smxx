@@ -78,6 +78,11 @@ h1.page-header
                     = @product.warning_message
               tr.divider
                 td[colspan='2']
+              tr
+                td.field 视频链接
+                td
+                  a
+                   = @product.video_url
           h4 产品图片
           .gallery#gallery.p-20
             .row
