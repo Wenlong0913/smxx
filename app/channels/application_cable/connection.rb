@@ -8,7 +8,8 @@ module ApplicationCable
 
     private
     def find_user
-      User.find_by(nickname: request.params[:credential]) rescue nil
+      api_token = ApiToken.find_by(token: request.params[:credential])
+      api_token && api_token.user
     end
   end
 end
