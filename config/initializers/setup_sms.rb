@@ -2,7 +2,7 @@ RestClient.log = Logger.new(STDOUT) unless Rails.env.production?
 Sms.setup do |s|
   s.service =
     lambda do |token_body|
-      if Rails.env.staging? || Rails.env.production?
+      if (Rails.env.staging? || Rails.env.production?) && token_body.mobile_phone != Settings.test_account.mobile_phone
         Sms::Services::YunPianService.send_text(token_body.mobile_phone, token_body.message)
       else
         Sms::Services::YunPianService::SendResponse.new('code' => 0)

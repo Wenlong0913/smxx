@@ -45,6 +45,9 @@ default: &default
       use_timestamp: false
       qiniu_host: ocwr8qu9g.bkt.clouddn.com
 
+  test_account:
+    mobile_phone: '13900000000'
+    code: '000000'
 development:
   <<: *default
 production:
