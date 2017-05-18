@@ -103,6 +103,9 @@ module AppAPI::V1
         t = Sms::Token.new(params[:mobile_phone])
         is_dev = !(Rails.env.staging? || Rails.env.production?)
         code = is_dev ? '123456' : (10000 + SecureRandom.random_number(10**8)).to_s[-5..-1]
+        if Settings.mobile.test_mobile && Settings.mobile.test_mobile[:phone] == params[:mobile_phone]
+          code = Settings.mobile.test_mobile[:code]
+        end
         body = Settings.mobile.auth_token_template.gsub('#code#', code)
         t.create code: code, message: body
         begin
@@ -142,7 +145,11 @@ module AppAPI::V1
       params do
         optional :nickname, type: String, desc: '昵称'
         # optional :username, type: String, desc: '名称'
-        optional :avatar, type: Rack::Multipart::UploadedFile, desc: '上传头像'
+        if Settings.project.imolin?
+          optional :avatar, type: String, desc: '头像, 格式是base64'
+        else
+          optional :avatar, type: Rack::Multipart::UploadedFile, desc: '上传头像'
+        end
         # optional :mobile_phone, type: String, desc: '手机号'
         if Settings.project.imolin?
           optional :gender, type: String, desc: '性别'
@@ -153,7 +160,16 @@ module AppAPI::V1
       put 'me' do
         authenticate!
         if params[:avatar]
-          current_user.avatar = ActionDispatch::Http::UploadedFile.new(params[:avatar])
+          if Settings.project.imolin?
+            StringIO.open(Base64.decode64(params[:avatar])) do |data|
+              data.class.class_eval { attr_accessor :original_filename, :content_type }
+              data.original_filename = "hedshot.jpg"
+              data.content_type = "image/jpeg"
+              current_user.avatar = data
+            end
+          else
+            current_user.avatar = ActionDispatch::Http::UploadedFile.new(params[:avatar])
+          end
         end
         if params[:nickname].present?
           current_user.nickname = params[:nickname].strip
