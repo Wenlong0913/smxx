@@ -103,8 +103,8 @@ module AppAPI::V1
         t = Sms::Token.new(params[:mobile_phone])
         is_dev = !(Rails.env.staging? || Rails.env.production?)
         code = is_dev ? '123456' : (10000 + SecureRandom.random_number(10**8)).to_s[-5..-1]
-        if Settings.mobile.test_mobile && Settings.mobile.test_mobile[:phone] == params[:mobile_phone]
-          code = Settings.mobile.test_mobile[:code]
+        if Settings.test_account && Settings.test_account[:mobile_phone] == params[:mobile_phone]
+          code = Settings.test_account[:code]
         end
         body = Settings.mobile.auth_token_template.gsub('#code#', code)
         t.create code: code, message: body
