@@ -7,6 +7,8 @@ zh-CN:
       article:
         title: 标题
         description: 内容
+        valid_time_begin: 有效期起始时间
+        valid_time_end: 有效期结束时间
     errors:
       models:
         article: 
