@@ -1,7 +1,12 @@
 source "https://gems.ruby-china.org"
 ruby '2.3.3'
 
-source "https://#{ENV['TANMER_GEM_TOKEN']}@gems.tanmer.com" do
+# set api key with
+#   bundle config gems.tanmer.com your_api_key
+# or
+#   export BUNDLE_GEMS__TANMER__COM="your_api_key"
+#
+source "https://gems.tanmer.com" do
   gem 'payment_core', '0.0.3'
   gem 'theme_color_admin', '0.0.5'
   gem 'sales_distribution', '0.1.0'

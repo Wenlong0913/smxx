@@ -58,7 +58,7 @@ PATH
 
 GEM
   remote: https://gems.ruby-china.org/
-  remote: https://8018774a-3855-4e38-8aa3-a31e41d7af9e@gems.tanmer.com/
+  remote: https://gems.tanmer.com/
   specs:
     actioncable (5.0.2)
       actionpack (= 5.0.2)
