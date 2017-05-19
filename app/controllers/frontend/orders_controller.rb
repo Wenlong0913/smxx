@@ -19,33 +19,44 @@ class Frontend::OrdersController < Frontend::BaseController
   end
 
   def new
-    authorize Order
-    @order = Order.new(order_params)
+    @order = site.orders.build
   end
 
   def edit
-    authorize @order
   end
 
   def create
-    authorize Order
-    @order = Order.new(permitted_attributes(Order))
+    ActiveRecord::Base.transaction do
+      @frontend_order = Order.new
+      @frontend_order.user_id = current_user.id
+      @frontend_order.site_id = @site.id
+      @frontend_order.price = params[:order][:price]
+      @frontend_order.description = params[:order][:description]
+      @frontend_order.create_by = current_user.id
+      @frontend_order.save!
+      params[:order][:order_products].each do |order_product_params|
+        order_product = @frontend_order.order_products.build
+        order_product.product_id = order_product_params[:id]
+        order_product.amount = order_product_params[:amount]
+        order_product.price = order_product_params[:price]
+        order_product.save!
+      end
+    end
 
     respond_to do |format|
       format.html do
-        if @order.save
-          redirect_to frontend_order_path(@order), notice: 'Order 创建成功.'
+        if @frontend_order
+          redirect_to frontend_order_path(@frontend_order), notice: '订单创建成功.'
         else
           render :new
         end
       end
-      format.json { render json: @order }
+      format.json { render json: @frontend_order }
     end
 
   end
 
   def update
-    authorize @order
     respond_to do |format|
       format.html do
         if @order.update(permitted_attributes(@order))
@@ -59,7 +70,6 @@ class Frontend::OrdersController < Frontend::BaseController
   end
 
   def destroy
-    authorize @order
     @order.destroy
     respond_to do |format|
       format.html { redirect_to frontend_orders_url, notice: 'Order 删除成功.' }

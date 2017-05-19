@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  namespace :frontend do
-    get 'users/show'
-    get 'home/index'
-  end
 
   get 'robots.txt', to: 'robots#index'
 

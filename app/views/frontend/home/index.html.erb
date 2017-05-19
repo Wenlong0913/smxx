@@ -86,29 +86,52 @@
         <a class="close-modal" href="#" data-dismiss="modal">
         <span class="menu-icon"></span>
         </a>
-        <img src="/templetes/eshop/img/cup1.jpg" alt="" class="img-responsive">
+        <img src="<%= @product.image_items.first.image_url || '/templetes/eshop/img/cup1.jpg'%>" alt="" class="img-responsive">
       </div>
       <div class="modal-body">
-        <h3 class="text-center"><b>PaperCup - Mockup </b>($5,00)</h3>
+        <h3 class="text-center"><b><%= @product.name %> </b>(￥<%= @product.price %>)</h3>
       </div>
       <div class="modal-footer">
-        <form id="buy" action="http://demo.angelostudio.net/1e-shop/1.2/buy" class="myform" method="post" novalidate>
-          <div class="form-group">
-            <div class=" controls">
-              <input name="email" placeholder="PayPal Email" class="form-control input-lg requiredField" type="email" data-error-invalid="Invalid email address" data-error-empty="Enter email">
+        <% if current_user %>
+
+          <%= simple_form_for(current_user.orders.build, url: frontend_orders_path,  method: :post, html: {class: "myform"}) do |f| %>
+            <%= f.input :price %>
+            <%= f.input :description %>
+            <% 2.times do |i| %>
+              ID: <%= text_field_tag "order[order_products][][id]" %><br/>
+              数量：<%= text_field_tag "order[order_products][][amount]" %><br/>
+              价格：<%= text_field_tag "order[order_products][][price]" %>
+             <% end %>
+
+            <%= f.submit '提交' %>
+          <% end %>
+
+          <form id="buy" action="http://demo.angelostudio.net/1e-shop/1.2/buy" class="myform" method="post" novalidate>
+            <div class="form-group">
+              <div class=" controls">
+                <input name="email" placeholder="PayPal Email" class="form-control input-lg requiredField" type="email" data-error-invalid="Invalid email address" data-error-empty="Enter email">
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <div class="controls">
-              <input id="password" class="form-control" type="password" placeholder="PayPal Password" name="password">
+            <div class="form-group">
+              <div class="controls">
+                <input id="password" class="form-control" type="password" placeholder="PayPal Password" name="password">
+              </div>
             </div>
-          </div>
+            <div class="form-group">
+              <button type="button" class="btn btn-block">PAY NOW</button>
+            </div>
+            <p class="text-center"><a href="#" data-dismiss="modal">Cancel</a>
+            </p>
+          </form>
+        <% else %>
+          <p class="text-center">购买之前，请登录账户</p>
           <div class="form-group">
-            <button type="button" class="btn btn-block">PAY NOW</button>
+            <%=link_to '点击这里登录', admin_sign_in_path, class: 'btn btn-block' %>
+            <%=link_to '新用户注册', sign_up_path, class: 'btn btn-block' %>
           </div>
-          <p class="text-center"><a href="#" data-dismiss="modal">Cancel</a>
+          <p class="text-center"><a href="#" data-dismiss="modal">取消</a>
           </p>
-        </form>
+        <% end %>
       </div>
     </div>
   </div>
