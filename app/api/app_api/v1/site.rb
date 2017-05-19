@@ -111,6 +111,32 @@ module AppAPI::V1
         present is_favorited: is_favorited
       end
 
+      desc '评论店铺' do
+        success AppAPI::Entities::Comment
+      end
+      params do
+        requires :id, type: Integer, desc: '产品ID'
+        requires :content, type: String, desc: '评论或者回复内容'
+        optional :parent_id, type: Integer, desc: '如果填写，parent_id就是回复的某条评论的ID'
+      end
+      post':id/comment' do
+        authenticate!
+        site = ::Site.find_by(id: params[:id])
+        error! '该店铺不存在' unless site
+
+        comment_attributes = {}
+        comment_attributes[:content]  = params[:content]
+        comment_attributes[:parent]   = ::Comment::Entry.where(id: params[:parent_id]).first unless params[:parent_id].blank?
+        comment_attributes[:user]     = current_user
+
+        comment = site.comments.new(comment_attributes)
+        if comment.save
+          present comment, with: AppAPI::Entities::Comment
+        else
+          error! comment.errors
+        end
+      end
+
     end # end of resources
   end
 end

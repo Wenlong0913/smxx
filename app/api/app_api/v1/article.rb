@@ -17,6 +17,9 @@ module AppAPI::V1
         authenticate!
         article = ::Article.new(title: params[:title], description: params[:description])
         article.author = current_user.id
+        if Settings.project.imolin?
+          article.community = current_user.current_community
+        end
         article.image_item_ids = params[:image_item_ids] if params[:image_item_ids]
         article.product_ids = params[:product_ids] if params[:product_ids]
         article.tag_list = params[:tag_list]  if params[:tag_list]
@@ -45,8 +48,7 @@ module AppAPI::V1
               ::Article.all
             end
         if params[:community_id]
-          community = ::Community.find(params[:community_id])
-          articles = articles.where(author: community.users.map(&:id))
+          articles = articles.where(community_id: params[:community_id])
         end
         articles = paginate_collection(sort_collection(articles), params)
         wrap_collection articles, AppAPI::Entities::Article, type: :list, includes: [params[:includes]], user_id: current_user.id
