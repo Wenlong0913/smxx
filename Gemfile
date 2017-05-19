@@ -3,6 +3,10 @@ ruby '2.3.3'
 
 source "https://#{ENV['TANMER_GEM_TOKEN']}@gems.tanmer.com" do
   gem 'payment_core', '0.0.3'
+  gem 'theme_color_admin', '0.0.5'
+  gem 'sales_distribution', '0.1.0'
+  gem 'gnomon', '0.1.0'
+  gem 'activerecord-postgres-earthdistance', '0.5.2.tanmer'
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -59,7 +63,7 @@ gem 'like', path: 'components/like'
 # gem 'active_model_serializers' # 不好用，不如直接as_json输出
 #
 # url-分销
-gem 'sales_distribution', git: 'git@gitlab.tanmer.com:tm-framework/sales_distribution.git'
+# gem 'sales_distribution', git: 'git@gitlab.tanmer.com:tm-framework/sales_distribution.git'
 # gem 'spreadsheet'
 gem "roo"
 gem 'roo-xls'
@@ -118,11 +122,11 @@ gem 'tracker', path: 'components/tracker'
 gem 'decorator', path: 'components/decorator'
 gem 'comment', path: 'components/comment'
 gem 'favorite', path: 'components/favorite'
-gem 'gnomon', git: 'git@gitlab.tanmer.com:tm-framework/gnomon.git'
-gem 'activerecord-postgres-earthdistance', '0.5.2', github: 'xiaohui-zhangxh/activerecord-postgres-earthdistance'
+# gem 'gnomon', git: 'git@gitlab.tanmer.com:tm-framework/gnomon.git'
+# gem 'activerecord-postgres-earthdistance', '0.5.2', github: 'xiaohui-zhangxh/activerecord-postgres-earthdistance'
 
 gem 'themeable', '~> 1.2.0'#, path: '../../gems/themeable'
-gem 'theme_color_admin', git: 'git@gitlab.tanmer.com:tm-themes/theme_color_admin.git'
+# gem 'theme_color_admin', git: 'git@gitlab.tanmer.com:tm-themes/theme_color_admin.git'
 # gem 'theme_card', git: 'git@gitlab.tanmer.com:tm-themes/theme_card.git'
 gem 'closure_tree'
 gem 'select2-rails'
