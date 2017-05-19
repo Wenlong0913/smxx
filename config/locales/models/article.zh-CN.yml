@@ -2,11 +2,11 @@
 zh-CN:
   activerecord:
     models:
-      article: Article
+      article: 公告
     attributes:
       article:
-        title: Title
-        description: Description
+        title: 标题
+        description: 内容
     errors:
       models:
         article: 

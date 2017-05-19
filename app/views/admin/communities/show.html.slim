@@ -5,6 +5,7 @@ h1.page-header
       => link_to '详情', admin_community_path(@community), class: 'btn btn-info'
     - else
       => link_to '周边商家', admin_community_path(@community, sites: true), class: 'btn btn-info', 'data-turbolinks': false
+    => link_to '公告列表', admin_community_articles_path(@community), class: 'btn btn-info'
     => link_to '修改', edit_admin_community_path(@community), class: 'btn btn-primary', 'data-turbolinks': false
     => link_to '定位', edit_admin_community_path(@community, map: true), class: 'btn btn-primary', 'data-turbolinks': false
     => link_to '删除', admin_community_path(@community), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-danger'

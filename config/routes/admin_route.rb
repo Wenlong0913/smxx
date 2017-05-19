@@ -20,7 +20,10 @@ module AdminRoute
             end
           end
         end
-        resources :communities, :concerns => :paginatable # 小区
+        # 小区
+        resources :communities, :concerns => :paginatable do
+          resources :articles
+        end
         resources :catalogs # 分类管理
         catalog_resources_for ProductCatalog # 产品分类管理
         catalog_resources_for MaterialCatalog # 物料分类管理

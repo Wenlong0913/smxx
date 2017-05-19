@@ -1,0 +1,26 @@
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+  .panel-body
+    = simple_form_for @article, url: @article.new_record? ? admin_community_articles_path : admin_community_article_path(@article), validate: true do |f|
+      - if @article.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@article.errors.count, "error")} prohibited this article from being saved:"
+          ul
+            - @article.errors.full_messages.each do |message|
+              li = message
+      .col-xs-12
+        .form-group
+          = f.input :title
+      .col-xs-12
+        .form-group
+          = f.input :description, as: :text
+      .col-xs-12
+        .form-group[rel="image-select"]
+          label 公告图片 
+          image-select[server="#{image_items_path}" name="article[image_item_ids][]" selected-ids="#{@article.image_item_ids.join(', ')}"]
+      = f.submit class: 'btn btn-success btn-block'

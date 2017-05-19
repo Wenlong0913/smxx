@@ -22,6 +22,10 @@
         li[class=("active" if page?('admin/communities'))]
           = link_to admin_communities_path do
             = fa_icon 'leaf', text: '小区'
+        - if @community.present? && page?('admin/articles')
+          li class=("has-sub #{'active' if page?('admin/articles')}")
+            = link_to admin_community_articles_path(@community) do
+              = fa_icon 'leaf', text: "#{@community.name}-公告列表"
       - if Settings.project.dagle?
         li class=("has-sub #{'active' if page?('admin/materials', admin_material_catalogs_path, 'admin/material_managements', 'admin/material_warehouses', 'admin/material_management_histories', 'admin/material_stock_alerts')}")
           = link_to dashboard_admin_materials_path
