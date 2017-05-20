@@ -7,9 +7,14 @@ html
   body
     h2
       = @user.nickname
-      | 正在邀请你注册...
+      | 正在邀请你注册, 邀请码是：
+    h3
+      = @resource.code
     p
-      button#reg-button[data-url="#{Settings.app.schema}://invite-link?code=#{@resource.code}"] 点击注册
+      button#reg-button[data-url="#{browser.wechat? ? Settings.weixin_open_app.app_id : Settings.app.schema}://invite-link?code=#{@resource.code}"] 点击注册
+
+      a>[href="#{Settings.weixin_open_app.app_id}://invite-link?code=#{@resource.code}"] 打开APP
+      a>[href="sxhop://invite-link?code=#{@resource.code}"] 打开APP2
 
   coffee:
     document.getElementById("reg-button").addEventListener 'click', (event)=>
