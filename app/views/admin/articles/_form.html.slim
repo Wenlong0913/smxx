@@ -19,6 +19,12 @@
       .col-xs-12
         .form-group
           = f.input :description, as: :text
+      .col-xs-6
+        .form-group
+          = f.input :valid_time_begin, as: :string, input_html: {class: 'date_form_datetime'}
+      .col-xs-6
+        .form-group
+          = f.input :valid_time_end, as: :string, input_html: {class: 'date_form_datetime'}
       .col-xs-12
         .form-group[rel="image-select"]
           label 公告图片 

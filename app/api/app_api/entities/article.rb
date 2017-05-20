@@ -11,6 +11,8 @@ module AppAPI
         expose :is_applied do |article, options|
           article.user_ids.include? options[:user_id]
         end
+        expose :valid_time_begin, documentation: { desc: '公告有效期起始时间' }
+        expose :valid_time_end, documentation: { desc: '公告有效期结束时间' }
       end
       expose_updated_at
 
