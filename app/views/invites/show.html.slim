@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    meta charset="utf-8"
+    meta http-equiv="X-UA-Compatible" content="IE=edge"
+    meta name="viewport" content="width=device-width, initial-scale=1"
+  body
+    h2
+      = @user.nickname
+      | 正在邀请你注册...
+    p
+      button#reg-button[data-url="#{Settings.app.schema}://invite-link?code=#{@resource.code}"] 点击注册
+
+  coffee:
+    document.getElementById("reg-button").addEventListener 'click', (event)=>
+      button = event.target
+      url = button.attributes['data-url'].value
+      window.location = url
+      window.setTimeout () =>
+        window.location = "https://itunes.apple.com/app/id942390505"
+      , 50

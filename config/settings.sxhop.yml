@@ -44,6 +44,9 @@ default: &default
       bucket: tmf
       use_timestamp: false
       qiniu_host: ocwr8qu9g.bkt.clouddn.com
+  app:
+    schema: sxhop
+    ios_download_url: https://itunes.apple.com/us/app/id942390505
 
   test_account:
     mobile_phone: '13900000000'

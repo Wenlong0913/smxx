@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170514104415) do
+ActiveRecord::Schema.define(version: 20170519075114) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "cube"
   enable_extension "earthdistance"
@@ -88,10 +87,13 @@ ActiveRecord::Schema.define(version: 20170514104415) do
     t.string   "title"
     t.text     "description"
     t.integer  "author"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "comments_count"
     t.integer  "likes_count"
+    t.integer  "community_id"
+    t.date     "valid_time_begin"
+    t.date     "valid_time_end"
   end
 
   create_table "attachment_relations", force: :cascade do |t|
@@ -835,9 +837,11 @@ ActiveRecord::Schema.define(version: 20170514104415) do
     t.jsonb    "features"
     t.string   "type"
     t.integer  "address_alias_id"
+    t.string   "address_line"
     t.integer  "catalog_id"
     t.integer  "favorites_count",  default: 0
     t.integer  "visits_count",     default: 0
+    t.integer  "comments_count"
     t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
   end
 

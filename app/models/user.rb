@@ -124,6 +124,8 @@ class User < ApplicationRecord
           user: self, # 分销链接属于谁的
           url: "http://"
       )
+      resource.update_attributes(url: "#{Settings.site.host}/invites/#{resource.code}")
+      resource
     end
   end
 
