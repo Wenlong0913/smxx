@@ -29,7 +29,8 @@ module AppAPI
 
         expose :shopping_carts_count, documentation: { desc: '购物车里商品的数量' }
 
-        expose :sales_distribution_code, documentation: { desc: '我的分销码'}
+        expose :share_code, documentation: { desc: '我的邀请码'}
+        expose :share_url, documentation: { desc: '我的邀请链接'}
 
         def site_favorites_count
           object.site_favorites.count
@@ -47,8 +48,12 @@ module AppAPI
           object.shopping_carts.sum(:amount)
         end
 
-        def sales_distribution_code
+        def share_code
           ::SalesDistribution::Resource.find_by(user_id: object.id, type_name: '用户注册').try(:code)
+        end
+
+        def share_url
+          "#{SalesDistribution.route_prefix}#{share_code}"
         end
       end
 
