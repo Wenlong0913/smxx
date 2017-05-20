@@ -46,7 +46,7 @@ module AppAPI::V1
             end
         if params[:community_id]
           community = ::Community.find(params[:community_id])
-          articles = articles.where(author: community.users.map(&:id))
+          articles = community.articles
         end
         articles = paginate_collection(sort_collection(articles), params)
         wrap_collection articles, AppAPI::Entities::Article, type: :list, includes: [params[:includes]], user_id: current_user.id
