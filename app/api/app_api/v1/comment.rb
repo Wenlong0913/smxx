@@ -65,8 +65,8 @@ module AppAPI::V1
         site = ::Site.find_by(id: params[:site_id])
         error! '该店铺不存在' unless site
 
-        # 该商品的所有评论
-        comments = ::Comment::Entry.where(resource: site.products)
+        # 该店铺的所有评论
+        comments = ::Comment::Entry.where(resource: site)
         # 当前页的评论
         comments = paginate_collection(sort_collection(comments), params)
         # 获取需要额外加载的父级评论类容

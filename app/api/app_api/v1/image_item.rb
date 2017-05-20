@@ -11,16 +11,32 @@ module AppAPI::V1
       # curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: application/json' 
       #  -F images[][file]=@"logo.png"  'http://api.lvh.me:5000/v1/image_items'
       params do
-        requires :images, type: Array do
-          requires :file, :type => Rack::Multipart::UploadedFile, :desc => "多图片上传"
+        if Settings.project.imolin?
+          requires :images, type: Array
+        else
+          requires :images, type: Array do
+            requires :file, :type => Rack::Multipart::UploadedFile, :desc => "多图片上传"
+          end
         end
       end
       post do
         authenticate!
         images = []
         if params[:images]
-          params[:images].each do |file|
-            images << ::ImageItem.create(image: ActionDispatch::Http::UploadedFile.new(file[:file]), owner: current_user)
+          if Settings.project.imolin?
+            params[:images].each do |image|
+              StringIO.open(Base64.decode64(image)) do |data|
+                data.class.class_eval { attr_accessor :original_filename, :content_type }
+                data.original_filename = "hedshot.jpg"
+                data.content_type = "image/jpeg"
+                image = ::ImageItem.create(image: data, owner: current_user)
+                images << image
+              end
+            end
+          else
+            params[:images].each do |file|
+              images << ::ImageItem.create(image: ActionDispatch::Http::UploadedFile.new(file[:file]), owner: current_user)
+            end
           end
         end
         present images, with: AppAPI::Entities::ImageItem        
