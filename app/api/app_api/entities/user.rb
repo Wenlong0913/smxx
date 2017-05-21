@@ -53,7 +53,7 @@ module AppAPI
         end
 
         def share_url
-          "#{SalesDistribution.route_prefix}#{share_code}"
+          "#{::SalesDistribution.route_prefix}#{share_code}"
         end
       end
 
