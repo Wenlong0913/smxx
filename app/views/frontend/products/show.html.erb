@@ -48,6 +48,24 @@
                       </label>
 
                     </div>
+                    <!-- 支付测试 -->
+                    <%= current_user.id %>
+                    <% if current_user.present? %>
+                      <%= simple_form_for(current_user.orders.build, url: frontend_orders_path,  method: :post, html: {class: "myform"}) do |f| %>
+                        <%= f.input :price %>
+                        <%= f.input :description %>
+                        <% 1.times do |i| %>
+                          ID: <%= text_field_tag "order[order_products][][id]" %><br/>
+                          数量：<%= text_field_tag "order[order_products][][amount]" %><br/>
+                          价格：<%= text_field_tag "order[order_products][][price]" %>
+                         <% end %>
+
+                        <%= f.submit '购买' %>
+                      <% end %>
+                    <% else %>
+                      请登录后购买
+                    <% end %>
+                    <!-- 支付测试end -->
                     <div class="formButton" style="margin-top: 30px;">
                       <div class="blog-share">
       									<ul class="clearfix">

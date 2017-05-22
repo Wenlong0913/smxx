@@ -2,7 +2,6 @@ class Frontend::OrdersController < Frontend::BaseController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
 
   def index
-    authorize Order
     @orders = Order.all.page(params[:page])
     respond_to do |format|
       format.html
@@ -11,7 +10,6 @@ class Frontend::OrdersController < Frontend::BaseController
   end
 
   def show
-    authorize @order
     respond_to do |format|
       format.html
       format.json { render json: @order }
