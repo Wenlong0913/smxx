@@ -30,6 +30,7 @@ zh-CN:
           delivering: 发货中
           delivered: 已收货
         description: 备注
+        delivery_date: 交货日期
     errors:
       models:
         order:
