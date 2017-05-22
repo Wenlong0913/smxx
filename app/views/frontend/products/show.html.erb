@@ -38,35 +38,78 @@
                   </div>
                   <div class="col-md-7">
                     <div class="formPrice" style="background-color: #fafafa;padding:15px;">
-                      <label style="margin: 0px;">
-                        购买价格：
-                        <span>￥<%= @product.price %></span>
-                        <a href="javascript: void(0)" style="float: right;">
-                          <i class="fa fa-heart fa-lg"></i>
-                          <span>收藏</span>
-                        </a>
+                      <h4>
+                        <% if @product.discount.present? %>
+                        <span style="background-color: #f08300;padding: 0px 5px; color: #fff; font-size: 13px;">折扣</span>
+                        <% end %>
+                        <%= @product.name %>
+                        <small>
+                          <i class="fa fa-clock-o m-l-5"></i>
+                          <%= @product.service_time %>
+                        </small>
+                      </h4>
+
+                      <label style="margin: 15px 0px; font-size: 12px; color: #9e9e9e;">
+                        <span><%= @product.description %></span>
+                      </label>
+                      <label style="margin: 0px; color: #9e9e9e;">
+                        <% if @product.price != nil && @product.discount != nil %>
+                        折扣价：
+                        <span>￥<%= @product.discount %></span>
+                        [<i style="text-decoration: line-through;font-size: 13px;">￥<%= @product.price %></i>]
+                        <% else %>
+
+                        <% end %>
+
+
                       </label>
 
-                    </div>
-                    <!-- 支付测试 -->
-                    <%= current_user.id %>
-                    <% if current_user.present? %>
-                      <%= simple_form_for(current_user.orders.build, url: frontend_orders_path,  method: :post, html: {class: "myform"}) do |f| %>
-                        <%= f.input :price %>
-                        <%= f.input :description %>
-                        <% 1.times do |i| %>
-                          ID: <%= text_field_tag "order[order_products][][id]" %><br/>
-                          数量：<%= text_field_tag "order[order_products][][amount]" %><br/>
-                          价格：<%= text_field_tag "order[order_products][][price]" %>
-                         <% end %>
+                      <label  style="margin: 15px 0px; font-size: 12px; color: #9e9e9e;">
+                        销量(月):
+                        <%= @product.month_number %>
+                        次
+                      </label>
 
-                        <%= f.submit '购买' %>
+
+
+                      <!-- 支付测试 -->
+                      <%#= current_user.id %>
+                      <% if current_user.present? %>
+                        <%= simple_form_for(current_user.orders.build, url: frontend_orders_path,  method: :post, html: {class: "myform", style: 'margin: 30px 0px;'}) do |f| %>
+                          <% 1.times do |i| %>
+                            <%= hidden_field_tag "order[order_products][][id]", @product.id %>
+                            <%= hidden_field_tag "order[order_products][][amount]", 1 %>
+                            <%= hidden_field_tag "order[order_products][][price]", @product.price %>
+                           <% end %>
+                          <%= f.submit '提交订单', style: 'padding: 6px 10px; background-color: #d12630; color: #fff;', class: 'pinterest' %>
+                        <% end %>
+                      <% else %>
+                        请登录后购买
                       <% end %>
-                    <% else %>
-                      请登录后购买
-                    <% end %>
+
+                      <div class="formOther">
+                        <div class="blog-share" style="margin: 0px;">
+        									<ul class="clearfix">
+                            <li>
+                              <span style="vertical-align: -moz-middle-with-baseline;">分享：</span>
+        										</li>
+        										<li>
+        											<a href="#" class="twitter"><span class="fa fa-qq fa-lg"></span></a>
+        										</li>
+        										<li>
+        											<a href="#" class="gplus" style="background-color: green;"><span class="fa fa-weixin fa-lg"></span></a>
+        										</li>
+        										<li>
+        											<a href="#" class="pinterest"><span class="fa fa-weibo fa-lg"></span></a>
+        										</li>
+        									</ul>
+        								</div>
+                      </div>
+
+                    </div>
+
                     <!-- 支付测试end -->
-                    <div class="formButton" style="margin-top: 30px;">
+                    <!-- <div class="formButton" style="margin-top: 30px;">
                       <div class="blog-share">
       									<ul class="clearfix">
       										<li>
@@ -83,25 +126,8 @@
       										</li>
       									</ul>
       								</div>
-                    </div>
-                    <div class="formOther">
-                      <div class="blog-share" style="margin: 0px;">
-      									<ul class="clearfix">
-                          <li>
-                            <span style="vertical-align: -moz-middle-with-baseline;">分享：</span>
-      										</li>
-      										<li>
-      											<a href="#" class="twitter"><span class="fa fa-qq fa-lg"></span></a>
-      										</li>
-      										<li>
-      											<a href="#" class="gplus" style="background-color: green;"><span class="fa fa-weixin fa-lg"></span></a>
-      										</li>
-      										<li>
-      											<a href="#" class="pinterest"><span class="fa fa-weibo fa-lg"></span></a>
-      										</li>
-      									</ul>
-      								</div>
-                    </div>
+                    </div> -->
+
                   </div>
               </div>
 
@@ -130,92 +156,6 @@
             </div>
 
 
-            <!-- <div class="blog-author clearfix">
-              <img alt="Image" src="http://1.gravatar.com/avatar/1986f5007ea888ec7ba6542025be0310?s=64&amp;r=g">
-              <div class="author-desc">
-                <h4>Mark Abucayon</h4>
-                <ul class="author-socials clearfix">
-                  <li><a href="#"><i class="fa fa-facebook fa-lg"></i></a></li>
-                  <li><a href="#"><i class="fa fa-twitter fa-lg"></i></a></li>
-                  <li><a href="#"><i class="fa fa-google-plus fa-lg"></i></a></li>
-                  <li><a href="#"><i class="fa fa-linkedin fa-lg"></i></a></li>
-                  <li><a href="#"><i class="fa fa-globe fa-lg"></i></a></li>
-                </ul>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-              </div>
-            </div> -->
-
-            <!-- <div class="blog-other-post clearfix">
-              <h5>你可能会喜欢</h5>
-              <div class="row">
-                <div class="col-sm-6 col-md-4">
-                  <div class="masonry-item">
-                    <div class="blog-mask">
-                      <a href="http://themecss.com/wp/Desilog/new-swedish-books/" class="blog-format-image-hover">
-                        <i class="fa fa-external-link fa-3x"></i>
-                      </a>
-                      <div class="blog-image">
-                        <a href="#"><img src="images/new-swedish-263x238.jpg" alt="Image" class="img-responsive"></a>
-                      </div>
-                    </div>
-                    <div class="blog-list-desc">
-                      <span class="categories">
-                        <a href="#">Branding</a>
-                      </span>
-                      <h4><a href="#">New Swedish Books</a></h4>
-                      <label>
-                        <span>admin&nbsp;‐</span>
-                        April 20, 2016
-                      </label>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                  <div class="masonry-item">
-                    <div class="blog-mask">
-                      <div class="blog-audio">
-                        <a href="#" class="blog-format-image-hover">
-                          <i class="fa fa-external-link fa-3x"></i>
-                        </a>
-                        <span class="blog-format-audio">Audio</span>
-                        <a href="#"><img src="images/featuring-color-green-263x238.jpg" alt="Image" class="img-responsive"></a>
-                      </div>
-                    </div>
-                    <div class="blog-list-desc">
-                      <span class="categories"><a href="#">Editorial Design</a></span>
-                      <h4><a href="#">Featuring the color GREEN</a></h4>
-                      <label>
-                        <span>admin&nbsp;‐</span>
-                        April 20, 2016
-                      </label>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                  <div class="masonry-item">
-                    <div class="blog-mask">
-                      <a href="#" class="blog-format-image-hover">
-                        <i class="fa fa-external-link fa-3x"></i>
-                      </a>
-                      <div class="blog-image">
-                        <a href="#"><img src="images/theater-hannover-263x238.jpg" alt="Image" class="img-responsive"></a>
-                      </div>
-                    </div>
-                    <div class="blog-list-desc">
-                      <span class="categories"><a href="#" rel="category tag">Character Design</a> <a href="#" >Drawing</a></span>
-                      <h4><a href="#">Freies Theater Hannover</a></h4>
-                      <label>
-                        <span>admin&nbsp;‐</span>
-                        April 20, 2016
-                      </label>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> -->
             <div class="contact-form comment-form clearfix">
               <h4>给我们宝贵的意见</h4>
               <%= render file: @cms_site.template_dir + '_form.html.erb' %>
