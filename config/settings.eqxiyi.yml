@@ -26,11 +26,11 @@ default: &default
     auth_token_template: "【德格SaaS】您的验证码是#code#。如非本人操作，请忽略本短信。"
 
   payment: # Ping++支付
-    api_id:
-    api_key:
+    api_id: "app_HOqTe5KCOGq9O088"
+    api_key: "sk_test_fzLyH49WTyzDi9ufH8jzrTyP"
     channels:
-    - alipay
     - wx
+    - wx_wap
     enable_pingpp_one: false
 
   qiniu: &qiniu_credentials

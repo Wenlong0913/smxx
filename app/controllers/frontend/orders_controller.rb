@@ -42,7 +42,6 @@ class Frontend::OrdersController < Frontend::BaseController
         order_product.save!
       end
     end
-
     respond_to do |format|
       format.html do
         if @frontend_order
@@ -76,6 +75,28 @@ class Frontend::OrdersController < Frontend::BaseController
       format.json { head 200 }
     end
 
+  end
+
+  def charge
+    order = Order.find(params[:id])
+    json = PaymentCore.create_charge(
+      order_no: order.code, # 订单号
+      channel: 'wx_wap', # 支付宝电脑端网页支付
+      amount: order.price, # 1分钱
+      client_ip: '127.0.0.1',
+      subject: 'E启洗视频',
+      body: '成都到丽江5日游 x 5人',
+      extra: {
+        success_url: 'frontend_orders_url'
+      }
+    )
+    render js: <<-JS
+    onStartCharging('#{json.to_json}')
+    JS
+  end
+
+  def paid_success
+    @product = Product.find(params[:id])
   end
 
   private

@@ -6,3 +6,4 @@
 //= require frontend/product_catalogs
 //= require frontend/products
 //= require frontend/users
+//= require frontend/pingpp
