@@ -67,6 +67,7 @@ h1.page-header
           tr
             th 标题
             th 发布人
+            th 标签
             th 操作
         tbody
           - @articles.each do |article|
@@ -75,6 +76,8 @@ h1.page-header
                 = article.title
               td
                 = article.user.try(:nickname)
+              td
+                = article.tag_list.join(", ")
               td
                 => link_to '查看', admin_community_article_path(@community, article), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_community_article_path(@community, article), class: 'btn btn-xs btn-default'
