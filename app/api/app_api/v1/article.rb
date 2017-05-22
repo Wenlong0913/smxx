@@ -17,6 +17,7 @@ module AppAPI::V1
         authenticate!
         article = ::Article.new(title: params[:title], description: params[:description])
         article.author = current_user.id
+        article.community_id = current_user.current_community.id
         article.image_item_ids = params[:image_item_ids] if params[:image_item_ids]
         article.product_ids = params[:product_ids] if params[:product_ids]
         article.tag_list = params[:tag_list]  if params[:tag_list]
