@@ -97,6 +97,21 @@ class Frontend::OrdersController < Frontend::BaseController
     @product = Product.find(params[:id])
   end
 
+  #实现客户端订单查询
+  #订单查询页面
+  def search
+  end
+  #post
+  #params: mobile/order_id
+  def do_search
+
+  end
+  #订单显示页面
+  def search_result
+
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order

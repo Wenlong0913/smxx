@@ -45,14 +45,14 @@ module FrontendRoute
         get 'users/show'
         get 'home/index'
         resources :products
-        resources :orders
-        # Route => POST /products/1/charge
-        # resources :products do
-        #   member do
-        #     post :charge
-        #     get :paid_success
-        #   end
-        # end
+        resources :orders do
+          collection do
+            get "search"
+            post "do_search"
+            get "search_result"
+          end
+        end
+
 
         resources :product_catalogs do
           resources :products

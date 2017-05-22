@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170514104415) do
+ActiveRecord::Schema.define(version: 20170522063446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,10 +87,13 @@ ActiveRecord::Schema.define(version: 20170514104415) do
     t.string   "title"
     t.text     "description"
     t.integer  "author"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "comments_count"
     t.integer  "likes_count"
+    t.integer  "community_id"
+    t.date     "valid_time_begin"
+    t.date     "valid_time_end"
   end
 
   create_table "attachment_relations", force: :cascade do |t|
@@ -577,6 +580,7 @@ ActiveRecord::Schema.define(version: 20170514104415) do
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
     t.integer  "impressions_count",  default: 0
+    t.text     "content"
     t.index ["market_template_id"], name: "index_market_pages_on_market_template_id", using: :btree
     t.index ["site_id"], name: "index_market_pages_on_site_id", using: :btree
   end
@@ -838,6 +842,7 @@ ActiveRecord::Schema.define(version: 20170514104415) do
     t.integer  "catalog_id"
     t.integer  "favorites_count",  default: 0
     t.integer  "visits_count",     default: 0
+    t.integer  "comments_count"
     t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
   end
 
