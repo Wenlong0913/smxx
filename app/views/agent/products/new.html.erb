@@ -114,8 +114,70 @@
               <div role="tabpanel" class="tab-pane fade" id="configurationInformation">
                 <!-- BEGIN checkout-body -->
                 <div class="checkout-body">
-                  <div class="col-xs-8 left-form-content row">
 
+                  <% if Settings.project.eqxiyi? %>
+                  <div class="col-xs-8 left-form-content row">
+                    <div class="col-xs-6">
+                      <div class="form-group">
+                        <%= f.input :price %>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="form-group">
+                        <%= f.input :discount %>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="form-group weight-input-group">
+                        <%= f.input :old_price %>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="form-group">
+                        <%= f.input :video_url %>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="form-group">
+                        <%= f.input :service_time %>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="form-group">
+                        <%= f.input :month_number, as: :integer %>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="form-group">
+                        <%= f.input_field :is_manager_recommend, as: :boolean %>
+                        <span class="control-label string.optional">是否设为站长推荐</span>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="form-group">
+                        <%= f.input_field :is_shelves, as: :boolean, label: false %>
+                        <span>是否创建后立即产品上架</span>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group">
+                        <%= f.input :warning_message, as: :text %>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group">
+                        <%= f.input :description, as: :text %>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group">
+                        <%= f.input :content, as: :ckeditor %>
+                      </div>
+                    </div>
+
+                  </div>
+                  <% else %>
+                  <div class="col-xs-8 left-form-content row">
                     <div class="col-xs-6">
                       <div class="form-group">
                         <%= f.input :price %>
@@ -191,6 +253,7 @@
                       </div>
                     </div>
                   </div>
+                  <% end %>
                   <div class="col-xs-4">
                     <div rel="additional-attributes" class="p-l-15">
                       <div>
