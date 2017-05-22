@@ -70,6 +70,17 @@ CMS站点是一个独立的网站内容管理系统， 每一个站点，对应p
     <li>[内容页]保存一些特殊定义的页面, 如about.html.erb(关于我们), contact.html.erb(联系我们)</li>
   </ul>
 
+# 路由
+CMS前端提供很少的路由，同时又具有很强的灵活性。
+
+      cms_frontend_root     | GET      | /                                        | cms#index            
+      cms_frontend_search   | GET      | /search(/:search(/page/:page))(.:format) | cms#search           
+      cms_frontend_tag      | GET      | /tag/:tag(/page/:page)(.:format)         | cms#tag              
+      cms_frontend_comment_create | POST     | /comment/create(.:format)          | cms#comment_create   
+      cms_frontend          | GET      | /:channel(/:id)(.:format)                | cms#index            
+                            | GET      | /:channel(/page/:page)(.:format)         |         
+
+
 # 数据初始化
 
   当新建一个网站的时候，可以同时初始化网站参数和栏目信息，具体操作是： 创建一个文件： /public/templetes/xxx/db_init.rb
@@ -252,3 +263,93 @@ PV次数：  <%= cms_page.impressionist_count %>
     10.用户前台访问地址：llshg.lvh.me:5000浏览站点
 
     11.用户后台访问地址：llshg.lvh.me:5000/agent
+
+
+# 一些CMS开发技巧
+
+## 在线导航
+
+ 1. 获取地图坐标：http://api.map.baidu.com/lbsapi/getpoint/index.html
+
+ 2. 设置经纬度：
+
+       @cms_site.keystores.find_or_create_by(key:'latitude', '30.668283')
+
+       @cms_site.keystores.find_or_create_by(key:'longitude', '104.127826')
+
+ 3. 添加导航代码
+
+      xj: 待完善
+
+ 4. 另外一种解决方案：
+  只需要获得用户地址，即可自动生成导航地图
+
+  以下代码通过输入地址直接返回在线导航地图
+
+      <div class="AccordionPanel">
+         <div class="AccordionPanelTab">在线导航</div>
+         <div class="AccordionPanelContent">
+           <div class="">
+             <div style="height:10px;"></div>
+             <!--<div id="allmap" class="mid" ></div>-->
+             <INPUT style="WIDTH: 100%" id="location" name="location" value="<%= raw value_for(@site_page, 'address') %>" type="hidden">
+             <INPUT  id="cityname" name="cityname" value="" style="display:none">
+             <DIV id="optionsNarrative"></DIV>
+             <style>
+               .mapimg img{width:90%!important;}
+               .lypho h4{font-size:medium; font-weight:700;}
+             </style>
+             <script>
+               var SAMPLE_ADVANCED_POST = 'http://api.map.baidu.com/geocoder/v2/?ak=5dbd6ef42378bdd6ed202331c10a27c8&callback=renderOption&output=json';
+               var advancedOptions = '';
+               var address
+               function showOptionsURL(type) {
+                 advancedOptions = SAMPLE_ADVANCED_POST;   
+                 address = document.getElementById('location').value;
+                 var cityname=document.getElementById('cityname').value;
+                 advancedOptions+="&address="+address;
+                 advancedOptions+="&city="+cityname;
+
+                 var safe = advancedOptions;
+                 //document.getElementById('optionsSampleUrl').innerHTML = safe.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+               };
+               function renderOption(response) {
+                 var html = '';
+                 if (response.status ) {
+                   var text = "无正确的返回结果:\n";
+                   document.getElementById('optionsNarrative').innerHTML = text;
+                   return;
+                 };
+                 var location = response.result.location;
+                 var uri = 'http://api.map.baidu.com/marker?location='+ location.lat +','+location.lng +'&title=婚礼位置&content='+address+'&output=html';
+                 var staticimageUrl = "http://api.map.baidu.com/staticimage?center=" +location.lng+','+location.lat + "&markers=" + location.lng+','+location.lat;
+
+                 html += '<p style="text-align:center"><a href="' + uri + '"><img class="mapimg" src="' + staticimageUrl + 'width=600&height=330&zoom=14"/></a></p><p style="text-align:center; line-heigt:30px;"><%= raw value_for(@site_page, "address") %><a href="' + uri + '"><img src=http://www.wedxt.cn/templates/wed/tab-wedding/img/daohang.png/></a></p>' ;
+                 document.getElementById('optionsNarrative').innerHTML = html;
+                 return;
+
+                 document.getElementById('optionsNarrative').innerHTML = html;
+               }
+               function doOptions() {
+                 var script = document.createElement('script');
+                 script.type = 'text/javascript';
+                 showOptionsURL('buttonClick');
+                 var newURL = advancedOptions.replace('5dbd6ef42378bdd6ed202331c10a27c8','5dbd6ef42378bdd6ed202331c10a27c8');
+                 script.src = newURL;
+                 document.body.appendChild(script);
+               };
+             </script>
+
+             <div style="height:10px;"></div>
+           </div>
+         </div>
+       </div>
+
+## 获取页面中的图片/文本
+  经常用于网站首页动态轮播图的获取：将图片和文字存在首页channel的content里，然后再动态取出来。
+
+    <%
+     doc = Nokogiri::HTML(@channel.content)
+     img_srcs = doc.css('img').map{ |i| i['src'] }
+     texts = doc.search('//text()').map(&:text).delete_if &:blank?
+     %>
