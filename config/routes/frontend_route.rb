@@ -42,7 +42,13 @@ module FrontendRoute
 
       # 前端页面路由
       namespace :frontend do
-        resources :products
+        # Route => POST /products/1/charge
+        resources :products do
+          member do
+            post :charge
+            get :paid_success
+          end
+        end
         resources :product_catalogs do
           resources :products
         end
