@@ -79,8 +79,18 @@
           - unless Settings.project.imolin?
             li[class=("active" if page?('admin/sites'))]
               = link_to Site.model_name.human, admin_sites_path
-
-
+      / eqxiyi
+      -if Settings.project.eqxiyi?
+        li class=("has-sub #{'active' if page?('admin/stie', 'admin/catalogs#index?klass=SiteCatalog', 'admin/catalogs#index?klass=ProductCatelog')}")
+          a href="javascript:;"
+            b.caret.pull-right
+            i.fa.fa-inbox
+            spn E启洗产品管理
+          ul.sub-menu
+            li[class= ('active' if page?('admin/catalogs#index?klass=ProductCatalog'))]
+              = link_to '视频分类', admin_product_catalogs_path
+            li[class=('active' if page?('admin/sites#index'))]
+              = link_to "视频列表", admin_site_products_path(Site.first.id)
       / imolin
       - if Settings.project.imolin? || Settings.project.meikemei?
         li class=("has-sub #{'active' if page?('admin/sites', 'admin/catalogs#index?klass=SiteCatalog', 'admin/catalogs#index?klass=ProductCatalog')}")

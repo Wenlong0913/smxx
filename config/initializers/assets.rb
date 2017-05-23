@@ -13,6 +13,7 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( test_room.js cable.js )
 Rails.application.config.assets.precompile += %w( docs.js docs.css ) # for doc
 Rails.application.config.assets.precompile += %w( frontend.js frontend.css) # for frontend
+Rails.application.config.assets.precompile += %w( frontend/pingpp.js )
 Rails.application.config.assets.precompile += %w( ckeditor/* )
 
 types = %w(*.png *.gif *.jpg *.eot *.woff *.ttf *.svg)
