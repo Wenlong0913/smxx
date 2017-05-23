@@ -25,6 +25,10 @@ h1.page-header
               td
                 =@article.user.try(:nickname)
             tr
+              td.field 标签
+              td
+                =@article.tag_list.join(", ")
+            tr
               td.field 有效期起始时间
               td
                 =@article.valid_time_begin

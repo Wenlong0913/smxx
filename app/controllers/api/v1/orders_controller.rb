@@ -7,7 +7,7 @@ class Api::V1::OrdersController < Api::V1::BaseController
     # authorize Order
     page_size = params[:page_size] ? params[:page_size].to_i : 20
     orders = params['search_content'].blank? ? @orders : @orders.where("code like :key", {key: ['%',params['search_content'].upcase, '%'].join})
-    orders = orders.order(updated_at: :desc).page(params[:page] || 1).per(page_size)
+    orders = orders.order(status: :asc, updated_at: :desc).page(params[:page] || 1).per(page_size)
     orders_json = order_json(orders)
     render json: render_base_data(orders_json, orders, page_size, @order_list_type)
   end
@@ -106,7 +106,7 @@ class Api::V1::OrdersController < Api::V1::BaseController
 
     def order_json(orders)
       orders.as_json(
-        only: [:id, :code, :resource_url, :price, :status, :internal_status, :description, :created_at],
+        only: [:id, :code, :resource_url, :price, :status, :internal_status, :description, :created_at, :delivery_date],
         include: {
           site: {only: [:id, :title], include: { user: { only: [:nickname], include: { mobile: { only: [:phone_number] } } } }},
           member: {only: [:name]},
