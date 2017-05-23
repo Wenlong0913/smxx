@@ -1,1 +1,9 @@
-用户订单查询结果显示。
+<% if @orders.size > 1 %>
+  <% @orders.each do |o| %>
+    <div class=""><%= o.code %></div>
+  <% end %>
+<% else %>
+   <%= @orders.first.created_at %>
+<% end %>
+
+<%= paginate @orders%>
