@@ -6,9 +6,15 @@
       ul.nav.navbar-nav
         li
           = link_to '#' do
-            i class="fa fa-plus-circle"
-            => current_user.username
+            | 欢迎使用商家端
 
       ul.nav.navbar-nav.navbar-right
         li
-          => current_user.username
+          = link_to '#' do
+            i.fa.fa-user
+            | &nbsp;
+            => current_user.nickname
+        li
+          = link_to sign_out_path, method: :delete do
+            i.fa.fa-sign-out
+            | &nbsp;退出
