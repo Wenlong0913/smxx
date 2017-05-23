@@ -42,6 +42,7 @@ class Frontend::OrdersController < Frontend::BaseController
     end
     respond_to do |format|
       format.html do
+        binding.pry
         if @frontend_order
           redirect_to frontend_order_path(@frontend_order), notice: '订单创建成功.'
         else
