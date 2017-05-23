@@ -43,7 +43,7 @@
                         <span style="background-color: #f08300;padding: 0px 5px; color: #fff; font-size: 13px;">折扣</span>
                         <% end %>
                         <%= @product.name %>
-                        <small>
+                        <small style="margin-left: 15px; color: #9e9e9e;">
                           <i class="fa fa-clock-o m-l-5"></i>
                           <%= @product.service_time %>
                         </small>
@@ -54,20 +54,20 @@
                       </label>
                       <label style="margin: 0px; color: #9e9e9e;">
                         <% if @product.price != nil && @product.discount != nil %>
-                        折扣价：
+                        折扣价:
                         <span>￥<%= @product.discount %></span>
                         [<i style="text-decoration: line-through;font-size: 13px;">￥<%= @product.price %></i>]
-                        <% else %>
-
+                        <% elsif @product.price != nil && @product.discount == nil %>
+                        价格:
+                        <span>￥<%= @product.price %></span>
                         <% end %>
 
 
                       </label>
 
                       <label  style="margin: 15px 0px; font-size: 12px; color: #9e9e9e;">
-                        销量(月):
-                        <%= @product.month_number %>
-                        次
+                        销量:
+                        <%= @product.month_number %>(/月)
                       </label>
 
 
@@ -79,7 +79,11 @@
                           <% 1.times do |i| %>
                             <%= hidden_field_tag "order[order_products][][id]", @product.id %>
                             <%= hidden_field_tag "order[order_products][][amount]", 1 %>
+                            <% if @product.discount.present? %>
+                            <%= hidden_field_tag "order[order_products][][price]", @product.discount %>
+                            <% else %>
                             <%= hidden_field_tag "order[order_products][][price]", @product.price %>
+                            <% end %>
                            <% end %>
                           <%= f.submit '提交订单', style: 'padding: 6px 10px; background-color: #d12630; color: #fff;', class: 'pinterest' %>
                         <% end %>

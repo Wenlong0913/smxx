@@ -4,8 +4,8 @@
     <div class="container">
       <div class="row header">
         <div class="col-md-12">
-          <h2><%= @order.id %></h2>
-          <p>订单创建成功</p>
+          <h2>订单创建成功</h2>
+          <p>订单ID:<%= @order.id %></p>
         </div>
       </div>
       <div class="row">
@@ -22,13 +22,13 @@
                       <div class="weui_cell_bd weui_cell_primary">
                           <p>订单编号</p>
                       </div>
-                      <div class="weui_cell_ft"><%= @order_no %></div>
+                      <div class="weui_cell_ft"><%= @order.code %></div>
                   </div>
                   <div class="weui_cell">
                       <div class="weui_cell_bd weui_cell_primary">
                           <p>支付金额</p>
                       </div>
-                      <div class="weui_cell_ft"><%= @amount.to_f / 100 %>元</div>
+                      <div class="weui_cell_ft"><%= @order.order_products.first.price.to_f %>元</div>
                   </div>
               </div>
               <div class="weui_btn_area">
