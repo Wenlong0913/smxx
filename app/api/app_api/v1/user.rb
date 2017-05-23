@@ -159,40 +159,41 @@ module AppAPI::V1
       end
       put 'me' do
         authenticate!
+        user = User.find(current_user.id) # get fresh data from DB
         if params[:avatar]
           if Settings.project.imolin?
             StringIO.open(Base64.decode64(params[:avatar])) do |data|
               data.class.class_eval { attr_accessor :original_filename, :content_type }
               data.original_filename = "hedshot.jpg"
               data.content_type = "image/jpeg"
-              current_user.avatar = data
+              user.avatar = data
             end
           else
-            current_user.avatar = ActionDispatch::Http::UploadedFile.new(params[:avatar])
+            user.avatar = ActionDispatch::Http::UploadedFile.new(params[:avatar])
           end
         end
         if params[:nickname].present?
-          current_user.nickname = params[:nickname].strip
+          user.nickname = params[:nickname].strip
         end
         # if params[:username].present?
-        #   current_user.username = params[:username].strip
+        #   user.username = params[:username].strip
         # end
         if params[:community_id].present?
-          current_user.communities << ::Community.find_by(id: params[:community_id])
-          current_user.user_communities.update_all(is_current: false)
-          current_user.user_communities.where(community_id: params[:community_id]).update_all(is_current: true)
+          user.communities << ::Community.find_by(id: params[:community_id])
+          user.user_communities.update_all(is_current: false)
+          user.user_communities.where(community_id: params[:community_id]).update_all(is_current: true)
         end
         # if params[:mobile_phone]
-        #   current_user.mobile.phone_number = params[:mobile_phone]
+        #   user.mobile.phone_number = params[:mobile_phone]
         # end
-        current_user.gender = params[:gender] if params[:gender]
-        current_user.description = params[:description] if params[:description]
-        if current_user.changed?
-          unless current_user.save && current_user.mobile.save
-            error! error: current_user.errors.messages, error_message: '保存失败'
+        user.gender = params[:gender] if params[:gender]
+        user.description = params[:description] if params[:description]
+        if user.changed?
+          unless user.save
+            error! error: user.errors.messages, error_message: '保存失败'
           end
         end
-        present current_user, with: AppAPI::Entities::User, type: :private
+        present user, with: AppAPI::Entities::User, type: :private
       end
 
       desc '获取用户信息' do
