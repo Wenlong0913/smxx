@@ -77,16 +77,27 @@ class Frontend::OrdersController < Frontend::BaseController
   end
 
   def charge
-    order = Order.find(params[:id])
+    # 获取当前用户订单号
+    order = @site.orders.find(params[:id])
+    # 获取当前订单下的所有产品
+    order_products = OrderProduct.where(order_id: order.id)
+    # 获取当前订单所有订单产品信息
+    products = Product.where(id: order_products.first.product_id)
+    # sum 订单下的所有产品价钱累加
+    sum = 0
+    order_products.each do |op|
+      sum = op.price.to_f * op.amount + sum
+    end
+    binding.pry
     json = PaymentCore.create_charge(
       order_no: order.code, # 订单号
-      channel: 'wx_wap', # 支付宝电脑端网页支付
-      amount: order.price, # 1分钱
+      channel: 'alipay_pc_direct', # 支付宝电脑端网页支付
+      amount: sum, # 1分钱
       client_ip: '127.0.0.1',
       subject: 'E启洗视频',
-      body: '成都到丽江5日游 x 5人',
+      body: products[0].name,
       extra: {
-        success_url: 'frontend_orders_url'
+        success_url: 'http://eqxy.lvh.me:5000/frontend/orders/1/paid_success'
       }
     )
     render js: <<-JS
