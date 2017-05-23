@@ -94,30 +94,4 @@
                 li = link_to '访客统计', agent_tracker_path
                 li = link_to '分销统计', agent_tracker_shares_path
       /! END header-nav
-      /! BEGIN header-nav
-      .header-nav
-        ul.nav.pull-right
-          li
-            a
-              span
-                = current_user.nickname
-          li.dropdown.dropdown-hover
-            a.header-cart data-toggle="dropdown" href="#"
-              span.total 0
-              span.arrow.top
-            .dropdown-menu.dropdown-menu-cart.p-0
-              .cart-header
-                h4.cart-title 未读消息
-              .cart-body
-                ul.cart-item
-                  li
-                    | 无
-              /.cart-footer
-                .row.row-space-10
-                  .col-xs-12
-                    a.btn.btn-default.btn-block href="#"  查看更多
-          li.divider
-          li
-            = link_to sign_out_path, method: :delete do
-              span 退出
 = render 'agent/preorder_conversitions/new'

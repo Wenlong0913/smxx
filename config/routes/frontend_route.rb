@@ -42,7 +42,22 @@ module FrontendRoute
 
       # 前端页面路由
       namespace :frontend do
+        get 'users/show'
+        get 'home/index'
         resources :products
+        resources :orders do
+          collection do
+            get "search"
+            post "do_search"
+            get "search_result"
+          end
+          member do
+            post :charge
+            get :paid_success
+          end
+        end
+
+
         resources :product_catalogs do
           resources :products
         end

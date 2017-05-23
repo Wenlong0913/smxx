@@ -56,7 +56,6 @@ class Cms::Site < ApplicationRecord
   end
 
   #methods for pages helper
-
   #下一页
   def next_page(page, pointer = 1)
     next_page = self.pages.where("cms_pages.id #{pointer > 0 ? '>' : '<'} ?", page.id).order("cms_pages.id #{pointer > 0 ? 'ASC' : 'DESC'}").first

@@ -8,5 +8,6 @@ class Frontend::BaseController < ApplicationController
   def load_cms_site
     @cms_site = Cms::Site.where("domain = ? OR root_domain = ?", request.subdomain, request.domain).first
     @cms_site ||= Cms::Site.first
+    @site = @cms_site.site
   end
 end

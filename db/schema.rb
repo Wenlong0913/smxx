@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20170519075114) do
+=======
+ActiveRecord::Schema.define(version: 20170522063446) do
+>>>>>>> frontend
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -580,6 +584,7 @@ ActiveRecord::Schema.define(version: 20170519075114) do
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
     t.integer  "impressions_count",  default: 0
+    t.text     "content"
     t.index ["market_template_id"], name: "index_market_pages_on_market_template_id", using: :btree
     t.index ["site_id"], name: "index_market_pages_on_site_id", using: :btree
   end

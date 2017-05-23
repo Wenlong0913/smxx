@@ -14,14 +14,17 @@
       table.table.table-stripped
         thead
           tr
-            th 联系方式
+            th
             th 留言内容
-            th 其他
+            th 其他信息
             th 操作
 
         tbody
           - @cms_comments.each do |cms_comment|
             tr
+              td
+                = distance_of_time_in_words_to_now(cms_comment.created_at)
+                | 前
               td = cms_comment.contact
               td = cms_comment.content
               td = cms_comment.features
