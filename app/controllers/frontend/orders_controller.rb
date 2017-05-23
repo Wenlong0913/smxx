@@ -116,10 +116,31 @@ class Frontend::OrdersController < Frontend::BaseController
   #post
   #params: mobile/order_id
   def do_search
-
+    if params[:keywords].blank?
+      render :search
+    else
+      redirect_to search_result_frontend_orders_path(keywords: params[:keywords])
+    end
   end
   #订单显示页面
   def search_result
+    user = nil
+    if params[:keywords] =~ /^\d{11}$/
+      mobile = User::Mobile.where(phone_number: params[:keywords])
+      user = mobile.first.user unless mobile.blank?
+    end
+
+    @orders = if user.present?
+      user.orders
+    else
+      Order.where(code: params[:keywords])
+    end
+
+    @orders =  @orders.page(params[:page]).per(5)
+
+    if @orders.blank?
+      render :search
+    end
 
   end
 
