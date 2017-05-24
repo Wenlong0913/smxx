@@ -163,7 +163,7 @@ module AppAPI::V1
           if Settings.project.imolin?
             StringIO.open(Base64.decode64(params[:avatar])) do |data|
               data.class.class_eval { attr_accessor :original_filename, :content_type }
-              data.original_filename = "hedshot.jpg"
+              data.original_filename = "user-#{current_user.id}.jpg"
               data.content_type = "image/jpeg"
               current_user.avatar = data
             end
@@ -188,7 +188,7 @@ module AppAPI::V1
         current_user.gender = params[:gender] if params[:gender]
         current_user.description = params[:description] if params[:description]
         if current_user.changed?
-          unless current_user.save && current_user.mobile.save
+          unless current_user.save
             error! error: current_user.errors.messages, error_message: '保存失败'
           end
         end
