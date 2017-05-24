@@ -1,78 +1,97 @@
-<div class="page-header">
-  <div class="container-fluid">
-    <h1>
-      <i class="fa fa-desktop order_head_icon"></i>订单列表
-      <%= link_to '返回官网', nil ,style: 'float: right;' %>
-    </h1>
-  </div>
-</div>
-
-<div class="panel panel-default">
-  <table class="table">
-    <thead>
-      <tr class="order_head_tr">
-        <td class="order_head_td">
-          编号
-        </td>
-        <td class="order_head_td">
-          订单号
-        </td>
-        <td class="order_head_td">
-          订单状态
-        </td>
-        <td class="order_head_td">
-          下单时间
-        </td>
-        <td class="order_head_td">
-          预计收货
-        </td>
-        <td class="order_head_td">
-          操作
-        </td>
-      </tr>
-    </thead>
-    <tbody>
-      <% @orders.order(updated_at: :desc).each_with_index do |order, index| %>
-        <tr class="order_tr">
-          <td class="order_td">
-            <%= index + 1 %>
+<%= render file: @cms_site.template_dir + '_header.html.erb'  %>
+<div class="container">
+  <div class="panel panel-default">
+    <table class="table">
+      <thead>
+        <tr class="order_head_tr">
+          <td class="order_head_td">
+            编号
           </td>
-          <td class="order_td">
-            <%= order.code %>
+          <td class="order_head_td">
+            订单号
           </td>
-          <td class="order_td">
-            支付成功
+          <td class="order_head_td">
+            订单状态
           </td>
-          <td class="order_td">
-            18分钟前
+          <td class="order_head_td">
+            下单时间
           </td>
-          <td class="order_td">
-            2017年6月31日
+          <td class="order_head_td">
+            预计收货
           </td>
-          <td class="order_td">
-            <a href="" title="查看" class="table_a">
-              <button class="table_btn btn-info">
-                <i class="fa fa-eye">
-                </i>
-              </button>
-            </a>
-            <a href="#" title="修改" class="table_a">
-              <button class="table_btn btn-warning">
-                <i class="fa fa-pencil">
-                </i>
-              </button>
-            </a>
-            <a href="#" title="删除" class="table_a">
-              <button class="table_btn btn-danger">
-                <i class="fa fa-times">
-                </i>
-              </button>
-            </a>
+          <td class="order_head_td">
+            操作
           </td>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @orders.order(updated_at: :desc).each_with_index do |order, index| %>
+          <tr class="order_tr">
+            <td class="order_td">
+              <%= index + 1 %>
+            </td>
+            <td class="order_td">
+              <%= order.code %>
+            </td>
+            <td class="order_td">
+              <%= order.status %>
+            </td>
+            <td class="order_td">
+              18分钟前
+            </td>
+            <td class="order_td">
+              2017年6月31日
+            </td>
+            <td class="order_td">
+              <button class="table_btn btn-info showResult">
+                <i class="fa fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6">
+              <div id="drk_timeline" class="timeline">
+                <div class="line_item position1 text-center">
+                  <div class="lint_point bg_success"></div>
+                  <div class="line_content">
+                    预计收货
+                  </div>
+                </div>
+                <div class="line_item position2 text-center">
+                  <div class="lint_point bg_success"></div>
+                  <div class="line_content">
+                    预计收货
+                  </div>
+                </div>
+                <div class="line_item position3 text-center">
+                  <div class="lint_point bg_success"></div>
+                  <div class="line_content">
+                    预计收货
+                  </div>
+                </div>
+                <div class="line_item position4 text-center">
+                  <div class="lint_point bg_warning"></div>
+                  <div class="line_content">
+                    预计收货
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= paginate @orders%>
+  <%= link_to '返回首页', '/'%>
 </div>
 
-<%= paginate @orders%>
+<script type="text/javascript">
+  $(function () {
+    $('.showResult').parent().parent().next().hide();
+    $('.showResult').click(function() {
+      $(this).parent().parent().next().toggle('slow');
+    });
+  })
+</script>
+<%= render file: @cms_site.template_dir + '_footer.html.erb'  %>

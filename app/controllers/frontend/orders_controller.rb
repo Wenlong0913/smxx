@@ -136,7 +136,7 @@ class Frontend::OrdersController < Frontend::BaseController
       Order.where(code: params[:keywords])
     end
 
-    @orders =  @orders.page(params[:page]).per(5)
+    @orders =  @orders.page(params[:page]).per(6)
 
     if @orders.blank?
       render :search
