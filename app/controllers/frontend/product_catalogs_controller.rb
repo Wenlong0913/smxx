@@ -4,6 +4,8 @@ class Frontend::ProductCatalogsController < Frontend::BaseController
   end
 
   def show
-    @product_catalog = ProductCatalog.find(params[:id])
+    @product_catalog = @site.ProductCatalog.find(params[:id])
+    # 当前分类下的所有产品
+    @products  = @site.products.where(catalog: params[:id]).order(updated_at: :desc).all
   end
 end

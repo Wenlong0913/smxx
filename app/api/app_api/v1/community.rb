@@ -7,23 +7,23 @@ module AppAPI::V1
       end
       params do
         use :pagination
-        use :sort, fields: [:id, :created_at, :updated_at]
+        use :sort, fields: [:distance, :name]
         optional :longitude, type: Float, desc: '经度'
         optional :latitude, type: Float, desc: '纬度'
-        all_or_none_of :longitude, :latitude
+        optional :distance, type: Integer, desc: '范围（米）', default: 500, values: 0..50_000
+        all_or_none_of :longitude, :latitude, :distance
       end
       get do
         # binding.pry
         if params[:latitude] && params[:longitude]
           communities = ::Community.near_by(lat: params[:latitude], lng: params[:longitude], distance: 500)
-          present communities, with: AppAPI::Entities::CommunitySimple
         else
-          communities = ::Community.all
-          communities = paginate_collection(sort_collection(communities), params)
-          wrap_collection communities, AppAPI::Entities::CommunitySimple
+          params[:_sort] = nil if params[:_sort] == 'distance'
         end
+        communities = paginate_collection(sort_collection(communities), params)
+        wrap_collection communities, AppAPI::Entities::CommunitySimple
       end
-      
+
     end
   end
 end

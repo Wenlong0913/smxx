@@ -35,6 +35,8 @@ zh-CN:
         event: 活动
         promotion: 促销
         is_manager_recommend: 是否设为站长推荐
+        is_shelves: 商品上架
+        video_url: 视频链接
     errors:
       models:
         product:

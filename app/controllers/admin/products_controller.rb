@@ -109,7 +109,7 @@ class Admin::ProductsController < Admin::BaseController
     def set_site
       @site = Site.find(params[:site_id])
     end
-    
+
     def filter_additional_attribute
       if params[:product][:additional_attribute_keys].present?
         params[:product][:additional_attribute_keys].each_pair do |k, v|
@@ -127,6 +127,7 @@ class Admin::ProductsController < Admin::BaseController
     end
 
     def set_product_price
+      params[:product][:old_price] = params[:product][:old_price].to_f * 100 unless params[:product][:old_price].blank?
       params[:product][:price] = params[:product][:price].to_f * 100 unless params[:product][:price].blank?
       params[:product][:discount] = params[:product][:discount].to_f * 100 unless params[:product][:discount].blank?
     end

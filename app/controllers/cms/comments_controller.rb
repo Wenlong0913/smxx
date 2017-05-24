@@ -4,7 +4,7 @@ class Cms::CommentsController < Cms::BaseController
 
   def index
     authorize Cms::Comment
-    @cms_comments = @cms_site.comments.page(params[:page])
+    @cms_comments = @cms_site.comments.order("id desc").page(params[:page])
     respond_to do |format|
       format.html
       format.json { render json: @cms_comments }

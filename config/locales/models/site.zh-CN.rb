@@ -1,6 +1,6 @@
 _, data = IO.read(__FILE__).split(/^__END__$/, 2)
 
-site_name = Settings.project.meikemei? ? '美容院' : '商家'
+site_name = Settings.project.meikemei? ? '美容院' : (Settings.project.dagle? ? '经销商' : '商家')
 
 YAML.load(ERB.new(data).result(binding))
 
