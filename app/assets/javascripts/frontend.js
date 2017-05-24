@@ -7,3 +7,4 @@
 // require frontend/products
 // require frontend/users
 // require frontend/pingpp
+//= require frontend/bootstrap.min
