@@ -164,7 +164,7 @@ module AppAPI::V1
           if Settings.project.imolin?
             StringIO.open(Base64.decode64(params[:avatar])) do |data|
               data.class.class_eval { attr_accessor :original_filename, :content_type }
-              data.original_filename = "user-#{current_user.id}.jpg"
+              data.original_filename = "user-#{user.id}.jpg"
               data.content_type = "image/jpeg"
               user.avatar = data
             end
