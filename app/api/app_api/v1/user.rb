@@ -159,12 +159,12 @@ module AppAPI::V1
       end
       put 'me' do
         authenticate!
-        user = User.find(current_user.id) # get fresh data from DB
+        user = ::User.find(current_user.id) # get fresh data from DB
         if params[:avatar]
           if Settings.project.imolin?
             StringIO.open(Base64.decode64(params[:avatar])) do |data|
               data.class.class_eval { attr_accessor :original_filename, :content_type }
-              data.original_filename = "hedshot.jpg"
+              data.original_filename = "user-#{user.id}.jpg"
               data.content_type = "image/jpeg"
               user.avatar = data
             end
