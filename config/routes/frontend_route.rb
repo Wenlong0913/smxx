@@ -44,6 +44,7 @@ module FrontendRoute
       namespace :frontend do
         get 'users/show'
         get 'home/index'
+        get 'share/index'
         resources :products
         resources :orders do
           collection do
