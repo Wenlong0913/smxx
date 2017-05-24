@@ -24,6 +24,7 @@ module AdminRoute
         resources :communities, :concerns => :paginatable do
           resources :articles
         end
+        resources :articles # 公告管理（imolin）
         resources :catalogs # 分类管理
         catalog_resources_for ProductCatalog # 产品分类管理
         catalog_resources_for MaterialCatalog # 物料分类管理

@@ -35,7 +35,7 @@ module AppAPI::V1
         optional :includes, type: String, values: ['description'], desc: '选择description后会返回文章类容'
         optional :type, type: String, values: ['owner'], desc: '选择owner后会返回我的文章类容'
         use :pagination
-        use :sort, fields: [:id, :created_at, :updated_at]
+        use :sort, fields: [:id, :created_at, :updated_at] unless Settings.project.imolin?
       end
       get do
         authenticate!
@@ -46,8 +46,7 @@ module AppAPI::V1
               ::Article.all
             end
         if params[:community_id]
-          community = ::Community.find(params[:community_id])
-          articles = community.articles
+          articles = ::Article.where(community_id: [params[:community_id], nil]).order("article_type asc, is_top desc, created_at desc")
         end
         articles = paginate_collection(sort_collection(articles), params)
         wrap_collection articles, AppAPI::Entities::Article, type: :list, includes: [params[:includes]], user_id: current_user.id
