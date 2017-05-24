@@ -112,7 +112,7 @@
           <p>官网栏目、页面管理</p>
         </div>
         <div class="stats-link">
-          <a href="<%= cms_site_path(@site.try(:cms_site)) %>">查看详细 <i class="fa fa-arrow-circle-o-right"></i></a>
+          <a href="<%= @site.cms_site.nil? ? new_cms_site_path : cms_site_path(@site.cms_site) %>">查看详细 <i class="fa fa-arrow-circle-o-right"></i></a>
         </div>
       </div>
     </div>
