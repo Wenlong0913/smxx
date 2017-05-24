@@ -1,70 +1,42 @@
-<div class="body-wrap">
-    <div id="st-container" class="st-container">
-        <div class="st-pusher">
-            <div class="st-content">
-                <div class="st-content-inner">
-                    <div class="header" id="header">
-                        <nav class="navbar navbar-main navbar-shadow" role="navigation" id="slide-nav">
-                            <div class="container-fluid">
-                                <div class="slide_menu">
-                                    <ul class="menu_slide_ul pull-left">
-                                        <li class="menu_slide_li font_color"><a href="" class="active menu_slide_a">订单查询</a></li>
-                                        <div class="clear_both"></div>
-                                    </ul>
-                                    <ul class="menu_slide_ul pull-right">
-                                        <li class="menu_slide_li font_color"><a href="http://www.grand-jardin.com/" class="menu_slide_a">返回官网</a></li>
-                                        <div class="clear_both"></div>
-                                    </ul>
-                                </div>
-                            </div>
-                        </nav>
-                    </div>
+<div class="page-header">
+  <div class="container-fluid">
+    <h1>
+      订单查询系统
+      <%= link_to '返回官网', nil ,style: 'float: right;' %>
+    </h1>
+  </div>
+</div>
 
-                    <section class="slice">
-                        <div class="container text-center">
-                            <div class="row" style="margin-top: 30px;">
-                                <a class="navbar-logo" href="index-2.html">
-                                    <img id="logoOne" src="images/gelan/logo.jpg" class="hide">
-                                    <img id="logoTwo" src="images/gelan/logo.jpg">
-                                </a>
-                            </div>
-                            <div class="row" style="margin-top: 30px;">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                  <%= form_tag(do_search_frontend_orders_path)  do %>
-                                    <div class="input-group">
-                                      <%= text_field_tag :keywords, nil, class: 'form-control' %>
-                                      <span class="input-group-btn">
-                                        <%= submit_tag "search", class: 'btn bg_color font_color' %>
-                                      </span>
-                                    </div>
-                                  <% end %>
+<div class="container text-center">
+  <div class="row" style="margin-top: 30px;">
+    <a class="navbar-logo" href="index-2.html">
+      <%= image_tag('/templetes/' + @cms_site.template  + '/images/search_logo.png') %>
+    </a>
+  </div>
 
-                                    <!-- <form class="form-horizontal">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="输入订单号/手机号/姓名进行查询">
-
-                                                <button class="btn bg_color font_color" type="button">搜索</button>
-                                            </span>
-                                        </div>
-                                    </form> -->
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-
-                            <div class="row" style="margin-top:30px;">
-                                <div class="col-md-3"></div>
-                                <div class="col-md-6 text-center">
-                                  <p class="text-center">
-                                    Copyright &copy; 2015 www.grand-jardin.com<br><span class="company-rights text-center">格兰雅克订单查询系统V1.0</span>咨询热线：13688111729
-                                  </p>
-                                </div>
-                                <div class="col-md-3"></div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>
+  <div class="row" style="margin-top: 30px;">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <%= form_tag(do_search_frontend_orders_path)  do %>
+        <div class="input-group">
+          <%= text_field_tag :keywords, nil, class: 'form-control searchInput', placeholder: "请输入预留电话或订单号" %>
+          <span class="input-group-btn">
+            <%= submit_tag "查询", class: 'btn btn-default' %>
+          </span>
         </div>
+      <% end %>
     </div>
+    <div class="col-md-4"></div>
+  </div>
+
+  <div class="row" style="margin-top:30px;">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 text-center">
+      <p class="text-center">
+        Copyright &copy; 2015 www.grand-jardin.com<br><span class="company-rights text-center">格兰雅克订单查询系统V1.0</span>咨询热线：13688111729
+      </p>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+
 </div>
