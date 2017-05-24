@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20170519075114) do
-=======
-ActiveRecord::Schema.define(version: 20170522063446) do
->>>>>>> frontend
+ActiveRecord::Schema.define(version: 20170522084938) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -758,6 +754,7 @@ ActiveRecord::Schema.define(version: 20170522063446) do
     t.integer  "create_by"
     t.integer  "update_by"
     t.string   "resource_url"
+    t.date     "delivery_date"
     t.index ["site_id"], name: "index_orders_on_site_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
   end
