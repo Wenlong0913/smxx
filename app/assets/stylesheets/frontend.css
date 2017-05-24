@@ -6,7 +6,7 @@
  *= require frontend/product_catalogs
  *= require frontend/products
  *= require frontend/users
- *= require frontend/bootstrap.min
+ * require frontend/bootstrap.min
  *= require frontend/search_order
  *= require_self
  */
