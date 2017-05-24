@@ -7,7 +7,7 @@ class Agent::MembersController < Agent::BaseController
     @agent_members = @site.members
     if params[:search].present?
       @filter_colums = %w(mobile_phone name)
-      @agent_members = build_query_filter(Member.all, only: @filter_colums)
+      @agent_members = build_query_filter(@agent_members, only: @filter_colums)
       conditions = []
       query = []
       @agent_member_catalogs.each do |catalog|
