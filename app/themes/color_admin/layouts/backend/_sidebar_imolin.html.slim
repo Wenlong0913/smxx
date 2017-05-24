@@ -61,6 +61,10 @@ li class=("has-sub #{'active' if page?('admin/orders', 'admin/produces', 'admin/
     li[class=('active' if page?('admin/orders#index'))]
       = link_to "#{Order.model_name.human}管理", admin_orders_path
 
+li[class=("active" if page?('admin/articles') && !@community.present?)]
+  = link_to admin_articles_path do
+    = fa_icon 'leaf', text: '系统公告'
+
 li class=("has-sub #{'active' if page?('admin/banners')}")
   a href="javascript:;"
     b.caret.pull-right
