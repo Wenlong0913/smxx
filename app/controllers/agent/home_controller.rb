@@ -6,9 +6,9 @@ class Agent::HomeController < Agent::BaseController
     if @site.nil?
       redirect_to new_agent_site_path and return
     end
-    @member_total_count = @site.members.count
+    @preorder_conversition_total_count = @site.preorder_conversitions.count
     @product_total_count = @site.products.count
     @order_total_count = @site.orders.count
-    @market_page_total_count = @site.market_pages.count
+    @deliveries_total_count = @site.deliveries.count
   end
 end

@@ -1,5 +1,11 @@
 class Article < ApplicationRecord
   audited
+
+  enum article_type: {
+    system: 0,      # 系统公告
+    community: 1,   # 小区公告
+  }
+
   has_many :image_item_relations, as: :relation, dependent: :destroy
   has_many :image_items, :through => :image_item_relations
   has_many :article_products, dependent: :destroy

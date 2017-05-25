@@ -8,7 +8,12 @@ class Admin::ArticlesController < Admin::BaseController
   def index
     authorize Article
     @filter_colums = %w(id title)
-    @articles = build_query_filter(@community.articles.all, only: @filter_colums).page(params[:page])
+    @articles = if @community.blank?
+      Article.system
+    else
+      @community.articles
+    end
+    @articles = build_query_filter(@articles, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@articles.to_json, filename: "articles-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
@@ -42,10 +47,11 @@ class Admin::ArticlesController < Admin::BaseController
   # POST /admin/articles
   def create
     authorize Article
-    @article = Article.new(permitted_attributes(Article).merge(community_id: @community.id, author: current_user.id))
+    @article = Article.new(permitted_attributes(Article).merge(community_id: @community.try(:id), author: current_user.id))
+    @article.article_type = @community ? 'community' : 'system'
 
     if @article.save
-      redirect_to admin_community_article_path(@community, @article), notice: "#{Article.model_name.human} 创建成功."
+      redirect_to @community ? admin_community_article_path(@community, @article) : admin_article_path(@article), notice: "#{Article.model_name.human} 创建成功."
     else
       render :new
     end
@@ -55,7 +61,7 @@ class Admin::ArticlesController < Admin::BaseController
   def update
     authorize @article
     if @article.update(permitted_attributes(@article))
-      redirect_to admin_community_article_path(@community, @article), notice: "#{Article.model_name.human} 更新成功."
+      redirect_to @community ? admin_community_article_path(@community, @article) : admin_article_path(@article), notice: "#{Article.model_name.human} 更新成功."
     else
       render :edit
     end
@@ -65,13 +71,17 @@ class Admin::ArticlesController < Admin::BaseController
   def destroy
     authorize @article
     @article.destroy
-    redirect_to admin_community_articles_url, notice: "#{Article.model_name.human} 删除成功."
+    redirect_to @community ? admin_community_articles_url : admin_articles_url, notice: "#{Article.model_name.human} 删除成功."
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_article
-      @article = @community.articles.find(params[:id])
+      @article = if @community.blank?
+        Article.find(params[:id])
+      else
+        @community.articles.find(params[:id])
+      end
     end
 
     # Only allow a trusted parameter "white list" through.
@@ -79,6 +89,6 @@ class Admin::ArticlesController < Admin::BaseController
     #       #   params[:admin_article]
     #       # end
     def set_community
-      @community = Community.find(params[:community_id])
+      @community = Community.where(id: params[:community_id]).first
     end
 end

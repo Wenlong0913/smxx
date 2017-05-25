@@ -32,13 +32,17 @@ module AppAPI::V1
       end
       post do
         authenticate!
-        chat_room = ::Chat::Room.new(name: params[:name])
-        if Settings.project.imolin?
-          community = current_user.current_community
-          chat_room.owner = community
+        community = current_user.current_community if Settings.project.imolin?
+        existed_chat_room = ::Chat::Room.where(name: params[:name])
+        existed_chat_room = existed_chat_room.where(owner: community) if Settings.project.imolin?
+        if existed_chat_room.blank?
+          chat_room = ::Chat::Room.new(name: params[:name])
+          chat_room.owner = community if Settings.project.imolin?
+          error! chat_room.errors unless chat_room.save
+          present chat_room, with: AppAPI::Entities::ChatRoom
+        else
+          present message: "圈子已经存在"
         end
-        error! chat_room.errors unless chat_room.save
-        present chat_room, with: AppAPI::Entities::ChatRoom
       end
 
     end # end of resources

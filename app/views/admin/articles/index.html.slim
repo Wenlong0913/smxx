@@ -1,8 +1,8 @@
 h1.page-header
   | #{Article.model_name.human}列表
   .pull-right
-    => link_to "新建#{Article.model_name.human}", new_admin_community_article_path(@community), class: 'btn btn-primary'
-    => link_to "返回小区", admin_community_path(@community), class: 'btn btn-primary'
+    => link_to "新建#{Article.model_name.human}", @community ? new_admin_community_article_path(@community) : new_admin_article_path, class: 'btn btn-primary'
+    => link_to "返回小区", admin_community_path(@community), class: 'btn btn-primary' if @community
 
 .panel.panel-default
   .panel-heading
@@ -14,7 +14,7 @@ h1.page-header
     h3.panel-title
       | #{Article.model_name.human}
   .panel-body
-    = form_for :search, url: admin_community_articles_path(community_id: params[:community_id]), method: :get do |f|
+    = form_for :search, url: @community ? admin_community_articles_path(community_id: params[:community_id]) : admin_articles_path, method: :get do |f|
       .toolbar.row
         .col-md-12
           p
@@ -68,6 +68,7 @@ h1.page-header
             th 标题
             th 发布人
             th 标签
+            th 是否置顶
             th 操作
         tbody
           - @articles.each do |article|
@@ -79,9 +80,14 @@ h1.page-header
               td
                 = article.tag_list.join(", ")
               td
-                => link_to '查看', admin_community_article_path(@community, article), class: 'btn btn-xs btn-default'
-                => link_to '编辑', edit_admin_community_article_path(@community, article), class: 'btn btn-xs btn-default'
-                = link_to '删除', admin_community_article_path(@community, article), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+                - if article.is_top == true
+                  | 是
+                - else
+                  | 否
+              td
+                => link_to '查看', @community ? admin_community_article_path(@community, article) : admin_article_path(article), class: 'btn btn-xs btn-default'
+                => link_to '编辑', @community ? edit_admin_community_article_path(@community, article) : edit_admin_article_path(article), class: 'btn btn-xs btn-default'
+                = link_to '删除', @community ? admin_community_article_path(@community, article) : admin_article_path(article), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
       = paginate @articles
 
 / TODO: move this code to application.js

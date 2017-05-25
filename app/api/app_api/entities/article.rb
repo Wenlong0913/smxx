@@ -13,6 +13,8 @@ module AppAPI
         end
         expose :valid_time_begin, documentation: { desc: '公告有效期起始时间' }
         expose :valid_time_end, documentation: { desc: '公告有效期结束时间' }
+        expose :article_type, documentation: { desc: '公告类型' }
+        expose :is_top, documentation: { desc: '是否置顶' }
       end
       expose_updated_at
 

@@ -150,7 +150,9 @@ module AppAPI::V1
         else
           optional :avatar, type: Rack::Multipart::UploadedFile, desc: '上传头像'
         end
-        # optional :mobile_phone, type: String, desc: '手机号'
+        optional :mobile_phone, type: String, desc: '手机号'
+        optional :mobile_phone_code, type: String, desc: '验证码'
+        all_or_none_of :mobile_phone, :mobile_phone_code
         if Settings.project.imolin?
           optional :gender, type: String, desc: '性别'
           optional :community_id, type: String, desc: '小区名称'
@@ -159,12 +161,12 @@ module AppAPI::V1
       end
       put 'me' do
         authenticate!
-        user = User.find(current_user.id) # get fresh data from DB
+        user = ::User.find(current_user.id) # get fresh data from DB
         if params[:avatar]
           if Settings.project.imolin?
             StringIO.open(Base64.decode64(params[:avatar])) do |data|
               data.class.class_eval { attr_accessor :original_filename, :content_type }
-              data.original_filename = "hedshot.jpg"
+              data.original_filename = "user-#{user.id}.jpg"
               data.content_type = "image/jpeg"
               user.avatar = data
             end
@@ -183,9 +185,13 @@ module AppAPI::V1
           user.user_communities.update_all(is_current: false)
           user.user_communities.where(community_id: params[:community_id]).update_all(is_current: true)
         end
-        # if params[:mobile_phone]
-        #   user.mobile.phone_number = params[:mobile_phone]
-        # end
+        if params[:mobile_phone_code] && params[:mobile_phone]
+          t = Sms::Token.new(params[:mobile_phone])
+          error! "验证码错误" unless t.valid?(params[:mobile_phone_code])
+          t.destroy!
+          user.mobile.phone_number = params[:mobile_phone]
+          error! error: user.mobile.errors.messages, error_message: '手机号已经被使用' unless user.mobile.save
+        end
         user.gender = params[:gender] if params[:gender]
         user.description = params[:description] if params[:description]
         if user.changed?
