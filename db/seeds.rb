@@ -27,6 +27,11 @@ unless User.find_by_phone_number('15328077520')
   _, user = User::Create.(mobile_phone: '15328077520', nickname: '用户', password: 'abcd1234')
 end
 
+# 测试账号，方便app审核时测试用，手机号验证码是000000，在settings.xx.yml中有设置
+unless User.find_by_phone_number('13900000000')
+  _, user = User::Create.(mobile_phone: '13900000000', nickname: '测试账号', password: 'xhkafhsafl')
+end
+
 site = Site.create_with(user: admin, address_line: '成都市成华区二环路东二段龙湖三千城').find_or_create_by!(title: '官网')
 raise "创建的第一个商家ID不等于1!!!" unless site.id == 1
 
