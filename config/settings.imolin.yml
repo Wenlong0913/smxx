@@ -22,6 +22,8 @@ default: &default
       api_key: c97380fa188341572c1bcdadf383dfc2
   mobile:
     auth_token_template: "【陌邻社区】您的验证码是#code#。如非本人操作，请忽略本短信。"
+  default_data:
+    rooms: ["吐槽圈", "互助圈", "亲子圈", "敬老圈", "宠物圈", "棋艺圈"]
 
   payment: # Ping++支付
     api_id:

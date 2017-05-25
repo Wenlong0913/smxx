@@ -18,8 +18,12 @@ module AppAPI::V1
         if Settings.project.imolin?
           community = ::Community.find(params[:community_id])
           rooms = paginate_collection(rooms.where(owner: community), params)
-          ::Chat::Room.find_or_create_by(name: community.name + '公共圈', owner: community) if rooms.empty?
-          rooms = paginate_collection(rooms.where(owner: community), params)
+          if rooms.count < (Settings.default_data.rooms.count + 1)
+            Settings.default_data.rooms.unshift("#{community.name}公共圈").each do |room_name|
+              ::Chat::Room.find_or_create_by(name: room_name, owner: community)
+            end
+            rooms = paginate_collection(community.chat_rooms, params)
+          end
         end
         wrap_collection rooms, AppAPI::Entities::ChatRoom
       end
