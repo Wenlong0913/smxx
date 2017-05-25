@@ -189,8 +189,9 @@ module AppAPI::V1
           t = Sms::Token.new(params[:mobile_phone])
           error! "验证码错误" unless t.valid?(params[:mobile_phone_code])
           t.destroy!
-          user.mobile.phone_number = params[:mobile_phone]
-          error! error: user.mobile.errors.messages, error_message: '手机号已经被使用' unless user.mobile.save
+          mobile = user.mobile || user.mobile.new
+          mobile.phone_number = params[:mobile_phone]
+          error! error: mobile.errors.messages, error_message: '手机号已经被使用' unless mobile.save
         end
         user.gender = params[:gender] if params[:gender]
         user.description = params[:description] if params[:description]
