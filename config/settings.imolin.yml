@@ -24,8 +24,8 @@ default: &default
     auth_token_template: "【陌邻社区】您的验证码是#code#。如非本人操作，请忽略本短信。"
 
   payment: # Ping++支付
-    api_id:
-    api_key:
+    api_id: app_zvTSK8njbLmTC0ub
+    api_key: sk_live_Oqzfr5rzDWbL1KOOa1OaPWPK
     channels:
     - alipay_wap
     - wx_pub
