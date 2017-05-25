@@ -1,6 +1,32 @@
-<% if @site %>
-你好，<%= @site.id %>
+<div class="bg-colors" data-colors="#568CD3,#D3744C,#389E86,#9356D3,#D35D56,#587EA0,#518E7E"></div>
+<% if @site_user.present? %>
+<div class="media" style="position: fixed;z-index: 9; margin-top: 0px;padding: 0.5em;background-color: rgba(255, 255, 255, .1);">
+  <div class="media-left">
+    <%= image_tag(@site_user.image_items.first.medium_image_url, width: '30px', height: '30px' ) %>
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading">
+      <%= @site_user.nickname %>
+    </h4>
+  </div>
+</div>
+<div id="fullpage">
+  <section data-anchor="">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-6 col-md-5 col-md-offset-6">
+          <h1 class="heading" data-animate-in="animateUpDown">陌邻，<br/>让邻里不再陌生!</h1>
+          <p class="delay_1" data-animate-in="animateUpDown">
+            陌邻APP提供小区邻友社交互动，提供全方位社区便民服务，通过人工智能，让周边服务，呼之即来。
+          </p>
+          <a href="#" class="btn btn-lg btn-primary delay_2" data-animate-in="animateUpDown">
+            <i class="fa fa-cloud-download"></i> APP 下载
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 <% else %>
-欢迎使用
-
+<h1><%= link_to '欢迎使用', "http://www.imolin.cn/" %></h1>
 <% end %>
