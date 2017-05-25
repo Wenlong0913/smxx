@@ -138,7 +138,7 @@
               = f.input :content, as: :ckeditor
         .row.text-right
           = f.submit '保存修改', class: 'btn btn-primary'
-    - if Settings.project.eqxiyi?
+    - elsif Settings.project.eqxiyi?
       = simple_form_for @product, url: @product.new_record? ? admin_site_products_path(@site) : admin_site_product_path(@site, @product) do |f|
         - if @product.errors.any?
           #error_explanation
