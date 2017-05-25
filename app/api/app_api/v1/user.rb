@@ -152,7 +152,7 @@ module AppAPI::V1
         end
         optional :mobile_phone, type: String, desc: '手机号'
         optional :mobile_phone_code, type: String, desc: '验证码'
-        all_or_none_of :mobile_phone, :mobile_phone_code
+        # all_or_none_of :mobile_phone, :mobile_phone_code
         if Settings.project.imolin?
           optional :gender, type: String, desc: '性别'
           optional :community_id, type: String, desc: '小区名称'

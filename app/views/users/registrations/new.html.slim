@@ -1,16 +1,18 @@
 h4 手机号注册
 
-= simple_form_for(@user, url: sign_up_path, remote: true, method: :post, html: {class: "margin-bottom-0"}) do |f|
+= simple_form_for(@user, url: sign_up_path, remote: true, method: :post, html: {class: "margin-bottom-0 register"}) do |f|
   - if flash[:alert]
     .alert.alert-danger
       = flash[:alert]
   .form-group.m-b-25.m-t-10
+    label 手机号
     input.form-control.input-lg[placeholder="手机号"name="user[mobile]"type="text"]
   .form-group.m-b-25.p-0.row
     .col-xs-9
+      label 验证码
       input.form-control.input-lg[name="user[code]"type="text"placeholder="验证码"]
     .col-xs-3.text-right
-      span.btn.btn-default.input-lg.get_code[data-url=api_v1_sessions_sms_path] 获取验证码
+      button.btn.btn-default.input-lg.get_code[data-url=api_v1_sessions_sms_path] 获取验证码
   .text-center.text-danger.title_error
   hr
   .login-buttons
