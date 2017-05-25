@@ -34,10 +34,10 @@
               <%= order.code %>
             </td>
             <td class="order_td">
-              <%= order.status %>
+              <%= enum_l(order, :internal_status) %>
             </td>
             <td class="order_td">
-              18分钟前
+              <%= format_time(order.created_at) %>
             </td>
             <td class="order_td">
               2017年6月31日
@@ -50,32 +50,181 @@
           </tr>
           <tr>
             <td colspan="6">
-              <div id="drk_timeline" class="timeline">
-                <div class="line_item position1 text-center">
-                  <div class="lint_point bg_success"></div>
-                  <div class="line_content">
-                    预计收货
+              <% if order.packing? %>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_warning"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, :internal_status) %>
+                    </div>
                   </div>
                 </div>
-                <div class="line_item position2 text-center">
-                  <div class="lint_point bg_success"></div>
-                  <div class="line_content">
-                    预计收货
+              <% elsif order.packed? %>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_success"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, 'packing') %>
+                    </div>
                   </div>
                 </div>
-                <div class="line_item position3 text-center">
-                  <div class="lint_point bg_success"></div>
-                  <div class="line_content">
-                    预计收货
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_warning"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, :internal_status) %>
+                    </div>
                   </div>
                 </div>
-                <div class="line_item position4 text-center">
-                  <div class="lint_point bg_warning"></div>
-                  <div class="line_content">
-                    预计收货
+              <% elsif order.producing? %>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_success"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, 'packing') %>
+                    </div>
                   </div>
                 </div>
-              </div>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_success"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, 'packed') %>
+                    </div>
+                  </div>
+                </div>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_warning"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, :internal_status) %>
+                    </div>
+                  </div>
+                </div>
+              <% elsif order.produced? %>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_success"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, 'packing') %>
+                    </div>
+                  </div>
+                </div>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_success"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, 'packed') %>
+                    </div>
+                  </div>
+                </div>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_success"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, 'producing') %>
+                    </div>
+                  </div>
+                </div>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_warning"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, :internal_status) %>
+                    </div>
+                  </div>
+                </div>
+              <% elsif order.delivering? %>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_success"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, 'packing') %>
+                    </div>
+                  </div>
+                </div>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_success"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, 'packed') %>
+                    </div>
+                  </div>
+                </div>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_success"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, 'producing') %>
+                    </div>
+                  </div>
+                </div>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_success"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, 'produced') %>
+                    </div>
+                  </div>
+                </div>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_warning"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, :internal_status) %>
+                    </div>
+                  </div>
+                </div>
+              <% elsif order.delivered? %>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_success"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, 'packing') %>
+                    </div>
+                  </div>
+                </div>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_success"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, 'packed') %>
+                    </div>
+                  </div>
+                </div>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_success"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, 'producing') %>
+                    </div>
+                  </div>
+                </div>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_success"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, 'produced') %>
+                    </div>
+                  </div>
+                </div>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_success"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, 'delivering') %>
+                    </div>
+                  </div>
+                </div>
+                <div id="drk_timeline" class="timeline">
+                  <div class="line_item position1 text-center">
+                    <div class="lint_point bg_warning"></div>
+                    <div class="line_content">
+                      <%= enum_l(order, :internal_status) %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
             </td>
           </tr>
         <% end %>
