@@ -17,8 +17,7 @@ module AppAPI::V1
         rooms = ::Chat::Room.all
         if Settings.project.imolin?
           community = ::Community.find(params[:community_id])
-          default_rooms = ["#{community.name}公共圈"] + Settings.default_data.rooms
-          default_rooms.each do |room_name|
+          Settings.default_data.rooms.each do |room_name|
             ::Chat::Room.find_or_create_by(name: room_name, owner: community)
           end
           rooms = paginate_collection(community.chat_rooms, params)
@@ -27,7 +26,7 @@ module AppAPI::V1
       end
 
       desc "创建频道" do
-        success AppAPI::Entities::ChatRoom 
+        success AppAPI::Entities::ChatRoom
       end
       params do
         requires :name, type: String, desc: '频道名称'

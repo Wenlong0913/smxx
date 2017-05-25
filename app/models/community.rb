@@ -9,10 +9,4 @@ class Community < ApplicationRecord
   has_many :user_communities, dependent: :destroy
   has_many :users, through: :user_communities
   has_many :articles, dependent: :destroy
-  after_save :create_chat_rooms
-
-
-  def create_chat_rooms
-    self.chat_rooms.create(name: self.name + '公共圈')
-  end
 end
