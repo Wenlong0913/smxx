@@ -23,7 +23,7 @@ h1.page-header
         .col-md-2
           = f.select "status", enum_options_for_select(Order, 'status'), {selected: params[:search] && params[:search][:status], prompt: '所有状态', include_blank: true}, class: 'form-control'
         .col-md-2
-          - if Settings.project.dagle?
+          - if Settings.project.grand?
             = f.select "material", [['实际用料大于计划用料', 'more'], ['实际用料小于计划用料', 'less']], {selected: params[:search] && params[:search][:material], prompt: '所有用料', include_blank: true}, class: 'form-control'
             span.hint 默认只筛选'已完成'的订单
         .col-md-2
@@ -35,7 +35,7 @@ h1.page-header
             h4.text-info 
               | 订单总额: 
               = (@orders_all.sum(&:price)/100).to_s + '元'
-          - if Settings.project.dagle?
+          - if Settings.project.grand?
             .col-md-3
               h4.text-info 
                 | 计划用料: 
@@ -52,7 +52,7 @@ h1.page-header
             th = Order.human_attribute_name(:site)
             th = Order.human_attribute_name(:price)
             th = Order.human_attribute_name(:status)
-            - if Settings.project.dagle?
+            - if Settings.project.grand?
               th = Order.human_attribute_name(:internal_status)
               th 计划用料/实际用料/差值
             th 操作
@@ -63,7 +63,7 @@ h1.page-header
               td = order.site.title
               td = order.price.to_f / 100
               td = enum_l(order, :status)
-              - if Settings.project.dagle?
+              - if Settings.project.grand?
                 td = enum_l(order, :internal_status) || '-'
                 th
                   span.label.label-primary

@@ -26,7 +26,7 @@
                 input#search-address.form-control
               #baidu-map
       - else
-        - if Settings.project.dagle?
+        - if Settings.project.grand?
           label[class="control-label"] 商家所有者
           select.select2.form-control[id="dropdown" name="site[user_id]" data-url="#{admin_users_url}"  data-id="#{@site.user_id}" data-name="#{User.find_by(id: @site.user).try(:nickname)}" ]
           = f.input :title

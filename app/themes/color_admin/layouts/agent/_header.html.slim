@@ -38,7 +38,7 @@
                 /! sxhop/dagle 订单不同
                 li = link_to '订单列表', agent_orders_path
                 / li = link_to '订单创建', new_agent_order_path
-            - if Settings.project.dagle?
+            - if Settings.project.grand?
               li.dropdown.dropdown-hover
                 a data-toggle="dropdown" href="#"
                   | 生产设计
