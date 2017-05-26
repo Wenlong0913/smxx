@@ -1,5 +1,5 @@
 class CatalogSerializer < ActiveModel::Serializer
-  attributes :id, :name, :children, :settings, :icon_url
+  attributes :id, :name, :children, :settings, :icon_url, :is_hot
   has_many :children
 
   def settings

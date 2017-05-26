@@ -10,7 +10,7 @@
     <div class="well well-sm table-responsive">
       <!-- <ol class="list-inline"> -->
         <transition-group name="bounce" tag="ol" class="list-inline">
-          <catalog class="black-classify" :key="depth" v-for="(arr, depth) in catalogGroups" :depth="depth" :parent_id="arr[0]" :catalogs="arr[1]" @selected="selected"  :breadcrumb="breadcrumb" :dataUrl="dataUrl" @removeCatalog="removeCatalogGroupsData" :editable="editable" :editicon="editicon"></catalog>
+          <catalog class="black-classify" :key="depth" v-for="(arr, depth) in catalogGroups" :depth="depth" :parent_id="arr[0]" :catalogs="arr[1]" @selected="selected"  :breadcrumb="breadcrumb" :dataUrl="dataUrl" @removeCatalog="removeCatalogGroupsData" :editable="editable" :editicon="editicon" :edithot="edithot"></catalog>
         </transition-group>
       <!-- </ol> -->
     </div>
@@ -28,6 +28,7 @@ export default {
     dataUrl: { required: true, type: String },
     editable: { type: Boolean, default: true },
     editicon: { type: Boolean, default: false },
+    edithot: { type: Boolean, default: false },
     showConfirmButtons: { type: Boolean, default: false },
     default: { type: Array, default: function(){
       return [];
