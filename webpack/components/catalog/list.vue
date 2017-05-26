@@ -38,7 +38,7 @@
         <i class="fa fa-plus-square m-r-5"></i>新增
       </span>
     </div>
-    <catalog-form v-model="showModal" :options="options" v-if="showModal" :model="newCatalogModel" @addSubmit="addCatalog" @editSubmit="editCatalog" :editicon="editicon"></catalog-form>
+    <catalog-form v-model="showModal" :options="options" v-if="showModal" :model="newCatalogModel" @addSubmit="addCatalog" @editSubmit="editCatalog" :editicon="editicon" :edithot="edithot"></catalog-form>
   </li>
 </template>
 <script>
@@ -48,6 +48,7 @@ export default {
   props: {
     editable: { type: Boolean},
     editicon: { type: Boolean},
+    edithot: { type: Boolean},
     breadcrumb: { type: Array, required: true },
     parent_id: { type: Number },
     catalogs: { type: Array, required: true },
@@ -146,6 +147,8 @@ export default {
         options.responseMessage = {status: true, text: '修改成功'}
         this.catalogs[options.index].name= catalog.name
         this.catalogs[options.index].settings = catalog.settings
+        this.catalogs[options.index].icon_url= catalog.icon_url
+        this.catalogs[options.index].is_hot= catalog.is_hot
         var _this = this;
         // setTimeout(function () {
           _this.showModal = false;

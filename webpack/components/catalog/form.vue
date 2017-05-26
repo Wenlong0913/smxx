@@ -33,6 +33,12 @@
                 <input type="text" @keyup.enter="submit" v-model='model.icon_url' class="form-control" placeholder="输入该分类的图标地址">
               </div>
             </div>
+            <div class="form-group" v-show="edithot">
+              <div class="col-sm-2 control-label">设为热门服务</div>
+              <div class="col-sm-1">
+                <input type="checkbox" @keyup.enter="submit" v-model='model.is_hot' class="form-control">
+              </div>
+            </div>
             <!-- 状态提示信息 -->
             <div class="return_messages text-center" :class="options.responseMessage.status ? 'text-success' : 'text-danger' ">
               {{ options.responseMessage.text}}
@@ -60,6 +66,7 @@ export default{
     options: { type: Object, required: true },
     value: { type: Boolean, default: true },
     editicon: { type: Boolean},
+    edithot: { type: Boolean},
     model: { type: Object, required: true }
   },
   data() {
