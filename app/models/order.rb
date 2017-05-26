@@ -82,7 +82,7 @@ class Order < ApplicationRecord
   if Settings.project.dagle?
     belongs_to :member
     validates_presence_of :member
-    validates_presence_of :delivery_date
+    # validates_presence_of :delivery_date
   end
 
   after_initialize do
