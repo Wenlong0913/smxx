@@ -9,7 +9,16 @@ class Admin::SitesController < Admin::BaseController
   def index
     authorize Site
     @filter_colums = %w(id title)
-    @sites = build_query_filter(Site.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
+    @sites = if params[:search] && params[:search][:keywords] =~ /^\d{11}$/
+      mobile = User::Mobile.where(phone_number: params[:search][:keywords]).first
+      if mobile.present? && mobile.user.present?
+        mobile.user.sites.page(params[:page])
+      else
+        build_query_filter(Site.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
+      end
+    else
+      build_query_filter(Site.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
+    end
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@sites.to_json, filename: "products-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

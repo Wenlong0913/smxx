@@ -12,6 +12,22 @@ h1.page-header
         i class="fa fa-minus"
     h3.panel-title 用户列表
   .panel-body
+    = form_for :search, url: admin_users_path, method: :get do |f|
+      .toolbar.row
+        .col-md-6.m-b-15
+          .input-group.search_all
+            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '搜索...'
+            span.input-group-btn
+              button.btn.btn-inverse[type='submit']
+                i.fa.fa-search
+    - if params[:search]
+      .alert.alert-success.m-b-15
+        strong
+          = "查询："
+        span
+          = @admin_users.total_count.to_s + "条记录"
+        span.close[data-dismiss="alert"]
+          | ×
     table class="table table-striped table-bordered"
       tr
         th ID
