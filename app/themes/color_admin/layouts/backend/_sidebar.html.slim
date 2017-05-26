@@ -17,7 +17,7 @@
       li.nav-header 功能导航
       - if Settings.project.dagle?
         = render "layouts/backend/sidebar_dagle"
-      - if Settings.project.grand? #格兰雅克
+      - if Settings.project.grand?
         = render "layouts/backend/sidebar_grand"
       - elsif Settings.project.imolin?
         = render "layouts/backend/sidebar_imolin"
