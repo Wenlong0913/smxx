@@ -23,7 +23,7 @@ class Ckeditor::Picture < Ckeditor::Asset
                     styles: { content: '800>', thumb: '300x225#' }
 
   validates_attachment_presence :data
-  validates_attachment_size :data, less_than: 2.megabytes
+  validates_attachment_size :data, less_than: 5.megabytes
   validates_attachment_content_type :data, content_type: /\Aimage/
 
   def url_content

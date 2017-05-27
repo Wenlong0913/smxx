@@ -22,7 +22,7 @@
         li[class=("active" if page?('admin/communities'))]
           = link_to admin_communities_path do
             = fa_icon 'leaf', text: '小区'
-      - if Settings.project.dagle?
+      - if Settings.project.grand?
         li class=("has-sub #{'active' if page?('admin/materials', admin_material_catalogs_path, 'admin/material_managements', 'admin/material_warehouses', 'admin/material_management_histories', 'admin/material_stock_alerts')}")
           = link_to dashboard_admin_materials_path
             b.caret.pull-right
@@ -69,7 +69,7 @@
           li class=("#{'active' if page?('admin/users')}") = link_to '用户', admin_users_path
           li class=("#{'active' if page?('admin/user/weixins')}") = link_to '微信用户', admin_user_weixins_path
           li class=("#{'active' if page?('admin/roles')}") = link_to '角色', admin_roles_path
-          - if Settings.project.dagle?
+          - if Settings.project.grand?
             li[class= ('active' if page?('admin/vendors'))]
               = link_to '供应商', admin_vendors_path
           - unless Settings.project.imolin?
@@ -137,7 +137,7 @@
               = link_to "创建#{Order.model_name.human}", new_admin_order_path
           li[class=('active' if page?('admin/orders#index'))]
             = link_to "#{Order.model_name.human}管理", admin_orders_path
-          - if Settings.project.dagle?
+          - if Settings.project.grand?
             / 生产任务
             li class="#{'active' if page?('admin/produces', 'admin/orders/:order_id/produces/:id')}"
               = link_to "#{Produce.model_name.human}管理", admin_produces_path
@@ -151,7 +151,7 @@
             li class="#{'active' if page?('admin/deliveries')}"
               = link_to "#{Delivery.model_name.human}管理", admin_deliveries_path
 
-      - if Settings.project.dagle?
+      - if Settings.project.grand?
         li class=("has-sub #{'active' if page?('admin/members', 'admin/member_catalogs')}")
           a href="javascript:;"
             b.caret.pull-right

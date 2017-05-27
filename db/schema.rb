@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170524081916) do
+ActiveRecord::Schema.define(version: 20170525102248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "cube"
   enable_extension "earthdistance"
@@ -165,10 +164,11 @@ ActiveRecord::Schema.define(version: 20170524081916) do
     t.integer  "parent_id"
     t.string   "name"
     t.integer  "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.string   "type"
     t.jsonb    "features"
+    t.boolean  "is_hot",     default: false
     t.index ["parent_id"], name: "index_catalogs_on_parent_id", using: :btree
   end
 
@@ -842,6 +842,7 @@ ActiveRecord::Schema.define(version: 20170524081916) do
     t.jsonb    "features"
     t.string   "type"
     t.integer  "address_alias_id"
+    t.string   "address_line"
     t.integer  "catalog_id"
     t.integer  "favorites_count",  default: 0
     t.integer  "visits_count",     default: 0

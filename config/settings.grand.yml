@@ -23,7 +23,7 @@ default: &default
     templates:
       order_notification: "【格兰雅克】您单号为#order#的订单当前的状态为:#message#。我们将时刻提醒您订单的状态"
   mobile:
-    auth_token_template: "【德格SaaS】您的验证码是#code#。如非本人操作，请忽略本短信。"
+    auth_token_template: "【格兰雅克】您的验证码是#code#。如非本人操作，请忽略本短信。"
 
   payment: # Ping++支付
     api_id:
