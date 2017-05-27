@@ -25,10 +25,15 @@ class Frontend::OrdersController < Frontend::BaseController
 
   def create
     ActiveRecord::Base.transaction do
+      price = 0
+      params[:order][:order_products].each do |order_product|
+        price += order_product[:price].to_f
+      end
+      binding.pry
       @frontend_order = Order.new
       @frontend_order.user_id = current_user.id
       @frontend_order.site_id = @site.id
-      @frontend_order.price = params[:order][:price]
+      @frontend_order.price = price
       @frontend_order.description = params[:order][:description]
       @frontend_order.create_by = current_user.id
       @frontend_order.save!
@@ -42,7 +47,6 @@ class Frontend::OrdersController < Frontend::BaseController
     end
     respond_to do |format|
       format.html do
-        binding.pry
         if @frontend_order
           redirect_to frontend_order_path(@frontend_order), notice: '订单创建成功.'
         else
@@ -51,7 +55,6 @@ class Frontend::OrdersController < Frontend::BaseController
       end
       format.json { render json: @frontend_order }
     end
-
   end
 
   def update
@@ -88,7 +91,6 @@ class Frontend::OrdersController < Frontend::BaseController
     order_products.each do |op|
       sum = op.price.to_f * op.amount + sum
     end
-    binding.pry
     json = PaymentCore.create_charge(
       order_no: order.code, # 订单号
       channel: 'alipay_pc_direct', # 支付宝电脑端网页支付
