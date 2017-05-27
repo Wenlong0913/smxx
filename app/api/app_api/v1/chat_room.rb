@@ -61,7 +61,7 @@ module AppAPI::V1
         else
           scope = ::Community.find(params[:community_id]).rooms
         end
-        scope.find(id)
+        scope.find(params[:id])
       end
 
     end # end of resources
