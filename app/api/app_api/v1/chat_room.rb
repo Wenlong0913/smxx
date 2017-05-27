@@ -46,6 +46,24 @@ module AppAPI::V1
         end
       end
 
+      desc "获取频道信息" do
+        success AppAPI::Entities::ChatRoom
+      end
+      params do
+        requires :id, type: Integer, desc: '频道ID'
+        if Settings.project.imolin?
+          requires :community_id, type: Integer, desc: '小区ID'
+        end
+      end
+      get ':id' do
+        if Settings.project.imolin?
+          scope = ::Chat::Room
+        else
+          scope = ::Community.find(params[:community_id]).rooms
+        end
+        scope.find(id)
+      end
+
     end # end of resources
   end
 end
