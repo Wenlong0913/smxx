@@ -51,7 +51,7 @@ h1.page-header
         strong
           = "查询："
         span
-          = @sites.total_count.to_s + "条记录"
+          = @sites.class.to_s == 'Array' ? @sites.count : @sites.total_count.to_s + "条记录"
         span.close[data-dismiss="alert"]
           | ×
     .table-responsive
