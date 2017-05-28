@@ -32,7 +32,7 @@ module AppAPI::V1
         if Settings.project.imolin?
           optional :community_id, type: Integer, desc: '小区下的所有文章列表'
         end
-        optional :includes, type: String, values: ['description'], desc: '选择description后会返回文章类容'
+        optional :includes, type: String, values: ['description', 'comments'], desc: '选择description后会返回文章类容'
         optional :type, type: String, values: ['owner'], desc: '选择owner后会返回我的文章类容'
         use :pagination
         use :sort, fields: [:id, :created_at, :updated_at] unless Settings.project.imolin?

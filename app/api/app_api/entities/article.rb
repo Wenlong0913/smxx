@@ -7,7 +7,7 @@ module AppAPI
         expose :products, using: AppAPI::Entities::ProductSimple, documentation: { is_array: true }, if: ->(article, options) { options[:type] != :list }
       end
       if Settings.project.imolin?
-        expose :comments, using: AppAPI::Entities::Comment
+        expose :comments, using: AppAPI::Entities::Comment, if: ->(article, options) { options.fetch(:includes, []).map(&:to_s).include?('comments') }
         expose :is_applied do |article, options|
           article.user_ids.include? options[:user_id]
         end
