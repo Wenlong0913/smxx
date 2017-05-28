@@ -30,7 +30,7 @@ h1.page-header
                 td
                   span
                     = enum_l(@order, :status)
-              - if Settings.project.dagle?
+              - if Settings.project.grand?
                 tr
                   td.field
                     | #{Order.human_attribute_name(:internal_status)}
@@ -98,7 +98,7 @@ h1.page-header
                   td = order_product.product.discount.to_f / 100 || order_product.product.price.to_f / 100
                   td = "#{order_product.amount}#{order_product.product.unit}"
                   td = order_product.price.to_f / 100
-- if Settings.project.dagle?
+- if Settings.project.grand?
   .panel
     .panel-heading
       .panel-heading-btn

@@ -30,8 +30,9 @@ class Cms::SitePolicy < ApplicationPolicy
     edit?
   end
 
+  #只有超级管理员和创建站点的自己本人才能删除CMS站点
   def destroy?
-    create?
+    return true if user.super_admin? || (user.has_role?(:agent) && record.site.try(:user_id) == user.id)
   end
 
   def permitted_attributes_for_create

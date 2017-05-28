@@ -24,6 +24,6 @@ class RoomChannel < ApplicationCable::Channel
   end
 
   def user
-    current_user ? {nickname: current_user.nickname, id: current_user.id, avatar: current_user.headshot} : {nickname: '游客'}
+    current_user ? {nickname: current_user.nickname, id: current_user.id, avatar: current_user.display_headshot} : {nickname: '游客'}
   end
 end

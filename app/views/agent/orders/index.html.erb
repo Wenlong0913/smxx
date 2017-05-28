@@ -80,7 +80,7 @@
                             物流:
                             <% if Settings.project.sxhop? %>
                               <%= order.order_deliveries.first.logistics_name + '(' + order.order_deliveries.first.logistics_number + ')' unless order.order_deliveries.first.try(:logistics_name).blank? %>
-                            <% elsif Settings.project.dagle? %>
+                            <% elsif Settings.project.grand? %>
                               <% unless order.order_deliveries.blank? %>
                                   <strong class=" text-primary"><%= order.order_deliveries.first.try{ logistics.map{|log| log.delivery.name + "(" + log.delivery.phone_number + ")"}.join(" | ") } %></strong>
                               <% end %>

@@ -7,12 +7,14 @@ module AppAPI
         expose :products, using: AppAPI::Entities::ProductSimple, documentation: { is_array: true }, if: ->(article, options) { options[:type] != :list }
       end
       if Settings.project.imolin?
-        expose :comments, using: AppAPI::Entities::Comment
+        expose :comments, using: AppAPI::Entities::Comment, if: ->(article, options) { options.fetch(:includes, []).map(&:to_s).include?('comments') }
         expose :is_applied do |article, options|
           article.user_ids.include? options[:user_id]
         end
         expose :valid_time_begin, documentation: { desc: '公告有效期起始时间' }
         expose :valid_time_end, documentation: { desc: '公告有效期结束时间' }
+        expose :article_type, documentation: { desc: '公告类型' }
+        expose :is_top, documentation: { desc: '是否置顶' }
       end
       expose_updated_at
 

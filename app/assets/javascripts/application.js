@@ -15,5 +15,6 @@
 //= require turbolinks
 //= require turbolinks-jquery
 //= require vue.setup
+//= require user
 // can't require tree
 // require_tree .

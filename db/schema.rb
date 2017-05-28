@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170522084938) do
+ActiveRecord::Schema.define(version: 20170525102248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,13 +87,15 @@ ActiveRecord::Schema.define(version: 20170522084938) do
     t.string   "title"
     t.text     "description"
     t.integer  "author"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.integer  "comments_count"
     t.integer  "likes_count"
     t.integer  "community_id"
     t.date     "valid_time_begin"
     t.date     "valid_time_end"
+    t.integer  "article_type"
+    t.boolean  "is_top",           default: false
   end
 
   create_table "attachment_relations", force: :cascade do |t|
@@ -162,10 +164,11 @@ ActiveRecord::Schema.define(version: 20170522084938) do
     t.integer  "parent_id"
     t.string   "name"
     t.integer  "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.string   "type"
     t.jsonb    "features"
+    t.boolean  "is_hot",     default: false
     t.index ["parent_id"], name: "index_catalogs_on_parent_id", using: :btree
   end
 

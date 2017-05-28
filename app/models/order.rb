@@ -36,7 +36,7 @@ class Order < ApplicationRecord
       completed: 2   # 已完成
     }
   end
-  if Settings.project.dagle?
+  if Settings.project.grand?
     enum internal_status: {
       packing: 0,    # 拆分物料
       packed: 1,     # 完成拆分
@@ -79,10 +79,10 @@ class Order < ApplicationRecord
 
   # attr_accessor :mobile_phone, :member_name
   #
-  if Settings.project.dagle?
+  if Settings.project.grand?
     belongs_to :member
     validates_presence_of :member
-    validates_presence_of :delivery_date
+    # validates_presence_of :delivery_date
   end
 
   after_initialize do
@@ -94,7 +94,7 @@ class Order < ApplicationRecord
     if self.price.blank?
       self.price = 0
     end
-    if Settings.project.dagle?
+    if Settings.project.grand?
       self.user = self.member.user
     end
     # self.user = self.member.user
@@ -144,7 +144,7 @@ class Order < ApplicationRecord
   # end
 
   def generate_code
-    return if Settings.project.dagle? && self.code.present?
+    return if Settings.project.grand? && self.code.present?
     prefix = Time.now.strftime('%Y%m%d')
     number = self.class.where("code LIKE ?", prefix+'%').count
     loop do

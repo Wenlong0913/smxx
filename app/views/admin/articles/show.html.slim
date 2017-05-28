@@ -1,8 +1,8 @@
 h1.page-header
   | 查看#{Article.model_name.human}
   .pull-right
-    => link_to '编辑', edit_admin_community_article_path(@community, @article), class: 'btn btn-primary'
-    = link_to '返回', admin_community_articles_path(@community), class: 'btn btn-primary'
+    => link_to '编辑', @community ? edit_admin_community_article_path(@community, @article) : edit_admin_article_path(@article), class: 'btn btn-primary'
+    = link_to '返回', @community ? admin_community_articles_path(@community) : admin_articles_path, class: 'btn btn-primary'
 
 .panel
   .panel-heading
@@ -17,6 +17,10 @@ h1.page-header
         .table-responsive
           table.table.table-profile
             tr
+              td.field 公告类型
+              td
+                =enum_l(@article, :article_type)
+            tr
               td.field 公告标题
               td
                 =@article.title
@@ -24,6 +28,13 @@ h1.page-header
               td.field 发布人
               td
                 =@article.user.try(:nickname)
+            tr
+              td.field 是否置顶
+              td
+                - if @article.is_top == true
+                  | 是
+                - else
+                  | 否
             tr
               td.field 标签
               td
