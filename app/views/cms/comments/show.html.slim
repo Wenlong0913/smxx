@@ -2,8 +2,9 @@
   h2
     | 站点管理
     .pull-right
-      => link_to '返回', cms_site_path(@cms_site), class: 'btn btn-default'
-      = link_to '修改', edit_cms_site_comment_path(@cms_site, @cms_comment), class: 'btn btn-success'
+      => link_to '修改', edit_cms_site_comment_path(@cms_site, @cms_comment), class: 'btn btn-success'
+      => link_to '返回', cms_site_comments_path(@cms_site), class: 'btn btn-default'
+
   .panel
     .panel-heading
       .panel-heading-btn
@@ -13,8 +14,10 @@
           i class="fa fa-minus"
     .panel-body
       p
-        = @cms_comment.contact
+        = link_to @cms_comment.contact, 'tel:' + @cms_comment.contact.to_s
       p
         = @cms_comment.content
       p
-        = @cms_comment.features
+        - @cms_comment.features.values.compact.each do |v|
+          = v
+          | ,&nbsp;

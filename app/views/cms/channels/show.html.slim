@@ -33,10 +33,4 @@
           h4 栏目页面
         .panel-body
 
-          - if @cms_pages.empty?
-            .panel-body
-              p
-                | 该栏目没有任何页面，
-                = link_to '点击这里添加!', new_cms_site_channel_page_path(@cms_site, @cms_channel)
           = render 'cms/pages/list'
-          = paginate @cms_pages

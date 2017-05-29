@@ -1,46 +1,14 @@
-<div class="bg-colors" data-colors="#568CD3,#D3744C,#389E86,#9356D3,#D35D56,#587EA0,#518E7E"></div>
-<% if @share_message.class == User %>
+<%= render file: @cms_site.template_dir + '_header.html' %>
 
-  <%= render file: '/frontend/share/user.html.erb' %>
-
-<% elsif @share_message.class == Cms::Site %>
-
-  <%= render file: '/frontend/share/cms_site.html.erb' %>
-
-<% elsif @share_message.class == Community %>
-
-  <%= render file: '/frontend/share/community.html.erb' %>
-
-<% elsif @share_message.class == Product %>
-
-  <%= render file: '/frontend/share/product.html.erb' %>
-
-<% else %>
-<div class="media" style="position: fixed;z-index: 9; margin-top: 0px;padding: 0.5em;background-color: rgba(255, 255, 255, .1);">
-  <div class="media-left">
-    <img src="<%= @cms_site.value_for(:logo) %>" alt="<%= @cms_site.description %>" width= '30px' height= '30px'>
-  </div>
-  <div class="media-body">
-    <h4 class="media-heading">
-      <%= @cms_site.name %>
-      邀请您注册
-    </h4>
-  </div>
-</div>
-  <div id="fullpage">
-    <section data-anchor="">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-6 col-sm-offset-6 col-md-5 col-md-offset-6">
-            <h1 class="heading text-center" data-animate-in="animateUpDown">陌邻，让邻里不再陌生!</h1>
-            <p class="delay_1" data-animate-in="animateUpDown">
-              陌邻APP提供小区邻友社交互动，提供全方位社区便民服务，通过人工智能，让周边服务，呼之即来。
-            </p>
-            <%= link_to '立即注册 >>', sign_up_path, class: 'btn btn-lg btn-primary delay_2' %>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-  <h1></h1>
+<% case @share_obj.class.to_s %>
+  <% when 'Site' %>
+    <%= render file: @cms_site.template_dir + '_share_site.html.erb' %>
+  <% when 'User' %>
+    <%= render file: @cms_site.template_dir + '_share_user.html.erb' %>
+  <% when 'Community' %>
+    <%= render file: @cms_site.template_dir + '_share_community.html.erb' %>
+  <% else %>
+    <%= render file: @cms_site.template_dir + '_share_default.html.erb' %>
 <% end %>
+
+<%= render file: @cms_site.template_dir + '_footer.html' %>

@@ -42,6 +42,7 @@ class Cms::Page < ApplicationRecord
     hide: "隐藏"
   }
 
+  default_scope -> {order(updated_at: :desc)}
   #最近新闻
   #eg: Cms::Page.recent(12, 12, :rand => true)
   #    Cms::Page.recent(1, 10, :channel => 'product-bed')

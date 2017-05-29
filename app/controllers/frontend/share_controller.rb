@@ -1,22 +1,11 @@
 class Frontend::ShareController < Frontend::BaseController
+  # share 可接受：user/order/community/product/site
+  # 实例：http://xxx.com/frontend/share/user/1
   def index
-
-    if params[:class].present? && params[:id].present?
-
-      if params[:class] == 'User'
-          @share_message = User.where(id: params[:id]).first
-      end
-
-      if params[:class] == 'Community'
-        @share_message = Community.where(id: params[:id]).first
-      end
-
-      if params[:class] == 'Product'
-        @share_message = Product.where(id: params[:id]).first
-      end
-
-    else
-      @share_message = @cms_site
+    begin
+      @share_obj = eval("::#{params[:class].capitalize}.find_by(id: #{params[:id]})")
+    rescue
+      @share_obj = @cms_site
     end
   end
 end
