@@ -60,10 +60,12 @@ class Cms::Page < ApplicationRecord
   end
 
   def thumb_image_path
+    return if image_path.blank?
     self.image_path.sub(/content|original/, 'thumb')
   end
 
   def original_image_path
+    return if image_path.blank?
     self.image_path.sub(/content|thumb/, 'original')
   end
 
