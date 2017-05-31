@@ -14,6 +14,9 @@ class CmsController < ApplicationController
   # 1. a URL query must has channel except root
   # 2. If has page, the channel is page.channel, not care the params
   def index
+    if request.original_url =~ /http:\/\/www.imolin.cn/share/i
+      return redirect_to "http://www.imolin.cn/frontend/share/sites/378764"
+    end
     #page first, then channel ?
     if params[:id]
       @page = Cms::Page.joins(:channel).where("cms_channels.site_id = ? and cms_pages.id = ?", @cms_site.id, params[:id]).first
