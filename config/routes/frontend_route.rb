@@ -44,7 +44,7 @@ module FrontendRoute
       namespace :frontend do
         get 'users/show'
         get 'home/index'
-        get 'share/index'
+        match 'share/(:class/:id)', to: "share#index", via: :get
         resources :products
         resources :orders do
           collection do

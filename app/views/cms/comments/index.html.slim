@@ -1,6 +1,6 @@
 .container
   h2
-    | 站点管理
+    | 留言管理
     .pull-right
       => link_to '返回', cms_site_path(@cms_site), class: 'btn btn-default'
   .panel
@@ -14,23 +14,31 @@
       table.table.table-stripped
         thead
           tr
-            th
+            th 联系方式
             th 留言内容
-            th 其他信息
-            th 操作
+            th
 
         tbody
           - @cms_comments.each do |cms_comment|
             tr
               td
+                h3
+                  = link_to cms_comment.contact, 'tel:' + cms_comment.contact.to_s
                 = distance_of_time_in_words_to_now(cms_comment.created_at)
                 | 前
-              td = cms_comment.contact
-              td = cms_comment.content
-              td = cms_comment.features
+                p.badge
+                  = cms_comment.status
+              td
+                = cms_comment.content
+                p
+                  - cms_comment.features.values.compact.each do |v|
+                    = v
+                    | ,
+
               td.text-right
-                => link_to '详情', cms_site_comment_path(@cms_site, cms_comment)
-                => link_to '修改', edit_cms_site_comment_path(@cms_site, cms_comment)
-                => link_to '删除', cms_site_comment_path(@cms_site, cms_comment), data: { confirm: '确定要删除吗?' }, method: :delete
+
+                => link_to '详情', cms_site_comment_path(@cms_site, cms_comment), class: 'btn btn-sm btn-success'
+                => link_to '修改', edit_cms_site_comment_path(@cms_site, cms_comment), class: 'btn btn-sm btn-info'
+                => link_to '删除', cms_site_comment_path(@cms_site, cms_comment), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-sm btn-danger'
 
       br

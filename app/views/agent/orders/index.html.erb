@@ -72,7 +72,7 @@
                               <% if Settings.project.sxhop? %>
                                 <%= order.user.try(:nickname) %>
                               <% else %>
-                                <%= order.member.try(:name)%>
+                                <%= order.try(:member).try(:name)%>
                               <% end%>
                             </a>
                           </div>
@@ -116,7 +116,7 @@
                             <%= link_to '点击确认收货', agent_order_path(order), method: :put, remote: true, data: {confirm: '确定收货吗?'}, class: 'label label-danger order-status', style: 'padding: 8px 10px' %>
                           <% else %>
                             <span class="label label-info" style="padding: 8px 10px">
-                              <%= decorate(order).display_internal_status %>
+                              <%= decorate(order).display_status %>
                             </span>
                           <% end %>
                         <% end %>

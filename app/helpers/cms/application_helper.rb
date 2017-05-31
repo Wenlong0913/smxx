@@ -40,7 +40,7 @@ module Cms::ApplicationHelper
   #默认调用方法：get_menu(@cms_site, 'product')
   #level: 显示的层级深度，默认为2级；如果要显示3级，则调用：get_menu(@cms_site, 'product', 3)
   def get_menu(cms_site, channel_title_or_short_title, opt={})
-    level = opt[:level].to_i || 1
+    level = opt[:level].to_i || 2
     parent_channel = cms_site.channels.find_by(short_title: channel_title_or_short_title)
     parent_channel ||= cms_site.channels.find_by(title: channel_title_or_short_title)
     return [] if parent_channel.nil?
@@ -61,6 +61,24 @@ module Cms::ApplicationHelper
     else
       %{<li><a class="#{opt[:css]}" href="#{get_cms_url(parent_channel)}">#{parent_channel.title}</a></li>}.html_safe
     end
+  end
+
+  #把ckeditor内容里面的图片地址全部查询出来，包括宽高
+  #<img alt="" src="/ckeditor/pictures/148/original.jpg" style="width: 640px; height: 427px;" />
+  #=> {src: "/ckeditor/pictures/148/original.jpg", alt: 'hello', width: "640", height: "427"}
+  def get_images_from_content(content)
+    photos = []
+    return photos if content.blank?
+    Nokogiri::HTML(content).search("img").each do |img|
+      next if img['src'].blank?
+      photo = {}
+      photo['src'] = img['src']
+      photo['alt'] = img['alt']
+      photo['width'] = $1.to_i if img['style'] =~ /width: (\d+)/i
+      photo['height'] = $1.to_i if img['style'] =~ /height: (\d+)/i
+      photos << photo
+    end
+    return photos
   end
 
 end

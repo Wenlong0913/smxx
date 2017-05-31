@@ -65,13 +65,6 @@
 
                       </label>
 
-                      <label  style="margin: 15px 0px; font-size: 12px; color: #9e9e9e;">
-                        销量:
-                        <%= @product.month_number %>(/月)
-                      </label>
-
-
-
                       <!-- 支付测试 -->
                       <%#= current_user.id %>
                       <% if current_user.present? %>
@@ -85,10 +78,10 @@
                             <%= hidden_field_tag "order[order_products][][price]", @product.price %>
                             <% end %>
                            <% end %>
-                          <%= f.submit '提交订单', style: 'padding: 6px 10px; background-color: #d12630; color: #fff;', class: 'pinterest' %>
+                          <%= f.submit '购买', style: 'padding: 6px 10px; background-color: #d12630; color: #fff;', class: 'pinterest' %>
                         <% end %>
                       <% else %>
-                        请登录后购买
+                        <%= link_to '购买', agent_sign_in_path, class: 'pinterest', style: 'display: inline-block; padding: 6px 10px; background-color: #d12630; color: #fff;margin: 30px 0px;' %>
                       <% end %>
 
                       <div class="formOther">
@@ -104,7 +97,7 @@
         											<a href="#" class="gplus" style="background-color: green;"><span class="fa fa-weixin fa-lg"></span></a>
         										</li>
         										<li>
-        											<a href="#" class="pinterest"><span class="fa fa-weibo fa-lg"></span></a>
+        											<a href="#" class="gplus"><span class="fa fa-weibo fa-lg"></span></a>
         										</li>
         									</ul>
         								</div>

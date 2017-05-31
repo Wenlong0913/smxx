@@ -1,11 +1,4 @@
-<div class="page-header">
-  <div class="container-fluid">
-    <h1>
-      订单查询系统
-      <%= link_to '返回官网', nil ,style: 'float: right;' %>
-    </h1>
-  </div>
-</div>
+<%= render file: @cms_site.template_dir + '_header.html.erb'  %>
 
 <div class="container text-center">
   <div class="row" style="margin-top: 30px;">
@@ -29,7 +22,7 @@
     <div class="col-md-4"></div>
   </div>
 
-  <div class="row" style="margin-top:30px;">
+  <!-- <div class="row" style="margin-top:30px;">
     <div class="col-md-3"></div>
     <div class="col-md-6 text-center">
       <p class="text-center">
@@ -37,6 +30,7 @@
       </p>
     </div>
     <div class="col-md-3"></div>
-  </div>
+  </div> -->
 
 </div>
+<%= render file: @cms_site.template_dir + '_footer.html.erb'  %>

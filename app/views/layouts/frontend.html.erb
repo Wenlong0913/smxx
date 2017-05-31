@@ -18,6 +18,7 @@
     <meta name="description" content="<%= @meta_description.present? ? @meta_description : yield(:meta_description) %>">
 
     <%= render file: @cms_site.template_dir + '_head.html' %>
+    <%= stylesheet_link_tag :frontend %>
     <%= javascript_include_tag :frontend %>
     <%= csrf_meta_tags %>
   </head>

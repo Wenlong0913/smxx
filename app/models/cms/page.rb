@@ -42,6 +42,7 @@ class Cms::Page < ApplicationRecord
     hide: "隐藏"
   }
 
+  default_scope -> {order(updated_at: :desc)}
   #最近新闻
   #eg: Cms::Page.recent(12, 12, :rand => true)
   #    Cms::Page.recent(1, 10, :channel => 'product-bed')
@@ -59,11 +60,13 @@ class Cms::Page < ApplicationRecord
   end
 
   def thumb_image_path
-    self.image_path.sub(/content|original/, 'thumb')
+    return if image_path.blank?
+    self.image_path.sub(/content|medium|original/, 'thumb')
   end
 
   def original_image_path
-    self.image_path.sub(/content|thumb/, 'original')
+    return if image_path.blank?
+    self.image_path.sub(/content|medium|thumb/, 'original')
   end
 
   def show_image
@@ -92,8 +95,8 @@ class Cms::Page < ApplicationRecord
 
  #set image_path to thumb
  def set_thumb_image_path
-   if image_path =~ /\/(content|original)\./
-     image_path.sub!(/\/(content|original)\./, '/thumb.')
+   if image_path =~ /\/(content|medium|original)\./
+     image_path.sub!(/\/(content|medium|original)\./, '/thumb.')
    end
  end
 

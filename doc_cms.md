@@ -119,7 +119,22 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
 公共方法：
 
     get_date(date)
-    get_cms_url(obj, params = {}) #obj: Cms::Page, Cms::Channel, String(short_title)
+
+    #obj: Cms::Page, Cms::Channel, String(short_title)
+    # get_cms_url(obj)
+    # get_cms_url('short_title')
+    get_cms_url(obj, params = {})
+
+
+    #前台获得下拉列表菜单
+    #默认调用方法：get_menu(@cms_site, 'product')
+    #level: 显示的层级深度，默认为2级；如果要显示3级，则调用：get_menu(@cms_site, 'product', 3)
+    get_menu(cms_site, channel_title_or_short_title, opt={})
+
+    把ckeditor内容里面的图片地址全部查询出来，包括宽高
+    #<img alt="" src="/ckeditor/pictures/148/original.jpg" style="width: 640px; height: 427px;" />
+    #=> {src: "/ckeditor/pictures/148/original.jpg", alt: 'hello', width: "640", height: "427"}
+    get_images_from_content(content)
 
 引用实例：
 
@@ -131,6 +146,11 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
     <% @channel.pages.where("'recommend' = ANY(properties)").each do |page| %>
 
     <%= paginate @pages, remote: true %>
+
+    <% Cms::Page.recent(@cms_site.id, 12, :rand => true) %>
+    <% Cms::Page.recent(@cms_site.id, 10, :channel => 'product-bed') %>
+
+    <%= distance_of_time_in_words_to_now(site.updated_at) %>前
 
 ### helper 方法
 

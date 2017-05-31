@@ -23,7 +23,7 @@
               a href="/agent"  首页
             li.dropdown.dropdown-hover
               a data-toggle="dropdown" href="javascript:void(0);"
-                | 产品
+                | 产品管理
                 i.fa.fa-angle-down
                 span.arrow.top
               ul.dropdown-menu
@@ -31,7 +31,7 @@
                 li = link_to '发布新品', new_agent_product_path, 'data-turbolinks': false
             li.dropdown.dropdown-hover
               a data-toggle="dropdown" href="javascript:void(0);"
-                | 订单
+                | 订单管理
                 i.fa.fa-angle-down
                 span.arrow.top
               ul.dropdown-menu
@@ -52,7 +52,7 @@
                       | &nbsp;新建任务
               li.dropdown.dropdown-hover
                 a data-toggle="dropdown" href="#"
-                  | 货运
+                  | 货运管理
                   i.fa.fa-angle-down
                   span.arrow.top
                 ul.dropdown-menu
@@ -68,20 +68,23 @@
 
             li.dropdown.dropdown-hover
               a data-toggle="dropdown" href="#"
-                | 网站
+                | 网站管理
                 i.fa.fa-angle-down
                 span.arrow.top
               ul.dropdown-menu
                 - if @site
                   - if @site.cms_site
-                    li = link_to '站点栏目', cms_site_path(@site.cms_site)
+                    li = link_to '网站设置', cms_site_path(@site.cms_site)
                     li = link_to '页面列表', cms_site_pages_path(@site.cms_site)
+                    li = link_to '留言管理', cms_site_comments_path(@site.cms_site)
+
                     li = link_to new_cms_site_page_path(@site.cms_site) do
                           i class="fa fa-plus-circle"
                           | &nbsp;添加页面
                   - else
                     li = link_to '添加站点', new_cms_site_path
-
+            li
+              = link_to '图片资源', agent_assets_index_path
             li.dropdown.dropdown-hover
               a data-toggle="dropdown" href="#"
                 | 访客统计
