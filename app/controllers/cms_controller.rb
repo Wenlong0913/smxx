@@ -15,7 +15,7 @@ class CmsController < ApplicationController
   # 2. If has page, the channel is page.channel, not care the params
   def index
     puts request.original_url
-    if request.original_url =~ /http:\/\/www.imolin.cn\/share/i
+    if request.original_url =~ /http:\/\/www.imolin.cn\/share\/.*/i
       return redirect_to "http://www.imolin.cn/frontend/share/sites/378764"
     end
     #page first, then channel ?
