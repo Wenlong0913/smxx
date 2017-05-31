@@ -21,17 +21,13 @@
             i.fa.fa-sign-in
       .login-content
 
-        .login-buttons.m-b-30.m-t-30.weixin-login[data-session-url=new_users_weixins_sessions_path data-verify-url=status_users_weixins_sessions_path data-qrcode-img-url=new_users_weixins_sessions_path(format: 'png')]
+        .login-buttons.m-b-30.m-t-30
             button.btn.btn-success.btn-block.btn-lg[data-toggle='modal' data-target='#mobile_login_modal'] 手机号登录
-            button.btn.btn-primary.btn-block.btn-lg[@click="showModal = true" v-show="false"]
+            button#weixin-login.btn.btn-primary.btn-block.btn-lg
               |微信扫码登录
-            modal[title="打开微信扫一扫登录" :show="showModal" @cancel="showModal = false"]
-              div
-                div[v-if="showImage" class="text-center"]
-                  h3
-                    |{{message}}
-                  img[:src="weixinQrcode"]
-              div[slot="footer"]
+        .weixin-login-container.hide[data-session-url=admin_sign_in_with_weixin_url data-verify-url='http://wxopen.tanmer.com/wx/mp_auth/qrcode/wx4c40bb18df07aafc.json']
+          img.weixin-login-qrcode
+          p.weixin-login-message
         hr
         p.text-center.text-inverse
           = Settings.site.copyright

@@ -5,6 +5,9 @@ module AdminRoute
         get "/static_pages/*id" => 'static_pages#show', as: :page, format: false
         get '/', to: 'home#index', as: :root
         get 'sign_in', to: 'sessions#new'
+        post 'sign_in_with_weixin', to: 'sessions#weixin_login', as: 'sign_in_with_weixin'
+        get 'profile', to: 'profile#show'
+        post 'profile/connect_weixin', to: 'profile#connect_weixin'
         namespace :tracker do
           get '/', to: 'home#index'
           namespace :visits do

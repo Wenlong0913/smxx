@@ -77,6 +77,9 @@
         = link_to admin_keystores_path do
           = fa_icon 'key', text: '参数管理'
       li
+        = link_to admin_profile_path do
+          = fa_icon 'key', text: '我的用户信息'
+      li
         = link_to sign_out_path, method: :delete do
           = fa_icon 'sign-out', text: '退出系统'
       /! begin sidebar minify button
