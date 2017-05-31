@@ -4,7 +4,7 @@ module AppAPI::V1
     resources :articles do
 
       desc "发布文章" do
-        success AppAPI::Entities::Article 
+        success AppAPI::Entities::Article
       end
       params do
         requires :description, type: String, desc: '文章内容'
@@ -39,7 +39,7 @@ module AppAPI::V1
       end
       get do
         authenticate!
-        articles = 
+        articles =
             case params[:type]
             when 'owner' then current_user.articles
             else
@@ -71,8 +71,14 @@ module AppAPI::V1
       end
       delete ':id' do
         authenticate!
-        article = ::Article.find(params[:id]).destroy
-        present article, with: AppAPI::Entities::Article
+        article = ::Article.find(params[:id])
+        if (article.user.id == current_user.id && article.created_at < 5.minutes.ago) ||
+          current_user.permission?(:manage_article)
+          article.destroy
+          present article, with: AppAPI::Entities::Article
+        else
+          error! '没有删除权限'
+        end
       end
 
       desc '文章评论' do
@@ -137,7 +143,7 @@ module AppAPI::V1
         else
           error! article.errors
         end
-      end  
+      end
 
     end # end of resources
   end
