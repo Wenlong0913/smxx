@@ -136,7 +136,7 @@
                         <span class="blog-format-audio" style="background-color: #5cb85c;padding: 0px 5px;">免费</span>
                       <% end %>
                       <% if product.image_items.size.to_i >= 1 %>
-                        <%= image_tag(product.image_items.first.medium_image_url)%>
+                        <%= image_tag(product.image_items.first.content_image_url)%>
                       <% else %>
                         <%= image_tag('/templetes/eqxiyi/images/a1.jpg')%>
                       <% end %>

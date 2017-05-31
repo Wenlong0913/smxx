@@ -61,12 +61,12 @@ class Cms::Page < ApplicationRecord
 
   def thumb_image_path
     return if image_path.blank?
-    self.image_path.sub(/content|original/, 'thumb')
+    self.image_path.sub(/content|medium|original/, 'thumb')
   end
 
   def original_image_path
     return if image_path.blank?
-    self.image_path.sub(/content|thumb/, 'original')
+    self.image_path.sub(/content|medium|thumb/, 'original')
   end
 
   def show_image
@@ -95,8 +95,8 @@ class Cms::Page < ApplicationRecord
 
  #set image_path to thumb
  def set_thumb_image_path
-   if image_path =~ /\/(content|original)\./
-     image_path.sub!(/\/(content|original)\./, '/thumb.')
+   if image_path =~ /\/(content|medium|original)\./
+     image_path.sub!(/\/(content|medium|original)\./, '/thumb.')
    end
  end
 

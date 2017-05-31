@@ -83,7 +83,8 @@
                           | &nbsp;添加页面
                   - else
                     li = link_to '添加站点', new_cms_site_path
-
+            li
+              = link_to '图片资源', agent_assets_index_path
             li.dropdown.dropdown-hover
               a data-toggle="dropdown" href="#"
                 | 访客统计

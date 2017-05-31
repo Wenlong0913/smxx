@@ -4,6 +4,10 @@ module AgentBackendRoute
       namespace :agent do
         get '/', to: 'home#index', as: :root
         get 'sign_in', to: 'sessions#new'
+        get 'assets/index'
+        get 'assets/intranet_images'
+        get 'assets/extranet_images'
+
         resources 'sites'
         resources 'products' do
           commentable
