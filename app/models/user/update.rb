@@ -24,9 +24,10 @@ class User
       end
 
       if mobile_phone
-        user.mobile.phone_number = mobile_phone
-        flag = user.mobile.save
-        user.errors.add :mobile_phone, user.mobile.errors.full_messages.join(', ') unless flag
+        mobile = user.mobile || user.build_mobile
+        mobile.phone_number = mobile_phone
+        flag = mobile.save
+        user.errors.add :mobile_phone, mobile.errors.full_messages.join(', ') unless flag
       end
 
       unless attributes[:password].present?
