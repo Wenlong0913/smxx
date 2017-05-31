@@ -47,11 +47,7 @@
                 <li>
                   <!-- begin media -->
                   <div class="media">
-                    <% if Settings.project.sxhop? %>
-                      <%= link_to image_tag(order.order_products.first.product.image_items.first.try(:image_url) || 'no-picture.png'), agent_order_path(order) %>
-                    <% else %>
-                      <%= image_tag ('gelan.jpg') %>
-                    <% end %>
+
                   </div>
                   <!-- end media -->
                   <!-- begin info-container -->
@@ -69,7 +65,7 @@
                           <div class="col-xs-6">
                             客户：
                             <a href="">
-                              <% if Settings.project.sxhop? %>
+                              <% if Settings.project.sxhop? || Settings.project.imolin? %>
                                 <%= order.user.try(:nickname) %>
                               <% else %>
                                 <%= order.try(:member).try(:name)%>
@@ -78,7 +74,7 @@
                           </div>
                           <div class="col-xs-6">
                             物流:
-                            <% if Settings.project.sxhop? %>
+                            <% if Settings.project.sxhop?  || Settings.project.imolin?%>
                               <%= order.order_deliveries.first.logistics_name + '(' + order.order_deliveries.first.logistics_number + ')' unless order.order_deliveries.first.try(:logistics_name).blank? %>
                             <% elsif Settings.project.grand? %>
                               <% unless order.order_deliveries.blank? %>
@@ -101,7 +97,7 @@
                         <%= order.created_at.strftime("%H:%M:%S") %>
                       </div>
                       <div class="order-status-display">
-                        <% if Settings.project.sxhop? %>
+                        <% if Settings.project.sxhop? || Settings.project.imolin? %>
                           <!-- sxhop -->
                           <span class="label label-info" style="padding: 8px 10px">
                             <%= decorate(order).display_status %>

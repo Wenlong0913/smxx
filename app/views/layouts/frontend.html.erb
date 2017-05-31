@@ -20,6 +20,7 @@
     <%= render file: @cms_site.template_dir + '_head.html' %>
     <%= stylesheet_link_tag :frontend %>
     <%= javascript_include_tag :frontend %>
+    <%= yield(:head) %>
     <%= csrf_meta_tags %>
   </head>
 
