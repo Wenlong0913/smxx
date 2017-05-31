@@ -77,6 +77,30 @@ module AppAPI::V1
         present :parents, extra_comments, with: AppAPI::Entities::Comment
       end
 
+      desc "#{ Settings.project.imolin? ? '公告' : '文章' }评论列表" do
+        success AppAPI::Entities::Comment.collection
+      end
+      params do
+        requires :article_id, type: Integer, desc: "#{ Settings.project.imolin? ? '公告' : '文章' }ID"
+        use :pagination
+        use :sort, fields: [:created_at]
+      end
+      get 'article' do
+        article = ::Article.find_by(id: params[:article_id])
+        error! "该#{ Settings.project.imolin? ? '公告' : '文章' }不存在" unless article
+
+        # 该文章/公告的所有评论
+        comments = ::Comment::Entry.where(resource: article)
+        # 当前页的评论
+        comments = paginate_collection(sort_collection(comments), params)
+        # 获取需要额外加载的父级评论类容
+        extra_ids = (comments.pluck(:parent_id).uniq - comments.pluck(:id)).compact
+        extra_comments = ::Comment::Entry.where("id in (?)", extra_ids)
+        
+        wrap_collection(comments, AppAPI::Entities::Comment, options={})
+        present :parents, extra_comments, with: AppAPI::Entities::Comment
+      end
+
       desc '评论点赞'
       params do
         requires :id, type: Integer, desc: "评论ID"
