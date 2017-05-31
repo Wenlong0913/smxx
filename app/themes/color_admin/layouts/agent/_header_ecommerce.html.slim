@@ -1,0 +1,17 @@
+li.dropdown.dropdown-hover
+  a data-toggle="dropdown" href="javascript:void(0);"
+    | 产品管理
+    i.fa.fa-angle-down
+    span.arrow.top
+  ul.dropdown-menu
+    li = link_to '产品列表', agent_products_path
+    li = link_to '发布新品', new_agent_product_path, 'data-turbolinks': false
+li.dropdown.dropdown-hover
+  a data-toggle="dropdown" href="javascript:void(0);"
+    | 订单管理
+    i.fa.fa-angle-down
+    span.arrow.top
+  ul.dropdown-menu
+    /! sxhop/dagle 订单不同
+    li = link_to '订单列表', agent_orders_path
+    / li = link_to '订单创建', new_agent_order_path
