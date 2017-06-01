@@ -22,8 +22,27 @@ class MarketPage <  ApplicationRecord
   has_many :image_item_relations, as: :relation
   has_many :image_items, :through => :image_item_relations
   has_many :sales_distribution_resources, class_name: 'SalesDistribution::Resource', as: 'object'
+  before_save :set_content_image
 
   def value_for(title, *opt)
     self.features[title] if self.features
   end
+
+  def set_content_image
+   doc = Nokogiri::HTML(content)
+   begin
+     doc.search("img").each do |img|
+       img.remove_attribute("style")
+       if img.attributes["class"].nil?
+         img.set_attribute("class", "img-responsive")
+       elsif (val = img.attribute("class").value) !~ /img-responsive/
+         img.set_attribute("class", "#{val} img-responsive")
+       end
+     end
+   rescue => ex
+     puts ex.message
+   end
+   self.content = doc.at("body").inner_html
+ end
+
 end
