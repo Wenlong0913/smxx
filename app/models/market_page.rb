@@ -29,6 +29,7 @@ class MarketPage <  ApplicationRecord
   end
 
   def set_content_image
+   return if content.blank?
    doc = Nokogiri::HTML(content)
    begin
      doc.search("img").each do |img|
