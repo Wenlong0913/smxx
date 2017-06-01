@@ -60,7 +60,7 @@ module AppAPI::V1
       end
       get ':id' do
         authenticate!
-        present ::Article.find(params[:id]), with: AppAPI::Entities::Article, includes: ['description'], user_id: current_user.id
+        present ::Article.find(params[:id]), with: AppAPI::Entities::Article, includes: ['description', 'comments'], user_id: current_user.id
       end
 
       desc '删除文章' do
