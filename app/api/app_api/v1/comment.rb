@@ -29,20 +29,30 @@ module AppAPI::V1
         end
       end
 
-      desc '商品评论列表' do
+      desc '评论列表' do
         success AppAPI::Entities::Comment.collection
       end
       params do
-        requires :id, type: Integer, desc: '产品ID'
+        requires :resource_id, type: Integer, desc: '资源ID'
+        requires :resource_type, type: String, values: ['product', 'site', 'article'], desc: '资源类型'
         use :pagination
         use :sort, fields: [:created_at]
       end
       get do
-        product = ::Product.find_by(id: params[:id])
-        error! '该产品不存在' unless product
+        resource = case params[:resource_type]
+        when 'product'
+          ::Product.find_by(id: params[:resource_id])
+        when 'site'
+          ::Site.find_by(id: params[:resource_id])
+        when 'article'
+          ::Article.find_by(id: params[:resource_id])
+        else
+          error! '传入的资源错误'
+        end
+        error! '该资源不存在' unless resource
 
         # 该商品的所有评论
-        comments = product.comments
+        comments = resource.comments
         # 当前页的评论
         comments = paginate_collection(sort_collection(comments), params)
         # 获取需要额外加载的父级评论类容
@@ -50,30 +60,6 @@ module AppAPI::V1
         extra_comments = ::Comment::Entry.where("id in (?)", extra_ids)
         
         wrap_collection(comments, AppAPI::Entities::Comment, options={user_id: (current_user.id rescue nil)})
-        present :parents, extra_comments, with: AppAPI::Entities::Comment
-      end
-
-      desc '店铺评论列表' do
-        success AppAPI::Entities::Comment.collection
-      end
-      params do
-        requires :site_id, type: Integer, desc: '店铺ID'
-        use :pagination
-        use :sort, fields: [:created_at]
-      end
-      get 'site' do
-        site = ::Site.find_by(id: params[:site_id])
-        error! '该店铺不存在' unless site
-
-        # 该店铺的所有评论
-        comments = ::Comment::Entry.where(resource: site)
-        # 当前页的评论
-        comments = paginate_collection(sort_collection(comments), params)
-        # 获取需要额外加载的父级评论类容
-        extra_ids = (comments.pluck(:parent_id).uniq - comments.pluck(:id)).compact
-        extra_comments = ::Comment::Entry.where("id in (?)", extra_ids)
-        
-        wrap_collection(comments, AppAPI::Entities::Comment, options={})
         present :parents, extra_comments, with: AppAPI::Entities::Comment
       end
 

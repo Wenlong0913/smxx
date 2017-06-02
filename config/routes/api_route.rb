@@ -5,11 +5,11 @@ module ApiRoute
       # Grape API
       constraints ApiSubdomain do
         mount AppAPI::Root => '/'
-        if Rails.env.development?
-          mount GrapeSwaggerRails::Engine => '/'
-        else
-          root to: redirect('/not_found')
-        end
+        # if Rails.env.development?
+          mount GrapeSwaggerRails::Engine => '/tm-docs'
+        # else
+          # root to: redirect('/not_found')
+        # end
       end
       namespace :api do
         get '/', to: "home#index"
