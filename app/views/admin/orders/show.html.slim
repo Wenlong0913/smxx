@@ -121,9 +121,9 @@ h1.page-header
                   
                 - @order.order_materials.each do |order_material|
                   tr
-                    td = order_material.material.catalog.name
-                    td = order_material.material.name
-                    td = "#{order_material.amount}#{order_material.material.unit}"
+                    td = order_material.material.blank? ? nil : (order_material.material.catalog.blank? ? '该物料还未分类' : order_material.material.catalog.name )
+                    td = order_material.material.blank? ? '该物料已被删除' : order_material.material.name
+                    td = "#{order_material.amount}#{order_material.material.unit unless order_material.material.blank?}"
                     td
                       => link_to '修改', edit_admin_order_material_path(@order, order_material), class: 'btn btn-xs btn-default'
                       => link_to '删除', admin_order_material_path(@order, order_material), class: 'btn btn-xs btn-danger', method: :delete
