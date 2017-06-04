@@ -1,0 +1,9 @@
+default: &default
+  site_share_url_pattern: 'http:/localhost:3000/desktop/share/sites/:id'
+development:
+  <<: *default
+test:
+  <<: *default
+production:
+  <<: *default
+  site_share_url_pattern: 'http://www.imolin.cn/desktop/share/sites/:id'
