@@ -23,6 +23,6 @@ module AppAPI::V1
     mount AppAPI::V1::Community
     mount AppAPI::V1::AddressBook
     mount AppAPI::V1::SalesDistribution
-    mount AppAPI::V1::Settings
+    mount AppAPI::V1::AppSettings
   end
 end

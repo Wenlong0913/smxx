@@ -1,7 +1,7 @@
 module AppAPI::V1
-  class Settings < Grape::API
+  class AppSettings < Grape::API
     helpers AppAPI::SharedParams
-    resources :settings do
+    resources :app_settings do
 
       desc 'App配置信息'
       get do
