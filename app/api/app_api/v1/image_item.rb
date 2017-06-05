@@ -12,7 +12,8 @@ module AppAPI::V1
       #  -F images[][file]=@"logo.png"  'http://api.lvh.me:5000/v1/image_items'
       params do
         if Settings.project.imolin?
-          requires :images, type: Array
+          optional :images, type: Array
+          optional :file, :type => Rack::Multipart::UploadedFile, :desc => "单图片上传"
         else
           requires :images, type: Array do
             requires :file, :type => Rack::Multipart::UploadedFile, :desc => "多图片上传"
@@ -21,8 +22,11 @@ module AppAPI::V1
       end
       post do
         authenticate!
-        images = []
-        if params[:images]
+        if params[:file]
+          image = ::ImageItem.create(image: ActionDispatch::Http::UploadedFile.new(params[:file]), owner: current_user)
+          present image, with: AppAPI::Entities::ImageItem
+        elsif params[:images]
+          images = []
           if Settings.project.imolin?
             params[:images].each do |image|
               StringIO.open(Base64.decode64(image)) do |data|
@@ -38,8 +42,8 @@ module AppAPI::V1
               images << ::ImageItem.create(image: ActionDispatch::Http::UploadedFile.new(file[:file]), owner: current_user)
             end
           end
-        end
-        present images, with: AppAPI::Entities::ImageItem        
+          present images, with: AppAPI::Entities::ImageItem       
+        end 
       end
 
     end # end of resources
