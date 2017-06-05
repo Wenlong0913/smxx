@@ -80,7 +80,7 @@ h1.page-header
                 - if Settings.project.imolin?
                   => site.address_line
                 - else
-                  => site.user.nickname
+                  => site.user.try(:nickname)
               - if Settings.project.meikemei?
                 td = site.contact_name
                 td = site.contact_phone

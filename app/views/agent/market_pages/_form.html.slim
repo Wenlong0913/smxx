@@ -37,7 +37,7 @@
           small
             | (手机全屏推荐大小：640x1136px)
         image-select[server="#{image_items_path}" rel="vue"  name="market_page[image_item_ids][]" selected-ids="#{@market_page.image_item_ids.join(', ')}"]
-      p
+      div.hidden
         = f.input :content, as: :ckeditor
       p
         = f.submit '提交保存', class: 'btn btn-success btn-lg'

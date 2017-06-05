@@ -1,7 +1,7 @@
 default: &default
   site:
     name: 探码CMS系统
-    host: http://www.raincms.cn
+    host: http://www.lvh.me:5000
     copyright: © TMF All Right Reserved 2015
     description:
     slogan:

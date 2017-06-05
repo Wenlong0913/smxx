@@ -128,12 +128,16 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
 
     #前台获得下拉列表菜单
     #默认调用方法：get_menu(@cms_site, 'product')
+
     #level: 显示的层级深度，默认为2级；如果要显示3级，则调用：get_menu(@cms_site, 'product', 3)
+
     get_menu(cms_site, channel_title_or_short_title, opt={})
 
     把ckeditor内容里面的图片地址全部查询出来，包括宽高
     #<img alt="" src="/ckeditor/pictures/148/original.jpg" style="width: 640px; height: 427px;" />
+
     #=> {src: "/ckeditor/pictures/148/original.jpg", alt: 'hello', width: "640", height: "427"}
+
     get_images_from_content(content)
 
 引用实例：
@@ -156,16 +160,16 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
 
 #### get_cms_url(obj, params = {})
 
-  获取链接路径, obj可以是Cms::Channel, Cms::Page, String(short_title)
+      获取链接路径, obj可以是Cms::Channel, Cms::Page, String(short_title)
 
 #### get_menu(cms_site, channel_title_or_short_title, opt={})
 
-  获取网站栏目菜单
+      获取网站栏目菜单
 
-  opt可以传：
+      opt可以传：
 
-  - level: 菜单层级，默认2，为两层
-  - css: 菜单a链接的class样式名称
+      - level: 菜单层级，默认2，为两层
+      - css: 菜单a链接的class样式名称
 
   实例：
 
@@ -174,6 +178,12 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
     <% @cms_site.channels.where('parent_id is null').each do |channel| %>
       <%= get_menu(@cms_site, channel.short_title,  css: 'smooth-scroll') %>
     <% end %>
+
+## 添加搜索框
+
+      <form action="<%= cms_frontend_search_path %>" method="get" class="widget_search">
+        <input type="search" placeholder="搜索信息..." id="s" name="search" class="form-control search-field">
+      </form>
 
 ## 添加表单
 

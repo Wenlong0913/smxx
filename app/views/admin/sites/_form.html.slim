@@ -26,7 +26,7 @@
                 input#search-address.form-control
               #baidu-map
       - else
-        - if Settings.project.grand?
+        - if Settings.project.grand? || Settings.project.cms?
           label[class="control-label"] 商家所有者
           select.select2.form-control[id="dropdown" name="site[user_id]" data-url="#{admin_users_url}"  data-id="#{@site.user_id}" data-name="#{User.find_by(id: @site.user).try(:nickname)}" ]
           = f.input :title
@@ -62,9 +62,9 @@
             .div class="col-md-6 col-sm-12"
               = f.input :sign_note, as: :text, input_html: {rows: 5}
           = f.input :content, as: :ckeditor
-          p 背景图片  
+          p 背景图片
           .form-group
-            image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@site.image_item_ids.join(', ')}"]        
+            image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@site.image_item_ids.join(', ')}"]
         - elsif Settings.project.sxhop?
           .row
             div class="col-md-6 col-sm-12"

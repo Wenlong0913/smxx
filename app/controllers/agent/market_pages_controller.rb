@@ -47,7 +47,7 @@ class Agent::MarketPagesController < Agent::BaseController
             url: agent_frontend_market_page_path(@site, @market_page),
             object: @market_page
           )
-          redirect_to agent_market_page_path(@market_page), notice: 'Market page 创建成功.'
+          redirect_to agent_market_page_path(@market_page), notice: '创建成功.'
         else
           render :new
         end
@@ -60,10 +60,11 @@ class Agent::MarketPagesController < Agent::BaseController
   def update
     authorize @market_page
     @market_page.features = params[:mpage]
+
     respond_to do |format|
       format.html do
         if @market_page.update(permitted_attributes(@market_page))
-          redirect_to agent_market_page_path(@market_page), notice: 'Market page 更新成功.'
+          redirect_to agent_market_page_path(@market_page), notice: '更新成功.'
         else
           render :edit
         end
@@ -76,7 +77,7 @@ class Agent::MarketPagesController < Agent::BaseController
     authorize @market_page
     @market_page.destroy
     respond_to do |format|
-      format.html { redirect_to agent_market_pages_url, notice: 'Market page 删除成功.' }
+      format.html { redirect_to agent_market_pages_url, notice: '删除成功.' }
       format.json { head 200 }
     end
 
