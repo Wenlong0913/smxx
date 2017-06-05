@@ -4,11 +4,11 @@ module AppAPI::V1
     resources :image_items do
 
       desc "图片上传" do
-        success AppAPI::Entities::ImageItem 
+        success AppAPI::Entities::ImageItem
       end
       # swagger 无法测试多图上传
       # 可以用如下方法测试
-      # curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: application/json' 
+      # curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: application/json'
       #  -F images[][file]=@"logo.png"  'http://api.lvh.me:5000/v1/image_items'
       params do
         if Settings.project.imolin?
@@ -27,7 +27,7 @@ module AppAPI::V1
             params[:images].each do |image|
               StringIO.open(Base64.decode64(image)) do |data|
                 data.class.class_eval { attr_accessor :original_filename, :content_type }
-                data.original_filename = "hedshot.jpg"
+                data.original_filename = "headshot.jpg"
                 data.content_type = "image/jpeg"
                 image = ::ImageItem.create(image: data, owner: current_user)
                 images << image
@@ -39,7 +39,7 @@ module AppAPI::V1
             end
           end
         end
-        present images, with: AppAPI::Entities::ImageItem        
+        present images, with: AppAPI::Entities::ImageItem
       end
 
     end # end of resources
