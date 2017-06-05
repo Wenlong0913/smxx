@@ -90,7 +90,7 @@ class Agent::MarketPagesController < Agent::BaseController
     end
 
     def set_market_templates
-      @market_templates = MarketTemplate.all
+      @market_templates = MarketTemplate.where(is_published: true)
     end
 
     # Only allow a trusted parameter "white list" through.

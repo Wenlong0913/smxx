@@ -7,7 +7,7 @@ class MarketTemplatePolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.has_role? :admin
-      [:catalog_id, :name, :base_path, :keywords, :description, :image_path, :html_source, :form_source]
+      [:catalog_id, :name, :base_path, :keywords, :description, :image_path, :is_published, :html_source, :form_source]
     else
       []
     end

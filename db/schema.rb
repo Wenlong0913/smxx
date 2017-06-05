@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170525102248) do
+ActiveRecord::Schema.define(version: 20170605025739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -589,16 +589,17 @@ ActiveRecord::Schema.define(version: 20170525102248) do
   end
 
   create_table "market_templates", force: :cascade do |t|
-    t.integer  "catalog_id",  null: false
-    t.string   "base_path",   null: false
-    t.string   "name",        null: false
+    t.integer  "catalog_id",                  null: false
+    t.string   "base_path",                   null: false
+    t.string   "name",                        null: false
     t.string   "keywords"
     t.string   "description"
     t.string   "image_path"
     t.text     "html_source"
     t.text     "form_source"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "is_published", default: true
     t.index ["catalog_id"], name: "index_market_templates_on_catalog_id", using: :btree
   end
 

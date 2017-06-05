@@ -13,6 +13,7 @@ zh-CN:
         image_path: 预览图
         html_source: Html源码
         form_source: Form源码
+        is_published: 是否发布
     errors:
       models:
         market_template:

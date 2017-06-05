@@ -20,6 +20,7 @@
       = f.input :description
       = f.input :image_path, hint: '图片尺寸推荐640x960px', input_html: {value: @market_template.image_path || '/templetes/market/snow/previews/demo-1.png'}
       = f.input :html_source, as: :text, input_html: {rows: 20}
+      = f.input :is_published
       p | 模板表单会根据html_source自动生成
       .form-group
         image-select[server="#{image_items_path}" name="market_template[image_item_ids][]" selected-ids="#{@market_template.image_item_ids.join(', ')}"]
