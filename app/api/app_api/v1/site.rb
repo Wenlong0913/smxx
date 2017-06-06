@@ -3,6 +3,21 @@ module AppAPI::V1
     helpers AppAPI::SharedParams
     resources :sites do
 
+      desc "获取定位小区附近#{::Site.model_name.human}列表" do
+        success AppAPI::Entities::SiteSimple.collection
+      end
+      params do
+        use :pagination
+      end
+      get 'near_by' do
+        authenticate!
+        error! '请先设置您的小区信息' unless current_user.current_community
+        community = current_user.current_community
+        sites = ::Site.near_by(lat: community.address_lat, lng: community.address_lng, distance: 5000)
+        sites = paginate_collection(sort_collection(sites), params)
+        wrap_collection sites, AppAPI::Entities::SiteSimple, includes: [:distance]
+      end
+
       desc "获取#{::Site.model_name.human}信息" do
         success AppAPI::Entities::Site
       end
@@ -49,23 +64,6 @@ module AppAPI::V1
           sites = sites.where("catalog_id = ?", params[:site_catalog_id])
           sites = sites.near_by(lat: community.address_lat, lng: community.address_lng, distance: 5000)
           # sites = sites.selecting_distance_from(community.address_lat, community.address_lng).order_by_distance(community.address_lat, community.address_lng)
-        end
-        sites = paginate_collection(sort_collection(sites), params)
-        wrap_collection sites, AppAPI::Entities::SiteSimple, includes: [:distance]
-      end
-
-      desc "获取定位小区附近#{::Site.model_name.human}列表" do
-        success AppAPI::Entities::SiteSimple.collection
-      end
-      params do
-        use :pagination
-      end
-      get '/near_by' do
-        authenticate!
-        sites = []
-        community = current_user.current_community
-        if community
-          sites = ::Site.near_by(lat: community.address_lat, lng: community.address_lng, distance: 5000)
         end
         sites = paginate_collection(sort_collection(sites), params)
         wrap_collection sites, AppAPI::Entities::SiteSimple, includes: [:distance]
