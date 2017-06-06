@@ -62,9 +62,11 @@ module AppAPI::V1
       end
       get '/near_by' do
         authenticate!
-        sites = ::Site.all
-        community = ::Community.find_by(id: current_user.current_community.id)
-        sites = sites.near_by(lat: community.address_lat, lng: community.address_lng, distance: 5000)
+        sites = []
+        community = current_user.current_community
+        if community
+          sites = ::Site.near_by(lat: community.address_lat, lng: community.address_lng, distance: 5000)
+        end
         sites = paginate_collection(sort_collection(sites), params)
         wrap_collection sites, AppAPI::Entities::SiteSimple, includes: [:distance]
       end
