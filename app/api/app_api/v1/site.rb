@@ -54,13 +54,13 @@ module AppAPI::V1
         wrap_collection sites, AppAPI::Entities::SiteSimple, includes: [:distance]
       end
 
-      desc "获取附近#{::Site.model_name.human}列表" do
+      desc "获取定位小区附近#{::Site.model_name.human}列表" do
         success AppAPI::Entities::SiteSimple.collection
       end
       params do
         use :pagination
       end
-      get '/near_by'do
+      get '/near_by' do
         authenticate!
         sites = ::Site.all
         community = ::Community.find_by(id: current_user.current_community.id)
