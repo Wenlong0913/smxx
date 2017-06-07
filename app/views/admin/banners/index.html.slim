@@ -75,7 +75,8 @@ h1.page-header
               td = banner.id
               td = banner.title
               td = enum_l(banner, :banner_type)
-              td = banner.image_url
+              td 
+                img[src="#{banner.image_url}" width="300px"]
               td
                 => link_to '查看', admin_banner_path(banner), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_banner_path(banner), class: 'btn btn-xs btn-default'
