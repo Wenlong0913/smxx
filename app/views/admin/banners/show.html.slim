@@ -35,8 +35,9 @@ h1.page-header
                 strong
                   | #{Banner.human_attribute_name(:image_url)}
               td
-                span
+                p
                   = @banner.image_url
+                img[src="#{@banner.image_url}" width="300px"]
             tr
               td.col-md-3.text-right
                 strong
