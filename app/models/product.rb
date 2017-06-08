@@ -36,6 +36,13 @@ class Product < Item
     discount: "折扣"
   }
 
+  WEIGHT_UNIT_HASH = {
+    Kg: "KG(千克)",
+    g: "g(克)",
+    ml: "ml(毫升)",
+    L: "L(升)"
+  }
+
   has_many :article_products, dependent: :destroy
   has_many :articles, :through => :article_products
 
