@@ -200,9 +200,12 @@
                               <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                              <li><a href="javascript:void(0)" data-val="Kg">Kg(千克)</a></li>
-                              <li role="separator" class="divider"></li>
-                              <li><a href="javascript:void(0)" data-val="g">g(克)</a></li>
+                              <% Product::WEIGHT_UNIT_HASH.each_with_index do |(k, v), index| %>
+                                <li><a href="javascript:void(0)" data-val=<%= k.to_s %>><%= v %></a></li>
+                                <% if index < Product::WEIGHT_UNIT_HASH.size - 1 %>
+                                  <li role="separator" class="divider"></li>
+                                <% end %>
+                              <% end %>
                             </ul>
                           </div>
                           <%= f.input :weight, label: false %>

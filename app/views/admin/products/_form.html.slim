@@ -46,17 +46,15 @@
                     button.btn.btn-default.dropdown-toggle[data-toggle="dropdown"]
                       | 单位:
                       small
-                        - if @product.weight_unit == 'g'
-                          span g(克)
-                        - else
-                          span KG(千克)
+                        span
+                          = Product::WEIGHT_UNIT_HASH[@product.weight_unit.to_sym]
                       span.caret
                     ul.dropdown-menu.p-t-5
-                      li
-                        a[href="javascript:void(0)" data-val="Kg"] KG(千克)
-                      li.divider[role="separator"]
-                      li
-                        a[href="javascript:void(0)" data-val="g"] g(克)
+                      - Product::WEIGHT_UNIT_HASH.each_with_index do |(k, v), index|
+                        li
+                          a[href="javascript:void(0)" data-val="#{k.to_s}"] #{v}
+                        - if index < Product::WEIGHT_UNIT_HASH.size - 1
+                          li.divider[role="separator"]
                   = f.input :weight, label: false
             .col-xs-6
               .form-group
