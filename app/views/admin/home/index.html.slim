@@ -2,7 +2,7 @@
   span 你 (
   span = true_user.nickname
   span )正在
-  span 模仿登录 
+  span 模仿登录
   span = current_user.nickname
   span = link_to "退出模仿", stop_impersonating_sessions_path, method: :post
 /! begin #content
@@ -67,7 +67,7 @@ h1.page-header
         h4 CMS 文章
         p= Cms::Page.count
       .stats-link
-        a href="/cms/sites"
+        a href="/admin/cms/sites"
           | 查看纤细
           i.fa.fa-arrow-circle-o-right
   /! end col-3
