@@ -9,4 +9,12 @@ class Community < ApplicationRecord
   has_many :user_communities, dependent: :destroy
   has_many :users, through: :user_communities
   has_many :articles, dependent: :destroy
+
+  def address_lat
+    self.manual_geodatum ? self.manual_geodatum.lat : self.address.lat
+  end
+
+  def address_lng
+    self.manual_geodatum ? self.manual_geodatum.lng : self.address.lng
+  end
 end
