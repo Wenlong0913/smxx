@@ -15,6 +15,8 @@ class MemberNote < ApplicationRecord
   belongs_to :member
   belongs_to :user
 
+  validates_presence_of :message
+
   def self.recent(count = 10)
     self.order("created_at DESC").limit(count)
   end

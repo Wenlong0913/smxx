@@ -23,7 +23,7 @@
             = f.input :typo, collection: ['正式', '非正式']
             = f.input :from, collection: ['网络', '线下', '活动']
             = f.input :owned, as: :hidden, input_html: {value: '系统'}
-            /= f.input :tel_phone
+            = f.input :tel_phone
             = f.input :email
             = f.input :qq
             = f.input :wechat
@@ -42,7 +42,7 @@
                 label: false,
                 item_wrapper_class: 'a radio-inline'
           hr
-          = f.input :birth
+          = f.input :birth, as: :string
           = f.input :note, as: :text
 
       .form-group
@@ -50,6 +50,14 @@
           = f.submit '保存', class: 'btn btn-success btn-block'
 
 javascript:
+  $('#member_birth').datetimepicker({
+    format: 'yyyy-mm-dd',
+    startView: 2,
+    minView: 1,
+    minuteStep: 60,
+    language: 'zh-CN'
+  });
+
   var $radios = $('input:radio');
 
   $radios.change(function () {
