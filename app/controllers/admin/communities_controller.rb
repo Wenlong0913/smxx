@@ -57,10 +57,10 @@ class Admin::CommunitiesController < Admin::BaseController
   def update
     authorize @community
     if params[:community][:lat].present? &&  params[:community][:lat].present?
-      manual_geodatum = @community.manual_geodatum || @community.build_manual_geodatum
-      manual_geodatum.lat = params[:community][:lat]
-      manual_geodatum.lng = params[:community][:lng]
-      manual_geodatum.save! if manual_geodatum.changed?
+      manual_geo = @community.manual_geo || @community.build_manual_geo
+      manual_geo.lat = params[:community][:lat]
+      manual_geo.lng = params[:community][:lng]
+      manual_geo.save! if manual_geo.changed?
       # address = Gnomon::Address.resolve(lat: params[:community][:lat], lng: params[:community][:lng])
       # @community.address = address
     end

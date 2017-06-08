@@ -11,10 +11,10 @@ class Community < ApplicationRecord
   has_many :articles, dependent: :destroy
 
   def address_lat
-    self.manual_geodatum ? self.manual_geodatum.lat : self.address.lat
+    self.manual_geo ? self.manual_geo.lat : self.address.lat
   end
 
   def address_lng
-    self.manual_geodatum ? self.manual_geodatum.lng : self.address.lng
+    self.manual_geo ? self.manual_geo.lng : self.address.lng
   end
 end

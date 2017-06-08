@@ -1,7 +1,7 @@
-# This migration comes from gnomon (originally 20170608090843)
-class CreateGnomonManualGeodata < ActiveRecord::Migration[5.0]
+# This migration comes from gnomon (originally 20170608101209)
+class CreateGnomonManualGeos < ActiveRecord::Migration[5.0]
   def change
-    create_table :gnomon_manual_geodata do |t|
+    create_table :gnomon_manual_geos do |t|
       t.decimal :lng, precision: 20, scale: 14
       t.decimal :lat, precision: 20, scale: 14
       t.references :resource, polymorphic: true

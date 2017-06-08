@@ -69,10 +69,10 @@ class Admin::SitesController < Admin::BaseController
       # address = Gnomon::Address.resolve(lat: params[:site][:lat], lng: params[:site][:lng])
       # @site.address = address
       # @site.address_line = address.name if address
-      manual_geodatum = @site.manual_geodatum || @site.build_manual_geodatum
-      manual_geodatum.lat = params[:site][:lat]
-      manual_geodatum.lng = params[:site][:lng]
-      manual_geodatum.save! if manual_geodatum.changed?
+      manual_geo = @site.manual_geo || @site.build_manual_geo
+      manual_geo.lat = params[:site][:lat]
+      manual_geo.lng = params[:site][:lng]
+      manual_geo.save! if manual_geo.changed?
     end
 
     flag, @site = Site::Update.(@site, permitted_attributes(@site).merge(updated_by: current_user.id))
