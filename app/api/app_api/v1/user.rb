@@ -102,7 +102,7 @@ module AppAPI::V1
         error! '请输入手机号' if params[:mobile_phone].blank?
         t = Sms::Token.new(params[:mobile_phone])
         is_dev = !(Rails.env.staging? || Rails.env.production?)
-        code = is_dev ? '123456' : (10000 + SecureRandom.random_number(10**8)).to_s[-5..-1]
+        code = is_dev ? '123456' : SecureRandom.random_number(10**8).to_s[0, 6].rjust(6, '0')
         if Settings.test_account.mobile_phone == params[:mobile_phone]
           code = Settings.test_account.code
         end

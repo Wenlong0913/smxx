@@ -33,10 +33,10 @@
 }
 .order_head_tr{
     background-color: #555;
-
 }
 .order_head_td{
-    color: #fff;
+  font-size: 18px;
+  color: #222;
 }
 .table_a{
     display: inline-block;
@@ -154,6 +154,7 @@
 
   <div class="container">
     <div class="panel panel-default table-responsive">
+      <h2>订单查询结果</h2>
       <table class="table table-bordered table-stripped">
         <thead>
           <tr class="order_head_tr">
@@ -238,6 +239,7 @@
     <%= paginate @orders%>
   </div>
 
+<% content_for :foot do %>
   <script type="text/javascript">
     $(function () {
       $('.showResult').parent().parent().next().hide();
@@ -246,4 +248,5 @@
       });
     })
   </script>
+<% end %>
 <%= render file: @cms_site.template_dir + '_footer.html.erb'  %>

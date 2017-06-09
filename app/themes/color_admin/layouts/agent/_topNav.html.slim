@@ -10,7 +10,7 @@
 
       ul.nav.navbar-nav.navbar-right
         li
-          = link_to '#' do
+          = link_to edit_agent_site_path(@site.id) do
             i.fa.fa-user
             | &nbsp;
             => current_user.nickname

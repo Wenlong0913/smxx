@@ -6,7 +6,7 @@
         - @agent_member_note.errors.full_messages.each do |message|
           li = message
 
-  = f.text_area :message, class: 'form-control'
+  = f.text_area :message, class: 'form-control', required: true
   br
   .row
     .col-md-6
