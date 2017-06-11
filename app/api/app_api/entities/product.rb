@@ -48,6 +48,10 @@ module AppAPI
       def like_users
         object.likes.as_json(only: [], include: { user: {only: [:nickname], methods: [:display_headshot]}})
       end
+
+      def content
+        object.content && object.content.gsub('src="/ckeditor_assets/', 'src="%sckeditor_assets/' % URI(Settings.site.host).merge('/').to_s)
+      end
     end
   end
 end
