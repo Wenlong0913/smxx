@@ -35,7 +35,7 @@ $(document).ready ()->
             type: 'get'
             dataType: 'json'
             success: (data)->
-              _this.workerOptions = data.users
+              _this.workerOptions = data.results
             error: (data)->
               alert('网络错误')
         teamChange: ()->
