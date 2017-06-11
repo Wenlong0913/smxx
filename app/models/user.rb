@@ -138,7 +138,7 @@ class User < ApplicationRecord
       else
         headshot
       end
-    URI(Settings.site.host).merge( url || "/assets/no-picture.png").to_s
+    URI(Settings.site.host).merge( url || ActionController::Base.helpers.image_path("default-headshot.png") ).to_s
   end
 
   if Settings.project.imolin?
