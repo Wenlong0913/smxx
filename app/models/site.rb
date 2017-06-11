@@ -62,6 +62,14 @@ class Site < ApplicationRecord
   
   if Settings.project.imolin?
     acts_as_address
+
+    def address_lat
+      self.manual_geo ? self.manual_geo.lat : self.address.lat
+    end
+
+    def address_lng
+      self.manual_geo ? self.manual_geo.lng : self.address.lng
+    end
   end
   audited
 
