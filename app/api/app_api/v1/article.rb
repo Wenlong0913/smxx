@@ -59,7 +59,7 @@ module AppAPI::V1
             when 'room' then articles.where(source: ::Chat::Room.find(params[:source_id]))
             else
               []
-            end          
+            end
         end
         if params[:community_id]
           articles = ::Article.where(community_id: [params[:community_id], nil]).order("article_type asc, is_top desc, created_at desc")
@@ -164,6 +164,35 @@ module AppAPI::V1
         else
           error! article.errors
         end
+      end
+
+      desc '取消点赞活动'
+      params do
+        requires :id, type: Integer, desc: "文章ID"
+      end
+      delete ':id/like' do
+        authenticate!
+        article = ::Article.find_by(id: params[:id])
+        error! '该文章不存在' unless article
+        if article.likes.tagged_by? current_user
+          article.likes.untag_by! current_user
+        end
+        present message: '取消点赞成功!'
+      end
+
+      desc '是否点赞了此活动'
+      params do
+        requires :id, type: Integer, desc: "文章ID"
+      end
+      post ':id/is_liked' do
+        authenticate!
+        article = ::Article.find(params[:id])
+        is_liked = if article.likes.tagged_by? current_user
+          true
+        else
+          false
+        end
+        present is_liked: is_liked
       end
 
     end # end of resources
