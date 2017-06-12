@@ -96,6 +96,10 @@ class User < ApplicationRecord
     false
   end
 
+  def super_admin?
+    has_any_role?({name: :super_admin, resource: :any})
+  end
+
   def super_admin_or_admin?
     has_any_role?({name: :admin, resource: :any}, {name: :super_admin, resource: :any})
   end
