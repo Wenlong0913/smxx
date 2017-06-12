@@ -187,11 +187,7 @@ module AppAPI::V1
       post ':id/is_liked' do
         authenticate!
         article = ::Article.find(params[:id])
-        is_liked = if article.likes.tagged_by? current_user
-          true
-        else
-          false
-        end
+        is_liked = article.likes.tagged_by? current_user
         present is_liked: is_liked
       end
 
