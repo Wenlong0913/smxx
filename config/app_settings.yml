@@ -1,5 +1,6 @@
 default: &default
-  site_share_url_pattern: 'http:/localhost:3000/desktop/share/sites/:id'
+  site_share_url_pattern: 'http://localhost:3000/desktop/share/sites/:id'
+  product_share_url_pattern: 'http://localhost:3000/desktop/share/products/:id'
 development:
   <<: *default
 test:
@@ -7,3 +8,4 @@ test:
 production:
   <<: *default
   site_share_url_pattern: 'http://www.imolin.cn/desktop/share/sites/:id'
+  product_share_url_pattern: 'http://www.imolin.cn/desktop/share/products/:id'
