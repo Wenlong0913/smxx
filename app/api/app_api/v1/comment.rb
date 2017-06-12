@@ -63,6 +63,23 @@ module AppAPI::V1
         present :parents, extra_comments, with: AppAPI::Entities::Comment
       end
 
+      desc '删除评论' do
+        success AppAPI::Entities::Comment
+      end
+      params do
+        requires :id, type: Integer, desc: '评论ID'
+      end
+      delete ':id' do
+        authenticate!
+        comment = ::Comment::Entry.find(params[:id])
+        if comment.user && comment.user.id == current_user.id
+          comment.destroy
+          present comment, with: AppAPI::Entities::Comment
+        else
+          error! '没有删除权限'
+        end
+      end
+
       desc '评论点赞'
       params do
         requires :id, type: Integer, desc: "评论ID"

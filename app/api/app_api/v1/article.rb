@@ -9,6 +9,7 @@ module AppAPI::V1
       params do
         requires :description, type: String, desc: '文章内容'
         requires :title, type: String, desc: '文章标题'
+        optional :room_id, type: Integer, desc: '文章来源'
         optional :image_item_ids, type: Array[Integer], coerce_with: ->(val) { val.split(/,|，/).map(&:to_i) }, desc: '图片IDs'
         optional :product_ids, type: Array[Integer], coerce_with: ->(val) { val.split(/,|，/).map(&:to_i) }, desc: '产品ID列表'
         optional :tag_list, type: String, desc: '文章标签, 多个文章用逗号隔开'
@@ -20,6 +21,7 @@ module AppAPI::V1
         if Settings.project.imolin?
           article.community_id = current_user.current_community.id
         end
+        article.source = ::Chat::Room.find(params[:room_id]) if params[:room_id]
         article.image_item_ids = params[:image_item_ids] if params[:image_item_ids]
         article.product_ids = params[:product_ids] if params[:product_ids]
         article.tag_list = params[:tag_list]  if params[:tag_list]
@@ -33,9 +35,13 @@ module AppAPI::V1
       params do
         if Settings.project.imolin?
           optional :community_id, type: Integer, desc: '小区下的所有文章列表'
+          optional :source_name, type: String, desc: '根据小区来源名称搜索'
         end
         optional :includes, type: String, values: ['description', 'comments'], desc: '选择description后会返回文章类容'
         optional :type, type: String, values: ['owner'], desc: '选择owner后会返回我的文章类容'
+        optional :source_id, type: Integer, desc: '文章来源ID'
+        optional :source_type, type: String, values: ['room'], desc: '文章来源类型'
+        all_or_none_of :source_id, :source_type
         use :pagination
         use :sort, fields: [:id, :created_at, :updated_at] unless Settings.project.imolin?
       end
@@ -47,8 +53,21 @@ module AppAPI::V1
             else
               ::Article.all
             end
+        if params[:source_type]
+          articles =
+            case params[:source_type]
+            when 'room' then articles.where(source: ::Chat::Room.find(params[:source_id]))
+            else
+              []
+            end          
+        end
         if params[:community_id]
           articles = ::Article.where(community_id: [params[:community_id], nil]).order("article_type asc, is_top desc, created_at desc")
+          if params[:source_name]
+            community = ::Community.find(params[:community_id])
+            rooms = community.chat_rooms.where("name like ?", "%#{params[:source_name]}%")
+            articles = articles.where(source: rooms)
+          end
         end
         articles = paginate_collection(sort_collection(articles), params)
         wrap_collection articles, AppAPI::Entities::Article, type: :list, includes: [params[:includes]], user_id: current_user.id

@@ -39,6 +39,7 @@ module AppAPI::V1
         if existed_chat_room.blank?
           chat_room = ::Chat::Room.new(name: params[:name])
           chat_room.owner = community if Settings.project.imolin?
+          chat_room.created_by = current_user.id
           error! chat_room.errors unless chat_room.save
           present chat_room, with: AppAPI::Entities::ChatRoom
         else
@@ -62,6 +63,23 @@ module AppAPI::V1
           scope = ::Community.find(params[:community_id]).rooms
         end
         scope.find(params[:id])
+      end
+
+      desc '删除频道' do
+        success AppAPI::Entities::ChatRoom
+      end
+      params do
+        requires :id, type: Integer, desc: '频道ID'
+      end
+      delete ':id' do
+        authenticate!
+        room = ::Chat::Room.find(params[:id])
+        if room.user && room.user.id == current_user.id
+          room.destroy
+          present room, with: AppAPI::Entities::ChatRoom
+        else
+          error! '没有删除权限'
+        end
       end
 
     end # end of resources
