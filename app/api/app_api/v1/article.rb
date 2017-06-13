@@ -42,6 +42,7 @@ module AppAPI::V1
         optional :source_id, type: Integer, desc: '文章来源ID'
         optional :source_type, type: String, values: ['room'], desc: '文章来源类型'
         all_or_none_of :source_id, :source_type
+        optional :tag_list, type: String, desc: '文章标签,用逗号隔开'
         use :pagination
         use :sort, fields: [:id, :created_at, :updated_at] unless Settings.project.imolin?
       end
@@ -68,6 +69,10 @@ module AppAPI::V1
             rooms = community.chat_rooms.where("name like ?", "%#{params[:source_name]}%")
             articles = articles.where(source: rooms)
           end
+        end
+        if params[:tag_list]
+          tag_list = params[:tag_list].split(/,/)
+          articles = articles.tagged_with(tag_list, :any => true)
         end
         articles = paginate_collection(sort_collection(articles), params)
         wrap_collection articles, AppAPI::Entities::Article, type: :list, includes: [params[:includes]], user_id: current_user.id
