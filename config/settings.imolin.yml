@@ -25,6 +25,8 @@ default: &default
   default_data:
     rooms:
     - 小区广场
+    - 业委会
+    - 物业圈
     - 吐槽圈
     - 互助圈
     - 亲子圈
