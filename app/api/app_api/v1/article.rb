@@ -34,7 +34,7 @@ module AppAPI::V1
       end
       params do
         if Settings.project.imolin?
-          optional :community_id, type: Integer, desc: '小区下的所有文章列表'
+          # optional :community_id, type: Integer, desc: '小区下的所有文章列表'
           optional :source_name, type: String, desc: '根据小区来源名称搜索'
         end
         optional :includes, type: String, values: ['description', 'comments'], desc: '选择description后会返回文章类容'
@@ -62,8 +62,9 @@ module AppAPI::V1
               []
             end
         end
-        if params[:community_id]
-          articles = ::Article.where(community_id: [params[:community_id], nil]).order("article_type asc, is_top desc, created_at desc")
+        if Settings.project.imolin?
+          error! '请先设置您的小区信息!' unless current_user.current_community
+          articles = articles.where(community_id: current_user.current_community.id).order("article_type asc, is_top desc, created_at desc")
           if params[:source_name]
             community = ::Community.find(params[:community_id])
             rooms = community.chat_rooms.where("name like ?", "%#{params[:source_name]}%")
