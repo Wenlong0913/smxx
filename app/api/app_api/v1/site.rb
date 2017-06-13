@@ -13,7 +13,7 @@ module AppAPI::V1
         authenticate!
         error! '请先设置您的小区信息' unless current_user.current_community
         community = current_user.current_community
-        sites = ::Site.near_by(lat: community.address_lat, lng: community.address_lng, distance: 5000)
+        sites = ::Site.where("features ->> 'is_published' = ?", "1").near_by(lat: community.address_lat, lng: community.address_lng, distance: 5000)
         sites = paginate_collection(sort_collection(sites), params)
         wrap_collection sites, AppAPI::Entities::SiteSimple, includes: [:distance]
       end
@@ -61,7 +61,7 @@ module AppAPI::V1
         end
         if params[:site_catalog_id]
           community = ::Community.find_by(id: current_user.current_community.id)
-          sites = sites.where("catalog_id = ?", params[:site_catalog_id])
+          sites = sites.where("catalog_id = ?", params[:site_catalog_id]).where("features ->> 'is_published' = ?", "1")
           sites = sites.near_by(lat: community.address_lat, lng: community.address_lng, distance: 5000)
           # sites = sites.selecting_distance_from(community.address_lat, community.address_lng).order_by_distance(community.address_lat, community.address_lng)
         end
