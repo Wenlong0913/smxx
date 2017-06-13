@@ -13,7 +13,6 @@ td
     - else
       span class="m-l-5 btn btn-xs btn-default"
         | 已下架
-  td = product.old_price.to_f / 100
   td = product.price.to_f / 100
   td
     - product.tags.each do |tag|

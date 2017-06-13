@@ -52,10 +52,6 @@ h1.page-header
                 td
                   a
                     = @product.price.to_f / 100
-                td.field 原价
-                td
-                  a
-                    = @product.old_price.to_f / 100
               tr.divider
                 td[colspan='2']
               tr
@@ -139,9 +135,6 @@ h1.page-header
                   td
                     =@product.catalog.try(:name)
                 tr
-                  td.field 原价
-                  td
-                    = @product.old_price.to_f / 100
                   td.field 售价
                   td
                     =@product.price.to_f / 100
