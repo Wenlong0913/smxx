@@ -80,8 +80,8 @@
 								</h4>
 								<label>
 									<span style="color: #f08300;">现:&nbsp;</span>
-									<span >￥<%= product.price / 100 %></span>
-									[<i style="text-decoration: line-through;">￥记得修改</i>]
+									<span >￥<%= product.discount / 100 %></span>
+									[<i style="text-decoration: line-through;">￥<%= product.price / 100 %></i>]
 								</label>
 								<label>
 									<span style="color: #f08300;">月单数:&nbsp;</span>
@@ -154,8 +154,8 @@
   										</span>
                     </h4>
                     <label>
-                      <span>现:&nbsp; ￥<%= product.price / 100 %></span>
-                      [<i style="text-decoration: line-through;">￥记得修改</i>]
+                      <span>现:&nbsp; ￥<%= product.discount / 100 %></span>
+                      [<i style="text-decoration: line-through;">￥<%= product.price / 100 %></i>]
                       <span style="display: inline-block; margin-left:50px;">单数:&nbsp;</span><%= product.month_number %>
                     </label>
                     <p><%= product.description %></p>
