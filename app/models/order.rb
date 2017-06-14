@@ -67,7 +67,7 @@ class Order < ApplicationRecord
   has_many :order_deliveries, dependent: :destroy
   has_one :produce, dependent: :destroy
   has_many :finance_histories, as: :owner, dependent: :destroy
-
+  has_one :charge, dependent: :destroy
 
   before_create :generate_code
   # before_validation :check_member

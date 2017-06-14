@@ -101,6 +101,11 @@ class Admin::OrdersController < Admin::BaseController
     redirect_to admin_orders_url, notice: "#{Order.model_name.human} 删除成功."
   end
 
+  def refund
+    authorize Order
+    @orders = Order.paid.page(params[:page])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
