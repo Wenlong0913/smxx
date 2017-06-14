@@ -14,6 +14,7 @@ td
       span class="m-l-5 btn btn-xs btn-default"
         | 已下架
   td = product.price.to_f / 100
+  td = product.discount.to_f / 100
   td
     - product.tags.each do |tag|
       span class="btn btn-xs btn-success"
