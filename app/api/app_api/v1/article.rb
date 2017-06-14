@@ -98,12 +98,21 @@ module AppAPI::V1
       delete ':id' do
         authenticate!
         article = ::Article.find(params[:id])
-        if (article.user.id == current_user.id && article.created_at < 5.minutes.ago) ||
-          current_user.permission?(:manage_article)
-          article.destroy
-          present article, with: AppAPI::Entities::Article
+        if Settings.project.sxhop?
+          if (article.user.id == current_user.id && article.created_at < 5.minutes.ago) ||
+            current_user.permission?(:manage_article)
+            article.destroy
+            present article, with: AppAPI::Entities::Article
+          else
+            error! '没有删除权限'
+          end
         else
-          error! '没有删除权限'
+          if article.user.id == current_user.id 
+            article.destroy
+            present article, with: AppAPI::Entities::Article
+          else
+            error! '没有删除权限'
+          end
         end
       end
 
