@@ -29,6 +29,11 @@ class Order < ApplicationRecord
       cancelled: 3, # 已取消
       completed: 4  # 已完成
     }
+    enum refund_status: {
+      apply_refund: 1, # 申请退款
+      refunding: 2,    # 退款中
+      refunded: 3      # 退款完成
+    }
   else
     enum status: {
       processing: 0, # 处理中

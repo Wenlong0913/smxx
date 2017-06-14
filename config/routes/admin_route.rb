@@ -99,8 +99,12 @@ module AdminRoute
         resources :orders, :concerns => :paginatable do
           resources :materials, except: [:index], controller: 'order_materials'
           resources :produces, only: [:show, :create, :destroy, :update]
+          member do
+            get 'apply_refund'
+            post 'refund'
+          end
           collection do
-            get 'refund'
+            get 'refunds'
           end
         end
         #营销页

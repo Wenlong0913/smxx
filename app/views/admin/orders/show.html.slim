@@ -1,4 +1,4 @@
-h1.page-header 
+h1.page-header
   | 查看#{Order.model_name.human}
   .pull-right
     => link_to '编辑', edit_admin_order_path(@order), class: 'btn btn-primary'
@@ -31,7 +31,7 @@ h1.page-header
                   span
                     = enum_l(@order, :status)
                     - if @order.paid?
-                      = link_to '申请退款', refund_admin_orders_path, class: 'btn btn-danger btn-xs'
+                      = link_to '申请退款', apply_refund_admin_order_path(@order), remote: true, class: 'btn btn-danger btn-xs'
               - if Settings.project.grand?
                 tr
                   td.field
@@ -94,10 +94,10 @@ h1.page-header
                 th = Product.human_attribute_name(:price)
                 th = OrderProduct.human_attribute_name(:amount)
                 th = OrderProduct.human_attribute_name(:price)
-                
+
               - @order.order_products.each do |order_product|
                 tr
-                  td 
+                  td
                     = link_to order_product.product.name, admin_site_product_path(@order.site, order_product.product)
                   td = order_product.product.discount.to_f / 100 || order_product.product.price.to_f / 100
                   td = "#{order_product.amount}#{order_product.product.unit}"
@@ -122,7 +122,7 @@ h1.page-header
                   th = Material.human_attribute_name(:name)
                   th = OrderMaterial.human_attribute_name(:amount)
                   th
-                  
+
                 - @order.order_materials.each do |order_material|
                   tr
                     td = order_material.material.blank? ? nil : (order_material.material.catalog.blank? ? '该物料还未分类' : order_material.material.catalog.name )

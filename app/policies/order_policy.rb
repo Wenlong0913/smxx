@@ -21,6 +21,14 @@ class OrderPolicy < ApplicationPolicy
     user.super_admin_or_admin? || user.permission?(:refund_order)
   end
 
+  def apply_refund?
+    user.super_admin_or_admin? || user.permission?(:refund_order)
+  end
+
+  def refunds?
+    user.super_admin_or_admin? || user.permission?(:refund_order)
+  end
+
   def permitted_attributes_for_create
     if user.super_admin_or_admin? || user.permission?(:create_order)
       [:user_id, :site_id, :code, :member_id, :preorder_conversition_id, :price, :description, :status, :internal_status, :delivery_date, :member_name, :mobile_phone, :image_item_ids => [], :attachment_ids => []]

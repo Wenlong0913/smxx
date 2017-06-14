@@ -29,6 +29,15 @@ zh-CN:
           produced: 生产完成
           delivering: 发货中
           delivered: 已收货
+        refund_status: 退款状态
+        refund_statuses:
+          apply_refund: 申请退款
+          refunding: 退款中
+          refunded: 退款完成
+        charge_id: 付款ID
+        refund_id: 退款ID
+        apply_refund_by: 退款申请人
+        refund_description: 退款描述
         description: 备注
         delivery_date: 交货日期
     errors:

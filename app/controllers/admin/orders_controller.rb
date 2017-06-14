@@ -1,7 +1,7 @@
 # csv support
 require 'csv'
 class Admin::OrdersController < Admin::BaseController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: [:show, :edit, :update, :destroy, :refund, :apply_refund]
   before_action :get_user, only: [:create, :update]
   # GET /admin/orders
   def index
@@ -101,9 +101,22 @@ class Admin::OrdersController < Admin::BaseController
     redirect_to admin_orders_url, notice: "#{Order.model_name.human} 删除成功."
   end
 
+  def apply_refund
+    authorize Order
+    # @orders = Order.paid.page(params[:page])
+    @order.apply_refund!
+    render js: "$.gritter.add({title: '提示', text: \"已经提交退款申请\"})"
+  end
+
+  def refunds
+    authorize Order
+    @orders = Order.apply_refund.page(params[:page])
+  end
+
   def refund
     authorize Order
-    @orders = Order.paid.page(params[:page])
+    refund = PaymentCore.create_refund({charge_id: order.charge.pingpp_charge_id, description: "申请退款"})
+    render js: "$.gritter.add({title: '提示', text: \"对款请求\"})"
   end
 
   private
