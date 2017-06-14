@@ -66,8 +66,7 @@ module AppAPI::V1
           error! '请先设置您的小区信息!' unless current_user.current_community
           articles = articles.where(community_id: current_user.current_community.id).order("article_type asc, is_top desc, created_at desc")
           if params[:source_name]
-            community = ::Community.find(params[:community_id])
-            rooms = community.chat_rooms.where("name like ?", "%#{params[:source_name]}%")
+            rooms = current_user.current_community.chat_rooms.where("name like ?", "%#{params[:source_name]}%")
             articles = articles.where(source: rooms)
           end
         end
