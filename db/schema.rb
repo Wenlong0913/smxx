@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170605025739) do
+ActiveRecord::Schema.define(version: 20170608101930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
   enable_extension "pgcrypto"
   enable_extension "cube"
   enable_extension "earthdistance"
@@ -405,6 +404,16 @@ ActiveRecord::Schema.define(version: 20170605025739) do
     t.integer "street_id"
     t.index ["district_id"], name: "index_gnomon_districts_streets_on_district_id", using: :btree
     t.index ["street_id"], name: "index_gnomon_districts_streets_on_street_id", using: :btree
+  end
+
+  create_table "gnomon_manual_geos", force: :cascade do |t|
+    t.decimal  "lng",           precision: 20, scale: 14
+    t.decimal  "lat",           precision: 20, scale: 14
+    t.string   "resource_type"
+    t.integer  "resource_id"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.index ["resource_type", "resource_id"], name: "index_gnomon_manual_geos_on_resource_type_and_resource_id", using: :btree
   end
 
   create_table "gnomon_provinces", force: :cascade do |t|
@@ -844,6 +853,7 @@ ActiveRecord::Schema.define(version: 20170605025739) do
     t.jsonb    "features"
     t.string   "type"
     t.integer  "address_alias_id"
+    t.string   "address_line"
     t.integer  "catalog_id"
     t.integer  "favorites_count",  default: 0
     t.integer  "visits_count",     default: 0

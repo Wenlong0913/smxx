@@ -18,6 +18,7 @@ class Article < ApplicationRecord
   has_many_likes
   belongs_to :user, foreign_key: :author, class_name: 'User'
   belongs_to :community
+  belongs_to :source, polymorphic: true
   acts_as_taggable
   after_save do
     discover = self.discovers.find_or_create_by(resource: self)

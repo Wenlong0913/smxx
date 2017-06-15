@@ -24,5 +24,6 @@ module AppAPI::V1
     mount AppAPI::V1::AddressBook
     mount AppAPI::V1::SalesDistribution
     mount AppAPI::V1::AppSettings
+    mount AppAPI::V1::Search
   end
 end

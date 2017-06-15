@@ -4,7 +4,6 @@ module AppAPI
     class Product < ProductSimple
 
       if Settings.project.meikemei?
-        expose :old_price, documentation: {desc: '产品原价'}
         expose :month_number, documentation: {desc: '月单数'}
         expose :responsive_person, documentation: {desc: '适用人群'}
         expose :warning_message, documentation: {desc: '注意事项'}

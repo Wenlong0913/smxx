@@ -9,10 +9,11 @@
             | 欢迎使用商家端
 
       ul.nav.navbar-nav.navbar-right
-        li
-          = link_to edit_agent_site_path(@site.id) do
-            i.fa.fa-user
-            | &nbsp;
+        - if @site.present?
+          li
+            = link_to edit_agent_site_path(@site.id) do
+              i.fa.fa-user
+              | &nbsp;
             => current_user.nickname
         li
           = link_to sign_out_path, method: :delete do
