@@ -204,3 +204,4 @@ gem 'activemodel-serializers-xml'
 gem 'vuejs-webpack-rails'
 
 gem 'foreman'
+gem 'newrelic_rpm'
