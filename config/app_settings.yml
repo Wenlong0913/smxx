@@ -1,6 +1,7 @@
 default: &default
   site_share_url_pattern: 'http://localhost:3000/desktop/share/sites/:id'
   product_share_url_pattern: 'http://localhost:3000/desktop/share/products/:id'
+  system_rooms: ['小区广场', '业委会', '物业圈', '吐槽圈', '互助圈', '亲子圈', '敬老圈', '宠物圈', '棋艺圈']
 development:
   <<: *default
 test:
