@@ -28,10 +28,15 @@ h1.page-header
                 td.field
                   | #{Order.human_attribute_name(:status)}
                 td
-                  span
-                    = enum_l(@order, :status)
+                  p.refund-button
                     - if @order.paid?
-                      = link_to '申请退款', apply_refund_admin_order_path(@order), remote: true, class: 'btn btn-danger btn-xs'
+                      - if @order.refund_status.blank?
+                        button.btn.btn-primary.btn-xs[data-toggle="modal" data-target="#refundModal"]
+                          | 申请退款
+                      - else
+                        | 已经提交退款申请
+                    - else
+                      = enum_l(@order, :status)
               - if Settings.project.grand?
                 tr
                   td.field
@@ -63,6 +68,7 @@ h1.page-header
                     = @order.price.to_f/100
               tr.divider
                 td[colspan='2']
+          == render 'refund_modal'
         - if Settings.project.grand?
           .col-sm-5
             a.thumbnail[href="#"]

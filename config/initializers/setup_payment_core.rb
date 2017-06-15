@@ -25,6 +25,30 @@ PaymentCore.setup do |p|
     end
   end
 
+  # 配置退款成功之后的回调，如下面例子：
+  p.on_refund_succeeded = lambda do |json|
+    order = Order.find_by(code: json[:charge_order_no])
+    if order
+      order.build_refund(
+        pingpp_charge_id: json[:charge],
+        event_id: json[:id],
+        order_no: json[:order_no],
+        description: json[:description],
+        charge: json[:charge],
+        amount: json[:amount],
+        created: json[:created],
+        charge_order_no: json[:charge_order_no],
+        succeed: json[:succeed],
+        status: json[:status],
+        time_succeed: json[:time_succeed],
+        failure_code: json[:failure_code],
+        failure_msg: json[:failure_msg]
+      )
+      order.refund_status = 'refunded'
+      order.save
+    end
+  end
+
   # 配置微信，为了获取openid
   p.weixin.app_id = Settings.weixin.app_id
   p.weixin.app_secret = Settings.weixin.app_secret

@@ -100,7 +100,7 @@ module AdminRoute
           resources :materials, except: [:index], controller: 'order_materials'
           resources :produces, only: [:show, :create, :destroy, :update]
           member do
-            get 'apply_refund'
+            post 'apply_refund'
             post 'refund'
           end
           collection do
