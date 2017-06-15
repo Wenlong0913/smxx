@@ -17,7 +17,6 @@ module AppAPI
         expose :sales_count, documentation: {desc: '产品的销量', type: Integer }
         expose :stock, documentation: { desc: '产品库存', type: Integer }
         expose :unit, documentation: { desc: '库存单位' }
-        expose :price, documentation: { desc: '产品原价', type: Float }
         expose :discount, documentation: { desc: '产品折后价', type: Float }
         expose :description, documentation: { desc: '产品简要描述' }
         expose :content, documentation: {desc: Settings.project.meikemei? ? '项目介绍' : '产品介绍'}
