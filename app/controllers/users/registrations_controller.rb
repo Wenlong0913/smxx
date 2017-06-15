@@ -26,8 +26,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   => {error: '创建失败了，请检查！'}
   #   
   def create
-    mobile = params[:user][:mobile]
-    code = params[:user][:code]
+    if params[:user][:mobile].present?
+      sign_up_with_mobile(params[:user][:mobile], params[:user][:code])
+    elsif params[:user][:email].present?
+      sign_up_with_email(params[:user][:email], params[:user][:password], params[:user][:password_confirmation])
+    end
+  end
+
+  private
+  def sign_up_with_mobile(mobile, code)
     t = Sms::Token.new(mobile)
     if t.valid?(code)
       user_attributes = {}
@@ -49,7 +56,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       render json: {error: '验证码不正确！'}
     end
+  end
 
+  def sign_up_with_email(email, password, password_confirmation)
+    user = User.new(email: email, password: password, password_confirmation: password_confirmation)
+    if user.save
+      sign_in user, :event => :authentication
+      render json: {}
+    else
+      render json: {error: user.errors.full_messages.join(',')}
+    end
   end
 
 end

@@ -1,5 +1,7 @@
 button[onclick="mobileRegister()"] 手机号注册
 button[onclick="wechatRegister()"] 微信扫码注册
+button[onclick="emailRegister()"] 邮箱注册
+
 
 div[id="bind-mobile" style="display: none"]
   h4[id="mobile-text"] 手机号注册
@@ -27,15 +29,43 @@ div[id="bind-wechat" style="display: none"]
   img id="qrcode-auth-image" width="180" style="margin-left: 50%; transform: translateX(-50%)"
   p align="center" id="qrcode-auth-message"
 
+div[id="bind-email" style="display: none"]
+  h4 邮箱注册
+  = simple_form_for(@user, url: sign_up_path, remote: true, method: :post, html: {class: "margin-bottom-0 register"}) do |f|
+    - if flash[:alert]
+      .alert.alert-danger
+        = flash[:alert]
+    .form-group.m-b-25.m-t-10
+      label 邮箱
+      input.form-control.input-lg[placeholder="邮箱"name="user[email]"type="text"]
+    .form-group.m-b-25.p-0.row
+      label 密码
+      input.form-control.input-lg[name="user[password]"type="password"placeholder="密码"]
+    .form-group.m-b-25.p-0.row
+      label 确认密码
+      input.form-control.input-lg[name="user[password_confirmation]"type="password"placeholder="确认密码"]
+    .text-center.text-danger.title_error
+    .login-buttons
+      = f.submit '注册', class: 'btn btn-success btn-block btn-lg', id: 'click_login', data:{href: root_path}
+  
+  
 javascript:
   function mobileRegister () {
     $('#bind-wechat').css('display', 'none')
     $('#bind-mobile').css('display', 'block')
+    $('#bind-email').css('display', 'none')
   }
   function wechatRegister () {
     $('#bind-wechat').css('display', 'block')
     $('#bind-mobile').css('display', 'none')
+    $('#bind-email').css('display', 'none')
   }
+  function emailRegister () {
+    $('#bind-email').css('display', 'block')
+    $('#bind-mobile').css('display', 'none') 
+    $('#bind-wechat').css('display', 'none')   
+  }
+
   var QrcodeAuth = function (){
     var instance = this;
     this.init = function() {
