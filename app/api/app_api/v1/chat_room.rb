@@ -20,7 +20,8 @@ module AppAPI::V1
           Settings.default_data.rooms.each do |room_name|
             ::Chat::Room.find_or_create_by(name: room_name, owner: community)
           end
-          rooms = paginate_collection(community.chat_rooms, params)
+          # rooms = paginate_collection(community.chat_rooms, params)
+          rooms = community.chat_rooms
         end
         wrap_collection rooms, AppAPI::Entities::ChatRoom
       end
