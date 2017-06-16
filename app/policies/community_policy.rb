@@ -36,13 +36,17 @@ class CommunityPolicy < ApplicationPolicy
   def permitted_attributes_for_create
     # fail "请在#{__FILE__}中添加params的permit属性"
     if user.has_role? :admin
-      [:name, :address_line, :lat, :lng, :owned_by, :contact_info, :note]
+      [:name, :address_line, :owned_by, :contact_info, :note]
     else
       []
     end
   end
 
   def permitted_attributes_for_update
-    permitted_attributes_for_create
+    if user.has_role? :admin
+      [:name, :address_line, :lat, :lng, :owned_by, :contact_info, :note]
+    else
+      []
+    end
   end
 end
