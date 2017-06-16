@@ -57,6 +57,16 @@ $(document).ready ->
       else
         # window.location.href = body.find('#mobile_login_modal .modal-body #click_login').data('href')
         window.location.href = request.url
+    body.find('#email_login_modal .modal-body form').on 'ajax:error', (event,request)->
+      error_dom = body.find('#email_login_modal .modal-body .title_error')
+      error_dom.addClass('text-danger').text('发送失败！请检查网络')
+    body.find('#email_login_modal .modal-body form').on 'ajax:success', (event,request)->
+      if request.hasOwnProperty('error')
+        error_dom = body.find('#email_login_modal .modal-body .title_error')
+        error_dom.addClass('text-danger').text(request.error)    
+      else
+        # window.location.href = body.find('#mobile_login_modal .modal-body #click_login').data('href')
+        window.location.href = request.url
   # 清除计时，返回消息
   return_mess = (setinterval_1, text, status)->
     color = 'text-danger'
