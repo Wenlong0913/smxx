@@ -25,6 +25,13 @@ class Article < ApplicationRecord
     discover.save!
   end
 
+  before_destroy do
+    if Settings.project.imolin? && self.source_type == "Chat::Room"
+      article_relation_messages = self.source.messages.where("text = ?", '{"_type":"article","articleId":' + self.id.to_s + '}')
+      article_relation_messages.destroy_all
+    end
+  end
+
   def api_created_at
     created_at.to_i
   end
