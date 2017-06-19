@@ -43,7 +43,7 @@ module AppAPI::V1
           error! chat_room.errors unless chat_room.save
           present chat_room, with: AppAPI::Entities::ChatRoom
         else
-          present message: "圈子已经存在"
+          error! "圈子已经存在"
         end
       end
 
