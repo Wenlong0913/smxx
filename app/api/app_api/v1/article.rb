@@ -101,9 +101,6 @@ module AppAPI::V1
         if Settings.project.sxhop?
           if (article.user.id == current_user.id && article.created_at < 5.minutes.ago) ||
             current_user.permission?(:manage_article)
-            article_relation_user = article.user
-            article_relation_messages = Chat::Message.where(user: article_relation_user).where("text = ?", '{"_type":"article","articleId":' + article.id.to_s + '}')
-            article_relation_messages.destroy_all
             article.destroy
             present article, with: AppAPI::Entities::Article
           else
