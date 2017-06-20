@@ -14,10 +14,13 @@
             - @cms_page.errors.full_messages.each do |message|
               li = message
 
-      = f.association :channel, collection: @cms_site.channels
+      = f.association :channel, collection: @cms_site.channels, selected: @cms_channel.id
       = f.input :title
-      = f.input :short_title
-      = f.input :keywords
+      .row
+        .col-md-6
+          = f.input :short_title
+        .col-md-6
+          = f.input :keywords
       = f.input :description
       = f.input :image_path
       = f.input :content, as: :ckeditor
