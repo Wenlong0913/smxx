@@ -23,7 +23,7 @@ module AdminRoute
             end
           end
         end
-        # 小区
+        # 社区
         resources :communities, :concerns => :paginatable do
           resources :articles
         end

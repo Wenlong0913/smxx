@@ -71,6 +71,6 @@ class Product < Item
   end
 
   def first_image
-    image_items.first.try(:image_url)
+    image_items.first.try(:image_url) || 'http://song-dev.qiniudn.com/product.jpg'
   end
 end

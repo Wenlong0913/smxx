@@ -45,7 +45,7 @@ module FrontendRoute
         get 'users/show'
         get 'home/index'
         match 'share/(:class/:id)', to: "share#index", via: :get
-        resources :products
+
         resources :orders do
           collection do
             get "search"
@@ -58,7 +58,12 @@ module FrontendRoute
           end
         end
 
-
+        resources :communites
+        resources :sites
+        resources :site_catalogs do
+          resources :sites
+        end
+        resources :products
         resources :product_catalogs do
           resources :products
         end

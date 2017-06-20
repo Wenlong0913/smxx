@@ -2,7 +2,7 @@
 zh-CN:
   activerecord:
     models:
-      community: 小区
+      community: 社区
     attributes:
       community:
         name: 名称
@@ -22,7 +22,7 @@ zh-CN:
         is_published: 是否发布
         updated_by: 最后更新人
         owned_by: 拥有者(分配给谁负责)
-        contact_info: 小区联系方式
+        contact_info: 社区联系方式
         note: 营销备注
     errors:
       models:

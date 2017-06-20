@@ -3,7 +3,7 @@ li class=("#{'active' if page?('admin/home') }")
     = fa_icon 'laptop', text: '首页'
 li[class=("active" if page?('admin/communities'))]
   = link_to admin_communities_path do
-    = fa_icon 'leaf', text: '小区'
+    = fa_icon 'leaf', text: '社区'
 - if @community.present? && page?('admin/articles')
   li class=("has-sub #{'active' if page?('admin/articles')}")
     = link_to admin_community_articles_path(@community) do

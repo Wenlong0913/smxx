@@ -25,26 +25,22 @@
     tr
       td.field 电话
       td
-        a
-          = @site.phone
+        = @site.phone
     tr.divider
       td[colspan='2']
     tr
       td.field 商圈
       td
-        a
-          = @site.business_area
+        = @site.business_area
       td.field 分类
       td
-        a
-          = @site.catalog.try(:full_name)
+        = @site.catalog.try(:full_name)
     tr.divider
       td[colspan='2']
     tr
       td.field 人均消费
       td
-        a
-          = @site.avg_price
+        = @site.avg_price
       td.field 是否签约
       td
         - if @site.has_contract == '1'
@@ -56,12 +52,10 @@
     tr
       td.field 特点
       td
-        a
-          = @site.properties
+        = @site.properties
       td.field 签约备注
       td
-        a
-          = @site.contract_note
+        = @site.contract_note
     tr.divider
       td[colspan='2']
 h4 商家图片

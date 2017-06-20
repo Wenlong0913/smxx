@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170608101930) do
+ActiveRecord::Schema.define(version: 20170612082959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,9 @@ ActiveRecord::Schema.define(version: 20170608101930) do
     t.date     "valid_time_end"
     t.integer  "article_type"
     t.boolean  "is_top",           default: false
+    t.string   "source_type"
+    t.integer  "source_id"
+    t.index ["source_type", "source_id"], name: "index_articles_on_source_type_and_source_id", using: :btree
   end
 
   create_table "attachment_relations", force: :cascade do |t|
@@ -188,6 +191,7 @@ ActiveRecord::Schema.define(version: 20170608101930) do
     t.datetime "updated_at", null: false
     t.string   "owner_type"
     t.integer  "owner_id"
+    t.integer  "created_by"
     t.index ["owner_type", "owner_id"], name: "index_chat_rooms_on_owner_type_and_owner_id", using: :btree
   end
 

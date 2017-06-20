@@ -17,6 +17,7 @@
               <!-- begin media -->
               <div class="media">
                 <%= image_tag cms_page.show_image %>
+                <i><%= cms_page.id %></i>
               </div>
               <!-- end media -->
               <!-- begin info-container -->
@@ -34,6 +35,11 @@
                       <span class="total-post"><%= cms_page.impressions_count %></span>
                       <span class="divider">/</span>
                       <span class="total-comment"><%= cms_page.impressionist_count %></span>
+                      <p>
+                        <% cms_page.properties.map{|p| Cms::Page::PROPERTIES[p.to_sym]}.compact.each do |pro| %>
+                          <span class="label label-<%= rand_color %>"><%= pro %></span>
+                        <% end %>
+                      </p>
                   </div>
                   <div class="latest-post">
                       <h4 class="title"><%= distance_of_time_in_words_to_now(cms_page.updated_at) %>前更新</h4>

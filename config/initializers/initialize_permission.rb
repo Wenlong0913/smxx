@@ -16,9 +16,9 @@ if Permission.table_exists?
       permissions << {symbol_name: 'login_desktop', name: '登陆桌面端', group_name: '登陆', description: ''}
     elsif Settings.project.imolin?
       permissions += [
-        {symbol_name: 'communities_insert', name: '小区添加', group_name: '小区管理', description: ''},
-        {symbol_name: 'communities_update', name: '小区修改', group_name: '小区管理', description: ''},
-        {symbol_name: 'communities_delete', name: '小区删除', group_name: '小区管理', description: ''},
+        {symbol_name: 'communities_insert', name: '社区添加', group_name: '社区管理', description: ''},
+        {symbol_name: 'communities_update', name: '社区修改', group_name: '社区管理', description: ''},
+        {symbol_name: 'communities_delete', name: '社区删除', group_name: '社区管理', description: ''},
       ]
     end
     permissions.each do |permission|

@@ -145,7 +145,7 @@ class User < ApplicationRecord
     URI(Settings.site.host).merge( url || ActionController::Base.helpers.image_path("default-headshot.png") ).to_s
   end
 
-  if Settings.project.imolin?
+  if Settings.project.imolin? || Settings.project.wgtong?
     def current_community
       @current_comunity ||= user_communities.where(is_current: true).first.try(:community)
     end

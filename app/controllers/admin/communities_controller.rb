@@ -25,7 +25,7 @@ class Admin::CommunitiesController < Admin::BaseController
   # GET /admin/communities/1
   def show
     authorize @community
-    #查找小区周边的商家(site), 按就近排序
+    #查找社区周边的商家(site), 按就近排序
     @sites = Site.near_by(lat: @community.address_lat, lng: @community.address_lng, distance: 2000).page(params[:page]).per(9) if params[:sites]
     @sites_string = @sites.to_json(only: [:id], methods: [:address_lat, :address_lng])
   end

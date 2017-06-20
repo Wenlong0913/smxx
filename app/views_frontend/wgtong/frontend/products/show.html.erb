@@ -1,0 +1,68 @@
+<div class="main-wrapper">
+	<%= render file: 'public/templetes/newshub/_header.html.erb' %>
+	<div class="container-fluid">
+		<!-- [[header start]] -->
+	  <%= render file: 'public/templetes/newshub/_top_menu.html.erb' %>
+		<!-- [[header end]] -->
+		<div class="row">
+			<div class="col-sm-9 tr-sticky">
+				<div class="tr-content theiaStickySidebar">
+					<div class="tr-section">
+						<div class="tr-post">
+							<div class="entry-header">
+								<div class="entry-thumbnail">
+									<img class="img-responsive" src="<%= @product.first_image %>" alt="<%= @product.name %>">
+								</div>
+							</div>
+							<div class="post-content">
+								<div class="author">
+									<img class="img-responsive img-circle" src="/templetes/newshub/images/others/author1.png" alt="Image">
+								</div>
+								<div class="entry-meta">
+									<ul>
+										<li>By <a href="#">Jhon dun</a></li>
+										<li>445 Share /<a href="#"> 1 Hour ago</a></li>
+										<li>
+											<ul>
+												<li>Share</li>
+												<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+											</ul>
+										</li>
+									</ul>
+								</div><!-- /.entry-meta -->
+								<h2 class="entry-title">
+									<%= @product.name %>
+								</h2>
+							</div><!-- /.post-content -->
+						</div><!-- /.tr-post -->
+
+						<div class="tr-details">
+							<%= raw @product.content %>
+						</div>
+					</div><!-- /.tr-section -->
+
+					<div class="tr-ad">
+						<a href="#"><img class="img-responsive" src="/templetes/newshub/images/advertise/1.jpg" alt="Image"></a>
+					</div><!-- /.add -->
+
+					<%= render file: 'public/templetes/newshub/_comments.html.erb' %>
+				</div><!-- /.tr-content -->
+			</div><!-- /.tr-sticky -->
+
+			<div class="col-sm-3 tr-sidebar tr-sticky">
+				<%= render file: 'public/templetes/newshub/_sidebar.html.erb' %>
+			</div>
+		</div><!-- /.row -->
+
+		<div class="tr-ad ad-bottom ad-image text-center">
+			<a href="#"><img class="img-responsive" src="/templetes/newshub/images/advertise/5.jpg" alt="Image"></a>
+		</div><!-- /.tr-ad -->
+
+	</div><!-- /.container-fulid -->
+</div><!-- /.main-wrapper -->
+<!-- [[footer start]] -->
+<%= render file: 'public/templetes/newshub/_footer.html.erb' %>
+<!-- [[footer end]] -->

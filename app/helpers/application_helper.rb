@@ -51,5 +51,8 @@ module ApplicationHelper
     ].sample
   end
 
+  def rand_color
+    ['default', 'primary', 'success', 'info', 'warning', 'danger'].sample
+  end
 
 end

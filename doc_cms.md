@@ -151,8 +151,27 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
 
     <%= paginate @pages, remote: true %>
 
+    #获得最近新闻
     <% Cms::Page.recent(@cms_site.id, 12, :rand => true) %>
     <% Cms::Page.recent(@cms_site.id, 10, :channel => 'product-bed') %>
+
+    #获得头条/推荐...新闻
+    PROPERTIES = {
+      hot: "头条",
+      recommend: "推荐",
+      slider: "幻灯",
+      scroll: "滚动",
+      redirect: "跳转",
+      hide: "隐藏"
+    }
+    # Cms::Page.where("'hot' = ANY (properties)")
+    # @channel.pages.where("'recommend' = ANY(properties)")
+    # Cms::Page.hot(site_id)
+    # Cms::Page.recommend(site_id, count)
+    # Cms::Page.slider(site_id, 6)
+    # Cms::Page.scroll(site_id, 6)
+    # Cms::Page.redirect(site_id, 6)
+    # Cms::Page.hide(site_id, 6)
 
     <%= distance_of_time_in_words_to_now(site.updated_at) %>前
 

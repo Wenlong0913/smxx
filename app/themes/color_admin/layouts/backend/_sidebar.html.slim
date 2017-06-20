@@ -19,7 +19,7 @@
         = render "layouts/backend/sidebar_dagle"
       - if Settings.project.grand?
         = render "layouts/backend/sidebar_grand"
-      - elsif Settings.project.imolin?
+      - elsif Settings.project.imolin? || Settings.project.wgtong?
         = render "layouts/backend/sidebar_imolin"
       - elsif Settings.project.sxhop?
         = render "layouts/backend/sidebar_sxhop"
@@ -27,6 +27,8 @@
         = render "layouts/backend/sidebar_meikemei"
       - elsif Settings.project.eqxiyi?
         = render "layouts/backend/sidebar_eqxiyi"
+        elsif Settings.project.wgtong?
+         = render "layouts/backend/sidebar_wgtong"
 
       li class=("has-sub #{'active' if page?('admin/cms/sites', "admin/cms/channels")}")
         a href="javascript:;"

@@ -1,31 +1,37 @@
-button[onclick="mobileRegister()"] 手机号注册
-button[onclick="wechatRegister()"] 微信扫码注册
+.container
+  div style="height: 100px;"
+  .row
+    .col-md-6.col-md-offset-2
+      .jumbotron
+        button[onclick="mobileRegister()" class="btn btn-primary"] 手机号注册
+        | &nbsp;
+        button[onclick="wechatRegister()" class="btn btn-primary"] 微信扫码注册
 
-div[id="bind-mobile" style="display: none"]
-  h4[id="mobile-text"] 手机号注册
-  = simple_form_for(@user, url: sign_up_path, remote: true, method: :post, html: {class: "margin-bottom-0 register"}) do |f|
-    - if flash[:alert]
-      .alert.alert-danger
-        = flash[:alert]
-    .form-group.m-b-25.m-t-10
-      label 手机号
-      input.form-control.input-lg[placeholder="手机号"name="user[mobile]"type="text"]
-      input.[type="hidden" name="user[wechat_code]" id="wechat-response-code"]
-    .form-group.m-b-25.p-0.row
-      .col-xs-9
-        label 验证码
-        input.form-control.input-lg[name="user[code]"type="text"placeholder="验证码"]
-      .col-xs-3.text-right
-        button.btn.btn-default.input-lg.get_code[data-url=api_v1_sessions_sms_path] 获取验证码
-    .text-center.text-danger.title_error
-    .login-buttons
-      = f.submit '注册', class: 'btn btn-success btn-block btn-lg', id: 'click_login', data:{href: root_path}
+        div[id="bind-mobile" style="display: none"]
+          h4[id="mobile-text"] 手机号注册
+          = simple_form_for(@user, url: sign_up_path, remote: true, method: :post, html: {class: "margin-bottom-0 register"}) do |f|
+            - if flash[:alert]
+              .alert.alert-danger
+                = flash[:alert]
+            .form-group.m-b-25.m-t-10
+              label 手机号
+              input.form-control.input-lg[placeholder="手机号"name="user[mobile]"type="text"]
+              input.[type="hidden" name="user[wechat_code]" id="wechat-response-code"]
+            .form-group.m-b-25.p-0.row
+              .col-xs-9
+                label 验证码
+                input.form-control.input-lg[name="user[code]"type="text"placeholder="验证码"]
+              .col-xs-3.text-right
+                button.btn.btn-default.input-lg.get_code[data-url=api_v1_sessions_sms_path] 获取验证码
+            .text-center.text-danger.title_error
+            .login-buttons
+              = f.submit '注册', class: 'btn btn-success btn-block btn-lg', id: 'click_login', data:{href: root_path}
 
-div[id="bind-wechat" style="display: none"]
-  h4 绑定微信
+        div[id="bind-wechat" style="display: none"]
+          h4 绑定微信
 
-  img id="qrcode-auth-image" width="180" style="margin-left: 50%; transform: translateX(-50%)"
-  p align="center" id="qrcode-auth-message"
+          img id="qrcode-auth-image" width="180" style="margin-left: 50%; transform: translateX(-50%)"
+          p align="center" id="qrcode-auth-message"
 
 javascript:
   function mobileRegister () {
