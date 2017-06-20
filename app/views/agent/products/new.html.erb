@@ -151,7 +151,7 @@
                     <div class="col-xs-6">
                       <div class="form-group">
                         <%= f.input_field :is_shelves, as: :boolean, label: false %>
-                        <span>是否创建后立即产品上架</span>
+                        <span>是否上架</span>
                       </div>
                     </div>
                     <div class="col-xs-12">
@@ -226,11 +226,34 @@
                         <%= f.input :unit %>
                       </div>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-3">
                       <div class="form-group">
                         <label class="control-label string.optional">是否设为站长推荐</label>
                         <div class="input-group">
                           <%= f.input_field :is_manager_recommend, as: :boolean %>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-3">
+                      <div class="form-group">
+                        <label class="control-label string.optional">是否上架</label>
+                        <div class="input-group">
+                          <%= f.input_field :is_shelves, as: :boolean %>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group check-group">
+                        <label class="control-label string optional">其他</>
+                        <div>
+                          <%= f.input_field :hot, as: :boolean %>
+                          <%= f.label :hot %>
+                          <%= f.input_field :recommend, as: :boolean, label: '推荐' %>
+                          <%= f.label :recommend %>
+                          <%= f.input_field :event, as: :boolean, label: '活动' %>
+                          <%= f.label :event %>
+                          <%= f.input_field :promotion, as: :boolean, label: '促销' %>
+                          <%= f.label :promotion %>
                         </div>
                       </div>
                     </div>
@@ -242,12 +265,6 @@
                     <div class="col-xs-12">
                       <div class="form-group">
                         <%= f.input :content, as: :ckeditor %>
-                      </div>
-                    </div>
-                    <div class="col-xs-12">
-                      <div class="form-group">
-                        <%= f.input_field :is_shelves, as: :boolean, label: false %>
-                        <span>是否创建后立即产品上架</span>
                       </div>
                     </div>
                   </div>
