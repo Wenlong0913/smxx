@@ -8,7 +8,7 @@ class Admin::Cms::PagesController < Admin::Cms::BaseController
   def index
     authorize ::Cms::Page
     @filter_colums = %w(title)
-    @cms_pages = build_query_filter(::Cms::Page.joins(:channel).where("cms_channels.site_id = ?", @cms_site.id), only: @filter_colums).page(params[:page])
+    @cms_pages = build_query_filter(::Cms::Page.joins(:channel).where("cms_channels.site_id = ?", @cms_site.id), only: @filter_colums).reorder("updated_at DESC").page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@cms_pages.to_json, filename: "cms_pages-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

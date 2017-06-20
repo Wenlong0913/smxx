@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170612082959) do
+ActiveRecord::Schema.define(version: 20170616093253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -302,14 +302,17 @@ ActiveRecord::Schema.define(version: 20170612082959) do
     t.string   "name"
     t.jsonb    "features"
     t.string   "address_line"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
     t.integer  "address_alias_id"
-    t.boolean  "is_published",     default: true
+    t.boolean  "is_published",                               default: true
     t.integer  "updated_by"
     t.integer  "owned_by"
     t.string   "contact_info"
     t.text     "note"
+    t.decimal  "lng",              precision: 20, scale: 14
+    t.decimal  "lat",              precision: 20, scale: 14
+    t.index "ll_to_earth((lat)::double precision, (lng)::double precision)", name: "idx__gnomon_community", using: :gist
     t.index ["owned_by"], name: "index_communities_on_owned_by", using: :btree
     t.index ["updated_by"], name: "index_communities_on_updated_by", using: :btree
   end
