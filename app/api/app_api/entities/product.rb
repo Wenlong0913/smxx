@@ -4,7 +4,6 @@ module AppAPI
     class Product < ProductSimple
 
       if Settings.project.meikemei?
-        expose :old_price, documentation: {desc: '产品原价'}
         expose :month_number, documentation: {desc: '月单数'}
         expose :responsive_person, documentation: {desc: '适用人群'}
         expose :warning_message, documentation: {desc: '注意事项'}
@@ -18,8 +17,6 @@ module AppAPI
         expose :sales_count, documentation: {desc: '产品的销量', type: Integer }
         expose :stock, documentation: { desc: '产品库存', type: Integer }
         expose :unit, documentation: { desc: '库存单位' }
-        expose :price, documentation: { desc: '产品原价', type: Float }
-        expose :discount, documentation: { desc: '产品折后价', type: Float }
         expose :description, documentation: { desc: '产品简要描述' }
         expose :content, documentation: {desc: Settings.project.meikemei? ? '项目介绍' : '产品介绍'}
         expose :is_fee, documentation: { desc: '是否有物流费用', type: Grape::API::Boolean }

@@ -20,9 +20,9 @@ module AppAPI::V1
           Settings.default_data.rooms.each do |room_name|
             ::Chat::Room.find_or_create_by(name: room_name, owner: community)
           end
-          rooms = paginate_collection(community.chat_rooms, params)
+          rooms = community.chat_rooms
         end
-        wrap_collection rooms, AppAPI::Entities::ChatRoom
+        present rooms, with: AppAPI::Entities::ChatRoom
       end
 
       desc "创建频道" do
@@ -43,7 +43,7 @@ module AppAPI::V1
           error! chat_room.errors unless chat_room.save
           present chat_room, with: AppAPI::Entities::ChatRoom
         else
-          present message: "圈子已经存在"
+          error! "圈子已经存在"
         end
       end
 

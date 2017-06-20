@@ -5,7 +5,7 @@ class UserDecorator < ApplicationDecorator
   end
 
   def display_name
-    nickname.presence || username.presence || mobile.phone_number
+    nickname.presence || username.presence || email.presence || mobile.try(:phone_number)
   end
 
   def display_role

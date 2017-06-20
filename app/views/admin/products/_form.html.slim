@@ -6,7 +6,7 @@
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
   .panel-body
-    - if Settings.project.sxhop?
+    - if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.grand?
       = simple_form_for @product, url: @product.new_record? ? (@site ? admin_site_products_path(@site): admin_products_path) : (@site ? admin_site_product_path(@site, @product) : admin_product_path(@product)) do |f|
         div
           .row
@@ -161,9 +161,9 @@
                 div[slot="footer"]
         .div class="row"
           .div class="col-md-6"
-            = f.input :old_price, as: :decimal, input_html: { value: @product.new_record? ? '' : (@product.old_price.to_f / 100) }
-          .div class="col-md-6"
             = f.input :price, as: :decimal, input_html: { value: @product.new_record? ? '' : (@product.price.to_f / 100) }
+          .div class="col-md-6"
+            = f.input :discount, as: :decimal, input_html: { value: @product.new_record? ? '' : (@product.discount.to_f / 100) }
         .div class="row"
           .div class="col-md-6"
             = f.input :video_url
@@ -217,9 +217,9 @@
                 div[slot="footer"]
         .div class="row"
           .div class="col-md-6"
-            = f.input :old_price, as: :decimal, input_html: { value: @product.new_record? ? '' : (@product.old_price.to_f / 100) }
-          .div class="col-md-6"
             = f.input :price, as: :decimal, input_html: { value: @product.new_record? ? '' : (@product.price.to_f / 100) }
+          .div class="col-md-6"
+            = f.input :discount, as: :decimal, input_html: { value: @product.new_record? ? '' : (@product.discount.to_f / 100) }
         .div class="row"
           .div class="col-md-6"
             = f.input :description, as: :text

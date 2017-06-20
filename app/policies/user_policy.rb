@@ -66,12 +66,12 @@ class UserPolicy < ApplicationPolicy
   def permitted_attributes_for_update
     if user.super_admin_or_admin?
       if record.id == User::MAIN_ID
-        [:mobile_phone, :nickname, :password, :password_confirmation]
+        [:mobile_phone, :nickname, :password, :password_confirmation, :email]
       else
-        [:mobile_phone, :nickname, :password, :password_confirmation, :role_ids => []]
+        [:mobile_phone, :nickname, :password, :password_confirmation, :email, :role_ids => []]
       end
     elsif user.id == record.id
-      [:nickname]
+      [:nickname, :email]
     else
       []
     end

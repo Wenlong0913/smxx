@@ -34,7 +34,7 @@ module AppAPI::V1
       end
       params do
         if Settings.project.imolin?
-          optional :community_id, type: Integer, desc: '小区下的所有文章列表'
+          # optional :community_id, type: Integer, desc: '小区下的所有文章列表'
           optional :source_name, type: String, desc: '根据小区来源名称搜索'
         end
         optional :includes, type: String, values: ['description', 'comments'], desc: '选择description后会返回文章类容'
@@ -42,6 +42,7 @@ module AppAPI::V1
         optional :source_id, type: Integer, desc: '文章来源ID'
         optional :source_type, type: String, values: ['room'], desc: '文章来源类型'
         all_or_none_of :source_id, :source_type
+        optional :tag_list, type: String, desc: '文章标签,用逗号隔开'
         use :pagination
         use :sort, fields: [:id, :created_at, :updated_at] unless Settings.project.imolin?
       end
@@ -61,13 +62,17 @@ module AppAPI::V1
               []
             end
         end
-        if params[:community_id]
-          articles = ::Article.where(community_id: [params[:community_id], nil]).order("article_type asc, is_top desc, created_at desc")
+        if Settings.project.imolin?
+          error! '请先设置您的小区信息!' unless current_user.current_community
+          articles = articles.where(community_id: [current_user.current_community.id, nil]).order("article_type asc, is_top desc, created_at desc")
           if params[:source_name]
-            community = ::Community.find(params[:community_id])
-            rooms = community.chat_rooms.where("name like ?", "%#{params[:source_name]}%")
+            rooms = current_user.current_community.chat_rooms.where("name like ?", "%#{params[:source_name]}%")
             articles = articles.where(source: rooms)
           end
+        end
+        if params[:tag_list]
+          tag_list = params[:tag_list].split(/,/)
+          articles = articles.tagged_with(tag_list, :any => true)
         end
         articles = paginate_collection(sort_collection(articles), params)
         wrap_collection articles, AppAPI::Entities::Article, type: :list, includes: [params[:includes]], user_id: current_user.id
@@ -93,12 +98,21 @@ module AppAPI::V1
       delete ':id' do
         authenticate!
         article = ::Article.find(params[:id])
-        if (article.user.id == current_user.id && article.created_at < 5.minutes.ago) ||
-          current_user.permission?(:manage_article)
-          article.destroy
-          present article, with: AppAPI::Entities::Article
+        if Settings.project.sxhop?
+          if (article.user.id == current_user.id && article.created_at < 5.minutes.ago) ||
+            current_user.permission?(:manage_article)
+            article.destroy
+            present article, with: AppAPI::Entities::Article
+          else
+            error! '没有删除权限'
+          end
         else
-          error! '没有删除权限'
+          if article.user.id == current_user.id
+            article.destroy
+            present article, with: AppAPI::Entities::Article
+          else
+            error! '没有删除权限'
+          end
         end
       end
 
