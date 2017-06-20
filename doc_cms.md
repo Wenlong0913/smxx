@@ -210,6 +210,19 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
         <input type="phone" name="comment[contact]" class="form-control" id="InputPhone" />
     <% end %>
 
+    若需要表单空值验证（有css样式）+异步提交（在当前页面返回结果）
+    1、修改html: { class: 'form-theme'} 为 html: { class: 'validate'}
+    2、在input标签的class属性中加入'required'属性
+
+    a标签代替button标签提交表单写法：
+    <a href="javascript:;" class="btn btn-success" onclick='submit_form()' >立即咨询</a>
+    <script type="text/javascript">
+      function submit_form(){
+        $('.simple_form').submit();
+      }
+    </script>
+
+
 可以使用的表单属性：
 
     contact: 联系方式
