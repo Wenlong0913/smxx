@@ -25,5 +25,6 @@ module AppAPI::V1
     mount AppAPI::V1::SalesDistribution
     mount AppAPI::V1::AppSettings
     mount AppAPI::V1::Search
+    mount AppAPI::V1::Complaint
   end
 end

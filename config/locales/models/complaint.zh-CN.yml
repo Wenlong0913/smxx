@@ -1,0 +1,12 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      complaint: Complaint
+    attributes:
+      complaint: {}
+    errors:
+      models:
+        complaint: 
+  helpers:
+    complaint: 
