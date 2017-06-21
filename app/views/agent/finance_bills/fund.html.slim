@@ -1,0 +1,51 @@
+.container.m-t-20
+  .content
+    h3 订单资金管理
+    .row
+      .col-md-3.col-sm-6
+        .widget.widget-stats.bg-green
+          .stats-icon
+            i.fa.fa-rmb
+          .stats-info
+            h3 总资金
+            p 
+              = Order.where(status: ['completed', 'cashed']).sum(:price).to_f/100
+              |元
+          .stats-link
+            a[href=""] 查看详细
+      .col-md-3.col-sm-6
+        .widget.widget-stats.bg-blue
+          .stats-icon
+            i.fa.fa-rmb
+          .stats-info
+            h3 已提现资金
+            p 
+              = Order.cashed.sum(:price).to_f/100
+              | 元
+          .stats-link
+            a[href=""] 查看详细
+      .col-md-3.col-sm-6
+        .widget.widget-stats.bg-purple
+          .stats-icon
+            i.fa.fa-money
+          .stats-info
+            h3 可提现资金
+            p 
+              = Order.completed.sum(:price).to_f/100
+              | 元
+              a.pull-right.btn.btn-warning[href="#{new_agent_finance_bill_path}"] 我要提现
+          .stats-link
+            a[href=""] 去提现
+    h3 账户充值管理
+    .row
+      .col-md-3.col-sm-6
+        .widget.widget-stats.bg-green
+          .stats-icon
+            i.fa.fa-money
+          .stats-info
+            h3 充值余额
+            p 
+              | 0元
+              button.pull-right.btn.btn-warning 去充值
+          .stats-link
+            a[href=""] 查看详细    

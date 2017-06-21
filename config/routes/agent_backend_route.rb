@@ -54,6 +54,12 @@ module AgentBackendRoute
             end
           end
         end
+        resources :finance_bills, only: [:index, :new, :create] do
+          collection do
+            get "fund"
+          end
+        end
+        # resources :finances, only: [:index]
       end
     end
   end
