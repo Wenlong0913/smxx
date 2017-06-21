@@ -9,7 +9,7 @@ li[class=("active" if page?('admin/communities'))]
     = link_to admin_community_articles_path(@community) do
       = fa_icon 'leaf', text: "#{@community.name}-公告列表"
 
-li class=("has-sub #{'active' if page?('admin/vendors', 'admin/sites','admin/users', 'admin/roles', 'admin/user/weixins')}")
+li class=("has-sub #{'active' if page?('admin/vendors','admin/users', 'admin/roles', 'admin/user/weixins')}")
   = link_to dashboard_admin_users_path
     b.caret.pull-right
     i.fa.fa-inbox

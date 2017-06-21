@@ -1,6 +1,6 @@
 <div class="main-wrapper">
 	<%= render file: 'public/templetes/newshub/_header.html.erb' %>
-	<div class="container-fluid">
+	<div class="container">
 		<!-- [[header start]] -->
 	  <%= render file: 'public/templetes/newshub/_top_menu.html.erb' %>
 		<!-- [[header end]] -->
@@ -10,8 +10,21 @@
 					<div class="tr-section">
 						<div class="tr-post">
 							<div class="entry-header">
-								<div class="entry-thumbnail">
-									<img class="img-responsive" src="<%= @product.first_image %>" alt="<%= @product.name %>">
+								<div class="row">
+									<div class="col-md-8">
+										<div class="entry-thumbnail">
+											<img class="img-responsive" src="<%= @product.first_image %>" alt="<%= @product.name %>">
+										</div>
+									</div>
+									<div class="col-md-4">
+										<p><i class="fa fa-map-marker"></i> 上海市崇明区城桥镇崇明大道7887号</p>
+										<p><i class="fa fa-calendar"></i> 2017年03月25日 - 2017年03月25日 </p>
+										<p><i class="fa fa-clock-o"></i> 13:30-15:00 </p>
+										<p><i class="fa fa-phone-square"></i> 02159626867-3019</p>
+										<p><i class="fa fa-cny"></i> 免费</p>
+										<p class="text-center gray">活动正在进行</p>
+										<p><a class="btn btn-block btn-lg btn-success">马上预订</a></p>
+									</div>
 								</div>
 							</div>
 							<div class="post-content">

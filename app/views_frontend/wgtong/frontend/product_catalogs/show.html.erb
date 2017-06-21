@@ -1,6 +1,6 @@
 <div class="main-wrapper">
   <%= render file: 'public/templetes/newshub/_header.html.erb' %>
-	<div class="container-fluid">
+	<div class="container-fluid container">
     <%= render file: 'public/templetes/newshub/_top_menu.html.erb' %>
 
 		<div class="tr-breadcrumb">
@@ -19,7 +19,7 @@
 				<div class="theiaStickySidebar">
 					<div class="tr-section">
 						<div class="section-title title-before">
-							<h1><a href="#">Business</a></h1>
+							<h1><a href="#">头条</a></h1>
 						</div>
             <% @products.each do |product| %>
 						<div class="tr-post">
@@ -75,7 +75,7 @@
 
 					<div class="tr-section post-vertical">
 						<div class="section-title title-before">
-							<h1><a href="#">Technlogy</a></h1>
+							<h1><a href="#">幻灯</a></h1>
 						</div>
 						<div class="tr-post">
 							<div class="row">
@@ -122,7 +122,7 @@
 
 					<div class="tr-section">
 						<div class="section-title title-before">
-							<h1><a href="#">Business</a></h1>
+							<h1><a href="#">推荐项目</a></h1>
 						</div>
 						<div class="tr-post">
 							<div class="entry-header">
@@ -254,7 +254,7 @@
 				<div class="theiaStickySidebar">
 					<div class="tr-section">
 						<div class="section-title title-before">
-							<h1><a href="#">Watch Now</a></h1>
+							<h1><a href="#">最近更新</a></h1>
 						</div>
 						<div class="tr-post tr-video-post">
 							<div class="entry-header">
@@ -368,12 +368,11 @@
 
 					<div class="tr-section local-events">
 						<div class="section-title title-before">
-							<h1><a href="#">Local Events</a></h1>
+							<h1><a href="#">本地活动</a></h1>
 						</div>
 						<ul class="nav nav-tabs" role="tablist">
-							<li role="presentation" class="active"><a href="#time1" data-toggle="tab">02.Jan</a></li>
-							<li role="presentation"><a href="#time2" data-toggle="tab">14.Jan</a></li>
-							<li role="presentation"><a href="#time3" data-toggle="tab"> 22.Jan</a></li>
+							<li role="presentation" class="active"><a href="#time1" data-toggle="tab">正在进行</a></li>
+							<li role="presentation"><a href="#time2" data-toggle="tab">马上开始</a></li>
 						</ul>
 						<div class="tab-content">
 							<div role="tabpanel" class="tab-pane active fade in" id="time1">
@@ -420,28 +419,6 @@
 								</div><!-- /.tr-post -->
 								<span>N Street Sacramento, California, USA</span>
 							</div>
-							<div role="tabpanel" class="tab-pane fade in" id="time3">
-								<div class="tr-post">
-									<div class="entry-header">
-										<div class="entry-thumbnail">
-											<a href="details1.html"><img class="img-responsive" src="/templetes/newshub/images/post/7.jpg" alt="Image"></a>
-										</div>
-									</div>
-									<div class="post-content">
-										<div class="entry-meta">
-											<ul>
-												<li>Apple Events</li>
-												<li>3:00 Pm</li>
-												<li>22 January, 2017</li>
-											</ul>
-										</div><!-- /.entry-meta -->
-										<h2 class="entry-title">
-											<a href="details1.html">18 Great Performances in Mediocre Movies in 2017</a>
-										</h2>
-									</div>
-								</div><!-- /.tr-post -->
-								<span>N Street Sacramento, California, USA</span>
-							</div>
 						</div>
 					</div><!-- meta-tab -->
 				</div><!-- /.theiaStickySidebar -->
@@ -455,7 +432,7 @@
 
 					<div class="tr-section tr-widget">
 						<div class="widget-title title-before">
-							<span>This Is rising</span>
+							<span>热门项目</span>
 						</div>
 						<ul class="medium-post-list">
 							<li class="tr-post">
