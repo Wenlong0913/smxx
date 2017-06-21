@@ -16,7 +16,7 @@
 /       
 
 .section-container.bg-silver.m-b-20.primary-content
-  .container[style='']
+  .container
     - if Settings.project.dagle?
       .search-container
         .search-content
@@ -118,30 +118,33 @@
               .f-s-14.m-b-15
                 span
                   = @order.status == 'completed' ? '订单已完成' : '订单处理中'
-              ul.list-inline
-                li
+              - @order.status = 'pending'
+              ul.list-inline[data-statu="#{@order.status}"]
+                li.open
                   .fa-block
-                    i.fa.fa-edit.fa-2x.text-success
+                    i.fa.fa-edit.fa-2x
                   .text-center
-                    span 提交订单
+                    span 创建订单
                     .time = @order.created_at.strftime("%Y-%m-%d %H:%M:%S")
-                li
-                  .fa-block[class="#{@order.status == 'pending' || @order.status == 'open' ? 'active' : ''}"]
-                    i.fa.fa-id-card-o.fa-2x.text-success
+                li.pending
+                  .fa-block
+                    i.fa.fa-id-card-o.fa-2x
                   .text-center
-                    span
-                      = @order.status == 'paid' ? '付款成功' : '待付款'
-                li
-                  .fa-block[class="#{@order.status == 'paid' ? 'active' : ''}"]
+                    span.select 待客户付款
+                    span.select 客户已付款
+                li.paid
+                  .fa-block
                     i.fa.fa-inbox.fa-2x.text-muted
                   .text-center
-                    span 商品出库
-                li
-                  .fa-block[class="#{@order.status == 'delivering' ? 'active' : ''}"]
-                    i.fa.fa-truck.fa-2x.text-muted
+                    span.select 订单发货
+                    span.select 订单已发货
+                li.delivering
+                  .fa-block
+                    i.fa.fa-truck.fa-2x
                   .text-center
-                    span 等待收货
-                li
+                    span.select 用户确认收货
+                    span.select 用户已收货
+                li.completed
                   - if @order.status == 'completed'
                     .fa-block.active
                       i.fa.fa-check-square-o.fa-2x
@@ -155,9 +158,13 @@
                       .time = @order.updated_at.strftime("%Y-%m-%d %H:%M:%S")
                   - else
                     .fa-block
-                      i.fa.fa-check-square-o.fa-2x.text-muted
+                      i.fa.fa-check-square-o.fa-2x
                     .text-center
                       = '订单完成'
+              .text-right.m-t-30.btns
+                button.btn.btn-warning[type="submit"] 发货
+                button.btn.btn-default[type="submit"] 关闭订单
+                button.btn.btn-danger[type="submit"] 用户申请退款
       .panel.panel-default.order-products
         .panel-heading
           .row
@@ -184,15 +191,23 @@
               span 应付总额：
               strong.float-right ￥116.2
       javascript:
-        var statu = false
-        $('.order-info .right-block ul li').each(function () {
-          var self = $(this).find('.fa-block')
-          if (self.hasClass('.active')) {
-            statu = true
-          }
-          if (statu) {
-            self.find('i').addClass('.text-muted')
-          } else {
-            self.find('i').addClass('.text-success')
-          }
+        $(function () {
+          var orderStatu = $('.order-info .right-block ul').data('statu')
+          var i = true
+          $('.order-info .right-block ul li').each(function () {
+            var self = $(this).find('.fa-block')
+            if ($(this).hasClass(orderStatu)) {
+              self.addClass('active')
+              i = false
+            }
+            if (i) {
+              self.find('i').addClass('text-success')
+              self.parent().append('<i class="fa fa-2x fa-caret-right success-right"></i>')
+              $(this).find('.text-center span.select').eq(0).hide()
+            } else {
+              self.find('i').addClass('text-muted')
+              $(this).find('.text-center span.select').eq(1).hide()
+            }
+          })
+          $('.order-info .right-block ul li.completed').find('i.success-right').hide()
         })

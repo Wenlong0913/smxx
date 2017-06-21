@@ -36,10 +36,16 @@
         .right-block
           ul.list-inline
             li
+              position: relative
               width: 20%
               .text-center
                 display: inline-table
                 width: 100%
+              .success-right
+                position: absolute
+                right: 0px
+                top: 45px
+                color: #00acac
               .fa-block
                 width: 50px
                 height: 50px
@@ -59,7 +65,11 @@
                 border-radius: 50px
                 i.fa
                   color: #fff !important
-
+          .btns
+            button
+              margin-right: 15px
+              &:last-child
+                margin: 0px
     .order-products
       .panel-footer
         display: inline-block
