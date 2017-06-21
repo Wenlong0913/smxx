@@ -14,63 +14,185 @@
 /       h4 订单详情
 /     .panel-body
 /       
-.section-container.bg-silver.m-b-20.primary-content
-  .container
-    .search-container
-      .search-content
-        .search-toolbar
-          | 订单产品列表
-        .container-list
-          .panel.panel-forum
-            ul.forum-list.forum-topic-list
-              - @order.order_products.each do |order_product|
-                - product = order_product.product
-                li
-                  .media
-                    = image_tag(product.image_items.first.try(:image_url) || 'no-picture.png')
-                  .info-container
-                    .info
-                      h4.title
-                        = product.name
-                      ul.info-start-end
-                        li.row
-                          .col-xs-6
-                            | 购买数量：
-                            = order_product.amount
-                          .col-xs-6
-                            | 商品金额：
-                            = order_product.price.to_f / 100
-      .search-sidebar
-        h4.title
-          | 订单信息
-        .form-group
-          label.control-label
-            | 订单号：
-          = @order.code
-        .form-group
-          label.control-label
-            | 客户：
-          = @order.user.nickname
-        .form-group
-          label.control-label
-            | 价格：
-          = @order.price.to_f / 100
-        .form-group
-          label.control-label
-            | 订单状态：
-          = decorate(@order).display_status
-        .form-group
-          label.control-label
-            | 订单描述：
-          = @order.description
-        
-        .form-group
-          label.control-label
-            | 订单物流：
-          span.display_order_delivery
-            = @order.order_deliveries.first.logistics_name + '(' + @order.order_deliveries.first.logistics_number + ')' unless @order.order_deliveries.first.try(:logistics_name).blank?
-        button.btn.btn-success.btn-sm[data-toggle='modal' data-target='#orderDelivery']
-          = @order.order_deliveries.first.logistics_name.blank? ? '添加物流信息' : '修改物流信息'
 
-= render 'order_delivery'
-        
+.section-container.bg-silver.m-b-20.primary-content
+  .container[style='']
+    - if Settings.project.dagle?
+      .search-container
+        .search-content
+          .search-toolbar
+            | 订单产品列表
+          .container-list
+            .panel.panel-forum
+              ul.forum-list.forum-topic-list
+                - @order.order_products.each do |order_product|
+                  - product = order_product.product
+                  li
+                    .media
+                      = image_tag(product.image_items.first.try(:image_url) || 'no-picture.png')
+                    .info-container
+                      .info
+                        h4.title
+                          = product.name
+                        ul.info-start-end
+                          li.row
+                            .col-xs-6
+                              | 购买数量：
+                              = order_product.amount
+                            .col-xs-6
+                              | 商品金额：
+                              = order_product.price.to_f / 100
+        .search-sidebar
+          h4.title
+            | 订单信息
+          .form-group
+            label.control-label
+              | 订单号：
+            = @order.code
+          .form-group
+            label.control-label
+              | 客户：
+            = @order.user.nickname
+          .form-group
+            label.control-label
+              | 价格：
+            = @order.price.to_f / 100
+          .form-group
+            label.control-label
+              | 订单状态：
+            = decorate(@order).display_status
+          .form-group
+            label.control-label
+              | 订单描述：
+            = @order.description
+          
+          .form-group
+            label.control-label
+              | 订单物流：
+            span.display_order_delivery
+              = @order.order_deliveries.first.logistics_name + '(' + @order.order_deliveries.first.logistics_number + ')' unless @order.order_deliveries.first.try(:logistics_name).blank?
+          button.btn.btn-success.btn-sm[data-toggle='modal' data-target='#orderDelivery']
+            = @order.order_deliveries.first.logistics_name.blank? ? '添加物流信息' : '修改物流信息'
+      = render 'order_delivery'
+    - else
+      ol.breadcrumb
+        li
+          a[href='#'] 订单列表
+        li.active
+          span 订单：22222
+      .panel.panel-default.order-info
+        .panel-body
+          .row
+            .col-xs-3.left-block
+              ul.list-unstyled
+                li.f-s-14.m-b-15
+                  label.control-label
+                    span 订单信息
+                li 
+                  label.control-label
+                    span 订单号：
+                    = @order.code
+                li 
+                  label.control-label
+                    span 客户：
+                    = @order.user && @order.user.nickname
+                li 
+                  label.control-label
+                    span 价格：
+                  = @order.price.to_f / 100
+                li 
+                  label.control-label
+                    span 订单状态：
+                    = decorate(@order).display_status
+                li 
+                  label.control-label
+                    span 订单描述：
+                    = @order.description
+                li 
+                  label.control-label
+                    span 订单物流：
+                  span.display_order_delivery
+                    = @order.order_deliveries.first.logistics_name + '(' + @order.order_deliveries.first.logistics_number + ')' unless @order.order_deliveries.first.try(:logistics_name).blank?
+
+            .col-xs-9.right-block
+              .f-s-14.m-b-15
+                span
+                  = @order.status == 'completed' ? '订单已完成' : '订单处理中'
+              ul.list-inline
+                li
+                  .fa-block
+                    i.fa.fa-edit.fa-2x.text-success
+                  .text-center
+                    span 提交订单
+                    .time = @order.created_at.strftime("%Y-%m-%d %H:%M:%S")
+                li
+                  .fa-block[class="#{@order.status == 'pending' || @order.status == 'open' ? 'active' : ''}"]
+                    i.fa.fa-id-card-o.fa-2x.text-success
+                  .text-center
+                    span
+                      = @order.status == 'paid' ? '付款成功' : '待付款'
+                li
+                  .fa-block[class="#{@order.status == 'paid' ? 'active' : ''}"]
+                    i.fa.fa-inbox.fa-2x.text-muted
+                  .text-center
+                    span 商品出库
+                li
+                  .fa-block[class="#{@order.status == 'delivering' ? 'active' : ''}"]
+                    i.fa.fa-truck.fa-2x.text-muted
+                  .text-center
+                    span 等待收货
+                li
+                  - if @order.status == 'completed'
+                    .fa-block.active
+                      i.fa.fa-check-square-o.fa-2x
+                      = '订单完成'
+                      .time = @order.updated_at.strftime("%Y-%m-%d %H:%M:%S")
+                  - if @order.status == 'cancelled'
+                    .fa-block.active-danger
+                      i.fa.fa-check-square-o.fa-2x
+                    .text-center
+                      = '订单已取消'
+                      .time = @order.updated_at.strftime("%Y-%m-%d %H:%M:%S")
+                  - else
+                    .fa-block
+                      i.fa.fa-check-square-o.fa-2x.text-muted
+                    .text-center
+                      = '订单完成'
+      .panel.panel-default.order-products
+        .panel-heading
+          .row
+            .col-xs-6.text-center 商品
+            .col-xs-3.text-center 商品数量
+            .col-xs-3.text-center 价格
+        .panel-body
+          - 2.times do |i|
+            .row.m-b-15
+              .col-xs-6
+                = image_tag '', style: 'width: 60px;height: 60px', class: 'img-thumbnail m-r-10'
+                span 商品
+              .col-xs-3.text-center 商品数量
+              .col-xs-3.text-center 价格
+        .panel-footer
+          ul.list-unstyled
+            li
+              span 商品总额：
+              span.float-right ￥116.2
+            li
+              span 运费：
+              span.float-right ￥116.2 
+            li.text-danger
+              span 应付总额：
+              strong.float-right ￥116.2
+      javascript:
+        var statu = false
+        $('.order-info .right-block ul li').each(function () {
+          var self = $(this).find('.fa-block')
+          if (self.hasClass('.active')) {
+            statu = true
+          }
+          if (statu) {
+            self.find('i').addClass('.text-muted')
+          } else {
+            self.find('i').addClass('.text-success')
+          }
+        })

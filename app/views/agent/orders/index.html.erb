@@ -99,9 +99,11 @@
                       <div class="order-status-display">
                         <% if Settings.project.sxhop? || Settings.project.imolin? %>
                           <!-- sxhop -->
-                          <span class="label label-info" style="padding: 8px 10px">
-                            <%= decorate(order).display_status %>
-                          </span>
+                          <%= link_to agent_order_path(order) do%>
+                            <span class="label label-info" style="padding: 8px 10px">
+                              <%= decorate(order).display_status %>
+                            </span>
+                          <% end %>
                         <% else %>
                           <!-- dagle -->
                           <% if order.cancelled? %>
