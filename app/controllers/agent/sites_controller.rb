@@ -14,6 +14,7 @@ class Agent::SitesController < Agent::BaseController
   def create
     @agent_site = Site.new(permitted_attributes(Site))
     @agent_site.user_id = current_user.id
+    @agent_site.address_line = '成都市'
     authorize @agent_site
 
     respond_to do |format|
