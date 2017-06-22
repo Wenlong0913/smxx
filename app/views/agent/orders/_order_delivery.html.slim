@@ -8,13 +8,16 @@
       span.error_message
         | 
       = simple_form_for @order_delivery, url: order_delivery_agent_order_path(@order), method: :put, remote: true do |f|
-        .modal-body.p-30
-          .row
-            .col-xs-12
-              .form-group.col-xs-4.p-l-0.m-0
-                = f.input :logistics_name
-              .form-group.col-xs-8.p-0.m-0
-                = f.input :logistics_number
-        .modal-footer
-          button.btn.btn-default[type="button" data-dismiss="modal"] 取消
-          = f.submit '保存物流信息', class: 'btn btn-primary save-delivery'
+          .modal-body.p-30
+            .row
+              .col-xs-12
+                .form-group.col-xs-4.p-l-0.m-0
+                  = f.input :logistics_name
+                .form-group.col-xs-8.p-0.m-0
+                  = f.input :logistics_number
+          .modal-footer
+            button.btn.btn-default[type="button" data-dismiss="modal"] 取消
+            - if Settings.project.dagle?
+              = f.submit '保存物流信息', class: 'btn btn-primary save-delivery'
+            - else
+              = f.submit '确认订单发货', class: 'btn btn-primary save-delivery'
