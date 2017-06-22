@@ -62,9 +62,10 @@ class Agent::OrdersController < Agent::BaseController
     @order_delivery = @order.order_deliveries.blank? ? @order.order_deliveries.new : @order.order_deliveries.first
     @order_delivery.logistics_name = params[:order_delivery][:logistics_name]
     @order_delivery.logistics_number = params[:order_delivery][:logistics_number]
+    new_record = @order_delivery.new_record?
     if @order_delivery.save
       if Settings.project.sxhop? || Settings.project.imolin?
-        @order.delivering!
+        @order.delivering! if new_record
       end
       render json: {status: 'ok', message: "#{@order_delivery.logistics_name}(#{@order_delivery.logistics_number})"}
     else
