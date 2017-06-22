@@ -28,7 +28,6 @@ class Order < ApplicationRecord
       cancelled: 3, # 已取消
       delivering: 4,# 发货中
       completed: 5,  # 已完成
-      cashed: 6,     #已提现
     }
   else
     enum status: {

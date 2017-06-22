@@ -9,7 +9,7 @@
           .stats-info
             h3 总资金
             p 
-              = Order.where(status: ['completed', 'cashed']).sum(:price).to_f/100
+              = @site.orders.completed.sum(:price).to_f/100
               |元
           .stats-link
             a[href=""] 查看详细
@@ -20,7 +20,7 @@
           .stats-info
             h3 已提现资金
             p 
-              = Order.cashed.sum(:price).to_f/100
+              = @site.orders.completed.where("finance_bill_id is not null").sum(:price).to_f/100
               | 元
           .stats-link
             a[href=""] 查看详细
@@ -31,7 +31,7 @@
           .stats-info
             h3 可提现资金
             p 
-              = Order.completed.sum(:price).to_f/100
+              = @site.orders.completed.where("finance_bill_id is null").sum(:price).to_f/100
               | 元
               a.pull-right.btn.btn-warning[href="#{new_agent_finance_bill_path}"] 我要提现
           .stats-link

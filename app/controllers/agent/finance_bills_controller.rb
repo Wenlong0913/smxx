@@ -2,7 +2,7 @@ class Agent::FinanceBillsController < Agent::BaseController
 
   def index
     authorize FinanceBill
-    @agent_finance_bills = FinanceBill.all.order("created_at DESC").page(params[:page])
+    @agent_finance_bills = FinanceBill.where(id: @site.orders.map(&:finance_bill_id)).order("created_at DESC").page(params[:page])
     respond_to do |format|
       format.html
       format.json { render json: @agent_finance_bills }
@@ -11,7 +11,7 @@ class Agent::FinanceBillsController < Agent::BaseController
 
   def new
     authorize FinanceBill
-    @orders = Order.completed
+    @orders = @site.orders.completed.where(finance_bill_id: nil)
     @agent_finance_bill = FinanceBill.new(agent_finance_bill_params)
   end
 
@@ -21,12 +21,12 @@ class Agent::FinanceBillsController < Agent::BaseController
     FinanceBill.transaction do
       begin
         @agent_finance_bill = FinanceBill.new(permitted_attributes(FinanceBill))
-        orders = Order.completed.where(id: params[:finance_bill][:order_ids])
+        orders = @site.orders.completed.where(id: params[:finance_bill][:order_ids], finance_bill_id: nil)
         if orders.any?
-          @agent_finance_bill.amount = orders.sum(:price).to_f/100
+          @agent_finance_bill.amount = orders.sum(:price).to_f
           @agent_finance_bill.status = 'open'
           @agent_finance_bill.save!
-          orders.update_all(finance_bill_id: @agent_finance_bill.id, status: 'cashed')
+          orders.update_all(finance_bill_id: @agent_finance_bill.id)
         end
       rescue
         flag = false
