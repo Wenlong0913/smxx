@@ -1,6 +1,6 @@
 class Agent::SitesController < Agent::BaseController
   skip_before_action :set_current_site
-  #before_action :set_site, only: [:show, :edit, :update, :destroy]
+  before_action :set_site, only: [:show, :edit, :update, :destroy]
 
   def new
     authorize Site
@@ -8,7 +8,8 @@ class Agent::SitesController < Agent::BaseController
   end
 
   def edit
-    authorize @site
+    @agent_site = Site.find(params[:id])
+    authorize @agent_site
   end
 
   def create
@@ -46,9 +47,9 @@ class Agent::SitesController < Agent::BaseController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    # def set_site
-    #   @agent_site = Site.find(params[:id])
-    # end
+    def set_site
+      @agent_site = Site.find(params[:id])
+    end
 
     # Only allow a trusted parameter "white list" through.
 
