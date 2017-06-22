@@ -53,6 +53,7 @@ class User < ApplicationRecord
   # 产品分销
   has_many :product_sales_dists, -> { where(type_name: '产品') }, class_name: 'SalesDistribution::Resource'
   has_many :tasks, foreign_key: :assignee_id
+  has_many :complaints
   has_many_comments
   has_many_favorites
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"

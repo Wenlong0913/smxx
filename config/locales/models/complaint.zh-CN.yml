@@ -1,0 +1,12 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      complaint: 投诉
+    attributes:
+      complaint: {}
+    errors:
+      models:
+        complaint: 
+  helpers:
+    complaint: 
