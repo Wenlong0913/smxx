@@ -135,6 +135,16 @@ module AdminRoute
         # 轮波图
         resources :banners
         resources :finance_histories, only: [:index, :new, :create, :show], :concerns => :paginatable
+
+        #数据采集
+        namespace :forage do
+          resources :sources
+          resources :run_keys
+          resources :simples do
+            resources :details
+          end
+          resources :details
+        end
       end
     end
   end
