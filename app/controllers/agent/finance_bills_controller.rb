@@ -23,7 +23,7 @@ class Agent::FinanceBillsController < Agent::BaseController
         @agent_finance_bill = FinanceBill.new(permitted_attributes(FinanceBill))
         orders = @site.orders.completed.where(id: params[:finance_bill][:order_ids], finance_bill_id: nil)
         if orders.any?
-          @agent_finance_bill.amount = orders.sum(:price).to_f
+          @agent_finance_bill.amount = orders.sum(:price).to_i
           @agent_finance_bill.status = 'open'
           @agent_finance_bill.save!
           orders.update_all(finance_bill_id: @agent_finance_bill.id)
