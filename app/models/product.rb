@@ -50,9 +50,9 @@ class Product < Item
   # Product.recommend(6, catalog_id: 1)
   PROPERTIES.each_pair do |k, v|
     scope k, ->(count = 2, options = {}) {
-      assoc = where("(features -> 'properties') ? '#{k}'").reorder("updated_at DESC").limit(count)
+      assoc = where("(items.features -> 'properties') ? '#{k}'").reorder("updated_at DESC").limit(count)
       if options[:catalog_id].present?
-        assoc = assoc.joins(:catalog).where(product_catalogs: { id: options[:catalog_id] })
+        assoc = assoc.joins(:catalog).where(catalogs: { id: options[:catalog_id] })
       end
       assoc
     }
