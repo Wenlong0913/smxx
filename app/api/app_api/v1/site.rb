@@ -66,16 +66,18 @@ module AppAPI::V1
           sites = sites.where("title like ?", "%#{params[:name]}%")
         end
         if Settings.project.imolin?
-          community = ::Community.find_by(id: current_user.current_community.id)
+          community = current_user.current_community
+          error! "用户还没有选择小区" unless community
+          sites = sites.published
           if params[:site_catalog_id]
-            sites = sites.where("catalog_id = ?", params[:site_catalog_id]).where("features ->> 'is_published' = ?", "1")
+            sites = sites.where("catalog_id = ?", params[:site_catalog_id])
             sites = sites.near_by(lat: community.address_lat, lng: community.address_lng, distance: 5000)
             # sites = sites.selecting_distance_from(community.address_lat, community.address_lng).order_by_distance(community.address_lat, community.address_lng)
           end
 
           # imolin店铺排序
           if params[:name]
-            sites = sites.where("features ->> 'is_published' = ?", "1").selecting_distance_from(community.address_lat, community.address_lng).order_by_distance(community.address_lat, community.address_lng)
+            sites = sites.selecting_distance_from(community.address_lat, community.address_lng).order_by_distance(community.address_lat, community.address_lng)
           end
         end
         sites = paginate_collection(sort_collection(sites), params)
