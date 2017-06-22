@@ -89,6 +89,8 @@ class Site < ApplicationRecord
     def address_lng
       self.manual_geo ? self.manual_geo.lng : self.address.lng
     end
+
+    scope :published, -> { where("features ->> 'is_published' = ?", "1") }
   end
   audited
 
