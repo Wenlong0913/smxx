@@ -43,9 +43,7 @@ end
 
 #系统参数
 Keystore.put('cms_template_names', "['default','dagle','app-landing-spotlight','grand','eshop','newshub']")
-if Settings.project.wgtong?
-  
-end
+
 # init Cms
 # visit: http://localhost:3000/cms_1/
 puts "创建CMS官网"

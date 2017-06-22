@@ -28,12 +28,35 @@ class Product < Item
   belongs_to :catalog
   belongs_to :site
 
-  PROPERTIES = {
-    recommend: "推荐",
-    event: "活动",
-    promotion: "促销",
-    discount: "折扣"
-  }
+  if Settings.project.wgtong?
+    PROPERTIES = {
+      hot: "头条",
+      recommend: "推荐",
+      slider: "幻灯",
+      scroll: "滚动",
+      redirect: "跳转",
+      hide: "隐藏"
+    }
+  else
+    PROPERTIES = {
+      recommend: "推荐",
+      event: "活动",
+      promotion: "促销",
+      discount: "折扣"
+    }
+  end
+  # Product.hot()
+  # Product.recommend(6)
+  # Product.recommend(6, catalog_id: 1)
+  PROPERTIES.each_pair do |k, v|
+    scope k, ->(count = 2, options = {}) {
+      assoc = where("(features -> 'properties') ? '#{k}'").reorder("updated_at DESC").limit(count)
+      if options[:catalog_id].present?
+        assoc = assoc.joins(:catalog).where(product_catalogs: { id: options[:catalog_id] })
+      end
+      assoc
+    }
+  end
 
   WEIGHT_UNIT_HASH = {
     Kg: "KG(千克)",
