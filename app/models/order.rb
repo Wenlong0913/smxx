@@ -27,7 +27,7 @@ class Order < ApplicationRecord
       paid: 2,      # 已付款
       cancelled: 3, # 已取消
       delivering: 4,# 发货中
-      completed: 5,  # 已完成
+      completed: 5, # 已完成
     }
   else
     enum status: {
