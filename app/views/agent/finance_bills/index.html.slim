@@ -1,0 +1,26 @@
+.container.m-t-20
+  .panel.panel-info
+    .panel-heading
+      .panel-heading-btn
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+          i class="fa fa-expand"
+        a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+          i class="fa fa-minus"
+      h4 账单历史记录
+    .panel-body
+      .table-responsive
+        table.table.table-striped
+          thead
+            tr
+              th 金额(单位:元)
+              th 状态
+              th 账单时间
+
+          tbody
+            - @agent_finance_bills.each do |agent_finance_bill|
+              tr
+                td = (agent_finance_bill.amount/100).to_f
+                td = decorate(agent_finance_bill).display_status
+                td = agent_finance_bill.created_at.strftime("%Y-%m-%d")
+    .text-center
+      = paginate @agent_finance_bills
