@@ -2,7 +2,7 @@
 zh-CN:
   activerecord:
     models:
-      complaint: Complaint
+      complaint: 投诉
     attributes:
       complaint: {}
     errors:
