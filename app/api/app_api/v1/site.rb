@@ -43,6 +43,7 @@ module AppAPI::V1
         # optional :friends, type: Boolean, desc: "好友#{::Site.model_name.human}"
         optional :favorite, type: String, values: ['mine', 'friends', 'top3'], desc: "私藏#{::Site.model_name.human}：我的私藏#{::Site.model_name.human}，好友私藏的#{::Site.model_name.human}，被私藏数高的#{::Site.model_name.human}top3"
         optional :site_catalog_id, type: Integer, desc: "根据分类显示#{::Site.model_name.human}列表"
+        optional :name, type: String, desc: "根据店铺名称模糊搜索"
       end
       get do
         authenticate!
@@ -59,11 +60,25 @@ module AppAPI::V1
           # 获取好友店铺
           sites = ::Site.where(user_id: current_user.friends)
         end
-        if params[:site_catalog_id]
-          community = ::Community.find_by(id: current_user.current_community.id)
-          sites = sites.where("catalog_id = ?", params[:site_catalog_id]).where("features ->> 'is_published' = ?", "1")
-          sites = sites.near_by(lat: community.address_lat, lng: community.address_lng, distance: 5000)
-          # sites = sites.selecting_distance_from(community.address_lat, community.address_lng).order_by_distance(community.address_lat, community.address_lng)
+
+        # 模糊查询获取店铺
+        if params[:name]
+          sites = sites.where("title like ?", "%#{params[:name]}%")
+        end
+        if Settings.project.imolin?
+          community = current_user.current_community
+          error! "用户还没有选择小区" unless community
+          sites = sites.published
+          if params[:site_catalog_id]
+            sites = sites.where("catalog_id = ?", params[:site_catalog_id])
+            sites = sites.near_by(lat: community.address_lat, lng: community.address_lng, distance: 5000)
+            # sites = sites.selecting_distance_from(community.address_lat, community.address_lng).order_by_distance(community.address_lat, community.address_lng)
+          end
+
+          # imolin店铺排序
+          if params[:name]
+            sites = sites.selecting_distance_from(community.address_lat, community.address_lng).order_by_distance(community.address_lat, community.address_lng)
+          end
         end
         sites = paginate_collection(sort_collection(sites), params)
         wrap_collection sites, AppAPI::Entities::SiteSimple, includes: [:distance]
