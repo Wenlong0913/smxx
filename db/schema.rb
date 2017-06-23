@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170621080509) do
+ActiveRecord::Schema.define(version: 20170621104042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -317,6 +317,17 @@ ActiveRecord::Schema.define(version: 20170621080509) do
     t.index ["updated_by"], name: "index_communities_on_updated_by", using: :btree
   end
 
+  create_table "complaints", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "source_type"
+    t.integer  "source_id"
+    t.text     "content"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["source_type", "source_id"], name: "index_complaints_on_source_type_and_source_id", using: :btree
+    t.index ["user_id"], name: "index_complaints_on_user_id", using: :btree
+  end
+
   create_table "discovers", force: :cascade do |t|
     t.string   "resource_type"
     t.integer  "resource_id"
@@ -333,6 +344,13 @@ ActiveRecord::Schema.define(version: 20170621080509) do
     t.datetime "updated_at",    null: false
     t.index ["resource_type", "resource_id"], name: "index_favorite_entries_on_resource_type_and_resource_id", using: :btree
     t.index ["user_id"], name: "index_favorite_entries_on_user_id", using: :btree
+  end
+
+  create_table "finance_bills", force: :cascade do |t|
+    t.integer  "amount"
+    t.integer  "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "finance_histories", force: :cascade do |t|
@@ -836,6 +854,8 @@ ActiveRecord::Schema.define(version: 20170621080509) do
     t.integer  "update_by"
     t.string   "resource_url"
     t.date     "delivery_date"
+    t.integer  "finance_bill_id"
+    t.index ["finance_bill_id"], name: "index_orders_on_finance_bill_id", using: :btree
     t.index ["site_id"], name: "index_orders_on_site_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
   end
@@ -1163,6 +1183,7 @@ ActiveRecord::Schema.define(version: 20170621080509) do
   add_foreign_key "article_products", "articles"
   add_foreign_key "article_users", "articles"
   add_foreign_key "attachment_relations", "attachments"
+  add_foreign_key "complaints", "users"
   add_foreign_key "forage_details", "forage_simples"
   add_foreign_key "forage_run_keys", "forage_sources"
   add_foreign_key "forage_simples", "forage_run_keys"
@@ -1180,6 +1201,7 @@ ActiveRecord::Schema.define(version: 20170621080509) do
   add_foreign_key "order_cvs", "orders"
   add_foreign_key "order_materials", "orders"
   add_foreign_key "order_products", "orders"
+  add_foreign_key "orders", "finance_bills"
   add_foreign_key "orders", "sites"
   add_foreign_key "orders", "users"
   add_foreign_key "produces", "orders"
