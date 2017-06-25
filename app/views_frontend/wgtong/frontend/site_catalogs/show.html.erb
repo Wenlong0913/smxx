@@ -18,15 +18,15 @@
 			<div class="col-sm-5 col-md-6 tr-sticky">
 
 				<div class="theiaStickySidebar">
-          <% site_hot = Site.hot.first || Site.first %>
+					<% Site.where(catalog_id: @site_catalog.id).each do |site| %>
 					<div class="tr-section">
 						<div class="section-title title-before">
-							<h1><a href="#"><%= site_hot.catalog.name %></a></h1>
+							<h1><a href="#"><%= site.catalog.name %></a></h1>
 						</div>
 						<div class="tr-post">
 							<div class="entry-header">
 								<div class="entry-thumbnail">
-									<a href="<%= frontend_site_path(site_hot) %>"><img class="img-responsive" src="<%= site_hot.first_image %>" alt="Image"></a>
+									<a href="<%= frontend_site_path(site) %>"><img class="img-responsive" src="<%= site.first_image %>" alt="Image"></a>
 								</div>
 							</div>
 							<div class="post-content">
@@ -35,235 +35,108 @@
 								</div>
 								<div class="entry-meta">
 									<ul>
-										<li>By <a href="#"><%= site_hot.catalog.name %></a></li>
-										<li>445 分享 /<a href="#"> 1 天前</a></li>
+										<li>By <a href="#"><%= site.catalog.name %></a></li>
+										<li><a href="#"> <%= distance_of_time_in_words_to_now(site.updated_at) %>前</a></li>
 										<li>
 											<ul>
-												<li>分享</li>
-												<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+												<li>分享到</li>
+												<li><a href="#"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
 											</ul>
 										</li>
 									</ul>
 								</div><!-- /.entry-meta -->
 								<h2 class="entry-title">
-									<%= link_to site_hot.title, frontend_site_path(site_hot) %>
+									<%= link_to site.title, frontend_site_path(site) %>
 								</h2>
-								<p><%= site_hot.description %></p>
+								<p><%= site.description.truncate(74) %></p>
 								<div class="read-more">
 									<div class="continue-reading pull-left">
-										<a href="<%= frontend_site_path(site_hot) %>">阅读更多 <i class="fa fa-angle-right"></i></a>
+										<a href="<%= frontend_site_path(site) %>">立即预订 <i class="fa fa-angle-right"></i></a>
 									</div>
 									<div class="feed pull-right">
 										<ul>
-											<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
 										</ul>
 									</div>
 								</div>
 							</div><!-- /.post-content -->
 						</div><!-- /.tr-post -->
 					</div><!-- /.tr-post -->
+					<% end %>
 
 					<div class="tr-ad">
 						<a href="#"><img class="img-responsive" src="/templetes/newshub/images/advertise/1.jpg" alt="Image"></a>
 					</div><!-- /.tr-ad -->
 
-					<div class="tr-section">
-						<div class="section-title title-before">
-							<h1><a href="#">Business</a></h1>
-						</div>
-						<div class="tr-post">
-							<div class="entry-header">
-								<div class="entry-thumbnail">
-									<a href="details1.html"><img class="img-responsive" src="/templetes/newshub/images/post/18.jpg" alt="Image"></a>
-								</div>
-							</div>
-							<div class="post-content">
-								<div class="author">
-									<a href="#"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/author3.png" alt="Image"></a>
-								</div>
-								<div class="entry-meta">
-									<ul>
-										<li>By <a href="#">Kolony Wispe</a></li>
-										<li>123 Share /<a href="#"> 2 Hour ago</a></li>
-										<li>
-											<ul>
-												<li>Share</li>
-												<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
-											</ul>
-										</li>
-									</ul>
-								</div><!-- /.entry-meta -->
-								<h2 class="entry-title">
-									<a href="details1.html">Peyton Manning deserved a better ending -- if he's telling the truth</a>
-								</h2>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut ex ea commodo consequat. </p>
-								<div class="read-more">
-									<div class="continue-reading pull-left">
-										<a href="#">Continue Reading <i class="fa fa-angle-right"></i></a>
-									</div>
-									<div class="feed pull-right">
-										<ul>
-											<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
-										</ul>
-									</div>
-								</div>
-							</div><!-- /.post-content -->
-						</div><!-- /.tr-section -->
-
-						<div class="medium-post-content row">
-							<div class="col-md-6 left-post">
-								<div class="tr-post">
-									<div class="entry-header">
-										<div class="entry-thumbnail">
-											<a href="details1.html"><img class="img-responsive" src="/templetes/newshub/images/post/19.jpg" alt="Image"></a>
-										</div>
-									</div>
-									<div class="post-content">
-										<div class="author">
-											<a href="#"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/author1.png" alt="Image"></a>
-										</div>
-										<div class="entry-meta">
-											<ul>
-												<li>By <a href="#">Janet Jackson</a></li>
-												<li>10 Share /<a href="#"> 3 Hour ago</a></li>
-											</ul>
-										</div><!-- /.entry-meta -->
-										<h2 class="entry-title">
-											<a href="details1.html">Duis autem vel eum iriure dolor in hendrerit</a>
-										</h2>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore।</p>
-										<div class="read-more">
-											<div class="continue-reading pull-left">
-												<a href="#">Continue Reading <i class="fa fa-angle-right"></i></a>
-											</div>
-											<div class="feed pull-right">
-												<ul>
-													<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-													<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-													<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-													<li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
-												</ul>
-											</div>
-										</div>
-									</div><!-- /.post-content -->
-								</div><!-- /.tr-post -->
-							</div>
-							<div class="col-md-6">
-								<div class="tr-post">
-									<div class="entry-header">
-										<div class="entry-thumbnail">
-											<a href="details1.html"><img class="img-responsive" src="/templetes/newshub/images/post/20.jpg" alt="Image"></a>
-										</div>
-									</div>
-									<div class="post-content">
-										<div class="author">
-											<a href="#"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/author2.png" alt="Image"></a>
-										</div>
-										<div class="entry-meta">
-											<ul>
-												<li>By <a href="#">Kolony Wispe</a></li>
-												<li>25 Share /<a href="#"> 7 Hour ago</a></li>
-											</ul>
-										</div><!-- /.entry-meta -->
-										<h2 class="entry-title">
-											<a href="details1.html">Martha Stewart, Snoop Dogg and Anna Kendrick</a>
-										</h2>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore।</p>
-										<div class="read-more">
-											<div class="continue-reading pull-left">
-												<a href="#">Continue Reading <i class="fa fa-angle-right"></i></a>
-											</div>
-											<div class="feed pull-right">
-												<ul>
-													<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-													<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-													<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-													<li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
-												</ul>
-											</div>
-										</div>
-									</div><!-- /.post-content -->
-								</div><!-- /.tr-post -->
-							</div>
-						</div><!-- /.row -->
-					</div>
 				</div><!-- /.theiaStickySidebar -->
       </div>
 
       <!-- 滚动 -->
-      <% site_scroll_first = Site.slider.first || Site.last %>
 			<div class="col-sm-4 col-md-3 tr-sticky medium-post-responsive">
 				<div class="theiaStickySidebar">
-
 					<div class="tr-section">
 						<div class="section-title title-before">
-							<h1><a href="#"><%= site_scroll_first.catalog.name %></a></h1>
+							<h1><a href="#">热门<%= @site_catalog.name %></a></h1>
 						</div>
-            <% if site_scroll_first.present? %>
-						<div class="tr-post tr-video-post">
-							<div class="entry-header">
-                <img class="img-responsive" src="<%= site_scroll_first.first_image %>" />
-								<!-- <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/-WlqrkXImsk" allowfullscreen=""></iframe> -->
-							</div>
-							<div class="post-content">
-								<div class="author">
-									<a href="#"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/author3.png" alt="Image"></a>
+						<% Site.hot.where(catalog_id: @site_catalog.id).limit(3).each do |site_hot| %>
+	            <% if site_hot.present? %>
+							<div class="tr-post">
+								<div class="entry-header">
+	                <img class="img-responsive" src="<%= site_hot.first_image %>" />
 								</div>
-								<div class="entry-meta">
-									<ul>
-										<li>By <a href="#"><%= site_scroll_first.catalog.name %></a></li>
-										<li>205 Share /<a href="#"> 4 Hour ago</a></li>
-									</ul>
-								</div><!-- /.entry-meta -->
-								<h2 class="entry-title">
-									<%= link_to site_scroll_first.title, frontend_site_path(site_scroll_first) %>
-								</h2>
-								<p><%= site_scroll_first.description %></p>
-								<div class="read-more">
-									<div class="continue-reading pull-left">
-										<a href="<%= frontend_site_path(site_scroll_first) %>">阅读更多 <i class="fa fa-angle-right"></i></a>
+								<div class="post-content">
+									<div class="author">
+										<a href="#"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/author3.png" alt="Image"></a>
 									</div>
-									<div class="feed pull-right">
+									<div class="entry-meta">
 										<ul>
-											<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+											<li>By <a href="#"><%= site_hot.catalog.name %></a></li>
+											<li><a href="#"> <%= distance_of_time_in_words_to_now(site_hot.updated_at) %>前</a></li>
 										</ul>
+									</div><!-- /.entry-meta -->
+									<h2 class="entry-title">
+										<%= link_to site_hot.title, frontend_site_path(site_hot) %>
+									</h2>
+									<p><%= site_hot.description.truncate(50) %></p>
+									<div class="read-more">
+										<div class="continue-reading pull-left">
+											<a href="<%= frontend_site_path(site_hot) %>">立即预订 <i class="fa fa-angle-right"></i></a>
+										</div>
+										<div class="feed pull-right">
+											<ul>
+												<li><a href="#"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
+											</ul>
+										</div>
 									</div>
-								</div>
-							</div><!-- /.post-content -->
-						</div><!-- /.tr-section -->
+								</div><!-- /.post-content -->
+							</div><!-- /.tr-section -->
+	            <% end %>
             <% end %>
 						<ul class="small-post-list">
-              <% site_scrolls = Site.scroll.limit(6) %>
-              <% site_scrolls.each do |site| %>
+							<% Site.scroll.where(catalog_id: @site_catalog.id).limit(6).each do |site_scrolls| %>
 							<li>
 								<div class="entry-header">
 									<div class="entry-thumbnail">
-										<a href="<%= frontend_site_path(site) %>"><img class="img-responsive" src="<%= site.first_image %>" alt="<%= site.title %>"></a>
+										<a href="<%= frontend_site_path(site_scrolls) %>"><img class="img-responsive" src="<%= site_scrolls.first_image %>" alt="<%= site_scrolls.title %>"></a>
 									</div>
 								</div>
 								<div class="post-content media-body">
 									<div class="entry-meta">
 										<ul>
-											<li>By <a href="#"><%= site.catalog.name %></a></li>
+											<li>By <a href="#"><%= site_scrolls.catalog.name %></a></li>
 										</ul>
 									</div><!-- /.entry-meta -->
 									<h2 class="entry-title">
-										<%= link_to site.title, frontend_site_path(site) %>
+										<%= link_to site_scrolls.title, frontend_site_url(site_scrolls) %>
 									</h2>
 								</div><!-- /.post-content -->
 							</li>
@@ -277,80 +150,37 @@
 
 					<div class="tr-section local-events">
 						<div class="section-title title-before">
-							<h1><a href="#">Local Events</a></h1>
+							<h1><a href="#">推荐 <%= @site_catalog.name %></a></h1>
 						</div>
 						<ul class="nav nav-tabs" role="tablist">
-							<li role="presentation" class="active"><a href="#time1" data-toggle="tab">02.Jan</a></li>
-							<li role="presentation"><a href="#time2" data-toggle="tab">14.Jan</a></li>
-							<li role="presentation"><a href="#time3" data-toggle="tab"> 22.Jan</a></li>
+							<li role="presentation" class="active"><a href="#time0" data-toggle="tab">推荐</a></li>
+							<li role="presentation"><a href="#time1" data-toggle="tab">推荐</a></li>
+							<li role="presentation"><a href="#time2" data-toggle="tab"> 推荐</a></li>
 						</ul>
 						<div class="tab-content">
-							<div role="tabpanel" class="tab-pane active fade in" id="time1">
+							<% Site.recommend.where(catalog_id: @site_catalog.id).limit(3).each_with_index do |site_recommends, index| %>
+							<div role="tabpanel" class="tab-pane fade in <%= 'active' if index == 0 %>" id="time<%= index %>">
 								<div class="tr-post">
 									<div class="entry-header">
 										<div class="entry-thumbnail">
-											<a href="details1.html"><img class="img-responsive" src="/templetes/newshub/images/post/3.jpg" alt="Image"></a>
+											<a href="<%= frontend_site_path(site_recommends) %>"><img class="img-responsive" src="<%= site_recommends.first_image %>" alt="Image"></a>
 										</div>
 									</div>
 									<div class="post-content">
 										<div class="entry-meta">
 											<ul>
-												<li>Apple Events</li>
-												<li>2:00 Pm</li>
-												<li>02 January, 2017</li>
+												<li>By <%= site_recommends.catalog.name %></li>
+												<li><%= distance_of_time_in_words_to_now(site_recommends.updated_at) %>前</li>
 											</ul>
 										</div><!-- /.entry-meta -->
 										<h2 class="entry-title">
-											<a href="details1.html">Martha Stewart, Snoop Dogg and Anna Kendrick</a>
+											<%= link_to site_recommends.title, frontend_site_path(site_recommends) %>
 										</h2>
 									</div>
 								</div><!-- /.tr-post -->
-								<span>N Street Sacramento, California, USA</span>
+								<span><%= site_recommends.description.truncate(50) %></span>
 							</div>
-							<div role="tabpanel" class="tab-pane fade in" id="time2">
-								<div class="tr-post">
-									<div class="entry-header">
-										<div class="entry-thumbnail">
-											<a href="details1.html"><img class="img-responsive" src="/templetes/newshub/images/post/5.jpg" alt="Image"></a>
-										</div>
-									</div>
-									<div class="post-content">
-										<div class="entry-meta">
-											<ul>
-												<li>Apple Events</li>
-												<li>5:00 Pm</li>
-												<li>14 January, 2017</li>
-											</ul>
-										</div><!-- /.entry-meta -->
-										<h2 class="entry-title">
-											<a href="details1.html">Celeb Role Models You Can Feel Good About</a>
-										</h2>
-									</div>
-								</div><!-- /.tr-post -->
-								<span>N Street Sacramento, California, USA</span>
-							</div>
-							<div role="tabpanel" class="tab-pane fade in" id="time3">
-								<div class="tr-post">
-									<div class="entry-header">
-										<div class="entry-thumbnail">
-											<a href="details1.html"><img class="img-responsive" src="/templetes/newshub/images/post/7.jpg" alt="Image"></a>
-										</div>
-									</div>
-									<div class="post-content">
-										<div class="entry-meta">
-											<ul>
-												<li>Apple Events</li>
-												<li>3:00 Pm</li>
-												<li>22 January, 2017</li>
-											</ul>
-										</div><!-- /.entry-meta -->
-										<h2 class="entry-title">
-											<a href="details1.html">18 Great Performances in Mediocre Movies in 2017</a>
-										</h2>
-									</div>
-								</div><!-- /.tr-post -->
-								<span>N Street Sacramento, California, USA</span>
-							</div>
+							<% end %>
 						</div>
 					</div><!-- meta-tab -->
 				</div><!-- /.theiaStickySidebar -->

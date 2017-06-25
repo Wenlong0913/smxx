@@ -20,15 +20,15 @@
 								</div>
 								<div class="entry-meta">
 									<ul>
-										<li>By <a href="#">Jhon dun</a></li>
-										<li>445 Share /<a href="#"> 1 Hour ago</a></li>
+										<li>By <a href="#"><%= @site.catalog.name %></a></li>
+										<li><a href="#"> <%= distance_of_time_in_words_to_now(@site.updated_at) %>前</a></li>
 										<li>
 											<ul>
-												<li>Share</li>
-												<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+												<li>分享到</li>
+												<li><a href="#"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
 											</ul>
 										</li>
 									</ul>
@@ -53,7 +53,7 @@
 			</div><!-- /.tr-sticky -->
 
 			<div class="col-sm-3 tr-sidebar tr-sticky">
-				<%= render file: 'public/templetes/newshub/_sidebar.html.erb' %>
+				<%#= render file: 'public/templetes/newshub/_sidebar.html.erb' %>
 			</div>
 		</div><!-- /.row -->
 
