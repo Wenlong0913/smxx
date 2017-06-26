@@ -371,50 +371,60 @@
               </li>
 						</ul>
 						<div class="tab-content">
-							<div role="tabpanel" class="tab-pane active fade in" id="time1">
-								<div class="tr-post">
-									<div class="entry-header">
-										<div class="entry-thumbnail">
-											<a href="javascript: void(0)"><img class="img-responsive" src="/templetes/newshub/images/post/3.jpg" alt="Image"></a>
-										</div>
-									</div>
-									<div class="post-content">
-										<div class="entry-meta">
-											<ul>
-												<li>Apple Events</li>
-												<li>2:00 Pm</li>
-												<li>02 January, 2017</li>
-											</ul>
-										</div>
-										<h2 class="entry-title">
-											<a href="javascript: void(0)">Martha Stewart, Snoop Dogg and Anna Kendrick</a>
-										</h2>
-									</div>
-								</div>
-								<span>N Street Sacramento, California, USA</span>
-							</div>
-							<div role="tabpanel" class="tab-pane fade in" id="time2">
-								<div class="tr-post">
-									<div class="entry-header">
-										<div class="entry-thumbnail">
-											<a href="javascript: void(0)"><img class="img-responsive" src="/templetes/newshub/images/post/5.jpg" alt="Image"></a>
-										</div>
-									</div>
-									<div class="post-content">
-										<div class="entry-meta">
-											<ul>
-												<li>Apple Events</li>
-												<li>5:00 Pm</li>
-												<li>14 January, 2017</li>
-											</ul>
-										</div>
-										<h2 class="entry-title">
-											<a href="javascript: void(0)">Celeb Role Models You Can Feel Good About</a>
-										</h2>
-									</div>
-								</div>
-								<span>N Street Sacramento, California, USA</span>
-							</div>
+              <% @products.where("features ->> 'status'=?",'open').reorder("updated_at desc").limit(1).each do |page| %>
+  							<div role="tabpanel" class="tab-pane active fade in" id="time1">
+  								<div class="tr-post">
+  									<div class="entry-header">
+  										<div class="entry-thumbnail">
+  											<a href="get_cms_url(page)">
+                          <img class="img-responsive" src="<%= page.first_image %>" alt="Image">
+                        </a>
+  										</div>
+  									</div>
+  									<div class="post-content">
+  										<div class="entry-meta">
+  											<ul>
+  												<li><%= @site.user.nickname  %></li>
+  												<li><%= page.time["4"] %>:<%= page.time["5"] %></li>
+  												<li><%= page.date %></li>
+  											</ul>
+  										</div>
+  										<h2 class="entry-title">
+  											<a href="get_cms_url(page)"><%= page.name %></a>
+  										</h2>
+  									</div>
+  								</div>
+  								<span><%= page.description.truncate(20) %></span>
+  							</div>
+              <% end %>
+
+              <% @products.where("features ->> 'status'=?",'pending').reorder("updated_at desc").limit(1).each do |page| %>
+  							<div role="tabpanel" class="tab-pane fade in" id="time2">
+  								<div class="tr-post">
+  									<div class="entry-header">
+  										<div class="entry-thumbnail">
+  											<a href="get_cms_url(page)">
+                          <img class="img-responsive" src="<%= page.first_image %>" alt="Image">
+                        </a>
+  										</div>
+  									</div>
+  									<div class="post-content">
+  										<div class="entry-meta">
+  											<ul>
+  												<li><%= @site.user.nickname  %></li>
+  												<li><%= page.time["4"] %>:<%= page.time["5"] %></li>
+  												<li><%= page.date %></li>
+  											</ul>
+  										</div>
+  										<h2 class="entry-title">
+  											<a href="get_cms_url(page)"><%= page.name %></a>
+  										</h2>
+  									</div>
+  								</div>
+  								<span><%= page.description %></span>
+  							</div>
+              <% end %>
+
 						</div>
 					</div>
 				</div>

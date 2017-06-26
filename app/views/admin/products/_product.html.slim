@@ -19,6 +19,21 @@ td
     - product.tags.each do |tag|
       span class="btn btn-xs btn-success"
         = tag.name
+- elsif Settings.project.wgtong?
+  / td = product.price.to_f / 100
+  td
+    = product.date
+    | /
+    = product.time["4"]
+    | :
+    = product.time["5"]
+  td
+    =product.address_line1
+  td
+    - product.tags.each do |tag|
+      => link_to tag.name, '#', class: 'btn btn-xs btn-success'
+  td
+      = link_to enum_i18n(Product, :status, product.status), '#', class: 'btn btn-xs btn-info'
 - else
   td = product.price.to_f / 100
   - if Settings.project.sxhop?

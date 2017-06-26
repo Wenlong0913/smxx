@@ -33,8 +33,20 @@ li class=("has-sub #{'active' if page?('admin/sites', 'admin/catalogs#index?klas
       = link_to "#{Site.model_name.human}列表", admin_sites_path
     /li[class=('active' if page?('admin/sites#new'))]
       = link_to "发布#{Site.model_name.human}", new_admin_site_path
+
+li class=("has-sub #{'active' if page?('admin/products')}")
+  a href="javascript:;"
+    b.caret.pull-right
+    i.fa.fa-cube
+    span  产品管理
+  ul.sub-menu
+    li[class=('active' if page?('admin/products'))]
+      = link_to "#{Product.model_name.human}列表", admin_site_products_path(Site.all.first.id)
+    li[class=('active' if page?('admin/products'))]
+      = link_to "#{Product.model_name.human}发布", new_admin_site_product_path(Site.all.first.id)
+
 - if @site.present? && !@site.new_record?
-  li class=("has-sub #{'active' if page?('admin/products')}")
+  / li class=("has-sub #{'active' if page?('admin/products')}")
     / = link_to dashboard_admin_products_path
     /   b.caret.pull-right
     /   i.fa.fa-inbox
