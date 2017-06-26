@@ -58,7 +58,7 @@ class Admin::ComplaintsController < Admin::BaseController
   # PATCH/PUT /admin/complaints/1
   def update
     authorize @complaint
-    @complaint.source.restore_display if params[:complaint] && params[:complaint][:status] == 'rejected'
+    @complaint.source.restore_display! if params[:complaint] && params[:complaint][:status] == 'rejected'
     if @complaint.update(permitted_attributes(@complaint).merge(processed_user: current_user))
       redirect_to admin_complaint_path(@complaint), notice: "#{Complaint.model_name.human} 更新成功."
     else
