@@ -5,6 +5,10 @@
 	.margin-top-10{
 		margin-top: 10px !important;
 	}
+	.contact-fa{
+		padding-right: 5px;
+		color: #35ceb4;
+	}
 </style>
 <div class="main-wrapper">
 	<%= render file: 'public/templetes/newshub/_header.html.erb' %>
@@ -25,16 +29,16 @@
 									<div class="col-md-5">
 										<div class="post-content margin-top-10">
 											<h1 class="entry-title weight-300"><%= @site.title %></h1>
-											<p><i class="fa fa-map-marker fa-lg"></i>地址： <%= @site.address_line %></p>
-											<p><i class="fa fa-phone fa-lg"></i>电话： <%= @site.contact_phone %></p>
-											<p><i class="fa fa-cny fa-lg"></i>费用： 
+											<p><i class="fa fa-map-marker fa-lg contact-fa"></i>地址： <%= @site.address_line %></p>
+											<p><i class="fa fa-mobile fa-lg contact-fa"></i>电话： <%= @site.contact_phone %></p>
+											<p><i class="fa fa-rmb fa-lg contact-fa"></i>费用：
 												<% if @site.avg_price.to_i == 0 %>
 												免费
 												<% else%>
 												<%= @site.avg_price %>
 												<% end %>
 											</p>
-											<p><i class="fa fa-edit fa-lg"></i>描述： <%= @site.description %></p>
+											<p><i class="fa fa-info fa-lg contact-fa"></i>简介： <%= @site.description %></p>
 											<a href="javascript: void(0)" class="btn btn-block btn-lg btn-success">马上预订</a>
 										</div>
 									</div>
