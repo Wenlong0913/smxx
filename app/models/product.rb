@@ -14,7 +14,12 @@
 #
 
 class Product < Item
-  store_accessor :features, :price, :image, :responsive_person, :warning_message, :service_time, :month_number, :unit, :stock, :description, :content, :discount, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values, :is_shelves, :is_fee, :shopping_fee, :hot, :recommend, :event, :promotion, :discount, :properties, :is_manager_recommend, :video_url
+  audited
+  store_accessor :features, :price, :image, :responsive_person, :warning_message, :service_time, :month_number, :unit, :stock,
+    :description, :content, :discount, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values,
+    :is_shelves, :is_fee, :shopping_fee, :hot, :recommend, :event, :promotion, :discount, :properties, :is_manager_recommend,
+    :video_url, :status
+
   acts_as_taggable
   #store_accessor :features, :price, :unit, :stock, :description, :content, :discount, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values, :is_shelves, :is_fee, :shopping_fee, :hot, :recommend, :event, :promotion, :discount
   validates_numericality_of :price, allow_blank: true
@@ -63,6 +68,17 @@ class Product < Item
     g: "g(克)",
     ml: "ml(毫升)",
     L: "L(升)"
+  }
+
+  #用于wgtong里的活动状态
+  # product.open!
+  # product.open?
+  # product.status  #=> 'open'
+  enum status: {
+    pending: 0,     # 还未开始
+    open: 1,        # 进行中
+    completed: 2,   # 已满员/售完
+    closed: 3       # 已结束/关闭
   }
 
   has_many :article_products, dependent: :destroy
