@@ -52,13 +52,13 @@ module AppAPI::V1
         error! '该资源不存在' unless resource
 
         # 该商品的所有评论
-        comments = resource.comments
+        comments = resource.comments.displayable
         # 当前页的评论
         comments = paginate_collection(sort_collection(comments), params)
         # 获取需要额外加载的父级评论类容
         extra_ids = (comments.pluck(:parent_id).uniq - comments.pluck(:id)).compact
         extra_comments = ::Comment::Entry.where("id in (?)", extra_ids)
-        
+
         wrap_collection(comments, AppAPI::Entities::Comment, options={user_id: (current_user.id rescue nil)})
         present :parents, extra_comments, with: AppAPI::Entities::Comment
       end

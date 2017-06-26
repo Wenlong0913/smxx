@@ -28,6 +28,7 @@ module AdminRoute
           resources :articles
         end
         resources :articles # 公告管理（imolin）
+        resources :complaints, except: [:new, :create] # 投诉管理
         resources :catalogs # 分类管理
         catalog_resources_for ProductCatalog # 产品分类管理
         catalog_resources_for MaterialCatalog # 物料分类管理

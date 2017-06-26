@@ -16,6 +16,7 @@ class Article < ApplicationRecord
   has_many :discovers, as: :resource, dependent: :destroy
   has_many_comments
   has_many_likes
+  has_many :complaints, as: :source, dependent: :destroy
   belongs_to :user, foreign_key: :author, class_name: 'User'
   belongs_to :community
   belongs_to :source, polymorphic: true
@@ -32,7 +33,17 @@ class Article < ApplicationRecord
     end
   end
 
+  scope :undisplayable, -> { where(is_complainted: true) }
+  scope :displayable, -> { where(is_complainted: false) }
+
   def api_created_at
     created_at.to_i
   end
+
+  # 举报未通过之后恢复为未举报
+  def restore_display
+    self.is_complainted = false
+    self.save!
+  end
+
 end

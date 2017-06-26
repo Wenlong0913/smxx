@@ -6,7 +6,7 @@ module AppAPI::V1
       params do
         requires :source_type, type: String, values: ['article', 'comment'], desc: "文章，评论"
         requires :source_id, type: Integer, desc: "投诉内容编号"
-        requires :content, type: String, desc: "投诉信息"
+        requires :reason, type: String, desc: "投诉原因"
       end
       post do
         authenticate!
@@ -23,7 +23,7 @@ module AppAPI::V1
         message = if current_user.complaints.where(source: source).exists?
           "你已经投诉过了"
         else
-          complaint = current_user.complaints.new(source: source, content: params[:content])
+          complaint = current_user.complaints.new(source: source, reason: params[:reason])
           if complaint.save
             "投诉成功"
           else
