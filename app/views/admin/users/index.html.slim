@@ -16,7 +16,7 @@ h1.page-header
       .toolbar.row
         .col-md-6.m-b-15
           .input-group.search_all
-            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '搜索...'
+            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '输入用户名称/手机号/邮箱...'
             span.input-group-btn
               button.btn.btn-inverse[type='submit']
                 i.fa.fa-search
@@ -33,6 +33,7 @@ h1.page-header
         th ID
         th 手机号
         th 名称
+        th 邮箱
         th 角色
         th 绑定商户
         th[colspan=4] 操作
@@ -45,6 +46,7 @@ h1.page-header
               br
               = link_to '微信用户', admin_user_weixin_path(user.weixin), class: 'btn btn-xs btn-info' if user.weixin
             td = d_user.display_name
+            td = d_user.email
             td = d_user.display_role
             td
               ul.list-unstyled

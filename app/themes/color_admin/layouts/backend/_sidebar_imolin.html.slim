@@ -72,3 +72,10 @@ li class=("has-sub #{'active' if page?('admin/banners')}")
     span 网站图片管理
   ul.sub-menu
     li class=("#{'active' if page?('admin/banners')}") = link_to '轮波图管理', admin_banners_path
+li class=("has-sub #{'active' if page?('admin/agent_plans')}")
+  a href="javascript:;"
+    b.caret.pull-right
+    i.fa.fa-inbox
+    span 商家签约套餐
+  ul.sub-menu
+    li class=("#{'active' if page?('admin/agent_plans')}") = link_to '商家签约套餐', admin_agent_plans_path

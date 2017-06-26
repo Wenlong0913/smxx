@@ -38,6 +38,12 @@ module AgentBackendRoute
 
         catalog_resources_for ProductCatalog, only: [:index]
         resources :market_pages, :concerns => :paginatable
+        resources :agent_plans, only: [:index] do
+          member do
+            post :charge
+            get :paid_success
+          end
+        end
 
         namespace :tracker do
           get '/', to: 'home#index'

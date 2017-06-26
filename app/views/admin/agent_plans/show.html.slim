@@ -1,0 +1,49 @@
+h1.page-header
+  | 查看#{AgentPlan.model_name.human}
+  .pull-right
+    => link_to '编辑', edit_admin_agent_plan_path(@agent_plan), class: 'btn btn-primary'
+    = link_to '返回', admin_agent_plans_path, class: 'btn btn-primary'
+
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+  .panel-body
+    .profile-container
+      .profile-info
+        .table-responsive
+          table.table.table-profile
+            tr
+              td.field
+                | #{AgentPlan.human_attribute_name(:name)}
+              td
+                a
+                  = @agent_plan.name
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field
+                | #{AgentPlan.human_attribute_name(:price)}
+              td
+                a
+                  = @agent_plan.price.to_f/100
+            tr
+              td.field
+                | #{AgentPlan.human_attribute_name(:description)}
+              td
+                a
+                  = @agent_plan.description
+            tr.divider
+              td[colspan='2']
+            tr
+              td.field
+                | #{AgentPlan.human_attribute_name(:features)}
+              td
+                - @agent_plan.features && @agent_plan.features.each do |f|
+                  p
+                    a = f
+            tr.divider
+              td[colspan='2']

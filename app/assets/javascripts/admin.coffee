@@ -19,6 +19,7 @@
 #= require admin/baidu_map
 #= require admin/audit_statistics
 #= require admin/article
+#= require admin/agent_plans
 #= require select2
 #= require select2_locale_zh-CN
 #= require select2_js

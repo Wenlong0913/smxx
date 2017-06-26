@@ -135,6 +135,7 @@ module AdminRoute
         # 轮波图
         resources :banners
         resources :finance_histories, only: [:index, :new, :create, :show], :concerns => :paginatable
+        resources :agent_plans
       end
     end
   end
