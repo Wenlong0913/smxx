@@ -7,10 +7,10 @@
 			<div class="title pull-left">
 				<h1><%= @site_catalog.name %></h1>
 			</div>
-	        <ol class="breadcrumb pull-right">
-	            <li><a href="/">首页</a></li>
-	            <li class="active"><%= @site_catalog.name %></li>
-	        </ol>
+        <ol class="breadcrumb pull-right">
+          <li><a href="/">首页</a></li>
+          <li class="active"><%= @site_catalog.name %></li>
+        </ol>
 		</div><!-- /.tr-breadcrumb -->
 
 		<div class="row tr-content">
@@ -21,7 +21,7 @@
 					<% Site.where(catalog_id: @site_catalog.id).each do |site| %>
 					<div class="tr-section">
 						<div class="section-title title-before">
-							<h1><a href="#"><%= site.catalog.name %></a></h1>
+							<h1><a href="#"><%= site.properties.map{|p| ::Site::PROPERTIES[p.to_sym]}.compact.join('，') %></a></h1>
 						</div>
 						<div class="tr-post">
 							<div class="entry-header">
@@ -187,170 +187,7 @@
 			</div>
       <!-- 最新 -->
 			<div class="col-sm-3 tr-sidebar tr-sticky">
-				<div class="theiaStickySidebar">
-					<div class="tr-section tr-ad ad-before">
-						<a href="#"><img class="img-responsive" src="/templetes/newshub/images/advertise/2.jpg" alt="Image"></a>
-					</div><!-- /.tr-post -->
-
-					<div class="tr-section tr-widget">
-						<div class="widget-title title-before">
-							<span>This Is rising</span>
-						</div>
-						<ul class="medium-post-list">
-							<li class="tr-post">
-								<div class="entry-header">
-									<div class="entry-thumbnail">
-										<a href="details1.html"><img class="img-responsive" src="/templetes/newshub/images/post/9.jpg" alt="Image"></a>
-									</div>
-								</div>
-								<div class="post-content">
-									<div class="catagory">
-										<a href="#">Entertainment</a>
-									</div>
-									<h2 class="entry-title">
-										<a href="details1.html">Howard Stern: 'I told Trump' I'm voting for Clinton</a>
-									</h2>
-								</div><!-- /.post-content -->
-							</li>
-							<li class="tr-post">
-								<div class="entry-header">
-									<div class="entry-thumbnail">
-										<a href="details1.html"><img class="img-responsive" src="/templetes/newshub/images/post/10.jpg" alt="Image"></a>
-									</div>
-								</div>
-								<div class="post-content">
-									<div class="catagory">
-										<a href="#">Business</a>
-									</div>
-									<h2 class="entry-title">
-										<a href="details1.html">Our closest relatives aren't fans of daylight saving time</a>
-									</h2>
-								</div><!-- /.post-content -->
-							</li>
-							<li class="tr-post">
-								<div class="entry-header">
-									<div class="entry-thumbnail">
-										<a href="details1.html"><img class="img-responsive" src="/templetes/newshub/images/post/11.jpg" alt="Image"></a>
-									</div>
-								</div>
-								<div class="post-content">
-									<div class="catagory">
-										<a href="#">Technology</a>
-									</div>
-									<h2 class="entry-title">
-										<a href="details1.html">And the most streamed Beatles song on Spotify is...</a>
-									</h2>
-								</div><!-- /.post-content -->
-							</li>
-							<li class="tr-post">
-								<div class="entry-header">
-									<div class="entry-thumbnail">
-										<a href="details1.html"><img class="img-responsive" src="/templetes/newshub/images/post/12.jpg" alt="Image"></a>
-									</div>
-								</div>
-								<div class="post-content">
-									<div class="catagory">
-										<a href="#">Sports</a>
-									</div>
-									<h2 class="entry-title">
-										<a href="details1.html">Our closest relatives aren't fans of daylight saving time</a>
-									</h2>
-								</div><!-- /.post-content -->
-							</li>
-						</ul>
-					</div><!-- /.tr-section -->
-
-					<div class="tr-weather tr-widget">
-						<div class="weather-top weather-bg-color">
-							<div class="row">
-								<div class="col-xs-6">
-									<div class="weather-image">
-										<img class="img-responsive" src="/templetes/newshub/images/others/weather1.png" alt="Image">
-									</div>
-								</div>
-								<div class="col-xs-6">
-									<span class="weather-temp">21 <sup>°C</sup></span>
-									<span class="weather-type">Mostly Cloudy</span>
-								</div>
-							</div>
-							<ul>
-								<li>London, UK</li>
-								<li><span><img class="img-responsive" src="/templetes/newshub/images/others/weather2.png" alt="Image"></span>13%</li>
-								<li><span><img class="img-responsive" src="/templetes/newshub/images/others/weather3.png" alt="Image"></span>6.44 MPH</li>
-							</ul>
-						</div><!-- /.weather-top -->
-
-						<div class="weather-bottom">
-							<ul>
-								<li>
-									<div class="weather-icon">
-										<img class="img-responsive" src="/templetes/newshub/images/others/weather6.png" alt="Image">
-									</div>
-									<div class="weather-info">
-										<span>23°</span>
-										<span class="date">Sun, 3 July</span>
-									</div>
-								</li>
-								<li>
-									<div class="weather-icon">
-										<img class="img-responsive" src="/templetes/newshub/images/others/weather5.png" alt="Image">
-									</div>
-									<div class="weather-info">
-										<span>26°</span>
-										<span class="date">Mon, 4 July</span>
-									</div>
-								</li>
-							</ul>
-						</div><!-- /.weather-bottom -->
-					</div><!-- /.weather-widget -->
-
-					<div class="tr-section tr-widget tr-ad ad-before">
-						<a href="#"><img class="img-responsive" src="/templetes/newshub/images/advertise/4.jpg" alt="Image"></a>
-					</div><!-- /.tr-post -->
-
-					<div class="tr-section tr-widget">
-						<div class="tr-twitter text-center">
-							<div id="twitter-carousel" class="carousel slide" data-ride="carousel">
-								<ol class="carousel-indicators">
-									<li data-target="#twitter-carousel" data-slide-to="0" class="active"></li>
-									<li data-target="#twitter-carousel" data-slide-to="1"></li>
-									<li data-target="#twitter-carousel" data-slide-to="2"></li>
-								</ol>
-								<div class="carousel-inner" role="listbox">
-									<div class="item active">
-										<div class="twitter">
-											<div class="twitter-icon">
-												<i class="fa fa-twitter" aria-hidden="true"></i>
-											</div>
-											<h2><a href="#">#newshub</a></h2>
-											<p>Confusing <a href="#">#design</a> terms: what's the difference between quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <span><a href="#">#UX, #UI and #IA?</a> <a href="#">http://buff.ly/1KdjpEi</a></span></p>
-										</div>
-									</div><!-- /.item -->
-
-									<div class="item">
-										<div class="twitter">
-											<div class="twitter-icon">
-												<i class="fa fa-twitter" aria-hidden="true"></i>
-											</div>
-											<h2><a href="#">#newshub</a></h2>
-											<p>Confusing <a href="#">#design</a> terms: what's the difference between quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <span><a href="#">#UX, #UI and #IA?</a> <a href="#">http://buff.ly/1KdjpEi</a></span></p>
-										</div>
-									</div><!-- /.item -->
-
-									<div class="item">
-										<div class="twitter">
-											<div class="twitter-icon">
-												<i class="fa fa-twitter" aria-hidden="true"></i>
-											</div>
-											<h2><a href="#">#newshub</a></h2>
-											<p>Confusing <a href="#">#design</a> terms: what's the difference between quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <span><a href="#">#UX, #UI and #IA?</a> <a href="#">http://buff.ly/1KdjpEi</a></span></p>
-										</div>
-									</div><!-- /.item -->
-								</div><!-- /.carousel-inner -->
-							</div><!-- /#twitter-carousel -->
-						</div><!-- /.tr-twitter -->
-					</div><!-- /.tr-section -->
-				</div><!-- /.theiaStickySidebar -->
+				<%= render file: 'public/templetes/newshub/_sidebar.html.erb' %>
 			</div>
 		</div><!-- /.row -->
 
