@@ -18,7 +18,7 @@ class Product < Item
   store_accessor :features, :price, :image, :responsive_person, :warning_message, :service_time, :month_number, :unit, :stock,
     :description, :content, :discount, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values,
     :is_shelves, :is_fee, :shopping_fee, :hot, :recommend, :event, :promotion, :discount, :properties, :is_manager_recommend,
-    :video_url, :status
+    :video_url, :status, :address_line1, :address_line2, :date, :time, :phone, :can_purchase, :note
 
   acts_as_taggable
   #store_accessor :features, :price, :unit, :stock, :description, :content, :discount, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values, :is_shelves, :is_fee, :shopping_fee, :hot, :recommend, :event, :promotion, :discount
