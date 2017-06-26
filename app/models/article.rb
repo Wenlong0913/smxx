@@ -41,7 +41,7 @@ class Article < ApplicationRecord
   end
 
   # 举报未通过之后恢复为未举报
-  def restore_display
+  def restore_display!
     self.is_complainted = false
     self.save!
   end
