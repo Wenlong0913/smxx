@@ -61,4 +61,4 @@ h1.page-header
           td.field
             | #{Complaint.human_attribute_name(:processed_by)}：
           td
-            = decorate(@complaint.processed_user).display_name unless @complaint.processed_user.blank?
+            = @complaint.processed_by && decorate(@complaint.processed_by).display_name
