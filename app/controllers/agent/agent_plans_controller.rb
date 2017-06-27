@@ -10,13 +10,14 @@ class Agent::AgentPlansController < Agent::BaseController
   end
 
   def charge
-    binding.pry
     @agent_plan = AgentPlan.find(params[:id])
     order = Order.create(
       user_id: @site.user.id,
       site_id: Site::MAIN_ID,
       price: @agent_plan.price
     )
+    callback_url = URI(Settings.site.host)
+    options = 'agent/agent_plans/' + @agent_plan.id.to_s + '/paid_success'
     json = PaymentCore.create_charge(
       order_no: order.code, # 订单号
       channel: 'alipay_pc_direct', # 支付宝电脑端网页支付
@@ -25,7 +26,7 @@ class Agent::AgentPlansController < Agent::BaseController
       subject: "商家#{@site.id}购买套餐",
       body: @agent_plan.name,
       extra: {
-        success_url: 'http://tao.dev.tanmer.com/agent/agent_plans/' + @agent_plan.id.to_s + '/paid_success'
+        success_url: callback_url.merge(options).to_s
       }
     )
     render js: <<-JS
