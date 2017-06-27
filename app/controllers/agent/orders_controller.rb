@@ -41,8 +41,18 @@ class Agent::OrdersController < Agent::BaseController
   end
 
   def update
-    if @order.delivered! && @order.completed!
-      render json: {status: 'ok'}
+    authorize @order
+    if Settings.project.sxhop? || Settings.project.imolin?
+      if params[:price].present? && !(@order.open? || @order.pending?)
+        return render json: {status: 'failed', message: '订单不可修改'}
+      end
+      flag, @order = Order::Update.(@order, permitted_attributes(@order))
+    else
+      flag = @order.delivered! && @order.completed!
+    end
+
+    if flag
+      render json: {status: 'ok', data: {updated_at: @order.updated_at.strftime("%Y-%m-%d %H:%M:%S")}}
     else
       render json: {status: 'failed', message: @order.errors.full_messages.join(', ')}
     end
@@ -52,7 +62,11 @@ class Agent::OrdersController < Agent::BaseController
     @order_delivery = @order.order_deliveries.blank? ? @order.order_deliveries.new : @order.order_deliveries.first
     @order_delivery.logistics_name = params[:order_delivery][:logistics_name]
     @order_delivery.logistics_number = params[:order_delivery][:logistics_number]
+    new_record = @order_delivery.new_record?
     if @order_delivery.save
+      if Settings.project.sxhop? || Settings.project.imolin?
+        @order.delivering! if new_record
+      end
       render json: {status: 'ok', message: "#{@order_delivery.logistics_name}(#{@order_delivery.logistics_number})"}
     else
       render json: {status: 'failed', message: @order_delivery.errors.full_messages.join(', ')}

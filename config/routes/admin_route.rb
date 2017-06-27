@@ -28,6 +28,7 @@ module AdminRoute
           resources :articles
         end
         resources :articles # 公告管理（imolin）
+        resources :complaints, except: [:new, :create] # 投诉管理
         resources :catalogs # 分类管理
         catalog_resources_for ProductCatalog # 产品分类管理
         catalog_resources_for MaterialCatalog # 物料分类管理
@@ -99,6 +100,13 @@ module AdminRoute
         resources :orders, :concerns => :paginatable do
           resources :materials, except: [:index], controller: 'order_materials'
           resources :produces, only: [:show, :create, :destroy, :update]
+          member do
+            post 'apply_refund'
+            post 'refund'
+          end
+          collection do
+            get 'refunds'
+          end
         end
         #营销页
         resources :market_catalogs, :concerns => :paginatable
@@ -136,6 +144,16 @@ module AdminRoute
         resources :banners
         resources :finance_histories, only: [:index, :new, :create, :show], :concerns => :paginatable
         resources :agent_plans
+
+        #数据采集
+        namespace :forage do
+          resources :sources
+          resources :run_keys
+          resources :simples do
+            resources :details
+          end
+          resources :details
+        end
       end
     end
   end

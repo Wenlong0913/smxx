@@ -1,7 +1,7 @@
 # csv support
 require 'csv'
 class Admin::OrdersController < Admin::BaseController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: [:show, :edit, :update, :destroy, :refund, :apply_refund]
   before_action :get_user, only: [:create, :update]
   # GET /admin/orders
   def index
@@ -99,6 +99,34 @@ class Admin::OrdersController < Admin::BaseController
     authorize @order
     @order.destroy
     redirect_to admin_orders_url, notice: "#{Order.model_name.human} 删除成功."
+  end
+
+  def apply_refund
+    authorize Order
+    @order.refund_status = 'apply_refund'
+    @order.refund_description = params[:order][:refund_description]
+    @order.apply_refund_by = current_user.id
+    if @order.save
+      render json: {status: 'ok', message: "退款提交申请成功"}
+    else
+      render json: {status: 'failed', message: @order.errors.full_messages.join(', ')}
+    end
+  end
+
+  def refunds
+    authorize Order
+    @orders = Order.where("refund_status is not null").page(params[:page])
+  end
+
+  def refund
+    authorize Order
+    ret = PaymentCore.create_refund({charge_id: @order.charge.pingpp_charge_id, description: @order.refund_description})
+    if ret[:result].blank?
+      render json: {status: 'failed', message: "向服务器提交退款申请失败, #{ret[:message]}"}
+    else
+      @order.refunding!
+      render json: {status: 'ok', message: "已向服务器提交退款申请"}
+    end
   end
 
   private

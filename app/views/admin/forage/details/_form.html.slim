@@ -1,0 +1,35 @@
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+  .panel-body
+    = simple_form_for @forage_detail, url: @forage_detail.new_record? ? admin_forage_details_path : admin_forage_detail_path(@forage_detail), validate: true do |f|
+      - if @forage_detail.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@forage_detail.errors.count, "error")} prohibited this forage_detail from being saved:"
+          ul
+            - @forage_detail.errors.full_messages.each do |message|
+              li = message
+
+      = f.association :forage_simple
+      = f.input :
+      = f.input :
+      = f.input :
+      = f.input :
+      = f.input :
+      = f.input :
+      = f.input :
+      = f.input :
+      = f.input :
+      = f.input :
+      = f.input :
+      = f.input :
+      = f.input :
+      = f.input :
+      = f.input :
+      = f.input :
+      = f.input :
+      = f.submit class: 'btn btn-success btn-block'

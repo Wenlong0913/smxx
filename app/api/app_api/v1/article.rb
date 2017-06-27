@@ -52,7 +52,7 @@ module AppAPI::V1
             case params[:type]
             when 'owner' then current_user.articles
             else
-              ::Article.all
+              ::Article.all.displayable
             end
         if params[:source_type]
           articles =

@@ -1,0 +1,17 @@
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+  .panel-body
+    = simple_form_for @forage_source, url: @forage_source.new_record? ? admin_forage_sources_path : admin_forage_source_path(@forage_source), validate: true do |f|
+      - if @forage_source.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@forage_source.errors.count, "error")} prohibited this forage_source from being saved:"
+          ul
+            - @forage_source.errors.full_messages.each do |message|
+              li = message
+
+      = f.submit class: 'btn btn-success btn-block'

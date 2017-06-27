@@ -27,7 +27,12 @@ class Order < ApplicationRecord
       paid: 2,      # 已付款
       cancelled: 3, # 已取消
       delivering: 4,# 发货中
-      completed: 5,  # 已完成
+      completed: 5, # 已完成
+    }
+    enum refund_status: {
+      apply_refund: 1, # 申请退款
+      refunding: 2,    # 退款中
+      refunded: 3      # 退款完成
     }
   else
     enum status: {
@@ -53,6 +58,7 @@ class Order < ApplicationRecord
   belongs_to :preorder_conversition
   belongs_to :create_user, class_name: 'User', foreign_key: :create_by
   belongs_to :update_user, class_name: 'User', foreign_key: :update_by
+  belongs_to :apply_refund_user, class_name: 'User', foreign_key: :apply_refund_by
 
   has_many_comments
   has_many :order_products, dependent: :destroy
@@ -67,7 +73,8 @@ class Order < ApplicationRecord
   has_many :order_deliveries, dependent: :destroy
   has_one :produce, dependent: :destroy
   has_many :finance_histories, as: :owner, dependent: :destroy
-
+  has_one :charge, dependent: :destroy
+  has_one :refund, dependent: :destroy
 
   before_create :generate_code
   # before_validation :check_member

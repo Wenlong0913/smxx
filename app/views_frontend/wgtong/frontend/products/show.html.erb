@@ -1,6 +1,6 @@
 <div class="main-wrapper">
 	<%= render file: 'public/templetes/newshub/_header.html.erb' %>
-	<div class="container-fluid">
+	<div class="container">
 		<!-- [[header start]] -->
 	  <%= render file: 'public/templetes/newshub/_top_menu.html.erb' %>
 		<!-- [[header end]] -->
@@ -10,8 +10,30 @@
 					<div class="tr-section">
 						<div class="tr-post">
 							<div class="entry-header">
-								<div class="entry-thumbnail">
-									<img class="img-responsive" src="<%= @product.first_image %>" alt="<%= @product.name %>">
+								<div class="row">
+									<div class="col-md-8">
+										<div class="entry-thumbnail">
+											<img class="img-responsive" src="<%= @product.first_image %>" alt="<%= @product.name %>">
+										</div>
+									</div>
+									<% list_icon = {"地址"	=>"map-marker", "具体位置"=>"map-marker", "日期"=>"calendar", "时长"=>"clock-o", "联系电话"=>"phone-square"} %>
+									<div class="col-md-4">
+										<!-- <p><i class="fa fa-map-marker"></i> 上海市崇明区城桥镇崇明大道7887号</p>
+										<p><i class="fa fa-calendar"></i> 2017年03月25日 - 2017年03月25日 </p>
+										<p><i class="fa fa-clock-o"></i> 13:30-15:00 </p>
+										<p><i class="fa fa-phone-square"></i> 02159626867-3019</p>
+										<p><i class="fa fa-cny"></i> 免费</p> -->
+										<% @product.additional_attribute_keys.each_pair do |k, v| %>
+											<p>
+												<i class="fa fa-<%= list_icon[v.strip]  %>"></i>
+												<%= @product.additional_attribute_values[k] %>
+											</p>
+										<% end %>
+										<p class="text-center gray">活动正在进行</p>
+										<p>
+											<a href="javascript: void(0)" class="btn btn-block btn-lg btn-success">马上预订</a>
+										</p>
+									</div>
 								</div>
 							</div>
 							<div class="post-content">
@@ -37,32 +59,31 @@
 									<%= @product.name %>
 								</h2>
 							</div><!-- /.post-content -->
-						</div><!-- /.tr-post -->
+						</div>
 
 						<div class="tr-details">
 							<%= raw @product.content %>
 						</div>
-					</div><!-- /.tr-section -->
+					</div>
 
 					<div class="tr-ad">
 						<a href="#"><img class="img-responsive" src="/templetes/newshub/images/advertise/1.jpg" alt="Image"></a>
-					</div><!-- /.add -->
+					</div>
 
 					<%= render file: 'public/templetes/newshub/_comments.html.erb' %>
-				</div><!-- /.tr-content -->
-			</div><!-- /.tr-sticky -->
+				</div>
+			</div>
 
 			<div class="col-sm-3 tr-sidebar tr-sticky">
 				<%= render file: 'public/templetes/newshub/_sidebar.html.erb' %>
 			</div>
-		</div><!-- /.row -->
-
+		</div>
 		<div class="tr-ad ad-bottom ad-image text-center">
 			<a href="#"><img class="img-responsive" src="/templetes/newshub/images/advertise/5.jpg" alt="Image"></a>
-		</div><!-- /.tr-ad -->
+		</div>
 
-	</div><!-- /.container-fulid -->
-</div><!-- /.main-wrapper -->
+	</div>
+</div>
 <!-- [[footer start]] -->
 <%= render file: 'public/templetes/newshub/_footer.html.erb' %>
 <!-- [[footer end]] -->

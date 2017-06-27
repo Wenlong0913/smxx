@@ -7,6 +7,9 @@
     ul.pagination
       margin: 0px !important
   .forum-list.forum-topic-list
+    li
+      &:hover
+        cursor: pointer
     .info-container
       height: 65px
       .date-replies
@@ -36,10 +39,16 @@
         .right-block
           ul.list-inline
             li
+              position: relative
               width: 20%
               .text-center
                 display: inline-table
                 width: 100%
+              .success-right
+                position: absolute
+                right: 0px
+                top: 45px
+                color: #00acac
               .fa-block
                 width: 50px
                 height: 50px
@@ -59,7 +68,14 @@
                 border-radius: 50px
                 i.fa
                   color: #fff !important
-
+            li.completed
+              .success-right
+                display: none
+          .btns
+            button
+              margin-right: 15px
+              &:last-child
+                margin: 0px
     .order-products
       .panel-footer
         display: inline-block

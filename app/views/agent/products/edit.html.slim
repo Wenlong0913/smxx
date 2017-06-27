@@ -39,7 +39,7 @@
                 .input-group
                   .input-group-btn
                     button.btn.btn-default.dropdown-toggle[data-toggle="dropdown"]
-                      | 单位: 
+                      | 单位:
                       small
                         span
                           = Product::WEIGHT_UNIT_HASH[@product.weight_unit.to_sym]
@@ -85,16 +85,7 @@
               .form-group.check-group
                 label.control-label.string.optional 其他
                 .
-                  = f.input_field :hot, as: :boolean
-                  = f.label :hot
-                  = f.input_field :recommend, as: :boolean, label: '推荐'
-                  = f.label :recommend
-                  = f.input_field :event, as: :boolean, label: '活动'
-                  = f.label :event
-                  = f.input_field :promotion, as: :boolean, label: '促销'
-                  = f.label :promotion
-                  / = f.input_field :discount, as: :boolean, label: '折扣'
-                  / = f.label :discount
+                  = f.collection_check_boxes :properties, Cms::Page::PROPERTIES, :first, :last, checked: @cms_page.try(:properties)
             .col-xs-12
               hr
               div[rel="attr_list_vue" data-values="#{@product.additional_attribute_values.to_json}" data-keys="#{@product.additional_attribute_keys.to_json}"]

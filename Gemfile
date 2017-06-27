@@ -7,7 +7,7 @@ ruby '2.3.3'
 #   export BUNDLE_GEMS__TANMER__COM="your_api_key"
 #
 source "https://gems.tanmer.com" do
-  gem 'payment_core', '0.0.3'
+  gem 'payment_core', '0.0.4'
   gem 'theme_color_admin', '0.0.5'
   gem 'sales_distribution', '0.1.0'
   gem 'gnomon', '0.2.0'

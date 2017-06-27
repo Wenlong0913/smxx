@@ -109,14 +109,14 @@ class CmsController < ApplicationController
     respond_to do |format|
       format.html do
         if @comment.save
-          render text: '提交成功！<a href="/">返回首页</a>'
+          redirect_to root_path, :notice=> '提交成功~'
         else
           render :new
         end
       end
       format.json do
         if @comment.save
-          render text: '提交成功！<a href="/">返回首页</a>'
+          redirect_to root_path, :notice=> '提交成功~'
         else
           render :new
         end

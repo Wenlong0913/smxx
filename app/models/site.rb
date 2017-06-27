@@ -37,22 +37,14 @@ class Site < ApplicationRecord
     image_items.first.try(:image_url) || 'http://song-dev.qiniudn.com/site.jpg'
   end
 
-  if Settings.project.imolin? || Settings.project.wgtong?
-    store_accessor :features, :description, :properties, :business_hours,
-                  :recommendation, :good_summary, :bad_summary, :parking,
-                  :wifi, :contact_name, :contact_phone, :has_contract, :contract_note,
-                  :avg_price, :is_published, :phone, :photos, :province, :real_city, :city, :district, :business_area,
-                  :lat, :lng, :updated_by, :content
-    validates_presence_of :title, :address_line#, :user_id
-    validates_uniqueness_of :title, scope: [:address_line]
-  elsif Settings.project.meikemei?
-    store_accessor :features, :business_hours, :content, :contact_phone, :contact_name, :is_sign, :sign_note,
-      :score, :comment, :properties, :updated_by, :has_contract, :is_published, :phone, :lat, :lng
-  else
-    store_accessor :features, :description, :updated_by
-    validates_presence_of :title, :user_id
-    validates_uniqueness_of :title, scope: [:type, :user_id]
-  end
+  store_accessor :features, :description, :properties, :business_hours,
+                :recommendation, :good_summary, :bad_summary, :parking,
+                :wifi, :contact_name, :contact_phone, :has_contract, :contract_note,
+                :avg_price, :is_published, :phone, :photos, :province, :real_city, :city, :district, :business_area,
+                :lat, :lng, :updated_by, :content
+  validates_presence_of :title, :address_line#, :user_id
+  validates_uniqueness_of :title, scope: [:address_line]
+
 
   if Settings.project.meikemei?
     PROPERTIES = {
