@@ -1,0 +1,200 @@
+<div class="main-wrapper">
+  <%= render file: 'public/templetes/newshub/_header.html.erb' %>
+	<div class="container">
+    <%= render file: 'public/templetes/newshub/_top_menu.html.erb' %>
+
+		<div class="tr-breadcrumb">
+			<div class="title pull-left">
+				<h1><%= @site_catalog.name %></h1>
+			</div>
+        <ol class="breadcrumb pull-right">
+          <li><a href="/">首页</a></li>
+          <li class="active"><%= @site_catalog.name %></li>
+        </ol>
+		</div><!-- /.tr-breadcrumb -->
+
+		<div class="row tr-content">
+      <!-- 头条-->
+			<div class="col-sm-5 col-md-6 tr-sticky">
+
+				<div class="theiaStickySidebar">
+					<% Site.where(catalog_id: @site_catalog.id).each do |site| %>
+					<div class="tr-section">
+						<div class="section-title title-before">
+							<h1><a href="#"><%= site.properties.map{|p| ::Site::PROPERTIES[p.to_sym]}.compact.join('，') %></a></h1>
+						</div>
+						<div class="tr-post">
+							<div class="entry-header">
+								<div class="entry-thumbnail">
+									<a href="<%= frontend_site_path(site) %>"><img class="img-responsive" src="<%= site.first_image %>" alt="Image"></a>
+								</div>
+							</div>
+							<div class="post-content">
+								<div class="author">
+									<a href="#"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/author1.png" alt="Image"></a>
+								</div>
+								<div class="entry-meta">
+									<ul>
+										<li>By <a href="#"><%= site.catalog.name %></a></li>
+										<li><a href="#"> <%= distance_of_time_in_words_to_now(site.updated_at) %>前</a></li>
+										<li>
+											<ul>
+												<li>分享到</li>
+												<li><a href="#"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
+											</ul>
+										</li>
+									</ul>
+								</div><!-- /.entry-meta -->
+								<h2 class="entry-title">
+									<%= link_to site.title, frontend_site_path(site) %>
+								</h2>
+								<p><%= site.description.truncate(74) %></p>
+								<div class="read-more">
+									<div class="continue-reading pull-left">
+										<a href="<%= frontend_site_path(site) %>">立即预订 <i class="fa fa-angle-right"></i></a>
+									</div>
+									<div class="feed pull-right">
+										<ul>
+											<li><a href="#"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
+										</ul>
+									</div>
+								</div>
+							</div><!-- /.post-content -->
+						</div><!-- /.tr-post -->
+					</div><!-- /.tr-post -->
+					<% end %>
+
+					<div class="tr-ad">
+						<a href="#"><img class="img-responsive" src="/templetes/newshub/images/advertise/1.jpg" alt="Image"></a>
+					</div><!-- /.tr-ad -->
+
+				</div><!-- /.theiaStickySidebar -->
+      </div>
+
+      <!-- 滚动 -->
+			<div class="col-sm-4 col-md-3 tr-sticky medium-post-responsive">
+				<div class="theiaStickySidebar">
+					<div class="tr-section">
+						<div class="section-title title-before">
+							<h1><a href="#">热门<%= @site_catalog.name %></a></h1>
+						</div>
+						<% Site.hot.where(catalog_id: @site_catalog.id).limit(3).each do |site_hot| %>
+	            <% if site_hot.present? %>
+							<div class="tr-post">
+								<div class="entry-header">
+	                <img class="img-responsive" src="<%= site_hot.first_image %>" />
+								</div>
+								<div class="post-content">
+									<div class="author">
+										<a href="#"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/author3.png" alt="Image"></a>
+									</div>
+									<div class="entry-meta">
+										<ul>
+											<li>By <a href="#"><%= site_hot.catalog.name %></a></li>
+											<li><a href="#"> <%= distance_of_time_in_words_to_now(site_hot.updated_at) %>前</a></li>
+										</ul>
+									</div><!-- /.entry-meta -->
+									<h2 class="entry-title">
+										<%= link_to site_hot.title, frontend_site_path(site_hot) %>
+									</h2>
+									<p><%= site_hot.description.truncate(50) %></p>
+									<div class="read-more">
+										<div class="continue-reading pull-left">
+											<a href="<%= frontend_site_path(site_hot) %>">立即预订 <i class="fa fa-angle-right"></i></a>
+										</div>
+										<div class="feed pull-right">
+											<ul>
+												<li><a href="#"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
+											</ul>
+										</div>
+									</div>
+								</div><!-- /.post-content -->
+							</div><!-- /.tr-section -->
+	            <% end %>
+            <% end %>
+						<ul class="small-post-list">
+							<% Site.scroll.where(catalog_id: @site_catalog.id).limit(6).each do |site_scrolls| %>
+							<li>
+								<div class="entry-header">
+									<div class="entry-thumbnail">
+										<a href="<%= frontend_site_path(site_scrolls) %>"><img class="img-responsive" src="<%= site_scrolls.first_image %>" alt="<%= site_scrolls.title %>"></a>
+									</div>
+								</div>
+								<div class="post-content media-body">
+									<div class="entry-meta">
+										<ul>
+											<li>By <a href="#"><%= site_scrolls.catalog.name %></a></li>
+										</ul>
+									</div><!-- /.entry-meta -->
+									<h2 class="entry-title">
+										<%= link_to site_scrolls.title, frontend_site_url(site_scrolls) %>
+									</h2>
+								</div><!-- /.post-content -->
+							</li>
+							<% end %>
+						</ul>
+					</div>
+
+					<div class="tr-section tr-ad ad-before">
+						<a href="#"><img class="img-responsive" src="/templetes/newshub/images/advertise/3.jpg" alt="Image"></a>
+					</div><!-- /.tr-section -->
+
+					<div class="tr-section local-events">
+						<div class="section-title title-before">
+							<h1><a href="#">推荐 <%= @site_catalog.name %></a></h1>
+						</div>
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active"><a href="#time0" data-toggle="tab">推荐</a></li>
+							<li role="presentation"><a href="#time1" data-toggle="tab">推荐</a></li>
+							<li role="presentation"><a href="#time2" data-toggle="tab"> 推荐</a></li>
+						</ul>
+						<div class="tab-content">
+							<% Site.recommend.where(catalog_id: @site_catalog.id).limit(3).each_with_index do |site_recommends, index| %>
+							<div role="tabpanel" class="tab-pane fade in <%= 'active' if index == 0 %>" id="time<%= index %>">
+								<div class="tr-post">
+									<div class="entry-header">
+										<div class="entry-thumbnail">
+											<a href="<%= frontend_site_path(site_recommends) %>"><img class="img-responsive" src="<%= site_recommends.first_image %>" alt="Image"></a>
+										</div>
+									</div>
+									<div class="post-content">
+										<div class="entry-meta">
+											<ul>
+												<li>By <%= site_recommends.catalog.name %></li>
+												<li><%= distance_of_time_in_words_to_now(site_recommends.updated_at) %>前</li>
+											</ul>
+										</div><!-- /.entry-meta -->
+										<h2 class="entry-title">
+											<%= link_to site_recommends.title, frontend_site_path(site_recommends) %>
+										</h2>
+									</div>
+								</div><!-- /.tr-post -->
+								<span><%= site_recommends.description.truncate(50) %></span>
+							</div>
+							<% end %>
+						</div>
+					</div><!-- meta-tab -->
+				</div><!-- /.theiaStickySidebar -->
+			</div>
+      <!-- 最新 -->
+			<div class="col-sm-3 tr-sidebar tr-sticky">
+				<%= render file: 'public/templetes/newshub/_sidebar.html.erb' %>
+			</div>
+		</div><!-- /.row -->
+
+		<div class="tr-ad ad-bottom ad-image text-center">
+			<a href="#"><img class="img-responsive" src="/templetes/newshub/images/advertise/5.jpg" alt="Image"></a>
+		</div><!-- /.tr-ad -->
+
+	</div><!-- /.container-fluid -->
+</div><!-- main-wrapper -->
+<%= render file: 'public/templetes/newshub/_footer.html.erb' %>

@@ -14,7 +14,7 @@ zh-CN:
         article_type: 公告类型
         article_types:
           system: 系统公告
-          community: 小区公告
+          community: 社区公告
     errors:
       models:
         article: 

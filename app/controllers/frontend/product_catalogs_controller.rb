@@ -1,11 +1,17 @@
 class Frontend::ProductCatalogsController < Frontend::BaseController
+  before_action :get_catalogs
+
   def index
-    @product_catalogs = ProductCatalog.all
   end
 
   def show
-    @product_catalog = @site.ProductCatalog.find(params[:id])
+    @product_catalog =ProductCatalog.find(params[:id])
     # 当前分类下的所有产品
-    @products  = @site.products.where(catalog: params[:id]).order(updated_at: :desc).all
+    @products  = Product.where(catalog_id: params[:id]).order(updated_at: :desc).page(params[:page])
+  end
+
+  private
+  def get_catalogs
+    @product_catalogs = ProductCatalog.all
   end
 end

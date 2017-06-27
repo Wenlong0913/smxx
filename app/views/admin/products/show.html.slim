@@ -48,14 +48,15 @@ h1.page-header
               tr.divider
                 td[colspan='2']
               tr
-                td.field 售价
-                td
-                  a
-                    = @product.price.to_f / 100
                 td.field 原价
                 td
                   a
-                    = @product.old_price.to_f / 100
+                    = @product.price.to_f / 100
+                td.field 优惠价
+                td
+                  a
+                    = @product.discount.to_f / 100
+
               tr.divider
                 td[colspan='2']
               tr
@@ -141,10 +142,10 @@ h1.page-header
                 tr
                   td.field 原价
                   td
-                    = @product.old_price.to_f / 100
-                  td.field 售价
+                    = @product.price.to_f / 100
+                  td.field 优惠价
                   td
-                    =@product.price.to_f / 100
+                    =@product.discount.to_f / 100
                 tr
                   td.field 月单数
                   td

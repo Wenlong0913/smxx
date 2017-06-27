@@ -11,7 +11,7 @@ $(document).ready ()->
         workers: []
         business: 'Site'
         action: 'create'
-        tasks: [{name: '商家管理', value: 'Site'}, {name: '小区管理', value: 'Community'}, {name: '产品管理', value: 'Item'}]
+        tasks: [{name: '商家管理', value: 'Site'}, {name: '社区管理', value: 'Community'}, {name: '产品管理', value: 'Item'}]
         actions: [{name: '创建', value: 'create'}, {name: '更新', value: 'update'}, {name: '删除', value: 'destroy'}]
         pieChartData: [],
         daterange: ''

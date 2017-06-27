@@ -44,10 +44,10 @@
             <!-- list -->
             <ul class="forum-list forum-topic-list">
               <% @orders.each do |order| %>
-                <li>
+                <li data-url="<%= (Settings.project.sxhop? || Settings.project.imolin?) ? agent_order_path(order) : '#'%>" class="link-li">
                   <!-- begin media -->
                   <div class="media">
-
+                    <img src="" alt="">
                   </div>
                   <!-- end media -->
                   <!-- begin info-container -->
@@ -99,9 +99,11 @@
                       <div class="order-status-display">
                         <% if Settings.project.sxhop? || Settings.project.imolin? %>
                           <!-- sxhop -->
-                          <span class="label label-info" style="padding: 8px 10px">
-                            <%= decorate(order).display_status %>
-                          </span>
+                          <%= link_to agent_order_path(order) do%>
+                            <span class="btn-info btn-sm">
+                              <%= decorate(order).display_status %>
+                            </span>
+                          <% end %>
                         <% else %>
                           <!-- dagle -->
                           <% if order.cancelled? %>
@@ -166,3 +168,10 @@
   </div>
   <!-- END container -->
 </div>
+<script type="text/javascript">
+  $(function() {
+    $('.agent-orders.index li.link-li').on('click', function(){
+      window.location.href = $(this).data('url')
+    })
+  })
+</script>

@@ -52,7 +52,7 @@ module AppAPI::V1
             case params[:type]
             when 'owner' then current_user.articles
             else
-              ::Article.all
+              ::Article.all.displayable
             end
         if params[:source_type]
           articles =
@@ -64,7 +64,7 @@ module AppAPI::V1
         end
         if Settings.project.imolin?
           error! '请先设置您的小区信息!' unless current_user.current_community
-          articles = articles.where(community_id: current_user.current_community.id).order("article_type asc, is_top desc, created_at desc")
+          articles = articles.where(community_id: [current_user.current_community.id, nil]).order("article_type asc, is_top desc, created_at desc")
           if params[:source_name]
             rooms = current_user.current_community.chat_rooms.where("name like ?", "%#{params[:source_name]}%")
             articles = articles.where(source: rooms)
@@ -107,7 +107,7 @@ module AppAPI::V1
             error! '没有删除权限'
           end
         else
-          if article.user.id == current_user.id 
+          if article.user.id == current_user.id
             article.destroy
             present article, with: AppAPI::Entities::Article
           else

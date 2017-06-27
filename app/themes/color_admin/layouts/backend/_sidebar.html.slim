@@ -27,6 +27,8 @@
         = render "layouts/backend/sidebar_meikemei"
       - elsif Settings.project.eqxiyi?
         = render "layouts/backend/sidebar_eqxiyi"
+      - elsif Settings.project.wgtong?
+         = render "layouts/backend/sidebar_wgtong"
 
       li class=("has-sub #{'active' if page?('admin/cms/sites', "admin/cms/channels")}")
         a href="javascript:;"

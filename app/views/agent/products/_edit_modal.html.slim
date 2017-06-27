@@ -13,9 +13,12 @@
 							span.title
 							span.close[data-dismiss="alert"] &times;
           .row
-            .col-xs-12
+            .col-xs-6
               .form-group
                 = f.input :price, input_html: { value: @product.price.to_f / 100 }
+            .col-xs-6
+              .form-group
+                = f.input :discount, input_html: { value: @product.discount.to_f / 100 }
             .col-xs-12
               .form-group.col-xs-8.p-l-0.m-0
                 = f.input :stock

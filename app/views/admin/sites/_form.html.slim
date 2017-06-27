@@ -15,7 +15,7 @@
             - @site.errors.full_messages.each do |message|
               li = message
       - if params[:map]
-        - if Settings.project.imolin?
+        - if Settings.project.imolin? || Settings.project.wgtong?
           .row
             div class="col-md-3 col-sm-12"
               = f.input :lat, readonly: false, placeholder: '自动填充', input_html: {value: @site.address_lat || params[:lat]}
@@ -76,7 +76,7 @@
           = f.input :description, as: :text, input_html: {rows: 10}
           .form-group
             image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@site.image_item_ids.join(', ')}"]
-        - elsif Settings.project.imolin?
+        - elsif Settings.project.imolin? || Settings.project.wgtong?
           .row
             div class="col-md-6 col-sm-12"
               label[class="control-label"] 商家所有者
@@ -103,7 +103,10 @@
             div class="col-md-3 col-sm-12"
               = f.input :good_summary
               = f.input :bad_summary
-              / = f.input :properties
+              / f.input :properties
+              p 标签备注（可多选）
+              = f.collection_check_boxes :properties, Site::PROPERTIES, :first, :last, checked: @site.try(:properties)
+
               = f.input :is_published, as: :boolean, label: false, label: '是否发布'
             div class="col-md-3 col-sm-12"
               = f.input :contact_name
@@ -114,9 +117,10 @@
               = f.input :description, as: :text, input_html: {rows: 10}
           .form-group
             image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@site.image_item_ids.join(', ')}"]
+        = f.input :content, as: :ckeditor
       = f.submit class: 'btn btn-success btn-block'
 
-- if Settings.project.imolin?
+- if Settings.project.imolin? || Settings.project.wgtong?
   script data-turbolinks="false" type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=#{Rails.application.config_for(:baidu_lbs_api)['geocoding']["ak"]}"
   javascript:
       var options = { autocomplete_input: 'search-address' };

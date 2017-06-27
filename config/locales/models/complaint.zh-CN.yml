@@ -1,0 +1,19 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      complaint: 举报
+    attributes:
+      complaint:
+        reason: 举报原因
+        comment: 审核备注
+        status: 审核结果
+        processed_by: 审核者
+        statuses:
+          rejected: 拒绝
+          approved: 批准
+    errors:
+      models:
+        complaint:
+  helpers:
+    complaint:

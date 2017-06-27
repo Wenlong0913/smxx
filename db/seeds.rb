@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
+puts "创建用户/权限"
 %w(super_admin admin agent).each do |name|
   Role.find_or_create_by name: name
 end
@@ -42,12 +42,13 @@ raise "创建的第一个商家ID不等于1!!!" unless site.id == 1
 end
 
 #系统参数
-Keystore.put('cms_template_names', "['default','app-landing-spotlight']")
+Keystore.put('cms_template_names', "['default','dagle','app-landing-spotlight','grand','eshop','newshub']")
 
 # init Cms
 # visit: http://localhost:3000/cms_1/
+puts "创建CMS官网"
 cms_site =
-  Cms::Site.create_with(name: '企业官网', domain: 'www', template: 'default', description: '这是用CMS搭建的官网').
+  Cms::Site.create_with(name: '企业官网', domain: 'www', template: 'newshub', description: '这是用CMS搭建的官网').
   find_or_create_by(site_id: site.id)
 # Cms::Site after_create :initialize_channel　已经存在，会自动创建一个首页
 # cms_channel = Cms::Channel.create!(site_id: cms_site.reload.id, title: '首页', description: '这里是首页的栏目描述', short_title: 'index', tmp_index: 'temp_index.html.erb', tmp_detail: 'temp_detail.html.erb')
@@ -61,31 +62,38 @@ content = ''
   cms_page = Cms::Page.find_or_create_by(channel_id: cms_channel.reload.id, title: '这是新闻标题', description: '这里是页面的描述', content: content)
 end
 
-names = %w(维修
-保洁
-家电清洗
-衣物护理
-搬家
-超市
-外卖
-美容
+puts "创建商家、社团分类"
+names = %w(场馆
+剧院
+图书馆
+社团
+志愿者
+其他
 )
 
 names.each do |name|
   SiteCatalog.find_or_create_by(name: name)
 end
 
-names = %w(饮品
-餐饮
-副食品
+puts "创建产品分类"
+names = %w(演出
+讲座
+展览
+体育
+培训
+赛事
+亲子
+读书
+音乐影视
+其他
 )
 
 names.each do |name|
   ProductCatalog.find_or_create_by(name: name)
 end
 
-# 德格商家
-puts "创建商家"
+# 德格供应商
+puts "创建供应商"
 vendor_names = ["自购", "舞东风", "联合100", "友达", "顺丰", "壹佰", "盛世百龙", "义力"]
 vendor_names.each do |vendor_name|
   unless Vendor.exists?(name: vendor_name)
@@ -127,6 +135,7 @@ material_catalogs.each_pair do |material_catalog, sub_material_catalos|
 end
 
 # 客户
+puts "创建客户分类"
 MemberCatalog.find_or_create_by(key: '客户级别', value: '{A类,B类,C类}')
 MemberCatalog.find_or_create_by(key: '会员关系', value: '{非会员,普通会员,银卡会员,金卡会员,至尊会员}')
 MemberCatalog.find_or_create_by(key: '客户性别', value: '{男,女}')
@@ -135,6 +144,7 @@ MemberCatalog.find_or_create_by(key: '购买能力', value: '{一般,高,很高}
 MemberCatalog.find_or_create_by(key: '客户活跃频次', value: '{很少,一般,高,很高}')
 
 # 营销页
+puts "创建营销页分类"
 MarketCatalog.find_or_create_by(name: '博客')
 MarketCatalog.find_or_create_by(name: '活动')
 MarketCatalog.find_or_create_by(name: '招商')

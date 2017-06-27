@@ -33,23 +33,18 @@ class Site < ApplicationRecord
   has_one :cms_site, class_name: '::Cms::Site', dependent: :destroy
   # store_accessor :features, :business_hours, :content, :contact_phone, :contact_name, :is_sign, :sign_note,
   # :score, :comment, :properties, :updated_by, :has_contract, :is_published, :phone, :lat, :lng
-
-  if Settings.project.imolin?
-    store_accessor :features, :description, :properties, :business_hours,
-                  :recommendation, :good_summary, :bad_summary, :parking,
-                  :wifi, :contact_name, :contact_phone, :has_contract, :contract_note,
-                  :avg_price, :is_published, :phone, :photos, :province, :real_city, :city, :district, :business_area,
-                  :lat, :lng, :updated_by
-    validates_presence_of :title, :address_line#, :user_id
-    validates_uniqueness_of :title, scope: [:address_line]
-  elsif Settings.project.meikemei?
-    store_accessor :features, :business_hours, :content, :contact_phone, :contact_name, :is_sign, :sign_note,
-      :score, :comment, :properties, :updated_by, :has_contract, :is_published, :phone, :lat, :lng
-  else
-    store_accessor :features, :description, :updated_by
-    validates_presence_of :title, :user_id
-    validates_uniqueness_of :title, scope: [:type, :user_id]
+  def first_image
+    image_items.first.try(:image_url) || 'http://song-dev.qiniudn.com/site.jpg'
   end
+
+  store_accessor :features, :description, :properties, :business_hours,
+                :recommendation, :good_summary, :bad_summary, :parking,
+                :wifi, :contact_name, :contact_phone, :has_contract, :contract_note,
+                :avg_price, :is_published, :phone, :photos, :province, :real_city, :city, :district, :business_area,
+                :lat, :lng, :updated_by, :content
+  validates_presence_of :title, :address_line#, :user_id
+  validates_uniqueness_of :title, scope: [:address_line]
+
 
   if Settings.project.meikemei?
     PROPERTIES = {
@@ -58,9 +53,25 @@ class Site < ApplicationRecord
       hidden_consumption: "无隐性消费",
       standard_procedure: "标准流程"
     }
+  else
+    PROPERTIES = {
+      hot: "头条",
+      recommend: "推荐",
+      slider: "幻灯",
+      scroll: "滚动",
+      redirect: "跳转",
+      hide: "隐藏"
+    }
   end
-  
-  if Settings.project.imolin?
+  # Site.hot
+  # Site.recommend(6)
+  PROPERTIES.each_pair do |k, v|
+    scope k, ->(count = 2) {
+      where("(features -> 'properties') ? '#{k}'").reorder("updated_at DESC").limit(count)
+    }
+  end
+
+  if Settings.project.imolin? || Settings.project.wgtong?
     acts_as_address
 
     def address_lat
@@ -70,6 +81,8 @@ class Site < ApplicationRecord
     def address_lng
       self.manual_geo ? self.manual_geo.lng : self.address.lng
     end
+
+    scope :published, -> { where("features ->> 'is_published' = ?", "1") }
   end
   audited
 

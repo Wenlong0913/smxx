@@ -151,8 +151,27 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
 
     <%= paginate @pages, remote: true %>
 
+    #获得最近新闻
     <% Cms::Page.recent(@cms_site.id, 12, :rand => true) %>
     <% Cms::Page.recent(@cms_site.id, 10, :channel => 'product-bed') %>
+
+    #获得头条/推荐...新闻
+    PROPERTIES = {
+      hot: "头条",
+      recommend: "推荐",
+      slider: "幻灯",
+      scroll: "滚动",
+      redirect: "跳转",
+      hide: "隐藏"
+    }
+    # Cms::Page.where("'hot' = ANY (properties)")
+    # @channel.pages.where("'recommend' = ANY(properties)")
+    # Cms::Page.hot(site_id)
+    # Cms::Page.recommend(site_id, count)
+    # Cms::Page.slider(site_id, 6)
+    # Cms::Page.scroll(site_id, 6)
+    # Cms::Page.redirect(site_id, 6)
+    # Cms::Page.hide(site_id, 6)
 
     <%= distance_of_time_in_words_to_now(site.updated_at) %>前
 
@@ -190,6 +209,19 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
     <%= simple_form_for(Cms::Comment.new, url: cms_frontend_comment_create_path, html: { class: 'form-theme', id: 'formYue' } ) do |f| %>
         <input type="phone" name="comment[contact]" class="form-control" id="InputPhone" />
     <% end %>
+
+    若需要表单空值验证（有css样式）+异步提交（在当前页面返回结果）
+    1、修改html: { class: 'form-theme'} 为 html: { class: 'validate'}
+    2、在input标签的class属性中加入'required'属性
+
+    a标签代替button标签提交表单写法：
+    <a href="javascript:;" class="btn btn-success" onclick='submit_form()' >立即咨询</a>
+    <script type="text/javascript">
+      function submit_form(){
+        $('.simple_form').submit();
+      }
+    </script>
+
 
 可以使用的表单属性：
 

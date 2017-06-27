@@ -17,7 +17,7 @@
       .col-xs-6
         .form-group
           - if @community
-            = f.input :article_type, as: :string, input_html: { value: '小区公告' }, disabled: true
+            = f.input :article_type, as: :string, input_html: { value: '社区公告' }, disabled: true
           - else
             = f.input :article_type, as: :string, input_html: { value: '系统公告' }, disabled: true
       .col-xs-6

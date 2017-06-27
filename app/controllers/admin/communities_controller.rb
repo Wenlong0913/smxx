@@ -25,7 +25,7 @@ class Admin::CommunitiesController < Admin::BaseController
   # GET /admin/communities/1
   def show
     authorize @community
-    #查找小区周边的商家(site), 按就近排序
+    #查找社区周边的商家(site), 按就近排序
     @sites = Site.near_by(lat: @community.address_lat, lng: @community.address_lng, distance: 2000).page(params[:page]).per(9) if params[:sites]
     @sites_string = @sites.to_json(only: [:id], methods: [:address_lat, :address_lng])
   end
@@ -56,14 +56,14 @@ class Admin::CommunitiesController < Admin::BaseController
   # PATCH/PUT /admin/communities/1
   def update
     authorize @community
-    if params[:community][:lat].present? &&  params[:community][:lat].present?
-      manual_geo = @community.manual_geo || @community.build_manual_geo
-      manual_geo.lat = params[:community][:lat]
-      manual_geo.lng = params[:community][:lng]
-      manual_geo.save! if manual_geo.changed?
+    # if params[:community][:lat].present? &&  params[:community][:lat].present?
+      # manual_geo = @community.manual_geo || @community.build_manual_geo
+      # manual_geo.lat = params[:community][:lat]
+      # manual_geo.lng = params[:community][:lng]
+      # manual_geo.save! if manual_geo.changed?
       # address = Gnomon::Address.resolve(lat: params[:community][:lat], lng: params[:community][:lng])
       # @community.address = address
-    end
+    # end
     flag, @community = Community::Update.(@community, permitted_attributes(@community).merge(updated_by: current_user.id))
     if flag
       redirect_to admin_community_path(@community), notice: "#{Community.model_name.human} 更新成功."

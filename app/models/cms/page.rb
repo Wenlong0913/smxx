@@ -41,7 +41,19 @@ class Cms::Page < ApplicationRecord
     redirect: "跳转",
     hide: "隐藏"
   }
+  # Cms::Page.hot(site_id)
+  # Cms::Page.recommend(site_id, 6)
+  PROPERTIES.each_pair do |k, v|
+    scope k, ->(site_id, count = 2, options = {}) {
+      assoc = joins(:channel).where("cms_channels.site_id = ? AND '#{k}' = ANY(cms_pages.properties)", site_id).reorder("updated_at DESC").limit(count)
+      if options[:channel].present?
+        assoc = assoc.joins(:channel).where(cms_channels: { short_title: options[:channel] })
+      end
+      assoc
+    }
+  end
 
+  #scope
   default_scope -> {order(updated_at: :desc)}
   #最近新闻
   #eg: Cms::Page.recent(12, 12, :rand => true)
@@ -54,6 +66,7 @@ class Cms::Page < ApplicationRecord
     assoc
   }
   scope :search, ->(site_id, q) { joins(:channel).where('cms_channels.site_id = ? AND cms_pages.title LIKE ?', site_id, "%#{q}%") }
+
 
   def format_date
     self.updated_at.strftime("%Y-%m-%d") unless self.updated_at.nil?

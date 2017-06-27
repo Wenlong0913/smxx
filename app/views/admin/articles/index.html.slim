@@ -2,7 +2,7 @@ h1.page-header
   | #{Article.model_name.human}列表
   .pull-right
     => link_to "新建#{Article.model_name.human}", @community ? new_admin_community_article_path(@community) : new_admin_article_path, class: 'btn btn-primary'
-    => link_to "返回小区", admin_community_path(@community), class: 'btn btn-primary' if @community
+    => link_to "返回社区", admin_community_path(@community), class: 'btn btn-primary' if @community
 
 .panel.panel-default
   .panel-heading

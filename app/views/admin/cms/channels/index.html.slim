@@ -102,7 +102,7 @@ h1.page-header
                   => link_to '前台预留', get_cms_url(cms_channel, subdomain: @cms_site.domain), target: '_blank', class: 'btn btn-xs btn-success'
                   => link_to '编辑', edit_admin_cms_site_channel_path(@cms_site,cms_channel), class: 'btn btn-xs btn-success'
                   = link_to '删除', admin_cms_site_channel_path(@cms_site,cms_channel), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
-
+    = paginate @cms_channels
 
 / TODO: move this code to application.js
 javascript:

@@ -372,6 +372,7 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
     netrc (0.11.0)
+    newrelic_rpm (4.2.0.334)
     nio4r (2.1.0)
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
@@ -697,6 +698,7 @@ DEPENDENCIES
   kaminari-i18n (~> 0.4.0)
   like!
   listen (~> 3.0.5)
+  newrelic_rpm
   non-stupid-digest-assets (~> 1.0, >= 1.0.9)
   omniauth-wechat-oauth2 (~> 0.1.0)
   paperclip
