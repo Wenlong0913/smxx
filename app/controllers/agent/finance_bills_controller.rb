@@ -2,7 +2,7 @@ class Agent::FinanceBillsController < Agent::BaseController
 
   def index
     authorize FinanceBill
-    @agent_finance_bills = FinanceBill.where(id: @site.orders.map(&:finance_bill_id)).order("created_at DESC").page(params[:page])
+    @agent_finance_bills = FinanceBill.where(site_id: @site.id).order("created_at DESC").page(params[:page])
     respond_to do |format|
       format.html
       format.json { render json: @agent_finance_bills }
@@ -21,6 +21,7 @@ class Agent::FinanceBillsController < Agent::BaseController
     FinanceBill.transaction do
       begin
         @agent_finance_bill = FinanceBill.new(permitted_attributes(FinanceBill))
+        @agent_finance_bill.site_id = @site.id
         orders = @site.orders.completed.where(id: params[:finance_bill][:order_ids], finance_bill_id: nil)
         if orders.any?
           @agent_finance_bill.amount = orders.sum(:price).to_i
