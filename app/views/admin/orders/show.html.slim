@@ -1,4 +1,4 @@
-h1.page-header 
+h1.page-header
   | 查看#{Order.model_name.human}
   .pull-right
     => link_to '编辑', edit_admin_order_path(@order), class: 'btn btn-primary'
@@ -28,8 +28,15 @@ h1.page-header
                 td.field
                   | #{Order.human_attribute_name(:status)}
                 td
-                  span
-                    = enum_l(@order, :status)
+                  p.refund-button
+                    - if @order.paid?
+                      - if @order.refund_status.blank?
+                        button.btn.btn-primary.btn-xs[data-toggle="modal" data-target="#refundModal"]
+                          | 申请退款
+                      - else
+                        | 已经提交退款申请
+                    - else
+                      = enum_l(@order, :status)
               - if Settings.project.grand?
                 tr
                   td.field
@@ -41,15 +48,15 @@ h1.page-header
                 td.field
                   | #{Order.human_attribute_name(:user)}
                 td
-                  a
+                  a[href="#{admin_user_path(@order.user || @order.member)}"]
                     = @order.user.blank? ? @order.member.name : decorate(@order.user).display_name
               tr.divider
                 td[colspan='2']
               tr
                 td.field
-                  | #{Order.human_attribute_name(:site)}
+                  | #{Site.model_name.human}
                 td
-                  a
+                  a[href="#{admin_site_path(@order.site)}"]
                     = @order.site.title
               tr.divider
                 td[colspan='2']
@@ -61,17 +68,19 @@ h1.page-header
                     = @order.price.to_f/100
               tr.divider
                 td[colspan='2']
-        .col-sm-5
-          a.thumbnail[href="#"]
-            = image_tag @order.image_items.first.try{image} || 'no-picture.png'
-            .caption.text-right
-              strong
-                = "设计图纸( 共 #{@order.image_items.size} 张 )"
-        .text-center.col-sm-12
-          - if @order.produce
-            = link_to '已发布生产任务', admin_order_produce_path(@order, @order.produce), class: "btn btn-warning"
-          - else
-            = link_to '发布生产任务', admin_order_produces_path(@order), class: "btn btn-info", method: :post
+          == render 'refund_modal'
+        - if Settings.project.grand?
+          .col-sm-5
+            a.thumbnail[href="#"]
+              = image_tag @order.image_items.first.try{image} || 'no-picture.png'
+              .caption.text-right
+                strong
+                  = "设计图纸( 共 #{@order.image_items.size} 张 )"
+          .text-center.col-sm-12
+            - if @order.produce
+              = link_to '已发布生产任务', admin_order_produce_path(@order, @order.produce), class: "btn btn-warning"
+            - else
+              = link_to '发布生产任务', admin_order_produces_path(@order), class: "btn btn-info", method: :post
 .panel
   .panel-heading
     .panel-heading-btn
@@ -91,10 +100,11 @@ h1.page-header
                 th = Product.human_attribute_name(:price)
                 th = OrderProduct.human_attribute_name(:amount)
                 th = OrderProduct.human_attribute_name(:price)
-                
+
               - @order.order_products.each do |order_product|
                 tr
-                  td = order_product.product.name
+                  td
+                    = link_to order_product.product.name, admin_site_product_path(@order.site, order_product.product)
                   td = order_product.product.discount.to_f / 100 || order_product.product.price.to_f / 100
                   td = "#{order_product.amount}#{order_product.product.unit}"
                   td = order_product.price.to_f / 100
@@ -118,7 +128,7 @@ h1.page-header
                   th = Material.human_attribute_name(:name)
                   th = OrderMaterial.human_attribute_name(:amount)
                   th
-                  
+
                 - @order.order_materials.each do |order_material|
                   tr
                     td = order_material.material.blank? ? nil : (order_material.material.catalog.blank? ? '该物料还未分类' : order_material.material.catalog.name )
