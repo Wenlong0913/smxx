@@ -102,6 +102,10 @@ h1.page-header
                     => link_to "已签约", '#', class: 'btn btn-xs btn-success'
                   - else
                     => link_to "未签约", '#', class: 'btn btn-xs btn-warning'
+                  - if site.agent_plan_id
+                    => link_to site.agent_plan.name, '#', class: 'btn btn-xs btn-success'
+                  - else
+                    => link_to "未付费", '#', class: 'btn btn-xs btn-warning'
                   - if site.is_published == '1'
                     => link_to "已发布", '#', class: 'btn btn-xs btn-success'
                   - else
