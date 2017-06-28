@@ -12,6 +12,7 @@
         table.table.table-striped
           thead
             tr
+              th 编号
               th 金额(单位:元)
               th 状态
               th 账单时间
@@ -19,6 +20,7 @@
           tbody
             - @agent_finance_bills.each do |agent_finance_bill|
               tr
+                td = agent_finance_bill.code
                 td = (agent_finance_bill.amount/100).to_f
                 td = decorate(agent_finance_bill).display_status
                 td = agent_finance_bill.created_at.strftime("%Y-%m-%d")
