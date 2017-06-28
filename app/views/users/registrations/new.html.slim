@@ -1,9 +1,8 @@
 css:
   .cover_box_bg {
-    padding: 30px;
-    background: linear-gradient(#CC697B, #A24B61);
-    background: -webkit-linear-gradient(#CC697B, #A24B61);
-    background: -moz-linear-gradient(#CC697B, #A24B61);
+    padding: 15px;
+    background-color: #63D5C4;
+    box-shadow: 1px -3px 20px 1px #000;
   }
   .color-white {
     color: #fff !important;
@@ -13,6 +12,7 @@ css:
   }
   .cover_box_bg .cover_center{
     border-radius: 10px;
+    box-shadow: 0px 0px 60px -10px #000;
     overflow: hidden;
   }
   .cover_box_bg .cover_center .center_left{
@@ -154,6 +154,10 @@ javascript:
     $(".right_btn").click(function() {
       $(this).addClass('right_btn_bg').siblings().removeClass('right_btn_bg')
     })
+    var wd_height = $(window).height()
+    var wd_width = $(window).width()
+
+    $("#cover_bg").css({"height": wd_height / 2, "width": wd_width})
   })
 
   function mobileRegister () {
