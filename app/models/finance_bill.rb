@@ -5,6 +5,7 @@ class FinanceBill < ApplicationRecord
       checked: 1,   # 已审核
       cashed: 2,    # 已付款
     }
+  belongs_to :site
   before_create :generate_code
 
   private

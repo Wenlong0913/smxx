@@ -144,6 +144,11 @@ module AdminRoute
         resources :banners
         resources :finance_histories, only: [:index, :new, :create, :show], :concerns => :paginatable
         resources :agent_plans
+        resources :finance_bills, only: [:index, :show], :concerns => :paginatable do
+          member do
+            post 'checked'
+          end
+        end
 
         #数据采集
         namespace :forage do

@@ -2,7 +2,11 @@ class Agent::FinanceBillsController < Agent::BaseController
 
   def index
     authorize FinanceBill
-    @agent_finance_bills = FinanceBill.where(site_id: @site.id).order("created_at DESC").page(params[:page])
+    @agent_finance_bills = FinanceBill.where(site_id: @site.id)
+    if params[:search] && params[:search][:code].present?
+      @agent_finance_bills = @agent_finance_bills.where("code like ?", ['%', params[:search][:code], '%'].join())
+    end
+    @agent_finance_bills = @agent_finance_bills.order("created_at DESC").page(params[:page])
     respond_to do |format|
       format.html
       format.json { render json: @agent_finance_bills }

@@ -5,6 +5,10 @@ class FinanceBillPolicy < ApplicationPolicy
     end
   end
 
+  def checked?
+    user.super_admin_or_admin? || user.permission?(:finance)
+  end
+
   def permitted_attributes_for_create
     if user.has_role? :agent
       []
