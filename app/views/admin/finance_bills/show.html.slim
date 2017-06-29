@@ -3,6 +3,8 @@ h1.page-header
   .pull-right
     - if @finance_bill.open?
       => link_to '审核通过', checked_admin_finance_bill_path(@finance_bill), method: :post, class: 'btn btn-primary'
+    - elsif @finance_bill.checked?
+      => link_to '确认打款', cashed_admin_finance_bill_path(@finance_bill), method: :post, class: 'btn btn-primary'
     = link_to '返回', admin_finance_bills_path, class: 'btn btn-primary'
 
 .panel

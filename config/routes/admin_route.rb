@@ -147,6 +147,7 @@ module AdminRoute
         resources :finance_bills, only: [:index, :show], :concerns => :paginatable do
           member do
             post 'checked'
+            post 'cashed'
           end
         end
 
