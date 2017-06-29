@@ -54,7 +54,7 @@
 										<% if @product.status == "" %>
 											<p class="text-center gray">未知状态</p>
 										<% else %>
-											<p class="text-center gray"><%= enum_i18nw(Product, :status, @product.status) %></p>
+											<p class="text-center gray"><%= enum_i18n(Product, :status, @product.status) %></p>
 										<% end %>
 										<% if @product.stock <= 0  %>
 											<p>
@@ -74,15 +74,15 @@
 								</div>
 								<div class="entry-meta">
 									<ul>
-										<li>By <a href="#">Jhon dun</a></li>
-										<li>445 Share /<a href="#"> 1 Hour ago</a></li>
+										<li>By <a href="#"><%= @product.catalog.name  %></a></li>
+										<li>445 分享 /<a href="#"> <%= distance_of_time_in_words_to_now(@product.created_at) %></a> 前</li>
 										<li>
 											<ul>
-												<li>Share</li>
-												<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+												<li>分享</li>
+												<li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
+									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
+									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
 											</ul>
 										</li>
 									</ul>
