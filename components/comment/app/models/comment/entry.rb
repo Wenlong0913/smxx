@@ -22,10 +22,14 @@ module Comment
       errors.add(:parent_id, "parent_id don't exist") if parent && !resource.comments.exists?(parent_id)
     end
 
-    # 举报未通过之后恢复为未举报状态
-    def restore_display
-      self.is_complainted = false
-      self.save!
+    # 审核举报内容之后显示aritcle
+    def restore_display!
+      self.update_attributes(is_complainted: false)
+    end
+
+    # 审核举报内容之后屏蔽article
+    def approved_complaint!
+      self.update_attributes(is_complainted: true)
     end
   end
 end
