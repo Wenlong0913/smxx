@@ -45,13 +45,17 @@
 										</p>
 										<p>
 											<i class="fa fa-clock-o"></i>
-											<%= @product.time["4"] %>:<%= @product.time["5"] %>
+											<%= @product.time %>
 										</p>
 										<p>
 											<i class="fa fa-phone-square"></i>
 											<%= @product.phone %>
 										</p>
-										<p class="text-center gray"><%= enum_i18n(Product, :status, @product.status) %></p>
+										<% if @product.status == "" %>
+											<p class="text-center gray">未知状态</p>
+										<% else %>
+											<p class="text-center gray"><%= enum_i18nw(Product, :status, @product.status) %></p>
+										<% end %>
 										<% if @product.stock <= 0  %>
 											<p>
 												<a href="javascript: void(0)" class="btn btn-block btn-lg btn-success" disabled="disabled">马上预订</a>
