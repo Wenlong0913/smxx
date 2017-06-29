@@ -15,7 +15,8 @@
             br
           p.text-center
             = link_to '立即购买', charge_agent_agent_plan_path(plan), method: :post, remote: :true, class: 'btn btn-warning'
-
+p.text-center
+  a[href="http://www.imolin.cn/news/192" target="_blank"] 购买商家套餐前请先阅读商家入驻协议
 javascript:
   function onStartCharging(charge){
     console.log(charge)

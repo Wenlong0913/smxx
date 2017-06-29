@@ -72,13 +72,15 @@ h1.page-header
             tr
               td = finance_bill.code
               td = finance_bill.amount.to_f/100
-              td = finance_bill.site.title
+              td = finance_bill.site.try(:title)
               td = decorate(finance_bill).display_status
               td = finance_bill.updated_at.localtime
               td
                 => link_to '查看', admin_finance_bill_path(finance_bill), class: 'btn btn-xs btn-default'
                 - if finance_bill.open?
                   => link_to '审核通过', checked_admin_finance_bill_path(finance_bill), method: :post, class: 'btn btn-xs btn-warning'
+                - elsif finance_bill.checked?
+                  => link_to '确认打款', cashed_admin_finance_bill_path(finance_bill), method: :post, class: 'btn btn-xs btn-warning'
       = paginate @finance_bills
 
 / TODO: move this code to application.js
