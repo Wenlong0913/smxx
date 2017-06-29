@@ -16,3 +16,21 @@ h1.page-header
       .profile-info
         .table-responsive
           table.table.table-profile
+            tr
+              td
+                a
+                  | 名称：
+                = @forage_source.name
+              td
+                a
+                  | 分类：
+                = @forage_source.catalog_name
+            tr
+              td
+                a
+                  | 链接地址：
+                = @forage_source.url
+              td
+                a
+                  | 链接地址：
+                = raw(@forage_source.note)
