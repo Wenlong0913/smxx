@@ -42,14 +42,12 @@ class Article < ApplicationRecord
 
   # 审核举报内容之后显示aritcle
   def restore_display!
-    self.is_complainted = false
-    self.save!
+    self.update_attributes(is_complainted: false)
   end
 
   # 审核举报内容之后屏蔽article
   def approved_complaint!
-    self.is_complainted = true
-    self.save!
+    self.update_attributes(is_complainted: true)
   end
 
 end
