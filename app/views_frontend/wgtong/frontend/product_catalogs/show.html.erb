@@ -99,7 +99,7 @@
   										</div>
   										<div class="entry-meta">
   											<ul>
-  												<li>By <a href="javascript: void(0)"><%= @site.user.nickname %></a></li>
+  												<li>By <a href="javascript: void(0)"><%= @current_user.nickname %></a></li>
   												<li>255 分享 /<a href="javascript: void(0)"> 9 Hour ago</a></li>
   											</ul>
   										</div><!-- /.entry-meta -->
@@ -131,7 +131,7 @@
 						<div class="section-title title-before">
 							<h1><a href="#">站长推荐</a></h1>
 						</div>
-            <% @products.where("features ->> 'is_manager_recommend' = ?", "1").order("updated_at desc").limit(1).each_with_index do |product, index| %>
+            <% Product.recommend(1, catalog_id: @product_catalog.id).each_with_index do |product, index| %>
               <div class="tr-post">
   							<div class="entry-header">
   								<div class="entry-thumbnail">
@@ -148,7 +148,7 @@
   								</div>
   								<div class="entry-meta">
   									<ul>
-  										<li>By <a href="javascript: void(0)"><%= @site.user.nickname %></a></li>
+  										<li>By <a href="javascript: void(0)"><%= @current_user.nickname %></a></li>
   										<li>123 分享 /<a href="javascript: void(0)"> 2 Hour ago</a></li>
   										<li>
   											<ul>
@@ -184,7 +184,7 @@
 
 
 						<div class="medium-post-content row">
-              <% @products.where("features ->> 'is_manager_recommend' = ?", "1").order("updated_at desc").limit(3).each_with_index do |product, index| %>
+              <% Product.recommend(3, catalog_id: @product_catalog.id).each_with_index do |product, index| %>
                 <% next if index <= 0 %>
                 <% if index == 1 %>
     							<div class="col-md-6 left-post">
@@ -204,7 +204,7 @@
     										</div>
     										<div class="entry-meta">
     											<ul>
-    												<li>By <a href="javascript:void(0)"><%= @site.user.nickname %></a></li>
+    												<li>By <a href="javascript:void(0)"><%= @current_user.nickname %></a></li>
     												<li>10 分享 /<a href="javascript:void(0)"> 3 Hour ago</a></li>
     											</ul>
     										</div>
@@ -247,7 +247,7 @@
                         </div>
                         <div class="entry-meta">
                           <ul>
-                            <li>By <a href="javascript:void(0)"><%= @site.user.nickname %></a></li>
+                            <li>By <a href="javascript:void(0)"><%= @current_user.nickname %></a></li>
                             <li>10 分享 /<a href="javascript:void(0)"> 3 Hour ago</a></li>
                           </ul>
                         </div>
@@ -302,12 +302,12 @@
   								</div>
   								<div class="entry-meta">
   									<ul>
-  										<li>发布 <a href="#"><% @site.user.nickname %></a></li>
+  										<li>发布 <a href="#"><%= @current_user.nickname %></a></li>
   										<li>205 分享 /<a href="javascript: void(0)"> 4 Hour ago</a></li>
   									</ul>
   								</div><!-- /.entry-meta -->
   								<h2 class="entry-title">
-  									<a href="javascript: void(0)"><%= product.name %></a>
+  									<a href="<%= frontend_product_path(product) %>"><%= product.name %></a>
   								</h2>
   								<p><%= product.description %></p>
   								<div class="read-more">
@@ -340,7 +340,7 @@
   								<div class="post-content media-body">
   									<div class="entry-meta">
   										<ul>
-  											<li>By <a href="javascript: void(0)"><%= @site.user.nickname %></a></li>
+  											<li>By <a href="javascript: void(0)"><%= @current_user.nickname %></a></li>
   										</ul>
   									</div>
   									<h2 class="entry-title">
@@ -384,7 +384,7 @@
   									<div class="post-content">
   										<div class="entry-meta">
   											<ul>
-  												<li><%= @site.user.nickname  %></li>
+  												<li><%= @current_user.nickname  %></li>
   												<li><%= page.time["4"] %>:<%= page.time["5"] %></li>
   												<li><%= page.date %></li>
   											</ul>
@@ -411,7 +411,7 @@
   									<div class="post-content">
   										<div class="entry-meta">
   											<ul>
-  												<li><%= @site.user.nickname  %></li>
+  												<li><%= @current_user.nickname  %></li>
   												<li><%= page.time["4"] %>:<%= page.time["5"] %></li>
   												<li><%= page.date %></li>
   											</ul>
@@ -432,170 +432,7 @@
 
       <!-- sidebar -->
 			<div class="col-sm-3 tr-sidebar tr-sticky">
-				<div class="theiaStickySidebar">
-					<div class="tr-section tr-ad ad-before">
-						<a href="#"><img class="img-responsive" src="/templetes/newshub/images/advertise/2.jpg" alt="Image"></a>
-					</div>
-
-					<div class="tr-section tr-widget">
-						<div class="widget-title title-before">
-							<span>热门项目</span>
-						</div>
-						<ul class="medium-post-list">
-							<li class="tr-post">
-								<div class="entry-header">
-									<div class="entry-thumbnail">
-										<a href="javascript: void(0)"><img class="img-responsive" src="/templetes/newshub/images/post/9.jpg" alt="Image"></a>
-									</div>
-								</div>
-								<div class="post-content">
-									<div class="catagory">
-										<a href="#">Entertainment</a>
-									</div>
-									<h2 class="entry-title">
-										<a href="javascript: void(0)">Howard Stern: 'I told Trump' I'm voting for Clinton</a>
-									</h2>
-								</div><!-- /.post-content -->
-							</li>
-							<li class="tr-post">
-								<div class="entry-header">
-									<div class="entry-thumbnail">
-										<a href="javascript: void(0)"><img class="img-responsive" src="/templetes/newshub/images/post/10.jpg" alt="Image"></a>
-									</div>
-								</div>
-								<div class="post-content">
-									<div class="catagory">
-										<a href="#">Business</a>
-									</div>
-									<h2 class="entry-title">
-										<a href="javascript: void(0)">Our closest relatives aren't fans of daylight saving time</a>
-									</h2>
-								</div><!-- /.post-content -->
-							</li>
-							<li class="tr-post">
-								<div class="entry-header">
-									<div class="entry-thumbnail">
-										<a href="javascript: void(0)"><img class="img-responsive" src="/templetes/newshub/images/post/11.jpg" alt="Image"></a>
-									</div>
-								</div>
-								<div class="post-content">
-									<div class="catagory">
-										<a href="#">Technology</a>
-									</div>
-									<h2 class="entry-title">
-										<a href="javascript: void(0)">And the most streamed Beatles song on Spotify is...</a>
-									</h2>
-								</div><!-- /.post-content -->
-							</li>
-							<li class="tr-post">
-								<div class="entry-header">
-									<div class="entry-thumbnail">
-										<a href="javascript: void(0)"><img class="img-responsive" src="/templetes/newshub/images/post/12.jpg" alt="Image"></a>
-									</div>
-								</div>
-								<div class="post-content">
-									<div class="catagory">
-										<a href="#">Sports</a>
-									</div>
-									<h2 class="entry-title">
-										<a href="javascript: void(0)">Our closest relatives aren't fans of daylight saving time</a>
-									</h2>
-								</div><!-- /.post-content -->
-							</li>
-						</ul>
-					</div>
-
-					<div class="tr-weather tr-widget">
-						<div class="weather-top weather-bg-color">
-							<div class="row">
-								<div class="col-xs-6">
-									<div class="weather-image">
-										<img class="img-responsive" src="/templetes/newshub/images/others/weather1.png" alt="Image">
-									</div>
-								</div>
-								<div class="col-xs-6">
-									<span class="weather-temp">21 <sup>°C</sup></span>
-									<span class="weather-type">Mostly Cloudy</span>
-								</div>
-							</div>
-							<ul>
-								<li>London, UK</li>
-								<li><span><img class="img-responsive" src="/templetes/newshub/images/others/weather2.png" alt="Image"></span>13%</li>
-								<li><span><img class="img-responsive" src="/templetes/newshub/images/others/weather3.png" alt="Image"></span>6.44 MPH</li>
-							</ul>
-						</div><!-- /.weather-top -->
-
-						<div class="weather-bottom">
-							<ul>
-								<li>
-									<div class="weather-icon">
-										<img class="img-responsive" src="/templetes/newshub/images/others/weather6.png" alt="Image">
-									</div>
-									<div class="weather-info">
-										<span>23°</span>
-										<span class="date">Sun, 3 July</span>
-									</div>
-								</li>
-								<li>
-									<div class="weather-icon">
-										<img class="img-responsive" src="/templetes/newshub/images/others/weather5.png" alt="Image">
-									</div>
-									<div class="weather-info">
-										<span>26°</span>
-										<span class="date">Mon, 4 July</span>
-									</div>
-								</li>
-							</ul>
-						</div><!-- /.weather-bottom -->
-					</div><!-- /.weather-widget -->
-
-					<div class="tr-section tr-widget tr-ad ad-before">
-						<a href="#"><img class="img-responsive" src="/templetes/newshub/images/advertise/4.jpg" alt="Image"></a>
-					</div><!-- /.tr-post -->
-
-					<div class="tr-section tr-widget">
-						<div class="tr-qq text-center">
-							<div id="qq-carousel" class="carousel slide" data-ride="carousel">
-								<ol class="carousel-indicators">
-									<li data-target="#qq-carousel" data-slide-to="0" class="active"></li>
-									<li data-target="#qq-carousel" data-slide-to="1"></li>
-									<li data-target="#qq-carousel" data-slide-to="2"></li>
-								</ol>
-								<div class="carousel-inner" role="listbox">
-									<div class="item active">
-										<div class="qq">
-											<div class="qq-icon">
-												<i class="fa fa-qq" aria-hidden="true"></i>
-											</div>
-											<h2><a href="#">#newshub</a></h2>
-											<p>Confusing <a href="#">#design</a> terms: what's the difference between quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <span><a href="#">#UX, #UI and #IA?</a> <a href="#">http://buff.ly/1KdjpEi</a></span></p>
-										</div>
-									</div><!-- /.item -->
-
-									<div class="item">
-										<div class="qq">
-											<div class="qq-icon">
-												<i class="fa fa-qq" aria-hidden="true"></i>
-											</div>
-											<h2><a href="#">#newshub</a></h2>
-											<p>Confusing <a href="#">#design</a> terms: what's the difference between quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <span><a href="#">#UX, #UI and #IA?</a> <a href="#">http://buff.ly/1KdjpEi</a></span></p>
-										</div>
-									</div><!-- /.item -->
-
-									<div class="item">
-										<div class="qq">
-											<div class="qq-icon">
-												<i class="fa fa-qq" aria-hidden="true"></i>
-											</div>
-											<h2><a href="#">#newshub</a></h2>
-											<p>Confusing <a href="#">#design</a> terms: what's the difference between quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <span><a href="#">#UX, #UI and #IA?</a> <a href="#">http://buff.ly/1KdjpEi</a></span></p>
-										</div>
-									</div><!-- /.item -->
-								</div><!-- /.carousel-inner -->
-							</div><!-- /#qq-carousel -->
-						</div><!-- /.tr-qq -->
-					</div><!-- /.tr-section -->
-				</div><!-- /.theiaStickySidebar -->
+        <%= render file: @cms_site.template_dir + '_sidebar.html.erb'  %>
 			</div>
 
 		</div>
