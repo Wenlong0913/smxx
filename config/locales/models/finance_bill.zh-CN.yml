@@ -7,6 +7,8 @@ zh-CN:
       finance_bill:
         amount: 金额
         status: 状态
+        code: 单号
+        site_id: 商家
         statuses:
           open: 申请中
           checked: 已审核 

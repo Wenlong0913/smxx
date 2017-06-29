@@ -12,7 +12,7 @@
               = @site.orders.completed.sum(:price).to_f/100
               |元
           .stats-link
-            a[href=""] 查看详细
+            a[href=""] &nbsp;
       .col-md-3.col-sm-6
         .widget.widget-stats.bg-blue
           .stats-icon
@@ -23,7 +23,7 @@
               = @site.orders.completed.where("finance_bill_id is not null").sum(:price).to_f/100
               | 元
           .stats-link
-            a[href=""] 查看详细
+            a[href=""] &nbsp;
       .col-md-3.col-sm-6
         .widget.widget-stats.bg-purple
           .stats-icon
@@ -35,17 +35,27 @@
               | 元
               a.pull-right.btn.btn-warning[href="#{new_agent_finance_bill_path}"] 我要提现
           .stats-link
-            a[href=""] 去提现
-    h3 账户充值管理
+            a[href=""] &nbsp;
+    h3 商家套餐管理
     .row
       .col-md-3.col-sm-6
         .widget.widget-stats.bg-green
           .stats-icon
-            i.fa.fa-money
+            i.fa.fa-list
           .stats-info
-            h3 充值余额
-            p 
-              | 0元
-              button.pull-right.btn.btn-warning 去充值
+            - if @site.agent_plan_id
+              h3 = @site.agent_plan.name
+              - @site.agent_plan.features.each do |pf|
+                span 
+                  i.fa.fa-check.green &nbsp;&nbsp;
+                  = pf
+                br
+              h5 
+                |购买时间: &nbsp;
+                = @site.paid_at.strftime("%Y-%m-%d")
+            - else
+              h3 您还没有购买套餐
+              p 
+                a.pull-right.btn.btn-warning[href="#{agent_agent_plans_path}"] 购买套餐
           .stats-link
-            a[href=""] 查看详细    
+            a[href=""] &nbsp;

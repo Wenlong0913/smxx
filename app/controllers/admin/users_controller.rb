@@ -10,7 +10,9 @@ class Admin::UsersController < Admin::BaseController
     @admin_users = User.all
     @admin_users = @admin_users.joins(:roles).where("roles.id = ?", params[:role_id])if params[:role_id]
     @admin_users = @admin_users.where("nickname like ?", "%#{params['q']}%") if params["q"].present?
-    @admin_users = @admin_users.where("nickname like ?", "%#{params[:search][:keywords]}%") if params[:search] && params[:search][:keywords]
+    if params[:search] && params[:search][:keywords]
+      @admin_users = @admin_users.joins(:mobile).where("nickname like :key OR email like :key OR user_mobiles.phone_number like :key", {key: "%#{params[:search][:keywords]}%"}) 
+    end
     @admin_users = @admin_users.includes(:roles, :mobile).page params[:page]
     respond_to do |format|
       format.html
