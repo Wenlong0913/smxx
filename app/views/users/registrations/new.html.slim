@@ -86,6 +86,7 @@
           span[class="content-icon glyphicon glyphicon glyphicon-grain grass_style"]
           span[class="content-icon glyphicon glyphicon-tree-deciduous tree_style"]
           span[class="content-icon glyphicon glyphicon glyphicon-grain grass_style"]
+
       .col-md-6[class=" col-xs-12 center_right"]
         .row[style="margin-top: 15px;"]
           .col-md-7.col-md-offset-5
@@ -119,9 +120,9 @@
                   = f.submit '立即注册', class: 'btn btn-lg right_btn right_btn_bg', id: 'click_login', data:{href: root_path}
 
             div[id="bind-wechat" style="display: none"]
-              h3[style="color: #999;"] 绑定微信
-              img id="qrcode-auth-image" width="180" style="margin-left: 50%; transform: translateX(-50%)"
-              p align="center" id="qrcode-auth-message"
+              h3.text-center[style="color: #999;"] 绑定微信
+              img[id="qrcode-auth-image" width="180" style="margin-left: 50%; transform: translateX(-50%); background: #eee; padding: 10px;"]
+              p[align="center" id="qrcode-auth-message" style="color: #eee;margin-top:15px;"]
 
             div[id="bind-email" style="display: none"]
               h3[style="color: #999;"] 邮箱注册
