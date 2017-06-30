@@ -1,5 +1,11 @@
 - content_for(:head) do
+  script[src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js" charset="utf-8" type="text/javascript"]
+  script[src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js" charset="utf-8" type="text/javascript"]
+
   css:
+    .error{
+      color: #80E3D1;
+    }
     .cover_box_bg {
       padding: 15px;
       background-color: #63D5C4;
@@ -102,13 +108,13 @@
           .col-md-8.col-md-offset-2
             div[id="bind-mobile" style="display: block"]
               h3[style="color: #999;"] 注册
-              = simple_form_for(@user, url: sign_up_path, remote: true, method: :post, html: {class: "margin-bottom-0 register"}) do |f|
+              = simple_form_for(@user, url: sign_up_path, remote: true, method: :post, html: {class: "margin-bottom-0 register", id: 'phoneForm'}) do |f|
                 - if flash[:alert]
                   .alert.alert-danger
                     = flash[:alert]
                 .form-group[style="margin-top: 30px;"]
                   label[style="color: #eee;"] 手机号
-                  input.form-control.input-md[placeholder="手机号"name="user[mobile]"type="text"]
+                  input.form-control.input-md[placeholder="手机号"name="user[mobile]"type="username"required]
                   input.[type="hidden" name="user[wechat_code]" id="wechat-response-code"]
                 .input-group[style="margin-top: 30px;"]
                   label[style="color: #eee;"] 验证码
@@ -126,22 +132,22 @@
 
             div[id="bind-email" style="display: none"]
               h3[style="color: #999;"] 邮箱注册
-              = simple_form_for(@user, url: sign_up_path, remote: true, method: :post, html: {class: "margin-bottom-0 register"}) do |f|
+              = simple_form_for(@user, url: sign_up_path, remote: true, method: :post, html: {class: "margin-bottom-0 register", id: "emailForm"}) do |f|
                 - if flash[:alert]
                   .alert.alert-danger
                     = flash[:alert]
 
                 .form-group[style="margin-top: 30px;"]
                   label[style="color: #eee;"] 邮箱
-                  input.form-control.input-md[placeholder="邮箱"name="user[email]"type="text"]
+                  input.form-control.input-md[placeholder="邮箱"name="user[email]"type="text"required]
 
                 .form-group[style="margin-top: 30px;"]
                   label[style="color: #eee;"] 密码
-                  input.form-control.input-md[name="user[password]"type="password"placeholder="密码"]
+                  input.form-control.input-md[name="user[password]"type="password"placeholder="密码"required]
 
                 .form-group[style="margin-top: 30px;"]
                   label[style="color: #eee;"] 确认密码
-                  input.form-control.input-md[name="user[password_confirmation]"type="password"placeholder="确认密码"]
+                  input.form-control.input-md[name="user[password_confirmation]"type="password"placeholder="确认密码"required]
 
                 .text-center.text-danger.title_error
 
@@ -151,8 +157,15 @@
 
 
 
+
 javascript:
   $(document).ready(function () {
+
+    $("#phoneForm").validate();
+
+    $("#emailForm").validate();
+
+
     $(".right_btn").click(function() {
       $(this).addClass('right_btn_bg').siblings().removeClass('right_btn_bg')
     })
