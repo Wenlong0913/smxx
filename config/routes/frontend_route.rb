@@ -63,7 +63,9 @@ module FrontendRoute
         resources :site_catalogs do
           resources :sites
         end
-        resources :products
+        resources :products do
+          commentable
+        end
         resources :product_catalogs do
           resources :products
         end

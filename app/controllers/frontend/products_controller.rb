@@ -1,4 +1,5 @@
 class Frontend::ProductsController < Frontend::BaseController
+  acts_as_commentable resource: Product
   def index
     # 所有产品列表
 
