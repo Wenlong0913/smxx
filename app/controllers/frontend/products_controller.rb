@@ -8,6 +8,7 @@ class Frontend::ProductsController < Frontend::BaseController
   def show
     # 当前产品详情
     @product = Product.find(params[:id])
+    @comment_path = comments_frontend_product_path
     # @similar_products = Product.where(tag_list: @product.tag_list.to_s).limit(3)
   end
 end
