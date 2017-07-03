@@ -13,6 +13,8 @@
     <meta name="author" content="tanmer.com" />
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <%= javascript_include_tag *webpack_asset_paths('vendor') %>
+    <%= javascript_include_tag *webpack_asset_paths('application') %>
     <title><%= @meta_title.present? ? @meta_title : (content_for?(:title) ? yield(:title) : @cms_site.name) %></title>
     <meta name="keywords" content="<%= @meta_keywords.present? ? @meta_keywords : yield(:meta_keywords) %>">
     <meta name="description" content="<%= @meta_description.present? ? @meta_description : yield(:meta_description) %>">
