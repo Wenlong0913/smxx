@@ -29,6 +29,11 @@ h1.page-header
               td = order.refund_description
               td
                 span.refund-link
-                  => link_to '退款', refund_admin_order_path(order), method: :post, remote: true, class: 'btn btn-xs btn-success'
+                  - if order.apply_refund?
+                    => link_to '退款', refund_admin_order_path(order), method: :post, remote: true, class: 'btn btn-xs btn-success'
+                  - elsif order.refunding?
+                    span.btn.btn-xs.btn-warning 退款中
+                  - elsif order.refunded?
+                    span.btn.btn-xs.btn-primary 退款成功
 .pull-right
   = paginate @orders

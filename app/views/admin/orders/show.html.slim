@@ -28,15 +28,20 @@ h1.page-header
                 td.field
                   | #{Order.human_attribute_name(:status)}
                 td
-                  p.refund-button
-                    - if @order.paid?
-                      - if @order.refund_status.blank?
-                        button.btn.btn-primary.btn-xs[data-toggle="modal" data-target="#refundModal"]
-                          | 申请退款
-                      - else
-                        | 已经提交退款申请
-                    - else
+                  p
+                    span.btn.btn-xs.btn-success
                       = enum_l(@order, :status)
+                    | &nbsp;
+                    - if @order.paid?
+                      span.refund-button
+                        - if @order.refund_status.blank?
+                          button.btn.btn-primary.btn-xs[data-toggle="modal" data-target="#refundModal"] 申请退款
+                        - elsif @order.apply_refund?
+                          span.btn.btn-xs.btn-warning 已经提交退款申请
+                        - elsif @order.refunding?
+                          span.btn.btn-xs.btn-warning 退款中
+                        - elsif @order.refunded?
+                          span.btn.btn-xs.btn-primary 退款成功
               - if Settings.project.grand?
                 tr
                   td.field
