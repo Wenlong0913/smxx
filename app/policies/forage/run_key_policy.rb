@@ -7,7 +7,7 @@ class Forage::RunKeyPolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.has_role? :admin
-      [:forage_source_id, :date, :is_processed, :processed_at, :total_count]
+      [:source_id, :date, :is_processed, :processed_at, :total_count]
     else
       []
     end

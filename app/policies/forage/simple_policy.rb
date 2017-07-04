@@ -7,7 +7,7 @@ class Forage::SimplePolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.has_role? :admin
-      [:forage_run_key_id, :catalog, :title, :url, :is_processed, :processed_at, :features]
+      [:run_key_id, :catalog, :title, :url, :is_processed, :processed_at, :features]
     else
       []
     end

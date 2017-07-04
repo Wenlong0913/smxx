@@ -64,46 +64,22 @@ h1.page-header
       table.table.table-striped.table-bordered
         thead
           tr
-            th = Forage::Detail.human_attribute_name(:forage_simple)
-            th = Forage::Detail.human_attribute_name(:)
-            th = Forage::Detail.human_attribute_name(:)
-            th = Forage::Detail.human_attribute_name(:)
-            th = Forage::Detail.human_attribute_name(:)
-            th = Forage::Detail.human_attribute_name(:)
-            th = Forage::Detail.human_attribute_name(:)
-            th = Forage::Detail.human_attribute_name(:)
-            th = Forage::Detail.human_attribute_name(:)
-            th = Forage::Detail.human_attribute_name(:)
-            th = Forage::Detail.human_attribute_name(:)
-            th = Forage::Detail.human_attribute_name(:)
-            th = Forage::Detail.human_attribute_name(:)
-            th = Forage::Detail.human_attribute_name(:)
-            th = Forage::Detail.human_attribute_name(:)
-            th = Forage::Detail.human_attribute_name(:)
-            th = Forage::Detail.human_attribute_name(:)
-            th = Forage::Detail.human_attribute_name(:)
+            th = Forage::Detail.human_attribute_name(:simple)
+            th = Forage::Detail.human_attribute_name(:title)
+            th = Forage::Detail.human_attribute_name(:date)
+            th = Forage::Detail.human_attribute_name(:time)
+            th = Forage::Detail.human_attribute_name(:from)
             th
         tbody
           - @forage_details.each do |forage_detail|
             tr
-              td = forage_detail.forage_simple
-              td = forage_detail.
-              td = forage_detail.
-              td = forage_detail.
-              td = forage_detail.
-              td = forage_detail.
-              td = forage_detail.
-              td = forage_detail.
-              td = forage_detail.
-              td = forage_detail.
-              td = forage_detail.
-              td = forage_detail.
-              td = forage_detail.
-              td = forage_detail.
-              td = forage_detail.
-              td = forage_detail.
-              td = forage_detail.
-              td = forage_detail.
+              td
+                h4 style="margin:0px;"
+                  => link_to "#{forage_detail.simple.id}. #{forage_detail.simple.title}", admin_forage_detail_path(forage_detail)
+              td = forage_detail.title
+              td = forage_detail.date
+              td = forage_detail.time
+              td = forage_detail.from
               td
                 => link_to '查看', admin_forage_detail_path(forage_detail), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_forage_detail_path(forage_detail), class: 'btn btn-xs btn-default'
