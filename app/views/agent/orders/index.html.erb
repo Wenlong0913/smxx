@@ -47,7 +47,11 @@
                 <li data-url="<%= (Settings.project.sxhop? || Settings.project.imolin?) ? agent_order_path(order) : '#'%>" class="link-li">
                   <!-- begin media -->
                   <div class="media">
-                    <img src="" alt="">
+                    <% if Settings.project.imolin? || Settings.project.sxhop? %>
+                      <%= image_tag order.products.first.image_items.first.try{ image_url } || 'no-picture.png' %>
+                    <% else %>
+                      <img src="" alt="">
+                    <% end %>
                   </div>
                   <!-- end media -->
                   <!-- begin info-container -->
