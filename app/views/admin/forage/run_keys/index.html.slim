@@ -70,7 +70,9 @@ h1.page-header
         tbody
           - @forage_run_keys.each do |forage_run_key|
             tr
-              td = forage_run_key.source
+              td
+                h4 style="margin:0px;"
+                  => link_to "#{forage_run_key.source.id}. #{forage_run_key.source.name}", admin_forage_run_key_path(forage_run_key)
               td = forage_run_key.date
               td
                 => link_to '查看', admin_forage_run_key_path(forage_run_key), class: 'btn btn-xs btn-default'

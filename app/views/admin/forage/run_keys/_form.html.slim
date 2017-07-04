@@ -14,6 +14,6 @@
             - @forage_run_key.errors.full_messages.each do |message|
               li = message
 
-      = f.association :source, collection: Forage::Source.all
+      = f.association :source
       = f.input :date
       = f.submit class: 'btn btn-success btn-block'
