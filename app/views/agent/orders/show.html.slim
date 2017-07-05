@@ -29,7 +29,7 @@
                   - product = order_product.product
                   li
                     .media
-                      = image_tag(product.image_items.first.try(:image_url) || 'no-picture.png')
+                      = image_tag(product.first_image)
                     .info-container
                       .info
                         h4.title
@@ -211,7 +211,7 @@
             - totalProductPrice += product_item.price
             .row.m-b-15
               .col-xs-6
-                = image_tag product_item.product.image_items.first.try{ image_url } || 'no-picture.png', style: 'width: 60px;height: 60px', class: 'img-thumbnail m-r-10'
+                = image_tag product_item.product.first_image, style: 'width: 60px;height: 60px', class: 'img-thumbnail m-r-10'
                 span
                   = product_item.product.name
               .col-xs-3.text-center

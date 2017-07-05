@@ -48,9 +48,9 @@
                   <!-- begin media -->
                   <div class="media">
                     <% if Settings.project.imolin? || Settings.project.sxhop? %>
-                      <%= image_tag order.products.first.image_items.first.try{ image_url } || 'no-picture.png' %>
+                      <%= image_tag order.products.first.first_image %>
                     <% else %>
-                      <img src="" alt="">
+                      <%= image_tag 'no-picture.png' %>
                     <% end %>
                   </div>
                   <!-- end media -->
