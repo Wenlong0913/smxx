@@ -58,7 +58,7 @@ class Admin::ComplaintsController < Admin::BaseController
   # PATCH/PUT /admin/complaints/1
   def update
     authorize @complaint
-    if params[:complaint] && params[:complaint][:status]
+    if params[:complaint] && params[:complaint][:status] && @complaint.complaint?
       case params[:complaint][:status]
       when 'rejected'
         @complaint.source.restore_display!
