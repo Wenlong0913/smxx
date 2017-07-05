@@ -1,0 +1,15 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      users_chat_room: Users chat room
+    attributes:
+      users_chat_room:
+        user: User
+        chat_room: Chat room
+        last_message_id: Last message
+    errors:
+      models:
+        users_chat_room: 
+  helpers:
+    users_chat_room: 
