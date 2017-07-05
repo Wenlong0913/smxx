@@ -12,7 +12,7 @@ $(document).ready ()->
     refund.each ->
       $(this).on 'ajax:success', (event, request) ->
         if request.status == 'ok'
-          bodyShow.find('.refund-button').text("已经提交退款申请")
+          bodyShow.find('.refund-button').replaceWith("<span class='btn btn-xs btn-warning'>已经提交退款申请</span>")
           refund.modal('hide')
           $.gritter.add({title: '提示', text: request.message})
         else

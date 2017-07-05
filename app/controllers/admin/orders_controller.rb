@@ -115,7 +115,7 @@ class Admin::OrdersController < Admin::BaseController
 
   def refunds
     authorize Order
-    @orders = Order.where("refund_status is not null").page(params[:page])
+    @orders = Order.where("refund_status is not null").order(refund_status: :asc).page(params[:page])
   end
 
   def refund
