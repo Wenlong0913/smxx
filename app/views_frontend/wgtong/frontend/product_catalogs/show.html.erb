@@ -33,15 +33,15 @@
     								</div>
     								<div class="entry-meta">
     									<ul>
-    										<li>By <a href="#"><%= product.site.title %></a></li>
-    										<li>445 分享 /<a href="#"> 1 Hour ago</a></li>
+    										<li>By <a href="#"><%= @product_catalog.name %></a></li>
+    										<li>445 分享 /<a href="#"> <%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
     										<li>
     											<ul>
     												<li>分享</li>
-    												<li><a href="javascript: void(0)"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-    												<li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-    												<li><a href="javascript: void(0)"><i class="fa fa-wechat" aria-hidden="true"></i></a></li>
-    												<li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+                            <li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
+    									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
+    									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+    									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
     											</ul>
     										</li>
     									</ul>
@@ -56,10 +56,10 @@
     									</div>
     									<div class="feed pull-right">
     										<ul>
-    											<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-    											<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
-    											<li><a href="#"><i class="fa fa-wechat" aria-hidden="true"></i></a></li>
-    											<li><a href="#"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
+                          <li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
+  									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
+  									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+  									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
     										</ul>
     									</div>
     								</div>
@@ -100,7 +100,7 @@
   										<div class="entry-meta">
   											<ul>
   												<li>By <a href="javascript: void(0)"><%= @product_catalog.name %></a></li>
-  												<li>255 分享 /<a href="javascript: void(0)"> 9 Hour ago</a></li>
+  												<li>255 分享 /<a href="javascript: void(0)"><%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
   											</ul>
   										</div><!-- /.entry-meta -->
   										<h2 class="entry-title">
@@ -113,10 +113,10 @@
   											</div>
   											<div class="feed pull-right">
   												<ul>
-  													<li><a href="javascript: void(0)"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-  													<li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-  													<li><a href="javascript: void(0)"><i class="fa fa-wechat" aria-hidden="true"></i></a></li>
-  													<li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+                            <li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
+    									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
+    									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+    									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
   												</ul>
   											</div>
   										</div>
@@ -149,14 +149,14 @@
   								<div class="entry-meta">
   									<ul>
   										<li>By <a href="javascript: void(0)"><%= @product_catalog.name %></a></li>
-  										<li>123 分享 /<a href="javascript: void(0)"> 2 Hour ago</a></li>
+  										<li>123 分享 /<a href="javascript: void(0)"> <%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
   										<li>
   											<ul>
   												<li>分享</li>
-  												<li><a href="javascript: void(0)"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-  												<li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-  												<li><a href="javascript: void(0)"><i class="fa fa-wechat" aria-hidden="true"></i></a></li>
-  												<li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+                          <li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
+  									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
+  									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+  									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
   											</ul>
   										</li>
   									</ul>
@@ -171,10 +171,10 @@
   									</div>
   									<div class="feed pull-right">
   										<ul>
-  											<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-  											<li><a href="#"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-  											<li><a href="#"><i class="fa fa-wechat" aria-hidden="true"></i></a></li>
-  											<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+                        <li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
+									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
+									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
   										</ul>
   									</div>
   								</div>
@@ -205,7 +205,7 @@
     										<div class="entry-meta">
     											<ul>
     												<li>By <a href="javascript:void(0)"><%= @product_catalog.name %></a></li>
-    												<li>10 分享 /<a href="javascript:void(0)"> 3 Hour ago</a></li>
+    												<li>10 分享 /<a href="javascript:void(0)"> <%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
     											</ul>
     										</div>
     										<h2 class="entry-title">
@@ -218,10 +218,10 @@
     											</div>
     											<div class="feed pull-right">
     												<ul>
-    													<li><a href="javascript：void(0)"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-    													<li><a href="javascript：void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-    													<li><a href="javascript：void(0)"><i class="fa fa-wechat" aria-hidden="true"></i></a></li>
-    													<li><a href="javascript：void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+                              <li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
+      									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
+      									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+      									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
     												</ul>
     											</div>
     										</div>
@@ -248,7 +248,7 @@
                         <div class="entry-meta">
                           <ul>
                             <li>By <a href="javascript:void(0)"><%= @product_catalog.name %></a></li>
-                            <li>10 分享 /<a href="javascript:void(0)"> 3 Hour ago</a></li>
+                            <li>10 分享 /<a href="javascript:void(0)"> <%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
                           </ul>
                         </div>
                         <h2 class="entry-title">
@@ -261,10 +261,10 @@
                           </div>
                           <div class="feed pull-right">
                             <ul>
-                              <li><a href="javascript：void(0)"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                              <li><a href="javascript：void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-                              <li><a href="javascript：void(0)"><i class="fa fa-wechat" aria-hidden="true"></i></a></li>
-                              <li><a href="javascript：void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+                              <li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
+      									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
+      									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+      									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
                             </ul>
                           </div>
                         </div>
@@ -303,7 +303,7 @@
   								<div class="entry-meta">
   									<ul>
   										<li>By <a href="#"><%= @product_catalog.name %></a></li>
-  										<li>205 分享 /<a href="javascript: void(0)"> 4 Hour ago</a></li>
+  										<li>205 分享 /<a href="javascript: void(0)"> <%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
   									</ul>
   								</div><!-- /.entry-meta -->
   								<h2 class="entry-title">
@@ -316,10 +316,10 @@
   									</div>
   									<div class="feed pull-right">
   										<ul>
-  											<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-  											<li><a href="#"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-  											<li><a href="#"><i class="fa fa-wechat" aria-hidden="true"></i></a></li>
-  											<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+                        <li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
+									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
+									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
+									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
   										</ul>
   									</div>
   								</div>
