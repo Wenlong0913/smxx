@@ -70,13 +70,13 @@ module AppAPI::V1
           error! "用户还没有选择小区" unless community
           # 获取发布的店铺
           sites = sites.published
-          # 所有店铺都要获取distance（小区距离）信息
-          sites = sites.selecting_distance_from(community.address_lat, community.address_lng).order_by_distance(community.address_lat, community.address_lng)
 
           if params[:site_catalog_id]
             sites = sites.where("catalog_id = ?", params[:site_catalog_id])
             sites = sites.near_by(lat: community.address_lat, lng: community.address_lng, distance: 5000)
-            # sites = sites.selecting_distance_from(community.address_lat, community.address_lng).order_by_distance(community.address_lat, community.address_lng)
+          else
+            # 所有店铺都要获取distance（小区距离）信息
+            sites = sites.selecting_distance_from(community.address_lat, community.address_lng).order_by_distance(community.address_lat, community.address_lng)
           end
         end
         sites = paginate_collection(sort_collection(sites), params)
