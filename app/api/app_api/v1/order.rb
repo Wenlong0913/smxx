@@ -130,7 +130,7 @@ module AppAPI::V1
         requires :content, type: String, desc: '评论或者回复内容'
         optional :parent_id, type: Integer, desc: '如果填写，parent_id就是回复的某条评论的ID'
       end
-      post ':id/comment' do
+      post ':id/comments' do
         authenticate!
         order = current_user.orders.find_by(id: params[:id])
         error! '该订单不存在' unless order
@@ -151,9 +151,9 @@ module AppAPI::V1
       desc '申请订单退款'
       params do
         requires :id, type: Integer, desc: '订单ID'
-        requires :refund_description, type: String, desc: '退款描述'
+        requires :description, type: String, desc: '退款描述'
       end
-      put ':id/refund' do
+      post ':id/refund' do
         authenticate!
         order = current_user.orders.find_by(id: params[:id])
         error! '该订单不存在' unless order
@@ -161,7 +161,7 @@ module AppAPI::V1
         error! '已经在退款流程中' unless order.refund_status.blank?
 
         order.refund_status = 'apply_refund'
-        order.refund_description = params[:refund_description]
+        order.refund_description = params[:description]
         order.apply_refund_by = current_user.id
 
         message = if order.save
