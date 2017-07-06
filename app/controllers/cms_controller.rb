@@ -3,7 +3,7 @@ class CmsController < ApplicationController
   helper Cms::ApplicationHelper
   include Cms::ApplicationHelper
   before_action :check_subdomain!
-  acts_as_commentable resource: Cms::Page
+
   #{"controller"=>"welcome", "action"=>"index", "channel"=>"fw", "id"=>"2", "tag" => "tagkey"}
   #params
   # :channel => channel.short_title
@@ -31,11 +31,11 @@ class CmsController < ApplicationController
     not_found! if params[:id] && @page.nil?
 
     if params[:search]
-      @pages = Cms::Page.search(@cms_site.id, params[:search]).order("updated_at DESC").page(params[:detail_page])
+      @pages = Cms::Page.search(@cms_site.id, params[:search]).order("updated_at DESC").page(params[:page])
     elsif params[:tag]
-      @pages = Cms::Page.tagged_with(params[:tag]).order("updated_at DESC").page(params[:detail_page])
+      @pages = Cms::Page.tagged_with(params[:tag]).order("updated_at DESC").page(params[:page])
     else
-      @pages = Cms::Page.joins(:channel).where(["cms_channels.site_id = ? AND (cms_channels.id = ? OR cms_channels.parent_id = ?)", @cms_site.id, @channel.id, @channel.id]).order("cms_pages.updated_at DESC").page(params[:detail_page]).per(6)
+      @pages = Cms::Page.joins(:channel).where(["cms_channels.site_id = ? AND (cms_channels.id = ? OR cms_channels.parent_id = ?)", @cms_site.id, @channel.id, @channel.id]).order("cms_pages.updated_at DESC").page(params[:page]).per(6)
     end
     #tag cloud
     #@tags = Cms::Page.tag_counts_on(:tags)
@@ -57,13 +57,6 @@ class CmsController < ApplicationController
     impressionist(@channel, "channel_#{@channel.id}")
     impressionist(@page, "page_#{@page.id}") if @page # 2nd argument is optional
 
-    # comments
-    @comment_path = if @page
-      cms_frontend_path(channel: @channel.id, detail_page: @page.id)
-    else
-      cms_frontend_path(channel: @channel.id)
-    end
-
     #respond_with @page || @channel
     respond_to do |format|
       format.html
@@ -73,7 +66,7 @@ class CmsController < ApplicationController
   end
 
   def search
-    @pages = Cms::Page.search(@cms_site.id, params[:search]).order("updated_at DESC").page(params[:detail_page])
+    @pages = Cms::Page.search(@cms_site.id, params[:search]).order("updated_at DESC").page(params[:page])
     @channel ||= Cms::Channel.first
     #comment
     #tag cloud
@@ -85,7 +78,7 @@ class CmsController < ApplicationController
   end
 
   def tag
-    @pages = Cms::Page.tagged_with(params[:tag]).order("updated_at DESC").page(params[:detail_page])
+    @pages = Cms::Page.tagged_with(params[:tag]).order("updated_at DESC").page(params[:page])
     @channel ||= Cms::Channel.first
 
     #comment
@@ -131,26 +124,6 @@ class CmsController < ApplicationController
     end
   end
 
-  def comments_index
-    @source = comment_resovel_resource
-    total_page = @source.comments.page(1).per(10).total_pages
-    current_page = params[:page].blank? ? total_page : params[:page]
-    @comments = comment__filter(@source.comments.page(current_page).per(10))
-    render json: comment__entry_json(@comments)
-  end
-
-  def create_comment
-    @source = comment_resovel_resource
-    entry = @source.comments.new(comment__permitted_params)
-    entry.user_id = comment__user_id
-
-    if entry.save
-      render json: comment__entry_json(entry)
-    else
-      head 403
-    end
-  end
-
   private
 
   def check_subdomain!
@@ -158,12 +131,4 @@ class CmsController < ApplicationController
     redirect_to root_url(subdomain: nil) if @cms_site.nil? || !@cms_site.is_published
   end
 
-  def comment_resovel_resource
-    source = if params[:detail_page]
-      Cms::Page.find(params[:detail_page])
-    else
-      Cms::Channel.find(params[:channel])
-    end
-    return source
-  end
 end
