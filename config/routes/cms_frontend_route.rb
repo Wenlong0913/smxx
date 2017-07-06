@@ -9,15 +9,11 @@ module CmsFrontendRoute
       constraints(CmsSubdomain) do
         scope as: :cms_frontend do
           root :to => "cms#index"
-          match '/search(/:search(/page/:detail_page))', to: "cms#search", via: :get, as: 'search'
-          match '/tag/:tag(/page/:detail_page)', to: "cms#tag", as: 'tag', via: :get
+          match '/search(/:search(/page/:page))', to: "cms#search", via: :get, as: 'search'
+          match '/tag/:tag(/page/:page)', to: "cms#tag", as: 'tag', via: :get
           match '/comment/create', to: "cms#comment_create", as: 'comment_create', via: :post
-          match '/:channel(/page/:detail_page/comments)', to: "cms#comments_index", via: :get
-          match '/:channel(/page/:detail_page/comments)', to: "cms#create_comment", via: :post
-          match '/:channel(/:id)/comments', to: "cms#comments_index", via: :get
-          match '/:channel(/:id)/comments', to: "cms#create_comment", via: :post
           match '/:channel(/:id)', to: "cms#index", via: :get
-          match '/:channel(/page/:detail_page)', to: "cms#index", via: :get
+          match '/:channel(/page/:page)', to: "cms#index", via: :get
         end
       end
 
