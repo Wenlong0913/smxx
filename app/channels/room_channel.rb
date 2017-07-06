@@ -11,7 +11,7 @@ class RoomChannel < ApplicationCable::Channel
     # Any cleanup needed when channel is unsubscribed
     stop_all_streams
     RoomChannel.broadcast_to @room, message: "#{user[:nickname]}离开房间", type: 'system'
-    uses_chat_rooms = UsersChatRoom.find_or_create_by(user_id: user[:id], chat_room_id: @room.id)
+    uses_chat_rooms = UsersChatRoom.find_or_create_by(user: current_user, chat_room: @room)
     uses_chat_rooms.update(last_message_id: @room.messages.last.id)
   end
 

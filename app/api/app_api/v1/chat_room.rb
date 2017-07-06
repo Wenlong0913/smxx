@@ -22,7 +22,7 @@ module AppAPI::V1
           end
           rooms = community.chat_rooms
         end
-        present rooms, with: AppAPI::Entities::ChatRoom, user_id: current_user.id
+        present rooms, with: AppAPI::Entities::ChatRoom
       end
 
       desc "创建频道" do
