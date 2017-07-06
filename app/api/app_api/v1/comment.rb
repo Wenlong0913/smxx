@@ -34,7 +34,7 @@ module AppAPI::V1
       end
       params do
         requires :resource_id, type: Integer, desc: '资源ID'
-        requires :resource_type, type: String, values: ['product', 'site', 'article'], desc: '资源类型'
+        requires :resource_type, type: String, values: ['product', 'site', 'article', 'order'], desc: '资源类型'
         use :pagination
         use :sort, fields: [:created_at]
       end
@@ -46,6 +46,8 @@ module AppAPI::V1
           ::Site.find_by(id: params[:resource_id])
         when 'article'
           ::Article.find_by(id: params[:resource_id])
+        when 'order'
+          ::Order.find_by(id: params[:resource_id])
         else
           error! '传入的资源错误'
         end

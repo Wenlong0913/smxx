@@ -10,6 +10,8 @@ module AppAPI
       # expose :price, documentation: { desc: '价格', type: Float }
       expose :status, documentation: { desc: '状态' }
       expose :display_price, as: :price, documentation: { desc: '产品价格', type: Float}
+      expose :refund_status, documentation: { desc: '退款状态' }
+      expose :refund_description, documentation: { desc: '退款描述' }
 
       def display_price
         object.price.to_f/100
