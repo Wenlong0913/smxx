@@ -65,7 +65,8 @@ h1.page-header
       table.table.table-striped.table-bordered
         thead
           tr
-            th 举报对象类型
+            th 类型
+            th 举报对象
             th 举报对象编号
             th 举报原因
             th
@@ -73,9 +74,11 @@ h1.page-header
           - @complaints.each do |complaint|
             tr
               td
-                = complaint.source_type.to_s == 'Comment::Entry' ? '评论' : Object::const_get(complaint.source_type).model_name.human
+                = enum_l(complaint, :complaint_type)
               td
-                = complaint.source_type.to_s == 'Comment::Entry' ? "#{complaint.source.content.slice(0, 10)}..." : complaint.source.title
+                = (complaint.source_type.to_s == 'Comment::Entry' ? '评论' : Object::const_get(complaint.source_type).model_name.human) if complaint.complaint?
+              td
+                = (complaint.source_type.to_s == 'Comment::Entry' ? "#{complaint.source.content.slice(0, 10)}..." : complaint.source.title) if complaint.complaint?
               td
                 = "#{complaint.reason.slice(0, 10)}..." unless complaint.reason.blank?
               td

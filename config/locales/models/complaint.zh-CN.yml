@@ -12,6 +12,9 @@ zh-CN:
         statuses:
           rejected: 拒绝
           approved: 批准
+        complaint_types:
+          complaint: 投诉
+          community_feedback: 小区反馈
     errors:
       models:
         complaint:
