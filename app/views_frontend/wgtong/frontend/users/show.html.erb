@@ -3,17 +3,95 @@
 <div id="wrap">
   <section id="start" class="padding-top-bottom text-center">
     <div class="container">
-      <div class="row header">
-        <div class="col-md-12">
-          <h2>PAPER CUP</h2>
-          <p>HQ PSD Mock-up</p>
-        </div>
-      </div>
+
+      <div class="tr-breadcrumb">
+  			<div class="title pull-left">
+  				<h1>个人中心</h1>
+  			</div>
+        <ol class="breadcrumb pull-right">
+          <li><a href="/">首页</a></li>
+        </ol>
+  		</div>
+
       <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-          <p>Assault voodoo god paranoid tattoo modem kanji <a href="#" title="">drone</a> urban hotdog uplink computer. Dome car papier-mache geodesic wonton soup RAF warehouse woman military-grade numinous shrine nodality pre. Physical drone chrome sunglasses footage vinyl disposable office denim youtube. Systemic-ware advert geodesic alcohol assassin monofilament shrine Chiba voodoo god film convenience store disposable industrial grade camera cartel. Artisanal marketing RAF into advert geodesic sprawl realism woman dome footage courier table drone media youtube ablative.</p>
+        <div class="col-sm-8 col-md-8 tr-sticky">
+          <div class="theiaStickySidebar">
+            <div class="tr-section">
+              <h3>帐号设置</h3>
+              <hr>
+              <div class="row">
+                <div class="col-md-4 col-xs-12">
+                  <div class="user-logo">
+                    <img src="/templetes/newshub/images/team/5.jpg " alt="" class="img-circle" width="150px">
+                  </div>
+                </div>
+                <div class="col-md-4 col-xs-12">
+                  <a href="#" class="btn btn-info btn-md" style="display: inlin-block; margin: 30px 0px 15px 0px;">修改头像</a>
+                  <p>建议头像尺寸为300*300像素，格式为jpg、jpeg,大小不超过2M</p>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: 30px;">
+                <div class="col-md-9 col-md-offset-1 col-xs-12">
+                  <div class="form-horizontal">
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">昵称</label>
+                      <div class="col-sm-10">
+                        <input type="name" class="form-control" id="inputName" placeholder="昵称">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputPassword" class="col-sm-2 control-label">密码</label>
+                      <div class="col-sm-10">
+                        <input type="password" class="form-control" id="inputPassword" placeholder="密码">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3"></div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-9 col-md-offset-1 col-xs-12">
+                  <div class="form-horizontal">
+                    <div class="form-group">
+                      <label for="inputPhone" class="col-sm-2 control-label">手机号</label>
+                      <div class="col-sm-10">
+                        <input type="phone" class="form-control" id="inputPhone" placeholder="手机号">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputWechat" class="col-sm-2 control-label">微信号</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputWechat" placeholder="微信号">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
+                      <div class="col-sm-10">
+                        <input type="email" class="form-control" id="inputEmail" placeholder="邮箱">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button type="button" name="button" class="btn btn-default">保存修改</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-5 col-md-4 tr-sticky" >
+  				<div class="theiaStickySidebar">
+  					<div class="tr-section">
+              <div class="user-logo">
+                <img src="/templetes/newshub/images/team/5.jpg " alt="" class="img-circle" width="150px">
+              </div>
+              <h3>昵称</h3>
+            </div>
+  				</div>
         </div>
       </div>
+
     </div>
   </section>
   <%= render file: @cms_site.template_dir + '_footer.html' %>

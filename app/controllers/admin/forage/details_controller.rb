@@ -5,7 +5,7 @@ class Admin::Forage::DetailsController < Admin::BaseController
 
   # GET /admin/forage/details
   def index
-    authorize Forage::Detail
+    authorize ::Forage::Detail
     @filter_colums = %w(id)
     @forage_details = build_query_filter(Forage::Detail.all, only: @filter_colums).page(params[:page])
     respond_to do |format|
@@ -29,7 +29,7 @@ class Admin::Forage::DetailsController < Admin::BaseController
 
   # GET /admin/forage/details/new
   def new
-    authorize Forage::Detail
+    authorize ::Forage::Detail
     @forage_detail = Forage::Detail.new
   end
 

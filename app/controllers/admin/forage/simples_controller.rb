@@ -5,7 +5,7 @@ class Admin::Forage::SimplesController < Admin::BaseController
 
   # GET /admin/forage/simples
   def index
-    authorize Forage::Simple
+    authorize ::Forage::Simple
     @filter_colums = %w(id)
     @forage_simples = build_query_filter(Forage::Simple.all, only: @filter_colums).page(params[:page])
     respond_to do |format|
