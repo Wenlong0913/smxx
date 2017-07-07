@@ -415,3 +415,14 @@ PV次数：  <%= cms_page.impressionist_count %>
      img_srcs = doc.css('img').map{ |i| i['src'] }
      texts = doc.search('//text()').map(&:text).delete_if &:blank?
      %>
+
+## 使用Gitlab上Revert操作恢复错误的Merge请求
+  1. 在Commits列表中找到错误的Merge请求，进入Merge请求详情页面
+
+  2. 在Merge请求详情页面的右上角Options下拉菜单中选择Revert操作
+
+  3. 在弹出框的下拉菜单中选择需要恢复的branch，并勾选Start a new merge request选项
+
+  4. 这时会返回到重新发起Merge请求页面，注意：这里发起的是Revert请求，我们依次选择提交Merge请求，并Merge到目标branch
+
+  5. 完成以上操作，git pull查看终端输出结果
