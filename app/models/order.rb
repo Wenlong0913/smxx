@@ -21,6 +21,9 @@
 class Order < ApplicationRecord
   audited
   if Settings.project.sxhop? || Settings.project.imolin?
+    store_accessor :features, :delivery_username, :delivery_phone, :delivery_address
+  end
+  if Settings.project.sxhop? || Settings.project.imolin?
     enum status: {
       open: 0,      # 未付款
       pending: 1,   # 付款中
