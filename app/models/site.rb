@@ -86,6 +86,14 @@ class Site < ApplicationRecord
     end
 
     scope :published, -> { where("features ->> 'is_published' = ?", "1") }
+
+     # site地址完成改动时候,经纬度也得跟着改
+    before_save do |rec|
+      if rec.address_line_changed?
+        rec.lat = address.lat
+        rec.lng = address.lng
+      end
+    end
   end
   audited
 
