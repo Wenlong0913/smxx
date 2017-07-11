@@ -1,7 +1,7 @@
 h1.page-header
   | #{Staff.model_name.human}列表
   .pull-right
-    = link_to "新建#{Staff.model_name.human}", new_admin_staff_path, class: 'btn btn-primary'
+    = link_to "新建#{Staff.model_name.human}", new_admin_site_staff_path(@site), class: 'btn btn-primary'
 
 .panel
   .panel-heading
@@ -26,12 +26,12 @@ h1.page-header
           - @staffs.each do |staff|
             tr
               td 
-                => link_to staff.site.title, admin_staff_path(staff)
+                => link_to staff.site.title, admin_site_staff_path(@site, staff)
               td = staff.title
               td = staff.age
               td = staff.work_years
               td = staff.properties.map{|p| Staff::PROPERTIES[p.to_sym] }.compact.join('，') if staff.properties.any?
               td
-                => link_to '查看', admin_staff_path(staff), class: 'btn btn-xs btn-primary'
-                => link_to '编辑', edit_admin_staff_path(staff), class: 'btn btn-xs btn-warning'
-                => link_to '删除', admin_staff_path(staff), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger' if policy(staff).destroy?
+                => link_to '查看', admin_site_staff_path(@site, staff), class: 'btn btn-xs btn-primary'
+                => link_to '编辑', edit_admin_site_staff_path(@site, staff), class: 'btn btn-xs btn-warning'
+                => link_to '删除', admin_site_staff_path(@site, staff), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger' if policy(staff).destroy?

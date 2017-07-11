@@ -80,16 +80,23 @@ module AdminRoute
           collection do
             get 'dashboard', to: 'sites#dashboard'
           end
-        end
-
-        if Settings.project.meikemei?
-          resources :staffs, :concerns => :paginatable do
-            resources :members, :concerns => :paginatable
-            collection do
-              get 'dashboard', to: 'staffs#dashboard'
+          if Settings.project.meikemei?
+            resources :staffs, :concerns => :paginatable do
+              collection do
+                get 'dashboard', to: 'staffs#dashboard'
+              end
             end
           end
         end
+
+        # if Settings.project.meikemei?
+        #   resources :staffs, :concerns => :paginatable do
+        #     resources :members, :concerns => :paginatable
+        #     collection do
+        #       get 'dashboard', to: 'staffs#dashboard'
+        #     end
+        #   end
+        # end
 
         resources :produces, only: [:index] do
           resources :tasks, only: [:create, :update]
@@ -126,7 +133,7 @@ module AdminRoute
         end
         #系统参数
         resources :keystores
-        resources :staffs
+        # resources :staffs
 
         #美容院
         if Settings.project.meikemei?

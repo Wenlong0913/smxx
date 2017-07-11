@@ -22,7 +22,7 @@
             = @site.business_hours
           td.field 是否签约：
           td
-            - if @site.is_sign == 'true'
+            - if @site.has_contract == '1'
               | 已签约
             - else
               | 未签约
@@ -39,7 +39,7 @@
             = @site.content
           td.field 签约备注：
           td
-            = @site.sign_note
+            = @site.contract_note
       p 背景图片
       .gallery#gallery
         .row

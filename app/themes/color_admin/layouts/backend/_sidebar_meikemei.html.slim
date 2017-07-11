@@ -29,7 +29,7 @@ li class=("has-sub #{'active' if page?('admin/sites', 'admin/catalogs#index?klas
     /li[class=('active' if page?('admin/sites#new'))]
       = link_to "发布#{Site.model_name.human}", new_admin_site_path
 - if @site.present? && !@site.new_record?
-  li class=("has-sub #{'active' if page?('admin/products')}")
+  li class=("has-sub #{'active' if page?('admin/products', 'admin/staffs')}")
     / = link_to dashboard_admin_products_path
     /   b.caret.pull-right
     /   i.fa.fa-inbox
@@ -41,6 +41,8 @@ li class=("has-sub #{'active' if page?('admin/sites', 'admin/catalogs#index?klas
     ul.sub-menu
       li[class=('active' if page?('admin/products'))]
         = link_to "#{Product.model_name.human}列表", admin_site_products_path(@site)
+      li[class=('active' if page?('admin/staffs'))]
+        = link_to "#{Staff.model_name.human}列表", admin_site_staffs_path(@site)
       /li[class=('active' if page?('admin/products#new'))]
         = link_to "发布#{Product.model_name.human}", new_admin_product_path
 

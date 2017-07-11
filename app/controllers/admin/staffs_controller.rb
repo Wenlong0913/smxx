@@ -2,12 +2,13 @@
 require 'csv'
 class Admin::StaffsController < Admin::BaseController
   before_action :set_staff, only: [:show, :edit, :update, :destroy]
+  before_action :set_site, only: [:show, :edit, :update, :destroy, :new, :index, :create]
 
   # GET /admin/staffs
   def index
     authorize Staff
     @filter_colums = %w(id)
-    @staffs = build_query_filter(Staff.all, only: @filter_colums).page(params[:page])
+    @staffs = build_query_filter(@site.staffs, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@staffs.to_json, filename: "staffs-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
@@ -30,7 +31,7 @@ class Admin::StaffsController < Admin::BaseController
   # GET /admin/staffs/new
   def new
     authorize Staff
-    @staff = Staff.new
+    @staff = @site.staffs.new
   end
 
   # GET /admin/staffs/1/edit
@@ -41,10 +42,10 @@ class Admin::StaffsController < Admin::BaseController
   # POST /admin/staffs
   def create
     authorize Staff
-    @staff = Staff.new(permitted_attributes(Staff))
+    @staff = @site.staffs.new(permitted_attributes(Staff))
     
     if @staff.save
-      redirect_to admin_staff_path(@staff), notice: "美容师 创建成功."
+      redirect_to admin_site_staff_path(@site, @staff), notice: "美容师 创建成功."
     else
       render :new
     end
@@ -54,7 +55,7 @@ class Admin::StaffsController < Admin::BaseController
   def update
     authorize @staff
     if @staff.update(permitted_attributes(@staff))
-      redirect_to admin_staff_path(@staff), notice: "美容师 更新成功."
+      redirect_to admin_site_staff_path(@site, @staff), notice: "美容师 更新成功."
     else
       render :edit
     end
@@ -64,13 +65,17 @@ class Admin::StaffsController < Admin::BaseController
   def destroy
     authorize @staff
     @staff.destroy
-    redirect_to admin_staffs_url, notice: "美容师 删除成功."
+    redirect_to admin_site_staffs_url(@site), notice: "美容师 删除成功."
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_staff
       @staff = Staff.find(params[:id])
+    end
+
+    def set_site
+      @site = Site.find(params[:site_id])
     end
 
     # Only allow a trusted parameter "white list" through.
