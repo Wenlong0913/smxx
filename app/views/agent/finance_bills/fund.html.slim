@@ -55,7 +55,7 @@
                 = @site.paid_at.strftime("%Y-%m-%d")
             - else
               h3 您还没有购买套餐
-              p
-                a.pull-right.btn.btn-warning[href="#{agent_agent_plans_path}"] 购买套餐
+              .text-right
+                a.btn.btn-warning[href="#{agent_agent_plans_path}"] 购买套餐
           .stats-link
             a[href="#{agent_agent_plans_path}"] &nbsp;
