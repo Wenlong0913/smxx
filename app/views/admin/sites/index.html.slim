@@ -85,12 +85,12 @@ h1.page-header
                 td = site.contact_name
                 td = site.contact_phone
                 td
-                  - if site.is_sign == "true"
+                  - if site.has_contract == "1"
                     => link_to "已签约", '#', class: 'btn btn-xs btn-success'
                   - else
                     => link_to "未签约", '#', class: 'btn btn-xs btn-warning'
                 td = site.business_hours
-                td = site.comment
+                td = site.content
               td
                 a[href="#"] = User.find_by(id: site.updated_by).try(:username).to_s
                 = '在'+ distance_of_time_in_words_to_now(site.updated_at) + '前更新'

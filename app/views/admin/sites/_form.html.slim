@@ -51,17 +51,17 @@
               = f.input :business_hours, collection: ['9:00-22:00', '8:00-22:00'], selected: '9:00-22:00'
           .div class="row"
             .div class="col-md-6 col-sm-12"
-              = f.input :comment, as: :text
+              / = f.input :content, as: :ckeditor
             .div class="col-md-6 col-sm-12"
-              = f.input :is_sign, as: :select
+              = f.input :has_contract, as: :boolean, label: false, label: '是否签约'
           .div class="row"
             .div class="col-md-6 col-sm-12"
-              = f.input :score, collection: ['1', '2', '3', '4', '5']
+              = f.input :good_summary, collection: ['1', '2', '3', '4', '5']
               p 标签备注（可多选）
               = f.collection_check_boxes :properties, Site::PROPERTIES, :first, :last, checked: @site.try(:properties)
             .div class="col-md-6 col-sm-12"
-              = f.input :sign_note, as: :text, input_html: {rows: 5}
-          = f.input :content, as: :ckeditor
+              = f.input :contract_note, as: :text, input_html: {rows: 5}
+          / = f.input :content, as: :ckeditor
           p 背景图片
           .form-group
             image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@site.image_item_ids.join(', ')}"]
