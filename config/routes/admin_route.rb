@@ -80,23 +80,16 @@ module AdminRoute
           collection do
             get 'dashboard', to: 'sites#dashboard'
           end
-          if Settings.project.meikemei?
-            resources :staffs, :concerns => :paginatable do
-              collection do
-                get 'dashboard', to: 'staffs#dashboard'
-              end
+        end
+
+        if Settings.project.meikemei?
+          resources :staffs, :concerns => :paginatable do
+            resources :members, :concerns => :paginatable
+            collection do
+              get 'dashboard', to: 'staffs#dashboard'
             end
           end
         end
-
-        # if Settings.project.meikemei?
-        #   resources :staffs, :concerns => :paginatable do
-        #     resources :members, :concerns => :paginatable
-        #     collection do
-        #       get 'dashboard', to: 'staffs#dashboard'
-        #     end
-        #   end
-        # end
 
         resources :produces, only: [:index] do
           resources :tasks, only: [:create, :update]

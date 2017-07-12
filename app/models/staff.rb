@@ -19,8 +19,8 @@ class Staff < ApplicationRecord
   has_many :image_items, dependent: :destroy, as: :owner
   has_many_favorites
   store_accessor :features, :description, :age, :work_years, :content, :certificate, :properties, :score, :total_service, :week_service
-  validates_presence_of :title, :site_id
-  validates_uniqueness_of :title, scope: [:site_id]
+  validates_presence_of :title
+  validates_uniqueness_of :title
 
   PROPERTIES = {
     breast_dredge: "乳腺疏通",
