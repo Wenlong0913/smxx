@@ -32,7 +32,6 @@ module AppAPI
           site.image_items.last.try(:image_url)
         end
         expose :properties, documentation: { desc: '标签备注', is_array: true }
-        expose :staffs, using: AppAPI::Entities::Staff, if: ->(site, options) { (options[:includes] || []).include?(:staffs) }, documentation: { is_array: true }
 
         def score
           BigDecimal(object.score.to_s).ceil
