@@ -64,7 +64,7 @@ class Admin::StaffsController < Admin::BaseController
   def destroy
     authorize @staff
     @staff.destroy
-    redirect_to admin_staffs_url(@site), notice: "美容师 删除成功."
+    redirect_to admin_staffs_url, notice: "美容师 删除成功."
   end
 
   private
