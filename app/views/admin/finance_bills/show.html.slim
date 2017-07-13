@@ -32,7 +32,7 @@ h1.page-header
                 | #{FinanceBill.human_attribute_name(:amount)}
               td
                 a
-                  = @finance_bill.amount
+                  = @finance_bill.amount.to_f/100
             tr.divider
               td[colspan='2']
             tr
@@ -51,7 +51,7 @@ h1.page-header
                   = decorate(@finance_bill).display_status
             tr.divider
               td[colspan='2']
-    
+
           table.table.table-striped.table-bordered
             thead
               tr
