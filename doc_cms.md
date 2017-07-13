@@ -154,6 +154,7 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
     #获得最近新闻
     <% Cms::Page.recent(@cms_site.id, 12, :rand => true) %>
     <% Cms::Page.recent(@cms_site.id, 10, :channel => 'product-bed') %>
+    <% Cms::Page.recent(@cms_site.id, 10, :channels => ['news1', 'news2']) %>  
 
     #获得头条/推荐...新闻
     PROPERTIES = {
@@ -241,6 +242,7 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
     status: 状态
     branch: 分站
     datetime: 预订时间
+
 
 # 如何添加二级域名
 
@@ -408,6 +410,7 @@ PV次数：  <%= cms_page.impressionist_count %>
        </div>
 
 ## 获取页面中的图片/文本
+
   经常用于网站首页动态轮播图的获取：将图片和文字存在首页channel的content里，然后再动态取出来。
 
     <%
@@ -415,6 +418,17 @@ PV次数：  <%= cms_page.impressionist_count %>
      img_srcs = doc.css('img').map{ |i| i['src'] }
      texts = doc.search('//text()').map(&:text).delete_if &:blank?
      %>
+
+## 通过each_slice分片数组
+  如： [1,2,3,'a', 'b', 'c','d'] =>  [[1, 2, 3], ["a", "b", "c"], ["d"]]
+
+
+      <% Cms::Page.recent(@cms_site.id, 6, channels: ['profession-news', 'company-news']).each_slice(2).each do |news| %>
+        <p>分隔</p>
+        <% news.each do |page| %>
+          <h2><%= page.title %></h2>
+        <% end %>
+      <% end %>
 
 ## 使用Gitlab上Revert操作恢复错误的Merge请求
   1. 在Commits列表中找到错误的Merge请求，进入Merge请求详情页面
