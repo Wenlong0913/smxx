@@ -18,33 +18,51 @@ module AppAPI::V1
         success AppAPI::Entities::Order
       end
       params do
-        requires :site_id, type: Integer, desc: "#{::Site.model_name.human}ID"
-        requires :shopping_cart_ids, type: Array[Integer], coerce_with: ->(val) { val.split(/,|，/).map(&:to_i) }, desc: '购物车ID列表'
-        optional :address_book_id, type: Integer, desc: '地址薄ID'
+        if Settings.project.meikemei?
+          requires :product_id, type: Integer, desc: '产品ID'
+          requires :service_time, type: String, desc: '服务时间'
+          requires :staff_id, type: Integer, desc: '美容师ID'
+        else
+          requires :site_id, type: Integer, desc: "#{::Site.model_name.human}ID"
+          requires :shopping_cart_ids, type: Array[Integer], coerce_with: ->(val) { val.split(/,|，/).map(&:to_i) }, desc: '购物车ID列表'
+          optional :address_book_id, type: Integer, desc: '地址薄ID'
+        end
       end
       post do
         authenticate!
-        order = current_user.orders.new(site_id: params[:site_id])
-        shopping_carts = ::ShoppingCart.where(id: params[:shopping_cart_ids])
-        error! '购物清单为空！' if shopping_carts.empty?
-        shopping_carts.each do |sc|
-          order.order_products.new(product_id: sc.product_id, price: sc.price, amount: sc.amount)
-        end
-        # 这里的修改是因为在order_product的model里面price已经被设置为产品价格和数量的乘积了，不要再改回去了
-        # def set_default_price
-        #   self.price ||= product.price * amount
-        # end
-        order.price = order.order_products.map(&:price).sum
-        if params[:address_book_id]
-          address_book = current_user.address_books.find_by(id: params[:address_book_id])
-          unless address_book.blank?
-            order.delivery_username = address_book.name
-            order.delivery_phone = address_book.mobile_phone
-            order.delivery_address = address_book.full_address
+        if Settings.project.meikemei?
+          product = ::Product.find_by(id: params[:product_id])
+          error! '产品不存在!' if product.nil?
+          order = current_user.orders.new(site_id: product.site_id)
+          order.order_products.new(product_id: product.id, price: product.price, amount: 1)
+          order.price = product.price
+          order.service_time = params[:service_time]
+          order.staff_id = params[:staff_id]
+          error! order.errors unless order.save
+          present order, with: AppAPI::Entities::Order
+        else
+          order = current_user.orders.new(site_id: params[:site_id])
+          shopping_carts = ::ShoppingCart.where(id: params[:shopping_cart_ids])
+          error! '购物清单为空！' if shopping_carts.empty?
+          shopping_carts.each do |sc|
+            order.order_products.new(product_id: sc.product_id, price: sc.price, amount: sc.amount)
           end
+          # 这里的修改是因为在order_product的model里面price已经被设置为产品价格和数量的乘积了，不要再改回去了
+          # def set_default_price
+          #   self.price ||= product.price * amount
+          # end
+          order.price = order.order_products.map(&:price).sum
+          if params[:address_book_id]
+            address_book = current_user.address_books.find_by(id: params[:address_book_id])
+            unless address_book.blank?
+              order.delivery_username = address_book.name
+              order.delivery_phone = address_book.mobile_phone
+              order.delivery_address = address_book.full_address
+            end
+          end
+          error! order.errors unless order.save && shopping_carts.destroy_all
+          present order, with: AppAPI::Entities::Order
         end
-        error! order.errors unless order.save && shopping_carts.destroy_all
-        present order, with: AppAPI::Entities::Order
       end
 
       desc "删除订单" do
