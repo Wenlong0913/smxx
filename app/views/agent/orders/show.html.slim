@@ -190,9 +190,10 @@
                 h3.text-center.m-t-30 订单已关闭
               - else
                 .text-right.m-t-30.btns
+                  - if @order.status == 'open' || @order.status == 'pending'
+                    button.btn.btn-info.edit-order-btn[type="submit" data-toggle='modal' data-target='#orderEdit'] 订单修改
                   - if @order.status == 'open' || @order.status == 'pending' || @order.status == 'paid'
                     button.btn.btn-warning.order-delivery[type="submit" data-toggle='modal' data-target='#orderDelivery'] 发货
-                    button.btn.btn-info.edit-order-btn[type="submit" data-toggle='modal' data-target='#orderEdit'] 订单修改
                     = link_to '关闭订单', agent_order_path(@order, order: {status: 'cancelled'}), remote: true, class: 'button btn btn-default order-status-btn order-cancelled', method: :PATCH
                   = link_to '确认用户已收到货', agent_order_path(@order, order: {status: 'completed'}), remote: true, class: "button btn btn-warning order-status-btn order-delivered #{@order.status == 'delivering' ? '' : 'hide'}", method: :PATCH
       .panel.panel-default.order-products
