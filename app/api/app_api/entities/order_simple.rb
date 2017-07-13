@@ -12,6 +12,11 @@ module AppAPI
       expose :display_price, as: :price, documentation: { desc: '产品价格', type: Float}
       expose :refund_status, documentation: { desc: '退款状态' }
       expose :refund_description, documentation: { desc: '退款描述' }
+      if Settings.project.imolin?
+        expose :delivery_username, documentation: { desc: '收货人' }
+        expose :delivery_phone, documentation: { desc: '联系方式' }
+        expose :delivery_address, documentation: { desc: '收货地址' }
+      end
 
       def display_price
         object.price.to_f/100

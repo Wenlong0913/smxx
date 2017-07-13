@@ -2,7 +2,7 @@ li class=("#{'active' if page?('admin/home') }")
   = link_to admin_root_path do
     = fa_icon 'laptop', text: '首页'
 
-li class=("has-sub #{'active' if page?('admin/vendors', 'admin/sites','admin/users', 'admin/roles', 'admin/user/weixins')}")
+li class=("has-sub #{'active' if page?('admin/vendors', 'admin/sites','admin/users', 'admin/roles', 'admin/user/weixins', 'admin/staffs')}")
   = link_to dashboard_admin_users_path
     b.caret.pull-right
     i.fa.fa-inbox
@@ -13,6 +13,8 @@ li class=("has-sub #{'active' if page?('admin/vendors', 'admin/sites','admin/use
     li class=("#{'active' if page?('admin/roles')}") = link_to '角色', admin_roles_path
     li[class=("active" if page?('admin/sites'))]
       = link_to Site.model_name.human, admin_sites_path
+    li[class=('active' if page?('admin/staffs'))]
+      = link_to "#{Staff.model_name.human}列表", admin_staffs_path
 
 li class=("has-sub #{'active' if page?('admin/sites', 'admin/catalogs#index?klass=SiteCatalog', 'admin/catalogs#index?klass=ProductCatalog')}")
   = link_to dashboard_admin_sites_path

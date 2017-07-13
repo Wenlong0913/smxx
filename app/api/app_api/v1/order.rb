@@ -36,11 +36,12 @@ module AppAPI::V1
         # end
         order.price = order.order_products.map(&:price).sum
         if params[:address_book_id]
-          address_book = ::AddressBook.find(params[:address_book_id])
-          order_delivery = order.order_deliveries.new({
-            delivery_username: address_book.name,
-            delivery_phone: address_book.mobile_phone,
-            delivery_address: address_book.full_address})
+          address_book = current_user.address_books.find_by(id: params[:address_book_id])
+          unless address_book.blank?
+            order.delivery_username = address_book.name
+            order.delivery_phone = address_book.mobile_phone
+            order.delivery_address = address_book.full_address
+          end
         end
         error! order.errors unless order.save && shopping_carts.destroy_all
         present order, with: AppAPI::Entities::Order

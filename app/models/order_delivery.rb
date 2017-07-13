@@ -12,10 +12,8 @@
 
 class OrderDelivery < ApplicationRecord
   audited
-  if Settings.project.sxhop?
+  if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.wgtong?
     store_accessor :features, :logistics_name, :logistics_number
-  elsif Settings.project.imolin? || Settings.project.wgtong?
-    store_accessor :features, :delivery_username, :delivery_phone, :delivery_address, :logistics_name, :logistics_number
   else
     store_accessor :features, :list, :note
   end
