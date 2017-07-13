@@ -18,6 +18,10 @@ module AppAPI
 
       expose :display_sell_price, documentation: { desc: '产品价格', type: Float}, as: :sell_price
       expose :display_price, documentation: { desc: '产品原价', type: Float}, as: :price
+      
+      with_options if: ->(products, options) { options.fetch(:includes, []).map(&:to_s).include?('tags') } do |f|
+        expose :tag_list, documentation: { desc: "产品的标签,特点", is_array: true }
+      end
 
       def display_sell_price
         object.sell_price.to_f/100

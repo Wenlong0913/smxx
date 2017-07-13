@@ -37,7 +37,7 @@ module AppAPI::V1
         optional :site_id, type: Integer, desc: '店铺ID'
         optional :name, type: String, desc: '根据名字搜索产品'
         optional :search_type, type: String, values: ['bought', 'all'], desc: '产品搜索类型: 我买过的产品, 所有产品, 默认为所有产品'
-        optional :includes, type: String, values: ['favoriters'], desc: '选择favoriters后允许返回捧场者头像'
+        optional :includes, type: String, values: ['favoriters', 'tags'], desc: '选择favoriters后允许返回捧场者头像, 选择tags后返回产品的标签特性'
       end
       get do
         authenticate!
