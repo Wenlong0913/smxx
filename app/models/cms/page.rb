@@ -64,7 +64,7 @@ class Cms::Page < ApplicationRecord
     if options[:channel].present?
       assoc = assoc.joins(:channel).where(cms_channels: { short_title: options[:channel] })
     end
-    if options[:channels].any?
+    if options[:channels] && options[:channels].any?
       assoc = assoc.joins(:channel).where("cms_channels.short_title in (?) ", options[:channels])
     end
     assoc
