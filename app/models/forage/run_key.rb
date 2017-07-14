@@ -1,7 +1,6 @@
 class Forage::RunKey < ApplicationRecord
   audited
-  belongs_to :forage_source, class_name: '::Forage::Source'
-  has_many :forage_simples, dependent: :destroy
-  validates_uniqueness_of [:forage_source_id, :date]
-
+  belongs_to :source, class_name: '::Forage::Source'
+  has_many :simples, dependent: :destroy
+  validates_uniqueness_of [:source_id, :date]
 end

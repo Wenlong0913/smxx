@@ -15,7 +15,6 @@ h1.page-header
       table.table.table-striped
         thead
           tr
-            th 所属美容院
             th 姓名
             th 年龄
             th 工作年限
@@ -25,8 +24,6 @@ h1.page-header
         tbody
           - @staffs.each do |staff|
             tr
-              td 
-                => link_to staff.site.title, admin_staff_path(staff)
               td = staff.title
               td = staff.age
               td = staff.work_years

@@ -13,5 +13,18 @@
           ul
             - @forage_source.errors.full_messages.each do |message|
               li = message
-
+      .row
+        .alert.alert-danger.fade.in.m-b-15.hide
+          strong 错误!&nbsp;
+          span.title
+          span.close[data-dismiss="alert"] &times;
+      .row
+        .col-md-4
+          = f.input :name
+        .col-md-4
+          = f.input :catalog_name
+        .col-md-4
+          = f.input :url
+        .col-md-12
+          = f.input :note, as: :ckeditor
       = f.submit class: 'btn btn-success btn-block'

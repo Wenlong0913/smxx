@@ -1,4 +1,4 @@
-/ h1 
+/ h1
 /   | 查看 agent_order
 /   .pull-right
 /     = link_to '编辑', edit_agent_order_path(@agent_order), class: 'btn btn-primary'
@@ -13,7 +13,7 @@
 /           i class="fa fa-minus"
 /       h4 订单详情
 /     .panel-body
-/       
+/
 = render 'order_delivery'
 .section-container.bg-silver.m-b-20.primary-content
   .container
@@ -29,7 +29,7 @@
                   - product = order_product.product
                   li
                     .media
-                      = image_tag(product.image_items.first.try(:image_url) || 'no-picture.png')
+                      = image_tag(product.first_image)
                     .info-container
                       .info
                         h4.title
@@ -65,7 +65,7 @@
             label.control-label
               | 订单描述：
             = @order.description
-          
+
           .form-group
             label.control-label
               | 订单物流：
@@ -111,28 +111,28 @@
                 li.f-s-14.m-b-15
                   label.control-label
                     strong 订单信息
-                li 
+                li
                   label.control-label
                     span 订单号：
                     = @order.code
-                li 
+                li
                   label.control-label
                     span 客户：
                     = link_to @order.user && @order.user.nickname || '没有客户'
-                li 
+                li
                   label.control-label
                     span 价格：
                   = @order.price.to_f / 100
-                / li 
+                / li
                 /   label.control-label
                 /     span 订单状态：
                 /     = decorate(@order).display_status
-                li 
+                li
                   label.control-label
                     span 订单物流：
                     span.display_order_delivery[style='width: auto;']
                       = @order.order_deliveries.first.logistics_name + '(' + @order.order_deliveries.first.logistics_number + ')' unless @order.order_deliveries.first.try(:logistics_name).blank?
-                li 
+                li
                   label.control-label
                     span 订单描述：
                   p.p-10
@@ -190,9 +190,10 @@
                 h3.text-center.m-t-30 订单已关闭
               - else
                 .text-right.m-t-30.btns
+                  - if @order.status == 'open' || @order.status == 'pending'
+                    button.btn.btn-info.edit-order-btn[type="submit" data-toggle='modal' data-target='#orderEdit'] 订单修改
                   - if @order.status == 'open' || @order.status == 'pending' || @order.status == 'paid'
                     button.btn.btn-warning.order-delivery[type="submit" data-toggle='modal' data-target='#orderDelivery'] 发货
-                    button.btn.btn-info.edit-order-btn[type="submit" data-toggle='modal' data-target='#orderEdit'] 订单修改
                     = link_to '关闭订单', agent_order_path(@order, order: {status: 'cancelled'}), remote: true, class: 'button btn btn-default order-status-btn order-cancelled', method: :PATCH
                   = link_to '确认用户已收到货', agent_order_path(@order, order: {status: 'completed'}), remote: true, class: "button btn btn-warning order-status-btn order-delivered #{@order.status == 'delivering' ? '' : 'hide'}", method: :PATCH
       .panel.panel-default.order-products
@@ -211,7 +212,7 @@
             - totalProductPrice += product_item.price
             .row.m-b-15
               .col-xs-6
-                = image_tag product_item.product.image_items.first.image_url, style: 'width: 60px;height: 60px', class: 'img-thumbnail m-r-10'
+                = image_tag product_item.product.first_image, style: 'width: 60px;height: 60px', class: 'img-thumbnail m-r-10'
                 span
                   = product_item.product.name
               .col-xs-3.text-center
@@ -222,10 +223,7 @@
           ul.list-unstyled
             li
               span 商品总额：
-              span.float-right = totalProductPrice
-            / li
-            /   span 运费：
-            /   span.float-right ￥116.2 
+              span.float-right = totalProductPrice.to_f / 100
             li.text-danger
               span 应付总额：
               strong.float-right.f-s-18 = (@order.price.to_f / 100)

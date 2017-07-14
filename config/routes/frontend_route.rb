@@ -59,11 +59,15 @@ module FrontendRoute
         end
 
         resources :communites
-        resources :sites
+        resources :sites do
+          commentable
+        end
         resources :site_catalogs do
           resources :sites
         end
-        resources :products
+        resources :products do
+          commentable
+        end
         resources :product_catalogs do
           resources :products
         end

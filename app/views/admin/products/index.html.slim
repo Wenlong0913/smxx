@@ -67,11 +67,15 @@ h1.page-header
               th 原价
               th 售价
             - else
-              th 价格
+              - if Settings.project.wgtong?
+                th 地点
+              - else
+                th 价格
             - if Settings.project.sxhop?
               th 折扣价
+
             th 标签
-            - if Settings.project.sxhop?
+            - if Settings.project.sxhop? || Settings.project.wgtong?
               th 状态
             th 操作
         tbody

@@ -2,6 +2,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require vue.setup
+//= require comments
 // require turbolinks
 // require frontend/product_catalogs
 // require frontend/products

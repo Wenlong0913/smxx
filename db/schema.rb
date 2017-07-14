@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170621104042) do
+ActiveRecord::Schema.define(version: 20170705121224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,15 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["user_id"], name: "index_address_books_on_user_id", using: :btree
+  end
+
+  create_table "agent_plans", force: :cascade do |t|
+    t.string   "name"
+    t.string   "features",                 array: true
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "price"
   end
 
   create_table "api_tokens", force: :cascade do |t|
@@ -98,6 +107,8 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.boolean  "is_top",           default: false
     t.string   "source_type"
     t.integer  "source_id"
+    t.integer  "complaints_count", default: 0
+    t.boolean  "is_complainted",   default: false
     t.index ["source_type", "source_id"], name: "index_articles_on_source_type_and_source_id", using: :btree
   end
 
@@ -173,6 +184,21 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.jsonb    "features"
     t.boolean  "is_hot",     default: false
     t.index ["parent_id"], name: "index_catalogs_on_parent_id", using: :btree
+  end
+
+  create_table "charges", force: :cascade do |t|
+    t.integer  "order_id"
+    t.string   "pingpp_charge_id"
+    t.string   "channel"
+    t.string   "client_ip"
+    t.string   "transaction_no"
+    t.string   "paid"
+    t.string   "refunded"
+    t.string   "time_paid"
+    t.string   "time_created"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["order_id"], name: "index_charges_on_order_id", using: :btree
   end
 
   create_table "chat_messages", force: :cascade do |t|
@@ -290,11 +316,13 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.text     "content"
     t.integer  "position"
     t.boolean  "deleted"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.integer  "parent_id"
     t.jsonb    "features"
-    t.integer  "likes_count",   default: 0
+    t.integer  "likes_count",      default: 0
+    t.integer  "complaints_count", default: 0
+    t.boolean  "is_complainted",   default: false
     t.index ["resource_type", "resource_id"], name: "index_comment_entries_on_resource_type_and_resource_id", using: :btree
   end
 
@@ -321,9 +349,13 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.integer  "user_id"
     t.string   "source_type"
     t.integer  "source_id"
-    t.text     "content"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.text     "reason"
+    t.integer  "processed_by"
+    t.text     "comment"
+    t.integer  "status"
+    t.integer  "complaint_type"
     t.index ["source_type", "source_id"], name: "index_complaints_on_source_type_and_source_id", using: :btree
     t.index ["user_id"], name: "index_complaints_on_user_id", using: :btree
   end
@@ -349,8 +381,11 @@ ActiveRecord::Schema.define(version: 20170621104042) do
   create_table "finance_bills", force: :cascade do |t|
     t.integer  "amount"
     t.integer  "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "code"
+    t.boolean  "is_entry",   default: false
+    t.integer  "site_id"
   end
 
   create_table "finance_histories", force: :cascade do |t|
@@ -843,8 +878,8 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.integer  "user_id"
     t.integer  "site_id"
     t.integer  "price"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.text     "description"
     t.integer  "status"
     t.integer  "internal_status"
@@ -855,6 +890,10 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.string   "resource_url"
     t.date     "delivery_date"
     t.integer  "finance_bill_id"
+    t.integer  "refund_status"
+    t.integer  "apply_refund_by"
+    t.text     "refund_description"
+    t.integer  "comments_count",           default: 0
     t.index ["finance_bill_id"], name: "index_orders_on_finance_bill_id", using: :btree
     t.index ["site_id"], name: "index_orders_on_site_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
@@ -878,6 +917,27 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["order_id"], name: "index_produces_on_order_id", using: :btree
+  end
+
+  create_table "refunds", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "pingpp_charge_id"
+    t.string   "event_id"
+    t.string   "order_no"
+    t.text     "description"
+    t.string   "charge"
+    t.string   "amount"
+    t.string   "created"
+    t.string   "charge_order_no"
+    t.string   "succeed"
+    t.string   "status"
+    t.string   "time_succeed"
+    t.string   "failure_code"
+    t.string   "failure_msg"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "order_id"
+    t.index ["user_id"], name: "index_refunds_on_user_id", using: :btree
   end
 
   create_table "roles", force: :cascade do |t|
@@ -945,6 +1005,8 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.integer  "favorites_count",  default: 0
     t.integer  "visits_count",     default: 0
     t.integer  "comments_count"
+    t.integer  "agent_plan_id"
+    t.datetime "paid_at"
     t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
   end
 
@@ -1157,6 +1219,16 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  create_table "users_chat_rooms", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "chat_room_id"
+    t.integer  "last_message_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["chat_room_id"], name: "index_users_chat_rooms_on_chat_room_id", using: :btree
+    t.index ["user_id"], name: "index_users_chat_rooms_on_user_id", using: :btree
+  end
+
   create_table "users_permissions", force: :cascade do |t|
     t.integer "user_id"
     t.integer "permission_id"
@@ -1183,6 +1255,7 @@ ActiveRecord::Schema.define(version: 20170621104042) do
   add_foreign_key "article_products", "articles"
   add_foreign_key "article_users", "articles"
   add_foreign_key "attachment_relations", "attachments"
+  add_foreign_key "charges", "orders"
   add_foreign_key "complaints", "users"
   add_foreign_key "forage_details", "forage_simples"
   add_foreign_key "forage_run_keys", "forage_sources"
@@ -1205,6 +1278,7 @@ ActiveRecord::Schema.define(version: 20170621104042) do
   add_foreign_key "orders", "sites"
   add_foreign_key "orders", "users"
   add_foreign_key "produces", "orders"
+  add_foreign_key "refunds", "users"
   add_foreign_key "shopping_carts", "users"
   add_foreign_key "tasks", "sites"
   add_foreign_key "theme_configs", "sites"
@@ -1217,4 +1291,6 @@ ActiveRecord::Schema.define(version: 20170621104042) do
   add_foreign_key "user_communities", "users"
   add_foreign_key "user_mobiles", "users"
   add_foreign_key "user_weixins", "users"
+  add_foreign_key "users_chat_rooms", "chat_rooms"
+  add_foreign_key "users_chat_rooms", "users"
 end

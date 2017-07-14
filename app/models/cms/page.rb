@@ -58,10 +58,14 @@ class Cms::Page < ApplicationRecord
   #最近新闻
   #eg: Cms::Page.recent(12, 12, :rand => true)
   #    Cms::Page.recent(1, 10, :channel => 'product-bed')
+  #    Cms::Page.recent(1, 10, :channels => ['product-bed', 'product-red'])
   scope :recent, ->(site_id, count = 10, options = {}) {
     assoc = joins(:channel).where('cms_channels.site_id = ?', site_id).reorder("updated_at DESC").limit(count)
     if options[:channel].present?
       assoc = assoc.joins(:channel).where(cms_channels: { short_title: options[:channel] })
+    end
+    if options[:channels] && options[:channels].any?
+      assoc = assoc.joins(:channel).where("cms_channels.short_title in (?) ", options[:channels])
     end
     assoc
   }

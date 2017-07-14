@@ -12,12 +12,17 @@ module AppAPI
       expose :sales_count, documentation: {desc: '产品的销量', type: Integer }
       expose :site, using: AppAPI::Entities::SiteSimple
       expose :image_items, using: AppAPI::Entities::ImageItemSimple, documentation: { is_array: true }, as: :images
+      expose :first_image, documentation: {desc: '产品默认图片'}
       with_options if: ->(products, options) { options.fetch(:includes, []).map(&:to_s).include?('favoriters') } do |f|
         expose :favoriters, documentation: { desc: "产品的捧场用户", is_array: true }
       end
 
       expose :display_sell_price, documentation: { desc: '产品价格', type: Float}, as: :sell_price
       expose :display_price, documentation: { desc: '产品原价', type: Float}, as: :price
+      
+      with_options if: ->(products, options) { options.fetch(:includes, []).map(&:to_s).include?('tags') } do |f|
+        expose :tag_list, documentation: { desc: "产品的标签,特点", is_array: true }
+      end
 
       def display_sell_price
         object.sell_price.to_f/100

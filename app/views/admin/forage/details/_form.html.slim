@@ -13,23 +13,32 @@
           ul
             - @forage_detail.errors.full_messages.each do |message|
               li = message
+      .row
+        .col-md-6
+          = f.association :simple
+        .col-md-6
+          = f.input :url
+        .col-md-6
+          = f.input :from
+        .col-md-6
+          = f.input :title
+        .col-md-6
+          = f.input :image
+        .col-md-6
+          = f.input :phone
+        .col-md-6
+          = f.input :price
+        .col-md-6
+          = f.input :date
+          = f.input :time
+        .col-md-6
+          = f.input :address_line1
+          = f.input :address_line2
+        .col-md-6
+          = f.input :description, as: :text, input_html: { rows: 6 }
+        .col-md-6
+          = f.input :note, as: :text, input_html: { rows: 6 }
+        .col-md-12
+          = f.input :content, as: :ckeditor
 
-      = f.association :forage_simple
-      = f.input :
-      = f.input :
-      = f.input :
-      = f.input :
-      = f.input :
-      = f.input :
-      = f.input :
-      = f.input :
-      = f.input :
-      = f.input :
-      = f.input :
-      = f.input :
-      = f.input :
-      = f.input :
-      = f.input :
-      = f.input :
-      = f.input :
       = f.submit class: 'btn btn-success btn-block'
