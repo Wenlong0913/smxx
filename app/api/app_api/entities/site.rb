@@ -28,6 +28,8 @@ module AppAPI
         expose :description, documentation: { desc: "#{::Site.model_name.human}详细描述" }, if: ->(site, options) { options[:type] == :full_site}
         expose :image_items, using: AppAPI::Entities::ImageItem, as: :images, documentation: { is_array: true }
         expose :address_line, documentation: { desc: '地址' }
+        expose :address_lat, documentation: {desc: '纬度'}
+        expose :address_lng, documentation: {desc: '经度'}
         expose :last_image do |site, options|
           site.image_items.last.try(:image_url)
         end
