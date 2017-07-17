@@ -8,12 +8,17 @@ module AppAPI::V1
       end
       params do
         use :pagination
+        optional :type, type: String, values: ['flatform_recommend'], desc: '平台推荐'
       end
       get 'near_by' do
         authenticate!
         error! '请先设置您的小区信息' unless current_user.current_community
         community = current_user.current_community
         sites = ::Site.where("features ->> 'is_published' = ?", "1").near_by(lat: community.address_lat, lng: community.address_lng, distance: 5000)
+        case params[:type]
+        when 'flatform_recommend'
+          sites = sites.where(is_flatform_recommend: true)
+        end
         sites = paginate_collection(sort_collection(sites), params)
         wrap_collection sites, AppAPI::Entities::SiteSimple, includes: [:distance]
       end
