@@ -9,7 +9,8 @@ module AppAPI
         expose :staff
 
         def staff
-          ::Staff.find_by(id: object.staff_id).as_json(only: [:title], methods: [:headshot])
+          s = ::Staff.find_by(id: object.staff_id)
+          s && s.as_json(only: [:title], methods: [:headshot])
         end
       end
     end
