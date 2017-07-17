@@ -21,7 +21,7 @@ module AppAPI::V1
         if Settings.project.meikemei?
           requires :product_id, type: Integer, desc: '产品ID'
           requires :service_time, type: String, desc: '服务时间'
-          requires :staff_id, type: Integer, desc: '美容师ID'
+          optional :staff_id, type: Integer, desc: '美容师ID'
         else
           requires :site_id, type: Integer, desc: "#{::Site.model_name.human}ID"
           requires :shopping_cart_ids, type: Array[Integer], coerce_with: ->(val) { val.split(/,|，/).map(&:to_i) }, desc: '购物车ID列表'
