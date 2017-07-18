@@ -72,7 +72,7 @@ class Site < ApplicationRecord
     }
   end
 
-  if Settings.project.imolin? || Settings.project.wgtong?
+  if Settings.project.imolin? || Settings.project.wgtong? || Settings.project.meikemei?
     acts_as_address
 
     def address_lat

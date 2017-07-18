@@ -41,4 +41,8 @@ class Staff < ApplicationRecord
     head_physiotherapy: "头部理疗"
   }
 
+  def headshot
+    image_items.first.try(:image_url)
+  end
+
 end

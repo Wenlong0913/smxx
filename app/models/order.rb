@@ -26,7 +26,7 @@ class Order < ApplicationRecord
   if Settings.project.meikemei?
     store_accessor :features, :staff_id, :service_time
   end
-  if Settings.project.sxhop? || Settings.project.imolin?
+  if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei?
     enum status: {
       open: 0,      # 未付款
       pending: 1,   # 付款中

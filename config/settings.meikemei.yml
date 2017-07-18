@@ -1,12 +1,12 @@
 default: &default
   site:
     name: 淘美客
-    host: http://localhost:5000
+    host: http://api.mokomo.cn
     copyright: © MoKoMo All Right Reserved 2015
     description: 淘美客是一家提供在线美容预约服务的互联网平台，专业打造优质舒适的社区美容服务，拥有丰富多样的美容项目、各有所长的美容技师供您自由选择。
     slogan: 定制私人美容，想约就约放心选择
   email:
-    sender: sender@tmf.com
+    sender: admin@tanmer.com
   weixin:
     app_id: wx2112a27b1c8bb766
     app_secret: d4624c36b6795d1d99dcf0547af5443d
@@ -44,7 +44,7 @@ default: &default
       bucket: tmf
       use_timestamp: false
       qiniu_host: ocwr8qu9g.bkt.clouddn.com
- 
+
   test_account:
     mobile_phone: '13900000000'
     code: '000000'
