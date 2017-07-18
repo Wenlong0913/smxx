@@ -23,18 +23,27 @@ module AppAPI::V1
       params do
         use :pagination
         use :sort, fields: [:id, :created_at, :updated_at]
+        optional :type, type: String, values: ['flatform_recommend'], desc: "平台推荐"
         optional :name, type: String, desc: '分类名称模糊搜索'
       end
       get do
-        # 查看所有分类
-        if params[:name]
-          product_catalogs = ::SiteCatalog.where("name like ?", "%#{params[:name]}%")
-          product_catalogs = paginate_collection(sort_collection(product_catalogs), params)
-          wrap_collection product_catalogs, AppAPI::Entities::SiteCatalog
+        site_catalogs = ::SiteCatalog.all
+        if params[:name] || params[:type]
+          # 查询分类
+          site_catalogs = site_catalogs.where("name like ?", "%#{params[:name]}%") if params[:name]
+          if params[:type]
+            case params[:type]
+            when 'flatform_recommend'
+              site_catalogs = site_catalogs.where(is_hot: true)
+            end
+          end
+          site_catalogs = paginate_collection(sort_collection(site_catalogs), params)
+          wrap_collection site_catalogs, AppAPI::Entities::SiteCatalog
         else
-          product_catalogs = ::SiteCatalog.where(parent_id: nil)
-          product_catalogs = paginate_collection(sort_collection(product_catalogs), params)
-          wrap_collection product_catalogs, AppAPI::Entities::SiteCatalog, includes: [:children]
+          # 查看所有分类
+          site_catalogs = ::SiteCatalog.where(parent_id: nil)
+          site_catalogs = paginate_collection(sort_collection(site_catalogs), params)
+          wrap_collection site_catalogs, AppAPI::Entities::SiteCatalog, includes: [:children]
         end
       end
 

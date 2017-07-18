@@ -20,8 +20,13 @@
 
 class Order < ApplicationRecord
   audited
-  store_accessor :features, :delivery_username, :delivery_phone, :delivery_address
   if Settings.project.sxhop? || Settings.project.imolin?
+    store_accessor :features, :delivery_username, :delivery_phone, :delivery_address
+  end
+  if Settings.project.meikemei?
+    store_accessor :features, :staff_id, :service_time
+  end
+  if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei?
     enum status: {
       open: 0,      # 未付款
       pending: 1,   # 付款中

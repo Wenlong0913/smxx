@@ -59,6 +59,7 @@ gem 'devise', '~> 4.2.0'
 gem 'devise-i18n'
 gem 'jwt', '~> 1.5.6'
 gem 'settingslogic', '~> 2.0.9'
+gem 'figaro', '~> 1.1', '>= 1.1.1'
 # gem 'swagger-docs' # 太麻烦，不如自己写markdown文档
 gem 'font-awesome-rails', '~> 4.7.0'
 gem 'simple_form', '~> 3.3.1'

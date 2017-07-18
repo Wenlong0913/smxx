@@ -11,6 +11,7 @@ module AppAPI
         expose :service_time, documentation: {desc: '服务时长'}
         expose :description, documentation: {desc: '简要描述'}
         expose :properties, documentation: {desc: '标签活动'}
+        expose :tag_list, documentation: {desc: '标签'}
       end
 
       with_options if: ->(product, options) { options[:type] == :full_product } do |f|
