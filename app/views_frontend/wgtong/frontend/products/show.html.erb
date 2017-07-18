@@ -75,14 +75,15 @@
 								<div class="entry-meta">
 									<ul>
 										<li>By <a href="#"><%= @product.catalog.name  %></a></li>
-										<li>445 分享 /<a href="#"> <%= distance_of_time_in_words_to_now(@product.created_at) %></a> 前</li>
+										<li><a href="#"> <%= distance_of_time_in_words_to_now(@product.created_at) %></a> 前</li>
 										<li>
 											<ul>
-												<li>分享</li>
-												<li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
-									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
-									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
+												<div class="bdsharebuttonbox" data-tag="share_1">
+	                        <a class="bds_qzone" data-cmd="qzone"></a>
+	                        <a class="bds_tsina" data-cmd="tsina"></a>
+	                        <a class="bds_sqq" data-cmd="sqq"></a>
+	                        <a class="bds_weixin" data-cmd="weixin"></a>
+	                      </div>
 											</ul>
 										</li>
 									</ul>
