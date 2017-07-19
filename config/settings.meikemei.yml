@@ -24,8 +24,8 @@ default: &default
     auth_token_template: "【淘美客】您的验证码是#code#。如非本人操作，请忽略本短信。"
 
   payment: # Ping++支付
-    api_id:
-    api_key:
+    api_id: app_yDm5S4uv9SOG8CWb
+    api_key: sk_live_mDyHWHybjjfHifjT0KfvfTm9
     channels:
     - alipay
     - wx
