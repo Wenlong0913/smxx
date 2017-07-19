@@ -1,4 +1,17 @@
 class Frontend::UsersController < Frontend::BaseController
   def show
   end
+
+  def edit
+    authorize current_user
+  end
+  def update
+    authorize @current_user
+    flag, @current_user = User::Update.(@current_user, permitted_attributes(@current_user))
+    if flag
+      redirect_to edit_frontend_user_path(@current_user), notice: '更新成功.'
+    else
+      render :edit
+    end
+  end
 end
