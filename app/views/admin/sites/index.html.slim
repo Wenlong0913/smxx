@@ -17,6 +17,8 @@ h1.page-header
         .col-md-6.m-b-15
           .input-group.search_all
             = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '搜索...'
+            span.input-group-addon[title="选中后查询将显示平台推荐商家"]
+              = f.check_box :recommend, {checked: (params[:search]&&params[:search][:recommend] == 'true')}, true, false
             span.input-group-btn
               button.btn.btn-inverse[type='submit']
                 i.fa.fa-search
