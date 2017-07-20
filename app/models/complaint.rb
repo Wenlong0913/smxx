@@ -7,10 +7,22 @@ class Complaint < ApplicationRecord
 
   validates_presence_of :complaint_type, :user, :reason
 
-  enum complaint_type: {
-    complaint: 0,
-    community_feedback: 1
-  }
+  if Settings.project.imolin?
+    enum complaint_type: {
+      complaint: 0,
+      community_feedback: 1
+    }
+  elsif Settings.project.meikemei?
+    enum complaint_type: {
+      complaint: 0,
+      staff_new: 1
+    }
+  else 
+    enum complaint_type: {
+      complaint: 0,
+      feedback: 1
+    }
+  end
 
   enum status: {
     rejected: 0,

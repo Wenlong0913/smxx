@@ -4,7 +4,11 @@ module AppAPI::V1
 
       desc '投诉'
       params do
-        requires :complaint_type, type: String, values: ['complaint', 'community_feedback'], desc: "投诉类型（投诉，小区反馈）"
+        if Settings.project.imolin?
+          requires :complaint_type, type: String, values: ['complaint', 'community_feedback'], desc: "投诉类型（投诉，小区反馈）"
+        elsif Settings.project.meikemei?
+          requires :complaint_type, type: String, values: ['staff_new', 'complaint'], desc: "美容师入驻, 投诉"
+        end
         optional :source_type, type: String, values: ['article', 'comment'], desc: "文章，评论"
         optional :source_id, type: Integer, desc: "投诉内容编号"
         requires :reason, type: String, desc: "投诉原因"

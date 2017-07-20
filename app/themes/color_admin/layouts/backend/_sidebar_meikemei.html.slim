@@ -2,7 +2,7 @@ li class=("#{'active' if page?('admin/home') }")
   = link_to admin_root_path do
     = fa_icon 'laptop', text: '首页'
 
-li class=("has-sub #{'active' if page?('admin/vendors', 'admin/sites','admin/users', 'admin/roles', 'admin/user/weixins', 'admin/staffs')}")
+li class=("has-sub #{'active' if page?('admin/vendors', 'admin/sites','admin/users', 'admin/roles', 'admin/user/weixins', 'admin/staffs', 'admin/members')}")
   = link_to dashboard_admin_users_path
     b.caret.pull-right
     i.fa.fa-inbox
@@ -15,7 +15,8 @@ li class=("has-sub #{'active' if page?('admin/vendors', 'admin/sites','admin/use
       = link_to Site.model_name.human, admin_sites_path
     li[class=('active' if page?('admin/staffs'))]
       = link_to "#{Staff.model_name.human}列表", admin_staffs_path
-
+    li[class=('active' if page?('admin/members'))]
+      = link_to "#{Member.model_name.human}列表", all_admin_members_path
 li class=("has-sub #{'active' if page?('admin/sites', 'admin/catalogs#index?klass=SiteCatalog', 'admin/catalogs#index?klass=ProductCatalog')}")
   = link_to dashboard_admin_sites_path
     b.caret.pull-right
@@ -57,6 +58,8 @@ li class=("has-sub #{'active' if page?('admin/orders', 'admin/produces', 'admin/
       = link_to "创建#{Order.model_name.human}", new_admin_order_path
     li[class=('active' if page?('admin/orders#index'))]
       = link_to "#{Order.model_name.human}管理", admin_orders_path
+    li[class=('active' if page?('admin/orders#refunds'))]
+      = link_to "#{Order.model_name.human}退款管理", refunds_admin_orders_path
 
 li class=("has-sub #{'active' if page?('admin/banners')}")
   a href="javascript:;"
@@ -65,3 +68,7 @@ li class=("has-sub #{'active' if page?('admin/banners')}")
     span 网站图片管理
   ul.sub-menu
     li class=("#{'active' if page?('admin/banners')}") = link_to '轮波图管理', admin_banners_path
+
+li class=("has-sub #{'active' if page?('admin/complaints')}")
+  = link_to admin_complaints_path do
+    = fa_icon 'leaf', text: '投诉/美容师入驻管理'

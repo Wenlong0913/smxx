@@ -15,6 +15,7 @@ zh-CN:
         complaint_types:
           complaint: 投诉
           community_feedback: 小区反馈
+          staff_new: 美容师入驻
     errors:
       models:
         complaint:
