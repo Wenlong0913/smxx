@@ -110,6 +110,11 @@ module AppAPI::V1
             product.sales_count += order_product.amount
             product.save!
           end
+          if Settings.project.meikemei? && order.staff_id
+            staff = ::Staff.find(order.staff_id)
+            staff.total_service = staff.total_service.to_i + 1
+            staff.save!
+          end
           present order, with: AppAPI::Entities::Order
         else
           error! '服务器发生错误，请稍后再试'
