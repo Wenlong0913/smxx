@@ -14,9 +14,9 @@ module AppAPI::V1
         all_or_none_of :longitude, :latitude, :distance
       end
       get do
-        # binding.pry
+        communities = ::Community.published
         if params[:latitude] && params[:longitude]
-          communities = ::Community.near_by(lat: params[:latitude], lng: params[:longitude], distance: 500)
+          communities = communities.near_by(lat: params[:latitude], lng: params[:longitude], distance: 500)
         else
           params[:_sort] = nil if params[:_sort] == 'distance'
         end
