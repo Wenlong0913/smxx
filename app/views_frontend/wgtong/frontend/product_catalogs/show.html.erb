@@ -33,8 +33,9 @@
     								</div>
     								<div class="entry-meta">
     									<ul>
-    										<li>By <a href="#"><%= @product_catalog.name %></a></li>
-    										<li><a href="#"> <%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
+    										<li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(product.updated_at) %>前</a></li>
+                        <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-eye"></i> <%= product.visits_count %>阅读</a></li>
+                        <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-comments-o"></i> <%= product.comments_count %>评论</a></li>
     									</ul>
     								</div>
     								<h2 class="entry-title">
@@ -93,8 +94,9 @@
   										</div>
   										<div class="entry-meta">
   											<ul>
-  												<li>By <a href="javascript: void(0)"><%= @product_catalog.name %></a></li>
-  												<li><a href="javascript: void(0)"><%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
+                          <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(product.updated_at) %>前</a></li>
+                          <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-eye"></i> <%= product.visits_count %>阅读</a></li>
+                          <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-comments-o"></i> <%= product.comments_count %>评论</a></li>
   											</ul>
   										</div><!-- /.entry-meta -->
   										<h2 class="entry-title">
@@ -144,8 +146,9 @@
   								</div>
   								<div class="entry-meta">
   									<ul>
-  										<li>By <a href="javascript: void(0)"><%= @product_catalog.name %></a></li>
-  										<li><a href="javascript: void(0)"> <%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
+  										<li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(product.updated_at) %>前</a></li>
+                      <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-eye"></i> <%= product.visits_count %>阅读</a></li>
+                      <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-comments-o"></i> <%= product.comments_count %>评论</a></li>
   									</ul>
   								</div>
   								<h2 class="entry-title">
@@ -193,8 +196,9 @@
     										</div>
     										<div class="entry-meta">
     											<ul>
-    												<li>By <a href="javascript:void(0)"><%= @product_catalog.name %></a></li>
-    												<li><a href="javascript:void(0)"> <%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
+    												<li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(product.updated_at) %>前</a></li>
+                            <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-eye"></i> <%= product.visits_count %>阅读</a></li>
+                            <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-comments-o"></i> <%= product.comments_count %>评论</a></li>
     											</ul>
     										</div>
     										<h2 class="entry-title">
@@ -238,8 +242,9 @@
                         </div>
                         <div class="entry-meta">
                           <ul>
-                            <li>By <a href="javascript:void(0)"><%= @product_catalog.name %></a></li>
-                            <li><a href="javascript:void(0)"> <%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
+                            <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(product.updated_at) %>前</a></li>
+                          <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-eye"></i> <%= product.visits_count %>阅读</a></li>
+                          <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-comments-o"></i> <%= product.comments_count %>评论</a></li>
                           </ul>
                         </div>
                         <h2 class="entry-title">
@@ -295,8 +300,9 @@
   								</div>
   								<div class="entry-meta">
   									<ul>
-  										<li>By <a href="#"><%= @product_catalog.name %></a></li>
-  										<li><a href="javascript: void(0)"> <%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
+  										<li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(product.updated_at) %>前</a></li>
+                      <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-eye"></i> <%= product.visits_count %>阅读</a></li>
+                      <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-comments-o"></i> <%= product.comments_count %>评论</a></li>
   									</ul>
   								</div><!-- /.entry-meta -->
   								<h2 class="entry-title">
