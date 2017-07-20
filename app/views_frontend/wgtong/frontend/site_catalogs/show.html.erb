@@ -21,7 +21,7 @@
 					<% Site.where(catalog_id: @site_catalog.id).each do |site| %>
 					<div class="tr-section">
 						<div class="section-title title-before">
-							<h1><a href="#"><%= site.properties.map{|p| ::Site::PROPERTIES[p.to_sym]}.compact.join('，') %></a></h1>
+							<h1><a href="javascript:void(0)"><%= site.properties.map{|p| ::Site::PROPERTIES[p.to_sym]}.compact.join('，') %></a></h1>
 						</div>
 						<div class="tr-post">
 							<div class="entry-header">
@@ -31,12 +31,14 @@
 							</div>
 							<div class="post-content">
 								<div class="author">
-									<a href="#"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/author1.png" alt="Image"></a>
+									<a href="javascript:void(0)"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/author<%= rand(1..8) %>.png" alt="Image"></a>
 								</div>
 								<div class="entry-meta">
 									<ul>
-										<li>By <a href="#"><%= site.catalog.name %></a></li>
-										<li><a href="#"> <%= distance_of_time_in_words_to_now(site.updated_at) %>前</a></li>
+										<li><a href="/frontend/sites/<%= site.id %>"><i class="fa fa-user-circle-o"></i> <%= @cms_site.name %></a></li>
+                    <li><a href="/frontend/sites/<%= site.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(site.updated_at) %>前</a></li>
+                    <li><a href="/frontend/sites/<%= site.id %>"><i class="fa fa-eye"></i> <%= site.visits_count %>阅读</a></li>
+                    <li><a href="/frontend/sites/<%= site.id %>"><i class="fa fa-comments-o"></i> <%= site.comments_count %>评论</a></li>
 									</ul>
 								</div><!-- /.entry-meta -->
 								<h2 class="entry-title">
@@ -78,7 +80,7 @@
 				<div class="theiaStickySidebar">
 					<div class="tr-section">
 						<div class="section-title title-before">
-							<h1><a href="#">热门<%= @site_catalog.name %></a></h1>
+							<h1><a href="javascript:void(0)">热门<%= @site_catalog.name %></a></h1>
 						</div>
 						<% Site.hot.where(catalog_id: @site_catalog.id).limit(3).each do |site_hot| %>
 	            <% if site_hot.present? %>
@@ -88,12 +90,13 @@
 								</div>
 								<div class="post-content">
 									<div class="author">
-										<a href="#"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/author3.png" alt="Image"></a>
+										<a href="javascript:void(0)"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/author<%= rand(1..8) %>.png" alt="Image"></a>
 									</div>
 									<div class="entry-meta">
 										<ul>
-											<li>By <a href="#"><%= site_hot.catalog.name %></a></li>
-											<li><a href="#"> <%= distance_of_time_in_words_to_now(site_hot.updated_at) %>前</a></li>
+	                    <li><a href="/frontend/sites/<%= site_hot.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(site_hot.updated_at) %>前</a></li>
+	                    <li><a href="/frontend/sites/<%= site_hot.id %>"><i class="fa fa-eye"></i> <%= site_hot.visits_count %>阅读</a></li>
+	                    <li><a href="/frontend/sites/<%= site_hot.id %>"><i class="fa fa-comments-o"></i> <%= site_hot.comments_count %>评论</a></li>
 										</ul>
 									</div><!-- /.entry-meta -->
 									<h2 class="entry-title">
@@ -128,11 +131,6 @@
 									</div>
 								</div>
 								<div class="post-content media-body">
-									<div class="entry-meta">
-										<ul>
-											<li>By <a href="#"><%= site_scrolls.catalog.name %></a></li>
-										</ul>
-									</div><!-- /.entry-meta -->
 									<h2 class="entry-title">
 										<%= link_to site_scrolls.title, frontend_site_url(site_scrolls) %>
 									</h2>
@@ -171,8 +169,9 @@
 									<div class="post-content">
 										<div class="entry-meta">
 											<ul>
-												<li>By <%= site_recommends.catalog.name %></li>
-												<li><%= distance_of_time_in_words_to_now(site_recommends.updated_at) %>前</li>
+												<li><a href="/frontend/sites/<%= site_recommends.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(site_recommends.updated_at) %>前</a></li>
+		                    <li><a href="/frontend/sites/<%= site_recommends.id %>"><i class="fa fa-eye"></i> <%= site_recommends.visits_count %>阅读</a></li>
+		                    <li><a href="/frontend/sites/<%= site_recommends.id %>"><i class="fa fa-comments-o"></i> <%= site_recommends.comments_count %>评论</a></li>
 											</ul>
 										</div><!-- /.entry-meta -->
 										<h2 class="entry-title">
