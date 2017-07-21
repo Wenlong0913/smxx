@@ -23,7 +23,7 @@
               a href="/agent"  首页
             - if Settings.project.dagle? || Settings.project.grand?
               = render "layouts/agent/header_all"
-            - elsif Settings.project.sxhop? || Settings.project.imolin?
+            - elsif Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei?
               = render "layouts/agent/header_ecommerce"
 
             li.dropdown.dropdown-hover
