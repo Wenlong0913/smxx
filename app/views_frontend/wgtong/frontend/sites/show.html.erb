@@ -39,7 +39,7 @@
 												<% end %>
 											</p>
 											<p><i class="fa fa-info fa-lg contact-fa"></i>简介： <%= @site.description %></p>
-											<a href="javascript: void(0)" class="btn btn-block btn-lg btn-success">马上预订</a>
+											<a href="javascript:void(0)" class="btn btn-block btn-lg btn-success" style="color: #fff;">马上预订</a>
 										</div>
 									</div>
 								</div>
@@ -50,15 +50,18 @@
 								</div>
 								<div class="entry-meta">
 									<ul>
-										<li>By <a href="#"><%= @site.catalog.name %></a></li>
-										<li><a href="#"> <%= distance_of_time_in_words_to_now(@site.updated_at) %>前</a></li>
+										<li><a href="javascript:void(0)"><i class="fa fa-user-circle-o"></i> <%= @cms_site.name %></a></li>
+                    <li><a href="javascript:void(0)"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(@site.updated_at) %>前</a></li>
+                    <li><a href="javascript:void(0)"><i class="fa fa-eye"></i> <%= @site.visits_count %>阅读</a></li>
+                    <li><a href="javascript:void(0)"><i class="fa fa-comments-o"></i> <%= @site.comments_count %>评论</a></li>
 										<li>
 											<ul>
-												<li>分享到</li>
-												<li><a href="#"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
+												<div class="bdsharebuttonbox" data-tag="share_1">
+	                        <a class="bds_qzone" data-cmd="qzone"></a>
+	                        <a class="bds_tsina" data-cmd="tsina"></a>
+	                        <a class="bds_sqq" data-cmd="sqq"></a>
+	                        <a class="bds_weixin" data-cmd="weixin"></a>
+	                      </div>
 											</ul>
 										</li>
 									</ul>
@@ -74,10 +77,13 @@
 						</div>
 					</div><!-- /.tr-section -->
 
-					<div class="tr-ad">
-						<a href="javascript：void(0)"><img class="img-responsive" src="<%= Keystore.value_for('banner-site-center-center-773x84') %>" alt="广告横幅773x84"></a>
-					</div><!-- /.add -->
-
+					<% if Keystore.value_for('banner-site-center-center-773x84').present? %>
+          <div class="tr-ad">
+            <% banner_site_center_center = Keystore.value_for('banner-site-center-center-773x84').split('|') %>
+            <a href="<%= banner_site_center_center[1] || 'javascript:void(0)' %>"><img class="img-responsive" src="<%= banner_site_center_center[0] %>" alt="广告横幅773x84"></a>
+          </div>
+          <% end %>
+          
 					<%= render file: 'public/templetes/newshub/_comments.html.erb' %>
 				</div><!-- /.tr-content -->
 			</div><!-- /.tr-sticky -->
@@ -87,9 +93,12 @@
 			</div>
 		</div><!-- /.row -->
 
+		<% if Keystore.value_for('banner-site-bottom-center-819×119').present? %>
 		<div class="tr-ad ad-bottom ad-image text-center">
-			<a href="#"><img class="img-responsive" src="/templetes/newshub/images/advertise/5.jpg" alt="Image"></a>
-		</div><!-- /.tr-ad -->
+      <% banner_site_bottom_center = Keystore.value_for('banner-site-bottom-center-819×119').split('|') %>
+			<a href="<%= banner_site_bottom_center[1] || 'javascript:void(0)' %>"><img class="img-responsive" src="<%= banner_site_bottom_center[0] %>" alt="广告横幅819×119"></a>
+		</div>
+    <% end %>
 
 	</div><!-- /.container-fulid -->
 </div><!-- /.main-wrapper -->

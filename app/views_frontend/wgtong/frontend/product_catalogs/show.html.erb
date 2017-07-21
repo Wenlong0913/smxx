@@ -33,17 +33,9 @@
     								</div>
     								<div class="entry-meta">
     									<ul>
-    										<li>By <a href="#"><%= @product_catalog.name %></a></li>
-    										<li>445 分享 /<a href="#"> <%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
-    										<li>
-    											<ul>
-    												<li>分享</li>
-                            <li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-    									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
-    									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
-    									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
-    											</ul>
-    										</li>
+    										<li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(product.updated_at) %>前</a></li>
+                        <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-eye"></i> <%= product.visits_count %>阅读</a></li>
+                        <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-comments-o"></i> <%= product.comments_count %>评论</a></li>
     									</ul>
     								</div>
     								<h2 class="entry-title">
@@ -56,10 +48,12 @@
     									</div>
     									<div class="feed pull-right">
     										<ul>
-                          <li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-  									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
-  									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
-  									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
+                          <div class="bdsharebuttonbox" data-tag="share_1">
+                            <a class="bds_qzone" data-cmd="qzone"></a>
+                            <a class="bds_tsina" data-cmd="tsina"></a>
+                            <a class="bds_sqq" data-cmd="sqq"></a>
+                            <a class="bds_weixin" data-cmd="weixin"></a>
+                          </div>
     										</ul>
     									</div>
     								</div>
@@ -68,11 +62,12 @@
             <% end %>
           </div>
           <!-- 广告位 -->
-					<div class="tr-ad">
-						<a href="javascript: void(0)">
-              <img class="img-responsive" src="<%= Keystore.value_for('banner-product-center-center-773x84') %>" alt="广告横幅773x84">
-            </a>
-					</div>
+          <% if Keystore.value_for('banner-product-center-center-773x84').present? %>
+          <div class="tr-ad">
+            <% banner_product_center_center = Keystore.value_for('banner-product-center-center-773x84').split('|') %>
+            <a href="<%= banner_product_center_center[1] || 'javascript:void(0)' %>"><img class="img-responsive" src="<%= banner_product_center_center[0] %>" alt="广告横幅773x84"></a>
+          </div>
+          <% end %>
           <!-- 幻灯 -->
 					<div class="tr-section post-vertical">
 						<div class="section-title title-before">
@@ -99,8 +94,9 @@
   										</div>
   										<div class="entry-meta">
   											<ul>
-  												<li>By <a href="javascript: void(0)"><%= @product_catalog.name %></a></li>
-  												<li>255 分享 /<a href="javascript: void(0)"><%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
+                          <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(product.updated_at) %>前</a></li>
+                          <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-eye"></i> <%= product.visits_count %>阅读</a></li>
+                          <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-comments-o"></i> <%= product.comments_count %>评论</a></li>
   											</ul>
   										</div><!-- /.entry-meta -->
   										<h2 class="entry-title">
@@ -113,10 +109,12 @@
   											</div>
   											<div class="feed pull-right">
   												<ul>
-                            <li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-    									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
-    									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
-    									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
+                            <div class="bdsharebuttonbox" data-tag="share_1">
+                              <a class="bds_qzone" data-cmd="qzone"></a>
+                              <a class="bds_tsina" data-cmd="tsina"></a>
+                              <a class="bds_sqq" data-cmd="sqq"></a>
+                              <a class="bds_weixin" data-cmd="weixin"></a>
+                            </div>
   												</ul>
   											</div>
   										</div>
@@ -148,17 +146,9 @@
   								</div>
   								<div class="entry-meta">
   									<ul>
-  										<li>By <a href="javascript: void(0)"><%= @product_catalog.name %></a></li>
-  										<li>123 分享 /<a href="javascript: void(0)"> <%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
-  										<li>
-  											<ul>
-  												<li>分享</li>
-                          <li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-  									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
-  									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
-  									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
-  											</ul>
-  										</li>
+  										<li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(product.updated_at) %>前</a></li>
+                      <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-eye"></i> <%= product.visits_count %>阅读</a></li>
+                      <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-comments-o"></i> <%= product.comments_count %>评论</a></li>
   									</ul>
   								</div>
   								<h2 class="entry-title">
@@ -171,10 +161,12 @@
   									</div>
   									<div class="feed pull-right">
   										<ul>
-                        <li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
-									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
-									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
+                        <div class="bdsharebuttonbox" data-tag="share_1">
+                          <a class="bds_qzone" data-cmd="qzone"></a>
+                          <a class="bds_tsina" data-cmd="tsina"></a>
+                          <a class="bds_sqq" data-cmd="sqq"></a>
+                          <a class="bds_weixin" data-cmd="weixin"></a>
+                        </div>
   										</ul>
   									</div>
   								</div>
@@ -204,8 +196,9 @@
     										</div>
     										<div class="entry-meta">
     											<ul>
-    												<li>By <a href="javascript:void(0)"><%= @product_catalog.name %></a></li>
-    												<li>10 分享 /<a href="javascript:void(0)"> <%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
+    												<li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(product.updated_at) %>前</a></li>
+                            <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-eye"></i> <%= product.visits_count %>阅读</a></li>
+                            <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-comments-o"></i> <%= product.comments_count %>评论</a></li>
     											</ul>
     										</div>
     										<h2 class="entry-title">
@@ -218,10 +211,12 @@
     											</div>
     											<div class="feed pull-right">
     												<ul>
-                              <li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-      									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
-      									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
-      									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
+                              <div class="bdsharebuttonbox" data-tag="share_1">
+                                <a class="bds_qzone" data-cmd="qzone"></a>
+                                <a class="bds_tsina" data-cmd="tsina"></a>
+                                <a class="bds_sqq" data-cmd="sqq"></a>
+                                <a class="bds_weixin" data-cmd="weixin"></a>
+                              </div>
     												</ul>
     											</div>
     										</div>
@@ -247,8 +242,9 @@
                         </div>
                         <div class="entry-meta">
                           <ul>
-                            <li>By <a href="javascript:void(0)"><%= @product_catalog.name %></a></li>
-                            <li>10 分享 /<a href="javascript:void(0)"> <%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
+                            <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(product.updated_at) %>前</a></li>
+                          <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-eye"></i> <%= product.visits_count %>阅读</a></li>
+                          <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-comments-o"></i> <%= product.comments_count %>评论</a></li>
                           </ul>
                         </div>
                         <h2 class="entry-title">
@@ -261,10 +257,12 @@
                           </div>
                           <div class="feed pull-right">
                             <ul>
-                              <li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-      									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
-      									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
-      									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
+                              <div class="bdsharebuttonbox" data-tag="share_1">
+                                <a class="bds_qzone" data-cmd="qzone"></a>
+                                <a class="bds_tsina" data-cmd="tsina"></a>
+                                <a class="bds_sqq" data-cmd="sqq"></a>
+                                <a class="bds_weixin" data-cmd="weixin"></a>
+                              </div>
                             </ul>
                           </div>
                         </div>
@@ -302,8 +300,9 @@
   								</div>
   								<div class="entry-meta">
   									<ul>
-  										<li>By <a href="#"><%= @product_catalog.name %></a></li>
-  										<li>205 分享 /<a href="javascript: void(0)"> <%= distance_of_time_in_words_to_now(product.created_at) %>前</a></li>
+  										<li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(product.updated_at) %>前</a></li>
+                      <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-eye"></i> <%= product.visits_count %>阅读</a></li>
+                      <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-comments-o"></i> <%= product.comments_count %>评论</a></li>
   									</ul>
   								</div><!-- /.entry-meta -->
   								<h2 class="entry-title">
@@ -316,10 +315,12 @@
   									</div>
   									<div class="feed pull-right">
   										<ul>
-                        <li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
-									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
-									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
+                        <div class="bdsharebuttonbox" data-tag="share_1">
+                          <a class="bds_qzone" data-cmd="qzone"></a>
+                          <a class="bds_tsina" data-cmd="tsina"></a>
+                          <a class="bds_sqq" data-cmd="sqq"></a>
+                          <a class="bds_weixin" data-cmd="weixin"></a>
+                        </div>
   										</ul>
   									</div>
   								</div>
@@ -352,10 +353,13 @@
 						</ul>
 					</div>
 
+          <% if Keystore.value_for('banner-product-right-center-400×576').present? %>
 					<div class="tr-section tr-ad ad-before">
-						<a href="javascript：void(0)">
-              <img class="img-responsive" src="<%= Keystore.value_for('banner-product-right-center-400×576') %>" alt="广告横幅400×576"></a>
+            <% banner_product_right_center = Keystore.value_for('banner-product-right-center-400×576').split('|') %>
+						<a href="<%= banner_product_right_center[1] || 'javascript:void(0)' %>">
+              <img class="img-responsive" src="<%= banner_product_right_center[0] %>" alt="广告横幅400×576"></a>
 					</div>
+          <% end %>
 
           <!-- 本地活动 -->
 					<div class="tr-section local-events">
@@ -437,9 +441,12 @@
 
 		</div>
 
+    <% if Keystore.value_for('banner-product-bottom-center-819×119').present? %>
 		<div class="tr-ad ad-bottom ad-image text-center">
-			<a href="javascript：void(0)"><img class="img-responsive" src="<%= Keystore.value_for('banner-product-bottom-center-819×119') %>" alt="广告横幅819×119"></a>
+      <% banner_product_bottom_center = Keystore.value_for('banner-product-bottom-center-819×119').split('|') %>
+			<a href="<%= banner_product_bottom_center[1] || 'javascript:void(0)' %>"><img class="img-responsive" src="<%= banner_product_bottom_center[0] %>" alt="广告横幅819×119"></a>
 		</div>
+    <% end %>
 
 	</div>
 </div>

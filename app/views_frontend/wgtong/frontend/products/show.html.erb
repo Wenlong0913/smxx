@@ -74,15 +74,17 @@
 								</div>
 								<div class="entry-meta">
 									<ul>
-										<li>By <a href="#"><%= @product.catalog.name  %></a></li>
-										<li>445 分享 /<a href="#"> <%= distance_of_time_in_words_to_now(@product.created_at) %></a> 前</li>
+										<li><a href="javascript:void(0)"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(@product.updated_at) %>前</a></li>
+                    <li><a href="javascript:void(0)"><i class="fa fa-eye"></i> <%= @product.visits_count %>阅读</a></li>
+                    <li><a href="javascript:void(0)"><i class="fa fa-comments-o"></i> <%= @product.comments_count %>评论</a></li>
 										<li>
 											<ul>
-												<li>分享</li>
-												<li><a href="javascript: void(0)"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-									      <li><a href="javascript: void(0)"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
-									      <li><a href="javascript: void(0)"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
-									      <li><a href="javascript: void(0)"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
+												<div class="bdsharebuttonbox" data-tag="share_1">
+	                        <a class="bds_qzone" data-cmd="qzone"></a>
+	                        <a class="bds_tsina" data-cmd="tsina"></a>
+	                        <a class="bds_sqq" data-cmd="sqq"></a>
+	                        <a class="bds_weixin" data-cmd="weixin"></a>
+	                      </div>
 											</ul>
 										</li>
 									</ul>
@@ -99,7 +101,7 @@
 					</div>
 
 					<div class="tr-ad">
-						<a href="javascript: void(0)">
+						<a href="javascript:void(0)">
               <img class="img-responsive" src="<%= Keystore.value_for('banner-product-center-center-773x84') %>" alt="广告横幅773x84">
 					</div>
 
@@ -111,9 +113,13 @@
 				<%= render file: 'public/templetes/newshub/_sidebar.html.erb' %>
 			</div>
 		</div>
+
+		<% if Keystore.value_for('banner-product-bottom-center-819×119').present? %>
 		<div class="tr-ad ad-bottom ad-image text-center">
-			<a href="#"><img class="img-responsive" src="/templetes/newshub/images/advertise/5.jpg" alt="Image"></a>
-		</div>
+      <% banner_product_bottom_center = Keystore.value_for('banner-product-bottom-center-819×119').split('|') %>
+			<a href="<%= banner_product_bottom_center[1] || 'javascript:void(0)' %>"><img class="img-responsive" src="<%= banner_product_bottom_center[0] %>" alt="广告横幅819×119"></a>
+		</div><!-- /.tr-ad -->
+    <% end %>
 
 	</div>
 </div>
