@@ -53,8 +53,9 @@ h1.page-header
                 td.field
                   | #{Order.human_attribute_name(:user)}
                 td
-                  a[href="#{admin_user_path(@order.user || @order.member)}"]
-                    = @order.user.blank? ? @order.member.name : decorate(@order.user).display_name
+                  - if @order.user || @order.member_id
+                    a[href="#{admin_user_path(@order.user || @order.member)}"]
+                      = @order.user.blank? ? @order.member.name : decorate(@order.user).display_name
               tr.divider
                 td[colspan='2']
               tr
