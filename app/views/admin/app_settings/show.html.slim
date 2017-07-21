@@ -1,0 +1,51 @@
+h1.page-header
+  | 查看#{AppSetting.model_name.human}
+  .pull-right
+    => link_to '编辑', edit_admin_app_setting_path(@app_setting), class: 'btn btn-primary'
+    = link_to '返回', admin_app_settings_path, class: 'btn btn-primary'
+
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+  .panel-body
+    .profile-container
+      .profile-info
+        .table-responsive
+          table.table.table-profile
+            - if policy(AppSetting).create?
+              tr
+                td.field =AppSetting.human_attribute_name(:name)
+                td
+                  = @app_setting.name
+              tr
+                td.field =AppSetting.human_attribute_name(:key_word)
+                td
+                  = @app_setting.key_word
+              tr
+                td.field =AppSetting.human_attribute_name(:site_share_url_pattern)
+                td
+                  = @app_setting.site_share_url_pattern
+              tr
+                td.field =AppSetting.human_attribute_name(:product_share_url_pattern)
+                td
+                  = @app_setting.product_share_url_pattern
+              tr
+                td.field =AppSetting.human_attribute_name(:system_rooms)
+                td
+                  = @app_setting.system_rooms
+              tr
+                td.field =AppSetting.human_attribute_name(:app_version_message)
+                td
+                  = @app_setting.app_version_message
+            tr
+              td.field =AppSetting.human_attribute_name(:main_banners)
+              td
+                = @app_setting.main_banners
+            tr
+              td.field =AppSetting.human_attribute_name(:service_banners)
+              td
+                = @app_setting.service_banners

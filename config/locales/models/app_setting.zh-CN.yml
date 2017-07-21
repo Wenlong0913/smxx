@@ -1,0 +1,20 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      app_setting: APP 参数设置
+    attributes:
+      app_setting:
+        name: 中文名称
+        key_word: 英文名称
+        site_share_url_pattern: 商家链接分享模式
+        product_share_url_pattern: 产品链接分享模式
+        system_rooms: 系统房间
+        service_banners: 服务轮播图
+        main_banners: 主页轮播图
+        app_version_message: 版本信息
+    errors:
+      models:
+        app_setting:
+  helpers:
+    app_setting:
