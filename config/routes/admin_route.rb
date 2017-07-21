@@ -122,6 +122,7 @@ module AdminRoute
         resources :members, :concerns => :paginatable do
           collection do
             get 'dashboard', to: 'members#dashboard'
+            get 'all'
           end
         end
         #系统参数

@@ -19,6 +19,8 @@ class Community < ApplicationRecord
     self.lng
   end
 
+  scope :published, -> { where(is_published: true) }
+
   # 小区地址完成改动时候,经纬度也得跟着改
   before_save do |rec|
     if rec.address_line_changed?

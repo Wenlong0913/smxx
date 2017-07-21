@@ -72,7 +72,7 @@ module AppAPI::V1
           elsif params[:mobile_phone]
             ::User.find_by_phone_number(params[:mobile_phone])
           end
-        if user.nil? && Settings.project.imolin? && params[:mobile_phone]
+        if user.nil? && (Settings.project.imolin? || Settings.project.meikemei?) && params[:mobile_phone]
           _ , user = ::User::Create.(mobile_phone: params[:mobile_phone])
           api_token = user.api_tokens.find_or_initialize_by(device: params[:device])
         end

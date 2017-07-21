@@ -34,8 +34,8 @@ module AppAPI::V1
           product = ::Product.find_by(id: params[:product_id])
           error! '产品不存在!' if product.nil?
           order = current_user.orders.new(site_id: product.site_id)
-          order.order_products.new(product_id: product.id, price: product.price, amount: 1)
-          order.price = product.price
+          order.order_products.new(product_id: product.id, price: product.sell_price, amount: 1)
+          order.price = product.sell_price
           order.service_time = params[:service_time]
           order.staff_id = params[:staff_id]
           error! order.errors unless order.save
@@ -109,6 +109,11 @@ module AppAPI::V1
             product = order_product.product
             product.sales_count += order_product.amount
             product.save!
+          end
+          if Settings.project.meikemei? && order.staff_id
+            staff = ::Staff.find(order.staff_id)
+            staff.total_service = staff.total_service.to_i + 1
+            staff.save!
           end
           present order, with: AppAPI::Entities::Order
         else

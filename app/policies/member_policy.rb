@@ -37,6 +37,10 @@ class MemberPolicy < ApplicationPolicy
     true
   end
 
+  def all?
+    user.super_admin_or_admin?
+  end
+
   def permitted_attributes_for_create
     if user.has_role?(:admin) || user.has_role?(:agent)
       [:user_id, :name, :qq, :email, :birth, :mobile_phone, :tel_phone, :wechat, :firm, :address, :note, :typo, :from, :owned, :features]

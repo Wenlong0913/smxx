@@ -1,10 +1,5 @@
 h1.page-header
-  - if params[:relation]
-    | 相关举报列表
-  - else
-    | #{Complaint.model_name.human}列表
-  .pull-right
-    = link_to '返回审核', edit_admin_complaint_path(@complaint), class: 'btn btn-primary' if params[:relation]
+  | 会员列表
 
 .panel.panel-default
   .panel-heading
@@ -14,7 +9,7 @@ h1.page-header
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
   .panel-body
-    /= form_for :search, url:  admin_complaints_path, method: :get do |f|
+    = form_for :search, url:  all_admin_members_path, method: :get do |f|
       .toolbar.row
         .col-md-12
           p
@@ -35,19 +30,18 @@ h1.page-header
             ul.dropdown-menu#search_column[role='menu']
               - @filter_colums.each do |filter_colum|
                 li
-                  a[href='javascript:;' data-key=filter_colum] = Complaint.human_attribute_name(filter_colum.to_sym)
+                  a[href='javascript:;'] = filter_colum
           .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
             button.btn.btn-default[type='submit'name='json'value='json'] json
             button.btn.btn-default[type='submit'name='xml'value='xml'] xml
             button.btn.btn-default[type='submit'name='csv'value='csv'] csv
       .well.form-horizontal.filter_search[class==params[:filters]?'show':'hidden']
         - if params[:filters] && !params[:filters].keys.blank?
-          .top.small.m-b-10 * 以下输入值将完全匹配字段对应值
           - params[:filters].keys.each do |key|
             .form-group
               label.col-xs-1.control-label
                 i.fa.fa-trash-o.m-r-5
-                b = Complaint.human_attribute_name(key.to_sym)
+                b = key
               - input_name = "filters["+key+"]"
               .col-xs-5
                 input.form-control[type="text"name==input_name value==params[:filters][key]]
@@ -58,47 +52,39 @@ h1.page-header
         strong
           = "查询："
         span
-          = @complaints.size.to_s + "条记录"
+          = @members.total_count.to_s + "条记录"
         span.close[data-dismiss="alert"]
           | ×
     .table-responsive.row.m-0
       table.table.table-striped.table-bordered
         thead
           tr
-            th 类型
-            th 举报对象
-            th 举报对象编号
-            th = Settings.project.meikemei? ? '内容' : '举报原因'
-            th
+            th 登录用户
+            th 会员名称
+            th 手机号
+            / th 性别
+            th 生日
+            th QQ
+            th 邮箱
         tbody
-          - @complaints.each do |complaint|
+          - @members.each do |member|
             tr
-              td
-                = enum_l(complaint, :complaint_type)
-              td
-                = (complaint.source_type.to_s == 'Comment::Entry' ? '评论' : Object::const_get(complaint.source_type).model_name.human) if complaint.complaint?
-              td
-                = (complaint.source_type.to_s == 'Comment::Entry' ? "#{complaint.source.content.slice(0, 10)}..." : complaint.source.title) if complaint.complaint?
-              td
-                = "#{complaint.reason.slice(0, 10)}..." unless complaint.reason.blank?
-              td
-                - if complaint.status.blank? && Settings.project.imolin?
-                  => link_to '审核', edit_admin_complaint_path(complaint), class: 'btn btn-xs btn-primary'
-                => link_to '查看', admin_complaint_path(complaint), class: 'btn btn-xs btn-success'
-                = link_to '删除', admin_complaint_path(complaint), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
-      = paginate @complaints
-
-/ TODO: move this code to application.js
+              td = member.user && decorate(member.user).display_name
+              td = member.name
+              td = member.mobile_phone
+              / td = decorate(member).display_gender
+              td = member.birth
+              td = member.qq
+              td = member.email
 javascript:
   $(document).ready(function(){
     bindRemoveLabel('.well.filter_search label.control-label');
-    $('form #search_column li a').off().on('click', function(){
+    $('form #search_column li a').on('click', function(){
       if($('.well.filter_search .form-group').length == 0){
         $('.well.form-horizontal.filter_search').removeClass('hidden').addClass('show');
       }
       var column_name = $(this).text();
-      var column_key = $(this).data('key');
-      var name = "filters["+ column_key +"]";
+      var name = "filters["+ column_name +"]";
       input_name = "input[name='" + name +"']";
       if(!$('.well.filter_search').find(input_name).length > 0){
         $('.well.filter_search hr').before("<div class='form-group'><label class='col-xs-1 control-label'><i class='fa fa-trash-o m-r-5'></i><b>"+ column_name +"</b></label><div class='col-xs-5'><input class='form-control' name='"+ name +"' type='text'></div></div>");
