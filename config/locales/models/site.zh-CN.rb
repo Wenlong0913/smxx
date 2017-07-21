@@ -24,7 +24,7 @@ zh-CN:
         sign_note: 签约备注
         score: 星级评分
         comment: 营销备注
-        description: 描述
+        description: 简要描述
         content: <%= site_name %>介绍
         good_summary: 好评数
         bad_summary: 差评数
