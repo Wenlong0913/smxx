@@ -4,6 +4,7 @@ class CreateAppSettings < ActiveRecord::Migration[5.0]
       t.string :name
       t.string :key_word
       t.json :app_data
+      t.boolean :is_used, default: false
 
       t.timestamps
     end

@@ -1,7 +1,7 @@
 # csv support
 require 'csv'
 class Admin::AppSettingsController < Admin::BaseController
-  before_action :set_app_setting, only: [:show, :edit, :update, :destroy]
+  before_action :set_app_setting, only: [:show, :edit, :update, :destroy, :used]
 
   # GET /admin/app_settings
   def index
@@ -67,12 +67,20 @@ class Admin::AppSettingsController < Admin::BaseController
     redirect_to admin_app_settings_url, notice: "#{AppSetting.model_name.human} 删除成功."
   end
 
+  def used
+    authorize @app_setting
+    if AppSetting.update_all(is_used: false) && @app_setting.update_attributes(is_used: true)
+      redirect_to admin_app_settings_url, notice: "#{@app_setting.name} 方案使用成功."
+    else
+      render js: "alert('出现错误')"
+    end
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_app_setting
       @app_setting = AppSetting.find(params[:id])
     end
-    
+
     # Only allow a trusted parameter "white list" through.
     # def admin_app_setting_params
     #       #   params[:admin_app_setting]

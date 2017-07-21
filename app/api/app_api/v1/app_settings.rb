@@ -5,14 +5,14 @@ module AppAPI::V1
 
       desc 'App配置信息'
       get do
-        info = AppSetting.where(key_word: 'APP-Setting').first
+        current_setting = AppSetting.where(is_used: true).first || AppSetting.first
         app_data = {
-          site_share_url_pattern: info.site_share_url_pattern,
-          product_share_url_pattern: info.product_share_url_pattern,
-          system_rooms: begin eval(info.system_rooms) rescue nil end,
-          service_banners: begin eval(info.service_banners) rescue nil end,
-          main_banners: begin eval(info.service_banners) rescue nil end,
-          app_version_message: begin eval(info.app_version_message) rescue nil end
+          site_share_url_pattern: current_setting.site_share_url_pattern,
+          product_share_url_pattern: current_setting.product_share_url_pattern,
+          system_rooms: begin eval(current_setting.system_rooms) rescue nil end,
+          service_banners: begin eval(current_setting.service_banners) rescue nil end,
+          main_banners: begin eval(current_setting.service_banners) rescue nil end,
+          app_version_message: begin eval(current_setting.app_version_message) rescue nil end
         }
         present app_data
       end

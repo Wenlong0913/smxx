@@ -14,7 +14,7 @@ class AppSettingPolicy < ApplicationPolicy
   end
 
   def update?
-    user.super_admin_or_admin?
+    edit?
   end
 
   def edit?
@@ -23,6 +23,10 @@ class AppSettingPolicy < ApplicationPolicy
 
   def destroy?
     create?
+  end
+
+  def used?
+    edit?
   end
 
   def permitted_attributes_for_create

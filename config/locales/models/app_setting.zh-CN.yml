@@ -13,6 +13,7 @@ zh-CN:
         service_banners: 服务轮播图
         main_banners: 主页轮播图
         app_version_message: 版本信息
+        is_used: 使用状态
     errors:
       models:
         app_setting:
