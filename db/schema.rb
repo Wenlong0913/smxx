@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170712053538) do
+ActiveRecord::Schema.define(version: 20170714093316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -996,18 +996,19 @@ ActiveRecord::Schema.define(version: 20170712053538) do
   create_table "sites", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.jsonb    "features"
     t.string   "type"
     t.integer  "address_alias_id"
     t.string   "address_line"
     t.integer  "catalog_id"
-    t.integer  "favorites_count",  default: 0
-    t.integer  "visits_count",     default: 0
+    t.integer  "favorites_count",       default: 0
+    t.integer  "visits_count",          default: 0
     t.integer  "comments_count"
     t.integer  "agent_plan_id"
     t.datetime "paid_at"
+    t.boolean  "is_flatform_recommend", default: false
     t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
   end
 
