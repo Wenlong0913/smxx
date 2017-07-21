@@ -97,7 +97,7 @@ module AdminRoute
         resources :task_types, except: [:show]
         resources :deliveries, except: [:show]
         resources :order_deliveries, only: [:index]
-        resources :orders, :concerns => :paginatable do
+        resources :orders, :concerns => :paginatable, except: Settings.project.imolin? ? [:new, :create] : nil do
           resources :materials, except: [:index], controller: 'order_materials'
           resources :produces, only: [:show, :create, :destroy, :update]
           member do

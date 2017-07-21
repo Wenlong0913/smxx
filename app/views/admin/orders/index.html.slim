@@ -1,7 +1,7 @@
 h1.page-header
   | #{Order.model_name.human}列表
   .pull-right
-    = link_to "新建#{Order.model_name.human}", new_admin_order_path, class: 'btn btn-primary' unless Settings.project.sxhop?
+    = link_to "新建#{Order.model_name.human}", new_admin_order_path, class: 'btn btn-primary' unless Settings.project.sxhop? || Settings.project.imolin?
 
 .panel.panel-default
   .panel-heading
