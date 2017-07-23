@@ -152,10 +152,10 @@ $(document).ready ->
     bodyNew.find('form#new_product').on 'ajax:error', (event,request)->
       $.gritter.add({title: '提示', text: '商品发布失败!'})
     bodyNew.find('form#new_product').on 'ajax:success', (event,request)->
+      $(window).scrollTop(0)
       bodyNew.find('.checkout-header .step').removeClass('active')
       bodyNew.find("[role='tabpanel']").removeClass('active in fade')
       if request.errors
-        $(window).scrollTop(0)
         $.gritter.add({title: '提示', text: request.errors})
         bodyNew.find('.basicInformation.step').addClass('active')
         bodyNew.find('#basicInformation').addClass('active')
