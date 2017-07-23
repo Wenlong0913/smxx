@@ -25,7 +25,7 @@ class Cms::Page < ApplicationRecord
   validates :channel, :title, :content, presence: true
   # validates :short_title, format: { with: /\A[a-zA-Z0-9-]+\z/,
   #   message: "名称简写只能包括字母数字和横线" }
-  validates_uniqueness_of :short_title
+  validates_uniqueness_of :short_title, scope: [:channel_id]
 
   before_save :set_content_image
   before_save :set_thumb_image_path
