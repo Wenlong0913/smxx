@@ -158,6 +158,7 @@ class CmsController < ApplicationController
 
   def check_subdomain!
     @cms_site = Cms::Site.where("domain = ? OR root_domain = ?", request.subdomain, request.domain).first
+    puts "----subdomain:#{request.subdomain}---domain: #{request.domain}-------cms_site: #{@cms_site.try(:id)}---"
     redirect_to root_url(subdomain: nil) if @cms_site.nil? || !@cms_site.is_published
   end
 
