@@ -20,13 +20,12 @@ class Cms::Page < ApplicationRecord
   is_impressionable :counter_cache => true
   belongs_to :channel
   has_one :site, through: :channel
-  has_many_comments
   before_validation :sanitize_short_title
   before_validation :create_unique_short_title
   validates :channel, :title, :content, presence: true
   # validates :short_title, format: { with: /\A[a-zA-Z0-9-]+\z/,
   #   message: "名称简写只能包括字母数字和横线" }
-  validates_uniqueness_of :short_title
+  validates_uniqueness_of :short_title, scope: [:channel_id]
 
   before_save :set_content_image
   before_save :set_thumb_image_path

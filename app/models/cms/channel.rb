@@ -27,7 +27,6 @@ class Cms::Channel < ApplicationRecord
                           foreign_key: "parent_id",
                           dependent: :destroy
 
-  has_many_comments
   belongs_to :parent, class_name: "Cms::Channel"
 
   validates :title, :short_title, :tmp_index, :tmp_detail, presence: true
