@@ -3,7 +3,6 @@ class CmsController < ApplicationController
   helper Cms::ApplicationHelper
   include Cms::ApplicationHelper
   before_action :check_subdomain!
-  acts_as_commentable resource: Cms::Page
 
   #{"controller"=>"welcome", "action"=>"index", "channel"=>"fw", "id"=>"2", "tag" => "tagkey"}
   #params
@@ -57,13 +56,6 @@ class CmsController < ApplicationController
     #统计channel
     impressionist(@channel, "channel_#{@channel.id}")
     impressionist(@page, "page_#{@page.id}") if @page # 2nd argument is optional
-
-    # add cms comments
-    @comment_path = if @page
-      cms_frontend_path(channel: @channel.id, page: @page.id)
-    else
-      cms_frontend_path(channel: @channel.id)
-    end
 
     #respond_with @page || @channel
     respond_to do |format|
@@ -132,28 +124,6 @@ class CmsController < ApplicationController
     end
   end
 
-  # 自定义comments_index
-  def comments_index
-    @source = comment_resovel_resource
-    total_page = @source.comments.page(1).per(10).total_pages
-    current_page = params[:page].blank? ? total_page : params[:page]
-    @comments = comment__filter(@source.comments.page(current_page).per(10))
-    render json: comment__entry_json(@comments)
-  end
-
-  # 自定义create_comment
-  def create_comment
-    @source = comment_resovel_resource
-    entry = @source.comments.new(comment__permitted_params)
-    entry.user_id = comment__user_id
-
-    if entry.save
-      render json: comment__entry_json(entry)
-    else
-      head 403
-    end
-  end
-
   private
 
   def check_subdomain!
@@ -162,12 +132,4 @@ class CmsController < ApplicationController
     redirect_to root_url(subdomain: nil) if @cms_site.nil? || !@cms_site.is_published
   end
 
-  def comment_resovel_resource
-    source = if params[:page]
-      Cms::Page.find(params[:page])
-    else
-      Cms::Channel.find(params[:channel])
-    end
-    return source
-  end
 end
