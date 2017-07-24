@@ -74,6 +74,9 @@ module AppAPI::V1
           tag_list = params[:tag_list].split(/,/)
           articles = articles.tagged_with(tag_list, :any => true)
         end
+        # 筛选掉有效期时间外的Article
+        now = Time.now
+        articles = articles.where('valid_time_begin is null or valid_time_begin <= ? and valid_time_end >= ?', now, now)
         articles = paginate_collection(sort_collection(articles), params)
         wrap_collection articles, AppAPI::Entities::Article, type: :list, includes: [params[:includes]], user_id: current_user.id
       end
