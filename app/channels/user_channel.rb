@@ -12,15 +12,14 @@ class UserChannel < ApplicationCable::Channel
   end
 
   def push_message
-    community = current_user.current_community
-    if community && community.chat_rooms.any?
-      room_with_unread_messages_count = []
-      community.chat_rooms.each do |room|
-        last_message_id = UsersChatRoom.where(user_id: current_user.id, chat_room_id: room.id).first.try(:last_message_id) || 0
-        unread_messages_count = room.messages.count - room.messages.where("id <= ?", last_message_id).count
-        room_with_unread_messages_count.push({id: room.id, count: unread_messages_count})
-      end
-      UserChannel.broadcast_to current_user, message: "#{room_with_unread_messages_count.to_json}", type: 'room'
+    user_id = 'user-' + current_user.id.to_s
+    redis = Redis.current
+    user_unread_messages = redis.get(user_id)
+    user_unread_messages_json = user_unread_messages ? JSON.parse(user_unread_messages) : {}
+    push_messages = []
+    user_unread_messages_json.each_pair do |k, v|
+      push_messages.push({id: k.split('room-')[1], count: v})
     end
+    UserChannel.broadcast_to current_user, message: "#{push_messages.to_json}", type: 'room'
   end
 end
