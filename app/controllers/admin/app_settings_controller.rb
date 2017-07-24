@@ -69,12 +69,13 @@ class Admin::AppSettingsController < Admin::BaseController
 
   def used
     authorize @app_setting
-    if AppSetting.update_all(is_used: false) && @app_setting.update_attributes(is_used: true)
+    if AppSetting.update_all(active: false) && @app_setting.update_attributes(active: true)
       redirect_to admin_app_settings_url, notice: "#{@app_setting.name} 方案使用成功."
     else
       render js: "alert('出现错误')"
     end
   end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_app_setting

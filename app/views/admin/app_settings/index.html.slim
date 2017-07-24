@@ -66,7 +66,7 @@ h1.page-header
           tr
             th = AppSetting.human_attribute_name(:name)
             th = AppSetting.human_attribute_name(:key_word)
-            th = AppSetting.human_attribute_name(:is_used)
+            th = AppSetting.human_attribute_name(:active)
             th
         tbody
           - @app_settings.each do |app_setting|
@@ -74,12 +74,12 @@ h1.page-header
               td = app_setting.name
               td = app_setting.key_word
               td
-                span[class="label label-#{app_setting.is_used ? 'success' : 'default'}"]
-                  = app_setting.is_used ? '使用中' : '未使用'
+                span[class="label label-#{app_setting.active ? 'success' : 'default'}"]
+                  = app_setting.active ? '使用中' : '未使用'
               td
                 => link_to '查看', admin_app_setting_path(app_setting), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_app_setting_path(app_setting), class: 'btn btn-xs btn-primary'
-                => link_to '使用', used_admin_app_setting_path(app_setting), method: :put, class: 'btn btn-xs btn-success' unless app_setting.is_used
+                => link_to '使用', used_admin_app_setting_path(app_setting), method: :put, class: 'btn btn-xs btn-success' unless app_setting.active
                 = link_to '删除', admin_app_setting_path(app_setting), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger' if policy(AppSetting).create?
       = paginate @app_settings
 

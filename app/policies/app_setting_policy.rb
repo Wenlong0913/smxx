@@ -31,9 +31,9 @@ class AppSettingPolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.has_role? :super_admin
-      [:name, :key_word, :site_share_url_pattern, :product_share_url_pattern, :system_rooms, :service_banners, :main_banners, :app_version_message]
+      [:name, :key_word, :site_share_url_pattern, :product_share_url_pattern, :system_rooms, :service_banners, :main_banners, :app_version_message, :active]
     elsif user.has_role? :admin
-      [:service_banners]
+      [:service_banners, :main_banners, :active]
     else
       []
     end

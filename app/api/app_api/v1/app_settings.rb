@@ -5,7 +5,7 @@ module AppAPI::V1
 
       desc 'App配置信息'
       get do
-        current_setting = AppSetting.where(is_used: true).first || AppSetting.first
+        current_setting = AppSetting.where(active: true).first || AppSetting.first
         app_data = {
           site_share_url_pattern: current_setting.site_share_url_pattern,
           product_share_url_pattern: current_setting.product_share_url_pattern,
