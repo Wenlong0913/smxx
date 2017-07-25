@@ -14,4 +14,9 @@ class Frontend::UsersController < Frontend::BaseController
       render :edit
     end
   end
+
+  def self_order
+    @user_orders = current_user.orders
+  end
+
 end
