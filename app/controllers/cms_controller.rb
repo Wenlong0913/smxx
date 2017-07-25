@@ -58,7 +58,7 @@ class CmsController < ApplicationController
     impressionist(@channel, "channel_#{@channel.id}")
     impressionist(@page, "page_#{@page.id}") if @page # 2nd argument is optional
 
-    # add cms comments
+    # add cms_page comments
     @comment_path = if @page
       cms_frontend_path(channel: @channel.id, page: @page.id)
     else
@@ -141,7 +141,7 @@ class CmsController < ApplicationController
     render json: comment__entry_json(@comments)
   end
 
-  # 自定义create_comment
+   # 自定义create_comment
   def create_comment
     @source = comment_resovel_resource
     entry = @source.comments.new(comment__permitted_params)
@@ -170,4 +170,5 @@ class CmsController < ApplicationController
     end
     return source
   end
+
 end

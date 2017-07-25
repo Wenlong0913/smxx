@@ -42,7 +42,11 @@ module FrontendRoute
 
       # 前端页面路由
       namespace :frontend do
-        resources :users
+        resources :users do
+          collection do
+            get "self_order"
+          end
+        end
         # get 'users/show'
         get 'home/index'
         match 'share/(:class/:id)', to: "share#index", via: :get
