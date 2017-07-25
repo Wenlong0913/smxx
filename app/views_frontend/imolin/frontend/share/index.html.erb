@@ -1,5 +1,7 @@
 <%= render file: @cms_site.template_dir + '_header.html' %>
-
+<% content_for :head do %>
+  <base href="http://www.imolin.cn"/>
+<% end %>
 <% case @share_obj.class.to_s %>
   <% when 'Site' %>
     <%= render file: "frontend/share/_share_site.html.erb" %>
