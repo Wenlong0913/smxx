@@ -5,7 +5,16 @@ module AppAPI::V1
 
       desc 'App配置信息'
       get do
-        Rails.application.config_for(:app_settings)
+        current_setting = AppSetting.where(active: true).first || AppSetting.first
+        app_data = {
+          site_share_url_pattern: current_setting.site_share_url_pattern,
+          product_share_url_pattern: current_setting.product_share_url_pattern,
+          system_rooms: begin YAML.load(current_setting.system_rooms) rescue [] end,
+          service_banners: begin YAML.load(current_setting.service_banners) rescue [] end,
+          main_banners: begin YAML.load(current_setting.service_banners) rescue [] end,
+          app_version_message: begin YAML.load(current_setting.app_version_message) rescue {} end
+        }
+        present app_data
       end
 
     end # end of resources

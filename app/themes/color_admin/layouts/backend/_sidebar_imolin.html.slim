@@ -69,6 +69,10 @@ li[class=("active" if page?('admin/articles') && !@community.present?)]
   = link_to admin_articles_path do
     = fa_icon 'leaf', text: '系统公告'
 
+li[class=("active" if page?('admin/app_settings'))]
+  = link_to admin_app_settings_path do
+    = fa_icon 'key', text: 'APP参数设置'
+
 li class=("has-sub #{'active' if page?('admin/banners')}")
   a href="javascript:;"
     b.caret.pull-right
