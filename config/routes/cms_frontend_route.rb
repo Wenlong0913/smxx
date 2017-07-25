@@ -14,8 +14,6 @@ module CmsFrontendRoute
           match '/comment/create', to: "cms#comment_create", as: 'comment_create', via: :post
           match '/:channel(/:id)', to: "cms#index", via: :get
           match '/:channel(/page/:page)', to: "cms#index", via: :get
-          match '/:channel(/page/:page/comments)', to: "cms#comments_index", via: :get
-          match '/:channel(/page/:page/comments)', to: "cms#create_comment", via: :post
         end
       end
 
