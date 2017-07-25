@@ -5,7 +5,7 @@ class RoomChannel < ApplicationCable::Channel
     # stream_from "some_channel"
     @room = Chat::Room.find(params[:id])
     RoomChannel.broadcast_to @room, message: "#{user[:nickname]}加入房间", type: 'system'
-    UnreadMessages.new(@room, current_user).user_add_room
+    UnreadMessages.new(@room, current_user).user_enter_room
     stream_for @room
   end
 
@@ -26,7 +26,7 @@ class RoomChannel < ApplicationCable::Channel
     Rails.logger.debug '%s say - %s' % [current_user, data]
     @room.messages.create(text: data['message'], user: current_user) if current_user
     RoomChannel.broadcast_to @room, message: data['message'], type: 'message', user: user
-    UnreadMessages.new(@room, current_user).add_unread_message
+    UnreadMessages.new(@room, current_user).add_offline_users_unread_message
   end
 
   def user

@@ -12,13 +12,11 @@ class UserChannel < ApplicationCable::Channel
   end
 
   def push_message
-    user_id = 'user-' + current_user.id.to_s
     redis = Redis.current
-    user_unread_messages = redis.get(user_id)
-    user_unread_messages_json = user_unread_messages ? JSON.parse(user_unread_messages) : {}
+    rooms = redis.keys("user-#{current_user.id}-room-*")
     push_messages = []
-    user_unread_messages_json.each_pair do |k, v|
-      push_messages.push({id: k.split('room-')[1], count: v})
+    rooms.each do |key|
+      push_messages.push({id: key.split('room-')[1], count: redis.get(key)})
     end
     UserChannel.broadcast_to current_user, message: "#{push_messages.to_json}", type: 'room'
   end

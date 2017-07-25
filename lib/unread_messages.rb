@@ -1,23 +1,23 @@
 class UnreadMessages
-  def initialize(room_id, user_id)
-    @room = Chat::Room.find_by(id: room_id)
-    @room_id = "room-#{@room.id.to_s}"  
-    @current_user = User.find_by(id: user_id)
+  def initialize(room, current_user)
+    @room = room
+    @room_id_key = "room-#{@room.id.to_s}"  
+    @current_user = current_user
     @redis = Redis.current
   end
 
-  def user_add_room
-    @redis.sadd(@room_id, @current_user.id)
+  def user_enter_room
+    @redis.sadd(@room_id_key, @current_user.id)
     clear_user_unread_message(@current_user.id)
   end
 
   def user_leave_room
-    @redis.srem(@room_id, @current_user.id)
+    @redis.srem(@room_id_key, @current_user.id)
   end
 
-  def add_unread_message
+  def add_offline_users_unread_message
     all_users =  @room.owner_type == 'Community' ? @room.owner.users.map(&:id) : []
-    current_users = @redis.smembers(@room_id)
+    current_users = @redis.smembers(@room_id_key)
     offline_users = []
     if current_users
       offline_users = all_users.uniq.map(&:to_s) - current_users
@@ -37,7 +37,8 @@ class UnreadMessages
   end
 
   def push_unread_message(user_id)
-    user = User.find(user_id)
+    user = User.find_by(id: user_id)
+    return unless user
     rooms = @redis.keys("user-#{user_id}-room-*")
     push_messages = []
     rooms.each do |key|
