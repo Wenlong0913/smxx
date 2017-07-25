@@ -98,6 +98,10 @@ class Order < ApplicationRecord
     # validates_presence_of :delivery_date
   end
 
+  if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei?
+    validates_presence_of :refund_description, :apply_refund_user, if: ->(order) { order.refund_status == 'apply_refund' }
+  end
+
   after_initialize do
     self.status ||= 0
     self.internal_status ||= 0

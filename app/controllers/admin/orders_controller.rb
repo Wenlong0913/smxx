@@ -103,7 +103,6 @@ class Admin::OrdersController < Admin::BaseController
 
   def apply_refund
     authorize Order
-    return render json: {status: 'failed', message: '退款申请描述不可为空！'} unless params[:order][:refund_description].present?
     @order.refund_status = 'apply_refund'
     @order.refund_description = params[:order][:refund_description]
     @order.apply_refund_by = current_user.id
