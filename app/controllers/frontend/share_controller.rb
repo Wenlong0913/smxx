@@ -3,7 +3,16 @@ class Frontend::ShareController < Frontend::BaseController
   # 实例：http://xxx.com/frontend/share/user/1
   def index
     begin
-      @share_obj = eval("::#{params[:class].capitalize}.find_by(id: #{params[:id]})")
+      if params[:class] == "sites"
+        @share_obj = ::Site.find_by(id: params[:id])
+      end
+      if params[:class] == "communites"
+        @share_obj = ::Community.find_by(id: params[:id])
+      end
+      if params[:class] == "users"
+        @share_obj = current_user
+      end
+      # @share_obj = eval("::#{params[:class].capitalize}.find_by(id: #{params[:id]})")
     rescue
       @share_obj = @cms_site
     end
