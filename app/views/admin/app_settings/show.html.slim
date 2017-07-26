@@ -12,40 +12,19 @@ h1.page-header
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
   .panel-body
-    .profile-container
-      .profile-info
-        .table-responsive
-          table.table.table-profile
-            - if policy(AppSetting).create?
-              tr
-                td.field =AppSetting.human_attribute_name(:name)
-                td
-                  = @app_setting.name
-              tr
-                td.field =AppSetting.human_attribute_name(:key_word)
-                td
-                  = @app_setting.key_word
-              tr
-                td.field =AppSetting.human_attribute_name(:site_share_url_pattern)
-                td
-                  = @app_setting.site_share_url_pattern
-              tr
-                td.field =AppSetting.human_attribute_name(:product_share_url_pattern)
-                td
-                  = @app_setting.product_share_url_pattern
-              tr
-                td.field =AppSetting.human_attribute_name(:system_rooms)
-                td
-                  = @app_setting.system_rooms
-              tr
-                td.field =AppSetting.human_attribute_name(:app_version_message)
-                td
-                  = @app_setting.app_version_message
-            tr
-              td.field =AppSetting.human_attribute_name(:main_banners)
-              td
-                = @app_setting.main_banners
-            tr
-              td.field =AppSetting.human_attribute_name(:service_banners)
-              td
-                = @app_setting.service_banners
+    = simple_form_for @app_setting, url: '' do |f|
+      - if @app_setting.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@app_setting.errors.count, "error")} prohibited this app_setting from being saved:"
+          ul
+            - @app_setting.errors.full_messages.each do |message|
+              li = message
+      - if policy(AppSetting).create?
+        = f.input :name, input_html: {readonly: true}
+        = f.input :key_word, input_html: {readonly: true}
+        = f.input :site_share_url_pattern, input_html: {readonly: true}
+        = f.input :product_share_url_pattern, input_html: {readonly: true}
+        = f.input :system_rooms, input_html: {readonly: true}
+        = f.input :app_version_message, as: :text, input_html: {rows: "#{@app_setting.app_version_message.split(/\n+/).size + 1}", readonly: true}
+      = f.input :main_banners, as: :text, input_html: {rows: "#{@app_setting.main_banners.split(/\n+/).size + 1}", readonly: true}
+      = f.input :service_banners, as: :text, input_html: {rows: "#{@app_setting.service_banners.split(/\n+/).size + 1}", readonly: true}
