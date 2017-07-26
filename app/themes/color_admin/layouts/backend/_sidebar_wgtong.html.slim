@@ -77,6 +77,10 @@ li[class=("active" if page?('admin/articles'))]
   = link_to admin_articles_path do
     = fa_icon 'leaf', text: '系统公告'
 
+li[class=("active" if page?('admin/cms/comments'))]
+  = link_to admin_cms_comments_path do
+    = fa_icon 'database', text: '留言管理'
+
 li class=("has-sub #{'active' if page?('admin/forage/sources', 'admin/forage/run_keys', 'admin/forage/simples', 'admin/forage/details')}")
   a href="javascript:;"
     b.caret.pull-right
