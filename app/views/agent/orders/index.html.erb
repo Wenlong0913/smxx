@@ -91,6 +91,20 @@
                             <span class="text-danger"><%= order.price.to_f / 100 %></span>
                           </div>
                         </li>
+                        <% if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei?%>
+                          <li class="row">
+                            <div class="col-xs-6">
+                              订单状态:
+                              <span class="btn-info btn-sm"><%= decorate(order).display_status %></span>
+                            </div>
+                            <div class="col-xs-6">
+                              <% if order.refund_status %>
+                                退款状态:
+                                <span class="btn-warning btn-sm"><%= decorate(order).display_refund_status %></span>
+                              <% end %>
+                            </div>
+                          </li>
+                        <% end %>
                       </ul>
                     </div>
                     <div class="date-replies">
@@ -103,11 +117,7 @@
                       <div class="order-status-display">
                         <% if Settings.project.sxhop? || Settings.project.imolin? %>
                           <!-- sxhop -->
-                          <%= link_to agent_order_path(order) do%>
-                            <span class="btn-info btn-sm">
-                              <%= decorate(order).display_status %>
-                            </span>
-                          <% end %>
+                         
                         <% else %>
                           <!-- dagle -->
                           <% if order.cancelled? %>
