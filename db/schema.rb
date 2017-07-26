@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170719074742) do
+ActiveRecord::Schema.define(version: 20170725072329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -290,6 +290,7 @@ ActiveRecord::Schema.define(version: 20170719074742) do
     t.datetime "updated_at",                     null: false
     t.string   "properties",        default: [],              array: true
     t.integer  "impressions_count", default: 0
+    t.integer  "comments_count",    default: 0
     t.index ["channel_id"], name: "index_cms_pages_on_channel_id", using: :btree
     t.index ["properties"], name: "index_cms_pages_on_properties", using: :gin
     t.index ["short_title"], name: "index_cms_pages_on_short_title", using: :btree
@@ -402,6 +403,7 @@ ActiveRecord::Schema.define(version: 20170719074742) do
   end
 
   create_table "forage_details", force: :cascade do |t|
+    t.integer  "simple_id",                     null: false
     t.string   "url",                           null: false
     t.string   "migrate_to"
     t.boolean  "can_purchase",  default: false
@@ -424,20 +426,22 @@ ActiveRecord::Schema.define(version: 20170719074742) do
     t.jsonb    "features"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
-    t.integer  "simple_id",                     null: false
+    t.index ["simple_id"], name: "index_forage_details_on_simple_id", using: :btree
   end
 
   create_table "forage_run_keys", force: :cascade do |t|
+    t.integer  "source_id",                    null: false
     t.datetime "date"
     t.boolean  "is_processed", default: false
     t.datetime "processed_at"
     t.integer  "total_count",  default: 0
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.integer  "source_id",                    null: false
+    t.index ["source_id"], name: "index_forage_run_keys_on_source_id", using: :btree
   end
 
   create_table "forage_simples", force: :cascade do |t|
+    t.integer  "run_key_id",                   null: false
     t.string   "catalog"
     t.string   "title"
     t.string   "url",                          null: false
@@ -446,7 +450,7 @@ ActiveRecord::Schema.define(version: 20170719074742) do
     t.string   "processed_at"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.integer  "run_key_id",                   null: false
+    t.index ["run_key_id"], name: "index_forage_simples_on_run_key_id", using: :btree
   end
 
   create_table "forage_sources", force: :cascade do |t|
@@ -886,10 +890,10 @@ ActiveRecord::Schema.define(version: 20170719074742) do
     t.integer  "update_by"
     t.string   "resource_url"
     t.date     "delivery_date"
-    t.integer  "finance_bill_id"
     t.integer  "refund_status"
     t.integer  "apply_refund_by"
     t.text     "refund_description"
+    t.integer  "finance_bill_id"
     t.integer  "comments_count",           default: 0
     t.jsonb    "features"
     t.index ["finance_bill_id"], name: "index_orders_on_finance_bill_id", using: :btree
