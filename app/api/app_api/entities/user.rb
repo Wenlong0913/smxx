@@ -16,7 +16,7 @@ module AppAPI
           expose :points, documentation: {desc: '用户积分'}
 
           def points
-            object.orders.completed.sum(&:price)/100.0
+            object.orders.completed.sum(&:price).to_i/100
           end
         end
       end
