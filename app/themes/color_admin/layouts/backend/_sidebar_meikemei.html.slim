@@ -61,14 +61,6 @@ li class=("has-sub #{'active' if page?('admin/orders', 'admin/produces', 'admin/
     li[class=('active' if page?('admin/orders#refunds'))]
       = link_to "#{Order.model_name.human}退款管理", refunds_admin_orders_path
 
-li class=("has-sub #{'active' if page?('admin/banners')}")
-  a href="javascript:;"
-    b.caret.pull-right
-    i.fa.fa-inbox
-    span 网站图片管理
-  ul.sub-menu
-    li class=("#{'active' if page?('admin/banners')}") = link_to '轮波图管理', admin_banners_path
-
 li class=("has-sub #{'active' if page?('admin/complaints')}")
   = link_to admin_complaints_path do
     = fa_icon 'leaf', text: '投诉/美容师入驻管理'

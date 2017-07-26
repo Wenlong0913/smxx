@@ -73,13 +73,6 @@ li[class=("active" if page?('admin/app_settings'))]
   = link_to admin_app_settings_path do
     = fa_icon 'key', text: 'APP参数设置'
 
-li class=("has-sub #{'active' if page?('admin/banners')}")
-  a href="javascript:;"
-    b.caret.pull-right
-    i.fa.fa-inbox
-    span 网站图片管理
-  ul.sub-menu
-    li class=("#{'active' if page?('admin/banners')}") = link_to '轮波图管理', admin_banners_path
 li class=("has-sub #{'active' if page?('admin/agent_plans')}")
   a href="javascript:;"
     b.caret.pull-right
