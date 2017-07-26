@@ -12,6 +12,13 @@ module AppAPI
           expose :gender, documentation: {desc: '性别'}
         end
         expose :display_headshot, as: :headshot, documentation: { desc: '头像' }
+        if Settings.project.meikemei?
+          expose :points, documentation: {desc: '用户积分'}
+
+          def points
+            object.orders.completed.sum(&:price)/100.0
+          end
+        end
       end
 
       expose :access_token, if: :access_token, documentation: { desc: '用户身份，在注册或登录时返回' } do |user, options|
