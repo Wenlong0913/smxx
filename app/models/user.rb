@@ -90,6 +90,10 @@ class User < ApplicationRecord
     attributes['nickname']
   end
 
+  def name
+    attributes['nickname'] || attributes['username'] ||  self.email && self.email.sub(/@.*$/, '') || self.weixin && self.weixin.name || self.mobile && self.mobile.phone_number.sub(/\d{4}$/, '****')
+  end
+
   ##
   # Devise default required email, if you don't want it , need to define this method.
   #
