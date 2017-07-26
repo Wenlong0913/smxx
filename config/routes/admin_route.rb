@@ -25,7 +25,11 @@ module AdminRoute
         end
         # 社区
         resources :communities, :concerns => :paginatable do
-          resources :articles
+          resources :articles do
+            member do
+              put 'recommend'
+            end
+          end
         end
         resources :articles # 公告管理（imolin）
         # APP参数管理

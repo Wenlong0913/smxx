@@ -5,9 +5,13 @@ class ArticlePolicy < ApplicationPolicy
     end
   end
 
+  def recommend?
+    create?
+  end
+
   def permitted_attributes_for_create
     if user.has_role? :admin
-      [:title, :description, :valid_time_begin, :valid_time_end, :tag_list, :article_type, :is_top, :image_item_ids => []]
+      [:title, :description, :valid_time_begin, :valid_time_end, :tag_list, :article_type, :is_top, :recommend, :image_item_ids => []]
     else
       []
     end
