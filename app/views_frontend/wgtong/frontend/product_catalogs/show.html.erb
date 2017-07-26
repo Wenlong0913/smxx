@@ -65,7 +65,7 @@
           <% if Keystore.value_for('banner-product-center-center-773x84').present? %>
           <div class="tr-ad">
             <% banner_product_center_center = Keystore.value_for('banner-product-center-center-773x84').split('|') %>
-            <a href="<%= banner_product_center_center[1] || 'javascript:void(0)' %>"><img class="img-responsive" src="<%= banner_product_center_center[0] %>" alt="广告横幅773x84"></a>
+            <a href="<%= banner_product_center_center[1] || 'javascript:void(0)' %>" target="_blank" ><img class="img-responsive" src="<%= banner_product_center_center[0] %>" alt="广告横幅773x84"></a>
           </div>
           <% end %>
           <!-- 幻灯 -->
@@ -356,7 +356,7 @@
           <% if Keystore.value_for('banner-product-right-center-400×576').present? %>
 					<div class="tr-section tr-ad ad-before">
             <% banner_product_right_center = Keystore.value_for('banner-product-right-center-400×576').split('|') %>
-						<a href="<%= banner_product_right_center[1] || 'javascript:void(0)' %>">
+						<a href="<%= banner_product_right_center[1] || 'javascript:void(0)' %>" target="_blank" >
               <img class="img-responsive" src="<%= banner_product_right_center[0] %>" alt="广告横幅400×576"></a>
 					</div>
           <% end %>
@@ -444,7 +444,7 @@
     <% if Keystore.value_for('banner-product-bottom-center-819×119').present? %>
 		<div class="tr-ad ad-bottom ad-image text-center">
       <% banner_product_bottom_center = Keystore.value_for('banner-product-bottom-center-819×119').split('|') %>
-			<a href="<%= banner_product_bottom_center[1] || 'javascript:void(0)' %>"><img class="img-responsive" src="<%= banner_product_bottom_center[0] %>" alt="广告横幅819×119"></a>
+			<a href="<%= banner_product_bottom_center[1] || 'javascript:void(0)' %>" target="_blank" ><img class="img-responsive" src="<%= banner_product_bottom_center[0] %>" alt="广告横幅819×119"></a>
 		</div>
     <% end %>
 
