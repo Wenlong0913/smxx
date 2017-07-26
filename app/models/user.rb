@@ -91,7 +91,7 @@ class User < ApplicationRecord
   end
 
   def name
-    attributes['nickname'] || attributes['username'] ||  self.email && self.email.sub(/@.*$/, '') || self.weixin && self.weixin.name || self.mobile && self.mobile.phone_number.sub(/\d{4}$/, '****')
+    attributes['nickname'] || attributes['username'] ||  self.email && (e = self.email.sub(/@.*$/, '') && e.present?) || self.weixin && (w = self.weixin.name && w.present? ) || self.mobile && self.mobile.phone_number.sub(/\d{4}$/, '****')
   end
 
   ##
