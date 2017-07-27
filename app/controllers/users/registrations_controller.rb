@@ -20,11 +20,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   resp = conn.post("/sign_up", {"user" => {"mobile" => '18687878787', "code" => '1235'}})
   #   resp.body
   #   => {error: '验证码不正确！'}
-  #   
+  #
   #   resp = conn.post("/sign_up", {"user" => {"mobile" => '18688787', "code" => '1234'}})
   #   resp.body
   #   => {error: '创建失败了，请检查！'}
-  #   
+  #
   def create
     if params[:user][:mobile].present?
       sign_up_with_mobile(params[:user][:mobile], params[:user][:code])
@@ -51,7 +51,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         sign_in user, :event => :authentication #this will throw if @user is not activate
         render json: {}
       else
-        render json: {error: '创建失败了，请检查！'}
+        render json: {error: user.errors.full_messages.join(",") }
       end
     else
       render json: {error: '验证码不正确！'}
