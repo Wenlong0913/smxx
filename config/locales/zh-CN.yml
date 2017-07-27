@@ -4,18 +4,6 @@
 # copy from tsechingho (http://github.com/tsechingho)
 
 zh-CN:
-  roles:
-    super_admin: '超级管理员'
-    admin: "管理员"
-    agent: '商家'
-    user: '用户'
-    factory_manager: "厂长"
-    product_manager: "总经销商"
-    storekeeper: "库管员"
-    designer: "设计"
-    worker: "操作员"
-    allocator: "拆单员"
-    purchase: "采购"
   will_paginate:
     previous_label: "&#8592; 上一页"
     next_label: "下一页 &#8594;"

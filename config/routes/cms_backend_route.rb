@@ -4,6 +4,9 @@ module CmsBackendRoute
       #admin backend
       namespace :admin do
         namespace :cms do
+          if Settings.project.wgtong?
+            resources :comments
+          end
           resources :sites do
             resources :comments
             resources :keystores

@@ -31,7 +31,7 @@
 							</div>
 							<div class="post-content">
 								<div class="author">
-									<a href="javascript:void(0)"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/author<%= rand(1..8) %>.png" alt="Image"></a>
+									<a href="/frontend/sites/<%= site.id %>"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/user.png" alt="Image"></a>
 								</div>
 								<div class="entry-meta">
 									<ul>
@@ -68,7 +68,7 @@
 					<% if Keystore.value_for('banner-site-center-center-773x84').present? %>
           <div class="tr-ad">
             <% banner_site_center_center = Keystore.value_for('banner-site-center-center-773x84').split('|') %>
-            <a href="<%= banner_site_center_center[1] || 'javascript:void(0)' %>"><img class="img-responsive" src="<%= banner_site_center_center[0] %>" alt="广告横幅773x84"></a>
+            <a href="<%= banner_site_center_center[1] || 'javascript:void(0)' %>" target="_blank" ><img class="img-responsive" src="<%= banner_site_center_center[0] %>" alt="广告横幅773x84"></a>
           </div>
           <% end %>
 
@@ -90,7 +90,7 @@
 								</div>
 								<div class="post-content">
 									<div class="author">
-										<a href="javascript:void(0)"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/author<%= rand(1..8) %>.png" alt="Image"></a>
+										<a href="/frontend/sites/<%= site_hot.id %>"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/user.png" alt="Image"></a>
 									</div>
 									<div class="entry-meta">
 										<ul>
@@ -143,14 +143,14 @@
 					<% if Keystore.value_for('banner-site-right-center-400×576').present? %>
 					<div class="tr-section tr-ad ad-before">
             <% banner_site_right_center = Keystore.value_for('banner-site-right-center-400×576').split('|') %>
-						<a href="<%= banner_site_right_center[1] || 'javascript:void(0)' %>">
+						<a href="<%= banner_site_right_center[1] || 'javascript:void(0)' %>" target="_blank" >
               <img class="img-responsive" src="<%= banner_site_right_center[0] %>" alt="广告横幅400×576"></a>
 					</div>
           <% end %>
 
 					<div class="tr-section local-events">
 						<div class="section-title title-before">
-							<h1><a href="#">推荐 <%= @site_catalog.name %></a></h1>
+							<h1><a href="javascript:void(0)">推荐 <%= @site_catalog.name %></a></h1>
 						</div>
 						<ul class="nav nav-tabs" role="tablist">
 							<li role="presentation" class="active"><a href="#time0" data-toggle="tab">推荐</a></li>
@@ -195,7 +195,7 @@
 		<% if Keystore.value_for('banner-site-bottom-center-819×119').present? %>
 		<div class="tr-ad ad-bottom ad-image text-center">
       <% banner_site_bottom_center = Keystore.value_for('banner-site-bottom-center-819×119').split('|') %>
-			<a href="<%= banner_site_bottom_center[1] || 'javascript:void(0)' %>"><img class="img-responsive" src="<%= banner_site_bottom_center[0] %>" alt="广告横幅819×119"></a>
+			<a href="<%= banner_site_bottom_center[1] || 'javascript:void(0)' %>" target="_blank" ><img class="img-responsive" src="<%= banner_site_bottom_center[0] %>" alt="广告横幅819×119"></a>
 		</div>
     <% end %>
 

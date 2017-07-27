@@ -57,7 +57,7 @@ module AdminRoute
         resources :material_stock_alerts, only: [:index] # 库存警报
         resources :material_purchases, only: [:index]
 
-        resources :roles, only: [:index], :concerns => :paginatable do
+        resources :roles, :concerns => :paginatable do
           resources :users, only: [:index], :concerns => :paginatable
           member do
             get 'edit_permission'

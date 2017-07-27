@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20170725072329) do
+=======
+ActiveRecord::Schema.define(version: 20170727061700) do
+>>>>>>> wgtong
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -403,10 +407,15 @@ ActiveRecord::Schema.define(version: 20170725072329) do
   end
 
   create_table "forage_details", force: :cascade do |t|
+<<<<<<< HEAD
     t.integer  "simple_id",                     null: false
     t.string   "url",                           null: false
+=======
+    t.integer  "forage_simple_id"
+    t.string   "url",                              null: false
+>>>>>>> wgtong
     t.string   "migrate_to"
-    t.boolean  "can_purchase",  default: false
+    t.boolean  "can_purchase",     default: false
     t.string   "purchase_url"
     t.string   "title"
     t.string   "keywords"
@@ -420,10 +429,11 @@ ActiveRecord::Schema.define(version: 20170725072329) do
     t.string   "phone"
     t.string   "price"
     t.string   "from"
-    t.boolean  "has_site",      default: false
+    t.boolean  "has_site",         default: false
     t.string   "site_name"
     t.string   "note"
     t.jsonb    "features"
+<<<<<<< HEAD
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.index ["simple_id"], name: "index_forage_details_on_simple_id", using: :btree
@@ -431,9 +441,19 @@ ActiveRecord::Schema.define(version: 20170725072329) do
 
   create_table "forage_run_keys", force: :cascade do |t|
     t.integer  "source_id",                    null: false
+=======
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.index ["forage_simple_id"], name: "index_forage_details_on_forage_simple_id", using: :btree
+  end
+
+  create_table "forage_run_keys", force: :cascade do |t|
+    t.integer  "forage_source_id"
+>>>>>>> wgtong
     t.datetime "date"
-    t.boolean  "is_processed", default: false
+    t.boolean  "is_processed",     default: false
     t.datetime "processed_at"
+<<<<<<< HEAD
     t.integer  "total_count",  default: 0
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
@@ -442,15 +462,31 @@ ActiveRecord::Schema.define(version: 20170725072329) do
 
   create_table "forage_simples", force: :cascade do |t|
     t.integer  "run_key_id",                   null: false
+=======
+    t.integer  "total_count",      default: 0
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.index ["forage_source_id"], name: "index_forage_run_keys_on_forage_source_id", using: :btree
+  end
+
+  create_table "forage_simples", force: :cascade do |t|
+    t.integer  "forage_run_key_id"
+>>>>>>> wgtong
     t.string   "catalog"
     t.string   "title"
-    t.string   "url",                          null: false
+    t.string   "url",                               null: false
     t.jsonb    "features"
-    t.boolean  "is_processed", default: false
+    t.boolean  "is_processed",      default: false
     t.string   "processed_at"
+<<<<<<< HEAD
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.index ["run_key_id"], name: "index_forage_simples_on_run_key_id", using: :btree
+=======
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.index ["forage_run_key_id"], name: "index_forage_simples_on_forage_run_key_id", using: :btree
+>>>>>>> wgtong
   end
 
   create_table "forage_sources", force: :cascade do |t|
@@ -948,6 +984,7 @@ ActiveRecord::Schema.define(version: 20170725072329) do
     t.integer  "resource_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "role_name"
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
     t.index ["name"], name: "index_roles_on_name", using: :btree
   end
@@ -1259,6 +1296,9 @@ ActiveRecord::Schema.define(version: 20170725072329) do
   add_foreign_key "attachment_relations", "attachments"
   add_foreign_key "charges", "orders"
   add_foreign_key "complaints", "users"
+  add_foreign_key "forage_details", "forage_simples"
+  add_foreign_key "forage_run_keys", "forage_sources"
+  add_foreign_key "forage_simples", "forage_run_keys"
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
   add_foreign_key "items", "sites"
