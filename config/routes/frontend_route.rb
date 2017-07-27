@@ -46,6 +46,7 @@ module FrontendRoute
           collection do
             get "self_order"
             get "self_comment"
+            get "self_complaint"
           end
         end
         # get 'users/show'
