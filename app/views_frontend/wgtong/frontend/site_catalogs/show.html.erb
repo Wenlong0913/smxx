@@ -18,7 +18,7 @@
 			<div class="col-sm-5 col-md-6 tr-sticky">
 
 				<div class="theiaStickySidebar">
-					<% Site.where(catalog_id: @site_catalog.id).each do |site| %>
+					<% Site.where(catalog_id: @site_catalog.id).order("updated_at DESC").each do |site| %>
 					<div class="tr-section">
 						<div class="section-title title-before">
 							<h1><a href="javascript:void(0)"><%= site.properties.map{|p| ::Site::PROPERTIES[p.to_sym]}.compact.join('，') %></a></h1>
@@ -64,6 +64,10 @@
 						</div><!-- /.tr-post -->
 					</div><!-- /.tr-post -->
 					<% end %>
+
+					<div class="row text-center">
+            <%= paginate @sites, remote: true %>
+          </div>
 
 					<% if Keystore.value_for('banner-site-center-center-773x84').present? %>
           <div class="tr-ad">
