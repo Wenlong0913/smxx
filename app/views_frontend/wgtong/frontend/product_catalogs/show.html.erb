@@ -389,7 +389,7 @@
   										<div class="entry-meta">
   											<ul>
   												<li><%= @product_catalog.name  %></li>
-  												<li><%= page.time["4"] %>:<%= page.time["5"] %></li>
+  												<li><%= page.time %></li>
   												<li><%= page.date %></li>
   											</ul>
   										</div>
@@ -398,7 +398,7 @@
   										</h2>
   									</div>
   								</div>
-  								<span><%= page.description.truncate(20) %></span>
+  								<span><%= page.description.to_s.truncate(20) %></span>
   							</div>
               <% end %>
 
