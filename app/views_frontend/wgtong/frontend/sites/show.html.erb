@@ -38,7 +38,7 @@
 												<%= @site.avg_price %>
 												<% end %>
 											</p>
-											<p><i class="fa fa-info fa-lg contact-fa"></i>简介： <%= @site.description %></p>
+											<p><i class="fa fa-info fa-lg contact-fa"></i>简介： <%= @site.description.truncate(80) %></p>
 											<a href="" class="btn btn-block btn-lg btn-success" style="color: #fff;" target="_blank">马上预订</a>
 										</div>
 									</div>
