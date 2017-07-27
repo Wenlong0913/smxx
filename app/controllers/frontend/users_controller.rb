@@ -19,4 +19,8 @@ class Frontend::UsersController < Frontend::BaseController
     @user_orders = current_user.orders
   end
 
+  def self_comment
+    @comments = Comment::Entry.where(user_id: current_user.id)
+  end
+
 end

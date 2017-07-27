@@ -45,6 +45,7 @@ module FrontendRoute
         resources :users do
           collection do
             get "self_order"
+            get "self_comment"
           end
         end
         # get 'users/show'
