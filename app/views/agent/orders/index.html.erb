@@ -48,7 +48,7 @@
                   <!-- begin media -->
                   <div class="media">
                     <% if Settings.project.imolin? || Settings.project.sxhop? %>
-                      <%= image_tag order.products.first.first_image %>
+                      <%= image_tag order.products.first.first_image, height: '50px' %>
                     <% else %>
                       <%= image_tag 'no-picture.png' %>
                     <% end %>
@@ -117,7 +117,7 @@
                       <div class="order-status-display">
                         <% if Settings.project.sxhop? || Settings.project.imolin? %>
                           <!-- sxhop -->
-                         
+
                         <% else %>
                           <!-- dagle -->
                           <% if order.cancelled? %>
