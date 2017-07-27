@@ -7,9 +7,7 @@
   			<div class="title pull-left">
   				<h1>
             我的订单
-            <small>2<%#= @user_orders.any? ? @user_orders.size : '0' %> 个订单</small>
-
-
+            <small>2<%#= @user_orders.any? ? @user_orders.size : '0' %> 条记录</small>
           </h1>
   			</div>
         <ol class="breadcrumb pull-right">
@@ -72,7 +70,7 @@
               <!-- 筛选分类 -->
               <div class="tr-section">
                 <p class="text-left">
-                  支付状态：
+                  预定类型：
                   <a href="#" class="btn btn-default">
                     全部
                   </a>
@@ -212,14 +210,134 @@
                   </div>
                 <% end %>
               <% else %>
-                <div class="row">
+                <!-- 文化活动订单 -->
+                <div class="tr-section">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p class="clearfix">
+                        <span class="pull-left">
+                          <a href="#">
+                            <code class="productOrderBg" style="color: #fff;"><i class="fa fa-share-alt"></i> 订单号:   12312312</code>
+                          </a>
+                        </span>
+
+                        <span class="pull-right">
+                          票数：x2
+                        </span>
+                      </p>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="productImg">
+                        <img src="http://www.wgtong.cn/photos/2017/7/5/8/original.?2017" alt="" class="img-responsive"/>
+                      </div>
+                    </div>
+
+                    <div class="col-md-9 text-left">
+                      <h4 >
+                        <a href="#" style="color: #2e2e2e;">
+                          "牙尖上的成都"卢匕李阳脱口秀
+                        </a>
+                        <small>演出</small>
+                      </h4>
+                      <!-- <p>
+                        <span class="orderPrice">¥ 100 .00</span>
+                      </p> -->
+                      <p>
+                        <span><i class="fa fa-map-marker productColorIcon"></i>  锦城艺术宫 - 成都市</span>
+                        <span><i class="fa fa-clock-o productColorIcon"></i> 2017.07.22 18:45分</span>
+                      </p>
+
+                      <p class="orderDescription">匕阳秀成立三年以来，不仅在广播领域有所进步，同时也在做自己的音乐，包括原创音乐和改编音乐。将成都文化，传统曲艺融入音乐当中，又将音乐融入到广播节目中，做成了自成一派的成都特色广播节目，而这些歌曲也成为了脍炙人口的热曲，迄今为止，匕阳兄弟已经发布了7首原创音乐和3首改编音乐，在成都造成了不小的公众影响力。</p>
+                      <div class="btn-group text-right" role="group">
+                        <button class="btn btn-default" type="button" name="button" data-toggle="modal" data-target="#deleteSite1">取消预定</button>
+                      </div>
+                      <div class="modal fade" id="deleteSite1" tabindex="-1" role="dialog" aria-labelledby="deleteProduct">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <h4 class="modal-title">提示</h4>
+                            </div>
+                            <div class="modal-body">
+                              是否要取消当前预定信息，点击“确认”取消预定，点击“取消”返回
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">确定</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <!-- 活动场馆订单 -->
+                <div class="tr-section">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p class="clearfix">
+                        <span class="pull-left">
+                          <a href="#">
+                            <code class="siteOrderBg" style="color: #fff;"><i class="fa fa-share-alt"></i> 订单号:   12312312</code>
+                          </a>
+                        </span>
+                        <span class="pull-right">
+                        </span>
+                      </p>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="productImg">
+                        <img src="http://whjd.sh.cn/static/admin/45/201604/Img/Img349ff7eb8432427d8397ba39ba19f19c_600_450.jpg" alt="" class="img-responsive"/>
+                      </div>
+                    </div>
+                    <div class="col-md-9 text-left">
+                      <h4 >
+                        <a href="#" style="color: #2e2e2e;">
+                          菊园新区社区文化活动中心
+                        </a>
+                      </h4>
+                      <p>
+                        <span><i class="fa fa-map-marker siteColorIcon"></i>  菊园新区社区文化活动中心 </span>
+                        <span><i class="fa fa-clock-o siteColorIcon"></i> 2017.07.28 9:30分 </span>
+                        <a href="#">
+                          <i class="fa fa-phone siteColorIcon"></i> 80109225
+                        </a>
+                      </p>
+                      <!-- <p class="orderPrice">免费</p> -->
+                      <p class="orderDescription">菊园新区社区文化活动中心会议室（401室，场地面积235平米，可容纳100人左右的会议、培训、讲座。</p>
+                      <div class="btn-group text-right" role="group">
+                        <button class="btn btn-default" type="button" name="button" data-toggle="modal" data-target="#deleteSite2">取消预定</button>
+                      </div>
+                      <div class="modal fade" id="deleteSite2" tabindex="-1" role="dialog" aria-labelledby="deleteProduct">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <h4 class="modal-title">提示</h4>
+                            </div>
+                            <div class="modal-body">
+                              是否要取消当前预定信息，点击“确认”取消预定，点击“取消”返回
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">确定</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="row">
                   <div class="col-md-12 text-center">
                     <i class="fa fa-frown-o" style="font-size:40px;color: #999;"></i>
                   </div>
                   <div class="col-md-12 text-center">
                     您目前还没有任何订单信息
                   </div>
-                </div>
+                </div> -->
               <% end %>
             </div>
           </div>
@@ -244,25 +362,7 @@
                     background-color: #eee;
                   }
                 </style>
-                <div class="collapse navbar-collapse" id="editSelf">
-                  <ul class="nav">
-                    <li>
-                      <a class="text-center" href="javascript: void(0)">消息中心 <span class="badge" style="background-color: #d9534f;">4</span></a>
-                    </li>
-                    <li>
-                      <%= link_to '账号设置', edit_frontend_user_path(current_user) %>
-                    </li>
-                    <li class="active">
-                      <%= link_to '我的订单', self_order_frontend_users_path %>
-                    </li>
-                    <li>
-                      <%= link_to '我的评论', self_comment_frontend_users_path %>
-                    </li>
-                    <li>
-                      <%= link_to '意见反馈', self_order_frontend_users_path %>
-                    </li>
-                  </ul>
-                </div>
+                <%= render file: 'frontend/users/_nav_sidebar.html.erb' %>
               </div>
     				</div>
           </div>

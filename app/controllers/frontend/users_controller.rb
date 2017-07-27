@@ -23,4 +23,7 @@ class Frontend::UsersController < Frontend::BaseController
     @comments = Comment::Entry.where(user_id: current_user.id)
   end
 
+  def self_complaint
+  end
+
 end
