@@ -1,4 +1,53 @@
 <%= render file: @cms_site.template_dir + '_header.html' %>
+<style media="screen">
+  .successOrder {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+  }
+  .warningOrder {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+  }
+  .siteOrderBg {
+    background: #337ab7;
+  }
+  .productOrderBg {
+    background: #d9534f;
+  }
+  .siteCommentBg {
+    background: #337ab7;
+  }
+  .productCommentBg {
+    background: #d9534f;
+  }
+  .orderPrice {
+    font-size: 25px;
+    color: #e81a1b;
+  }
+  .orderLink {
+    color: #fff;
+    padding: 5px 15px;
+  }
+  .orderLinkPayBg {
+    background-color: brown;
+  }
+  .orderLinkOutBg {
+    background-color: #9e9e9e;
+  }
+  .orderDescription {
+    max-width: 100%;
+    text-overflow : ellipsis;
+    overflow: hidden;
+    white-space: nowrap
+  }
+  .productImg {
+    max-height: 150px;
+    max-width: 150px;
+    overflow: hidden;
+  }
+</style>
 <div id="wrap">
   <section id="start" class="padding-top-bottom text-center">
     <div class="container">
@@ -14,56 +63,6 @@
           <li><a href="/">首页</a></li>
         </ol>
   		</div>
-
-        <style media="screen">
-          .successOrder {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-          }
-          .warningOrder {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-          }
-          .siteOrderBg {
-            background: #337ab7;
-          }
-          .productOrderBg {
-            background: #d9534f;
-          }
-          .siteCommentBg {
-            background: #337ab7;
-          }
-          .productCommentBg {
-            background: #d9534f;
-          }
-          .orderPrice {
-            font-size: 25px;
-            color: #e81a1b;
-          }
-          .orderLink {
-            color: #fff;
-            padding: 5px 15px;
-          }
-          .orderLinkPayBg {
-            background-color: brown;
-          }
-          .orderLinkOutBg {
-            background-color: #9e9e9e;
-          }
-          .orderDescription {
-            max-width: 100%;
-            text-overflow : ellipsis;
-            overflow: hidden;
-            white-space: nowrap
-          }
-          .productImg {
-            max-height: 150px;
-            max-width: 150px;
-            overflow: hidden;
-          }
-        </style>
         <div class="row">
           <div class="col-sm-8 col-md-8 tr-sticky">
             <div class="theiaStickySidebar">
@@ -386,30 +385,7 @@
           </div>
 
           <div class="col-sm-5 col-md-4 tr-sticky" >
-    				<div class="theiaStickySidebar">
-    					<div class="tr-section">
-                <div class="user-logo">
-                  <img src="/templetes/newshub/images/team/5.jpg " alt="" class="img-circle" width="150px">
-                </div>
-                <h3>昵称</h3>
-                <hr>
-                <style media="screen">
-                  #editSelf ul li{
-                    float: none;
-                  }
-                  #editSelf ul li a{
-                    display: block;
-                  }
-                  .active {
-                    text-decoration: none;
-                    background-color: #eee;
-                  }
-                </style>
-                <%= render file: 'frontend/users/_nav_sidebar.html.erb' %>
-              </div>
-
-    				</div>
-
+    				<%= render file: 'frontend/users/_nav_sidebar.html.erb' %>
           </div>
         </div>
 
