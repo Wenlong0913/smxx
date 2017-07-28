@@ -33,7 +33,7 @@
           = f.input :description, as: :text
       .col-xs-12
         .form-group
-          = f.input :tag_list, collection: ['活动', '吐槽', '公告', '福利', '求助', '转让', '话题'], include_blank: true, selected: @article.tag_list.first
+          = f.input :tag_list, collection: ['启事', '声明', '广告', '求助', '话题'], include_blank: true, selected: @article.tag_list.first
       .col-xs-6
         .form-group
           = f.input :valid_time_begin, as: :string, input_html: {class: 'date_form_datetime'}
