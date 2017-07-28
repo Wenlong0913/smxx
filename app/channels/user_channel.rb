@@ -14,9 +14,13 @@ class UserChannel < ApplicationCable::Channel
   def push_message
     redis = Redis.current
     rooms = redis.keys("user-#{current_user.id}-room-*")
+    community = current_user.current_community
+    community_rooms = Chat::Room.where(owner: community).map(&:id)
     push_messages = []
     rooms.each do |key|
-      push_messages.push({id: key.split('room-')[1], count: redis.get(key)})
+      room_id = key.split('room-')[1]
+      next if !community_rooms.include?(room_id.to_i)
+      push_messages.push({id: room_id, count: redis.get(key)})
     end
     UserChannel.broadcast_to current_user, message: "#{push_messages.to_json}", type: 'room'
   end
