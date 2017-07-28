@@ -74,7 +74,7 @@ module AppAPI::V1
       delete do
         authenticate!
         order = current_user.orders.find(params[:id]).destroy
-        present order, with: AppAPI::Entities::Order
+        present order, with: AppAPI::Entities::OrderSimple, action: :destroy
       end
 
       desc '获取订单列表' do
