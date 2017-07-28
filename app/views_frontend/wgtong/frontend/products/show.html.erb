@@ -26,11 +26,11 @@
 											<p><i class="fa fa-cny"></i> 免费</p>
 										<% else %>
 											<% if @product.price.present? && @product.discount.present? %>
-												<p><i class="fa fa-cny"></i> <%= @product.discount %></p>
+												<p><i class="fa fa-cny"></i> <%= @product.discount / 100 %></p>
 											<% elsif @product.price != 0 || @product.price != ""  && @product.discount == 0 || @product.discount == "" %>
-												<p><i class="fa fa-cny"></i> <%= @product.price %></p>
+												<p><i class="fa fa-cny"></i> <%= @product.price / 100 %></p>
 											<% else %>
-												<p><i class="fa fa-cny"></i> <%= @product.discount %></p>
+												<p><i class="fa fa-cny"></i> <%= @product.discount / 100 %></p>
 											<% end %>
 										<% end %>
 										<p>
