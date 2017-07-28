@@ -18,6 +18,4 @@ h1.page-header
         i class="fa fa-minus"
     h3.panel-title &nbsp;
   .panel-body
-    == render Settings.project.meikemei? ? 'profile_meikemei' : ( Settings.project.imolin? ? 'profile_imolin' : ( Settings.project.wgtong? ? 'profile_wgtong' : 'profile'))
-  .hero
-    = raw @site.content
+    == render Settings.project.meikemei? ? 'profile_meikemei' : ( Settings.project.imolin? ? 'profile_imolin' : 'profile')
