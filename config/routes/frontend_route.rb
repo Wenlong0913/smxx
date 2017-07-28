@@ -47,6 +47,7 @@ module FrontendRoute
             get "self_order"
             get "self_comment"
             get "self_complaint"
+            get "self_message"
           end
         end
         # get 'users/show'

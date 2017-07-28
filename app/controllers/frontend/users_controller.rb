@@ -26,4 +26,7 @@ class Frontend::UsersController < Frontend::BaseController
   def self_complaint
   end
 
+  def self_message
+  end
+
 end
