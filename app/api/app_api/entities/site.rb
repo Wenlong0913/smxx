@@ -36,6 +36,10 @@ module AppAPI
         end
         expose :properties, documentation: { desc: '标签备注', is_array: true }
 
+        expose :is_favorite do |site, options|
+          site.favorites.tagged_by? options[:user_id]
+        end
+
         def score
           BigDecimal(object.score.to_s).ceil
         end

@@ -35,7 +35,7 @@ module AppAPI::V1
           site = ::Site.find(params[:id])
           present site, with: AppAPI::Entities::Site, includes: [:products], type: :full_site, user_id: current_user.id
         else
-          present ::Site.find(params[:id]), with: AppAPI::Entities::Site, includes: [:products]
+          present ::Site.find(params[:id]), with: AppAPI::Entities::Site, includes: [:products], user_id: current_user.id
         end
       end
 
