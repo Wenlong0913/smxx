@@ -64,3 +64,7 @@ li class=("has-sub #{'active' if page?('admin/orders', 'admin/produces', 'admin/
 li class=("has-sub #{'active' if page?('admin/complaints')}")
   = link_to admin_complaints_path do
     = fa_icon 'leaf', text: '投诉/美容师入驻管理'
+
+li[class=("active" if page?('admin/app_settings'))]
+  = link_to admin_app_settings_path do
+    = fa_icon 'key', text: 'APP参数设置'
