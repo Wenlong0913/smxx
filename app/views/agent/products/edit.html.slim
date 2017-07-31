@@ -42,7 +42,7 @@
                       | 单位:
                       small
                         span
-                          = Product::WEIGHT_UNIT_HASH[@product.weight_unit.to_sym]
+                          = Product::WEIGHT_UNIT_HASH[@product.weight_unit.to_s]
                       span.caret
                     ul.dropdown-menu.p-t-5
                       - Product::WEIGHT_UNIT_HASH.each_with_index do |(k, v), index|
