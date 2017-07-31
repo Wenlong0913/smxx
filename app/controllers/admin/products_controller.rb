@@ -21,7 +21,7 @@ class Admin::ProductsController < Admin::BaseController
                 else
                   Product.all
                 end
-    @products = build_query_filter(@products, only: @filter_colums).page(params[:page])
+    @products = build_query_filter(@products, only: @filter_colums).order(updated_at: :desc).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@products.to_json, filename: "products-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

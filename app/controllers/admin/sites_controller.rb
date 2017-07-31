@@ -1,5 +1,6 @@
 class Admin::SitesController < Admin::BaseController
   before_action :set_site, only: [:show, :edit, :update, :destroy]
+  before_action :set_delivery_fee, only: [:create, :update]
 
   def dashboard
     authorize Site
@@ -97,6 +98,9 @@ class Admin::SitesController < Admin::BaseController
       @site = Site.find(params[:id])
     end
 
+    def set_delivery_fee
+      params[:site][:delivery_fee] = params[:site][:delivery_fee].to_f * 100 unless params[:site][:delivery_fee].blank?
+    end
     # Only allow a trusted parameter "white list" through.
     # def admin_site_params
     #       #   params.require(:admin_site).permit(policy(@admin_site).permitted_attributes)

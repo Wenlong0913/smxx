@@ -56,13 +56,14 @@
                         - if index < Product::WEIGHT_UNIT_HASH.size - 1
                           li.divider[role="separator"]
                   = f.input :weight, label: false
-            .col-xs-6
-              .form-group
-                label.control-label.string.optional 产品是否存在运费
-                .input-group
-                  span.input-group-addon.fee_checkbox
-                    = f.input_field :is_fee, as: :boolean, label: false
-                  = f.input :shopping_fee, label: false, input_html: {class: "form-control"}
+            - unless Settings.project.imolin?
+              .col-xs-6
+                .form-group
+                  label.control-label.string.optional 产品是否存在运费
+                  .input-group
+                    span.input-group-addon.fee_checkbox
+                      = f.input_field :is_fee, as: :boolean, label: false
+                    = f.input :shopping_fee, label: false, input_html: {class: "form-control"}
             .col-xs-6
               .form-group.col-xs-8.p-l-0.m-0
                 = f.input :stock

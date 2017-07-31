@@ -21,7 +21,7 @@
 class Order < ApplicationRecord
   audited
   if Settings.project.sxhop? || Settings.project.imolin?
-    store_accessor :features, :delivery_username, :delivery_phone, :delivery_address
+    store_accessor :features, :delivery_username, :delivery_phone, :delivery_address, :delivery_fee
   end
   if Settings.project.meikemei?
     store_accessor :features, :staff_id, :service_time
