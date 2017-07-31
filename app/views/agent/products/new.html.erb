@@ -207,17 +207,19 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-6">
-                      <div class="form-group">
-                        <label class="control-label string.optional">产品是否存在运费</label>
-                        <div class="input-group">
-                          <span class="input-group-addon fee_checkbox">
-                            <%= f.input_field :is_fee, as: :boolean, label: false %>
-                          </span>
-                          <%= f.input :shopping_fee, label: false, input_html: {class: "form-control"} %>
+                    <% unless Settings.project.imolin? %>
+                      <div class="col-xs-6">
+                        <div class="form-group">
+                          <label class="control-label string.optional">产品是否存在运费</label>
+                          <div class="input-group">
+                            <span class="input-group-addon fee_checkbox">
+                              <%= f.input_field :is_fee, as: :boolean, label: false %>
+                            </span>
+                            <%= f.input :shopping_fee, label: false, input_html: {class: "form-control"} %>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    <% end %>
                     <div class="col-xs-6">
                       <div class="form-group col-xs-8 p-l-0 m-0">
                         <%= f.input :stock %>
@@ -226,16 +228,14 @@
                         <%= f.input :unit %>
                       </div>
                     </div>
-                    <div class="col-xs-3">
-                      <div class="form-group">
+                    <div class="col-xs-6">
+                      <div class="form-group col-xs-6 p-0 m-0">
                         <label class="control-label string.optional">是否设为站长推荐</label>
                         <div class="input-group">
                           <%= f.input_field :is_manager_recommend, as: :boolean %>
                         </div>
                       </div>
-                    </div>
-                    <div class="col-xs-3">
-                      <div class="form-group">
+                      <div class="form-group col-xs-6 p-0 m-0">
                         <label class="control-label string.optional">是否上架</label>
                         <div class="input-group">
                           <%= f.input_field :is_shelves, as: :boolean %>

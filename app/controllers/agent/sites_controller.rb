@@ -1,7 +1,7 @@
 class Agent::SitesController < Agent::BaseController
   skip_before_action :set_current_site
   before_action :set_site, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_delivery_fee, only: [:create, :update]
   def new
     authorize Site
     @agent_site = Site.new
@@ -51,6 +51,9 @@ class Agent::SitesController < Agent::BaseController
       @agent_site = Site.find(params[:id])
     end
 
+    def set_delivery_fee
+      params[:site][:delivery_fee] = params[:site][:delivery_fee].to_f * 100 unless params[:site][:delivery_fee].blank?
+    end
     # Only allow a trusted parameter "white list" through.
 
 end

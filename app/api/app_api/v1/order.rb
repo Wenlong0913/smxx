@@ -41,7 +41,8 @@ module AppAPI::V1
           error! order.errors unless order.save
           present order, with: AppAPI::Entities::Order
         else
-          order = current_user.orders.new(site_id: params[:site_id])
+          site = ::Site.find_by(id: params[:site_id])
+          order = current_user.orders.new(site: site)
           shopping_carts = ::ShoppingCart.where(id: params[:shopping_cart_ids])
           error! '购物清单为空！' if shopping_carts.empty?
           shopping_carts.each do |sc|
@@ -52,6 +53,10 @@ module AppAPI::V1
           #   self.price ||= product.price * amount
           # end
           order.price = order.order_products.map(&:price).sum
+          if Settings.project.imolin?
+            order.price = order.price + site.delivery_fee.to_f
+            order.delivery_fee = site.delivery_fee
+          end
           if params[:address_book_id]
             address_book = current_user.address_books.find_by(id: params[:address_book_id])
             unless address_book.blank?

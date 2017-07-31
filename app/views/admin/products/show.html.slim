@@ -335,13 +335,14 @@ h1.page-header
                     a
                       = @product.weight
                       span = "(#{@product.weight_unit})"
-                  td.field 产品是否存在运费
-                  td
-                    a
-                      - if @product.is_fee == '1'
-                        span = "运费：#{@product.shopping_fee}"
-                      - else
-                        span 没有运费
+                  - unless Settings.project.imolin?
+                    td.field 产品是否存在运费
+                    td
+                      a
+                        - if @product.is_fee == '1'
+                          span = "运费：#{@product.shopping_fee}"
+                        - else
+                          span 没有运费
                 tr
                   td.field 简要描述
                   td

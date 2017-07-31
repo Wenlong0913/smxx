@@ -83,7 +83,9 @@
               p 标签备注（可多选）
               = f.collection_check_boxes :properties, Site::PROPERTIES, :first, :last, checked: @agent_site.try(:properties)
             div class="col-md-4 col-sm-12"
-            = f.input :is_published, as: :boolean, label: false, label: '是否发布'
+              = f.input :is_published, as: :boolean, label: false, label: '是否发布'
+            div class="col-md-4 col-sm-12"
+              = f.input :delivery_fee, input_html: { value: @agent_site.new_record? ? '' : (@agent_site.delivery_fee.to_f / 100) }, as: :integer
           .form-group
             image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@agent_site.image_item_ids.join(', ')}"]
           = f.input :content, as: :ckeditor

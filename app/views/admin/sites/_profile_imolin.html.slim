@@ -26,6 +26,9 @@
       td.field 电话
       td
         = @site.phone
+      td.field 订单配送费
+      td
+        = @site.delivery_fee.to_f/100
     tr.divider
       td[colspan='2']
     tr

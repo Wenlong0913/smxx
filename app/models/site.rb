@@ -42,7 +42,7 @@ class Site < ApplicationRecord
                 :recommendation, :good_summary, :bad_summary, :parking,
                 :wifi, :contact_name, :contact_phone, :has_contract, :contract_note,
                 :avg_price, :is_published, :phone, :photos, :province, :real_city, :city, :district, :business_area,
-                :lat, :lng, :updated_by, :content
+                :lat, :lng, :updated_by, :content, :delivery_fee
   validates_presence_of :title, :address_line#, :user_id
   validates_uniqueness_of :title, scope: [:address_line]
 
