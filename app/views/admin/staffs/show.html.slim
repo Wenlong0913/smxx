@@ -22,8 +22,6 @@ h1.page-header
                 = @staff.title
             tr.divider
               td[colspan='2']
-            tr.divider
-              td[colspan='2']
             tr
               td.field 年龄
               td
@@ -69,7 +67,7 @@ h1.page-header
             tr
               td.field 工作经历
               td
-                = @staff.content
+                = raw @staff.content
             tr.divider
               td[colspan='2']
           p 证书认证

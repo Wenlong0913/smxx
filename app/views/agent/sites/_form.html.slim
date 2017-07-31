@@ -36,9 +36,7 @@
             image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@agent_site.image_item_ids.join(', ')}"]
         - elsif Settings.project.meikemei?
           .div class="row"
-            .div class="col-md-6 col-sm-12"
-              = f.input :user_id, collection: User.all.decorate, label_method: :display_name
-            .div class="col-md-6 col-sm-12"
+            .div class="col-md-12 col-sm-12"
               = f.input :title, required: true
           .div class="row"
             .div class="col-md-6 col-sm-12"
@@ -49,19 +47,10 @@
             .div class="col-md-6 col-sm-12"
               = f.input :address_line, required: true
             .div class="col-md-6 col-sm-12"
-              = f.input :business_hours, collection: ['9:00-22:00', '8:00-22:00'], selected: '9:00-22:00'
+              = f.input :business_hours, collection: ['8:00-22:00', '9:00-22:00', '10:00-22:00'], selected: '9:00-22:00'
           .div class="row"
-            .div class="col-md-6 col-sm-12"
-              = f.input :comment, as: :text
-            .div class="col-md-6 col-sm-12"
-              = f.input :is_sign, as: :select
-          .div class="row"
-            .div class="col-md-6 col-sm-12"
-              = f.input :score, collection: ['1', '2', '3', '4', '5']
-              p 标签备注（可多选）
+            .div class="col-md-12 col-sm-12"
               = f.collection_check_boxes :properties, Site::PROPERTIES, :first, :last, checked: @agent_site.try(:properties)
-            .div class="col-md-6 col-sm-12"
-              = f.input :sign_note, as: :text, input_html: {rows: 5}
           = f.input :content, as: :ckeditor
           p 背景图片
           .form-group
@@ -97,34 +86,34 @@
             = f.input :is_published, as: :boolean, label: false, label: '是否发布'
           .form-group
             image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@agent_site.image_item_ids.join(', ')}"]
-        = f.input :content, as: :ckeditor
+          = f.input :content, as: :ckeditor
       = f.submit class: 'btn btn-success btn-block'
 
 - if Settings.project.imolin? || Settings.project.wgtong?
-script data-turbolinks="false" type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=#{Rails.application.config_for(:baidu_lbs_api)['geocoding']["ak"]}"
-javascript:
-    var options = { autocomplete_input: 'search-address' };
-    options['center_point'] = "#{@agent_site.city_name}" || '成都' ;
-    var current_point = null;
-    var current_marker = null;
-    if($('#stadium_lat').val() != "" && $('#site_lng').val() != ""){
-      current_point = new BMap.Point($('#site_lng').val(), $('#site_lat').val());
-      current_marker = new BMap.Marker(current_point);  // 创建标注
-      options['center_point'] = current_point;
-      options['zoom'] = 18;
-    }
-    var map_obj = new BaiduMap('baidu-map', options);
-    var map = map_obj.map;
-    map.setDefaultCursor("default");   //设置地图默认的鼠标指针样式
-    map_obj.pickLatLng(function(point){
-      $('#site_lat').val(point.lat);
-      $('#site_lng').val(point.lng);
-      map.clearOverlays();
-      map.addOverlay(new BMap.Marker(point));
-    });
-    map_obj.bindAutocomplete('search-address', function(location){
-      map_obj.setPlace(location);
-    })
-    if(current_marker){
-      map.addOverlay(current_marker);              // 将标注添加到地图中
-    }
+  script data-turbolinks="false" type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=#{Rails.application.config_for(:baidu_lbs_api)['geocoding']["ak"]}"
+  javascript:
+      var options = { autocomplete_input: 'search-address' };
+      options['center_point'] = "#{@agent_site.city_name}" || '成都' ;
+      var current_point = null;
+      var current_marker = null;
+      if($('#stadium_lat').val() != "" && $('#site_lng').val() != ""){
+        current_point = new BMap.Point($('#site_lng').val(), $('#site_lat').val());
+        current_marker = new BMap.Marker(current_point);  // 创建标注
+        options['center_point'] = current_point;
+        options['zoom'] = 18;
+      }
+      var map_obj = new BaiduMap('baidu-map', options);
+      var map = map_obj.map;
+      map.setDefaultCursor("default");   //设置地图默认的鼠标指针样式
+      map_obj.pickLatLng(function(point){
+        $('#site_lat').val(point.lat);
+        $('#site_lng').val(point.lng);
+        map.clearOverlays();
+        map.addOverlay(new BMap.Marker(point));
+      });
+      map_obj.bindAutocomplete('search-address', function(location){
+        map_obj.setPlace(location);
+      })
+      if(current_marker){
+        map.addOverlay(current_marker);              // 将标注添加到地图中
+      }
