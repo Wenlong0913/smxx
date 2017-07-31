@@ -145,7 +145,7 @@ module AppAPI::V1
       params do
         optional :nickname, type: String, desc: '昵称'
         # optional :username, type: String, desc: '名称'
-        if Settings.project.imolin?
+        if Settings.project.imolin? || Settings.project.meikemei?
           optional :avatar, type: String, desc: '头像, 格式是base64'
         else
           optional :avatar, type: Rack::Multipart::UploadedFile, desc: '上传头像'
@@ -163,7 +163,7 @@ module AppAPI::V1
         authenticate!
         user = ::User.find(current_user.id) # get fresh data from DB
         if params[:avatar]
-          if Settings.project.imolin?
+          if Settings.project.imolin? || Settings.project.meikemei?
             StringIO.open(Base64.decode64(params[:avatar])) do |data|
               data.class.class_eval { attr_accessor :original_filename, :content_type }
               data.original_filename = "user-#{user.id}.jpg"
