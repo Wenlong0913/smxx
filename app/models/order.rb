@@ -121,7 +121,7 @@ class Order < ApplicationRecord
 
   after_commit do
     if @should_send_paid_message && (Settings.project.imolin? || Settings.project.meikemei?)
-      OrderNotificationJob.perform_async(self)
+      OrderNotificationJob.perform_async(self.id)
     end
   end
 
