@@ -34,12 +34,13 @@
           td
             = @site.address_line
         tr
-          td.field 美容院介绍：
-          td
-            = @site.content
           td.field 签约备注：
           td
             = @site.contract_note
+        tr
+          td.field 美容院介绍：
+          td
+            = raw @site.content
       p 背景图片
       .gallery#gallery
         .row
