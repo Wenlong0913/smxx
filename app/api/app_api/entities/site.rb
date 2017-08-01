@@ -6,7 +6,7 @@ module AppAPI
       if Settings.project.imolin?
         expose :title, documentation: { desc: "#{::Site.model_name.human}名称"}
         expose :description, documentation: { desc: "#{::Site.model_name.human}简要描述" }, if: ->(site, options) { options[:type] == :full_site}
-        expose :display_delivery_fee, documentation: { desc: '配送费', type: Float }
+        expose :display_delivery_fee, as: :delivery_fee, documentation: { desc: '配送费', type: Float }
         expose :content, documentation: { desc: "#{::Site.model_name.human}介绍" }
         expose :image_items, using: AppAPI::Entities::ImageItem, as: :images, documentation: { is_array: true }
         expose :business_hours, documentation: { desc: '营业时间' }
