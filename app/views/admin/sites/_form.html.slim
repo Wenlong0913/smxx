@@ -101,14 +101,14 @@
               = f.input :business_hours, placeholder: '09:00-22:00'
               = f.input :avg_price, as: :float
               = f.input :is_flatform_recommend, as: :boolean
+              = f.input :is_published, as: :boolean, label: false, label: '是否发布'
             div class="col-md-3 col-sm-12"
               = f.input :good_summary, input_html: { maxlength: 5 }
               = f.input :bad_summary, input_html: { maxlength: 2 }
-              / f.input :properties
               p 标签备注（可多选）
               = f.collection_check_boxes :properties, Site::PROPERTIES, :first, :last, checked: @site.try(:properties)
+              = f.input :delivery_fee, input_html: { value: @site.new_record? ? '' : (@site.delivery_fee.to_f / 100) }, as: :integer
 
-              = f.input :is_published, as: :boolean, label: false, label: '是否发布'
             div class="col-md-3 col-sm-12"
               = f.input :contact_name
               = f.input :contact_phone, input_html: { maxlength: 11 }

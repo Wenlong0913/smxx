@@ -16,7 +16,8 @@ class Staff < ApplicationRecord
   belongs_to :site
   has_many :theme_configs
   has_one :active_theme_config, -> { where(active: true) }, class_name: 'ThemeConfig'
-  has_many :image_items, dependent: :destroy, as: :owner
+  has_many :image_item_relations, as: :relation
+  has_many :image_items, :through => :image_item_relations
   has_many_favorites
   store_accessor :features, :description, :age, :work_years, :content, :certificate, :properties, :score, :total_service, :week_service
   validates_presence_of :title

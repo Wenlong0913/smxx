@@ -36,6 +36,7 @@ zh-CN:
         phone: 手机号
         contract_note: 签约备注
         is_flatform_recommend: 是否设为平台推荐
+        delivery_fee: 订单配送费
         properties:
           assure: 正品保障
           cleaning: 卫生清洁
