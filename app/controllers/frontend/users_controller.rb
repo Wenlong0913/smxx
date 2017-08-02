@@ -38,4 +38,11 @@ class Frontend::UsersController < Frontend::BaseController
   def ensure_login!
     redirect_to root_url unless current_user
   end
+
+  def binding_phone
+  end
+
+  def binding_weixin
+  end
+
 end
