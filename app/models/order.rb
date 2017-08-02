@@ -114,7 +114,15 @@ class Order < ApplicationRecord
     if Settings.project.grand?
       self.user = self.member.user
     end
+    # 判断是否要发支付成功的短信
+    @should_send_paid_message = self.status_change == ['open', 'paid'] || self.status_change == ['pending', 'paid']
     # self.user = self.member.user
+  end
+
+  after_commit do
+    if @should_send_paid_message && (Settings.project.imolin? || Settings.project.meikemei?)
+      OrderNotificationJob.perform_async(self.id)
+    end
   end
 
   def paid
