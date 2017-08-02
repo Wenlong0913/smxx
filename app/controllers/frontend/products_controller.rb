@@ -1,5 +1,6 @@
 class Frontend::ProductsController < Frontend::BaseController
   acts_as_commentable resource: Product
+  impressionist :actions=>[:show]
   def index
     # 所有产品列表
 
