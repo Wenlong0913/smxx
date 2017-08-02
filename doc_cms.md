@@ -280,6 +280,10 @@ Nginx config:
 
   add_column :cms_pages, :impressions_count, :integer, default: 0
 
+  注：如果不想添加一个字段，而是想要指定一个不同的列名，可以：
+
+  is_impressionable :counter_cache => true, :column_name => :my_column_name
+
 2. 修改Model:
 
   is_impressionable :counter_cache => true
