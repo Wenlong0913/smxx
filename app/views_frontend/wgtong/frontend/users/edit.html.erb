@@ -25,17 +25,27 @@
                     <div class="col-md-9 col-md-offset-1 col-xs-12">
                       <div class="form-horizontal">
                         <!-- 头像 -->
-                        <!-- <div class="row">
+                        <div class="row" style="margin-bottom: 60px;">
                           <div class="col-md-4 col-xs-12">
                             <div class="user-logo">
-                              <img src="" alt="" class="img-circle" width="150px">
+                              <div class="slim br-5" data-label="选择图片" 
+                                  data-button-cancel-label = "取消"
+                                  data-button-confirm-label = "确认"
+                                  data-will-save="upload"
+                                  data-will-remove="imageWillBeRemoved"
+                                  data-save-initial-image="true"
+                                  data-ratio="1:1">
+                                <!-- <input type="file" name="slim[]"/> -->
+                                <img src="<%= @current_user.display_headshot %>" alt="">
+                                <%= f.file_field :attachments %>
+                              </div>
                             </div>
                           </div>
                           <div class="col-md-4 col-xs-12">
-                            <%#= f.input :attachments, as: :file, label: false, input_html: { style: 'display: inlin-block; margin: 50px 0px 15px 0px;' } %>
-                            <p>建议头像尺寸为300*300像素，格式为jpg、jpeg,大小不超过2M</p>
+                            <h3>修改头像</h3>
+                            <p style="margin-top: 60px;">建议头像尺寸为300*300像素，格式为jpg、jpeg、png,大小不超过2M</p>
                           </div>
-                        </div> -->
+                        </div>
                         <div class="form-group">
                           <label for="inputName" class="col-sm-2 control-label">昵称</label>
                           <div class="col-sm-10">
@@ -48,18 +58,18 @@
                             <%= f.input :email, label: false %>
                           </div>
                         </div>
-                        <!-- <div class="form-group">
+                        <div class="form-group">
                           <label for="inputPassword" class="col-sm-2 control-label">密码</label>
                           <div class="col-sm-10">
-                            <%#= f.input :password, hint: '密码至少6位，不需要修改密码则不填！', label: false %>
+                            <%= f.input :password, hint: '密码至少6位，不需要修改密码则不填！', label: false %>
                           </div>
                         </div>
                         <div class="form-group">
                           <label for="inputPassword" class="col-sm-2 control-label">确认密码</label>
                           <div class="col-sm-10">
-                            <%#= f.input :password_confirmation, label: false %>
+                            <%= f.input :password_confirmation, label: false %>
                           </div>
-                        </div> -->
+                        </div>
                       </div>
 
                     </div>
