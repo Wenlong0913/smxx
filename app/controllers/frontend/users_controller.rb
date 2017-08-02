@@ -29,4 +29,10 @@ class Frontend::UsersController < Frontend::BaseController
   def self_message
   end
 
+  def binding_phone
+  end
+
+  def binding_weixin
+  end
+
 end
