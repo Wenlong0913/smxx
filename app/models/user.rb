@@ -56,7 +56,11 @@ class User < ApplicationRecord
   has_many :complaints
   has_many_comments
   has_many_favorites
-  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
+  has_attached_file :avatar, 
+                    styles: {:original => '800>', medium: "300x300>", thumb: "100x100>" }, 
+                    default_url: "/images/:style/missing.png", 
+                    path: ":rails_root/public/photos/:year/:month/:day/:id/:style.:extension", 
+                    url: "/photos/:year/:month/:day/:id/:style.:extension"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
   validates_attachment_file_name :avatar, matches: [/png\z/i, /jpe?g\z/i]
   validates_with AttachmentSizeValidator, attributes: :avatar, less_than: 10.megabytes
@@ -145,7 +149,7 @@ class User < ApplicationRecord
   def display_headshot
     url =
       if !(avatar.url == "/images/original/missing.png")
-        avatar.url(:thumb)
+        Settings.project.wgtong? ? avatar.url(:original) : avatar.url(:thumb)
       elsif weixin && weixin.headshot
         weixin.headshot
       else

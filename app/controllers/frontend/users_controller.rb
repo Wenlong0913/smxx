@@ -1,4 +1,5 @@
 class Frontend::UsersController < Frontend::BaseController
+  before_action :ensure_login!
   def show
   end
 
@@ -7,6 +8,10 @@ class Frontend::UsersController < Frontend::BaseController
   end
   def update
     authorize @current_user
+    if params[:user][:attachments]
+      @current_user.avatar = JSON.parse(params[:user][:attachments])["output"]["image"]
+      @current_user.avatar_file_name = JSON.parse(params[:user][:attachments])["input"]["name"]
+    end
     flag, @current_user = User::Update.(@current_user, permitted_attributes(@current_user))
     if flag
       redirect_to edit_frontend_user_path(@current_user), notice: '更新成功.'
@@ -27,6 +32,11 @@ class Frontend::UsersController < Frontend::BaseController
   end
 
   def self_message
+  end
+
+
+  def ensure_login!
+    redirect_to root_url unless current_user
   end
 
   def binding_phone
