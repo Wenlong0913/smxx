@@ -34,7 +34,7 @@ h1.page-header
           .col-md-3
             h4.text-info 
               | 订单总额: 
-              = (@orders_all.sum(&:price).to_f/100).to_s + '元'
+              = (@orders_all.sum(&:price)/100.0).to_s + '元'
           - if Settings.project.grand?
             .col-md-3
               h4.text-info 
