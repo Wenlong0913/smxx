@@ -287,7 +287,6 @@
               <% next if index > 0 %>
   						<div class="tr-post tr-video-post">
   							<div class="entry-header">
-  								<!-- <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/-WlqrkXImsk" allowfullscreen=""></iframe> -->
                   <a href="<%= frontend_product_path(product) %>">
                     <img class="img-responsive" src="<%= product.first_image %>" alt="Image">
                   </a>
@@ -330,14 +329,16 @@
 						<ul class="small-post-list">
               <% @products.each_with_index do |product, index| %>
                 <% next if index <= 0 %>
-                <li>
-  								<div class="entry-header">
-  									<div class="entry-thumbnail">
-  										<a href="<%= frontend_product_path(product) %>">
-                        <img class="img-responsive" src="<%= product.first_image %>" alt="Image">
-                      </a>
-  									</div>
-  								</div>
+                <li style="margin: -20px -15px;">
+                  <% if product.image_items.presence %>
+                    <div class="entry-header" style="width: 100%; height: 100%;">
+                      <div class="entry-thumbnail">
+                        <a href="<%= frontend_product_path(product) %>">
+                          <img class="img-responsive" src="<%= product.image_items.first.try(:image_url) %>" alt="Image">
+                        </a>
+                      </div>
+                    </div>
+                  <% end %>
   								<div class="post-content media-body">
   									<div class="entry-meta">
   										<ul>
@@ -346,6 +347,8 @@
   									</div>
   									<h2 class="entry-title">
   										<a href="<%= frontend_product_path(product) %>"><%= product.name %></a>
+                      <br/>
+                      <small><%= product.description.truncate(20) %></small>
   									</h2>
   								</div>
   							</li>
