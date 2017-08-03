@@ -42,7 +42,7 @@ h2 绑定微信
       }
 
       this.connect = function(code) {
-        var url = '#{admin_profile_connect_weixin_url }';
+        var url = '#{connect_weixin_frontend_users_url }';
         $.post(url, { code: code }, function(data){
           if (data.success) {
             $('#qrcode-auth-message').text('绑定成功')

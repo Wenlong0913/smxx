@@ -21,11 +21,12 @@ class Frontend::UsersController < Frontend::BaseController
   end
 
   def self_order
-    @user_orders = current_user.orders
+    @user_orders = current_user.orders.order("updated_at DESC").page(params[:page])
   end
 
   def self_comment
-    @comments = Comment::Entry.where(user_id: current_user.id)
+    @comments = Comment::Entry.where(user_id: current_user.id).order("updated_at DESC").page(params[:page])
+    @product_comments = @comments.group_by{|c| c.resource}
   end
 
   def self_complaint
@@ -40,9 +41,35 @@ class Frontend::UsersController < Frontend::BaseController
   end
 
   def binding_phone
+    if params['user']
+      t = Sms::Token.new(params['user']['mobile'])
+      if t.valid?(params['user']['code'])
+        t.destroy!
+        mobile = current_user.mobile || current_user.build_mobile
+        mobile.phone_number = params['user']['mobile']
+        if mobile.save
+          render json: {}
+        else
+          render json: {error: mobile.errors.full_messsages}
+        end
+      else
+        render json: {error: '验证码不正确！'}
+      end
+    end
   end
 
   def binding_weixin
+    if params[:code]
+      conn = Faraday.new(:url => 'http://wxopen.tanmer.com')
+      response = conn.get('/wx/mp_auth/wx4c40bb18df07aafc/fetch_uid/%s' % params[:code])
+      data = JSON.parse(response.body)
+      if data['uid']
+        current_user.weixin = User::Weixin.find_or_create_by(uid: data['uid'])
+        render json: { success: true }
+      else
+        render json: { success: false }
+      end
+    end
   end
 
 end

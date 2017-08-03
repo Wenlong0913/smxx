@@ -48,6 +48,10 @@ module FrontendRoute
             get "self_comment"
             get "self_complaint"
             get "self_message"
+            get "binding_phone"
+            get "binding_weixin"
+            post "binding_weixin"
+            post "binding_phone"
           end
         end
         # get 'users/show'
