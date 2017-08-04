@@ -1,7 +1,7 @@
 class Cms::PagesController < Cms::BaseController
   before_action :set_cms_site
   before_action :set_cms_page, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_cms_tags, only: [:edit, :new]
   def index
     @cms_pages = Cms::Page.joins(:channel).where("cms_channels.site_id = ?", @cms_site.id).page(params[:page])
     authorize @cms_pages
@@ -78,6 +78,11 @@ class Cms::PagesController < Cms::BaseController
     def set_cms_page
       @cms_page = Cms::Page.find(params[:id])
       @cms_channel = @cms_page.channel
+    end
+
+    def set_cms_tags
+      @cms_site_tags = @cms_site.tags.pluck(:name).uniq
+      @cms_site_most_tags = @cms_site.tags.reorder("taggings_count desc").most_used(5).uniq.map(&:name)
     end
 
     # Only allow a trusted parameter "white list" through.
