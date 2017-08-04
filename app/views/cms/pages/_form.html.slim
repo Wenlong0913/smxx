@@ -24,6 +24,17 @@
         .col-md-6
           = f.input :keywords, placeholder: '关键词用逗号隔开'
           = f.input :description, placeholder: '文章摘要，用于SEO描述'
+        .col-md-12
+          .form-group.string.optional.product_tag
+            label.control-label.string.optional 添加标签
+            ul.cms-page-tags[data-cms-site-tags=@cms_site_tags]
+              - @cms_page.tag_list.each do |tag|
+                li = tag
+            .most-tag-list
+              span.small 常用标签：
+              - @cms_site_most_tags.each do |val|
+                span.label.m-r-5 = val
+
       = f.input :content, as: :ckeditor, input_html: { ckeditor: {toolbar: 'custom', height: '600px'}}
       = f.collection_check_boxes :properties, Cms::Page::PROPERTIES, :first, :last, checked: @cms_page.try(:properties)
       = f.submit class: 'btn btn-success btn-block'
