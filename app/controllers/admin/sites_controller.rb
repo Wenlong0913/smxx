@@ -9,7 +9,7 @@ class Admin::SitesController < Admin::BaseController
   # GET /admin/sites
   def index
     authorize Site
-    @filter_colums = %w(id title)
+    @filter_colums = %w(id title address_line)
     @sites = if params[:search] && params[:search][:keywords] =~ /^\d{11}$/
       mobile = User::Mobile.where(phone_number: params[:search][:keywords]).first
       if mobile.present? && mobile.user.present?
