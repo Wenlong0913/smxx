@@ -106,10 +106,15 @@ class CmsController < ApplicationController
     @comment.status = params[:comment][:status]
     @comment.branch = params[:comment][:branch]
     @comment.datetime = params[:comment][:datetime]
+    # 评论系统使用
+    @comment.source_type = params[:comment][:source_type]
+    @comment.source_id = params[:comment][:source_id]
+    @comment.user_id = current_user.id
     respond_to do |format|
       format.html do
         if @comment.save
-          redirect_to root_path, :notice=> '提交成功~'
+          redirect_back fallback_location: root_path, :notice=> '提交成功~'
+          # redirect_to root_path, :notice=> '提交成功~'
         else
           render :new
         end
