@@ -18,6 +18,7 @@
 class Cms::Page < ApplicationRecord
   audited
   is_impressionable :counter_cache => true
+  acts_as_taggable
   belongs_to :channel
   has_one :site, through: :channel
   has_many_comments
