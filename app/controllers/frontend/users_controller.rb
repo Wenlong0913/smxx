@@ -30,6 +30,15 @@ class Frontend::UsersController < Frontend::BaseController
   end
 
   def self_complaint
+    @complaint = Complaint.new
+    if params[:complaint]
+      complaint = Complaint.new(user_id: current_user.id, reason: params[:complaint][:reason], complaint_type: "feedback")
+      if complaint.save
+        redirect_to frontend_user_path(current_user), notice: "发布成功"
+      else
+        render
+      end
+    end
   end
 
   def self_message

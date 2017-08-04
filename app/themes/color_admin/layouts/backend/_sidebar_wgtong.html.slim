@@ -71,6 +71,10 @@ li[class=("active" if page?('admin/articles'))]
   = link_to admin_articles_path do
     = fa_icon 'leaf', text: '应急公告'
 
+li class=("has-sub #{'active' if page?('admin/complaints')}")
+  = link_to admin_complaints_path do
+    = fa_icon 'leaf', text: '意见反馈'
+    
 li class=("has-sub #{'active' if page?('admin/cms/comments', 'admin/orders', 'admin/produces', 'admin/orders/:order_id/produces/:id', 'admin/task_types', 'admin/deliveries', 'admin/order_deliveries')}")
   a href="javascript:;"
     b.caret.pull-right
