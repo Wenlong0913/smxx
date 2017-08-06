@@ -211,10 +211,6 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
         <input type="phone" name="comment[contact]" class="form-control" id="InputPhone" />
     <% end %>
 
-    若需要表单空值验证（有css样式）+异步提交（在当前页面返回结果）
-    1、修改html: { class: 'form-theme'} 为 html: { class: 'validate'}
-    2、在input标签的class属性中加入'required'属性
-
     a标签代替button标签提交表单写法：
     <a href="javascript:;" class="btn btn-success" onclick='submit_form()' >立即咨询</a>
     <script type="text/javascript">
@@ -222,7 +218,6 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
         $('.simple_form').submit();
       }
     </script>
-
 
 可以使用的表单属性：
 
@@ -243,6 +238,66 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
     branch: 分站
     datetime: 预订时间
 
+## 以Cms::Page和Cms::Channel为例添加百度分享按钮
+  
+  ## 配置分享内容
+    具体分享配置可查看百度分享官方文档：http://share.baidu.com/code/advance
+    <% p = @page || @channel %>
+    <script>
+      window._bd_share_config = {
+        common : {
+          bdText : '<%= p.title %>',
+          bdDesc : '<%= p.description %>',
+          bdUrl : '<%= get_cms_url(p) %>',
+          bdPic : '<%= p.image_path %>',
+          bdMini: 2,
+          bdStyle: 1
+        },
+        share : [{
+          "bdSize" : 24
+        }],
+      }
+      with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+  ## 页面添加分享按钮
+    <div class="bdsharebuttonbox" data-tag="share_1">
+      <a class="bds_qzone" data-cmd="qzone"></a>
+      <a class="bds_tsina" data-cmd="tsina"></a>
+      <a class="bds_sqq" data-cmd="sqq"></a>
+      <a class="bds_weixin" data-cmd="weixin"></a>
+    </div>
+
+  ## 常用的配置属性
+    图片分享按钮
+    image : [{
+      viewType : 'list',
+      viewPos : 'top',
+      viewColor : 'black',
+      viewSize : '16',
+      viewList : ['qzone','tsina','sqq','weixin']
+    }],
+
+    划词分享按钮
+    selectShare : [{
+     "bdselectMiniList" : ['qzone','tsina','sqq','weixin']
+    }]
+
+    常用分享按钮名称对应表
+    QQ空间  qzone
+    新浪微博  tsina
+    人人网 renren
+    腾讯微博  tqq
+    开心网 kaixin001
+    百度贴吧  tieba
+    豆瓣网 douban
+    QQ好友  sqq
+    天涯社区 ty
+    linkedin  linkedin
+    微信  weixin
+
+## 添加Cms::Page和Cms::Channel的评论
+  评论功能尚未完整，待完善
 
 # 如何添加二级域名
 
