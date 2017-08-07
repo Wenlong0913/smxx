@@ -10,6 +10,7 @@
 *= require admin/products
 *= require admin/public
 *= require admin/order_deliveries
+*= require admin/app_banners
 *= require common/error_explanation
 *= require_self
 */

@@ -77,7 +77,7 @@ module AppAPI::V1
         end
         # 筛选掉有效期时间外的Article
         now = Time.now
-        articles = articles.where('valid_time_begin is null or valid_time_begin <= ? and valid_time_end >= ?', now, now)
+        articles = articles.where('article_type != ? or article_type is null', 2).where('valid_time_begin is null or valid_time_begin <= ? and valid_time_end >= ?', now, now)
         articles = paginate_collection(sort_collection(articles), params)
         wrap_collection articles, AppAPI::Entities::Article, type: :list, includes: [params[:includes]], user_id: current_user.id
       end
