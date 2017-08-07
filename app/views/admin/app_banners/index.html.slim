@@ -88,7 +88,6 @@ h1.page-header
               th articles/#{article.id}
               td = article.updated_at.strftime("%Y-%m-%d/%H:%M:%S")
               td
-                / => link_to '查看', @community ? admin_community_article_path(@community, article) : admin_article_path(article), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_app_setting_app_banner_path(@app_setting, article), class: 'edit-btn btn btn-xs btn-primary'
                 = link_to '删除', admin_app_setting_app_banner_path(@app_setting, article), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
 
