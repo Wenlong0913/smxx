@@ -16,6 +16,14 @@
           </span>
         </div>
       <% end %>
+      <% if notice %>
+        <div class="alert alert-warning alert-dismissible text-left" role="alert" style="padding: 0px 0px 0px 10px; margin-top: 10px;">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <%= notice %>
+        </div>
+      <% end %>
     </div>
     <div class="col-md-4"></div>
   </div>
