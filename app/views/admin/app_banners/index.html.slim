@@ -26,10 +26,10 @@ h1.page-header
               input.form-control[type="text" value="#{v['url'].to_s}" name="app_setting[url][#{index}]"]
               span.input-group-btn
                 = f.submit '更新', class: 'button btn btn-default'
-            - if v['url'] && v['url'].split('/')[0] == 'articles' && article = @app_banner_articles.find_by(id: v['url'].split('/')[1])
+            - if v['url'] && v['url'].split('/')[1] == 'banners' && article = @app_banner_articles.find_by(id: v['url'].split('/')[2])
               div.article-content-show
                   => link_to '编辑', edit_admin_app_setting_app_banner_path(@app_setting, article), class: 'edit-btn btn btn-xs btn-primary'
-                  = @app_banner_articles.find_by(id: v['url'].split('/')[1]).description.html_safe
+                  = article.description.html_safe
             - else
               .text-info.m-t-10.m-b-10 此路由不支持预览, 请在app上查看
 
@@ -55,10 +55,10 @@ h1.page-header
               input.form-control[type="text" value="#{v['url'].to_s}" name="app_setting[url][#{index}]"]
               span.input-group-btn
                 = f.submit '更新', class: 'button btn btn-default'
-            - if v['url'] && v['url'].split('/')[0] == 'articles' && article = @app_banner_articles.find_by(id: v['url'].split('/')[1])
+            - if v['url'] && v['url'].split('/')[1] == 'banners' && article = @app_banner_articles.find_by(id: v['url'].split('/')[2])
               div.article-content-show
                 => link_to '编辑', edit_admin_app_setting_app_banner_path(@app_setting, article), class: 'edit-btn btn btn-xs btn-primary'
-                = @app_banner_articles.find_by(id: v['url'].split('/')[1]).description.html_safe
+                = article.description.html_safe
             - else
               .text-info.m-t-10.m-b-10 此路由不支持预览, 请在app上查看
 .panel.panel-default
@@ -69,7 +69,7 @@ h1.page-header
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
     h3.panel-title.text-red
-      | 轮播图详细页－历史记录
+      | 自定义编辑轮播图详细页－历史记录
   .panel-body
     .table-responsive.row.m-0
       table.table.table-striped.table-bordered
@@ -85,7 +85,7 @@ h1.page-header
             tr
               td = index + 1
               td = article.title
-              th articles/#{article.id}
+              th = "/banners/#{article.id}/show"
               td = article.updated_at.strftime("%Y-%m-%d/%H:%M:%S")
               td
                 => link_to '编辑', edit_admin_app_setting_app_banner_path(@app_setting, article), class: 'edit-btn btn btn-xs btn-primary'
