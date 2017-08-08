@@ -5,9 +5,10 @@ class Frontend::ProductCatalogsController < Frontend::BaseController
   end
 
   def show
-    @product_catalog =ProductCatalog.find(params[:id])
+    @product_catalog = ProductCatalog.find(params[:id])
     # 当前分类下的所有产品
-    @products  = Product.where(catalog_id: params[:id]).order(updated_at: :desc).page(params[:page])
+    @products = @product_catalog.products
+    # @products  = Product.where(catalog_id: params[:id]).order(updated_at: :desc).page(params[:page])
   end
 
   private
