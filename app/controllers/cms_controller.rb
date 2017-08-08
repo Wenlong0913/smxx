@@ -57,6 +57,13 @@ class CmsController < ApplicationController
     impressionist(@channel, "channel_#{@channel.id}")
     impressionist(@page, "page_#{@page.id}") if @page # 2nd argument is optional
 
+    # 评论列表
+    @comments_list = if @page
+      Cms::Comment.where(source_type: 'Cms::Page', source_id: @page.id).order("created_at ASC").page(params[:page]).per(6)
+    else
+      Cms::Comment.where(source_type: 'Cms::Channel', source_id: @channel.id).order("created_at ASC").page(params[:page]).per(6)
+    end
+
     #respond_with @page || @channel
     respond_to do |format|
       format.html
