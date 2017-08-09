@@ -1,41 +1,38 @@
-form.form-horizontal
+= form_for(@order, url: charge_frontend_orders_path, remote: true, html: {class: 'form-horizontal'}) do |f|
   .tr-section.text-left
     .row.mb-30
       .col-md-3
         .productImg
-          img[src="" alt="" class="img-responsive"]
+          img[src="#{@product.first_image}" alt="" class="img-responsive"]
       .col-md-9.text-left
         h4
-          a[href="#" class="color2e"] 产品名称
-          small 分类
+          a[href="#" class="color2e"]
+            = @product.name
+          small = @product.catalog.try(:name)
         p
-          span[class="orderPrice"] ¥ 100.00
+          span[class="orderPrice"] 
+            small 价格: 
+            = (@product.price/100.0).to_s + '元'
         p
           span
             i[class="fa fa-map-marker productColorIcon"]
-            | 地址
+            = @product.address_line1
+        p
+          small
+            = @product.address_line2
         p
           span
             i[class="fa fa-clock-o productColorIcon"]
-            | 时间
-        .modal.fade[id="deleteSite1" tabindex="-1" role="dialog" aria-labelledby="deleteProduct"]
-          .modal-dialog[role="document"]
-            .modal-content
-              .modal-header
-                button[type="button" class="close" data-dimiss="modal" aria-label="Close"]
-                h4.modal-title 提示
-              .modal-body 是否要取消当前预定信息，点击“确认”取消预定，点击“取消”返回
-              .modal-footer
-                button[type="button" class="btn btn-default" data-dismiss="modal"] 取消
-                button[type="button" class="btn btn-danger" data-dismiss="modal"] 确定
+            = @product.date + ' ' + @product.time
     .form-group
       label[for="inputPhone" class="col-sm-2 control-label text-left"] 手机号
       .col-sm-10
-        input[type="text" class="form-control" id="inputPhone" value="#{current_user.mobile.phone_number}" style="width: 200px;"]
+        input[type="text" name="order['delivery_phone']" class="form-control" id="inputPhone" value="#{current_user.mobile.phone_number}" style="width: 200px;"]
     .form-group
       label[for="inputNumber" class="col-sm-2 control-label"] 数量：
       .col-sm-10
-        input[type="number" class="form-control" id="inputNumber" value="1" readonly style="width: 120px;"]
+        input[type="hidden" name="order[product][id]" value="#{@product.id}"]
+        input[type="number" name="order[product][number]" class="form-control" id="inputNumber" value="1" style="width: 120px;"]
     article[style="border: 1px solid #ccc;"]
       h3[class="text-warning" style="padding-left: 20px;"] 预定须知
       ol
@@ -46,3 +43,19 @@ form.form-horizontal
         li 活动最终解释权归举办方所有。
   p[class="text-center read_content"] 提交订单表示您已阅读预定须知
   button[type="submit" class="btn btn-danger btn-md"] 去支付
+
+javascript:
+  function onStartCharging(charge){
+    pingpp.createPayment(charge, function(result, err){
+      console.log(result);
+      console.log(err.msg);
+      console.log(err.extra);
+      if (result == "success") {
+          // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的支付结果都会跳转到 extra 中对应的 URL。
+      } else if (result == "fail") {
+          // charge 不正确或者微信公众账号支付失败时会在此处返回
+      } else if (result == "cancel") {
+          // 微信公众账号支付取消支付
+      }
+    });
+  }

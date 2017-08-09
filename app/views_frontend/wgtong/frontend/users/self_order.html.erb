@@ -88,13 +88,14 @@
             </div>
             <% if @user_orders.any? %>
               <% @user_orders.each_with_index do |order| %>
+                <% next if order.order_products.empty? %>
                 <!-- 文化活动订单 -->
                 <div class="tr-section">
                   <div class="row">
                     <div class="col-md-12">
                       <p class="clearfix">
                         <span class="pull-left">
-                          <a href="#">
+                          <a href="<%=frontend_order_path(order) %>">
                             <code class="productOrderBg" style="color: #fff;"><i class="fa fa-share-alt"></i> 订单号:   <%= order.code%></code>
                           </a>
                         </span>
@@ -130,28 +131,20 @@
 
                       <p class="orderDescription"><%= order_product.product.description %></p>
                       <div class="btn-group text-right" role="group">
-                        <button class="btn btn-default" type="button" name="button" data-toggle="modal" data-target="#deleteSite1">取消预定</button>
-                      </div>
-                      <div class="modal fade" id="deleteSite1" tabindex="-1" role="dialog" aria-labelledby="deleteProduct">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                              <h4 class="modal-title">提示</h4>
-                            </div>
-                            <div class="modal-body">
-                              是否要取消当前预定信息，点击“确认”取消预定，点击“取消”返回
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">确定</button>
-                            </div>
-                          </div>
-                        </div>
+                        <%#<button class="btn btn-default" type="button" name="button" data-toggle="modal" data-target="#deleteSite1">取消预定</button>%>
                       </div>
                     </div>
                   </div>
                   <%end%>
+                  <div class="row">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-3">
+                      <p class="text-left">下单时间: <%=distance_of_time_in_words_to_now(order.created_at) %>前</p>
+                    </div>
+                    <div class="col-md-3">
+                      <p class="text-right">订单状态: <%= enum_l(order, :status)%></p>
+                    </div>
+                  </div>
                 </div>
               <% end %>
               <%= paginate @user_orders %>
