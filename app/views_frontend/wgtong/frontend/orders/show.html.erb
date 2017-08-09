@@ -1,95 +1,103 @@
 <%= render file: @cms_site.template_dir + '_header.html' %>
 <div id="wrap">
-  <div class="container">
-
-    <div class="blog-author clearfix">
-      <img alt="Image" src="http://1.gravatar.com/avatar/1986f5007ea888ec7ba6542025be0310?s=64&amp;r=g">
-      <div class="author-desc">
-        <h4 style="color: #384042;">
-          <%= @order.products[0].name %>
-          <small>单号：<%= @order.code %></small>
-        </h4>
-        <ul class="blog-tags clearfix" style="margin-bottom: 10px;">
-          <li>
-            <span style="padding: 0 6px;letter-spacing: 1px;text-transform: uppercase;display: inline-block;z-index: 3;background: #f08300;color: #FFF;font-size: 11px;line-height: 18px;border-radius: 4px;">
-							数量：<%= @order.order_products[0].amount %>
-						</span>
-          </li>
-          <li>
-            <span style="padding: 0 6px;letter-spacing: 1px;text-transform: uppercase;display: inline-block;z-index: 3;background: #f08300;color: #FFF;font-size: 11px;line-height: 18px;border-radius: 4px;">
-							<i class="fa fa-clock-o m-l-5"></i>
-							时长：<%= @order.products[0].service_time %>
-						</span>
-          </li>
-        </ul>
-				<h5 style="color: #f08300;">￥<%= @order.price.to_f %></h5>
-        <p><%= @order.products[0].description %></p>
-      </div>
-    </div>
-
-  </div>
   <section id="start" class="padding-top-bottom text-center">
     <div class="container">
-      <div class="row header">
-        <div class="col-md-12">
-          <h2>订单创建成功</h2>
-          <p>订单ID:<%= @order.id %></p>
-        </div>
-      </div>
+      <!-- navbar -->
+      <div class="tr-breadcrumb">
+  			<div class="title pull-left">
+  				<h1>订单详情</h1>
+  			</div>
+        <ol class="breadcrumb pull-right">
+          <li>
+            <a href="/">首页</a>
+          </li>
+          <li>
+            <%= link_to '我的订单', self_order_frontend_users_path %>
+          </li>
+          <li>
+            订单编号：@222222
+          </li>
+        </ol>
+  		</div>
+
       <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-          <!-- pay start -->
-          <div class="hd">
-              <h1 class="page_title"><%= PaymentCore.title %></h1>
-              <p class="page_desc"><%= PaymentCore.description %></p>
-          </div>
-
-          <div class="bd">
-              <div class="weui_cells">
-                  <div class="weui_cell">
-                      <div class="weui_cell_bd weui_cell_primary">
-                          <p>订单编号</p>
+        <div class="col-sm-8 col-md-8 tr-sticky">
+          <div class="theiaStickySidebar">
+            <!-- 支付失败 -->
+            <div class="tr-section">
+              <div class="row text-left">
+                <div class="col-md-12">
+                  <h3 class="clearfix">
+                    <div class="pull-left">
+                      支付状态：<span class="text-danger">失败</span>
+                    </div>
+                    <div class="pull-right">
+                      <div class="btn-group" role="group" aria-label="重新支付按钮组">
+                        <button type="button" class="btn btn-default" name="button">返回订单</button>
+                        <button type="button" class="btn btn-danger" name="button">重新支付</button>
                       </div>
-                      <div class="weui_cell_ft"><%= @order.code %></div>
-                  </div>
-                  <div class="weui_cell">
-                      <div class="weui_cell_bd weui_cell_primary">
-                          <p>支付金额</p>
+                    </div>
+                  </h3>
+                  <hr/>
+                  <p class="text-center" style=" color: #9e9e9e">
+                    <span class="fa fa-frown-o" style="font-size: 45px;"></span>
+                  </p>
+                  <p class="text-center" style=" color: #9e9e9e">
+                    <span>温馨提示：订单支付失败，请检查“订单状态”后尝试重新支付</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- 支付成功 -->
+            <div class="tr-section">
+              <div class="row text-left">
+                <div class="col-md-12">
+                  <h3 class="clearfix">
+                    <div class="pull-left">
+                      支付状态：<span class="text-success">支付成功</span>
+                    </div>
+                    <div class="pull-right">
+                      总金额：<span class="text-danger">¥ 100.00</span>
+                    </div>
+                  </h3>
+                  <hr>
+                  <p class="clearfix">
+                    订单信息：
+                    <a href="#" class="pull-right">返回我的订单</a>
+                  </p>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="productImg">
+                        <img src="http://www.lvh.me:5000/photos/2017/6/26/1/original.?2017" alt="" class="img-responsive"/>
                       </div>
-                      <div class="weui_cell_ft"><%= @order.order_products.first.price.to_f %>元</div>
+                    </div>
+                    <div class="col-md-9 text-left">
+                      <h4 >
+                        <a href="#" style="color: #2e2e2e;">
+                          产品名称
+                        </a>
+                        <small>产品分类</small>
+                      </h4>
+                      <p>
+                        <span><i class="fa fa-map-marker productColorIcon"></i>  地址信息描述</span>
+                      </p>
+                      <p>
+                        <span><i class="fa fa-clock-o productColorIcon"></i> 产品时间</span>
+                      </p>
+                    </div>
                   </div>
+                </div>
               </div>
-              <div class="weui_btn_area">
-                <%= simple_form_for(@order, url: charge_frontend_order_path, method: :post, remote: true) do |f| %>
-                  <% f.button :submit, '去结算', class: 'btn btn-primary weui_btn weui_btn_primary' %>
-                <% end %>
-              </div>
+            </div>
           </div>
+        </div>
 
-          <%= javascript_include_tag 'frontend/pingpp' %>
-          <script>
-            function onStartCharging(charge){
-                pingpp.createPayment(charge, function(result, err){
-                  console.log(result);
-                  console.log(err.msg);
-                  console.log(err.extra);
-                  if (result == "success") {
-                      // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的支付结果都会跳转到 extra 中对应的 URL。
-                  } else if (result == "fail") {
-                      // charge 不正确或者微信公众账号支付失败时会在此处返回
-                  } else if (result == "cancel") {
-                      // 微信公众账号支付取消支付
-                  }
-                });
-              }
-          </script>
-
-        <!-- pay end -->
+        <div class="col-sm-5 col-md-4 tr-sticky" >
+          <%= render file: 'frontend/users/_nav_sidebar.html.erb' %>
         </div>
       </div>
+
     </div>
   </section>
-  <!-- vertical center / slider -->
-  <!-- end vertical center / slider -->
   <%= render file: @cms_site.template_dir + '_footer.html' %>
 </div>
