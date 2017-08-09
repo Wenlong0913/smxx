@@ -14,7 +14,7 @@ class Frontend::UsersController < Frontend::BaseController
     end
     flag, @current_user = User::Update.(@current_user, permitted_attributes(@current_user))
     if flag
-      redirect_to edit_frontend_user_path(@current_user), notice: '更新成功.'
+      redirect_to edit_users_path, notice: '更新成功.'
     else
       render :edit
     end
@@ -34,7 +34,7 @@ class Frontend::UsersController < Frontend::BaseController
     if params[:complaint]
       complaint = Complaint.new(user_id: current_user.id, reason: params[:complaint][:reason], complaint_type: "feedback")
       if complaint.save
-        redirect_to frontend_user_path(current_user), notice: "发布成功"
+        redirect_to users_path(current_user), notice: "发布成功"
       else
         render
       end
