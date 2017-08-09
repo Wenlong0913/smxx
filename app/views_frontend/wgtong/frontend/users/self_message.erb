@@ -46,7 +46,8 @@
             </p>
           </div>
           <!-- block type comment -->
-          <% @notifications.where("actor_id is not null").each do |notice| %>
+          <% @notifications.each do |notice| %>
+          <% next if notice.actor_id.nil? %>
             <div class="tr-section text-left">
               <div class="feed pull-right">
                 <span class="fa fa-bell" style="font-size: 20px; color: #f0ad4e; text-shadow: 1px 1px 1px #dfdfdf;"></span>
@@ -73,7 +74,8 @@
             </div>
           <% end %>
           <!-- block type email -->
-          <% @notifications.where("actor_id is null").each do |notice| %>
+          <% @notifications.each do |notice| %>
+          <% next if notice.actor_id %>
           <div class="tr-section text-left">
             <div class="media row">
               <div class="col-md-1 col-xs-1">

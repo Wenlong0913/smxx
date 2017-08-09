@@ -43,8 +43,8 @@ class Frontend::UsersController < Frontend::BaseController
 
   def self_message
     @notifications = Notification.where(user: current_user).unread.order('updated_at DESC')
+    Notification.read!(@notifications.select(&:id))
   end
-
 
   def ensure_login!
     redirect_to root_url unless current_user
