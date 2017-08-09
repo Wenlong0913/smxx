@@ -21,7 +21,19 @@ class Notification < ApplicationRecord
   def actor_avatar_url
     self.actor.display_headshot
   end
-
+  
+  #  有actor_id时
+  # <img src="<%= notice.actor_avatar_url%>" alt="" class="img-circle" width="80px">
+  # <a href="#"><%= notice.actor_name%></a>
+  # <p>对您的<%= notice.notify_type %> <a href="<%=notice.target_url%>"><%= notice.target.send(notice.target_name) %></a> <%= notice.content%></p>
+  # <a href="<%=notice.second_target_url%>"><%= notice.second_target.send(notice.second_target_name) %></a>
+  # 您的评论'aaa'有了新回复:'bbbbb'
+  # 无actor_id时
+  # <p class="orderDescription">你的<%= notice.notify_type%>
+  #   <a href="<%=notice.target_url %>"><%= notice.target.send(notice.target_name)%></a>
+  #   <%= notice.content%>
+  # </p>
+  # #####您的订单状态更新了
   def self.notice(user_id, actor_id, type, content, target, target_name, target_url=nil, second_target=nil, second_target_name=nil, second_target_url=nil)
     create({
       user_id: user_id,
