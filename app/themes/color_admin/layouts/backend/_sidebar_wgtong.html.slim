@@ -81,8 +81,8 @@ li class=("has-sub #{'active' if page?('admin/cms/comments', 'admin/orders', 'ad
     i.fa.fa-cube
     span 留言评论
   ul.sub-menu
-    li[class=("active" if page?())]
-      = link_to '#' do
+    li[class=("active" if page?('admin/comments'))]
+      = link_to admin_comments_path do
         = fa_icon 'database', text: '评论管理'
     li[class=("active" if page?('admin/cms/comments'))]
       = link_to admin_cms_comments_path do

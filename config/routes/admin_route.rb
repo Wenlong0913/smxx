@@ -139,6 +139,9 @@ module AdminRoute
         resources :keystores
         # resources :staffs
 
+        #评论
+        resources :comments
+
         #美容院
         if Settings.project.meikemei?
           resources :shops
