@@ -7,7 +7,11 @@ class Frontend::ProductCatalogsController < Frontend::BaseController
   def show
     @product_catalog =ProductCatalog.find(params[:id])
     # 当前分类下的所有产品
-    @products  = Product.where(catalog_id: params[:id]).order(updated_at: :desc).page(params[:page])
+    @products = @product_catalog.products
+    if @products.empty?
+      # 当前商家最近更新的产品
+      @recent_products = Product.all.reorder(updated_at: :desc)
+    end
   end
 
   private
