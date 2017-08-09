@@ -68,7 +68,7 @@
             <div class="theiaStickySidebar">
               <% if @comments.any? %>
                 <% @product_comments.each_pair do |product, comments| %>
-                 <% next unless product.type == 'Product'%>
+                 <% if product.type == 'Product' %>
                   <div class="tr-section text-left">
                     <div class="entry-meta">
                       <ul>
@@ -89,6 +89,28 @@
                       </div>
                     <%end%>
                   </div>
+                  <% elsif product.class.to_s == 'Site' %>
+                    <div class="tr-section text-left">
+                      <div class="entry-meta">
+                        <ul>
+                          <li>
+                            <img src="<%= current_user.display_headshot%>" alt="" class="img-circle" width="80px">
+                            <a href="#"><%= current_user.nickname %></a>
+                          </li>
+                        </ul>
+                      </div>
+                      <p>你在 <a href="<%= frontend_site_path(product)%>"><%= product.title%></a> 中的评论：</p>
+                      <% comments.each do |comment|%>
+                        <div class="well clearfix">
+                          <a class="pull-right" href="#" style="color: #d9534f;margin-left: 10px;">
+                            <i class="fa fa-times-circle"></i>
+                          </a>
+                          <span class="pull-left"><%= comment.content%></span>
+                          <span class="pull-right" style="color: #9e9e9e;"><%= distance_of_time_in_words_to_now(comment.created_at)%>前</span>
+                        </div>
+                      <%end%>
+                    </div>                  
+                  <%end %>
                 <% end %>
                 <%= paginate @comments %>
               <% else %>
