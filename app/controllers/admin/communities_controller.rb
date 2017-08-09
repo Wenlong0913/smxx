@@ -6,7 +6,7 @@ class Admin::CommunitiesController < Admin::BaseController
   # GET /admin/communities
   def index
     authorize Community
-    @filter_colums = %w(id name)
+    @filter_colums = %w(id name address_line)
     @communities = build_query_filter(Community.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
     respond_to do |format|
       if params[:json].present?

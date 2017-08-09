@@ -37,6 +37,11 @@ module AdminRoute
           member do
             put 'used'
           end
+          resources :app_banners do
+            collection do
+              put 'edit_banner'
+            end
+          end
         end
         resources :complaints, except: [:new, :create] # 投诉管理
         resources :catalogs # 分类管理

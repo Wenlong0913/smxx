@@ -29,6 +29,10 @@ class AppSettingPolicy < ApplicationPolicy
     edit?
   end
 
+  def edit_banner?
+    edit?
+  end
+
   def permitted_attributes_for_create
     if user.has_role? :super_admin
       [:name, :key_word, :site_share_url_pattern, :product_share_url_pattern, :system_rooms, :service_banners, :main_banners, :app_version_message, :active]
