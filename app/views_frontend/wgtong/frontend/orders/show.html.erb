@@ -15,7 +15,7 @@
             <%= link_to '我的订单', self_order_frontend_users_path %>
           </li>
           <li>
-            订单编号：@222222
+            订单编号：<%= @order.code%>
           </li>
         </ol>
   		</div>
@@ -24,7 +24,7 @@
         <div class="col-sm-8 col-md-8 tr-sticky">
           <div class="theiaStickySidebar">
             <!-- 支付失败 -->
-            <div class="tr-section">
+            <%#<div class="tr-section">
               <div class="row text-left">
                 <div class="col-md-12">
                   <h3 class="clearfix">
@@ -47,42 +47,52 @@
                   </p>
                 </div>
               </div>
-            </div>
+            </div>%>
             <!-- 支付成功 -->
             <div class="tr-section">
               <div class="row text-left">
                 <div class="col-md-12">
                   <h3 class="clearfix">
                     <div class="pull-left">
-                      支付状态：<span class="text-success">支付成功</span>
+                      支付状态：<span class="text-success"><%=  enum_l(@order, :status) %></span>
                     </div>
                     <div class="pull-right">
-                      总金额：<span class="text-danger">¥ 100.00</span>
+                      总金额：<span class="text-danger">¥ <%= @order.price/100.0%></span>
                     </div>
                   </h3>
                   <hr>
                   <p class="clearfix">
                     订单信息：
-                    <a href="#" class="pull-right">返回我的订单</a>
+                    <% if ['open', 'pending'].include?(@order.status) %>
+                      <a href="<%= self_order_frontend_users_path%>" class="pull-right">去支付</a>
+                    <% else %>
+                      <a href="<%= self_order_frontend_users_path%>" class="pull-right">返回我的订单</a>
+                    <% end %>
                   </p>
                   <div class="row">
                     <div class="col-md-3">
                       <div class="productImg">
-                        <img src="http://www.lvh.me:5000/photos/2017/6/26/1/original.?2017" alt="" class="img-responsive"/>
+                        <img src="<%= @order.order_products.first.product.first_image%>" alt="" class="img-responsive"/>
                       </div>
                     </div>
                     <div class="col-md-9 text-left">
                       <h4 >
                         <a href="#" style="color: #2e2e2e;">
-                          产品名称
+                          <%= @order.order_products.first.product.name%>
                         </a>
-                        <small>产品分类</small>
+                        <small><%= @order.order_products.first.product.catalog.try(:name)%></small>
                       </h4>
                       <p>
-                        <span><i class="fa fa-map-marker productColorIcon"></i>  地址信息描述</span>
+                        <span>
+                          <i class="fa fa-map-marker productColorIcon"></i>
+                          <%= @order.order_products.first.product.address_line1%>
+                        </span>
                       </p>
                       <p>
-                        <span><i class="fa fa-clock-o productColorIcon"></i> 产品时间</span>
+                        <span>
+                          <i class="fa fa-clock-o productColorIcon"></i> 
+                          <%= @order.order_products.first.product.date + @order.order_products.first.product.time %>
+                        </span>
                       </p>
                     </div>
                   </div>

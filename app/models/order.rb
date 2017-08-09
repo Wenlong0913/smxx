@@ -20,13 +20,13 @@
 
 class Order < ApplicationRecord
   audited
-  if Settings.project.sxhop? || Settings.project.imolin?
+  if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.wgtong?
     store_accessor :features, :delivery_username, :delivery_phone, :delivery_address, :delivery_fee
   end
   if Settings.project.meikemei?
     store_accessor :features, :staff_id, :service_time
   end
-  if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei?
+  if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei? || Settings.project.wgtong?
     enum status: {
       open: 0,      # 未付款
       pending: 1,   # 付款中
@@ -117,7 +117,7 @@ class Order < ApplicationRecord
     # 判断是否要发支付成功的短信
     @should_send_paid_message = self.status_change == ['open', 'paid'] || self.status_change == ['pending', 'paid']
     # self.user = self.member.user
-    Notification.notice(self.user.id, nil, '订单', '状态更新了', self, 'code') if self.status_changed?
+    Notification.notice(self.user.id, nil, '订单', '状态更新了', self, 'code') if self.status_changed? && self.id.present?
   end
 
   after_commit do

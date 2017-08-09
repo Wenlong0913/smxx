@@ -64,9 +64,9 @@ module FrontendRoute
             get "search"
             post "do_search"
             get "search_result"
+            post "charge"
           end
           member do
-            post :charge
             get :paid_success
           end
         end
