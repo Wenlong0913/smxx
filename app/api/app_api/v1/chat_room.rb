@@ -22,7 +22,6 @@ module AppAPI::V1
           end
           rooms = community.chat_rooms
         end
-        rooms = paginate_collection(rooms, params)
         present rooms, with: AppAPI::Entities::ChatRoom
       end
 
