@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-md-4 col-xs-12">
                   <h3><%= current_user.nickname %></h3>
-                  <%= link_to '基本信息修改', edit_frontend_user_path(current_user), class: "btn btn-info btn-md", style: "display: inlin-block; margin: 30px 0px 15px 0px;" %>
+                  <%= link_to '基本信息修改', edit_users_path, class: "btn btn-info btn-md", style: "display: inlin-block; margin: 30px 0px 15px 0px;" %>
                 </div>
               </div>
 
@@ -44,7 +44,7 @@
                     <div class="form-group">
                       <label class="col-sm-2 control-label">电话：</label>
                       <div class="col-sm-10">
-                        <p class="form-control-static text-left"><%= current_user.mobile.phone_number %> <%= link_to '手机绑定', binding_phone_frontend_users_path, style: "margin-left: 15px;" %> </p>
+                        <p class="form-control-static text-left"><%= current_user.mobile.phone_number %> <%= link_to '手机绑定', binding_phone_users_path, style: "margin-left: 15px;" %> </p>
                       </div>
                     </div>
 
@@ -55,7 +55,7 @@
                           <% if current_user.weixin %>
                             <%= current_user.weixin.try(:uid) %>
                           <% else %>
-                            <%= link_to '微信绑定', binding_weixin_frontend_users_path, style: "margin-left: 15px;" %>
+                            <%= link_to '微信绑定', binding_weixin_users_path, style: "margin-left: 15px;" %>
                           <% end %>
                         </p>
                       </div>
