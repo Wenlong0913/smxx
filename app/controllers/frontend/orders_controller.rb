@@ -29,7 +29,6 @@ class Frontend::OrdersController < Frontend::BaseController
       params[:order][:order_products].each do |order_product|
         price += order_product[:price].to_f
       end
-      binding.pry
       @frontend_order = Order.new
       @frontend_order.user_id = current_user.id
       @frontend_order.site_id = @site.id
@@ -84,8 +83,6 @@ class Frontend::OrdersController < Frontend::BaseController
     order = @site.orders.find(params[:id])
     # 获取当前订单下的所有产品
     order_products = OrderProduct.where(order_id: order.id)
-    # 获取当前订单所有订单产品信息
-    products = Product.where(id: order_products.first.product_id)
     # sum 订单下的所有产品价钱累加
     sum = 0
     order_products.each do |op|
@@ -97,7 +94,7 @@ class Frontend::OrdersController < Frontend::BaseController
       amount: sum, # 1分钱
       client_ip: '127.0.0.1',
       subject: 'E启洗视频',
-      body: products[0].name,
+      body: "订单内容",
       extra: {
         success_url: 'http://eqxy.lvh.me:5000/frontend/orders/1/paid_success'
       }
@@ -141,7 +138,7 @@ class Frontend::OrdersController < Frontend::BaseController
     @orders =  @orders.page(params[:page]).per(6)
 
     if @orders.blank?
-      render :search
+      redirect_to search_frontend_orders_path, notice: '未找到该订单号/手机号的订单信息，请重新输入'
     end
 
   end
