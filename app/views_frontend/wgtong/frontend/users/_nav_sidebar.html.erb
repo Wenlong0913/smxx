@@ -22,7 +22,7 @@
         <li>
           <%= link_to(self_message_frontend_users_path) do %>
             消息中心
-            <span class="badge" style="background-color: #d9534f;">2</span>
+            <span class="badge" style="background-color: #d9534f;"><%= Notification.where(user: current_user).unread.count%></span>
           <% end %>
         </li>
         <li>

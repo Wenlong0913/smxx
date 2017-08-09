@@ -117,6 +117,7 @@ class Order < ApplicationRecord
     # 判断是否要发支付成功的短信
     @should_send_paid_message = self.status_change == ['open', 'paid'] || self.status_change == ['pending', 'paid']
     # self.user = self.member.user
+    Notification.notice(self.user.id, nil, '订单', '状态更新了', self, 'code') if self.status_changed?
   end
 
   after_commit do
