@@ -118,7 +118,10 @@
               <div class="collapse navbar-collapse" id="editSelf">
                 <ul class="nav">
                   <li>
-                    <a class="text-center" href="javascript: void(0)">消息中心 <span class="badge" style="background-color: #d9534f;">4</span></a>
+                    <%= link_to(self_message_frontend_users_path) do %>
+                      消息中心
+                      <span class="badge" style="background-color: #d9534f;">2</span>
+                    <% end %>
                   </li>
                   <li class="active">
                     <%= link_to '账号设置', edit_frontend_user_path(current_user) %>

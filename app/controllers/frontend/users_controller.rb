@@ -33,6 +33,7 @@ class Frontend::UsersController < Frontend::BaseController
   end
 
   def self_message
+    @notifications = Notification.where(user: current_user).unread.order('updated_at DESC')
   end
 
 

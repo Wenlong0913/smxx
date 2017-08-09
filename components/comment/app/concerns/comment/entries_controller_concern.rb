@@ -12,6 +12,7 @@ module Comment
       entry.user_id = comment__user_id
 
       if entry.save
+        send_notification(entry)
         render json: comment__entry_json(entry)
       else
         head 403
@@ -59,6 +60,14 @@ module Comment
         comment_info[:current_page] = entry.current_page
       end
       return comment_info
+    end
+
+    def send_notification(comment)
+      # send(user, actor, type, content, target, target_name, target_url=nil, second_target=nil, second_target_name=nil)
+      # ***对您的评论vvvvvvvvv有了新回复:nnnnnnnnnn
+      if comment.parent
+        Notification.notice(comment.parent.user_id, comment.user_id, '评论', '有了新回复', comment.parent, 'content', nil, comment, 'content')
+      end
     end
 
   end
