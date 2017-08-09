@@ -48,4 +48,8 @@ class Notification < ApplicationRecord
       second_target_url: second_target_url
     })
   end
+
+  def self.read!(notification_ids)
+    where(id: notification_ids).update_all(read_at: Time.now)
+  end
 end
