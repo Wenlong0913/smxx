@@ -27,10 +27,10 @@ li class=("has-sub #{'active' if page?('admin/products', 'admin/sites', 'admin/c
   ul.sub-menu
     li[class= ('active' if page?('admin/catalogs#index?klass=SiteCatalog'))]
       = link_to '商家分类', admin_site_catalogs_path
-    li[class= ('active' if page?('admin/catalogs#index?klass=ProductCatalog'))]
-      = link_to '产品分类', admin_product_catalogs_path
     li[class=('active' if page?('admin/sites#index'))]
       = link_to "#{Site.model_name.human}列表", admin_sites_path
+    li[class= ('active' if page?('admin/catalogs#index?klass=ProductCatalog'))]
+      = link_to '产品分类', admin_product_catalogs_path
     /li[class=('active' if page?('admin/sites#new'))]
       = link_to "发布#{Site.model_name.human}", new_admin_site_path
 
@@ -71,6 +71,10 @@ li[class=("active" if page?('admin/articles'))]
   = link_to admin_articles_path do
     = fa_icon 'leaf', text: '应急公告'
 
+li class=("has-sub #{'active' if page?('admin/complaints')}")
+  = link_to admin_complaints_path do
+    = fa_icon 'leaf', text: '意见反馈'
+    
 li class=("has-sub #{'active' if page?('admin/cms/comments', 'admin/orders', 'admin/produces', 'admin/orders/:order_id/produces/:id', 'admin/task_types', 'admin/deliveries', 'admin/order_deliveries')}")
   a href="javascript:;"
     b.caret.pull-right

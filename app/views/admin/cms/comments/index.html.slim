@@ -1,7 +1,5 @@
 h1.page-header
   | #{Cms::Comment.model_name.human}列表
-  .pull-right
-    = link_to "新建#{Cms::Comment.model_name.human}", new_admin_cms_comment_path, class: 'btn btn-primary'
 
 .panel.panel-default
   .panel-heading
@@ -88,7 +86,6 @@ h1.page-header
                 => cms_comment.created_at.strftime('%Y-%m-%d %H:%M:%S')
               td
                 => link_to '查看', admin_cms_comment_path(cms_comment), class: 'btn btn-xs btn-default'
-                => link_to '编辑', edit_admin_cms_comment_path(cms_comment), class: 'btn btn-xs btn-default'
                 = link_to '删除', admin_cms_comment_path(cms_comment), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
       = paginate @cms_comments
 

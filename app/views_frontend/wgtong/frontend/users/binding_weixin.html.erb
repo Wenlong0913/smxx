@@ -1,14 +1,45 @@
-h1 我的个人信息
+<div id="wrap">
+  <section id="start" class="padding-top-bottom text-center">
+    <div class="container">
 
-h2 绑定微信
+      <div class="tr-breadcrumb">
+  			<div class="title pull-left">
+  				<h1>
+            微信绑定
+          </h1>
+  			</div>
+        <ol class="breadcrumb pull-right">
+          <li><a href="/">首页</a></li>
+        </ol>
+  		</div>
+      <div class="row">
+        <div class="col-sm-8 col-md-8 tr-sticky">
+          <div class="theiaStickySidebar">
+            <% if current_user.weixin %>
+            <p> 您已经绑定过微信了</p>
+          <%else%>
+            <div class="tr-section">
+              <div id="bind-wechat">
+                <h3 class="text-center" style="color: #999;">扫码绑定微信</h3>
+                <img id="qrcode-auth-image" width="180" style="height: 200px; margin: 0 auto; background: #eee; padding: 10px;" src="" alt="">
+                <p align="center" id="qrcode-auth-message" style="margin-top:15px;"></p>
+              </div>
+            </div>
+          <%end%>
+          </div>
+        </div>
+        <div class="col-sm-5 col-md-4 tr-sticky" >
+          <%= render file: 'frontend/users/_nav_sidebar.html.erb' %>
+        </div>
+      </div>
 
-- if current_user.weixin
-  p 已绑定
-- else
-  img#qrcode-auth-image width="180" style="margin-left: 50%; transform: translateX(-50%)"
-  p#qrcode-auth-message align="center"
-  javascript:
-    var QrcodeAuth = function (){
+    </div>
+  </section>
+  <%= render file: @cms_site.template_dir + '_footer.html' %>
+</div>
+
+<script>
+  var QrcodeAuth = function (){
       var instance = this;
       this.init = function() {
         $.getJSON('http://wxopen.tanmer.com/wx/mp_auth/qrcode/wx4c40bb18df07aafc.json', function(data){
@@ -42,7 +73,7 @@ h2 绑定微信
       }
 
       this.connect = function(code) {
-        var url = '#{connect_weixin_frontend_users_url }';
+        var url = '#{admin_profile_connect_weixin_url }';
         $.post(url, { code: code }, function(data){
           if (data.success) {
             $('#qrcode-auth-message').text('绑定成功')
@@ -55,3 +86,4 @@ h2 绑定微信
     $(function(){
       (new QrcodeAuth()).init()
     })
+</script>

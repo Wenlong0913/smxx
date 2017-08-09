@@ -18,7 +18,8 @@
 			<div class="col-sm-5 col-md-6 tr-sticky">
 
 				<div class="theiaStickySidebar">
-					<% Site.where(catalog_id: @site_catalog.id).each do |site| %>
+					<% Site.where(catalog_id: @site_catalog.id).order("updated_at DESC").each do |site| %>
+					<% if site.properties.length == 1  %>
 					<div class="tr-section">
 						<div class="section-title title-before">
 							<h1><a href="javascript:void(0)"><%= site.properties.map{|p| ::Site::PROPERTIES[p.to_sym]}.compact.join('，') %></a></h1>
@@ -47,7 +48,7 @@
 								<p><%= site.description.truncate(74) %></p>
 								<div class="read-more">
 									<div class="continue-reading pull-left">
-										<a href="<%= frontend_site_path(site) %>">立即预订 <i class="fa fa-angle-right"></i></a>
+										<a href="<%= frontend_site_path(site) %>">了解更多 <i class="fa fa-angle-right"></i></a>
 									</div>
 									<div class="feed pull-right">
 										<ul>
@@ -64,6 +65,11 @@
 						</div><!-- /.tr-post -->
 					</div><!-- /.tr-post -->
 					<% end %>
+					<% end %>
+
+					<div class="row text-center">
+            <%= paginate @sites, remote: true %>
+          </div>
 
 					<% if Keystore.value_for('banner-site-center-center-773x84').present? %>
           <div class="tr-ad">
@@ -105,7 +111,7 @@
 									<p><%= site_hot.description.truncate(50) %></p>
 									<div class="read-more">
 										<div class="continue-reading pull-left">
-											<a href="<%= frontend_site_path(site_hot) %>">立即预订 <i class="fa fa-angle-right"></i></a>
+											<a href="<%= frontend_site_path(site_hot) %>">了解更多 <i class="fa fa-angle-right"></i></a>
 										</div>
 										<div class="feed pull-right">
 											<ul>
@@ -122,22 +128,6 @@
 							</div><!-- /.tr-section -->
 	            <% end %>
             <% end %>
-						<ul class="small-post-list">
-							<% Site.scroll.where(catalog_id: @site_catalog.id).limit(6).each do |site_scrolls| %>
-							<li>
-								<div class="entry-header">
-									<div class="entry-thumbnail">
-										<a href="<%= frontend_site_path(site_scrolls) %>"><img class="img-responsive" src="<%= site_scrolls.first_image %>" alt="<%= site_scrolls.title %>"></a>
-									</div>
-								</div>
-								<div class="post-content media-body">
-									<h2 class="entry-title">
-										<%= link_to site_scrolls.title, frontend_site_url(site_scrolls) %>
-									</h2>
-								</div><!-- /.post-content -->
-							</li>
-							<% end %>
-						</ul>
 					</div>
 
 					<% if Keystore.value_for('banner-site-right-center-400×576').present? %>

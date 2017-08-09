@@ -71,7 +71,7 @@ class UserPolicy < ApplicationPolicy
         [:mobile_phone, :nickname, :password, :password_confirmation, :email, :role_ids => []]
       end
     elsif user.id == record.id
-      [:nickname, :email]
+      [:nickname, :email, :password, :password_confirmation]
     else
       []
     end

@@ -1,0 +1,110 @@
+<%= render file: @cms_site.template_dir + '_header.html' %>
+<style media="screen">
+ .orderDescription {
+  width: 100%;
+  text-overflow : ellipsis;
+  overflow: hidden;
+  white-space: nowrap
+}
+</style>
+<div id="wrap">
+  <section id="start" class="padding-top-bottom text-center">
+    <div class="container">
+      <!-- header start -->
+      <div class="tr-breadcrumb">
+  			<div class="title pull-left">
+  				<h1>
+            消息中心
+          </h1>
+  			</div>
+        <ol class="breadcrumb pull-right">
+          <li><a href="/">首页</a></li>
+        </ol>
+  		</div>
+      <!-- header end -->
+
+      <!-- content start -->
+      <div class="row">
+        <div class="col-sm-8 col-md-8 tr-sticky">
+          <!-- message types -->
+          <div class="tr-section">
+            <p class="text-left">
+              状态：
+              <a href="#" class="btn btn-default">
+                全部
+              </a>
+               <a href="#" class="btn btn-default">
+                 <span class="fa fa-bell" style="font-size: 20px; color: #f0ad4e; text-shadow: 1px 1px 1px #dfdfdf;"></span>
+                 未阅读
+                 <span class="badge">1</span>
+               </a>
+               <a href="#" class="btn btn-default">
+                 <span class="fa fa-bell" style="font-size: 20px; color: #dfdfdf; text-shadow: 1px 1px 1px #dfdfdf;"></span>
+                 已阅读
+                 <span class="badge">1</span>
+               </a>
+            </p>
+          </div>
+          <!-- block type comment -->
+          <div class="tr-section text-left">
+            <div class="feed pull-right">
+              <span class="fa fa-bell" style="font-size: 20px; color: #f0ad4e; text-shadow: 1px 1px 1px #dfdfdf;"></span>
+            </div>
+            <div class="entry-meta">
+              <ul>
+                <li>
+                  <img src="/templetes/newshub/images/others/user.png" alt="">
+                  <a href="#">韩大爷的杂货铺</a>
+                </li>
+              </ul>
+            </div>
+            <p>你在 <a href="#">"牙尖上的成都"卢匕李阳脱口秀</a> 中收到了一条新品论：</p>
+            <div class="well">
+              <a href="javascritpt:void(0)">@<%= current_user.nickname %></a>
+              <span>谢谢</span>
+            </div>
+            <div class="clearfix">
+              <div class="feed pull-left">
+                <span class="entry-meta">刚刚</span>
+              </div>
+              <div class="feed pull-right">
+                <button class="btn btn-default btn-xs" type="button" name="button">回复</button>
+              </div>
+            </div>
+          </div>
+          <!-- block type email -->
+          <div class="tr-section text-left">
+            <div class="media row">
+              <div class="col-md-1 col-xs-1">
+                <a href="#">
+                  <img class="img-responsive" src="/templetes/newshub/images/ico/apple-touch-icon-57-precomposed.png" alt="...">
+                </a>
+              </div>
+              <div class="col-md-11 col-xs-11" style="margin-left: -15px;">
+                <div class="feed pull-right">
+                  <span class="fa fa-bell" style="font-size: 20px; color: #dfdfdf; text-shadow: 1px 1px 1px #dfdfdf;"></span>
+                </div>
+                <h4 class="media-heading">文管员</h4>
+                <p class="entry-meta orderDescription">欢迎加入丰富多彩的原创文广信息社区——文广通，有任何疑问（可以投稿，专题主编，签约作者，问管员）欢迎加入丰富多彩的原创文广信息社区——文广通，有任何疑问（可以投稿，专题主编，签约作者，问管员）</p>
+                <div class="feed clearfix">
+                  <div class="feed pull-left entry-meta">
+                    07-27 09:22
+                  </div>
+                  <button class="btn btn-default btn-xs pull-right" type="button" name="button">查看</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- nav_sidebar -->
+        <div class="col-sm-5 col-md-4 tr-sticky" >
+          <%= render file: 'frontend/users/_nav_sidebar.html.erb' %>
+        </div>
+      </div>
+      <!-- content end -->
+
+    </div>
+  </section>
+  <%= render file: @cms_site.template_dir + '_footer.html' %>
+</div>

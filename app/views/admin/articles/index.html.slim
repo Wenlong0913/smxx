@@ -76,7 +76,7 @@ h1.page-header
               td
                 = article.title
               td
-                = article.user.try(:nickname)
+                = article.user.name
               td
                 = article.tag_list.join(", ")
               td
