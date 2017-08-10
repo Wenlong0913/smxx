@@ -26,14 +26,19 @@
                       <div class="form-horizontal">
                         <!-- 头像 -->
                         <div class="row" style="margin-bottom: 60px;">
-                          <div class="col-md-4 col-xs-12">
+                          <div class="col-md-5 col-xs-12">
                             <div class="user-logo">
-                              <div class="slim br-5" data-label="选择图片"
+                              <div class="slim br-5"
+                                  data-label="选择图片"
                                   data-button-cancel-label = "取消"
                                   data-button-confirm-label = "确认"
                                   data-will-save="upload"
                                   data-will-remove="imageWillBeRemoved"
                                   data-save-initial-image="true"
+                                  data-label-loading="true"
+                                  data-push="true"
+                                  data-did-upload="imageUpload"
+                                  data-service="<%= headshot_users_url %>"
                                   data-ratio="1:1">
                                 <!-- <input type="file" name="slim[]"/> -->
                                 <img src="<%= @current_user.display_headshot %>" alt="">
@@ -103,6 +108,7 @@
                   </div> -->
                   <%= f.button :submit, '提交修改' %>
                 <% end %>
+
               </div>
             </div>
           </div>
@@ -115,4 +121,12 @@
     </div>
   </section>
   <%= render file: @cms_site.template_dir + '_footer.html' %>
+  <script>
+    function imageUpload(error, data, response) {
+      if (response.success == true) {
+        document.getElementById("navbarImg").setAttribute("src", response.url);
+        document.getElementById("sidebarImg").setAttribute("src", response.url);
+      }
+    }
+  </script>
 </div>
