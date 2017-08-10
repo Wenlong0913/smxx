@@ -25,9 +25,24 @@ module AdminRoute
         end
         # 社区
         resources :communities, :concerns => :paginatable do
-          resources :articles
+          resources :articles do
+            member do
+              put 'recommend'
+            end
+          end
         end
         resources :articles # 公告管理（imolin）
+        # APP参数管理
+        resources :app_settings do
+          member do
+            put 'used'
+          end
+          resources :app_banners do
+            collection do
+              put 'edit_banner'
+            end
+          end
+        end
         resources :complaints, except: [:new, :create] # 投诉管理
         resources :catalogs # 分类管理
         catalog_resources_for ProductCatalog # 产品分类管理
@@ -47,7 +62,7 @@ module AdminRoute
         resources :material_stock_alerts, only: [:index] # 库存警报
         resources :material_purchases, only: [:index]
 
-        resources :roles, only: [:index], :concerns => :paginatable do
+        resources :roles, :concerns => :paginatable do
           resources :users, only: [:index], :concerns => :paginatable
           member do
             get 'edit_permission'
@@ -97,7 +112,7 @@ module AdminRoute
         resources :task_types, except: [:show]
         resources :deliveries, except: [:show]
         resources :order_deliveries, only: [:index]
-        resources :orders, :concerns => :paginatable do
+        resources :orders, :concerns => :paginatable, except: Settings.project.imolin? ? [:new, :create] : nil do
           resources :materials, except: [:index], controller: 'order_materials'
           resources :produces, only: [:show, :create, :destroy, :update]
           member do
@@ -122,11 +137,12 @@ module AdminRoute
         resources :members, :concerns => :paginatable do
           collection do
             get 'dashboard', to: 'members#dashboard'
+            get 'all'
           end
         end
         #系统参数
         resources :keystores
-        resources :staffs
+        # resources :staffs
 
         #美容院
         if Settings.project.meikemei?

@@ -66,7 +66,6 @@ class Cms::CommentsController < Cms::BaseController
       format.html { redirect_to cms_site_comments_url(@cms_site), notice: ' 删除成功.' }
       format.json { head 200 }
     end
-
   end
 
   private

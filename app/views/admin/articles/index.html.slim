@@ -76,7 +76,7 @@ h1.page-header
               td
                 = article.title
               td
-                = article.user.try(:nickname)
+                = article.user.name
               td
                 = article.tag_list.join(", ")
               td
@@ -86,9 +86,10 @@ h1.page-header
                   | 否
               td
                 => link_to '查看', @community ? admin_community_article_path(@community, article) : admin_article_path(article), class: 'btn btn-xs btn-default'
-                => link_to '编辑', @community ? edit_admin_community_article_path(@community, article) : edit_admin_article_path(article), class: 'btn btn-xs btn-default'
+                => link_to '编辑', @community ? edit_admin_community_article_path(@community, article) : edit_admin_article_path(article), class: 'btn btn-xs btn-primary'
+                => link_to "#{article.is_flatform_recommend ? '取消平台推荐' : '设为平台推荐'}", recommend_admin_community_article_path(@community, article), method: :put, remote: true, class: "btn btn-xs btn-#{article.is_flatform_recommend ? 'warning' : 'success'} recommend" if @community
                 = link_to '删除', @community ? admin_community_article_path(@community, article) : admin_article_path(article), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
-      = paginate @articles
+    = paginate @articles
 
 / TODO: move this code to application.js
 javascript:

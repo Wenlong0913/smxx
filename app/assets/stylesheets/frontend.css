@@ -7,6 +7,7 @@
  *= require frontend/products
  *= require frontend/users
  * require frontend/bootstrap.min
+ *= require frontend/slim.min
  *= require frontend/search_order
  *= require_self
  */

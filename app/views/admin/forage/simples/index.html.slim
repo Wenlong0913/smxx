@@ -64,18 +64,30 @@ h1.page-header
       table.table.table-striped.table-bordered
         thead
           tr
-            th = Forage::Simple.human_attribute_name(:forage_run_key)
+            th = Forage::Simple.human_attribute_name(:run_key)
             th = Forage::Simple.human_attribute_name(:catalog)
             th = Forage::Simple.human_attribute_name(:title)
             th = Forage::Simple.human_attribute_name(:url)
+            th = Forage::Simple.human_attribute_name(:is_processed)
             th
         tbody
           - @forage_simples.each do |forage_simple|
             tr
-              td = forage_simple.forage_run_key
-              td = forage_simple.catalog
+              td
+                h4 style="margin:0px;"
+                  => link_to "#{forage_simple.run_key.id}. #{forage_simple.run_key}", admin_forage_simple_path(forage_simple)
+              td
+                a.btn.btn-info.btn-xs
+                  = forage_simple.catalog
               td = forage_simple.title
               td = forage_simple.url
+              td
+                - if forage_simple.is_processed?
+                  a.btn.btn-success
+                    | 成功
+                - else
+                  a.btn.btn-warning.btn-xs
+                    | 失败
               td
                 => link_to '查看', admin_forage_simple_path(forage_simple), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_forage_simple_path(forage_simple), class: 'btn btn-xs btn-default'

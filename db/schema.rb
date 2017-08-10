@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170621104042) do
+ActiveRecord::Schema.define(version: 20170727061700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,15 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.index ["user_id"], name: "index_address_books_on_user_id", using: :btree
   end
 
+  create_table "agent_plans", force: :cascade do |t|
+    t.string   "name"
+    t.string   "features",                 array: true
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "price"
+  end
+
   create_table "api_tokens", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "token",      limit: 64
@@ -63,6 +72,15 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.datetime "updated_at",            null: false
     t.index ["token"], name: "index_api_tokens_on_token", using: :btree
     t.index ["user_id"], name: "index_api_tokens_on_user_id", using: :btree
+  end
+
+  create_table "app_settings", force: :cascade do |t|
+    t.string   "name"
+    t.string   "key_word"
+    t.json     "app_data"
+    t.boolean  "active",     default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "article_products", force: :cascade do |t|
@@ -87,17 +105,20 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.string   "title"
     t.text     "description"
     t.integer  "author"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.integer  "comments_count"
     t.integer  "likes_count"
     t.integer  "community_id"
     t.date     "valid_time_begin"
     t.date     "valid_time_end"
     t.integer  "article_type"
-    t.boolean  "is_top",           default: false
+    t.boolean  "is_top",                default: false
     t.string   "source_type"
     t.integer  "source_id"
+    t.integer  "complaints_count",      default: 0
+    t.boolean  "is_complainted",        default: false
+    t.boolean  "is_flatform_recommend", default: false
     t.index ["source_type", "source_id"], name: "index_articles_on_source_type_and_source_id", using: :btree
   end
 
@@ -173,6 +194,21 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.jsonb    "features"
     t.boolean  "is_hot",     default: false
     t.index ["parent_id"], name: "index_catalogs_on_parent_id", using: :btree
+  end
+
+  create_table "charges", force: :cascade do |t|
+    t.integer  "order_id"
+    t.string   "pingpp_charge_id"
+    t.string   "channel"
+    t.string   "client_ip"
+    t.string   "transaction_no"
+    t.string   "paid"
+    t.string   "refunded"
+    t.string   "time_paid"
+    t.string   "time_created"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["order_id"], name: "index_charges_on_order_id", using: :btree
   end
 
   create_table "chat_messages", force: :cascade do |t|
@@ -264,6 +300,7 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.datetime "updated_at",                     null: false
     t.string   "properties",        default: [],              array: true
     t.integer  "impressions_count", default: 0
+    t.integer  "comments_count",    default: 0
     t.index ["channel_id"], name: "index_cms_pages_on_channel_id", using: :btree
     t.index ["properties"], name: "index_cms_pages_on_properties", using: :gin
     t.index ["short_title"], name: "index_cms_pages_on_short_title", using: :btree
@@ -290,11 +327,13 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.text     "content"
     t.integer  "position"
     t.boolean  "deleted"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.integer  "parent_id"
     t.jsonb    "features"
-    t.integer  "likes_count",   default: 0
+    t.integer  "likes_count",      default: 0
+    t.integer  "complaints_count", default: 0
+    t.boolean  "is_complainted",   default: false
     t.index ["resource_type", "resource_id"], name: "index_comment_entries_on_resource_type_and_resource_id", using: :btree
   end
 
@@ -321,9 +360,13 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.integer  "user_id"
     t.string   "source_type"
     t.integer  "source_id"
-    t.text     "content"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.text     "reason"
+    t.integer  "processed_by"
+    t.text     "comment"
+    t.integer  "status"
+    t.integer  "complaint_type"
     t.index ["source_type", "source_id"], name: "index_complaints_on_source_type_and_source_id", using: :btree
     t.index ["user_id"], name: "index_complaints_on_user_id", using: :btree
   end
@@ -349,8 +392,11 @@ ActiveRecord::Schema.define(version: 20170621104042) do
   create_table "finance_bills", force: :cascade do |t|
     t.integer  "amount"
     t.integer  "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "code"
+    t.boolean  "is_entry",   default: false
+    t.integer  "site_id"
   end
 
   create_table "finance_histories", force: :cascade do |t|
@@ -367,10 +413,10 @@ ActiveRecord::Schema.define(version: 20170621104042) do
   end
 
   create_table "forage_details", force: :cascade do |t|
-    t.integer  "forage_simple_id"
-    t.string   "url",                              null: false
+    t.integer  "simple_id",                     null: false
+    t.string   "url",                           null: false
     t.string   "migrate_to"
-    t.boolean  "can_purchase",     default: false
+    t.boolean  "can_purchase",  default: false
     t.string   "purchase_url"
     t.string   "title"
     t.string   "keywords"
@@ -384,37 +430,37 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.string   "phone"
     t.string   "price"
     t.string   "from"
-    t.boolean  "has_site",         default: false
+    t.boolean  "has_site",      default: false
     t.string   "site_name"
     t.string   "note"
     t.jsonb    "features"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.index ["forage_simple_id"], name: "index_forage_details_on_forage_simple_id", using: :btree
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.index ["simple_id"], name: "index_forage_details_on_simple_id", using: :btree
   end
 
   create_table "forage_run_keys", force: :cascade do |t|
-    t.integer  "forage_source_id"
+    t.integer  "source_id",                    null: false
     t.datetime "date"
-    t.boolean  "is_processed",     default: false
+    t.boolean  "is_processed", default: false
     t.datetime "processed_at"
-    t.integer  "total_count",      default: 0
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.index ["forage_source_id"], name: "index_forage_run_keys_on_forage_source_id", using: :btree
+    t.integer  "total_count",  default: 0
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["source_id"], name: "index_forage_run_keys_on_source_id", using: :btree
   end
 
   create_table "forage_simples", force: :cascade do |t|
-    t.integer  "forage_run_key_id"
+    t.integer  "run_key_id",                   null: false
     t.string   "catalog"
     t.string   "title"
-    t.string   "url",                               null: false
+    t.string   "url",                          null: false
     t.jsonb    "features"
-    t.boolean  "is_processed",      default: false
+    t.boolean  "is_processed", default: false
     t.string   "processed_at"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.index ["forage_run_key_id"], name: "index_forage_simples_on_forage_run_key_id", using: :btree
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["run_key_id"], name: "index_forage_simples_on_run_key_id", using: :btree
   end
 
   create_table "forage_sources", force: :cascade do |t|
@@ -843,8 +889,8 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.integer  "user_id"
     t.integer  "site_id"
     t.integer  "price"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.text     "description"
     t.integer  "status"
     t.integer  "internal_status"
@@ -854,7 +900,12 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.integer  "update_by"
     t.string   "resource_url"
     t.date     "delivery_date"
+    t.integer  "refund_status"
+    t.integer  "apply_refund_by"
+    t.text     "refund_description"
     t.integer  "finance_bill_id"
+    t.integer  "comments_count",           default: 0
+    t.jsonb    "features"
     t.index ["finance_bill_id"], name: "index_orders_on_finance_bill_id", using: :btree
     t.index ["site_id"], name: "index_orders_on_site_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
@@ -880,12 +931,34 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.index ["order_id"], name: "index_produces_on_order_id", using: :btree
   end
 
+  create_table "refunds", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "pingpp_charge_id"
+    t.string   "event_id"
+    t.string   "order_no"
+    t.text     "description"
+    t.string   "charge"
+    t.string   "amount"
+    t.string   "created"
+    t.string   "charge_order_no"
+    t.string   "succeed"
+    t.string   "status"
+    t.string   "time_succeed"
+    t.string   "failure_code"
+    t.string   "failure_msg"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "order_id"
+    t.index ["user_id"], name: "index_refunds_on_user_id", using: :btree
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string   "name"
     t.string   "resource_type"
     t.integer  "resource_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "role_name"
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
     t.index ["name"], name: "index_roles_on_name", using: :btree
   end
@@ -935,16 +1008,19 @@ ActiveRecord::Schema.define(version: 20170621104042) do
   create_table "sites", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.jsonb    "features"
     t.string   "type"
     t.integer  "address_alias_id"
     t.string   "address_line"
     t.integer  "catalog_id"
-    t.integer  "favorites_count",  default: 0
-    t.integer  "visits_count",     default: 0
+    t.integer  "favorites_count",       default: 0
+    t.integer  "visits_count",          default: 0
     t.integer  "comments_count"
+    t.integer  "agent_plan_id"
+    t.datetime "paid_at"
+    t.boolean  "is_flatform_recommend", default: false
     t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
   end
 
@@ -955,7 +1031,6 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.datetime "updated_at", null: false
     t.jsonb    "features"
     t.string   "type"
-    t.integer  "site_id"
     t.index ["user_id"], name: "index_staffs_on_user_id", using: :btree
   end
 
@@ -1157,6 +1232,16 @@ ActiveRecord::Schema.define(version: 20170621104042) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  create_table "users_chat_rooms", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "chat_room_id"
+    t.integer  "last_message_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["chat_room_id"], name: "index_users_chat_rooms_on_chat_room_id", using: :btree
+    t.index ["user_id"], name: "index_users_chat_rooms_on_user_id", using: :btree
+  end
+
   create_table "users_permissions", force: :cascade do |t|
     t.integer "user_id"
     t.integer "permission_id"
@@ -1183,10 +1268,8 @@ ActiveRecord::Schema.define(version: 20170621104042) do
   add_foreign_key "article_products", "articles"
   add_foreign_key "article_users", "articles"
   add_foreign_key "attachment_relations", "attachments"
+  add_foreign_key "charges", "orders"
   add_foreign_key "complaints", "users"
-  add_foreign_key "forage_details", "forage_simples"
-  add_foreign_key "forage_run_keys", "forage_sources"
-  add_foreign_key "forage_simples", "forage_run_keys"
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
   add_foreign_key "items", "sites"
@@ -1205,6 +1288,7 @@ ActiveRecord::Schema.define(version: 20170621104042) do
   add_foreign_key "orders", "sites"
   add_foreign_key "orders", "users"
   add_foreign_key "produces", "orders"
+  add_foreign_key "refunds", "users"
   add_foreign_key "shopping_carts", "users"
   add_foreign_key "tasks", "sites"
   add_foreign_key "theme_configs", "sites"
@@ -1217,4 +1301,6 @@ ActiveRecord::Schema.define(version: 20170621104042) do
   add_foreign_key "user_communities", "users"
   add_foreign_key "user_mobiles", "users"
   add_foreign_key "user_weixins", "users"
+  add_foreign_key "users_chat_rooms", "chat_rooms"
+  add_foreign_key "users_chat_rooms", "users"
 end

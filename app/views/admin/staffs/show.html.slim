@@ -23,12 +23,6 @@ h1.page-header
             tr.divider
               td[colspan='2']
             tr
-              td.field 所属美容院
-              td
-                =decorate(@staff.site).title
-            tr.divider
-              td[colspan='2']
-            tr
               td.field 年龄
               td
                 = @staff.age
@@ -73,7 +67,7 @@ h1.page-header
             tr
               td.field 工作经历
               td
-                = @staff.content
+                = raw @staff.content
             tr.divider
               td[colspan='2']
           p 证书认证

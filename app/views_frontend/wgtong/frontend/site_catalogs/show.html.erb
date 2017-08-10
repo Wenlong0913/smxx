@@ -18,34 +18,28 @@
 			<div class="col-sm-5 col-md-6 tr-sticky">
 
 				<div class="theiaStickySidebar">
-					<% Site.where(catalog_id: @site_catalog.id).each do |site| %>
+					<% Site.where(catalog_id: @site_catalog.id).order("updated_at DESC").each do |site| %>
+					<% if site.properties.length == 1  %>
 					<div class="tr-section">
 						<div class="section-title title-before">
-							<h1><a href="#"><%= site.properties.map{|p| ::Site::PROPERTIES[p.to_sym]}.compact.join('，') %></a></h1>
+							<h1><a href="javascript:void(0)"><%= site.properties.map{|p| ::Site::PROPERTIES[p.to_sym]}.compact.join('，') %></a></h1>
 						</div>
 						<div class="tr-post">
 							<div class="entry-header">
 								<div class="entry-thumbnail">
-									<a href="<%= frontend_site_path(site) %>"><img class="img-responsive" src="<%= site.first_image %>" alt="Image"></a>
+									<a href="<%= frontend_site_path(site) %>"><img class="img-responsive" src="<%= site.first_image %>" alt="<%= site.title %>"></a>
 								</div>
 							</div>
 							<div class="post-content">
 								<div class="author">
-									<a href="#"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/author1.png" alt="Image"></a>
+									<a href="/frontend/sites/<%= site.id %>"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/user.png" alt="Image"></a>
 								</div>
 								<div class="entry-meta">
 									<ul>
-										<li>By <a href="#"><%= site.catalog.name %></a></li>
-										<li><a href="#"> <%= distance_of_time_in_words_to_now(site.updated_at) %>前</a></li>
-										<li>
-											<ul>
-												<li>分享到</li>
-												<li><a href="#"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
-											</ul>
-										</li>
+										<li><a href="/frontend/sites/<%= site.id %>"><i class="fa fa-user-circle-o"></i> <%= @cms_site.name %></a></li>
+                    <li><a href="/frontend/sites/<%= site.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(site.updated_at) %>前</a></li>
+                    <li><a href="/frontend/sites/<%= site.id %>"><i class="fa fa-eye"></i> <%= site.visits_count %>阅读</a></li>
+                    <li><a href="/frontend/sites/<%= site.id %>"><i class="fa fa-comments-o"></i> <%= site.comments_count %>评论</a></li>
 									</ul>
 								</div><!-- /.entry-meta -->
 								<h2 class="entry-title">
@@ -54,14 +48,16 @@
 								<p><%= site.description.truncate(74) %></p>
 								<div class="read-more">
 									<div class="continue-reading pull-left">
-										<a href="<%= frontend_site_path(site) %>">立即预订 <i class="fa fa-angle-right"></i></a>
+										<a href="<%= frontend_site_path(site) %>">了解更多 <i class="fa fa-angle-right"></i></a>
 									</div>
 									<div class="feed pull-right">
 										<ul>
-											<li><a href="#"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
-											<li><a href="#"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
+											<div class="bdsharebuttonbox" data-tag="share_1">
+	                      <a class="bds_qzone" data-cmd="qzone"></a>
+	                      <a class="bds_tsina" data-cmd="tsina"></a>
+	                      <a class="bds_sqq" data-cmd="sqq"></a>
+	                      <a class="bds_weixin" data-cmd="weixin"></a>
+	                    </div>
 										</ul>
 									</div>
 								</div>
@@ -69,10 +65,18 @@
 						</div><!-- /.tr-post -->
 					</div><!-- /.tr-post -->
 					<% end %>
+					<% end %>
 
-					<div class="tr-ad">
-						<a href="#"><img class="img-responsive" src="/templetes/newshub/images/advertise/1.jpg" alt="Image"></a>
-					</div><!-- /.tr-ad -->
+					<div class="row text-center">
+            <%= paginate @sites, remote: true %>
+          </div>
+
+					<% if Keystore.value_for('banner-site-center-center-773x84').present? %>
+          <div class="tr-ad">
+            <% banner_site_center_center = Keystore.value_for('banner-site-center-center-773x84').split('|') %>
+            <a href="<%= banner_site_center_center[1] || 'javascript:void(0)' %>" target="_blank" ><img class="img-responsive" src="<%= banner_site_center_center[0] %>" alt="广告横幅773x84"></a>
+          </div>
+          <% end %>
 
 				</div><!-- /.theiaStickySidebar -->
       </div>
@@ -82,7 +86,7 @@
 				<div class="theiaStickySidebar">
 					<div class="tr-section">
 						<div class="section-title title-before">
-							<h1><a href="#">热门<%= @site_catalog.name %></a></h1>
+							<h1><a href="javascript:void(0)">热门<%= @site_catalog.name %></a></h1>
 						</div>
 						<% Site.hot.where(catalog_id: @site_catalog.id).limit(3).each do |site_hot| %>
 	            <% if site_hot.present? %>
@@ -92,12 +96,13 @@
 								</div>
 								<div class="post-content">
 									<div class="author">
-										<a href="#"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/author3.png" alt="Image"></a>
+										<a href="/frontend/sites/<%= site_hot.id %>"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/user.png" alt="Image"></a>
 									</div>
 									<div class="entry-meta">
 										<ul>
-											<li>By <a href="#"><%= site_hot.catalog.name %></a></li>
-											<li><a href="#"> <%= distance_of_time_in_words_to_now(site_hot.updated_at) %>前</a></li>
+	                    <li><a href="/frontend/sites/<%= site_hot.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(site_hot.updated_at) %>前</a></li>
+	                    <li><a href="/frontend/sites/<%= site_hot.id %>"><i class="fa fa-eye"></i> <%= site_hot.visits_count %>阅读</a></li>
+	                    <li><a href="/frontend/sites/<%= site_hot.id %>"><i class="fa fa-comments-o"></i> <%= site_hot.comments_count %>评论</a></li>
 										</ul>
 									</div><!-- /.entry-meta -->
 									<h2 class="entry-title">
@@ -106,14 +111,16 @@
 									<p><%= site_hot.description.truncate(50) %></p>
 									<div class="read-more">
 										<div class="continue-reading pull-left">
-											<a href="<%= frontend_site_path(site_hot) %>">立即预订 <i class="fa fa-angle-right"></i></a>
+											<a href="<%= frontend_site_path(site_hot) %>">了解更多 <i class="fa fa-angle-right"></i></a>
 										</div>
 										<div class="feed pull-right">
 											<ul>
-												<li><a href="#"><i class="fa fa-qq" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-weixin" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a></li>
-												<li><a href="#"><i class="fa fa-renren" aria-hidden="true"></i></a></li>
+												<div class="bdsharebuttonbox" data-tag="share_1">
+	                        <a class="bds_qzone" data-cmd="qzone"></a>
+	                        <a class="bds_tsina" data-cmd="tsina"></a>
+	                        <a class="bds_sqq" data-cmd="sqq"></a>
+	                        <a class="bds_weixin" data-cmd="weixin"></a>
+	                      </div>
 											</ul>
 										</div>
 									</div>
@@ -121,36 +128,19 @@
 							</div><!-- /.tr-section -->
 	            <% end %>
             <% end %>
-						<ul class="small-post-list">
-							<% Site.scroll.where(catalog_id: @site_catalog.id).limit(6).each do |site_scrolls| %>
-							<li>
-								<div class="entry-header">
-									<div class="entry-thumbnail">
-										<a href="<%= frontend_site_path(site_scrolls) %>"><img class="img-responsive" src="<%= site_scrolls.first_image %>" alt="<%= site_scrolls.title %>"></a>
-									</div>
-								</div>
-								<div class="post-content media-body">
-									<div class="entry-meta">
-										<ul>
-											<li>By <a href="#"><%= site_scrolls.catalog.name %></a></li>
-										</ul>
-									</div><!-- /.entry-meta -->
-									<h2 class="entry-title">
-										<%= link_to site_scrolls.title, frontend_site_url(site_scrolls) %>
-									</h2>
-								</div><!-- /.post-content -->
-							</li>
-							<% end %>
-						</ul>
 					</div>
 
+					<% if Keystore.value_for('banner-site-right-center-400×576').present? %>
 					<div class="tr-section tr-ad ad-before">
-						<a href="#"><img class="img-responsive" src="/templetes/newshub/images/advertise/3.jpg" alt="Image"></a>
-					</div><!-- /.tr-section -->
+            <% banner_site_right_center = Keystore.value_for('banner-site-right-center-400×576').split('|') %>
+						<a href="<%= banner_site_right_center[1] || 'javascript:void(0)' %>" target="_blank" >
+              <img class="img-responsive" src="<%= banner_site_right_center[0] %>" alt="广告横幅400×576"></a>
+					</div>
+          <% end %>
 
 					<div class="tr-section local-events">
 						<div class="section-title title-before">
-							<h1><a href="#">推荐 <%= @site_catalog.name %></a></h1>
+							<h1><a href="javascript:void(0)">推荐 <%= @site_catalog.name %></a></h1>
 						</div>
 						<ul class="nav nav-tabs" role="tablist">
 							<li role="presentation" class="active"><a href="#time0" data-toggle="tab">推荐</a></li>
@@ -169,8 +159,9 @@
 									<div class="post-content">
 										<div class="entry-meta">
 											<ul>
-												<li>By <%= site_recommends.catalog.name %></li>
-												<li><%= distance_of_time_in_words_to_now(site_recommends.updated_at) %>前</li>
+												<li><a href="/frontend/sites/<%= site_recommends.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(site_recommends.updated_at) %>前</a></li>
+		                    <li><a href="/frontend/sites/<%= site_recommends.id %>"><i class="fa fa-eye"></i> <%= site_recommends.visits_count %>阅读</a></li>
+		                    <li><a href="/frontend/sites/<%= site_recommends.id %>"><i class="fa fa-comments-o"></i> <%= site_recommends.comments_count %>评论</a></li>
 											</ul>
 										</div><!-- /.entry-meta -->
 										<h2 class="entry-title">
@@ -191,9 +182,12 @@
 			</div>
 		</div><!-- /.row -->
 
+		<% if Keystore.value_for('banner-site-bottom-center-819×119').present? %>
 		<div class="tr-ad ad-bottom ad-image text-center">
-			<a href="#"><img class="img-responsive" src="/templetes/newshub/images/advertise/5.jpg" alt="Image"></a>
-		</div><!-- /.tr-ad -->
+      <% banner_site_bottom_center = Keystore.value_for('banner-site-bottom-center-819×119').split('|') %>
+			<a href="<%= banner_site_bottom_center[1] || 'javascript:void(0)' %>" target="_blank" ><img class="img-responsive" src="<%= banner_site_bottom_center[0] %>" alt="广告横幅819×119"></a>
+		</div>
+    <% end %>
 
 	</div><!-- /.container-fluid -->
 </div><!-- main-wrapper -->

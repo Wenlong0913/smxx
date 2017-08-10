@@ -68,7 +68,7 @@ h1.page-header
             th 类型
             th 举报对象
             th 举报对象编号
-            th 举报原因
+            th = Settings.project.meikemei? ? '内容' : '举报原因'
             th
         tbody
           - @complaints.each do |complaint|
@@ -82,10 +82,9 @@ h1.page-header
               td
                 = "#{complaint.reason.slice(0, 10)}..." unless complaint.reason.blank?
               td
-                - if complaint.status.blank?
+                - if complaint.status.blank? && Settings.project.imolin?
                   => link_to '审核', edit_admin_complaint_path(complaint), class: 'btn btn-xs btn-primary'
-                - else
-                  => link_to '查看', admin_complaint_path(complaint), class: 'btn btn-xs btn-success'
+                => link_to '查看', admin_complaint_path(complaint), class: 'btn btn-xs btn-success'
                 = link_to '删除', admin_complaint_path(complaint), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
       = paginate @complaints
 

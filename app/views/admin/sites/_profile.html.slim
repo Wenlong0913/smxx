@@ -1,21 +1,49 @@
 .table-responsive
   table.table.table-profile
     tr
-      td.field 用户名
+      td.field 商家名：
       td
-        =decorate(@site.user).display_name
-    tr.divider
-      td[colspan='2']
+        a
+          = @site.user && decorate(@site.user).display_name
+      td.field 联系电话：
+      td
+        = @site.phone
+      td.field 营业时间：
+      td
+        = @site.business_hours
     tr
-      td.field 名称
+      td.field 联系人姓名：
       td
-        = @site.title
-    tr.divider
-      td[colspan='2']
+        = @site.contact_name
+      td.field 联系人电话：
+      td
+        = @site.contact_phone
+      td.field 是否签约：
+      td
+        - if @site.has_contract == '1'
+          span.label.label-success 已签约
+        - else
+          span.label.label-warning 未签约
     tr
-      td.field 描述
+      td.field 人均消费：
       td
-        = @site.description
+        = @site.avg_price
+      td.field 好评数量：
+      td
+        = @site.good_summary
+      td.field 差评数量：
+      td
+        = @site.bad_summary
+.table-responsive
+  table.table.table-profile
+    tr
+      td.field 签约备注：
+      td
+        = @site.contract_note
+    tr
+      td.field 商家描述：
+      td
+        = @site.description    
     tr.divider
       td[colspan='2']
 .gallery#gallery

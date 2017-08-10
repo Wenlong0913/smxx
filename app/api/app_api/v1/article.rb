@@ -38,7 +38,7 @@ module AppAPI::V1
           optional :source_name, type: String, desc: '根据小区来源名称搜索'
         end
         optional :includes, type: String, values: ['description', 'comments'], desc: '选择description后会返回文章类容'
-        optional :type, type: String, values: ['owner'], desc: '选择owner后会返回我的文章类容'
+        optional :type, type: String, values: ['owner', 'recommend'], desc: '选择owner后会返回我的文章类容'
         optional :source_id, type: Integer, desc: '文章来源ID'
         optional :source_type, type: String, values: ['room'], desc: '文章来源类型'
         all_or_none_of :source_id, :source_type
@@ -51,6 +51,7 @@ module AppAPI::V1
         articles =
             case params[:type]
             when 'owner' then current_user.articles
+            when 'recommend' then ::Article.where(is_flatform_recommend: true)
             else
               ::Article.all.displayable
             end
@@ -74,6 +75,9 @@ module AppAPI::V1
           tag_list = params[:tag_list].split(/,/)
           articles = articles.tagged_with(tag_list, :any => true)
         end
+        # 筛选掉有效期时间外的Article
+        now = Time.now
+        articles = articles.where('article_type != ? or article_type is null', 2).where('valid_time_begin is null or valid_time_begin <= ? and valid_time_end >= ?', now, now)
         articles = paginate_collection(sort_collection(articles), params)
         wrap_collection articles, AppAPI::Entities::Article, type: :list, includes: [params[:includes]], user_id: current_user.id
       end

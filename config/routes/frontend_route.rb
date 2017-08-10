@@ -42,7 +42,20 @@ module FrontendRoute
 
       # 前端页面路由
       namespace :frontend do
-        get 'users/show'
+        resources :users do
+          collection do
+            get "self_order"
+            get "self_comment"
+            get "self_complaint"
+            post "self_complaint"
+            get "self_message"
+            get "binding_phone"
+            get "binding_weixin"
+            post "binding_weixin"
+            post "binding_phone"
+          end
+        end
+        # get 'users/show'
         get 'home/index'
         match 'share/(:class/:id)', to: "share#index", via: :get
 
@@ -59,11 +72,15 @@ module FrontendRoute
         end
 
         resources :communites
-        resources :sites
+        resources :sites do
+          commentable
+        end
         resources :site_catalogs do
           resources :sites
         end
-        resources :products
+        resources :products do
+          commentable
+        end
         resources :product_catalogs do
           resources :products
         end

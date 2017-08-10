@@ -21,6 +21,12 @@
 class Order < ApplicationRecord
   audited
   if Settings.project.sxhop? || Settings.project.imolin?
+    store_accessor :features, :delivery_username, :delivery_phone, :delivery_address, :delivery_fee
+  end
+  if Settings.project.meikemei?
+    store_accessor :features, :staff_id, :service_time
+  end
+  if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei?
     enum status: {
       open: 0,      # 未付款
       pending: 1,   # 付款中
@@ -92,6 +98,10 @@ class Order < ApplicationRecord
     # validates_presence_of :delivery_date
   end
 
+  if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei?
+    validates_presence_of :refund_description, :apply_refund_user, if: ->(order) { order.refund_status == 'apply_refund' }
+  end
+
   after_initialize do
     self.status ||= 0
     self.internal_status ||= 0
@@ -104,7 +114,15 @@ class Order < ApplicationRecord
     if Settings.project.grand?
       self.user = self.member.user
     end
+    # 判断是否要发支付成功的短信
+    @should_send_paid_message = self.status_change == ['open', 'paid'] || self.status_change == ['pending', 'paid']
     # self.user = self.member.user
+  end
+
+  after_commit do
+    if @should_send_paid_message && (Settings.project.imolin? || Settings.project.meikemei?)
+      OrderNotificationJob.perform_async(self.id)
+    end
   end
 
   def paid

@@ -23,6 +23,12 @@ module AppAPI
         expose :favorites_count, documentation: { desc: '被私藏数', type: Integer }
       end
 
+      if Settings.project.meikemei?
+        expose :address_line, documentation: { desc: '地址' }
+        expose :phone, documentation: { desc: '联系电话' }
+        expose :business_hours, documentation: { desc: '营业时间' }
+      end
+
       expose :user, using: AppAPI::Entities::UserSimple
 
       private

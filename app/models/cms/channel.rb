@@ -26,7 +26,6 @@ class Cms::Channel < ApplicationRecord
   has_many :children, class_name: "Cms::Channel",
                           foreign_key: "parent_id",
                           dependent: :destroy
-
   belongs_to :parent, class_name: "Cms::Channel"
 
   validates :title, :short_title, :tmp_index, :tmp_detail, presence: true

@@ -1,5 +1,6 @@
 class Admin::SitesController < Admin::BaseController
   before_action :set_site, only: [:show, :edit, :update, :destroy]
+  before_action :set_delivery_fee, only: [:create, :update]
 
   def dashboard
     authorize Site
@@ -8,7 +9,7 @@ class Admin::SitesController < Admin::BaseController
   # GET /admin/sites
   def index
     authorize Site
-    @filter_colums = %w(id title)
+    @filter_colums = %w(id title address_line)
     @sites = if params[:search] && params[:search][:keywords] =~ /^\d{11}$/
       mobile = User::Mobile.where(phone_number: params[:search][:keywords]).first
       if mobile.present? && mobile.user.present?
@@ -19,6 +20,7 @@ class Admin::SitesController < Admin::BaseController
     else
       build_query_filter(Site.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
     end
+    @sites = @sites.where(is_flatform_recommend: params[:search][:recommend]) if params[:search]&&params[:search][:recommend]
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@sites.to_json, filename: "products-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
@@ -96,6 +98,9 @@ class Admin::SitesController < Admin::BaseController
       @site = Site.find(params[:id])
     end
 
+    def set_delivery_fee
+      params[:site][:delivery_fee] = params[:site][:delivery_fee].to_f * 100 unless params[:site][:delivery_fee].blank?
+    end
     # Only allow a trusted parameter "white list" through.
     # def admin_site_params
     #       #   params.require(:admin_site).permit(policy(@admin_site).permitted_attributes)

@@ -29,6 +29,8 @@ $(document).ready ->
         'comment[offer]': self.features.offer
       $.post
         url: url
+        beforeSend: (xhr)->
+          xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
         data: dataAll
         success: (data)->
           self.posting = false

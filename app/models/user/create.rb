@@ -20,7 +20,7 @@ class User
           user.mobile = mobile
           flag = user.save
         else
-          user.errors.add :mobile_phone, '手机号已经存在'
+          user.errors.add :mobile_phone, '已经存在'
         end
       else
         flag = false

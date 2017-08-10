@@ -18,14 +18,16 @@
 class Cms::Page < ApplicationRecord
   audited
   is_impressionable :counter_cache => true
+  acts_as_taggable
   belongs_to :channel
   has_one :site, through: :channel
+  has_many_comments
   before_validation :sanitize_short_title
   before_validation :create_unique_short_title
   validates :channel, :title, :content, presence: true
   # validates :short_title, format: { with: /\A[a-zA-Z0-9-]+\z/,
   #   message: "名称简写只能包括字母数字和横线" }
-  validates_uniqueness_of :short_title
+  validates_uniqueness_of :short_title, scope: [:channel_id]
 
   before_save :set_content_image
   before_save :set_thumb_image_path
@@ -58,10 +60,14 @@ class Cms::Page < ApplicationRecord
   #最近新闻
   #eg: Cms::Page.recent(12, 12, :rand => true)
   #    Cms::Page.recent(1, 10, :channel => 'product-bed')
+  #    Cms::Page.recent(1, 10, :channels => ['product-bed', 'product-red'])
   scope :recent, ->(site_id, count = 10, options = {}) {
     assoc = joins(:channel).where('cms_channels.site_id = ?', site_id).reorder("updated_at DESC").limit(count)
     if options[:channel].present?
       assoc = assoc.joins(:channel).where(cms_channels: { short_title: options[:channel] })
+    end
+    if options[:channels] && options[:channels].any?
+      assoc = assoc.joins(:channel).where("cms_channels.short_title in (?) ", options[:channels])
     end
     assoc
   }

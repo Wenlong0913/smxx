@@ -56,8 +56,6 @@ li class=("has-sub #{'active' if page?('admin/orders')}")
     i.fa.fa-cube
     span 订单管理
   ul.sub-menu
-    li[class=('active' if page?('admin/orders#new'))]
-      = link_to "创建#{Order.model_name.human}", new_admin_order_path
     li[class=('active' if page?('admin/orders#index'))]
       = link_to "#{Order.model_name.human}管理", admin_orders_path
     li[class=('active' if page?('admin/orders#refunds'))]
@@ -71,13 +69,10 @@ li[class=("active" if page?('admin/articles') && !@community.present?)]
   = link_to admin_articles_path do
     = fa_icon 'leaf', text: '系统公告'
 
-li class=("has-sub #{'active' if page?('admin/banners')}")
-  a href="javascript:;"
-    b.caret.pull-right
-    i.fa.fa-inbox
-    span 网站图片管理
-  ul.sub-menu
-    li class=("#{'active' if page?('admin/banners')}") = link_to '轮波图管理', admin_banners_path
+li[class=("active" if page?('admin/app_settings'))]
+  = link_to admin_app_settings_path do
+    = fa_icon 'key', text: 'APP参数设置'
+
 li class=("has-sub #{'active' if page?('admin/agent_plans')}")
   a href="javascript:;"
     b.caret.pull-right

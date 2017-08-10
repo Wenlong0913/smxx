@@ -154,6 +154,7 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
     #获得最近新闻
     <% Cms::Page.recent(@cms_site.id, 12, :rand => true) %>
     <% Cms::Page.recent(@cms_site.id, 10, :channel => 'product-bed') %>
+    <% Cms::Page.recent(@cms_site.id, 10, :channels => ['news1', 'news2']) %>  
 
     #获得头条/推荐...新闻
     PROPERTIES = {
@@ -210,10 +211,6 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
         <input type="phone" name="comment[contact]" class="form-control" id="InputPhone" />
     <% end %>
 
-    若需要表单空值验证（有css样式）+异步提交（在当前页面返回结果）
-    1、修改html: { class: 'form-theme'} 为 html: { class: 'validate'}
-    2、在input标签的class属性中加入'required'属性
-
     a标签代替button标签提交表单写法：
     <a href="javascript:;" class="btn btn-success" onclick='submit_form()' >立即咨询</a>
     <script type="text/javascript">
@@ -221,7 +218,6 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
         $('.simple_form').submit();
       }
     </script>
-
 
 可以使用的表单属性：
 
@@ -241,6 +237,67 @@ CMS前端提供很少的路由，同时又具有很强的灵活性。
     status: 状态
     branch: 分站
     datetime: 预订时间
+
+## 以Cms::Page和Cms::Channel为例添加百度分享按钮
+  
+  ## 配置分享内容
+    具体分享配置可查看百度分享官方文档：http://share.baidu.com/code/advance
+    <% p = @page || @channel %>
+    <script>
+      window._bd_share_config = {
+        common : {
+          bdText : '<%= p.title %>',
+          bdDesc : '<%= p.description %>',
+          bdUrl : '<%= get_cms_url(p) %>',
+          bdPic : '<%= p.image_path %>',
+          bdMini: 2,
+          bdStyle: 1
+        },
+        share : [{
+          "bdSize" : 24
+        }],
+      }
+      with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+  ## 页面添加分享按钮
+    <div class="bdsharebuttonbox" data-tag="share_1">
+      <a class="bds_qzone" data-cmd="qzone"></a>
+      <a class="bds_tsina" data-cmd="tsina"></a>
+      <a class="bds_sqq" data-cmd="sqq"></a>
+      <a class="bds_weixin" data-cmd="weixin"></a>
+    </div>
+
+  ## 常用的配置属性
+    图片分享按钮
+    image : [{
+      viewType : 'list',
+      viewPos : 'top',
+      viewColor : 'black',
+      viewSize : '16',
+      viewList : ['qzone','tsina','sqq','weixin']
+    }],
+
+    划词分享按钮
+    selectShare : [{
+     "bdselectMiniList" : ['qzone','tsina','sqq','weixin']
+    }]
+
+    常用分享按钮名称对应表
+    QQ空间  qzone
+    新浪微博  tsina
+    人人网 renren
+    腾讯微博  tqq
+    开心网 kaixin001
+    百度贴吧  tieba
+    豆瓣网 douban
+    QQ好友  sqq
+    天涯社区 ty
+    linkedin  linkedin
+    微信  weixin
+
+## 添加Cms::Page和Cms::Channel的评论
+  评论功能尚未完整，待完善
 
 # 如何添加二级域名
 
@@ -277,6 +334,10 @@ Nginx config:
 1. 给表添加统计字段(migration)
 
   add_column :cms_pages, :impressions_count, :integer, default: 0
+
+  注：如果不想添加一个字段，而是想要指定一个不同的列名，可以：
+
+  is_impressionable :counter_cache => true, :column_name => :my_column_name
 
 2. 修改Model:
 
@@ -408,6 +469,7 @@ PV次数：  <%= cms_page.impressionist_count %>
        </div>
 
 ## 获取页面中的图片/文本
+
   经常用于网站首页动态轮播图的获取：将图片和文字存在首页channel的content里，然后再动态取出来。
 
     <%
@@ -415,3 +477,25 @@ PV次数：  <%= cms_page.impressionist_count %>
      img_srcs = doc.css('img').map{ |i| i['src'] }
      texts = doc.search('//text()').map(&:text).delete_if &:blank?
      %>
+
+## 通过each_slice分片数组
+  如： [1,2,3,'a', 'b', 'c','d'] =>  [[1, 2, 3], ["a", "b", "c"], ["d"]]
+
+
+      <% Cms::Page.recent(@cms_site.id, 6, channels: ['profession-news', 'company-news']).each_slice(2).each do |news| %>
+        <p>分隔</p>
+        <% news.each do |page| %>
+          <h2><%= page.title %></h2>
+        <% end %>
+      <% end %>
+
+## 使用Gitlab上Revert操作恢复错误的Merge请求
+  1. 在Commits列表中找到错误的Merge请求，进入Merge请求详情页面
+
+  2. 在Merge请求详情页面的右上角Options下拉菜单中选择Revert操作
+
+  3. 在弹出框的下拉菜单中选择需要恢复的branch，并勾选Start a new merge request选项
+
+  4. 这时会返回到重新发起Merge请求页面，注意：这里发起的是Revert请求，我们依次选择提交Merge请求，并Merge到目标branch
+
+  5. 完成以上操作，git pull查看终端输出结果

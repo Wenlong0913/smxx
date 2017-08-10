@@ -1,7 +1,7 @@
 class CreateForageDetails < ActiveRecord::Migration[5.0]
   def change
     create_table :forage_details do |t|
-      t.references :forage_simple, foreign_key: true
+      t.integer :simple_id, null: false, index: true
       t.string :url, null: false
       t.string :migrate_to
       t.boolean :can_purchase, default: false

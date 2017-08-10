@@ -24,13 +24,18 @@
                 = f.input :stock
               .form-group.col-xs-4.p-0.m-0
                 = f.input :unit
-            .col-xs-12
-              .form-group
-                label.control-label.string.optional 产品是否存在运费
-                .input-group
-                  span.input-group-addon.fee_checkbox
-                    = f.input_field :is_fee, as: :boolean, label: false
-                  = f.input :shopping_fee, label: false, input_html: {class: "form-control"}
+            - if Settings.project.imolin?
+              .col-xs-12
+                small.text-danger
+                  | * 订单配送费统一在商家信息编辑中管理
+            - else
+              .col-xs-12
+                .form-group
+                  label.control-label.string.optional 产品是否存在运费
+                  .input-group
+                    span.input-group-addon.fee_checkbox
+                      = f.input_field :is_fee, as: :boolean, label: false
+                    = f.input :shopping_fee, label: false, input_html: {class: "form-control"}
         .modal-footer
           button.btn.btn-default[type="button" data-dismiss="modal"] 取消
           = f.submit '保存调价', class: 'btn btn-primary'

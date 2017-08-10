@@ -17,6 +17,8 @@ h1.page-header
         .col-md-6.m-b-15
           .input-group.search_all
             = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '搜索...'
+            span.input-group-addon[title="选中后查询将显示平台推荐商家"]
+              = f.check_box :recommend, {checked: (params[:search]&&params[:search][:recommend] == 'true')}, true, false
             span.input-group-btn
               button.btn.btn-inverse[type='submit']
                 i.fa.fa-search
@@ -85,12 +87,12 @@ h1.page-header
                 td = site.contact_name
                 td = site.contact_phone
                 td
-                  - if site.is_sign == "true"
+                  - if site.has_contract == "1"
                     => link_to "已签约", '#', class: 'btn btn-xs btn-success'
                   - else
                     => link_to "未签约", '#', class: 'btn btn-xs btn-warning'
                 td = site.business_hours
-                td = site.comment
+                td = raw site.content
               td
                 a[href="#"] = User.find_by(id: site.updated_by).try(:username).to_s
                 = '在'+ distance_of_time_in_words_to_now(site.updated_at) + '前更新'

@@ -18,10 +18,11 @@
     <meta name="description" content="<%= @meta_description.present? ? @meta_description : yield(:meta_description) %>">
 
     <%= render file: @cms_site.template_dir + '_head.html' %>
+    <%= yield(:head) %>
     <%= csrf_meta_tags %>
   </head>
 
-  <body>
+  <body <%= @cms_site.value_for("body").html_safe %>>
     <% unless params[:search] || params[:tag] || params[:controller] == 'comments' %>
       <% if @page %>
         <% if File.exist?( @cms_site.template_dir + @channel.tmp_detail )%>

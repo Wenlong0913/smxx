@@ -2,7 +2,7 @@
 require 'csv'
 class Admin::ArticlesController < Admin::BaseController
   before_action :set_community
-  before_action :set_article, only: [:show, :edit, :update, :destroy]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :recommend]
 
   # GET /admin/articles
   def index
@@ -72,6 +72,15 @@ class Admin::ArticlesController < Admin::BaseController
     authorize @article
     @article.destroy
     redirect_to @community ? admin_community_articles_url : admin_articles_url, notice: "#{Article.model_name.human} 删除成功."
+  end
+
+  def recommend
+    authorize @article
+    if @article.update_attributes(is_flatform_recommend: !@article.is_flatform_recommend)
+      render json: {status: 'ok', recommend: @article.is_flatform_recommend, message: "设置成功"}
+    else
+      render js: "alert('出现错误')"
+    end
   end
 
   private

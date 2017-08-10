@@ -24,7 +24,7 @@ zh-CN:
         sign_note: 签约备注
         score: 星级评分
         comment: 营销备注
-        description: 描述
+        description: 简要描述
         content: <%= site_name %>介绍
         good_summary: 好评数
         bad_summary: 差评数
@@ -35,6 +35,8 @@ zh-CN:
         lng: 经度
         phone: 手机号
         contract_note: 签约备注
+        is_flatform_recommend: 是否设为平台推荐
+        delivery_fee: 订单配送费
         properties:
           assure: 正品保障
           cleaning: 卫生清洁

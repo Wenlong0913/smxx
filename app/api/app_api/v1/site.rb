@@ -8,12 +8,17 @@ module AppAPI::V1
       end
       params do
         use :pagination
+        optional :type, type: String, values: ['flatform_recommend'], desc: '平台推荐'
       end
       get 'near_by' do
         authenticate!
         error! '请先设置您的小区信息' unless current_user.current_community
         community = current_user.current_community
-        sites = ::Site.where("features ->> 'is_published' = ?", "1").near_by(lat: community.address_lat, lng: community.address_lng, distance: 5000)
+        sites = ::Site.where("features ->> 'is_published' = ?", "1").near_by(lat: community.address_lat, lng: community.address_lng, distance: 2000)
+        case params[:type]
+        when 'flatform_recommend'
+          sites = sites.where(is_flatform_recommend: true)
+        end
         sites = paginate_collection(sort_collection(sites), params)
         wrap_collection sites, AppAPI::Entities::SiteSimple, includes: [:distance]
       end
@@ -30,7 +35,7 @@ module AppAPI::V1
           site = ::Site.find(params[:id])
           present site, with: AppAPI::Entities::Site, includes: [:products], type: :full_site, user_id: current_user.id
         else
-          present ::Site.find(params[:id]), with: AppAPI::Entities::Site, includes: [:products, :staffs]
+          present ::Site.find(params[:id]), with: AppAPI::Entities::Site, includes: [:products], user_id: current_user.id
         end
       end
 
@@ -73,7 +78,7 @@ module AppAPI::V1
 
           if params[:site_catalog_id]
             sites = sites.where("catalog_id = ?", params[:site_catalog_id])
-            sites = sites.near_by(lat: community.address_lat, lng: community.address_lng, distance: 5000)
+            sites = sites.near_by(lat: community.address_lat, lng: community.address_lng, distance: 2000)
           else
             # 所有店铺都要获取distance（小区距离）信息
             sites = sites.selecting_distance_from(community.address_lat, community.address_lng).order_by_distance(community.address_lat, community.address_lng)

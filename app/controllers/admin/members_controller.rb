@@ -1,7 +1,7 @@
 # csv support
 require 'csv'
 class Admin::MembersController < Admin::BaseController
-  before_action :set_site
+  before_action :set_site, only: [:index, :show, :new, :edit, :create, :update, :destroy]
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
   def dashboard
@@ -70,6 +70,24 @@ class Admin::MembersController < Admin::BaseController
     authorize @member
     Member::Destroy.(@member)
     redirect_to admin_site_members_url(@site), notice: 'Member 删除成功.'
+  end
+
+  def all
+    authorize Member
+    @filter_colums = %w(name qq email)
+    @members = build_query_filter(Member.all, only: @filter_colums).page(params[:page])
+    respond_to do |format|
+      if params[:json].present?
+        format.html { send_data(@members.to_json, filename: "members-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
+      elsif params[:xml].present?
+        format.html { send_data(@members.to_xml, filename: "members-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
+      elsif params[:csv].present?
+        # as_csv =>  () | only: [] | except: []
+        format.html { send_data(@members.as_csv(only: []), filename: "members-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+      else
+        format.html
+      end
+    end
   end
 
   private

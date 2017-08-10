@@ -2,6 +2,8 @@
 #= require tracker
 #= require comments
 #= require agent/products
+#= require agent/cms_pages
+#= require agent/sites
 #= require agent/preorder_conversitions
 #= require agent/new_preorder_conversitions
 #= require agent/orders

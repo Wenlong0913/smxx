@@ -22,6 +22,7 @@ class Cms::Site < ApplicationRecord
   has_many :comments, dependent: :destroy
   belongs_to :site, class_name: '::Site'
   after_create :do_initialize
+  has_many :tags, through: :pages
 
   validates :name, :template, :domain, :description, presence: true
   validates_uniqueness_of :domain

@@ -14,8 +14,14 @@
             - @forage_simple.errors.full_messages.each do |message|
               li = message
 
-      = f.association :forage_run_key
-      = f.input :catalog
-      = f.input :title
-      = f.input :url
+      .row
+        .col-md-6
+          = f.association :run_key
+        .col-md-6
+          = f.input :title
+        .col-md-6
+          = f.input :catalog
+        .col-md-6
+          = f.input :url
+      = f.input :is_processed, as: :boolean, checked_value: true, unchecked_value: false
       = f.submit class: 'btn btn-success btn-block'

@@ -64,16 +64,19 @@ h1.page-header
       table.table.table-striped.table-bordered
         thead
           tr
-            th 分类
             th 名称
+            th 分类
             th
         tbody
           - @forage_sources.each do |forage_source|
             tr
               td
-                = forage_source.catalog_name
+                h4 style="margin:0px;"
+                  => link_to "#{forage_source.id}. #{forage_source.name}", admin_forage_source_path(forage_source)
               td
-                = forage_source.name
+                -if forage_source.catalog_name.present?
+                  a.btn.btn-xs.btn-success
+                    = forage_source.catalog_name
               td
                 => link_to '查看', admin_forage_source_path(forage_source), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_forage_source_path(forage_source), class: 'btn btn-xs btn-default'

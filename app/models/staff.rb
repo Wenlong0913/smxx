@@ -16,11 +16,12 @@ class Staff < ApplicationRecord
   belongs_to :site
   has_many :theme_configs
   has_one :active_theme_config, -> { where(active: true) }, class_name: 'ThemeConfig'
-  has_many :image_items, dependent: :destroy, as: :owner
+  has_many :image_item_relations, as: :relation
+  has_many :image_items, :through => :image_item_relations
   has_many_favorites
   store_accessor :features, :description, :age, :work_years, :content, :certificate, :properties, :score, :total_service, :week_service
-  validates_presence_of :title, :site_id
-  validates_uniqueness_of :title, scope: [:site_id]
+  validates_presence_of :title
+  validates_uniqueness_of :title
 
   PROPERTIES = {
     breast_dredge: "乳腺疏通",
@@ -40,5 +41,9 @@ class Staff < ApplicationRecord
     ovary_care: "卵巢护理",
     head_physiotherapy: "头部理疗"
   }
+
+  def headshot
+    image_items.first.try(:image_url)
+  end
 
 end

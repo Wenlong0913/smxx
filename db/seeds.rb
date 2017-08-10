@@ -10,6 +10,8 @@ puts "创建用户/权限"
   Role.find_or_create_by name: name
 end
 
+
+
 unless User.find_by_phone_number('18080810818')
   _, admin = User::Create.(mobile_phone: '18080810818', nickname: '管理员', password: 'abcd1234')
   admin.save!
@@ -30,6 +32,15 @@ end
 # 测试账号，方便app审核时测试用，手机号验证码是000000，在settings.xx.yml中有设置
 unless User.find_by_phone_number('13900000000')
   _, user = User::Create.(mobile_phone: '13900000000', nickname: '测试账号', password: 'xhkafhsafl')
+end
+
+flag, public_admin = User::Create.(mobile_phone: '11000000000', nickname: '超级管理员', email: 'admin@tanmer.com', password: 'tanmer.com')
+if flag
+  public_admin.save!
+  public_admin.add_role :admin
+  public_admin.add_role :super_admin
+else
+  puts "公共超级管理员创建失败"
 end
 
 site = Site.create_with(user: admin, address_line: '成都市成华区二环路东二段龙湖三千城').find_or_create_by!(title: '官网')

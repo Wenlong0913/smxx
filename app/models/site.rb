@@ -13,6 +13,7 @@
 
 class Site < ApplicationRecord
   MAIN_ID = 1
+  is_impressionable :counter_cache => true, :column_name => :visits_count
   belongs_to :user, optional: true
   belongs_to :catalog
   has_many :theme_configs
@@ -42,7 +43,8 @@ class Site < ApplicationRecord
                 :recommendation, :good_summary, :bad_summary, :parking,
                 :wifi, :contact_name, :contact_phone, :has_contract, :contract_note,
                 :avg_price, :is_published, :phone, :photos, :province, :real_city, :city, :district, :business_area,
-                :updated_by, :content
+                :updated_by, :content, :delivery_fee
+
   validates_presence_of :title, :address_line#, :user_id
   validates_uniqueness_of :title, scope: [:address_line]
 
@@ -72,7 +74,7 @@ class Site < ApplicationRecord
     }
   end
 
-  if Settings.project.imolin? || Settings.project.wgtong?
+  if Settings.project.imolin? || Settings.project.wgtong? || Settings.project.meikemei?
     acts_as_address
     acts_as_geolocated lat: 'lat', lng: 'lng'
     def address_lat

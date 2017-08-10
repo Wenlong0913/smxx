@@ -1,0 +1,179 @@
+<%= render file: @cms_site.template_dir + '_header.html' %>
+<style media="screen">
+  .successOrder {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+  }
+  .warningOrder {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+  }
+  .siteOrderBg {
+    background: #337ab7;
+  }
+  .productOrderBg {
+    background: #d9534f;
+  }
+  .siteColorIcon {
+    color: #337ab7;
+  }
+  .productColorIcon {
+    color: #d9534f;
+  }
+  .orderPrice {
+    font-size: 25px;
+    color: #e81a1b;
+  }
+  .orderLink {
+    color: #fff;
+    padding: 5px 15px;
+  }
+  .orderLinkPayBg {
+    background-color: brown;
+  }
+  .orderLinkOutBg {
+    background-color: #9e9e9e;
+  }
+  .orderDescription {
+    max-width: 100%;
+    text-overflow : ellipsis;
+    overflow: hidden;
+    white-space: nowrap
+  }
+  .productImg {
+    max-height: 150px;
+    max-width: 150px;
+    overflow: hidden;
+  }
+</style>
+<div id="wrap">
+  <section id="start" class="padding-top-bottom text-center">
+    <div class="container">
+
+      <div class="tr-breadcrumb">
+  			<div class="title pull-left">
+  				<h1>
+            我的订单
+            <small><%=@user_orders.size %> 条记录</small>
+          </h1>
+  			</div>
+        <ol class="breadcrumb pull-right">
+          <li><a href="/">首页</a></li>
+        </ol>
+  		</div>
+
+      <div class="row">
+        <div class="col-sm-8 col-md-8 tr-sticky">
+          <div class="theiaStickySidebar">
+            <!-- 筛选分类 -->
+            <div class="tr-section">
+              <p class="text-left">
+                预定类型：
+                <a href="#" class="btn btn-default">
+                  全部
+                </a>
+                 <a href="#" class="btn btn-default">
+                   <span class="successOrder siteOrderBg"></span>
+                   活动场馆
+                   <span class="badge">1</span>
+                 </a>
+                 <a href="#" class="btn btn-default">
+                   <span class="warningOrder productOrderBg"></span>
+                   文化活动
+                   <span class="badge">1</span>
+                 </a>
+              </p>
+            </div>
+            <% if @user_orders.any? %>
+              <% @user_orders.each_with_index do |order| %>
+                <!-- 文化活动订单 -->
+                <div class="tr-section">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p class="clearfix">
+                        <span class="pull-left">
+                          <a href="#">
+                            <code class="productOrderBg" style="color: #fff;"><i class="fa fa-share-alt"></i> 订单号:   <%= order.code%></code>
+                          </a>
+                        </span>
+
+                        <span class="pull-right">
+                          票数：x<%= order.order_products.first.amount%>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <% order.order_products.each_with_index do |order_product| %>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="productImg">
+                        <img src="<%= order_product.product.first_image%>" alt="" class="img-responsive"/>
+                      </div>
+                    </div>
+
+                    <div class="col-md-9 text-left">
+                      <h4 >
+                        <a href="#" style="color: #2e2e2e;">
+                          <%= order_product.product.name%>
+                        </a>
+                        <small><%= order_product.product.catalog.try(:name) %></small>
+                      </h4>
+                      <!-- <p>
+                        <span class="orderPrice">¥ 100 .00</span>
+                      </p> -->
+                      <p>
+                        <span><i class="fa fa-map-marker productColorIcon"></i>  <%= order_product.product.address_line1 %></span>
+                        <span><i class="fa fa-clock-o productColorIcon"></i> <%= order_product.product.date + ' '  + order_product.product.time%></span>
+                      </p>
+
+                      <p class="orderDescription"><%= order_product.product.description %></p>
+                      <div class="btn-group text-right" role="group">
+                        <button class="btn btn-default" type="button" name="button" data-toggle="modal" data-target="#deleteSite1">取消预定</button>
+                      </div>
+                      <div class="modal fade" id="deleteSite1" tabindex="-1" role="dialog" aria-labelledby="deleteProduct">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <h4 class="modal-title">提示</h4>
+                            </div>
+                            <div class="modal-body">
+                              是否要取消当前预定信息，点击“确认”取消预定，点击“取消”返回
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">确定</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <%end%>
+                </div>
+              <% end %>
+              <%= paginate @user_orders %>
+            <% else %>
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <i class="fa fa-frown-o" style="font-size:40px;color: #999;"></i>
+                </div>
+                <div class="col-md-12 text-center">
+                  您目前还没有任何订单信息
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="col-sm-5 col-md-4 tr-sticky" >
+  				<%= render file: 'frontend/users/_nav_sidebar.html.erb' %>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <%= render file: @cms_site.template_dir + '_footer.html' %>
+</div>

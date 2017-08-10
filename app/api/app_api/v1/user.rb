@@ -72,7 +72,7 @@ module AppAPI::V1
           elsif params[:mobile_phone]
             ::User.find_by_phone_number(params[:mobile_phone])
           end
-        if user.nil? && Settings.project.imolin? && params[:mobile_phone]
+        if user.nil? && (Settings.project.imolin? || Settings.project.meikemei?) && params[:mobile_phone]
           _ , user = ::User::Create.(mobile_phone: params[:mobile_phone])
           api_token = user.api_tokens.find_or_initialize_by(device: params[:device])
         end
@@ -145,7 +145,7 @@ module AppAPI::V1
       params do
         optional :nickname, type: String, desc: '昵称'
         # optional :username, type: String, desc: '名称'
-        if Settings.project.imolin?
+        if Settings.project.imolin? || Settings.project.meikemei?
           optional :avatar, type: String, desc: '头像, 格式是base64'
         else
           optional :avatar, type: Rack::Multipart::UploadedFile, desc: '上传头像'
@@ -163,7 +163,7 @@ module AppAPI::V1
         authenticate!
         user = ::User.find(current_user.id) # get fresh data from DB
         if params[:avatar]
-          if Settings.project.imolin?
+          if Settings.project.imolin? || Settings.project.meikemei?
             StringIO.open(Base64.decode64(params[:avatar])) do |data|
               data.class.class_eval { attr_accessor :original_filename, :content_type }
               data.original_filename = "user-#{user.id}.jpg"

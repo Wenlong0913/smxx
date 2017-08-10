@@ -43,7 +43,7 @@ class SitePolicy < ApplicationPolicy
         :recommendation, :good_summary, :bad_summary, :parking,
         :wifi, :contact_name, :contact_phone, :has_contract, :contract_note,
         :avg_price, :is_published, :phone, :photos, :province, :city, :area, :business_area,
-        :lat, :lng, :catalog_id, :address_line, :content, :is_sign, :sign_note, :score, :comment,
+        :lat, :lng, :catalog_id, :address_line, :content, :is_sign, :sign_note, :score, :comment, :is_flatform_recommend, :delivery_fee,
         :properties => [], :image_item_ids => []]
     elsif user.has_role?(:agent) && user.sites.empty?
       [:title]

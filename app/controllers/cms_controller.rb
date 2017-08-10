@@ -57,6 +57,13 @@ class CmsController < ApplicationController
     impressionist(@channel, "channel_#{@channel.id}")
     impressionist(@page, "page_#{@page.id}") if @page # 2nd argument is optional
 
+    # 评论列表
+    @comments_list = if @page
+      Cms::Comment.where(source_type: 'Cms::Page', source_id: @page.id).order("created_at ASC").page(params[:page]).per(6)
+    else
+      Cms::Comment.where(source_type: 'Cms::Channel', source_id: @channel.id).order("created_at ASC").page(params[:page]).per(6)
+    end
+
     #respond_with @page || @channel
     respond_to do |format|
       format.html
@@ -106,10 +113,15 @@ class CmsController < ApplicationController
     @comment.status = params[:comment][:status]
     @comment.branch = params[:comment][:branch]
     @comment.datetime = params[:comment][:datetime]
+    # 评论系统使用
+    @comment.source_type = params[:comment][:source_type]
+    @comment.source_id = params[:comment][:source_id]
+    @comment.user_id = current_user.id
     respond_to do |format|
       format.html do
         if @comment.save
-          redirect_to root_path, :notice=> '提交成功~'
+          redirect_back fallback_location: root_path, :notice=> '提交成功~'
+          # redirect_to root_path, :notice=> '提交成功~'
         else
           render :new
         end
@@ -127,7 +139,8 @@ class CmsController < ApplicationController
   private
 
   def check_subdomain!
-    @cms_site = Cms::Site.where("domain = ? OR root_domain = ?", request.subdomain, request.domain).first
+    @cms_site = Cms::Site.where("domain = ? OR root_domain = ?", request.subdomains, request.domain).first
+    logger.info "----subdomain:#{request.subdomain}---domain: #{request.domain}-------cms_site: #{@cms_site.try(:id)}---"
     redirect_to root_url(subdomain: nil) if @cms_site.nil? || !@cms_site.is_published
   end
 

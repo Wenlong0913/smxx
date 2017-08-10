@@ -1,5 +1,5 @@
 class Admin::RolesController < Admin::BaseController
-  before_action :set_role, only: [:edit_permission, :update_permission]
+  before_action :set_role, only: [:edit, :update, :destroy, :edit_permission, :update_permission]
 
   def index
     authorize Role
@@ -7,6 +7,34 @@ class Admin::RolesController < Admin::BaseController
     respond_to do |format|
       format.html
       format.json { render json: {admin_roles: @admin_roles.as_json(only: [:id], methods: [:role_name])} }
+    end
+  end
+
+  # GET /admin/members/1/edit
+  def edit
+    authorize @role
+  end
+
+  def update
+    authorize @role
+    respond_to do |format|
+      format.html do
+        if @role.update(permitted_attributes(@role))
+          redirect_to admin_roles_path, notice: ' 更新成功.'
+        else
+          render :edit
+        end
+      end
+      format.json { render json: @role }
+    end
+  end
+
+  def destroy
+    authorize @role
+    @role.destroy
+    respond_to do |format|
+      format.html { redirect_to admin_roles_path, notice: ' 删除成功.' }
+      format.json { head 200 }
     end
   end
 
