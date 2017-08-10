@@ -137,12 +137,17 @@
                   </div>
                   <%end%>
                   <div class="row">
-                    <div class="col-md-6"></div>
+                    <div class="col-md-4"></div>
                     <div class="col-md-3">
                       <p class="text-left">下单时间: <%=distance_of_time_in_words_to_now(order.created_at) %>前</p>
                     </div>
-                    <div class="col-md-3">
-                      <p class="text-right">订单状态: <%= enum_l(order, :status)%></p>
+                    <div class="col-md-5">
+                      <p class="text-right">订单状态: 
+                        <%= enum_l(order, :status)%>
+                        <% if order.refund_status %>
+                           <small class="text-danger"><%= enum_l(order, :refund_status)%></small>
+                        <%end%>
+                      </p>
                     </div>
                   </div>
                 </div>

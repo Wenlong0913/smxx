@@ -66,6 +66,8 @@ module FrontendRoute
           end
           member do
             get :paid_success
+            post "confirm" #确认消费
+            post "refund"  #退款申请
           end
         end
 
