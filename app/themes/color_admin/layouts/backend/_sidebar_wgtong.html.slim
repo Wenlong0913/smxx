@@ -66,6 +66,8 @@ li class=("has-sub #{'active' if page?('admin/orders', 'admin/produces', 'admin/
       = link_to "创建#{Order.model_name.human}", new_admin_order_path
     li[class=('active' if page?('admin/orders#index'))]
       = link_to "#{Order.model_name.human}管理", admin_orders_path
+    li[class=('active' if page?('admin/orders#refunds'))]
+      = link_to "#{Order.model_name.human}退款管理", refunds_admin_orders_path
 
 li[class=("active" if page?('admin/articles'))]
   = link_to admin_articles_path do

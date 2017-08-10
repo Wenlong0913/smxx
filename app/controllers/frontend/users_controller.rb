@@ -21,7 +21,11 @@ class Frontend::UsersController < Frontend::BaseController
   end
 
   def self_order
-    @user_orders = current_user.orders.order("updated_at DESC").page(params[:page])
+    if ['pending', 'open', 'paid', 'completed', 'cancelled'].include?(params[:type])
+      @user_orders = current_user.orders.where(status: params[:type]).order("updated_at DESC").page(params[:page])
+    else
+      @user_orders = current_user.orders.order("updated_at DESC").page(params[:page])
+    end
   end
 
   def self_comment
