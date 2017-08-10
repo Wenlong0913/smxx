@@ -68,24 +68,30 @@
         <div class="col-sm-8 col-md-8 tr-sticky">
           <div class="theiaStickySidebar">
             <!-- 筛选分类 -->
-            <%#<div class="tr-section">
+            <div class="tr-section">
               <p class="text-left">
-                预定类型：
-                <a href="#" class="btn btn-default">
+                订单类型：
+                <a href="<%= self_order_users_path %>" class="btn btn-default <%= params[:type].blank? ? 'btn-success' : '' %>">
                   全部
                 </a>
-                 <a href="#" class="btn btn-default">
+                 <a href="<%= self_order_users_path(type: 'paid') %>" class="btn btn-default <%= params[:type] == 'paid' ? 'btn-success' : '' %>">
                    <span class="successOrder siteOrderBg"></span>
-                   活动场馆
-                   <span class="badge">1</span>
+                   已付款
                  </a>
-                 <a href="#" class="btn btn-default">
+                 <a href="<%= self_order_users_path(type: 'open') %>" class="btn btn-default <%= params[:type] == 'open' ? 'btn-warning' : '' %>">
                    <span class="warningOrder productOrderBg"></span>
-                   文化活动
-                   <span class="badge">1</span>
+                   未付款
+                 </a>
+                 <a href="<%= self_order_users_path(type: 'completed') %>" class="btn btn-default <%= params[:type] == 'completed' ? 'btn-info' : '' %>">
+                   <span class="warningOrder productOrderBg"></span>
+                   已消费
+                 </a>
+                 <a href="<%= self_order_users_path(type: 'cancelled') %>" class="btn btn-default <%= params[:type] == 'cancelled' ? 'btn-danger' : '' %>">
+                   <span class="warningOrder productOrderBg"></span>
+                   已取消
                  </a>
               </p>
-            </div>%>
+            </div>
             <% if @user_orders.any? %>
               <% @user_orders.each_with_index do |order| %>
                 <% next if order.order_products.empty? %>

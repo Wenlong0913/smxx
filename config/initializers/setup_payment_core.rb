@@ -45,6 +45,7 @@ PaymentCore.setup do |p|
         failure_msg: json[:failure_msg]
       )
       order.refund_status = 'refunded'
+      order.status = 'cancelled'
       order.save
     end
   end
