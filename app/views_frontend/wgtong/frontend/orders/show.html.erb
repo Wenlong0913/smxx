@@ -23,31 +23,6 @@
       <div class="row">
         <div class="col-sm-8 col-md-8 tr-sticky">
           <div class="theiaStickySidebar">
-            <!-- 支付失败 -->
-            <%#<div class="tr-section">
-              <div class="row text-left">
-                <div class="col-md-12">
-                  <h3 class="clearfix">
-                    <div class="pull-left">
-                      支付状态：<span class="text-danger">失败</span>
-                    </div>
-                    <div class="pull-right">
-                      <div class="btn-group" role="group" aria-label="重新支付按钮组">
-                        <button type="button" class="btn btn-default" name="button">返回订单</button>
-                        <button type="button" class="btn btn-danger" name="button">重新支付</button>
-                      </div>
-                    </div>
-                  </h3>
-                  <hr/>
-                  <p class="text-center" style=" color: #9e9e9e">
-                    <span class="fa fa-frown-o" style="font-size: 45px;"></span>
-                  </p>
-                  <p class="text-center" style=" color: #9e9e9e">
-                    <span>温馨提示：订单支付失败，请检查“订单状态”后尝试重新支付</span>
-                  </p>
-                </div>
-              </div>
-            </div>%>
             <!-- 支付成功 -->
             <div class="tr-section">
               <div class="row text-left">
@@ -95,6 +70,32 @@
                         </span>
                       </p>
                     </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <p>预留手机号:
+                        <small class="text-info"><%= @order.delivery_phone || current_user.mobile.try(:phone_number) %></small>
+                      </p>
+                    </div>
+                    <div class="col-md-3">
+                      <p>下单时间:
+                        <small><%= distance_of_time_in_words_to_now(@order.created_at) %>前</small>
+                      </p>
+                    </div>
+                    <% if @order.paid? %>
+                      <div class="col-md-2">
+                        <% if @order.refund_status.blank?%>
+                          <%= link_to '确认消费', confirm_frontend_order_path(@order), method: :post, data: { confirm: "是否确认消费?" }, class: 'btn btn-success' %>
+                        <% end %>
+                      </div>
+                      <div class="col-md-2">
+                        <% if @order.refund_status.blank?%>
+                          <%= link_to '退款申请', refund_frontend_order_path(@order), method: :post, data: { confirm: "是否需要退款?" }, class: 'btn btn-warning' %>
+                        <% else %>
+                          <p><%= enum_l(@order, :refund_status) %> </p>
+                        <% end %>
+                      </div>
+                    <% end %>
                   </div>
                 </div>
               </div>

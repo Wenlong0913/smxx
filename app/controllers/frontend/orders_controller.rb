@@ -1,5 +1,5 @@
 class Frontend::OrdersController < Frontend::BaseController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: [:show, :edit, :update, :destroy, :confirm, :refund]
   before_action :ensure_login!
 
   def index
@@ -185,6 +185,25 @@ class Frontend::OrdersController < Frontend::BaseController
 
   end
 
+  def confirm
+    @order.completed!
+    @order.order_products.each do |order_product|
+      product = order_product.product
+      product.sales_count += order_product.amount
+      product.save!
+    end
+    redirect_to frontend_order_path(@order)
+  end
+
+  def refund
+    if @order.refund_status.blank?
+      @order.refund_status = 'apply_refund'
+      # @order.refund_description = params[:description]
+      @order.apply_refund_by = current_user.id
+      @order.save!
+    end
+    redirect_to frontend_order_path(@order)
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
