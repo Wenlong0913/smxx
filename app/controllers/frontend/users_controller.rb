@@ -1,4 +1,5 @@
 class Frontend::UsersController < Frontend::BaseController
+  skip_before_action :verify_authenticity_token, :only => [:headshot]
   before_action :ensure_login!
   def show
   end
@@ -8,13 +9,9 @@ class Frontend::UsersController < Frontend::BaseController
   end
   def update
     authorize @current_user
-    if params[:user][:attachments]
-      @current_user.avatar = JSON.parse(params[:user][:attachments])["output"]["image"]
-      @current_user.avatar_file_name = JSON.parse(params[:user][:attachments])["input"]["name"]
-    end
     flag, @current_user = User::Update.(@current_user, permitted_attributes(@current_user))
     if flag
-      redirect_to edit_users_path, notice: '更新成功.'
+      redirect_to users_path, notice: '信息修改成功！'
     else
       render :edit
     end
@@ -91,6 +88,18 @@ class Frontend::UsersController < Frontend::BaseController
       else
         render json: { success: false }
       end
+    end
+  end
+
+  def headshot
+    if params[:user][:attachments]
+      @current_user.avatar = JSON.parse(params[:user][:attachments])["output"]["image"]
+      @current_user.avatar_file_name = JSON.parse(params[:user][:attachments])["input"]["name"]
+    end
+    if @current_user.save
+      render json: { success: true , url: current_user.display_headshot }
+    else
+      render :edit
     end
   end
 

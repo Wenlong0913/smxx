@@ -47,6 +47,7 @@ module FrontendRoute
         get "self_complaint"
         post "self_complaint"
         get "self_message"
+        post "headshot"
         get "binding_phone"
         get "binding_weixin"
         post "binding_weixin"
