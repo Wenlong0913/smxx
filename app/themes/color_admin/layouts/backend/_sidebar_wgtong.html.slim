@@ -83,10 +83,10 @@ li class=("has-sub #{'active' if page?('admin/cms/comments', 'admin/orders', 'ad
   ul.sub-menu
     li[class=("active" if page?('admin/comments'))]
       = link_to admin_comments_path do
-        = fa_icon 'database', text: '评论管理'
+        = fa_icon 'database', text: '商家评论管理'
     li[class=("active" if page?('admin/cms/comments'))]
       = link_to admin_cms_comments_path do
-        = fa_icon 'database', text: '留言管理'
+        = fa_icon 'database', text: '新闻留言管理'
 
 li class=("has-sub #{'active' if page?('admin/forage/sources', 'admin/forage/run_keys', 'admin/forage/simples', 'admin/forage/details')}")
   a href="javascript:;"

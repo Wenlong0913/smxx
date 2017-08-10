@@ -1,5 +1,5 @@
 h1.page-header
-  | #{Cms::Comment.model_name.human}列表
+  | 留言评论列表
 
 .panel.panel-default
   .panel-heading
@@ -9,7 +9,7 @@ h1.page-header
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
     h3.panel-title
-      | #{Cms::Comment.model_name.human}
+      | 用户留言
   .panel-body
     = form_for :search, url:  admin_cms_comments_path, method: :get do |f|
       .toolbar.row
@@ -70,7 +70,7 @@ h1.page-header
             th 咨询时间
             th 操作
         tbody
-          - @cms_comments.each do |cms_comment|
+          - @cms_comments.where("user_id is null").each do |cms_comment|
             tr
               td
                 => cms_comment.contact
@@ -88,6 +88,54 @@ h1.page-header
                 => link_to '查看', admin_cms_comment_path(cms_comment), class: 'btn btn-xs btn-default'
                 = link_to '删除', admin_cms_comment_path(cms_comment), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
       = paginate @cms_comments
+
+.panel.panel-default
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+    h3.panel-title
+      | 用户评论
+    .table-responsive.row.m-0
+      table.table.table-striped.table-bordered
+        thead
+          tr
+            th 
+            th 评论对象
+            th 评论用户
+            th 评论内容
+            th 是否发布
+            th 评论时间
+            th 操作
+        tbody
+          - @cms_comments.where("contact is null").each do |cms_comment|
+            tr
+              td
+                => cms_comment.id
+              td
+                - if cms_comment.source_type.to_s == 'Cms::Page'
+                  =>  Cms::Page.find(cms_comment.source_id).title
+                - elsif cms_comment.source_type.to_s == 'Cms::Channel'
+                  =>  Cms::Channel.find(cms_comment.source_id).title
+              td
+                => User.find(cms_comment.user_id).name
+              td  
+                => cms_comment.content
+              td  
+                - if cms_comment.is_published.to_s == 'true'
+                  span.label.label-success 已发布
+                - else
+                  span.label.label-warning 未发布
+              td
+                => cms_comment.created_at.strftime('%Y-%m-%d %H:%M:%S')
+              td
+                => link_to '查看', admin_cms_comment_path(cms_comment), class: 'btn btn-xs btn-default'
+                => link_to '编辑', edit_admin_cms_comment_path(cms_comment), class: 'btn btn-xs btn-default'
+                = link_to '删除', admin_cms_comment_path(cms_comment), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+      = paginate @cms_comments
+
 
 / TODO: move this code to application.js
 javascript:
