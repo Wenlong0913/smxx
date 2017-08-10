@@ -43,7 +43,8 @@ class Site < ApplicationRecord
                 :recommendation, :good_summary, :bad_summary, :parking,
                 :wifi, :contact_name, :contact_phone, :has_contract, :contract_note,
                 :avg_price, :is_published, :phone, :photos, :province, :real_city, :city, :district, :business_area,
-                :lat, :lng, :updated_by, :content, :delivery_fee
+                :updated_by, :content, :delivery_fee
+
   validates_presence_of :title, :address_line#, :user_id
   validates_uniqueness_of :title, scope: [:address_line]
 
@@ -75,16 +76,26 @@ class Site < ApplicationRecord
 
   if Settings.project.imolin? || Settings.project.wgtong? || Settings.project.meikemei?
     acts_as_address
-
+    acts_as_geolocated lat: 'lat', lng: 'lng'
     def address_lat
-      self.manual_geo ? self.manual_geo.lat : self.address.lat
+      # self.manual_geo ? self.manual_geo.lat : self.address.lat
+      self.lat
     end
 
     def address_lng
-      self.manual_geo ? self.manual_geo.lng : self.address.lng
+      # self.manual_geo ? self.manual_geo.lng : self.address.lng
+      self.lng
     end
 
     scope :published, -> { where("features ->> 'is_published' = ?", "1") }
+
+     # site地址完成改动时候,经纬度也得跟着改
+    before_save do |rec|
+      if rec.address_line_changed?
+        rec.lat = address.lat
+        rec.lng = address.lng
+      end
+    end
   end
   audited
 
