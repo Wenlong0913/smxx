@@ -3,7 +3,7 @@ Short description and motivation.
 
 ## Usage
 
-### Simplest usage
+### Simplest usage 
 
 in a controller, add this line:
 
@@ -35,7 +35,7 @@ user_id is by checking `current_user.id`, won't record resource and payload.
 ## views使用
 - 引入js/css:
 
-   > 注意: 在veiws中引用tracker模块前使用class为'tracker'的容器作为最外层容器，css/js才会生效
+   > 注意: 在views中引用tracker模块前使用class为'tracker'的容器作为最外层容器，css/js才会生效
 
    > 需要vue.js
 

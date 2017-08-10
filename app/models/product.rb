@@ -15,7 +15,6 @@
 
 class Product < Item
   audited
-  is_impressionable :counter_cache => true, :column_name => :visits_count
   store_accessor :features, :price, :image, :responsive_person, :warning_message, :service_time, :month_number, :unit, :stock,
     :description, :content, :discount, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values,
     :is_shelves, :is_fee, :shopping_fee, :hot, :recommend, :event, :promotion, :discount, :properties, :is_manager_recommend,
