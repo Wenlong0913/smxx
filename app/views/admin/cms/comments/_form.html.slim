@@ -14,4 +14,28 @@
             - @cms_comment.errors.full_messages.each do |message|
               li = message
 
+      .table-responsive
+        table.table.table-profile
+          tr
+            td.field 评论对象：
+            td
+              - if @cms_comment.source_type.to_s == 'Cms::Page'
+                = Cms::Page.find(@cms_comment.source_id).title
+              - elsif @cms_comment.source_type.to_s == 'Cms::Channel'
+                = Cms::Channel.find(@cms_comment.source_id).title
+          tr
+            td.field 评论用户：
+            td
+              = User.find(@cms_comment.user_id).name
+          tr
+            td.field 评论内容：
+            td
+              = @cms_comment.content
+          tr
+            td.field 评论时间：
+            td
+              = @cms_comment.created_at.strftime('%Y-%m-%d %H:%M:%S')
+          tr.divider
+            td[colspan='2']
+      = f.input :is_published, as: :boolean, label: false, label: '是否发布'
       = f.submit class: 'btn btn-success btn-block'
