@@ -12,7 +12,7 @@
             <a href="/">首页</a>
           </li>
           <li>
-            <%= link_to '我的订单', self_order_frontend_users_path %>
+            <%= link_to '我的订单', self_order_users_path %>
           </li>
           <li>
             订单编号：<%= @order.code%>
@@ -64,9 +64,9 @@
                   <p class="clearfix">
                     订单信息：
                     <% if ['open', 'pending'].include?(@order.status) %>
-                      <a href="<%= self_order_frontend_users_path%>" class="pull-right">去支付</a>
+                      <%= link_to '去支付', charge_frontend_orders_path(order_id: @order.id), method: :post, remote: true, class: 'pull-right' %>
                     <% else %>
-                      <a href="<%= self_order_frontend_users_path%>" class="pull-right">返回我的订单</a>
+                      <a href="<%= self_order_users_path%>" class="pull-right">返回我的订单</a>
                     <% end %>
                   </p>
                   <div class="row">
@@ -111,3 +111,20 @@
   </section>
   <%= render file: @cms_site.template_dir + '_footer.html' %>
 </div>
+<%= javascript_include_tag 'payment_core/pingpp' %>
+<script>
+  function onStartCharging(charge){
+    pingpp.createPayment(charge, function(result, err){
+      console.log(result);
+      console.log(err.msg);
+      console.log(err.extra);
+      if (result == "success") {
+          // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的支付结果都会跳转到 extra 中对应的 URL。
+      } else if (result == "fail") {
+          // charge 不正确或者微信公众账号支付失败时会在此处返回
+      } else if (result == "cancel") {
+          // 微信公众账号支付取消支付
+      }
+    });
+  }
+</script>

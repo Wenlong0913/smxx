@@ -62,7 +62,9 @@
 											<p><i class="fa fa-bullhorn"></i>状态：<%= enum_i18n(Product, :status, @product.status) %></p>
 										<% end %>
 										<p>
-											<a href="<%= new_frontend_order_path(product_id: @product.id) %>" class="btn btn-block btn-lg btn-success">马上预订</a>
+											<% if @product.sell_price > 0 %>
+												<a href="<%= new_frontend_order_path(product_id: @product.id) %>" class="btn btn-block btn-lg btn-success">马上预订</a>
+											<%end%>
 										</p>
 									</div>
 								</div>

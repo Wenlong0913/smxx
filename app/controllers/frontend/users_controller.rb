@@ -25,7 +25,11 @@ class Frontend::UsersController < Frontend::BaseController
   end
 
   def self_comment
-    @comments = Comment::Entry.where(user_id: current_user.id).order("updated_at DESC").page(params[:page])
+    if params[:type]
+      @comments = Comment::Entry.where(user_id: current_user.id, resource_type: params[:type]).order("updated_at DESC").page(params[:page])
+    else
+      @comments = Comment::Entry.where(user_id: current_user.id).order("updated_at DESC").page(params[:page])
+    end
     @product_comments = @comments.group_by{|c| c.resource}
   end
 
@@ -42,8 +46,12 @@ class Frontend::UsersController < Frontend::BaseController
   end
 
   def self_message
-    @notifications = Notification.where(user: current_user).unread.order('updated_at DESC')
-    Notification.read!(@notifications.select(&:id))
+    if params[:type] == 'unread'
+      @notifications = Notification.where(user: current_user).unread.order('updated_at DESC')
+      Notification.read!(@notifications.select(&:id))    
+    else
+      @notifications = Notification.where(user: current_user).where("read_at is not null").order('updated_at DESC')
+    end
   end
 
   def ensure_login!

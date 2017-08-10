@@ -68,7 +68,7 @@
         <div class="col-sm-8 col-md-8 tr-sticky">
           <div class="theiaStickySidebar">
             <!-- 筛选分类 -->
-            <div class="tr-section">
+            <%#<div class="tr-section">
               <p class="text-left">
                 预定类型：
                 <a href="#" class="btn btn-default">
@@ -85,7 +85,7 @@
                    <span class="badge">1</span>
                  </a>
               </p>
-            </div>
+            </div>%>
             <% if @user_orders.any? %>
               <% @user_orders.each_with_index do |order| %>
                 <% next if order.order_products.empty? %>

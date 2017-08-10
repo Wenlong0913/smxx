@@ -66,6 +66,24 @@
         <div class="row">
           <div class="col-sm-8 col-md-8 tr-sticky">
             <div class="theiaStickySidebar">
+              <div class="tr-section">
+                <p class="text-left">
+                  类型：
+                  <a href="<%= self_comment_users_path() %>" class="btn btn-default <%= params[:type].blank? ? 'active' : '' %>">
+                    全部
+                  </a>
+                  <a href="<%= self_comment_users_path(type: 'Site') %>" class="btn btn-default <%= params[:type] == 'Site' ? 'active' : '' %>">
+                    <span class="successOrder siteOrderBg"></span>
+                    文化场馆
+                    <span class="badge"><%= @comments.where(resource_type: 'Site').count %></span>
+                  </a>
+                  <a href="<%= self_comment_users_path(type: 'Item') %>" class="btn btn-default <%= params[:type] == 'Item' ? 'active' : '' %>">
+                    <span class="warningOrder productOrderBg"></span>
+                    文化活动
+                    <span class="badge"><%= @comments.where(resource_type: 'Item').count%></span>
+                  </a>
+                </p>
+              </div>
               <% if @comments.any? %>
                 <% @product_comments.each_pair do |product, comments| %>
                  <% if product.type == 'Product' %>

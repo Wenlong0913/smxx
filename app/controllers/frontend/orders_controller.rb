@@ -84,6 +84,7 @@ class Frontend::OrdersController < Frontend::BaseController
     if Settings.project.wgtong?
       if params[:order_id]
         order = Order.find(params[:order_id])
+        product = order.order_products.first.product
       else
         order = Order.new(user: current_user)
         product = Product.find(params[:order][:product][:id])
@@ -139,7 +140,14 @@ class Frontend::OrdersController < Frontend::BaseController
   end
 
   def paid_success
-    @product = Product.find(params[:id])
+    order = Order.find_by_code(params[:out_trade_no])
+    order.build_charge(
+      channel: params[:exterface],
+      transaction_no: params[:trade_no]
+    )
+    order.status = 'paid'
+    order.save!
+    redirect_to frontend_order_path(order)
   end
 
   #实现客户端订单查询

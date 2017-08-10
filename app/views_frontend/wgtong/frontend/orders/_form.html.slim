@@ -43,7 +43,7 @@
         li 活动最终解释权归举办方所有。
   p[class="text-center read_content"] 提交订单表示您已阅读预定须知
   button[type="submit" class="btn btn-danger btn-md"] 去支付
-
+= javascript_include_tag 'payment_core/pingpp'
 javascript:
   function onStartCharging(charge){
     pingpp.createPayment(charge, function(result, err){
