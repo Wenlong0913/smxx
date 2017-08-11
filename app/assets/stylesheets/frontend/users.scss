@@ -26,3 +26,34 @@
   font-size: 13px;
   vertical-align: -webkit-baseline-middle;
 }
+
+/* show page */
+.quicknavBox {
+  display: flex;
+  flex-flow: row wrap;
+}
+.quicknavBox .quicknav {
+  display: block;
+  border: 1px solid #dfdfdf;
+  padding: 15px 10px;
+  border-radius: 5px;
+  flex-grow: 1;
+  margin-left: 5px;
+  margin-top: 5px;
+}
+.quicknavBox .quicknav h4 span {
+  color: #666;
+}
+.quicknavBox .quicknav:hover {
+  border: 1px solid #e81a1b;
+}
+.quicknavBox .quicknav:hover h4 span{
+  color: #e81a1b;
+}
+.quicknavBox .quicknav .mainBadge{
+  color: #fff;
+  background-color: #e81a1b;
+}
+.quicknavBox .quicknav .quicuh4 {
+  margin: 0px;
+}
