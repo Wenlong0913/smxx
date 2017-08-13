@@ -30,12 +30,12 @@ module AppAPI::V1
         requires :id, type: Integer, desc: "#{::Site.model_name.human}ID"
       end
       get ':id' do
-        authenticate!
+        authenticate! unless Settings.project.meikemei?
         if Settings.project.imolin?
           site = ::Site.find(params[:id])
           present site, with: AppAPI::Entities::Site, includes: [:products], type: :full_site, user_id: current_user.id
         else
-          present ::Site.find(params[:id]), with: AppAPI::Entities::Site, includes: [:products], user_id: current_user.id
+          present ::Site.find(params[:id]), with: AppAPI::Entities::Site, includes: [:products], user_id: (current_user ? current_user.id : nil)
         end
       end
 
@@ -51,7 +51,7 @@ module AppAPI::V1
         optional :name, type: String, desc: "根据店铺名称模糊搜索"
       end
       get do
-        authenticate!
+        authenticate! unless Settings.project.meikemei?
         sites = ::Site.all
         if params[:favorite]
           sites =

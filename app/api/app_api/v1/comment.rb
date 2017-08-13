@@ -12,7 +12,7 @@ module AppAPI::V1
         optional :parent_id, type: Integer, desc: '如果填写，parent_id就是回复的某条评论的ID'
       end
       post do
-        authenticate!
+        authenticate! unless Settings.project.meikemei?
         product = ::Product.find_by(id: params[:id])
         error! '该产品不存在' unless product
 
