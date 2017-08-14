@@ -63,7 +63,7 @@ li class=("has-sub #{'active' if page?('admin/orders')}")
 
 li class=("has-sub #{'active' if page?('admin/complaints')}")
   = link_to admin_complaints_path do
-    = fa_icon 'leaf', text: '投诉管理'
+    = fa_icon 'leaf', text: '举报/反馈管理'
 
 li[class=("active" if page?('admin/articles') && !@community.present?)]
   = link_to admin_articles_path do
