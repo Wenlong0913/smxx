@@ -13,8 +13,9 @@ h1.page-header
         i class="fa fa-expand"
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
+    h3.panel-title &nbsp;
   .panel-body
-    /= form_for :search, url:  admin_complaints_path, method: :get do |f|
+    = form_for :search, url:  admin_complaints_path, method: :get do |f|
       .toolbar.row
         .col-md-12
           p
@@ -22,24 +23,59 @@ h1.page-header
             a<[href="https://www.postgresql.org/docs/current/static/functions-matching.html" target="_blank"]查看详情说明
       .toolbar.row
         .col-md-6.m-b-15
+          = f.hidden_field :complaint_type, class: 'complaint_type_dom_input', val: params[:search].present? ? params[:search][:complaint_type] : nil
           .input-group.search_all
+            .input-group-btn.complaint_type_select
+              button.btn.btn-default.dropdown-toggle[type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"]
+                span.text
+                  -if params[:search].present?
+                    - case params[:search][:complaint_type]
+                    - when 'community_feedback'
+                      | 筛选类型 - 小区反馈
+                    - when 'complaint'
+                      | 筛选类型 - 投诉
+                    - else
+                      | 筛选类型 - 无
+                  - else
+                    | 筛选类型 - 无
+                span.caret
+              ul.dropdown-menu
+                li
+                  a[data-type=''] 筛选类型 - 无
+                  a[data-type='community_feedback'] 筛选类型 - 小区反馈
+                  a[data-type='complaint'] 筛选类型 - 投诉
             = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '关键字搜索...'
+            / <!-- Split button -->
+            / <div class="btn-group">
+            /   <button  class=""></button>
+            /   <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            /     <span class="caret"></span>
+            /     <span class="sr-only">Toggle Dropdown</span>
+            /   </button>
+            /   <ul class="dropdown-menu">
+            /     <li><a href="#">Action</a></li>
+            /     <li><a href="#">Another action</a></li>
+            /     <li><a href="#">Something else here</a></li>
+            /     <li role="separator" class="divider"></li>
+            /     <li><a href="#">Separated link</a></li>
+            /   </ul>
+            / </div>
             span.input-group-btn
               button.btn.btn-inverse[type='submit']
                 i.fa.fa-search
-        .col-md-6.m-b-15
-          .btn-group
-            button.btn.btn-default.dropdown-toggle[type='button'data-toggle='dropdown']
-              | 筛选列名
-              span.caret
-            ul.dropdown-menu#search_column[role='menu']
-              - @filter_colums.each do |filter_colum|
-                li
-                  a[href='javascript:;' data-key=filter_colum] = Complaint.human_attribute_name(filter_colum.to_sym)
-          .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
-            button.btn.btn-default[type='submit'name='json'value='json'] json
-            button.btn.btn-default[type='submit'name='xml'value='xml'] xml
-            button.btn.btn-default[type='submit'name='csv'value='csv'] csv
+        / .col-md-6.m-b-15
+        /   .btn-group
+        /     button.btn.btn-default.dropdown-toggle[type='button'data-toggle='dropdown']
+        /       | 筛选列名
+        /       span.caret
+        /     ul.dropdown-menu#search_column[role='menu']
+        /       - @filter_colums.each do |filter_colum|
+        /         li
+        /           a[href='javascript:;' data-key=filter_colum] = Complaint.human_attribute_name(filter_colum.to_sym)
+        /   .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
+        /     button.btn.btn-default[type='submit'name='json'value='json'] json
+        /     button.btn.btn-default[type='submit'name='xml'value='xml'] xml
+        /     button.btn.btn-default[type='submit'name='csv'value='csv'] csv
       .well.form-horizontal.filter_search[class==params[:filters]?'show':'hidden']
         - if params[:filters] && !params[:filters].keys.blank?
           .top.small.m-b-10 * 以下输入值将完全匹配字段对应值
@@ -69,6 +105,7 @@ h1.page-header
             th 举报对象
             th 举报对象编号
             th = Settings.project.meikemei? ? '内容' : '举报原因'
+            th 时间
             th
         tbody
           - @complaints.each do |complaint|
@@ -82,6 +119,8 @@ h1.page-header
               td
                 = "#{complaint.reason.slice(0, 10)}..." unless complaint.reason.blank?
               td
+                = complaint.created_at.strftime("%Y-%m-%d %H:%M:%S")
+              td
                 - if complaint.status.blank? && Settings.project.imolin?
                   => link_to '审核', edit_admin_complaint_path(complaint), class: 'btn btn-xs btn-primary'
                 => link_to '查看', admin_complaint_path(complaint), class: 'btn btn-xs btn-success'
@@ -92,6 +131,11 @@ h1.page-header
 javascript:
   $(document).ready(function(){
     bindRemoveLabel('.well.filter_search label.control-label');
+    $('form .complaint_type_select ul.dropdown-menu li a').off().on('click', function() {
+      $('.search_all .complaint_type_select button .text').text($(this).text())
+      $('input.complaint_type_dom_input').val($(this).data('type'))
+    })
+
     $('form #search_column li a').off().on('click', function(){
       if($('.well.filter_search .form-group').length == 0){
         $('.well.form-horizontal.filter_search').removeClass('hidden').addClass('show');

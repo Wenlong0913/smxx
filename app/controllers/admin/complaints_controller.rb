@@ -11,7 +11,10 @@ class Admin::ComplaintsController < Admin::BaseController
       @complaint = Complaint.find(params[:relation])
       @complaints = @complaint.source.complaints
     end
-    @filter_colums = %w(id)
+    if params[:search].present? && params[:search][:complaint_type].present?
+      @complaints = @complaints.where(complaint_type: params[:search][:complaint_type])
+    end
+    @filter_colums = %w(id reason)
     @complaints = build_query_filter(@complaints, only: @filter_colums).order(status: :desc).page(params[:page])
     respond_to do |format|
       if params[:json].present?
