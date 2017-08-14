@@ -25,9 +25,6 @@
                 <li class="<%= 'sign active' unless params[:reorder].present? %>">
                   <%= link_to '默认', agent_orders_path %>
                 </li>
-                <li class="<%= 'sign' if params[:reorder] == 'newest' %>">
-                  <%= link_to '最新', agent_orders_path+"?reorder=newest" %>
-                </li>
                 <li class="<%= 'sign' if params[:reorder] == 'price' %>">
                   <%= link_to '价格', agent_orders_path+"?reorder=price" %>
                 </li>
