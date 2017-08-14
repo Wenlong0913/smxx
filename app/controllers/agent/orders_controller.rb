@@ -25,13 +25,11 @@ class Agent::OrdersController < Agent::BaseController
       conditions.unshift query.join(' and ')
       @orders = @orders.where(conditions)
     end
-    if params[:reorder]
-      case params[:reorder]
-      when 'price'
-        @orders = @orders.order(price: :desc)
-      when 'newest'
-        @orders = @orders.order(created_at: :desc)
-      end
+    case params[:reorder]
+    when 'price'
+      @orders = @orders.order(price: :desc)
+    else
+      @orders = @orders.order(updated_at: :desc)
     end
     @orders = @orders.page(params[:page]).per(10)
   end
