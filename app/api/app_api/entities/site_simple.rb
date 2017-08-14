@@ -45,13 +45,17 @@ module AppAPI
       end
 
       def comments_count
-        object.products.sum(&:comments_count)
+        if Settings.project.imolin?
+          object.orders.sum(&:comments_count)
+        else
+          object.products.sum(&:comments_count)
+        end
       end
 
       def site_catalog_name
         object.catalog.try(:name)
       end
-      
+
     end
   end
 end
