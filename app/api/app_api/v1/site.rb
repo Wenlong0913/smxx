@@ -15,7 +15,7 @@ module AppAPI::V1
         end
       end
       get 'near_by' do
-        authenticate!
+        authenticate! unless Settings.project.meikemei?
         if Settings.project.imolin?
           error! '请先设置您的小区信息' unless current_user.current_community
           community = current_user.current_community
