@@ -28,7 +28,7 @@ module AppAPI::V1
           sites = sites.where(is_flatform_recommend: true)
         end
         sites = paginate_collection(sort_collection(sites), params)
-        wrap_collection sites, AppAPI::Entities::SiteSimple, includes: [:distance]
+        wrap_collection sites, AppAPI::Entities::SiteSimple, includes: [:distance], type: :full_site
       end
 
       desc "获取#{::Site.model_name.human}信息" do
@@ -94,9 +94,9 @@ module AppAPI::V1
         end
         sites = paginate_collection(sort_collection(sites), params)
         if Settings.project.imolin?
-          wrap_collection sites, AppAPI::Entities::SiteSimple, includes: [:distance]
+          wrap_collection sites, AppAPI::Entities::SiteSimple, includes: [:distance], type: :full_site
         else
-          wrap_collection sites, AppAPI::Entities::SiteSimple
+          wrap_collection sites, AppAPI::Entities::SiteSimple, type: :full_site
         end
       end
 
