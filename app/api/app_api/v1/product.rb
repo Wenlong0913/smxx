@@ -10,7 +10,7 @@ module AppAPI::V1
         requires :id, type: Integer, desc: "#{::Product.model_name.human}ID"
       end
       get ':id' do
-        authenticate!
+        authenticate! unless Settings.project.meikemei?
         present ::Product.find(params[:id]), with: AppAPI::Entities::Product, type: :full_product
       end
 
@@ -40,7 +40,7 @@ module AppAPI::V1
         optional :includes, type: String, values: ['favoriters', 'tags'], desc: '选择favoriters后允许返回捧场者头像, 选择tags后返回产品的标签特性'
       end
       get do
-        authenticate!
+        authenticate! unless Settings.project.meikemei?
         # 查看所有上架商品
         site = nil
         if params[:site_id]

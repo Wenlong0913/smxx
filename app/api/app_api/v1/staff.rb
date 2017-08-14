@@ -10,7 +10,7 @@ module AppAPI::V1
         requires :id, type: Integer, desc: '美容师ID'
       end
       get ':id' do
-        authenticate!
+        authenticate! unless Settings.project.meikemei?
         present ::Staff.find(params[:id]), with: AppAPI::Entities::Staff #, includes: [:products]
         # AppAPI::Entities::Staff.represent(::Staff.find(params[:id]), only: [:title])
       end
@@ -25,7 +25,7 @@ module AppAPI::V1
         optional :favorite, type: String, values: ['private', 'friends', 'all'], desc: '私藏美容师：我的私藏美容师，好友私藏的美容师，被私藏数高的美容师'
       end
       get do
-        authenticate!
+        authenticate! unless Settings.project.meikemei?
         staffs = ::Staff.all
         if params[:favorite]
           staffs =
