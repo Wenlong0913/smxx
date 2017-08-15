@@ -10,9 +10,9 @@
             = @product.name
           small = @product.catalog.try(:name)
         p
-          span[class="orderPrice"] 
-            small 价格: 
-            = (@product.price/100.0).to_s + '元'
+          span[class="orderPrice"]
+            small 价格:
+            = (@product.sell_price/100.0).to_s + '元'
         p
           span
             i[class="fa fa-map-marker productColorIcon"]

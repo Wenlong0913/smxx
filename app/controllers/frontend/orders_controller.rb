@@ -100,7 +100,7 @@ class Frontend::OrdersController < Frontend::BaseController
       channel: 'alipay_pc_direct', # 支付宝电脑端网页支付
       amount: order.price, # 1分钱
       client_ip: request.remote_addr,
-      subject: "购买#{product.name}",
+      subject: "购买#{product.name.truncate(20)}",
       body: product.name,
       extra: {
         success_url: callback_url.merge(options).to_s
@@ -183,6 +183,6 @@ class Frontend::OrdersController < Frontend::BaseController
     end
 
     def ensure_login!
-      redirect_to root_url unless current_user
+      redirect_to admin_sign_in_path unless current_user
     end
 end
