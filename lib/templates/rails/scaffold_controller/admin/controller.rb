@@ -20,7 +20,7 @@ class <%= controller_class_name %>Controller < Admin::BaseController
         format.html { send_data(@<%= plural_model_var_name %>.to_xml, filename: "<%= plural_model_var_name %>-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@<%= plural_model_var_name %>.as_csv(only: []), filename: "<%= plural_model_var_name %>-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@<%= plural_model_var_name %>.as_csv(), filename: "<%= plural_model_var_name %>-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end
