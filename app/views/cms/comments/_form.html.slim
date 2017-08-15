@@ -20,11 +20,12 @@
         = f.input :content2
         = f.input :content3
         = f.input :datetime
-    .row
-      .col-md-6
         = f.input :status, collection: ['未处理', '已处理', '跟踪中', '拉黑'], selected: '已处理'
-      .col-md-6
+    .row
+      .col-md-4
         = f.input :branch, disabled: true
+      .col-md-4
+        = f.input :is_published, as: :boolean, label: false, label: '是否发布'
 
   .form-actions
     = f.button :submit, '提交', class: 'btn btn-primary btn-block btn-lg'

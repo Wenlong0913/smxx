@@ -3,7 +3,7 @@ module Comment
     def comments_index
       total_page = comment__resolve_resource.comments.page(1).per(10).total_pages
       current_page = params[:page].blank? ? total_page : params[:page]
-      @comments = comment__filter(comment__resolve_resource.comments.page(current_page).per(10))
+      @comments = comment__filter(comment__resolve_resource.comments.where(is_published: true).page(current_page).per(10))
       render json: comment__entry_json(@comments)
     end
 

@@ -7,7 +7,7 @@ class Admin::CommentsController < Admin::BaseController
   def index
     authorize Comment::Entry
     @filter_colums = %w(id)
-    @admin_comments = Comment::Entry.all.page(params[:page])
+    @admin_comments = Comment::Entry.all.order("created_at DESC").page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@admin_comments.to_json, filename: "admin_comments-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

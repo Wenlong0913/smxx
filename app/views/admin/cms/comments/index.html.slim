@@ -70,7 +70,7 @@ h1.page-header
             th 咨询时间
             th 操作
         tbody
-          - @cms_comments.where("user_id is null").each do |cms_comment|
+          - @cms_comments.where("source_type is null").each do |cms_comment|
             tr
               td
                 => cms_comment.contact
@@ -110,7 +110,7 @@ h1.page-header
             th 评论时间
             th 操作
         tbody
-          - @cms_comments.where("contact is null").each do |cms_comment|
+          - @cms_comments.where("source_type is not null").each do |cms_comment|
             tr
               td
                 => cms_comment.id
