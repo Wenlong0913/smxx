@@ -18,7 +18,7 @@ class Admin::MaterialStockAlertsController < Admin::BaseController
         format.html { send_data(@material_stock_alerts.to_xml, filename: "material_stock_alerts-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@material_stock_alerts.as_csv(only: []), filename: "material_stock_alerts-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@material_stock_alerts.as_csv(), filename: "material_stock_alerts-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end

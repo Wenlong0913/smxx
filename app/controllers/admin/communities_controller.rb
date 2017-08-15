@@ -15,7 +15,7 @@ class Admin::CommunitiesController < Admin::BaseController
         format.html { send_data(@communities.to_xml, filename: "communities-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@communities.as_csv(only: []), filename: "communities-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@communities.as_csv(), filename: "communities-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end

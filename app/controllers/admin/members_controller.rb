@@ -20,7 +20,7 @@ class Admin::MembersController < Admin::BaseController
         format.html { send_data(@members.to_xml, filename: "members-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@members.as_csv(only: []), filename: "members-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@members.as_csv(), filename: "members-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end

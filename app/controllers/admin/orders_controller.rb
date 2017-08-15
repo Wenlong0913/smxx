@@ -47,7 +47,7 @@ class Admin::OrdersController < Admin::BaseController
         format.html { send_data(@orders.to_xml, filename: "orders-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@orders.as_csv(only: []), filename: "orders-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@orders.as_csv(), filename: "orders-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
         format.json { render json: {:results => @orders.as_json(only: [:id, :code]), :total => @orders.size} }
