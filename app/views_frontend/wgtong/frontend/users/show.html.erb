@@ -12,12 +12,64 @@
           <li><a href="/">首页</a></li>
         </ol>
   		</div>
-
+      <% if notice %>
+        <div class="alert alert-success alert-dismissible text-left" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>提示：</strong> <%= notice %>
+        </div>
+      <% end %>
       <div class="row">
         <div class="col-sm-8 col-md-8 tr-sticky">
           <div class="theiaStickySidebar">
             <div class="tr-section">
-              <h3>用户信息</h3>
+              <div class="quicknavBox">
+                <%= link_to( self_message_users_path, html_options={ class: 'quicknav' }) do %>
+                  <h4 class="quicuh4">
+                    <span class="fa fa-bell-o"></span>
+                    消息中心
+                    <% if Notification.where(user: current_user).unread.count > 0 %>
+                      <span class="badge mainBadge"><%= Notification.where(user: current_user).unread.count%></span>
+                    <% end %>
+                  </h4>
+                <% end %>
+                <%= link_to( edit_users_path, html_options={ class: 'quicknav' }) do %>
+                  <h4 class="quicuh4">
+                    <span class="fa fa-cogs"></span>
+                    账号设置
+                  </h4>
+                <% end %>
+                <%= link_to( self_order_users_path, html_options={ class: 'quicknav' }) do %>
+                  <h4 class="quicuh4">
+                    <span class="fa fa-edit"></span>
+                    我的订单
+                  </h4>
+                <% end %>
+                <%= link_to( self_comment_users_path, html_options={ class: 'quicknav' }) do %>
+                  <h4 class="quicuh4">
+                    <span class="fa fa-volume-up"></span>
+                    我的评论
+                  </h4>
+                <% end %>
+                <%= link_to( self_complaint_users_path, html_options={ class: 'quicknav' }) do %>
+                  <h4 class="quicuh4">
+                    <span class="fa fa-envelope-o"></span>
+                    意见反馈
+                  </h4>
+                <% end %>
+                <%= link_to( '/contact', html_options={ class: 'quicknav' }) do %>
+                  <h4 class="quicuh4">
+                    <span class="fa fa-search"></span>
+                    帮助中心
+                  </h4>
+                <% end %>
+                <%= link_to( '/about', html_options={ class: 'quicknav' }) do %>
+                  <h4 class="quicuh4">
+                    <span class="fa fa-list-alt"></span>
+                    场馆入驻
+                  </h4>
+                <% end %>
+              </div>
+
               <hr>
               <div class="row">
                 <div class="col-md-4 col-xs-12">
@@ -27,7 +79,7 @@
                 </div>
                 <div class="col-md-4 col-xs-12">
                   <h3><%= current_user.nickname %></h3>
-                  <%= link_to '基本信息修改', edit_frontend_user_path(current_user), class: "btn btn-info btn-md", style: "display: inlin-block; margin: 30px 0px 15px 0px;" %>
+                  <%= link_to '基本信息修改', edit_users_path, class: "btn btn-info btn-md", style: "display: inlin-block; margin: 30px 0px 15px 0px;" %>
                 </div>
               </div>
 
@@ -37,17 +89,23 @@
                     <div class="form-group">
                       <label class="col-sm-2 control-label">邮箱：</label>
                       <div class="col-sm-10">
-                        <p class="form-control-static text-left"><%= current_user.email %></p>
+                        <% if current_user.email.present? %>
+                          <p class="form-control-static text-left"><%= current_user.email %></p>
+                        <% else %>
+                          <p class="form-control-static text-left"><%= link_to '绑定邮箱', edit_users_path %></p>
+                        <% end %>
                       </div>
                     </div>
-
                     <div class="form-group">
                       <label class="col-sm-2 control-label">电话：</label>
                       <div class="col-sm-10">
-                        <p class="form-control-static text-left"><%= current_user.mobile.phone_number %> <%= link_to '手机绑定', binding_phone_frontend_users_path, style: "margin-left: 15px;" %> </p>
+                        <% if current_user.try(:mobile).try(:phone_number).present? %>
+                          <p class="form-control-static text-left"><%= current_user.mobile.phone_number %> <%= link_to '手机绑定', binding_phone_users_path, style: "margin-left: 15px;" %> </p>
+                        <% else %>
+                          <p class="form-control-static text-left">暂无手机号 <%= link_to '手机绑定', binding_phone_users_path, style: "margin-left: 15px;" %> </p>
+                        <% end %>
                       </div>
                     </div>
-
                     <div class="form-group">
                       <label class="col-sm-2 control-label">微信：</label>
                       <div class="col-sm-10">
@@ -55,7 +113,7 @@
                           <% if current_user.weixin %>
                             <%= current_user.weixin.try(:uid) %>
                           <% else %>
-                            <%= link_to '微信绑定', binding_weixin_frontend_users_path, style: "margin-left: 15px;" %>
+                            <%= link_to '微信绑定', binding_weixin_users_path, style: "margin-left: 15px;" %>
                           <% end %>
                         </p>
                       </div>

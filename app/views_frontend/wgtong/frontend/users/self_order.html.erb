@@ -70,31 +70,38 @@
             <!-- 筛选分类 -->
             <div class="tr-section">
               <p class="text-left">
-                预定类型：
-                <a href="#" class="btn btn-default">
+                订单类型：
+                <a href="<%= self_order_users_path %>" class="btn btn-default <%= params[:type].blank? ? 'btn-success' : '' %>">
                   全部
                 </a>
-                 <a href="#" class="btn btn-default">
+                 <a href="<%= self_order_users_path(type: 'paid') %>" class="btn btn-default <%= params[:type] == 'paid' ? 'btn-success' : '' %>">
                    <span class="successOrder siteOrderBg"></span>
-                   活动场馆
-                   <span class="badge">1</span>
+                   已付款
                  </a>
-                 <a href="#" class="btn btn-default">
+                 <a href="<%= self_order_users_path(type: 'open') %>" class="btn btn-default <%= params[:type] == 'open' ? 'btn-warning' : '' %>">
                    <span class="warningOrder productOrderBg"></span>
-                   文化活动
-                   <span class="badge">1</span>
+                   未付款
+                 </a>
+                 <a href="<%= self_order_users_path(type: 'completed') %>" class="btn btn-default <%= params[:type] == 'completed' ? 'btn-info' : '' %>">
+                   <span class="warningOrder productOrderBg"></span>
+                   已消费
+                 </a>
+                 <a href="<%= self_order_users_path(type: 'cancelled') %>" class="btn btn-default <%= params[:type] == 'cancelled' ? 'btn-danger' : '' %>">
+                   <span class="warningOrder productOrderBg"></span>
+                   已取消
                  </a>
               </p>
             </div>
             <% if @user_orders.any? %>
               <% @user_orders.each_with_index do |order| %>
+                <% next if order.order_products.empty? %>
                 <!-- 文化活动订单 -->
                 <div class="tr-section">
                   <div class="row">
                     <div class="col-md-12">
                       <p class="clearfix">
                         <span class="pull-left">
-                          <a href="#">
+                          <a href="<%=frontend_order_path(order) %>">
                             <code class="productOrderBg" style="color: #fff;"><i class="fa fa-share-alt"></i> 订单号:   <%= order.code%></code>
                           </a>
                         </span>
@@ -130,28 +137,25 @@
 
                       <p class="orderDescription"><%= order_product.product.description %></p>
                       <div class="btn-group text-right" role="group">
-                        <button class="btn btn-default" type="button" name="button" data-toggle="modal" data-target="#deleteSite1">取消预定</button>
-                      </div>
-                      <div class="modal fade" id="deleteSite1" tabindex="-1" role="dialog" aria-labelledby="deleteProduct">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                              <h4 class="modal-title">提示</h4>
-                            </div>
-                            <div class="modal-body">
-                              是否要取消当前预定信息，点击“确认”取消预定，点击“取消”返回
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">确定</button>
-                            </div>
-                          </div>
-                        </div>
+                        <%#<button class="btn btn-default" type="button" name="button" data-toggle="modal" data-target="#deleteSite1">取消预定</button>%>
                       </div>
                     </div>
                   </div>
                   <%end%>
+                  <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-3">
+                      <p class="text-left">下单时间: <%=distance_of_time_in_words_to_now(order.created_at) %>前</p>
+                    </div>
+                    <div class="col-md-5">
+                      <p class="text-right">订单状态: 
+                        <%= enum_l(order, :status)%>
+                        <% if order.refund_status %>
+                           <small class="text-danger"><%= enum_l(order, :refund_status)%></small>
+                        <%end%>
+                      </p>
+                    </div>
+                  </div>
                 </div>
               <% end %>
               <%= paginate @user_orders %>

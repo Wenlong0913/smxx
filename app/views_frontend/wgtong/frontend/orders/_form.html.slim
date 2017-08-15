@@ -1,10 +1,61 @@
-= simple_form_for(@order, url: frontend_orders_path) do |f|
-  = f.error_notification
-
-  .form-inputs
-
-    = f.input :price
-    = f.input :status
-
-  .form-actions
-    = f.button :submit
+= form_for(@order, url: charge_frontend_orders_path, remote: true, html: {class: 'form-horizontal'}) do |f|
+  .tr-section.text-left
+    .row.mb-30
+      .col-md-3
+        .productImg
+          img[src="#{@product.first_image}" alt="" class="img-responsive"]
+      .col-md-9.text-left
+        h4
+          a[href="#" class="color2e"]
+            = @product.name
+          small = @product.catalog.try(:name)
+        p
+          span[class="orderPrice"] 
+            small 价格: 
+            = (@product.price/100.0).to_s + '元'
+        p
+          span
+            i[class="fa fa-map-marker productColorIcon"]
+            = @product.address_line1
+        p
+          small
+            = @product.address_line2
+        p
+          span
+            i[class="fa fa-clock-o productColorIcon"]
+            = @product.date + ' ' + @product.time
+    .form-group
+      label[for="inputPhone" class="col-sm-2 control-label text-left"] 手机号
+      .col-sm-10
+        input[type="text" name="order['delivery_phone']" class="form-control" id="inputPhone" value="#{current_user.mobile.phone_number}" style="width: 200px;"]
+    .form-group
+      label[for="inputNumber" class="col-sm-2 control-label"] 数量：
+      .col-sm-10
+        input[type="hidden" name="order[product][id]" value="#{@product.id}"]
+        input[type="number" name="order[product][number]" class="form-control" id="inputNumber" value="1" style="width: 120px;"]
+    article[style="border: 1px solid #ccc;"]
+      h3[class="text-warning" style="padding-left: 20px;"] 预定须知
+      ol
+        li 全年未入场票数达10张，将被取消当年预订资格；
+        li 如需退票，请至“我的空间-活动管理“，退票截止至活动前一天（活动当天不可退票）；
+        li 如因不可控因素导致活动无法进行，举办方有权延期或取消活动，并以短信方式通知订票人；
+        li 如参加区图书馆、文化馆活动的市民，由于停车位有限，建议读者搭乘公共交通前往；
+        li 活动最终解释权归举办方所有。
+  p[class="text-center read_content"] 提交订单表示您已阅读预定须知
+  button[type="submit" class="btn btn-danger btn-md"] 去支付
+= javascript_include_tag 'payment_core/pingpp'
+javascript:
+  function onStartCharging(charge){
+    pingpp.createPayment(charge, function(result, err){
+      console.log(result);
+      console.log(err.msg);
+      console.log(err.extra);
+      if (result == "success") {
+          // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的支付结果都会跳转到 extra 中对应的 URL。
+      } else if (result == "fail") {
+          // charge 不正确或者微信公众账号支付失败时会在此处返回
+      } else if (result == "cancel") {
+          // 微信公众账号支付取消支付
+      }
+    });
+  }

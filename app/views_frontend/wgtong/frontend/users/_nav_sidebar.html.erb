@@ -13,29 +13,38 @@
 <div class="theiaStickySidebar">
   <div class="tr-section">
     <div class="user-logo">
-      <img src="<%= current_user.display_headshot %>" alt="" class="img-circle" width="150px">
+      <img id="sidebarImg" src="<%= current_user.display_headshot %>" alt="" class="img-circle" width="150px">
     </div>
     <h3><%= current_user.nickname %></h3>
     <hr>
     <div class="collapse navbar-collapse" id="editSelf">
       <ul class="nav">
         <li>
-          <%= link_to(self_message_frontend_users_path) do %>
+          <%= link_to(self_message_users_path) do %>
             消息中心
-            <span class="badge" style="background-color: #d9534f;">2</span>
+            <% if Notification.where(user: current_user).unread.count > 0 %>
+              <span class="badge" style="background-color: #d9534f;"><%= Notification.where(user: current_user).unread.count%></span>
+            <% end %>
           <% end %>
         </li>
         <li>
-          <%= link_to '账号设置', edit_frontend_user_path(current_user) %>
+          <%= link_to '账号设置', edit_users_path %>
         </li>
         <li>
-          <%= link_to '我的订单', self_order_frontend_users_path %>
+          <%= link_to '我的订单', self_order_users_path %>
         </li>
         <li>
-          <%= link_to '我的评论', self_comment_frontend_users_path %>
+          <%= link_to '我的评论', self_comment_users_path %>
         </li>
         <li>
-          <%= link_to '意见反馈', self_complaint_frontend_users_path %>
+          <%= link_to '意见反馈', self_complaint_users_path %>
+        </li>
+        <hr>
+        <li>
+          <%= link_to '帮助中心', '/contact' %>
+        </li>
+        <li>
+          <%= link_to '场馆入驻', '/about' %>
         </li>
       </ul>
     </div>

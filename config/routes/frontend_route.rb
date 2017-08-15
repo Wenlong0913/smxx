@@ -41,21 +41,20 @@ module FrontendRoute
       end
 
       # 前端页面路由
+      resource :users, except: [:create, :destroy, :new], controller: 'frontend/users' do
+        get "self_order"
+        get "self_comment"
+        get "self_complaint"
+        post "self_complaint"
+        get "self_message"
+        post "headshot"
+        get "binding_phone"
+        get "binding_weixin"
+        post "binding_weixin"
+        post "binding_phone"
+      end
+
       namespace :frontend do
-        resources :users do
-          collection do
-            get "self_order"
-            get "self_comment"
-            get "self_complaint"
-            post "self_complaint"
-            get "self_message"
-            get "binding_phone"
-            get "binding_weixin"
-            post "binding_weixin"
-            post "binding_phone"
-          end
-        end
-        # get 'users/show'
         get 'home/index'
         match 'share/(:class/:id)', to: "share#index", via: :get
 
@@ -64,10 +63,12 @@ module FrontendRoute
             get "search"
             post "do_search"
             get "search_result"
+            post "charge"
           end
           member do
-            post :charge
             get :paid_success
+            post "confirm" #确认消费
+            post "refund"  #退款申请
           end
         end
 
