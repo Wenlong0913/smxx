@@ -20,7 +20,7 @@
     <div class="collapse navbar-collapse" id="editSelf">
       <ul class="nav">
         <li>
-          <%= link_to(self_message_users_path) do %>
+          <%= link_to(self_message_users_path(type: 'unread')) do %>
             消息中心
             <% if Notification.where(user: current_user).unread.count > 0 %>
               <span class="badge" style="background-color: #d9534f;"><%= Notification.where(user: current_user).unread.count%></span>
