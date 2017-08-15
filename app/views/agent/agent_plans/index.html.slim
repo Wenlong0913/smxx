@@ -8,11 +8,7 @@
           .stats-info
             h3.text-center = plan.name
             h3.text-center.text-danger = (plan.price.to_f/100).to_s + '元'
-          - plan.features.each do |pf|
-            p 
-              i.fa.fa-check.green &nbsp;&nbsp;
-              = pf
-            br
+          = raw(plan.content)
           p.text-center
             = link_to '立即购买', charge_agent_agent_plan_path(plan), method: :post, remote: :true, class: 'btn btn-warning'
 p.text-center

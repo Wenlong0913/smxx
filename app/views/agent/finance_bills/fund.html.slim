@@ -44,12 +44,9 @@
             i.fa.fa-list
           .stats-info
             - if @site.agent_plan_id
-              h3 = @site.agent_plan.name
-              - @site.agent_plan.features.each do |pf|
-                span
-                  i.fa.fa-check.green &nbsp;&nbsp;
-                  = pf
-                br
+              - product = Product.find(@site.agent_plan_id)
+              h3 = product.name
+              = raw(product.content)
               h5
                 |购买时间: &nbsp;
                 = @site.paid_at.strftime("%Y-%m-%d")

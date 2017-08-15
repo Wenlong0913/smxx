@@ -1,8 +1,11 @@
 class Agent::AgentPlansController < Agent::BaseController
 
   def index
-    authorize AgentPlan
-    @agent_plans = AgentPlan.all.order("id").page(params[:page])
+    # authorize AgentPlan
+    authorize Product
+    # @agent_plans = AgentPlan.all.order("id").page(params[:page])
+    catalog = ProductCatalog.where(name: '商家套餐').first
+    @agent_plans = Product.where(site_id: Site::MAIN_ID, catalog_id: catalog.try(:id))
     respond_to do |format|
       format.html
       format.json { render json: @agent_plans }
@@ -10,12 +13,14 @@ class Agent::AgentPlansController < Agent::BaseController
   end
 
   def charge
-    @agent_plan = AgentPlan.find(params[:id])
-    order = Order.create(
+    @agent_plan = Product.find(params[:id])
+    order = Order.new(
       user_id: @site.user.id,
-      site_id: Site::MAIN_ID,
+      site_id: @agent_plan.site_id,
       price: @agent_plan.price
     )
+    order.order_products.new(product_id: @agent_plan.id, amount: 1, price: @agent_plan.price)
+    order.save!
     callback_url = URI(Settings.site.host)
     options = 'agent/agent_plans/' + @agent_plan.id.to_s + '/paid_success'
     json = PaymentCore.create_charge(
@@ -58,14 +63,14 @@ class Agent::AgentPlansController < Agent::BaseController
   # }
   def paid_success
     order = Order.find_by_code(params[:out_trade_no])
-    order.build_charge(
-      channel: params[:exterface],
-      transaction_no: params[:trade_no]
-    )
-    order.status = 'paid'
-    order.save!
-    @agent_plan = AgentPlan.find(params[:id])
-    @site.agent_plan_id = @agent_plan.id
+    # order.build_charge(
+    #   channel: params[:exterface],
+    #   transaction_no: params[:trade_no]
+    # )
+    # order.status = 'paid'
+    # order.save!
+    # @agent_plan = AgentPlan.find(params[:id])
+    @site.agent_plan_id = order.order_products.first.product_id
     @site.paid_at = Time.now
     @site.save!
     FinanceBill.create({
