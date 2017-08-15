@@ -164,7 +164,7 @@ class Frontend::OrdersController < Frontend::BaseController
   def refund
     if @order.refund_status.blank?
       @order.refund_status = 'apply_refund'
-      # @order.refund_description = params[:description]
+      @order.refund_description = "用户申请退款"
       @order.apply_refund_by = current_user.id
       @order.save!
     end
