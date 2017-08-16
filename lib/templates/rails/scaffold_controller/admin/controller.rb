@@ -15,12 +15,12 @@ class <%= controller_class_name %>Controller < Admin::BaseController
     @<%= plural_model_var_name %> = build_query_filter(<%= orm_class.all(model_class_name) %>, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?
-        format.html { send_data(@<%= plural_model_var_name %>.to_json, filename: "<%= plural_model_var_name %>-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
+        format.html { send_data(@<%= plural_model_var_name %>.to_json(only: []), filename: "<%= plural_model_var_name %>-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
       elsif params[:xml].present?
-        format.html { send_data(@<%= plural_model_var_name %>.to_xml, filename: "<%= plural_model_var_name %>-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
+        format.html { send_data(@<%= plural_model_var_name %>.to_xml(only: []), filename: "<%= plural_model_var_name %>-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@<%= plural_model_var_name %>.as_csv(), filename: "<%= plural_model_var_name %>-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@<%= plural_model_var_name %>.as_csv(only: []), filename: "<%= plural_model_var_name %>-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end
