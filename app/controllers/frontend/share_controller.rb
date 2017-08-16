@@ -12,6 +12,9 @@ class Frontend::ShareController < Frontend::BaseController
       if params[:class] == "users"
         @share_obj = current_user
       end
+      if params[:class] == "articles"
+        @share_obj = ::Article.find_by(id: params[:id])
+      end
       # @share_obj = eval("::#{params[:class].capitalize}.find_by(id: #{params[:id]})")
     rescue
       @share_obj = @cms_site
