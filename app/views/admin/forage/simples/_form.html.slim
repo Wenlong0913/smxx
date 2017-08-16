@@ -6,6 +6,10 @@
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
   .panel-body
+    p
+      h5
+        | #{Forage::Simple.human_attribute_name(:run_key)}：　#{@forage_simple.run_key.source.name}（#{@forage_simple.run_key.date}）
+    hr
     = simple_form_for @forage_simple, url: @forage_simple.new_record? ? admin_forage_simples_path : admin_forage_simple_path(@forage_simple), validate: true do |f|
       - if @forage_simple.errors.any?
         #error_explanation
@@ -15,8 +19,6 @@
               li = message
 
       .row
-        .col-md-6
-          = f.association :run_key
         .col-md-6
           = f.input :title
         .col-md-6
