@@ -21,7 +21,7 @@ module AppAPI::V1
           community = current_user.current_community
           sites = ::Site.where("features ->> 'is_published' = ?", "1").near_by(lat: community.address_lat, lng: community.address_lng, distance: 2000)
         elsif Settings.project.meikemei?
-          sites = ::Site.where("features ->> 'is_published' = ?", "1").near_by(lat: params[:lat], lng: params[:lng], distance: 2000)
+          sites = ::Site.near_by(lat: params[:lat], lng: params[:lng], distance: 20000)
         end
         case params[:type]
         when 'flatform_recommend'
