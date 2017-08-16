@@ -25,6 +25,7 @@ class Site < ApplicationRecord
   has_many :products, dependent: :destroy
   has_many :tags, through: :products
   has_many :orders, dependent: :destroy
+  has_many :order_comments, through: :orders, source: :comments
   has_many :preorder_conversitions, dependent: :destroy
   has_many :market_pages, dependent: :destroy
   has_many_favorites
