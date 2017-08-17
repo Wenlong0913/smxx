@@ -90,7 +90,7 @@ li class=("has-sub #{'active' if page?('admin/cms/comments', 'admin/orders', 'ad
       = link_to admin_cms_comments_path do
         = fa_icon 'database', text: '新闻留言管理'
 
-li class=("has-sub #{'active' if page?('admin/forage/sources', 'admin/forage/run_keys', 'admin/forage/simples', 'admin/forage/details')}")
+li class=("has-sub #{'active' if page?('admin/forage/sources', 'admin/forage/run_keys', 'admin/forage/simples', 'admin/forage/details', 'admin/forage/data_caches')}")
   a href="javascript:;"
     b.caret.pull-right
     i.fa.fa-inbox
@@ -100,3 +100,4 @@ li class=("has-sub #{'active' if page?('admin/forage/sources', 'admin/forage/run
     li class=("#{'active' if page?('admin/forage/run_keys')}") = link_to '运行策略', admin_forage_run_keys_path
     li class=("#{'active' if page?('admin/forage/simples')}") = link_to '数据清单', admin_forage_simples_path
     li class=("#{'active' if page?('admin/forage/details')}") = link_to '数据详情', admin_forage_details_path
+    li class=("#{'active' if page?('admin/forage/data_caches')}") = link_to '数据合并', admin_forage_data_caches_path

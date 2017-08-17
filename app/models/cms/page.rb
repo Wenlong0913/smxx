@@ -17,6 +17,8 @@
 
 class Cms::Page < ApplicationRecord
   audited
+  store_accessor :forage, :forage_url, :is_foraged
+
   is_impressionable :counter_cache => true
   acts_as_taggable
   belongs_to :channel

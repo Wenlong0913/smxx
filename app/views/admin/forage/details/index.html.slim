@@ -1,7 +1,5 @@
 h1.page-header
   | #{Forage::Detail.model_name.human}列表
-  .pull-right
-    = link_to "新建#{Forage::Detail.model_name.human}", new_admin_forage_detail_path, class: 'btn btn-primary'
 
 .panel.panel-default
   .panel-heading
@@ -73,10 +71,10 @@ h1.page-header
         tbody
           - @forage_details.each do |forage_detail|
             tr
+              td = forage_detail.simple_id
               td
-                h4 style="margin:0px;"
-                  => link_to "#{forage_detail.simple.id}. #{forage_detail.simple.title}", admin_forage_detail_path(forage_detail)
-              td = forage_detail.title
+                h5
+                  => link_to forage_detail.title, admin_forage_detail_path(forage_detail)
               td = forage_detail.date
               td = forage_detail.time
               td = forage_detail.from

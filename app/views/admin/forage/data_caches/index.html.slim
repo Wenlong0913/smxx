@@ -1,5 +1,5 @@
 h1.page-header
-  | #{Forage::Simple.model_name.human}列表
+  | #{Forage::DataCache.model_name.human}列表
 
 .panel.panel-default
   .panel-heading
@@ -9,10 +9,10 @@ h1.page-header
       a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
         i class="fa fa-minus"
     h3.panel-title
-      | #{Forage::Simple.model_name.human}
+      | #{Forage::DataCache.model_name.human}
   .panel-body
-    = form_for :search, url:  admin_forage_simples_path, method: :get do |f|
-      .toolbar.row
+    = form_for :search, url:  admin_forage_data_caches_path, method: :get do |f|
+      /.toolbar.row
         .col-md-12
           p
             |支持SIMILAR TO查询语法, %代表匹配所有，_代表匹配一个字符
@@ -32,8 +32,8 @@ h1.page-header
             ul.dropdown-menu#search_column[role='menu']
               - @filter_colums.each do |filter_colum|
                 li
-                  a[href='javascript:;' data-key=filter_colum] = Forage::Simple.human_attribute_name(filter_colum.to_sym)
-          .btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
+                  a[href='javascript:;' data-key=filter_colum] = Forage::DataCache.human_attribute_name(filter_colum.to_sym)
+          /.btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
             button.btn.btn-default[type='submit'name='json'value='json'] json
             button.btn.btn-default[type='submit'name='xml'value='xml'] xml
             button.btn.btn-default[type='submit'name='csv'value='csv'] csv
@@ -44,7 +44,7 @@ h1.page-header
             .form-group
               label.col-xs-1.control-label
                 i.fa.fa-trash-o.m-r-5
-                b = Forage::Simple.human_attribute_name(key.to_sym)
+                b = Forage::DataCache.human_attribute_name(key.to_sym)
               - input_name = "filters["+key+"]"
               .col-xs-5
                 input.form-control[type="text"name==input_name value==params[:filters][key]]
@@ -55,42 +55,33 @@ h1.page-header
         strong
           = "查询："
         span
-          = @forage_simples.size.to_s + "条记录"
+          = @forage_data_caches.size.to_s + "条记录"
         span.close[data-dismiss="alert"]
           | ×
     .table-responsive.row.m-0
       table.table.table-striped.table-bordered
         thead
           tr
-            th = Forage::Simple.human_attribute_name(:run_key)
-            th = Forage::Simple.human_attribute_name(:catalog)
-            th = Forage::Simple.human_attribute_name(:title)
-            th = Forage::Simple.human_attribute_name(:url)
-            th = Forage::Simple.human_attribute_name(:is_processed)
+            th = Forage::DataCache.human_attribute_name(:id)
+            th = Forage::DataCache.human_attribute_name(:title)
+            th = Forage::DataCache.human_attribute_name(:migrate_to)
+            th = Forage::DataCache.human_attribute_name(:matched_status)
+            th = Forage::DataCache.human_attribute_name(:is_merged)
             th
         tbody
-          - @forage_simples.each do |forage_simple|
+          - @forage_data_caches.each do |forage_data_cache|
             tr
+              td = forage_data_cache.id
+              td = forage_data_cache.title
+              td = forage_data_cache.migrate_to
+              td = Forage::DataCache::MATCHED_STATUS[forage_data_cache.matched_status.to_sym]
+              td = enum_l(forage_data_cache, :is_merged)
               td
-                h4 style="margin:0px;"
-                  => link_to "#{forage_simple.run_key.source.name}(#{forage_simple.run_key.date})", admin_forage_simple_path(forage_simple)
-              td
-                a.btn.btn-info.btn-xs
-                  = forage_simple.catalog
-              td = forage_simple.title
-              td = forage_simple.url
-              td
-                - if forage_simple.is_processed?
-                  a.btn.btn-success
-                    | 成功
-                - else
-                  a.btn.btn-warning.btn-xs
-                    | 失败
-              td
-                => link_to '查看', admin_forage_simple_path(forage_simple), class: 'btn btn-xs btn-default'
-                => link_to '编辑', edit_admin_forage_simple_path(forage_simple), class: 'btn btn-xs btn-default'
-                = link_to '删除', admin_forage_simple_path(forage_simple), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
-      = paginate @forage_simples
+                => link_to '查看', admin_forage_data_cach_path(forage_data_cache), class: 'btn btn-xs btn-default'
+                - if forage_data_cache.unmerged?
+                  => link_to '编辑', edit_admin_forage_data_cach_path(forage_data_cache), class: 'btn btn-xs btn-default'
+                  = link_to '不合并', admin_forage_data_cach_path(forage_data_cache), data: { confirm: '确定不合并祠内偶然那个?' }, method: :delete, class: 'btn btn-xs btn-danger'
+      = paginate @forage_data_caches
 
 / TODO: move this code to application.js
 javascript:

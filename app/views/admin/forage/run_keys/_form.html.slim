@@ -13,7 +13,12 @@
           ul
             - @forage_run_key.errors.full_messages.each do |message|
               li = message
-
-      = f.association :source
+      - if @forage_run_key.new_record?
+        = f.association :source
+      - else
+        p
+          h5
+            | 数据源：　#{@forage_run_key.source.name}
+        hr
       = f.input :date
       = f.submit class: 'btn btn-success btn-block'

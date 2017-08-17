@@ -21,7 +21,7 @@ h1.page-header
                 | #{Forage::Simple.human_attribute_name(:run_key)}
               td
                 a
-                  = @forage_simple.run_key
+                  = "#{@forage_simple.run_key.source.name}(#{@forage_simple.run_key.date})"
             tr.divider
               td[colspan='2']
             tr

@@ -179,6 +179,7 @@ module AdminRoute
             resources :details
           end
           resources :details
+          resources :data_caches, except: [:new, :create]
         end
       end
     end
