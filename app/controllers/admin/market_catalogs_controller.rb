@@ -15,7 +15,7 @@ class Admin::MarketCatalogsController < Admin::BaseController
         format.html { send_data(@market_catalogs.to_xml, filename: "market_catalogs-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@market_catalogs.as_csv(only: []), filename: "market_catalogs-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@market_catalogs.as_csv(), filename: "market_catalogs-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end

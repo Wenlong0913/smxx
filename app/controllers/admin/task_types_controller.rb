@@ -15,7 +15,7 @@ class Admin::TaskTypesController < Admin::BaseController
         format.html { send_data(@task_types.to_xml, filename: "task_types-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@task_types.as_csv(only: []), filename: "task_types-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@task_types.as_csv(), filename: "task_types-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end

@@ -33,7 +33,7 @@ class Admin::MaterialPurchasesController < Admin::BaseController
         format.html { send_data(@material_purchases.to_xml, filename: "material_purchases-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@material_purchases.as_csv(only: []), filename: "material_purchases-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@material_purchases.as_csv(), filename: "material_purchases-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
         format.json { render json: {:results => @material_purchases.as_json(only: [:id, :code]), :total => @material_purchases.size} }

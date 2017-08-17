@@ -15,7 +15,7 @@ class Admin::AppSettingsController < Admin::BaseController
         format.html { send_data(@app_settings.to_xml, filename: "app_settings-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@app_settings.as_csv(only: []), filename: "app_settings-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@app_settings.as_csv(), filename: "app_settings-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end
@@ -75,7 +75,7 @@ class Admin::AppSettingsController < Admin::BaseController
       render js: "alert('出现错误')"
     end
   end
-  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_app_setting
