@@ -118,6 +118,7 @@ module AdminRoute
           member do
             post 'apply_refund'
             post 'refund'
+            post 'refund_success'
           end
           collection do
             get 'refunds'
@@ -178,6 +179,7 @@ module AdminRoute
             resources :details
           end
           resources :details
+          resources :data_caches, except: [:new, :create]
         end
       end
     end

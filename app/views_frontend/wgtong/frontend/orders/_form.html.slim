@@ -10,9 +10,9 @@
             = @product.name
           small = @product.catalog.try(:name)
         p
-          span[class="orderPrice"] 
-            small 价格: 
-            = (@product.price/100.0).to_s + '元'
+          span[class="orderPrice"]
+            small 价格:
+            = (@product.sell_price/100.0).to_s + '元'
         p
           span
             i[class="fa fa-map-marker productColorIcon"]
@@ -27,7 +27,7 @@
     .form-group
       label[for="inputPhone" class="col-sm-2 control-label text-left"] 手机号
       .col-sm-10
-        input[type="text" name="order['delivery_phone']" class="form-control" id="inputPhone" value="#{current_user.mobile.phone_number}" style="width: 200px;"]
+        input[type="text" name="order[delivery_phone]" class="form-control" id="inputPhone" value="#{current_user.mobile.phone_number}" style="width: 200px;"]
     .form-group
       label[for="inputNumber" class="col-sm-2 control-label"] 数量：
       .col-sm-10
