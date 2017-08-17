@@ -2,7 +2,7 @@ h1.page-header
   | #{Cms::Page.model_name.human}列表:
   = @cms_site.name
   .pull-right
-    => link_to "新建#{Cms::Page.model_name.human}", new_admin_cms_site_page_path(@cms_site), class: 'btn btn-primary'
+    => link_to "新建#{Cms::Page.model_name.human}", new_admin_cms_site_channel_page_path(@cms_site, @cms_channel), class: 'btn btn-primary'
     => link_to "返回站点", admin_cms_site_channels_path(@cms_site), class: 'btn btn-default'
 
 .panel.panel-default
