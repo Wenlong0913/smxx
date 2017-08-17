@@ -10,8 +10,9 @@ source "https://gems.tanmer.com" do
   gem 'payment_core', '0.0.4'
   gem 'theme_color_admin', '0.0.5'
   gem 'sales_distribution', '0.1.0'
-  gem 'gnomon', '0.2.0'
-  gem 'activerecord-postgres-earthdistance', '0.5.2.tanmer'
+  gem 'gnomon', '0.2.1'
+  # comment this since it's merged
+  # gem 'activerecord-postgres-earthdistance', '0.5.2.tanmer'
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -128,8 +129,6 @@ gem 'tracker', path: 'components/tracker'
 gem 'decorator', path: 'components/decorator'
 gem 'comment', path: 'components/comment'
 gem 'favorite', path: 'components/favorite'
-# gem 'gnomon', git: 'git@gitlab.tanmer.com:tm-framework/gnomon.git'
-# gem 'activerecord-postgres-earthdistance', '0.5.2', github: 'xiaohui-zhangxh/activerecord-postgres-earthdistance'
 
 gem 'themeable', '~> 1.2.0'#, path: '../../gems/themeable'
 # gem 'theme_color_admin', git: 'git@gitlab.tanmer.com:tm-themes/theme_color_admin.git'

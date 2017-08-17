@@ -102,7 +102,7 @@ GEM
       activemodel (= 5.0.3)
       activesupport (= 5.0.3)
       arel (~> 7.0)
-    activerecord-postgres-earthdistance (0.5.2.tanmer)
+    activerecord-postgres-earthdistance (0.5.2)
       activerecord (>= 3.1)
       pg
       rake
@@ -129,7 +129,7 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
-    baidu_api-geocoding (1.0.0)
+    baidu_api-geocoding (1.1.2)
     bcrypt (3.1.11)
     bindex (0.5.0)
     bootstrap-sass (3.3.7)
@@ -255,11 +255,11 @@ GEM
     github-markup (1.6.0)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
-    gnomon (0.2.0)
-      activerecord-postgres-earthdistance (~> 0.5.1)
-      baidu_api-geocoding (~> 1.0.0)
+    gnomon (0.2.1)
+      activerecord-postgres-earthdistance (~> 0.5, >= 0.5.2)
+      baidu_api-geocoding (~> 1.0)
       kaminari (~> 1.0, >= 1.0.1)
-      rails (~> 5.0.1)
+      rails (~> 5.0)
     grape (0.19.1)
       activesupport
       builder
@@ -650,7 +650,6 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   activemodel-serializers-xml
-  activerecord-postgres-earthdistance (= 0.5.2.tanmer)!
   acts-as-taggable-on (~> 4.0)
   annotate
   audited (~> 4.3)
@@ -680,7 +679,7 @@ DEPENDENCIES
   font-awesome-rails (~> 4.7.0)
   foreman
   github-markup
-  gnomon (= 0.2.0)!
+  gnomon (= 0.2.1)!
   grape (~> 0.19.1)
   grape-entity (~> 0.6.1)
   grape-route-helpers (~> 2.0)
