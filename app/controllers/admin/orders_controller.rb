@@ -1,7 +1,7 @@
 # csv support
 require 'csv'
 class Admin::OrdersController < Admin::BaseController
-  before_action :set_order, only: [:show, :edit, :update, :destroy, :refund, :apply_refund]
+  before_action :set_order, only: [:show, :edit, :update, :destroy, :refund, :apply_refund, :refund_success]
   before_action :get_user, only: [:create, :update]
   # GET /admin/orders
   def index
@@ -120,6 +120,19 @@ class Admin::OrdersController < Admin::BaseController
 
   def refund
     authorize Order
+    unless @order.charge
+      render json: {status: 'failed', message: "该订单没有支付!"}
+      return
+    end
+    unless @order.charge.pingpp_charge_id
+      render json: {status: 'failed', message: "该订单没有支付成功!"}
+      return
+    end
+    if @order.charge.try(:channel) == 'create_direct_pay_by_user'
+      @order.refunding!
+      render json: {status: 'ok', message: "不支持自动退款,请前往https://www.pingxx.com手工退款!"}
+      return
+    end
     ret = PaymentCore.create_refund({charge_id: @order.charge.pingpp_charge_id, description: @order.refund_description})
     if ret[:result].blank?
       render json: {status: 'failed', message: "向服务器提交退款申请失败, #{ret[:message]}"}
@@ -127,6 +140,20 @@ class Admin::OrdersController < Admin::BaseController
       @order.refunding!
       render json: {status: 'ok', message: "已向服务器提交退款申请"}
     end
+  end
+
+  def refund_success
+    authorize @order
+    notice = ''
+    if @order.refunding?
+      @order.refund_status = 'refunded'
+      @order.status = 'cancelled'
+      @order.save!
+      notice = '该订单退款成功'
+    else
+      notice = '该订单尚未申请退款!'
+    end
+    redirect_to refunds_admin_orders_path,notice: notice
   end
 
   private

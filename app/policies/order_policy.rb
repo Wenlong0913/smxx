@@ -25,6 +25,10 @@ class OrderPolicy < ApplicationPolicy
     user.super_admin_or_admin? || user.permission?(:refund_order)
   end
 
+  def refund_success?
+    user.super_admin_or_admin? || user.permission?(:refund_success)
+  end
+
   def refunds?
     user.super_admin_or_admin? || user.permission?(:refund_order)
   end
