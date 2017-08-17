@@ -197,7 +197,7 @@ module AppAPI::V1
         error! '该店铺不存在' unless site
         comments = site.order_comments.displayable
         comments = paginate_collection(sort_collection(comments), params)
-        wrap_collection(comments, AppAPI::Entities::Comment, options={user_id: (current_user.id rescue nil)})
+        wrap_collection(comments, AppAPI::Entities::Comment)
       end
 
     end # end of resources
