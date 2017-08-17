@@ -118,6 +118,7 @@ module AdminRoute
           member do
             post 'apply_refund'
             post 'refund'
+            post 'refund_success'
           end
           collection do
             get 'refunds'
