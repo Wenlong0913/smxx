@@ -15,7 +15,7 @@ class Admin::VendorsController < Admin::BaseController
         format.html { send_data(@vendors.to_xml, filename: "vendors-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@vendors.as_csv(only: []), filename: "vendors-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@vendors.as_csv(), filename: "vendors-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end

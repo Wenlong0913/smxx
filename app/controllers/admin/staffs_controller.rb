@@ -15,7 +15,7 @@ class Admin::StaffsController < Admin::BaseController
         format.html { send_data(@staffs.to_xml, filename: "staffs-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@staffs.as_csv(only: []), filename: "staffs-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@staffs.as_csv(), filename: "staffs-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end
@@ -42,7 +42,7 @@ class Admin::StaffsController < Admin::BaseController
   def create
     authorize Staff
     @staff = Staff.new(permitted_attributes(Staff))
-    
+
     if @staff.save
       redirect_to admin_staff_path(@staff), notice: "美容师 创建成功."
     else

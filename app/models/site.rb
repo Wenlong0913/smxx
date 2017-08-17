@@ -13,7 +13,6 @@
 
 class Site < ApplicationRecord
   MAIN_ID = 1
-  is_impressionable :counter_cache => true, :column_name => :visits_count
   belongs_to :user, optional: true
   belongs_to :catalog
   has_many :theme_configs

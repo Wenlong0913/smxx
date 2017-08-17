@@ -1,5 +1,6 @@
 class Frontend::OrdersController < Frontend::BaseController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: [:show, :edit, :update, :destroy, :confirm, :refund]
+  before_action :ensure_login!
 
   def index
     @orders = Order.all.page(params[:page])
@@ -17,7 +18,8 @@ class Frontend::OrdersController < Frontend::BaseController
   end
 
   def new
-    @order = site.orders.build
+    @order = Order.new
+    @product = Product.find(params[:product_id])
   end
 
   def edit
@@ -79,24 +81,29 @@ class Frontend::OrdersController < Frontend::BaseController
   end
 
   def charge
-    # 获取当前用户订单号
-    order = @site.orders.find(params[:id])
-    # 获取当前订单下的所有产品
-    order_products = OrderProduct.where(order_id: order.id)
-    # sum 订单下的所有产品价钱累加
-    sum = 0
-    order_products.each do |op|
-      sum = op.price.to_f * op.amount + sum
+    if params[:order_id]
+      order = Order.find(params[:order_id])
+      product = order.order_products.first.product
+    else
+      order = Order.new(user: current_user)
+      product = Product.find(params[:order][:product][:id])
+      order.order_products.new(product_id: product.id, amount: params[:order][:product][:number], price: product.sell_price)
+      order.delivery_phone = params[:order][:delivery_phone]
+      order.site = product.site
+      order.price = product.sell_price.to_f * params[:order][:product][:number].to_i
+      order.save!
     end
+    callback_url = URI(Settings.site.host)
+    options = 'frontend/orders/' + order.id.to_s + '/paid_success'
     json = PaymentCore.create_charge(
       order_no: order.code, # 订单号
       channel: 'alipay_pc_direct', # 支付宝电脑端网页支付
-      amount: sum, # 1分钱
-      client_ip: '127.0.0.1',
-      subject: 'E启洗视频',
-      body: "订单内容",
+      amount: order.price, # 1分钱
+      client_ip: request.remote_addr,
+      subject: "购买#{product.name}",
+      body: product.name,
       extra: {
-        success_url: 'http://eqxy.lvh.me:5000/frontend/orders/1/paid_success'
+        success_url: callback_url.merge(options).to_s
       }
     )
     render js: <<-JS
@@ -105,7 +112,8 @@ class Frontend::OrdersController < Frontend::BaseController
   end
 
   def paid_success
-    @product = Product.find(params[:id])
+    order = Order.find_by_code(params[:out_trade_no])
+    redirect_to frontend_order_path(order)
   end
 
   #实现客户端订单查询
@@ -143,6 +151,25 @@ class Frontend::OrdersController < Frontend::BaseController
 
   end
 
+  def confirm
+    @order.completed!
+    @order.order_products.each do |order_product|
+      product = order_product.product
+      product.sales_count += order_product.amount
+      product.save!
+    end
+    redirect_to frontend_order_path(@order)
+  end
+
+  def refund
+    if @order.refund_status.blank?
+      @order.refund_status = 'apply_refund'
+      # @order.refund_description = params[:description]
+      @order.apply_refund_by = current_user.id
+      @order.save!
+    end
+    redirect_to frontend_order_path(@order)
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -153,5 +180,9 @@ class Frontend::OrdersController < Frontend::BaseController
     # Only allow a trusted parameter "white list" through.
     def order_params
       params.require(:order).permit(:user_id, :product_id, :price, :status)
+    end
+
+    def ensure_login!
+      redirect_to root_url unless current_user
     end
 end

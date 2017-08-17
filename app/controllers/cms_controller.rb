@@ -116,7 +116,8 @@ class CmsController < ApplicationController
     # 评论系统使用
     @comment.source_type = params[:comment][:source_type]
     @comment.source_id = params[:comment][:source_id]
-    @comment.user_id = current_user.id
+    @comment.user_id = params[:comment][:user_id]
+
     respond_to do |format|
       format.html do
         if @comment.save

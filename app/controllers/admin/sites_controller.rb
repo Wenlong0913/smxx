@@ -28,7 +28,7 @@ class Admin::SitesController < Admin::BaseController
         format.html { send_data(@sites.to_xml, filename: "products-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@sites.as_csv(only: []), filename: "sites-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@sites.as_csv(), filename: "sites-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end

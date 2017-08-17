@@ -14,7 +14,7 @@ class Admin::MaterialManagementHistoriesController < Admin::BaseController
         format.html { send_data(@admin_material_management_histories.to_xml, filename: "admin_material_management_details-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@admin_material_management_histories.as_csv(only: []), filename: "admin_material_management_details-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@admin_material_management_histories.as_csv(), filename: "admin_material_management_details-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end

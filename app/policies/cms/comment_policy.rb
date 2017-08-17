@@ -36,7 +36,7 @@ class Cms::CommentPolicy < ApplicationPolicy
   def permitted_attributes_for_create
     if user.super_admin_or_admin?  || user.has_role?(:agent)
       [:site_id, :contact, :content, :name, :mobile_phone, :tel_phone,:email,:qq,
-      :address,:gender,:birth,:hobby,:content2,:content3,:status,:branch,:datetime]
+      :address,:gender,:birth,:hobby,:content2,:content3,:status,:branch,:datetime,:is_published]
     else
       []
     end

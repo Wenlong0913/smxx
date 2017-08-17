@@ -66,6 +66,8 @@ li class=("has-sub #{'active' if page?('admin/orders', 'admin/produces', 'admin/
       = link_to "创建#{Order.model_name.human}", new_admin_order_path
     li[class=('active' if page?('admin/orders#index'))]
       = link_to "#{Order.model_name.human}管理", admin_orders_path
+    li[class=('active' if page?('admin/orders#refunds'))]
+      = link_to "#{Order.model_name.human}退款管理", refunds_admin_orders_path
 
 li[class=("active" if page?('admin/articles'))]
   = link_to admin_articles_path do
@@ -81,12 +83,12 @@ li class=("has-sub #{'active' if page?('admin/cms/comments', 'admin/orders', 'ad
     i.fa.fa-cube
     span 留言评论
   ul.sub-menu
-    li[class=("active" if page?())]
-      = link_to '#' do
-        = fa_icon 'database', text: '评论管理'
+    li[class=("active" if page?('admin/comments'))]
+      = link_to admin_comments_path do
+        = fa_icon 'database', text: '商家评论管理'
     li[class=("active" if page?('admin/cms/comments'))]
       = link_to admin_cms_comments_path do
-        = fa_icon 'database', text: '留言管理'
+        = fa_icon 'database', text: '新闻留言管理'
 
 li class=("has-sub #{'active' if page?('admin/forage/sources', 'admin/forage/run_keys', 'admin/forage/simples', 'admin/forage/details')}")
   a href="javascript:;"

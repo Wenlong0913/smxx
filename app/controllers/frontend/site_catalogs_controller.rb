@@ -15,5 +15,5 @@ class Frontend::SiteCatalogsController < Frontend::BaseController
   def get_catalogs
     @site_catalogs = SiteCatalog.all
   end
-  
+
 end

@@ -23,7 +23,7 @@ class Admin::ComplaintsController < Admin::BaseController
         format.html { send_data(@complaints.to_xml, filename: "complaints-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
       elsif params[:csv].present?
         # as_csv =>  () | only: [] | except: []
-        format.html { send_data(@complaints.as_csv(only: []), filename: "complaints-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+        format.html { send_data(@complaints.as_csv(), filename: "complaints-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
       end
