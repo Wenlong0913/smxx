@@ -161,7 +161,7 @@ module AppAPI::V1
         success AppAPI::Entities::Comment
       end
       params do
-        requires :id, type: Integer, desc: '产品ID'
+        requires :id, type: Integer, desc: '店铺ID'
         requires :content, type: String, desc: '评论或者回复内容'
         optional :parent_id, type: Integer, desc: '如果填写，parent_id就是回复的某条评论的ID'
       end
@@ -181,6 +181,23 @@ module AppAPI::V1
         else
           error! comment.errors
         end
+      end
+
+      # imolin的特殊需求
+      desc '店铺所有订单的评论' do
+        success AppAPI::Entities::Comment.collection
+      end
+      params do
+        requires :id, type: Integer, desc: '店铺ID'
+        use :pagination
+        use :sort, fields: [:created_at]
+      end
+      get ':id/order_comments' do
+        site = ::Site.find_by(id: params[:id])
+        error! '该店铺不存在' unless site
+        comments = site.order_comments.displayable
+        comments = paginate_collection(sort_collection(comments), params)
+        wrap_collection(comments, AppAPI::Entities::Comment)
       end
 
     end # end of resources
