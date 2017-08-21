@@ -5,9 +5,11 @@ class Admin::AgentPlansController < Admin::BaseController
   before_action :set_agent_plan_price, only: [:create, :update]
   # GET /admin/agent_plans
   def index
-    authorize AgentPlan
+    # authorize AgentPlan
+    authorize Product
     @filter_colums = %w(id)
-    @agent_plans = build_query_filter(AgentPlan.all, only: @filter_colums).page(params[:page])
+    catalog_id = ProductCatalog.find_by(name: '商家套餐').try(:id)
+    @agent_plans = build_query_filter(Product.where(catalog_id: catalog_id), only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@agent_plans.to_json, filename: "agent_plans-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
@@ -29,8 +31,10 @@ class Admin::AgentPlansController < Admin::BaseController
 
   # GET /admin/agent_plans/new
   def new
-    authorize AgentPlan
-    @agent_plan = AgentPlan.new
+    # authorize AgentPlan
+    authorize Product
+    @agent_plan = Product.new
+    # @agent_plan = AgentPlan.new
   end
 
   # GET /admin/agent_plans/1/edit
@@ -40,10 +44,14 @@ class Admin::AgentPlansController < Admin::BaseController
 
   # POST /admin/agent_plans
   def create
-    authorize AgentPlan
-    @agent_plan = AgentPlan.new(permitted_attributes(AgentPlan))
+    # authorize AgentPlan
+    authorize Product
+    main_site = Site.find_by(id: Site::MAIN_ID)
+    catalog = ProductCatalog.find_or_create_by(name: '商家套餐')
+    @agent_plan = main_site.products.new(permitted_attributes(Product))
+    @agent_plan.catalog = catalog
     if @agent_plan.save
-      redirect_to admin_agent_plan_path(@agent_plan), notice: "#{AgentPlan.model_name.human} 创建成功."
+      redirect_to admin_agent_plan_path(@agent_plan), notice: "商家套餐创建成功."
     else
       render :new
     end
@@ -53,7 +61,7 @@ class Admin::AgentPlansController < Admin::BaseController
   def update
     authorize @agent_plan
     if @agent_plan.update(permitted_attributes(@agent_plan))
-      redirect_to admin_agent_plan_path(@agent_plan), notice: "#{AgentPlan.model_name.human} 更新成功."
+      redirect_to admin_agent_plan_path(@agent_plan), notice: "商家套餐更新成功."
     else
       render :edit
     end
@@ -63,17 +71,17 @@ class Admin::AgentPlansController < Admin::BaseController
   def destroy
     authorize @agent_plan
     @agent_plan.destroy
-    redirect_to admin_agent_plans_url, notice: "#{AgentPlan.model_name.human} 删除成功."
+    redirect_to admin_agent_plans_url, notice: "商家套餐删除成功."
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_agent_plan
-      @agent_plan = AgentPlan.find(params[:id])
+      @agent_plan = Product.find(params[:id])
     end
 
     def set_agent_plan_price
-      params[:agent_plan][:price] = params[:agent_plan][:price].to_f * 100 unless params[:agent_plan][:price].blank?
+      params[:product][:price] = params[:product][:price].to_f * 100 unless params[:product][:price].blank?
     end
 
     # Only allow a trusted parameter "white list" through.
