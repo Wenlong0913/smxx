@@ -14,6 +14,10 @@ class Frontend::ProductsController < Frontend::BaseController
     @comment_path = comments_frontend_product_path(@product)
     # @similar_products = Product.where(tag_list: @product.tag_list.to_s).limit(3)
   end
+  
+  def wechat_product
+    @product = Product.find(params[:id])
+  end
 
   private
     def get_user_id

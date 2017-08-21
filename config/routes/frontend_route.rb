@@ -57,6 +57,8 @@ module FrontendRoute
       namespace :frontend do
         get 'home/index'
         match 'share/(:class/:id)', to: "share#index", via: :get
+        get 'wechat_product/:id', to: 'products#wechat_product', as: 'wechat_product'
+        get 'wechat_site/:id', to: 'sites#wechat_site', as: 'wechat_site'
 
         resources :orders do
           collection do
@@ -78,12 +80,18 @@ module FrontendRoute
         end
         resources :site_catalogs do
           resources :sites
+          collection do
+            get 'wechat_sites'
+          end
         end
         resources :products do
           commentable
         end
         resources :product_catalogs do
           resources :products
+          collection do
+            get 'wechat_products'
+          end
         end
 
       end
