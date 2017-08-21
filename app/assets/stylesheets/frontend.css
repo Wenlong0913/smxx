@@ -6,6 +6,7 @@
  *= require frontend/product_catalogs
  *= require frontend/products
  *= require frontend/users
+ *= require frontend/share
  * require frontend/bootstrap.min
  *= require frontend/slim.min
  *= require frontend/search_order
