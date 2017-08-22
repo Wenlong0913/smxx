@@ -89,12 +89,18 @@
               <i class='fa fa-fire'></i> 未开始
             </strong>
           </span>
-        <% else %>
+        <% elsif product.status == 'closed' %>
           <span class='pull-right status cancel '>
              <strong>
                <i class='fa fa-fire'></i> 已结束
              </strong>
           </span>
+        <% else %>
+        <span class='pull-right'>
+           <strong>
+             <i class='fa fa-fire'></i> 未发布
+           </strong>
+        </span>
         <% end %>
       </div>
     </a>
