@@ -7,6 +7,7 @@ zh-CN:
       app_setting:
         name: 中文名称(name)
         key_word: 英文名称(key_word)
+        article_share_url_pattern: 文章链接分享模式(article_share_url_pattern)
         site_share_url_pattern: 商家链接分享模式(site_share_url_pattern)
         product_share_url_pattern: 产品链接分享模式(product_share_url_pattern)
         system_rooms: 系统房间(system_rooms)
