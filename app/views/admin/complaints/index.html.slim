@@ -42,8 +42,12 @@ h1.page-header
               ul.dropdown-menu
                 li
                   a[data-type=''] 筛选类型 - 无
-                  a[data-type='community_feedback'] 筛选类型 - 小区反馈
-                  a[data-type='complaint'] 筛选类型 - 投诉
+                  - if Settings.project.imolin?
+                    a[data-type='community_feedback'] 筛选类型 - 小区反馈
+                    a[data-type='complaint'] 筛选类型 - 投诉
+                  - elsif Settings.project.meikemei?
+                    a[data-type='staff_new'] 筛选类型 - 美容师入驻
+                    a[data-type='complaint'] 筛选类型 - 投诉
             = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '关键字搜索...'
             / <!-- Split button -->
             / <div class="btn-group">
