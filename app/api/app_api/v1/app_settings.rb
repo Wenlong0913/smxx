@@ -7,6 +7,7 @@ module AppAPI::V1
       get do
         current_setting = AppSetting.where(active: true).first || AppSetting.first
         app_data = {
+          article_share_url_pattern: current_setting.article_share_url_pattern,
           site_share_url_pattern: current_setting.site_share_url_pattern,
           product_share_url_pattern: current_setting.product_share_url_pattern,
           system_rooms: begin YAML.load(current_setting.system_rooms) rescue [] end,

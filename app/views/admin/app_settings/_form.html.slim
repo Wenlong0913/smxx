@@ -18,6 +18,7 @@
         = f.input :key_word
         = f.input :site_share_url_pattern
         = f.input :product_share_url_pattern
+        = f.input :article_share_url_pattern
         = f.input :system_rooms, value: @app_setting.to_s
         .alert.alert-danger
           | 请注意系统房间的添加或修改格式：　['小区广场', '业委会', ...]

@@ -25,6 +25,7 @@ h1.page-header
         = f.input :key_word, input_html: {readonly: true}
         = f.input :site_share_url_pattern, input_html: {readonly: true}
         = f.input :product_share_url_pattern, input_html: {readonly: true}
+        = f.input :article_share_url_pattern, input_html: {readonly: true}
         = f.input :system_rooms, input_html: {readonly: true}
         = f.input :app_version_message, as: :text, input_html: {rows: "#{@app_setting.app_version_message.split(/\n+/).size + 1}", readonly: true}
       = f.input :main_banners, as: :text, input_html: {rows: "#{@app_setting.main_banners.split(/\n+/).size + 1}", readonly: true}
