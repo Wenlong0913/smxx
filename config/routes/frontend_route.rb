@@ -54,6 +54,8 @@ module FrontendRoute
         post "binding_phone"
       end
 
+      get :search_result, to: 'frontend/search#search_result'
+
       namespace :frontend do
         get 'home/index'
         match 'share/(:class/:id)', to: "share#index", via: :get
