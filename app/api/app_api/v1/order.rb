@@ -22,7 +22,6 @@ module AppAPI::V1
           requires :product_id, type: Integer, desc: '产品ID'
           requires :service_time, type: String, desc: '服务时间'
           optional :staff_id, type: Integer, desc: '美容师ID'
-          optional :delivery_phone, type: String, desc: '手机号'
         else
           requires :site_id, type: Integer, desc: "#{::Site.model_name.human}ID"
           requires :shopping_cart_ids, type: Array[Integer], coerce_with: ->(val) { val.split(/,|，/).map(&:to_i) }, desc: '购物车ID列表'
@@ -39,7 +38,6 @@ module AppAPI::V1
           order.price = product.sell_price
           order.service_time = params[:service_time]
           order.staff_id = params[:staff_id]
-          order.delivery_phone = params[:delivery_phone]
           error! order.errors unless order.save
           present order, with: AppAPI::Entities::Order
         else
