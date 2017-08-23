@@ -143,7 +143,7 @@ module AppAPI::V1
             amount: order.price,
             client_ip: env['HTTP_X_REAL_IP'] || env['REMOTE_ADDR'],
             subject: "购买 #{order.order_products.first.product.site.title} 的产品",
-            body: order.order_products.map { |op| "#{op.product.name} x #{op.amount}" }.join("\n")
+            body: order.order_products.map { |op| "#{op.product.name} x #{op.amount}" }.join(';').truncate(128)
           )
           present charge: charge
         when 'paid'
