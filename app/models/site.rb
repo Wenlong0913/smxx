@@ -108,4 +108,8 @@ class Site < ApplicationRecord
     end
   end
 
+  def available_phone
+    contact_phone.presence || phone.presence || user.try(:mobile).try(:phone_number)
+  end
+
 end
