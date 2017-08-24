@@ -45,6 +45,7 @@ class Agent::OrdersController < Agent::BaseController
         return render json: {status: 'failed', message: '订单不可修改'}
       end
       flag, @order = Order::Update.(@order, permitted_attributes(@order))
+      OrderCompletedJobJob.perform_async(@order.id, "由商家(#{order.site.title})") if @order.status_change == ['delivering', 'completed'] && flag
     else
       flag = @order.delivered! && @order.completed!
     end
