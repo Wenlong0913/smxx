@@ -109,15 +109,7 @@ class Site < ApplicationRecord
   end
 
   def available_phone
-    if self.contact_phone.present?
-      self.contact_phone
-    elsif self.phone.present?
-      self.phone
-    elsif self.user && self.user.mobile
-      self.user.mobile.phone_number
-    else
-      nil
-    end
+    contact_phone.presence || phone.presence || user.try(:mobile).try(:phone_number)
   end
 
 end
