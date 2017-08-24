@@ -40,7 +40,7 @@ class Agent::OrdersController < Agent::BaseController
 
   def update
     authorize @order
-    if Settings.project.sxhop? || Settings.project.imolin?
+    if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei?
       if params[:price].present? && !(@order.open? || @order.pending?)
         return render json: {status: 'failed', message: '订单不可修改'}
       end

@@ -126,7 +126,7 @@ class Order < ApplicationRecord
     if @should_send_paid_message && (Settings.project.imolin? || Settings.project.meikemei?)
       OrderNotificationJob.perform_async(self.id)
     elsif @should_send_completed_message && (Settings.project.imolin? || Settings.project.meikemei?)
-      OrderCompletedJobJob.perform_in(20.days, self.id)
+      OrderCompletedJobJob.perform_in(30.days, self.id)
     end
   end
 
