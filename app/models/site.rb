@@ -108,13 +108,13 @@ class Site < ApplicationRecord
     end
   end
 
-  def site_phone
-    if self.user && self.user.mobile
-      self.user.mobile.phone_number
+  def available_phone
+    if self.contact_phone.present?
+      self.contact_phone
     elsif self.phone.present?
       self.phone
-    elsif self.contact_phone.present?
-      self.contact_phone
+    elsif self.user && self.user.mobile
+      self.user.mobile.phone_number
     else
       nil
     end
