@@ -108,4 +108,16 @@ class Site < ApplicationRecord
     end
   end
 
+  def sms_phone
+    if self.user && self.user.mobile
+      self.user.mobile.phone_number
+    elsif self.phone.present?
+      self.phone
+    elsif self.contact_phone.present?
+      self.contact_phone
+    else
+      nil
+    end
+  end
+
 end
