@@ -60,7 +60,7 @@ module AppAPI::V1
       end
       get do
         authenticate! unless Settings.project.meikemei?
-        sites = ::Site.all
+        sites = ::Site.where.not(id: Site::MAIN_ID)
         if params[:favorite]
           sites =
             case params[:favorite]
