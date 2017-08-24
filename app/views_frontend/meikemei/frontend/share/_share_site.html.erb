@@ -15,25 +15,6 @@
             <a href="/" class="tomoko-header">
               <img src="/templetes/app-landing-tomoko/logo.png" class="tomoko-logo" width="160px" height="60px"/>
             </a>
-            <!-- <div class="nav pull-right">
-              <nav class="navbar navbar-default" role="navigation">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">菜单</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                </button>
-                <ul class="collapse navbar-collapse navbar-ex1-collapse">
-                  <li><a href="/" title="">首页</a></li>
-                  <li><a data-scroll-nav="1" title="">产品介绍</a></li>
-                  <li><a data-scroll-nav="2" title="">功能特点</a></li>
-                  <li><a data-scroll-nav="4" title="">软件预览</a></li>
-                  <li><a data-scroll-nav="6" title="">商家入驻</a></li>
-                  <li><a href="/" title="">新闻中心</a></li>
-                  <li class="download-btn"><a data-scroll-nav="3" title="">APP下载 <i class="fa fa-cloud-download"></i></a></li>
-                </ul>
-              </nav>
-            </div> -->
           </div>
         </div>
       </div>
@@ -58,8 +39,8 @@
           <!-- Phone Carousel -->
           <div class="download">
             <ul class="dw-btns">
-              <li><a data-toggle="tooltip" data-placement="top" title="" href="<%= @cms_site.value_for('ios')%>" data-original-title="下载iPhone版"><i class="fa fa-apple fa-lg"></i></a></li>
-              <li><a data-toggle="tooltip" data-placement="top" title="" href="<%= @cms_site.value_for('android')%>" data-original-title="下载Android版"><i class="fa fa-android fa-lg"></i></a></li>
+              <li><a href="<%= @cms_site.value_for('ios')%>" title="下载ios版"><i class="fa fa-apple fa-lg"></i></a></li>
+              <li><a href="<%= @cms_site.value_for('android')%>" title="下载Android版" download="下载Android版" ><i class="fa fa-android fa-lg"></i></a></li>
             </ul>
           </div>
 
