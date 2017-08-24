@@ -6,14 +6,14 @@ class OrderNotificationJob
     case order.status
     when 'paid'
       if order.user && order.user.mobile
-        msg = Settings.sms.templates.order_succeed_to_user.gsub('#site_name#', order.site.title).gsub('#phone#', order.site.sms_phone || '无')
+        msg = Settings.sms.templates.order_succeed_to_user.gsub('#site_name#', order.site.title).gsub('#phone#', order.site.site_phone || '无')
         body = OpenStruct.new(mobile_phone: order.user.mobile.phone_number, message: msg)
         response = Sms.service.(body)
         response.valid!
       end
-      if order.site.sms_phone
+      if order.site.user && order.site.user.mobile
         msg = Settings.sms.templates.order_succeed_to_agent.gsub('#price#', number_to_currency(order.price / 100.0, format: '%n 元'))
-        body = OpenStruct.new(mobile_phone: order.site.sms_phone, message: msg)
+        body = OpenStruct.new(mobile_phone: order.site.user.mobile.phone_number, message: msg)
         response = Sms.service.(body)
         response.valid!
       end

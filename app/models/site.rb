@@ -108,7 +108,7 @@ class Site < ApplicationRecord
     end
   end
 
-  def sms_phone
+  def site_phone
     if self.user && self.user.mobile
       self.user.mobile.phone_number
     elsif self.phone.present?
