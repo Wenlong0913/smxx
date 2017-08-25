@@ -29,6 +29,10 @@
           | ---
           br
           | version_number: 2.1.3
+      .col-md-6
+        = f.input :auto_deliver_days, as: :float
+      .col-md-6
+        = f.input :auto_cancel_hours, as: :float
       = f.input :main_banners, as: :text, input_html: {rows: 5}
       .alert.alert-danger
         | 请注意APP版本的添加或修改格式：　(以---开始，src和url为一组)

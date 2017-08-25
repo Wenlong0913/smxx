@@ -15,6 +15,8 @@ zh-CN:
         main_banners: 主页轮播图(main_banners)
         app_version_message: 版本信息(app_version_message)
         active: 使用状态(active)
+        auto_deliver_days: 自动确认收货的天数(auto_deliver_days)
+        auto_cancel_hours: 自动关闭未支付订单的小时数(auto_cancel_hours)
     errors:
       models:
         app_setting:

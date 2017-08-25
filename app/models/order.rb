@@ -116,8 +116,6 @@ class Order < ApplicationRecord
     end
     # 判断是否要发支付成功的短信
     @should_send_paid_message = self.status_change == ['open', 'paid'] || self.status_change == ['pending', 'paid']
-    # 判断到期后自动收货是否发送短信
-    @should_send_completed_message = self.status_change == ['paid', 'delivering']
     # self.user = self.member.user
     Notification.notice(self.user.id, nil, '订单', '状态更新了', self, 'code') if self.status_changed? && self.id.present?
   end
@@ -125,8 +123,6 @@ class Order < ApplicationRecord
   after_commit do
     if @should_send_paid_message && (Settings.project.imolin? || Settings.project.meikemei?)
       OrderNotificationJob.perform_async(self.id)
-    elsif @should_send_completed_message && (Settings.project.imolin? || Settings.project.meikemei?)
-      OrderCompletedJobJob.perform_in(30.days, self.id)
     end
   end
 
