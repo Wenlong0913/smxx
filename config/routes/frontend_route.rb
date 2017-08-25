@@ -57,11 +57,11 @@ module FrontendRoute
       get :search_result, to: 'frontend/search#search_result'
       # 文广痛微场馆路由配置
       resources :micro_website, only: :index, controller: 'frontend/micro_website'
-      resource :micro_website, except: [:new, :show, :edit, :destroy, :create, :update], controller: 'frontend/micro_website' do
+      resource :micro_website, only: [], controller: 'frontend/micro_website' do
         get 'wechat_sites' # 场馆列表
         get 'wechat_products' # 活动列表
-        get 'wechat_product/:id', to: 'frontend/micro_website#wechat_product', as: 'wechat_product'
-        get 'wechat_site/:id', to: 'frontend/micro_website#wechat_site', as: 'wechat_site'
+        get 'wechat_product/:id', action: 'wechat_product', as: 'wechat_product'
+        get 'wechat_site/:id', action: 'wechat_site', as: 'wechat_site'
       end
 
       namespace :frontend do
