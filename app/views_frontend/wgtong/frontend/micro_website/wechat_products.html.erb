@@ -70,7 +70,7 @@
         <div class="address">
           <small>地址: <%= product.address_line1 %></small>
         </div>
-        <small class="time">活动时间: <%= product.date.present? ? product.date : ( product.time.present? ? product.time : "尚未发布" ) %></small>
+        <small class="time">活动时间: <%= product.date.present? ? product.date : ( product.time.presence || "尚未发布" )%></small>
         <% if product.status == 'open' %>
           <span class='pull-right text-warning'>
             <strong>
