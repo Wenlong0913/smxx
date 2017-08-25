@@ -25,7 +25,7 @@ module AppAPI
 
       if Settings.project.meikemei?
         expose :address_line, documentation: { desc: '地址' }
-        expose :phone, documentation: { desc: '联系电话' }
+        expose :available_phone, as: :phone, documentation: { desc: '联系电话' }
         expose :business_hours, documentation: { desc: '营业时间' }
         expose :distance, documentation: { desc: '商家之间的距离'}, if: ->(site, options) { options.fetch(:includes, []).map(&:to_s).include?('distance') }
       end
