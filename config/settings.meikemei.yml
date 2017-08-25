@@ -2,8 +2,8 @@ default: &default
   site:
     name: 淘美客
     host: http://api.mokomo.cn
-    copyright: © MoKoMo All Right Reserved 2015
-    description: 淘美客是一家提供在线美容预约服务的互联网平台，专业打造优质舒适的社区美容服务，拥有丰富多样的美容项目、各有所长的美容技师供您自由选择。
+    copyright: © ToMoKo All Right Reserved 2017
+    description: 淘美客是一家提供在线美容预约服务的私享平台，专业打造优质舒适的社区美容服务，丰富多样的美容项目、各有所长的美容技师供您自由选择。
     slogan: 定制私人美容，想约就约放心选择
   email:
     sender: admin@tanmer.com

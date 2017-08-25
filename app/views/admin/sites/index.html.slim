@@ -65,9 +65,8 @@ h1.page-header
             - if Settings.project.meikemei?
               th 联系人
               th 联系人电话
+              th 地址
               th 是否签约
-              th 营业时间
-              th 营销备注
             th 更新历史
             th 操作
 
@@ -86,13 +85,12 @@ h1.page-header
               - if Settings.project.meikemei?
                 td = site.contact_name
                 td = site.contact_phone
+                td = site.address_line
                 td
                   - if site.has_contract == "1"
                     => link_to "已签约", '#', class: 'btn btn-xs btn-success'
                   - else
                     => link_to "未签约", '#', class: 'btn btn-xs btn-warning'
-                td = site.business_hours
-                td = raw site.content
               td
                 a[href="#"] = User.find_by(id: site.updated_by).try(:username).to_s
                 = '在'+ distance_of_time_in_words_to_now(site.updated_at) + '前更新'
