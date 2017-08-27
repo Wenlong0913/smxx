@@ -3,7 +3,7 @@ subscriber = null
 navMessagesVue = null
 tableMessagesVue = null
 onReceivedMessage = (data)->
-  if data.type == 'notification-message' || true
+  if data.type == 'notification-message'
     data = JSON.parse data.message
     localMessages = JSON.parse(sessionStorage.getItem('messages') || null) || []
     localMessages.splice 0, 0, data
