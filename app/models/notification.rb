@@ -21,7 +21,7 @@ class Notification < ApplicationRecord
   def actor_avatar_url
     self.actor.display_headshot
   end
-  
+
   #  有actor_id时
   # <img src="<%= notice.actor_avatar_url%>" alt="" class="img-circle" width="80px">
   # <a href="#"><%= notice.actor_name%></a>
@@ -35,7 +35,7 @@ class Notification < ApplicationRecord
   # </p>
   # #####您的订单状态更新了
   def self.notice(user_id, actor_id, type, content, target, target_name, target_url=nil, second_target=nil, second_target_name=nil, second_target_url=nil)
-    create({
+    recorde = create({
       user_id: user_id,
       actor_id: actor_id,
       notify_type: type,
@@ -47,6 +47,7 @@ class Notification < ApplicationRecord
       second_target_name: second_target_name,
       second_target_url: second_target_url
     })
+    UserChannel.broadcast_to User.find_by(id: user_id), message: recorde.to_json, type: 'notification-message'
   end
 
   def self.read!(notification_ids)
