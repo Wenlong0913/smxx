@@ -47,7 +47,7 @@ class Order < ApplicationRecord
       completed: 2   # 已完成
     }
   end
-  if Settings.project.grand?
+  if Settings.project.grand? || Settings.project.demo? || Settings.project.dagle?
     enum internal_status: {
       packing: 0,    # 拆分物料
       packed: 1,     # 完成拆分
@@ -60,9 +60,9 @@ class Order < ApplicationRecord
 
   belongs_to :user
   belongs_to :site
-  if Settings.project.dagle? || Settings.project.demo? || Settings.project.grand?
-    belongs_to :member
-  end
+  # if Settings.project.dagle? || Settings.project.demo? || Settings.project.grand?
+  #   belongs_to :member
+  # end
   belongs_to :preorder_conversition
   belongs_to :create_user, class_name: 'User', foreign_key: :create_by
   belongs_to :update_user, class_name: 'User', foreign_key: :update_by
@@ -94,7 +94,7 @@ class Order < ApplicationRecord
 
   # attr_accessor :mobile_phone, :member_name
   #
-  if Settings.project.grand?
+  if Settings.project.grand? || Settings.project.demo? || Settings.project.dagle?
     belongs_to :member
     validates_presence_of :member
     # validates_presence_of :delivery_date
@@ -113,7 +113,7 @@ class Order < ApplicationRecord
     if self.price.blank?
       self.price = 0
     end
-    if Settings.project.grand?
+    if Settings.project.grand? || Settings.project.demo? || Settings.project.dagle? 
       self.user = self.member.user
     end
     # 判断是否要发支付成功的短信
@@ -172,7 +172,7 @@ class Order < ApplicationRecord
   # end
 
   def generate_code
-    return if Settings.project.grand? && self.code.present?
+    return if (Settings.project.grand? || Settings.project.demo? || Settings.project.dagle?) && self.code.present?
     prefix = Time.now.strftime('%Y%m%d')
     number = self.class.where("code LIKE ?", prefix+'%').count
     loop do
