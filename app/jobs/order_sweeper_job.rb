@@ -4,7 +4,7 @@ class OrderSweeperJob
   def perform
     if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei?
       # 获取配置信息
-      current_setting = AppSetting.where(active: true).first || AppSetting.first
+      current_setting = AppSetting.current
       auto_deliver_days = current_setting.auto_deliver_days.to_f || 30
       auto_cancel_seconds = (current_setting.auto_cancel_hours.to_f || 1) * 60 * 60
 

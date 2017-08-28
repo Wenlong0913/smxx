@@ -5,4 +5,6 @@ class AppSetting < ApplicationRecord
 
   validates_presence_of :name, :key_word
   validates_uniqueness_of :name, scope: [:key_word]
+
+  scope :current, -> { where(active: true).first || first }
 end

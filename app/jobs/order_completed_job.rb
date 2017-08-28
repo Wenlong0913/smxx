@@ -2,11 +2,7 @@ class OrderCompletedJob
   include Sidekiq::Worker
 
   def perform(order_id, from='auto')
-    order = begin
-      Order.find(order_id)
-    rescue => e
-      nil
-    end
+    order = Order.find_by(id: order_id)
     if order
       if order.delivering? && from == 'auto'
         order.completed!
