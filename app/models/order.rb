@@ -60,7 +60,9 @@ class Order < ApplicationRecord
 
   belongs_to :user
   belongs_to :site
-  # belongs_to :member
+  if Settings.project.dagle? || Settings.project.demo? || Settings.project.grand?
+    belongs_to :member
+  end
   belongs_to :preorder_conversition
   belongs_to :create_user, class_name: 'User', foreign_key: :create_by
   belongs_to :update_user, class_name: 'User', foreign_key: :update_by
