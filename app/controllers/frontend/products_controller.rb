@@ -15,9 +15,6 @@ class Frontend::ProductsController < Frontend::BaseController
     # @similar_products = Product.where(tag_list: @product.tag_list.to_s).limit(3)
   end
   
-  def wechat_product
-    @product = Product.find(params[:id])
-  end
 
   private
     def get_user_id

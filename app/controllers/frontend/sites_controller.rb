@@ -8,10 +8,6 @@ class Frontend::SitesController < Frontend::BaseController
     @comment_path = comments_frontend_site_path(@site)
   end
 
-	def wechat_site
-		@site = Site.find(params[:id])
-	end
-
   private
     def get_user_id
       current_user && current_user.id

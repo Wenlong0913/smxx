@@ -53,14 +53,20 @@ module FrontendRoute
         post "binding_weixin"
         post "binding_phone"
       end
-
+      # [ 商家, 产品, 新闻 ] 查询路由配置
       get :search_result, to: 'frontend/search#search_result'
+      # 文广痛微场馆路由配置
+      resources :micro_website, only: :index, controller: 'frontend/micro_website'
+      resource :micro_website, only: [], controller: 'frontend/micro_website' do
+        get 'wechat_sites' # 场馆列表
+        get 'wechat_products' # 活动列表
+        get 'wechat_product/:id', action: 'wechat_product', as: 'wechat_product'
+        get 'wechat_site/:id', action: 'wechat_site', as: 'wechat_site'
+      end
 
       namespace :frontend do
         get 'home/index'
         match 'share/(:class/:id)', to: "share#index", via: :get
-        get 'wechat_product/:id', to: 'products#wechat_product', as: 'wechat_product'
-        get 'wechat_site/:id', to: 'sites#wechat_site', as: 'wechat_site'
 
         resources :orders do
           collection do
@@ -82,18 +88,12 @@ module FrontendRoute
         end
         resources :site_catalogs do
           resources :sites
-          collection do
-            get 'wechat_sites'
-          end
         end
         resources :products do
           commentable
         end
         resources :product_catalogs do
           resources :products
-          collection do
-            get 'wechat_products'
-          end
         end
 
       end

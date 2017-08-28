@@ -10,18 +10,6 @@ class Frontend::SiteCatalogsController < Frontend::BaseController
     @sites = @site_catalog.sites.order(updated_at: :desc).page(params[:page])
   end
 
-  # 微信公众号使用
-  def wechat_sites
-    # @site_catalog = SiteCatalog.find(params[:id])
-    @sites = Site.all.order(updated_at: :desc).page(params[:page])
-    @site_catalogs = SiteCatalog.all.order(updated_at: :ASC).page(params[:page])
-
-    if params[:catalog_id]
-      @site_catalog =SiteCatalog.find(params[:catalog_id])
-      @sites = @site_catalog.sites.order(updated_at: :desc).page(params[:page])
-    end
-
-  end
 
   private
 
