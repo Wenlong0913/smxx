@@ -221,11 +221,11 @@ h1.page-header
             - if Settings.project.meikemei?
               table.table.table-profile
                 tr
-                  td.field 美容院商家
+                  td.field 美容院商家：
                   td
                     =@product.site.title
 
-                  td.field 产品名称
+                  td.field 产品名称：
                   td
                     a
                       = @product.name
@@ -236,55 +236,43 @@ h1.page-header
                     - %w(hot recommend event promotion).each do |v|
                       - if @product.features[v] == '1'
                           span.label.label-warning => Product.human_attribute_name(v.to_sym)
-                  td.field 商家
-                  td
-                    a
-                      = @product.site.title
-
                 tr.divider
                   td[colspan='4']
                 tr
-                  td.field 库存
+                  td.field 库存：
                   td
 
                     = @product.name
 
-                  td.field 产品分类
+                  td.field 产品分类：
                   td
-                    =@product.catalog.try(:name)
+                    = @product.catalog.try(:name)
                 tr
-                  td.field 原价
+                  td.field 原价：
                   td
                     = @product.price.to_f / 100
-                  td.field 优惠价
+                  td.field 优惠价：
                   td
-                    =@product.discount.to_f / 100
+                    = @product.discount.to_f / 100
                 tr
-                  td.field 月单数
+                  td.field 月单数：
                   td
-                    =@product.month_number
-                  td.field 适应人群
+                    = @product.month_number
+                  td.field 适应人群：
                   td
-                    =@product.responsive_person
-
+                    = @product.responsive_person
                 tr
-                  td.field 注意事项
+                  td.field 适应人群：
                   td
-                    =@product.warning_message
-                  td.field 描述
-
+                    = @product.responsive_person
+                  td.field 服务时长：
                   td
-                    = @product.description
-
+                    = @product.service_time
+              table.table.table-profile
                 tr
-                  td.field 适应人群
+                  td.field 注意事项：
                   td
-                    =@product.responsive_person
-                  td.field 服务时长
-                  td
-                    =@product.service_time
-                tr.divider
-                  td[colspan='2']
+                    = @product.warning_message
             - else
               table.table.table-profile
                 tr
