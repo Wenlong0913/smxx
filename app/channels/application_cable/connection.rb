@@ -8,8 +8,12 @@ module ApplicationCable
 
     private
     def find_user
-      api_token = ApiToken.find_by(token: request.params[:credential])
-      api_token && api_token.user
+      if request.params[:credential].present?
+        api_token = ApiToken.find_by(token: request.params[:credential])
+        api_token && api_token.user
+      else
+        request::env['warden'].user
+      end
     end
   end
 end

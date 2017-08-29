@@ -35,7 +35,7 @@ class Notification < ApplicationRecord
   # </p>
   # #####您的订单状态更新了
   def self.notice(user_id, actor_id, type, content, target, target_name, target_url=nil, second_target=nil, second_target_name=nil, second_target_url=nil)
-    recorde = create({
+    record = create({
       user_id: user_id,
       actor_id: actor_id,
       notify_type: type,
@@ -47,7 +47,7 @@ class Notification < ApplicationRecord
       second_target_name: second_target_name,
       second_target_url: second_target_url
     })
-    UserChannel.broadcast_to User.find_by(id: user_id), message: recorde.to_json, type: 'notification-message'
+    UserChannel.broadcast_to User.find(id: user_id), message: record.to_json, type: 'notification-message' if user_id.present?
   end
 
   def self.read!(notification_ids)

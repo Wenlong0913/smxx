@@ -16,7 +16,7 @@ onConnected = ->
   subscriber.perform('push_agent_message', {})
 onDisconnected = ->
   console.log('disconnected')
-connect = (credential, events = {}) ->
+connect = (events = {}) ->
   channel = 'UserChannel'
   defaultEvents =
     connected: ->
@@ -27,7 +27,7 @@ connect = (credential, events = {}) ->
       console.log('debug', 'my cable rejected')
     received: (payload) ->
       console.log('debug', 'my cable received: ', payload)
-  cable = window.ActionCable.createConsumer('/cable?credential=' + credential)
+  cable = window.ActionCable.createConsumer('/cable')
   cable.subscriptions.create({channel}, Object.assign({}, defaultEvents, events))
 removeItem = (item, index)->
   navMessagesVue._data.messages.splice(index, 1)
@@ -40,10 +40,10 @@ removeItem = (item, index)->
       if data.status == 'ok'
         console.log 'ok'
       else
-        $.gritter.add({type: 'error', title: '错误', text: "删除失败!"})
+        $.gritter.add({type: 'error', title: '错误', text: "消息更新失败!"})
         location.reload(true)
     error: (data)->
-      $.gritter.add({type: 'error', title: '错误', text: "删除失败!"})
+      $.gritter.add({type: 'error', title: '错误', text: "消息更新失败!"})
       location.reload(true)
 redirectTo = (item, index)->
   removeItem(item, index)
@@ -54,7 +54,7 @@ redirectTo = (item, index)->
 $ ->
   # 连接
   if !subscriber
-    subscriber = connect($('body').data('token'), {
+    subscriber = connect({
       disconnected: onDisconnected,
       connected: onConnected,
       received: onReceivedMessage
