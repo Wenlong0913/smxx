@@ -1,65 +1,65 @@
-<nav class="navbar navbar-default navbar-fixed-top" style="margin-bottom: 5px;">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <p class="navbar-text title-cneter-p" style="display: inline-block;">活动信息</p>
-      <a class="navbar-brand" href="#">
-        <%#= image_tag '/templetes/newshub/images/footer-logo1.png', style: 'height: 20px;' %>
-        龙泉文化
-      </a>
-    </div>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li>
-          <%= link_to '新闻资讯', '/wechart'%>
-        </li>
-        <li class="active">
-          <%= link_to '活动报名',  wechat_products_micro_website_path%>
-        </li>
-        <li>
-          <%= link_to '场馆信息', wechat_sites_micro_website_path %>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<%= render file: 'frontend/micro_website/_navbar.html.erb' %>
 
 <div class="panel panel-default top-tabs-block">
   <div class="list-group-item screen-list">
-
+    <label class="" style="color: #777;">
+      <small>状态：</small>
+    </label>
     <label class="<%= params[:type] == nil ? 'active' : '' %>">
       <a href="<%= wechat_products_micro_website_path %>">
         <small>全部</small>
       </a>
     </label>
     <label class="<%= params[:type] == 'pending' ? 'active' : '' %>">
-      <a href="<%= wechat_products_micro_website_path(type: 'pending') %>">
+      <a href="<%= wechat_products_micro_website_path + '?type=pending' + ( params[:id].present? ? '&id='+ params[:id] : '' ) %>">
         <small>未开始</small>
       </a>
     </label>
     <label class="<%= params[:type] == 'open' ? 'active' : '' %>">
-      <a href="<%= wechat_products_micro_website_path(type: 'open') %>">
+      <a href="<%= wechat_products_micro_website_path + '?type=open' + ( params[:id].present? ? '&id='+ params[:id] : '' ) %>">
         <small>进行中</small>
       </a>
     </label>
     <label class="<%= params[:type] == 'completed' ? 'active' : '' %>">
-      <a href="<%= wechat_products_micro_website_path(type: 'completed') %>">
+      <a href="<%= wechat_products_micro_website_path + '?type=completed' + ( params[:id].present? ? '&id='+ params[:id] : '' ) %>">
         <small>已售完</small>
       </a>
     </label>
     <label class="<%= params[:type] == 'closed' ? 'active' : '' %>">
-      <a href="<%= wechat_products_micro_website_path(type: 'closed') %>">
+      <a href="<%= wechat_products_micro_website_path + '?type=closed' + ( params[:id].present? ? '&id='+ params[:id] : '' ) %>">
         <small>已结束</small>
       </a>
     </label>
   </div>
+
+  <div class="list-group-item screen-list">
+    <label class="" style="color: #777;">
+      <small>分类：</small>
+    </label>
+    <label class="<%= params[:id] == nil ? 'active' : '' %>">
+      <a href="<%= wechat_products_micro_website_path %>">
+        <small>全部</small>
+      </a>
+    </label>
+
+    <% @product_catalogs.each do |catalog|%>
+      <label class="<%= params[:id] == catalog.id.to_s ? 'active' : '' %>">
+        <a href="<%= wechat_products_micro_website_path + '?id=' + catalog.id.to_s + (params[:type].present? ? '&type='+ params[:type] : '') %>">
+          <small><%= catalog.name %></small>
+        </a>
+      </label>
+    <% end %>
+
+  </div>
 </div>
 <div class="list-group custom-list">
+  <% if @products.empty? %>
+    <p class="text-center" style="margin-top: 15px;">
+      <span class="fa fa-exclamation-circle" style="color: #777; font-size: 2rem; vertical-align: middle;"></span>
+      <span class="" style="color: #777;">当前状态或分类下暂无信息</span>
+    </p>
+  <% end %>
+
   <% @products.each do |product|%>
     <a href='<%= wechat_product_micro_website_path(id: product.id) %>' class="list-group-item">
       <div class="image-dom" style="background-image: url('<%= product.first_image %>')"></div>
@@ -107,25 +107,6 @@
   <% end%>
 </div>
 <%= paginate @products %>
-<!-- <nav aria-label="Page navigation" class='text-right'>
-  <ul class="pagination">
-    <li>
-      <a href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li>
-      <a href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav> -->
 
 <style lang="css">
   body { padding-top: 55px; }
