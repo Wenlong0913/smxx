@@ -1,12 +1,14 @@
 <style type="text/css">
+body { padding-top: 50px; }
 @media (max-width: 767px) {
   .slider-style-three .item, .slider-style-three .container{
     min-height: 200px !important;
   }
 }
 </style>
+<%= render file: 'frontend/micro_website/_navbar.html.erb' %>
 
-<div class="main-wrapper">
+<div class="main-wrapper" style="">
   <div class="container" style="background-color: #fff;">
 
     <!-- banner -->
@@ -151,7 +153,7 @@
                     暂无
                   <% end %>
                 </p>
-                <p>联系电话： 
+                <p>联系电话：
                   <% if site.contact_phone.present? %>
                     <%= site.contact_phone %>
                   <% else %>
@@ -199,9 +201,8 @@
           <p>
             <a href="#"><i class="fa fa-arrow-circle-up"></i>&nbsp;点我回到顶部</a>
           </p>
-        </address>          
+        </address>
       </div><!-- /.footer-bottom-content -->
     </div><!-- /.container -->
-  </div><!-- /.footer-bottom -->    
+  </div><!-- /.footer-bottom -->
 </footer><!-- /#footer -->
-
