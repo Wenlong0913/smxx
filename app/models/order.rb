@@ -118,7 +118,7 @@ class Order < ApplicationRecord
     @should_send_paid_message = self.status_change == ['open', 'paid'] || self.status_change == ['pending', 'paid']
     # self.user = self.member.user
     # 订单状态改变消息提醒
-    if self.status_changed? && !self.new_record?
+    if self.status_changed? && !self.new_record? && self.user
       if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei? || Settings.project.wgtong?
         content = nil
         case self.status

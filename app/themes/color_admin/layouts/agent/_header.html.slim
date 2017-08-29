@@ -98,7 +98,7 @@
                       p.price
                         | {{(new Date(message.created_at)).toLocaleString()}}
                     .cart-item-close
-                      a[href="javascript:void(0)" data-toggle="tooltip" data-title="Remove" @click="removeItem(message, index)"] ×
+                      span[data-toggle="tooltip" data-title="Remove" @click="removeItem(message, index)"] ×
               .cart-footer
                 .row.row-space-10
                   .col-xs-12

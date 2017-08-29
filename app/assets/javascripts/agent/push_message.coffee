@@ -2,18 +2,17 @@
 subscriber = null
 navMessagesVue = null
 tableMessagesVue = null
+localMessages = []
 onReceivedMessage = (data)->
   if data.type == 'notification-message'
-    data = JSON.parse data.message
-    localMessages = JSON.parse(sessionStorage.getItem('messages') || null) || []
-    localMessages.splice 0, 0, data
-    navMessagesVue._data.messages = localMessages
-    tableMessagesVue.addItem(data) if tableMessagesVue
-    sessionStorage.setItem('messages', JSON.stringify(localMessages))
+    localMessages.unshift JSON.parse data.message
+  else if data.type == 'notification-messages'
+    localMessages = JSON.parse(data.messages || null) || []
+  navMessagesVue.load()
+  tableMessagesVue.load() if tableMessagesVue
 onConnected = ->
   console.log('connected')
-  sessionStorage.removeItem('messages')
-  subscriber.perform('push_agent_message', {})
+  subscriber.perform('notifications', {})
 onDisconnected = ->
   console.log('disconnected')
 connect = (events = {}) ->
@@ -30,9 +29,9 @@ connect = (events = {}) ->
   cable = window.ActionCable.createConsumer('/cable')
   cable.subscriptions.create({channel}, Object.assign({}, defaultEvents, events))
 removeItem = (item, index)->
-  navMessagesVue._data.messages.splice(index, 1)
-  tableMessagesVue._data.messages.splice(index, 1) if tableMessagesVue
-  sessionStorage.setItem('messages', JSON.stringify(navMessagesVue._data.messages))
+  localMessages.splice(index, 1)
+  navMessagesVue.load()
+  tableMessagesVue.load() if tableMessagesVue
   $.ajax
     url: '/agent/messages/'+item.id
     type: 'PATCH'
@@ -67,7 +66,7 @@ $ ->
       messages: []
     methods:
       load: ->
-        this.messages = JSON.parse(sessionStorage.getItem('messages')) || []
+        this.messages = localMessages
       removeItem: (item, index)->
         removeItem(item, index)
       redirectTo: (item, index) ->
@@ -85,16 +84,10 @@ $ ->
         messages: []
       methods:
         load: ->
-          for x in $(this.$el).data('messages')
-            this.addItem(x)
+          this.messages = localMessages
         removeItem: (item, index)->
           removeItem(item, index)
         redirectTo: (item, index) ->
           redirectTo(item, index)
-        addItem: (item) ->
-          hasItem = true
-          for x in this.messages
-            hasItem = false if x.id == item.id
-          this.messages.splice(0, 0, item) if hasItem
       mounted: ->
         this.load()

@@ -25,10 +25,8 @@ class UserChannel < ApplicationCable::Channel
     UserChannel.broadcast_to current_user, message: "#{push_messages.to_json}", type: 'room'
   end
 
-  def push_agent_message
-    notices = Notification.where(user_id: current_user.id).unread.order(created_at: :asc)
-    notices.each do |v|
-      UserChannel.broadcast_to current_user, message: v.to_json, type: 'notification-message'
-    end
+  def notifications
+    notices = Notification.where(user_id: current_user.id).unread.order(created_at: :desc)
+    UserChannel.broadcast_to current_user, messages: notices.to_json, type: 'notification-messages'
   end
 end

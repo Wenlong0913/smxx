@@ -47,7 +47,7 @@ class Notification < ApplicationRecord
       second_target_name: second_target_name,
       second_target_url: second_target_url
     })
-    UserChannel.broadcast_to User.find(id: user_id), message: record.to_json, type: 'notification-message' if user_id.present?
+    UserChannel.broadcast_to User.find(user_id), message: record.to_json, type: 'notification-message' if user_id.present?
   end
 
   def self.read!(notification_ids)

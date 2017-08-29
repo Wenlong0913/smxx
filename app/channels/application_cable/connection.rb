@@ -12,7 +12,7 @@ module ApplicationCable
         api_token = ApiToken.find_by(token: request.params[:credential])
         api_token && api_token.user
       else
-        request::env['warden'].user
+        request::env['warden'].authenticate(scope: :user)
       end
     end
   end
