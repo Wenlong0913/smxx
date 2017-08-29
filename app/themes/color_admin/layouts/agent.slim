@@ -13,7 +13,7 @@ html
     = stylesheet_link_tag    'color_admin/agent/application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'color_admin/agent/application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-  body.bg-silver[class=[controller_path.parameterize, action_name] data-token=[current_user.issue_api_token(request.env['HTTP_USER_AGENT'])]]
+  body.bg-silver[class=[controller_path.parameterize, action_name]]
     #page-container.fade
       = render 'layouts/agent/topNav'
       = render 'layouts/agent/header'
