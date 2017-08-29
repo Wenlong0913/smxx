@@ -12,7 +12,8 @@ class Frontend::MicroWebsiteController < Frontend::BaseController
   end
 
   def wechat_products
-    if params[:id]
+    @product_catalogs = ProductCatalog.all
+    if params[:id].present?
       @product_catalog = ProductCatalog.find(params[:id])
       @products = @product_catalog.products
     else
