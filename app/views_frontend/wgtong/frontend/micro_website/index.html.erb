@@ -1,0 +1,248 @@
+<style type="text/css">
+@media (max-width: 767px) {
+  .slider-style-three .item, .slider-style-three .container{
+    min-height: 200px !important;
+  }
+}
+</style>
+
+<div class="main-wrapper">
+  <div class="container" style="background-color: #fff;">
+
+    <!-- banner -->
+    <div class="row">
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="3000" >
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+          <div class="item active">
+            <% if Keystore.value_for('wechat-index-banner01-380×200').present? %>
+              <% wechat_index_banner01 = Keystore.value_for('wechat-index-banner01-380×200').split('|') %>
+              <a href="<%= wechat_index_banner01[1] || 'javascript:void(0)' %>">
+                <img src="<%= wechat_index_banner01[0] %>" alt="">
+              </a>
+            <% end %>
+          </div>
+          <div class="item">
+            <% if Keystore.value_for('wechat-index-banner02-380×200').present? %>
+              <% wechat_index_banner02 = Keystore.value_for('wechat-index-banner02-380×200').split('|') %>
+              <a href="<%= wechat_index_banner02[1] || 'javascript:void(0)' %>">
+                <img src="<%= wechat_index_banner02[0] %>" alt="">
+              </a>
+            <% end %>
+          </div>
+          <div class="item">
+            <% if Keystore.value_for('wechat-index-banner03-380×200').present? %>
+              <% wechat_index_banner03 = Keystore.value_for('wechat-index-banner03-380×200').split('|') %>
+              <a href="<%= wechat_index_banner03[1] || 'javascript:void(0)' %>">
+                <img src="<%= wechat_index_banner03[0] %>" alt="">
+              </a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- nav -->
+    <div class="row text-center" style="margin: 20px 0px;">
+      <div class="col-md-3 col-xs-3 col-sm-3">
+        <a href="/wechat_products" style="color: #333;">
+          <div style="width: 50px;height: 50px;background-color: #e84f17;color: #fff;border-radius: 50%;padding: 13px 10px;">
+            <i class="fa fa-list fa-2x"></i>
+          </div>
+          <small>活动报名</small>
+        </a>
+      </div>
+      <div class="col-md-3 col-xs-3 col-sm-3">
+        <a href="/wechat_products" style="color: #333;">
+          <div style="width: 50px;height: 50px;background-color: #7cba00;color: #fff;border-radius: 50%;padding: 10px 12px;">
+            <i class="fa fa-cube fa-2x"></i>
+          </div>
+          <small>场馆信息</small>
+        </a>
+      </div>
+      <div class="col-md-3 col-xs-3 col-sm-3">
+        <a href="/wechart" style="color: #333;">
+          <div style="width: 50px;height: 50px;background-color: #00a2f2;color: #fff;border-radius: 50%;padding: 13px 10px;">
+            <i class="fa fa-newspaper-o fa-2x"></i>
+          </div>
+          <small>新闻资讯</small>
+        </a>
+      </div>
+      <div class="col-md-3 col-xs-3 col-sm-3">
+        <a href="/wechart" style="color: #333;">
+          <div style="width: 50px;height: 50px;background-color: #ffbb00;color: #fff;border-radius: 50%;padding: 10px 12px;">
+            <i class="fa fa-flag fa-2x"></i>
+          </div>
+          <small>近期热点</small>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 热门活动 -->
+  <div class="container-fulid">
+    <div class="row" style="margin: 20px 0px;">
+      <h4 style="padding-left: 5px;border-left: 5px solid #e84f17;">热门活动 <small class="pull-right" style="padding-right: 5px;"><a href="/wechat_products">查看更多&gt;&gt;</a></small></h4>
+
+      <% @wechat_index_hot_product.each do |product| %>
+        <div class="col-md-6 col-xs-6 col-sm-6" style="padding: 5px;">
+          <img src="<%= product.first_image %>" class="img-responsive" >
+          <div style="border: 1px solid #ccc;padding: 5px;background-color: #fff;">
+            <p><%= product.name %></p>
+            <span>价格：
+              <b style="color: #e84f17;">
+                <% if product.sell_price > 0 %>
+                  <%= product.sell_price / 100.0 %>
+                <% else %>
+                  免费
+                <% end %>
+              </b>
+            </span>
+            <br>
+            <span>状态：
+              <b style="color: #e84f17;">
+                <% if product.status == 'open' %>
+                  进行中
+                <% elsif product.status == 'completed' %>
+                  已售完
+                <% elsif product.status == 'pending' %>
+                  未开始
+                <% elsif product.status == 'closed' %>
+                  已结束
+                <% else %>
+                  未发布
+                <% end %>
+              </b>
+            </span>
+            <br>
+            <span><i class="fa fa-clock-o">&nbsp;</i><%= product.date.present? ? product.date : ( product.time.presence || "尚未发布" ) %></span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- 场馆展示 -->
+  <div class="container-fulid">
+    <div class="row" style="margin: 20px 0px;">
+      <h4 style="padding-left: 5px;border-left: 5px solid #e84f17;">热门场馆<small class="pull-right" style="padding-right: 5px;"><a href="/wechat_products">查看更多&gt;&gt;</a></small></h4>
+      <ul class="entertainment-slider" style="padding: 0px;">
+        <% @wechat_index_hot_site.each do |site| %>
+          <li>
+            <div class="entertainment">
+              <div class="entertainment-image">
+                <img class="img-responsive" src="<%= site.first_image %>" alt="Image">
+              </div>
+              <div class="entertainment-info text-left">
+                <h2><%= site.title %></h2>
+                <p>地址：
+                  <% if site.address_line.present? %>
+                    <%= site.address_line %>
+                  <% else %>
+                    暂无
+                  <% end %>
+                </p>
+                <p>联系电话： 
+                  <% if site.contact_phone.present? %>
+                    <%= site.contact_phone %>
+                  <% else %>
+                    <%= site.phone %>
+                  <% end %>
+                </p>
+                <p><%= site.description.truncate(70) %></p>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+      <p class="text-center" style="margin: 0px;"><small style="color: #ccc;">左右滑动场馆，查看更多！</small></p>
+    </div>
+  </div>
+
+  <!-- 新闻资讯 -->
+  <div class="container-fulid">
+    <div class="row" style="margin: 20px 0px;">
+      <h4 style="padding-left: 5px;border-left: 5px solid #e84f17;">新闻资讯<small class="pull-right" style="padding-right: 5px;"><a href="/wechart">查看更多&gt;&gt;</a></small></h4>
+
+      <%# Cms::Page.hot(@cms_site.id, 5, channel: 'wechart').each_with_index do |page, index| %>
+      <div class="row">
+        <div class="col-md-4 col-xs-4 col-sm-4" style="padding: 0px;">
+          <img src="/templetes/newshub/images/recent/news1.jpg" class="img-responsive" >
+        </div>
+        <div class="col-md-8 col-xs-8 col-sm-8">
+          <p>区委书记何勋主持召开成都市龙泉驿区绿道建设工作专题会</p>
+          <p style="color: #555;"><i class="fa fa-clock-o">大约1小时前</i>&nbsp;&nbsp;<i class="fa fa-comments">评论：20</i></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-xs-4 col-sm-4" style="padding: 0px;">
+          <img src="/templetes/newshub/images/recent/news2.jpg" class="img-responsive" >
+        </div>
+        <div class="col-md-8 col-xs-8 col-sm-8">
+          <p>第七届成都数字娱乐周昨日闭幕 中东欧16国专家武侯“献智”</p>
+          <p style="color: #555;"><i class="fa fa-clock-o">大约1小时前</i>&nbsp;&nbsp;<i class="fa fa-comments">评论：20</i></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-xs-4 col-sm-4" style="padding: 0px;">
+          <img src="/templetes/newshub/images/recent/news3.jpg" class="img-responsive" >
+        </div>
+        <div class="col-md-8 col-xs-8 col-sm-8">
+          <p>10余处三国文化遗存将成数字化文化地标</p>
+          <p style="color: #555;"><i class="fa fa-clock-o">大约1小时前</i>&nbsp;&nbsp;<i class="fa fa-comments">评论：20</i></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-xs-4 col-sm-4" style="padding: 0px;">
+          <img src="/templetes/newshub/images/recent/news4.jpg" class="img-responsive" >
+        </div>
+        <div class="col-md-8 col-xs-8 col-sm-8">
+          <p>龙泉驿区市场和质量监督管理局联合区公安分局开展药...</p>
+          <p style="color: #555;"><i class="fa fa-clock-o">大约1小时前</i>&nbsp;&nbsp;<i class="fa fa-comments">评论：20</i></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-xs-4 col-sm-4" style="padding: 0px;">
+          <img src="/templetes/newshub/images/recent/news5.jpg" class="img-responsive" >
+        </div>
+        <div class="col-md-8 col-xs-8 col-sm-8">
+          <p>保护“龙泉蓝”44台燃煤锅炉全部“清零”</p>
+          <p style="color: #555;"><i class="fa fa-clock-o">大约1小时前</i>&nbsp;&nbsp;<i class="fa fa-comments">评论：20</i></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- main-wrapper -->
+
+<footer id="footer">
+  <div class="footer-bottom text-center" style="padding: 10px 0px;">
+    <div class="container">
+      <div class="footer-bottom-content">
+        <address>
+          <p>
+          <a href="#">点我回到顶部<i class="fa fa-"></i></a>
+          <br>
+          &copy;2017 <a href="#">龙泉驿区文化云微站 All Rights reserved</a>
+          <br>
+          电子邮件: <a href="#">tang@wgtong.com</a>
+          <br>
+          广告联系: <a href="#">028-82157660 </a> 
+          <br>
+          联系电话: 17318194563
+          <br>
+          技术支持：<a href="">探码科技</a>
+          </p>
+        </address>          
+      </div><!-- /.footer-bottom-content -->
+    </div><!-- /.container -->
+  </div><!-- /.footer-bottom -->    
+</footer><!-- /#footer -->
+
