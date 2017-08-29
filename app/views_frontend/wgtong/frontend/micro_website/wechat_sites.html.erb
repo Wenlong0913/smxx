@@ -17,6 +17,12 @@
   </div>
 </div>
 <div class="list-group custom-list">
+  <% if @sites.empty? %>
+    <p class="text-center" style="margin-top: 15px;">
+      <span class="fa fa-exclamation-circle" style="color: #777; font-size: 2rem; vertical-align: middle;"></span>
+      <span class="" style="color: #777;">当前状态或分类下暂无信息</span>
+    </p>
+  <% end %>
   <% @sites.each do |site|%>
     <a href='<%= wechat_site_micro_website_path(id: site.id) %>' class="list-group-item">
       <div class="row">
@@ -35,7 +41,7 @@
           </div>
           <div class="label-catalog">
             <small>
-              <label><%= site.catalog.name %></label>
+              <label><%= site.catalog.try(:name) %></label>
             </small>
           </div>
         </div>
