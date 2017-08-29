@@ -52,7 +52,7 @@
     <!-- nav -->
     <div class="row text-center" style="margin: 20px 0px;">
       <div class="col-md-3 col-xs-3 col-sm-3">
-        <a href="/wechat_products" style="color: #333;">
+        <a href="/micro_website/wechat_products" style="color: #333;">
           <div style="width: 50px;height: 50px;background-color: #e84f17;color: #fff;border-radius: 50%;padding: 13px 10px;">
             <i class="fa fa-list fa-2x"></i>
           </div>
@@ -60,7 +60,7 @@
         </a>
       </div>
       <div class="col-md-3 col-xs-3 col-sm-3">
-        <a href="/wechat_products" style="color: #333;">
+        <a href="/micro_website/wechat_products" style="color: #333;">
           <div style="width: 50px;height: 50px;background-color: #7cba00;color: #fff;border-radius: 50%;padding: 10px 12px;">
             <i class="fa fa-cube fa-2x"></i>
           </div>
@@ -68,7 +68,7 @@
         </a>
       </div>
       <div class="col-md-3 col-xs-3 col-sm-3">
-        <a href="/wechart" style="color: #333;">
+        <a href="/wechat" style="color: #333;">
           <div style="width: 50px;height: 50px;background-color: #00a2f2;color: #fff;border-radius: 50%;padding: 13px 10px;">
             <i class="fa fa-newspaper-o fa-2x"></i>
           </div>
@@ -76,7 +76,7 @@
         </a>
       </div>
       <div class="col-md-3 col-xs-3 col-sm-3">
-        <a href="/wechart" style="color: #333;">
+        <a href="/wechat" style="color: #333;">
           <div style="width: 50px;height: 50px;background-color: #ffbb00;color: #fff;border-radius: 50%;padding: 10px 12px;">
             <i class="fa fa-flag fa-2x"></i>
           </div>
@@ -92,22 +92,21 @@
       <h4 style="padding-left: 5px;border-left: 5px solid #e84f17;">热门活动 <small class="pull-right" style="padding-right: 5px;"><a href="/wechat_products">查看更多&gt;&gt;</a></small></h4>
 
       <% @wechat_index_hot_product.each do |product| %>
-        <div class="col-md-6 col-xs-6 col-sm-6" style="padding: 5px;">
-          <img src="<%= product.first_image %>" class="img-responsive" >
-          <div style="border: 1px solid #ccc;padding: 5px;background-color: #fff;">
-            <p><%= product.name %></p>
-            <span>价格：
-              <b style="color: #e84f17;">
+        <div class="col-md-12 col-xs-12 col-sm-12" style="padding: 5px;">
+          <a href="<%= wechat_product_micro_website_path(id: product.id) %>">
+            <img src="<%= product.first_image %>" class="img-responsive" >
+          </a>
+          <div style="border: 1px solid #ddd;padding: 5px;">
+            <h4><a href="<%= wechat_product_micro_website_path(id: product.id) %>" style="color: #222629;"><%= product.name.truncate(20) %></a></h4>
+            <p>
+              <span class="label label-primary">
                 <% if product.sell_price > 0 %>
                   <%= product.sell_price / 100.0 %>
                 <% else %>
                   免费
                 <% end %>
-              </b>
-            </span>
-            <br>
-            <span>状态：
-              <b style="color: #e84f17;">
+              </span>&nbsp;&nbsp;
+              <span class="label label-success">
                 <% if product.status == 'open' %>
                   进行中
                 <% elsif product.status == 'completed' %>
@@ -119,10 +118,13 @@
                 <% else %>
                   未发布
                 <% end %>
-              </b>
-            </span>
-            <br>
-            <span><i class="fa fa-clock-o">&nbsp;</i><%= product.date.present? ? product.date : ( product.time.presence || "尚未发布" ) %></span>
+              </span>&nbsp;&nbsp;
+              <% if product.phone.present? %>
+              <span class="label label-info">电话：<%= product.phone %></span>
+              <% end %>
+            </p>
+            <p><%= product.description.truncate(50) %></p>
+            <a href="<%= new_frontend_order_path(product_id: product.id) %>" class="btn btn-primary" >立即预定</a>
           </div>
         </div>
       <% end %>
@@ -169,54 +171,21 @@
   <!-- 新闻资讯 -->
   <div class="container-fulid">
     <div class="row" style="margin: 20px 0px;">
-      <h4 style="padding-left: 5px;border-left: 5px solid #e84f17;">新闻资讯<small class="pull-right" style="padding-right: 5px;"><a href="/wechart">查看更多&gt;&gt;</a></small></h4>
+      <h4 style="padding-left: 5px;border-left: 5px solid #e84f17;">新闻资讯<small class="pull-right" style="padding-right: 5px;"><a href="/wechat">查看更多&gt;&gt;</a></small></h4>
 
-      <%# Cms::Page.hot(@cms_site.id, 5, channel: 'wechart').each_with_index do |page, index| %>
-      <div class="row">
-        <div class="col-md-4 col-xs-4 col-sm-4" style="padding: 0px;">
-          <img src="/templetes/newshub/images/recent/news1.jpg" class="img-responsive" >
+      <% Cms::Page.hot(@cms_site.id, 5, channel: 'wechat').each do |page| %>
+        <div class="row">
+          <div class="col-md-4 col-xs-4 col-sm-4" style="padding: 0px;">
+            <a href="<%= get_cms_url(page) %>">
+              <img src="<%= page.image_path %>" class="img-responsive" >
+            </a>
+          </div>
+          <div class="col-md-8 col-xs-8 col-sm-8">
+            <p><a href="<%= get_cms_url(page) %>"><%= page.title.truncate(34) %></a></p>
+            <p style="color: #555;"><i class="fa fa-clock-o"><%= distance_of_time_in_words_to_now(page.updated_at) %>前</i>&nbsp;&nbsp;<i class="fa fa-eye">浏览：<%= page.impressions_count %></i></p>
+          </div>
         </div>
-        <div class="col-md-8 col-xs-8 col-sm-8">
-          <p>区委书记何勋主持召开成都市龙泉驿区绿道建设工作专题会</p>
-          <p style="color: #555;"><i class="fa fa-clock-o">大约1小时前</i>&nbsp;&nbsp;<i class="fa fa-comments">评论：20</i></p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4 col-xs-4 col-sm-4" style="padding: 0px;">
-          <img src="/templetes/newshub/images/recent/news2.jpg" class="img-responsive" >
-        </div>
-        <div class="col-md-8 col-xs-8 col-sm-8">
-          <p>第七届成都数字娱乐周昨日闭幕 中东欧16国专家武侯“献智”</p>
-          <p style="color: #555;"><i class="fa fa-clock-o">大约1小时前</i>&nbsp;&nbsp;<i class="fa fa-comments">评论：20</i></p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4 col-xs-4 col-sm-4" style="padding: 0px;">
-          <img src="/templetes/newshub/images/recent/news3.jpg" class="img-responsive" >
-        </div>
-        <div class="col-md-8 col-xs-8 col-sm-8">
-          <p>10余处三国文化遗存将成数字化文化地标</p>
-          <p style="color: #555;"><i class="fa fa-clock-o">大约1小时前</i>&nbsp;&nbsp;<i class="fa fa-comments">评论：20</i></p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4 col-xs-4 col-sm-4" style="padding: 0px;">
-          <img src="/templetes/newshub/images/recent/news4.jpg" class="img-responsive" >
-        </div>
-        <div class="col-md-8 col-xs-8 col-sm-8">
-          <p>龙泉驿区市场和质量监督管理局联合区公安分局开展药...</p>
-          <p style="color: #555;"><i class="fa fa-clock-o">大约1小时前</i>&nbsp;&nbsp;<i class="fa fa-comments">评论：20</i></p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4 col-xs-4 col-sm-4" style="padding: 0px;">
-          <img src="/templetes/newshub/images/recent/news5.jpg" class="img-responsive" >
-        </div>
-        <div class="col-md-8 col-xs-8 col-sm-8">
-          <p>保护“龙泉蓝”44台燃煤锅炉全部“清零”</p>
-          <p style="color: #555;"><i class="fa fa-clock-o">大约1小时前</i>&nbsp;&nbsp;<i class="fa fa-comments">评论：20</i></p>
-        </div>
-      </div>
+      <% end %>
     </div>
   </div>
 
@@ -228,17 +197,7 @@
       <div class="footer-bottom-content">
         <address>
           <p>
-          <a href="#">点我回到顶部<i class="fa fa-"></i></a>
-          <br>
-          &copy;2017 <a href="#">龙泉驿区文化云微站 All Rights reserved</a>
-          <br>
-          电子邮件: <a href="#">tang@wgtong.com</a>
-          <br>
-          广告联系: <a href="#">028-82157660 </a> 
-          <br>
-          联系电话: 17318194563
-          <br>
-          技术支持：<a href="">探码科技</a>
+            <a href="#"><i class="fa fa-arrow-circle-up"></i>&nbsp;点我回到顶部</a>
           </p>
         </address>          
       </div><!-- /.footer-bottom-content -->
