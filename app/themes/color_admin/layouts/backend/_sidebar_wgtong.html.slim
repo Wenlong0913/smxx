@@ -96,8 +96,8 @@ li class=("has-sub #{'active' if page?('admin/forage/sources', 'admin/forage/run
     i.fa.fa-inbox
     span 数据采集
   ul.sub-menu
-    li class=("#{'active' if page?('admin/forage/sources')}") = link_to '数据源', admin_forage_sources_path
-    li class=("#{'active' if page?('admin/forage/run_keys')}") = link_to '运行策略', admin_forage_run_keys_path
-    li class=("#{'active' if page?('admin/forage/simples')}") = link_to '数据清单', admin_forage_simples_path
-    li class=("#{'active' if page?('admin/forage/details')}") = link_to '数据详情', admin_forage_details_path
+    / li class=("#{'active' if page?('admin/forage/sources')}") = link_to '数据源', admin_forage_sources_path
+    / li class=("#{'active' if page?('admin/forage/run_keys')}") = link_to '运行策略', admin_forage_run_keys_path
+    / li class=("#{'active' if page?('admin/forage/simples')}") = link_to '数据清单', admin_forage_simples_path
+    / li class=("#{'active' if page?('admin/forage/details')}") = link_to '数据详情', admin_forage_details_path
     li class=("#{'active' if page?('admin/forage/data_caches')}") = link_to '数据合并', admin_forage_data_caches_path

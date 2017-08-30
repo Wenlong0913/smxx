@@ -73,7 +73,7 @@ h1.page-header
             tr
               td = forage_data_cache.id
               td = forage_data_cache.title
-              td = forage_data_cache.migrate_to
+              td = Forage::DataCache::MIGRATE_TO_HASH[forage_data_cache.migrate_to.to_sym]
               td = Forage::DataCache::MATCHED_STATUS[forage_data_cache.matched_status.to_sym]
               td = enum_l(forage_data_cache, :is_merged)
               td

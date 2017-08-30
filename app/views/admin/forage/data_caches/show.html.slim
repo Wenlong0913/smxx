@@ -32,7 +32,7 @@ h1.page-header
               td.field
                 | #{Forage::DataCache.human_attribute_name(:migrate_to)}
               td
-                  = @forage_data_cache.migrate_to
+                  = Forage::DataCache::MIGRATE_TO_HASH[@forage_data_cache.migrate_to.to_sym]
             tr.divider
             - if @forage_data_cache.merged?
               tr

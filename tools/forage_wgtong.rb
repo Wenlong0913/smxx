@@ -115,9 +115,9 @@ class ForageWgtong
     source.run_keys.where(is_processed: 'f').update_all(is_processed: 'n')
     current_run_key = source.run_keys.order("date asc").last
     # simple
-    hdb_simple(current_run_key) if current_run_key.is_processed == 'n'
+    hdb_simple(current_run_key) if current_run_key && current_run_key.is_processed == 'n'
     # detail
-    hdb_detail(current_run_key)
+    hdb_detail(current_run_key) if current_run_key
   end
 
   def hdb_detail(current_run_key)
@@ -180,8 +180,10 @@ class ForageWgtong
       driver.navigate.to current_run_key.source.url
       sleep(2)
       main_doc = Nokogiri::HTML(driver.page_source)
+      i = 0
 
       loop do
+        i += 1
         content_doc_arr = main_doc.xpath("//li[@class='find_main_li img find']")
         content_doc_arr.each do |simple_doc|
           # simple
@@ -193,7 +195,7 @@ class ForageWgtong
         end
 
         next_page = main_doc.xpath("//div[@class='join_feny']/a[contains(text(), '下一页　')]")
-        if next_page.blank?
+        if next_page.blank? || i > 200
           break
         else
           next_page_url = next_page.first['href']

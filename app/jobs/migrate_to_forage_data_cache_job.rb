@@ -3,7 +3,7 @@ class MigrateToForageDataCacheJob
 
   def perform
     begin
-      Forage::Detail.where(is_merged: '-').limit(1000).each do |forage_detail|
+      Forage::Detail.where(is_merged: 'n').limit(1000).each do |forage_detail|
         begin
           # first: find in data_cache
           old_caches = Forage::DataCache.where("data ->> 'migrate_to' = ? AND (title = ? OR url = ?)", forage_detail.migrate_to, forage_detail.title, forage_detail.url)
@@ -50,7 +50,7 @@ class MigrateToForageDataCacheJob
         end
         forage_detail.save!
       end
-    end while Forage::Detail.where(is_merged: '-').limit(1).count > 0
+    end while Forage::Detail.where(is_merged: 'n').limit(1).count > 0
   end
 
   def match_source(forage_detail)
