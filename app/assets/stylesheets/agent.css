@@ -12,6 +12,7 @@
 *= require common/error_explanation
 *= require agent/comments
 *= require agent/member
+*= require agent/message
 *= require cms/pages
 *= require tracker
 *= require_self
