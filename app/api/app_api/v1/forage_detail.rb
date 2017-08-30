@@ -24,31 +24,35 @@ module AppAPI::V1
         optional :note, type: String, desc: '备注'
       end
       post do
-        begin
-          forage_detail = ::Forage::Detail.new(title: params[:title], url: params[:url])
-          forage_detail.migrate_to = params[:migrate_to]
-          forage_detail.can_purchase = params[:can_purchase]
-          forage_detail.purchase_url = params[:purchase_url]
-          forage_detail.keywords = params[:keywords]
-          forage_detail.image = params[:image]
-          forage_detail.description = params[:description]
-          forage_detail.content = params[:content]
-          forage_detail.date = params[:date]
-          forage_detail.time = params[:time]
-          forage_detail.address_line1 = params[:address_line1]
-          forage_detail.address_line2 = params[:address_line2]
-          forage_detail.phone = params[:phone]
-          forage_detail.price = params[:price]
-          forage_detail.from = params[:from]
-          forage_detail.site_name = params[:site_name]
-          forage_detail.note = params[:note]
-          forage_detail.simple_id = params[:simple_id]
-          forage_detail.save
-          flag = true
-        rescue
-          flag = false
+        if Settings.project.wgtong?
+          begin
+            forage_detail = ::Forage::Detail.new(title: params[:title], url: params[:url])
+            forage_detail.migrate_to = params[:migrate_to]
+            forage_detail.can_purchase = params[:can_purchase]
+            forage_detail.purchase_url = params[:purchase_url]
+            forage_detail.keywords = params[:keywords]
+            forage_detail.image = params[:image]
+            forage_detail.description = params[:description]
+            forage_detail.content = params[:content]
+            forage_detail.date = params[:date]
+            forage_detail.time = params[:time]
+            forage_detail.address_line1 = params[:address_line1]
+            forage_detail.address_line2 = params[:address_line2]
+            forage_detail.phone = params[:phone]
+            forage_detail.price = params[:price]
+            forage_detail.from = params[:from]
+            forage_detail.site_name = params[:site_name]
+            forage_detail.note = params[:note]
+            forage_detail.simple_id = params[:simple_id]
+            forage_detail.save
+            flag = true
+          rescue
+            flag = false
+          end
+          present import_status: flag
+        else
+          present notice: "notice"
         end
-        present import_status: flag
       end
     end
   end
