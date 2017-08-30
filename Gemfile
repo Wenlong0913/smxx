@@ -136,6 +136,7 @@ gem 'themeable', '~> 1.2.0'#, path: '../../gems/themeable'
 gem 'closure_tree'
 gem 'select2-rails'
 gem 'sidekiq'
+gem 'sidekiq-cron', '~> 0.6.3'
 gem 'redis-namespace'
 
 # Markdown markup for doc

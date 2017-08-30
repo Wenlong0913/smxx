@@ -1,0 +1,4 @@
+order_sweeper_job:
+  cron: "*/1 * * * *"
+  class: "OrderSweeperJob"
+  queue: default
