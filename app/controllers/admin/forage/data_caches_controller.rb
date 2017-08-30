@@ -8,7 +8,8 @@ class Admin::Forage::DataCachesController < Admin::Forage::BaseController
   def index
     authorize ::Forage::DataCache
     @filter_colums = %w(title migrate_to)
-    @forage_data_caches = build_query_filter(Forage::DataCache.all, only: @filter_colums).page(params[:page])
+    @forage_data_caches = Forage::DataCache.all.order(is_merged: :asc, created_at: :asc)
+    @forage_data_caches = build_query_filter(@forage_data_caches, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@forage_data_caches.to_json, filename: "forage_data_caches-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
