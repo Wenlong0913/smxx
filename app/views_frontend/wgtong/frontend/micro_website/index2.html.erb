@@ -4,55 +4,27 @@
     min-height: 200px !important;
   }
 }
-.grey-text {
-  color: #333 !important;
+.nav-four {
+  padding: 5px;
 }
-.nav-wechat-products {
-  width: 50px;
-  height: 50px;
-  background-color: #e84f17;
-  color: #fff;
-  border-radius: 50%;
-  padding: 13px 10px;
+.nav-four-img {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
-.nav-wechat-sites {
-  width: 50px;
-  height: 50px;
-  background-color: #7cba00;
-  color: #fff;
-  border-radius: 50%;
-  padding: 10px 12px;
+.nav-four-box {
+  box-shadow: 0px 5px 5px #999;
+  padding: 5px;
+  background-color: #fff;
 }
-.nav-wechat-news {
-  width: 50px;
-  height: 50px;
-  background-color: #00a2f2;
-  color: #fff;
-  border-radius: 50%;
-  padding: 13px 10px;
+.nav-four-text {
+  margin: 0px;
+  text-align: center;
 }
-.nav-wechat-recent {
-  width: 50px;
-  height: 50px;
-  background-color: #ffbb00;
-  color: #fff;
-  border-radius: 50%;
-  padding: 10px 12px;
-}
-.block-title {
-  margin: 20px 0px;
-}
-.block-title h4 {
-  padding-left: 5px;
-  border-left: 5px solid #e84f17;
-}
-.block-title h4 small {
-  padding-right: 5px;
-}
+
 </style>
+
 <div class="main-wrapper">
   <div class="container" style="background-color: #fff;">
-
     <!-- banner -->
     <div class="row">
       <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="3000" >
@@ -92,65 +64,64 @@
         </div>
       </div>
     </div>
-
-    <!-- nav -->
-    <div class="row text-center" style="margin: 20px 0px;">
-      <div class="col-md-3 col-xs-3 col-sm-3">
-        <a href="/micro_website/wechat_products" class="grey-text">
-          <div class="nav-wechat-products">
-            <i class="fa fa-list fa-2x"></i>
-          </div>
-          <small>活动报名</small>
-        </a>
-      </div>
-      <div class="col-md-3 col-xs-3 col-sm-3">
-        <a href="/micro_website/wechat_products" class="grey-text">
-          <div class="nav-wechat-sites">
-            <i class="fa fa-cube fa-2x"></i>
-          </div>
-          <small>场馆信息</small>
-        </a>
-      </div>
-      <div class="col-md-3 col-xs-3 col-sm-3">
-        <a href="/wechat" class="grey-text">
-          <div class="nav-wechat-news">
-            <i class="fa fa-newspaper-o fa-2x"></i>
-          </div>
-          <small>新闻资讯</small>
-        </a>
-      </div>
-      <div class="col-md-3 col-xs-3 col-sm-3">
-        <a href="/wechat" class="grey-text">
-          <div class="nav-wechat-recent">
-            <i class="fa fa-flag fa-2x"></i>
-          </div>
-          <small>近期热点</small>
-        </a>
-      </div>
-    </div>
   </div>
 
   <!-- 热门活动 -->
   <div class="container-fulid">
-    <div class="row block-title">
-      <h4>热门活动 <small class="pull-right"><a href="/wechat_products">查看更多&gt;&gt;</a></small></h4>
+    <div class="row" style="margin: 10px 0px 20px 0px;">
+      <div class="col-md-6 col-xs-6 col-sm-6 nav-four">
+        <img src="/templetes/newshub/images/recent/product1.jpg" class="img-responsive nav-four-img">
+        <div class="nav-four-box">
+          <p class="nav-four-text">活动报名</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-xs-6 col-sm-6 nav-four">
+        <img src="/templetes/newshub/images/recent/product3.jpg" class="img-responsive nav-four-img">
+        <div class="nav-four-box">
+          <p class="nav-four-text">场馆信息</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-xs-6 col-sm-6 nav-four">
+        <img src="/templetes/newshub/images/recent/product2.jpg" class="img-responsive nav-four-img">
+        <div class="nav-four-box">
+          <p class="nav-four-text">新闻资讯</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-xs-6 col-sm-6 nav-four">
+        <img src="/templetes/newshub/images/recent/product4.jpg" class="img-responsive nav-four-img">
+        <div class="nav-four-box">
+          <p class="nav-four-text">近期热点</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- 活动预告 -->
+  <div class="container-fulid">
+    <div class="row" style="margin: 20px 0px;">
+      <div style="margin-bottom: 20px;">
+        <h4 class="text-center" style="margin: 0px;">活动预告</h4>
+        <p style="width: 30px;border: 1px solid #e84f17;margin: 3px auto;"></p>
+      </div>
       <% @wechat_index_hot_product.each do |product| %>
-        <div class="col-md-12 col-xs-12 col-sm-12" style="padding: 5px;">
-          <a href="<%= wechat_product_micro_website_path(id: product.id) %>">
-            <img src="<%= product.first_image %>" class="img-responsive" >
-          </a>
-          <div style="border: 1px solid #ddd;padding: 5px;">
-            <h4><a href="<%= wechat_product_micro_website_path(id: product.id) %>" style="color: #222629;"><%= product.name.truncate(20) %></a></h4>
-            <p>
-              <span class="label label-primary">
+      <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-4 col-xs-4 col-sm-4" style="padding: 0px;">
+          <img src="<%= product.first_image %>" class="img-responsive" >
+        </div>
+        <div class="col-md-8 col-xs-8 col-sm-8">
+          <p><%= product.name.truncate(38) %></p>
+          <p style="margin: 0px;">
+            <span>价格：
+              <b style="color: #00a2f2;">
                 <% if product.sell_price > 0 %>
                   <%= product.sell_price / 100.0 %>
                 <% else %>
                   免费
                 <% end %>
-              </span>&nbsp;&nbsp;
-              <span class="label label-success">
+              </b>
+            </span>&nbsp;&nbsp;
+            <span>状态：
+              <b style="color: #00a2f2;">
                 <% if product.status == 'open' %>
                   进行中
                 <% elsif product.status == 'completed' %>
@@ -162,23 +133,20 @@
                 <% else %>
                   未发布
                 <% end %>
-              </span>&nbsp;&nbsp;
-              <% if product.phone.present? %>
-              <span class="label label-info">电话：<%= product.phone %></span>
-              <% end %>
-            </p>
-            <p><%= product.description.truncate(50) %></p>
-            <a href="<%= new_frontend_order_path(product_id: product.id) %>" class="btn btn-primary" >立即预定</a>
-          </div>
+              </b>
+            </span>
+          </p>
         </div>
+      </div>
       <% end %>
+      <p class="text-right"><a href="/micro_website/wechat_products">查看更多&gt;&gt;</a></p>
     </div>
   </div>
 
   <!-- 场馆展示 -->
   <div class="container-fulid">
-    <div class="row block-title">
-      <h4>热门场馆<small class="pull-right"><a href="/micro_website/wechat_sites">查看更多&gt;&gt;</a></small></h4>
+    <div class="row" style="margin: 20px 0px;">
+      <h4 style="padding-left: 5px;border-left: 5px solid #e84f17;">热门场馆<small class="pull-right" style="padding-right: 5px;"><a href="/micro_website/wechat_sites">查看更多&gt;&gt;</a></small></h4>
       <ul class="entertainment-slider" style="padding: 0px;">
         <% @wechat_index_hot_site.each do |site| %>
           <li>
@@ -214,24 +182,23 @@
 
   <!-- 新闻资讯 -->
   <div class="container-fulid">
-    <div class="row block-title">
-      <h4>新闻资讯<small class="pull-right"><a href="/wechat">查看更多&gt;&gt;</a></small></h4>
-
-      <% Cms::Page.hot(@cms_site.id, 5, channel: 'wechat').each do |page| %>
-        <div class="row">
-          <div class="col-md-4 col-xs-4 col-sm-4" style="padding: 0px;">
-            <a href="<%= get_cms_url(page) %>">
-              <img src="<%= page.image_path %>" class="img-responsive" >
-            </a>
-          </div>
-          <div class="col-md-8 col-xs-8 col-sm-8">
-            <p><a href="<%= get_cms_url(page) %>"><%= page.title.truncate(34) %></a></p>
-            <p style="color: #555;"><i class="fa fa-clock-o"><%= distance_of_time_in_words_to_now(page.updated_at) %>前</i>&nbsp;&nbsp;<i class="fa fa-eye">浏览：<%= page.impressions_count %></i></p>
-          </div>
+    <div class="row" style="margin: 20px 0px;">
+      <div style="margin-bottom: 20px;">
+        <h4 class="text-center" style="margin: 0px;">新闻资讯</h4>
+        <p style="width: 30px;border: 1px solid #e84f17;margin: 3px auto;"></p>
+      </div>
+      <% Cms::Page.hot(@cms_site.id, 9, channel: 'wechat').each do |page| %>
+      <div class="row">
+        <div class="col-md-8 col-xs-8 col-sm-8">
+          <p>【<%= site.properties.map{|p| ::Site::PROPERTIES[p.to_sym]}.compact.join('，') %>】<%= page.title.truncate(15) %></p>
         </div>
+        <div class="col-md-4 col-xs-4 col-sm-4">
+          <p><i class="fa fa-clock-o">&nbsp;</i><%= distance_of_time_in_words_to_now(page.updated_at) %>前</p>
+        </div>
+      </div>
       <% end %>
     </div>
   </div>
-</div><!-- main-wrapper -->
+</div><!-- main-wrapper --> 
 
 <%= render file: 'frontend/micro_website/_footer.html.erb' %>
