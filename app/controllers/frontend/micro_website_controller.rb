@@ -25,6 +25,14 @@ class Frontend::MicroWebsiteController < Frontend::BaseController
     @products = @products.page(params[:page])
   end
 
+  def wechat_news
+    @pages = @cms_site.channels.find_by(short_stitle: 'wechat').pages.page(params[:page])
+  end
+
+  def wechat_new
+    @page = Cms::Page.find(params[:id])
+  end
+
   def wechat_product
     @product = Product.find(params[:id])
   end
