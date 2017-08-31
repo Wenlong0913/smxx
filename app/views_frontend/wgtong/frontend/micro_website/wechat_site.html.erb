@@ -22,13 +22,15 @@
 	                          <%= @site.title %>
 	                        <% end %>
 												</p>
-												<p><i class="fa fa-mobile fa-lg contact-fa"></i>联系电话：
+
 													<% if @site.contact_phone.present? %>
-	                          <%= @site.contact_phone %>
-	                        <% else %>
-	                          <%= @site.phone %>
+														<p><i class="fa fa-mobile fa-lg contact-fa"></i>联系电话：<%= @site.contact_phone %></p>
+	                        <% elsif @site.phone.present? %>
+														<p><i class="fa fa-mobile fa-lg contact-fa"></i>联系电话：<%= @site.phone %></p>
+													<% else %>
+														
 	                        <% end %>
-												</p>
+
 												<p><i class="fa fa-clock-o contact-fa"></i>营业时间：
 													<% if @site.business_hours.present? %>
 	                          <%= @site.business_hours %>
@@ -50,7 +52,9 @@
 	                          暂无
 	                        <% end %>
 												</p>
-												<p><i class="fa fa-info contact-fa"></i>简介： <%= @site.description.truncate(120) %></p>
+												<% if @site.description.present? %>
+													<p><i class="fa fa-info contact-fa"></i>简介： <%= @site.description %></p>
+												<% end %>
 											</div>
 										</div>
 									</div>
