@@ -1,12 +1,12 @@
 <style type="text/css">
-@media (max-width: 767px) {
-  .slider-style-three .item, .slider-style-three .container{
-    min-height: 200px !important;
+  @media (max-width: 767px) {
+    .slider-style-three .item, .slider-style-three .container{
+      min-height: 200px !important;
+    }
+    .white-text {
+      color: #fff !important;
+    }
   }
-  .white-text {
-    color: #fff !important;
-  }
-}
 </style>
 
 <div class="main-wrapper">
@@ -67,7 +67,12 @@
       </div>
       <div class="col-md-6 col-xs-6 col-sm-6" style="margin: 0px;background-color: #ffbb00;">
         <h3 class="white-text"><i class="fa fa-flag fa-2x"></i></h3>
-        <p><a class="white-text" href="#">近期热点</a></p>
+        <p>
+        <% if Keystore.value_for('recent-hot-spots').present? %>
+          <% recent_hot_spots = Keystore.value_for('recent-hot-spots').split('|') %>
+          <a href="<%= recent_hot_spots[1] || 'javascript:void(0)' %>" class="white-text"><%= recent_hot_spots[0] %></a>
+        <% end %>
+        </p>        
       </div>
     </div>
   </div>
