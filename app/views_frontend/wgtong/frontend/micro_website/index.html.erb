@@ -223,7 +223,7 @@
       <h4>新闻资讯<small class="pull-right"><a href="/wechat">查看更多&gt;&gt;</a></small></h4>
 
       <% Cms::Page.hot(@cms_site.id, 5, channel: 'wechat').each do |page| %>
-        <div class="row">
+        <div class="row" style="margin-top: 10px;">
           <div class="col-md-4 col-xs-4 col-sm-4" style="padding: 0px;">
             <a href="<%= get_cms_url(page) %>">
               <img src="<%= page.image_path %>" class="img-responsive" >
