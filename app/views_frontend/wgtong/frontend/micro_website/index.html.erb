@@ -1,54 +1,54 @@
 <style type="text/css">
-@media (max-width: 767px) {
-  .slider-style-three .item, .slider-style-three .container{
-    min-height: 200px !important;
+  @media (max-width: 767px) {
+    .slider-style-three .item, .slider-style-three .container{
+      min-height: 200px !important;
+    }
   }
-}
-.grey-text {
-  color: #333 !important;
-}
-.nav-wechat-products {
-  width: 50px;
-  height: 50px;
-  background-color: #e84f17;
-  color: #fff;
-  border-radius: 50%;
-  padding: 13px 10px;
-}
-.nav-wechat-sites {
-  width: 50px;
-  height: 50px;
-  background-color: #7cba00;
-  color: #fff;
-  border-radius: 50%;
-  padding: 10px 12px;
-}
-.nav-wechat-news {
-  width: 50px;
-  height: 50px;
-  background-color: #00a2f2;
-  color: #fff;
-  border-radius: 50%;
-  padding: 13px 10px;
-}
-.nav-wechat-recent {
-  width: 50px;
-  height: 50px;
-  background-color: #ffbb00;
-  color: #fff;
-  border-radius: 50%;
-  padding: 10px 12px;
-}
-.block-title {
-  margin: 20px 0px;
-}
-.block-title h4 {
-  padding-left: 5px;
-  border-left: 5px solid #e84f17;
-}
-.block-title h4 small {
-  padding-right: 5px;
-}
+  .grey-text {
+    color: #333 !important;
+  }
+  .nav-wechat-products {
+    width: 50px;
+    height: 50px;
+    background-color: #e84f17;
+    color: #fff;
+    border-radius: 50%;
+    padding: 13px 10px;
+  }
+  .nav-wechat-sites {
+    width: 50px;
+    height: 50px;
+    background-color: #7cba00;
+    color: #fff;
+    border-radius: 50%;
+    padding: 10px 12px;
+  }
+  .nav-wechat-news {
+    width: 50px;
+    height: 50px;
+    background-color: #00a2f2;
+    color: #fff;
+    border-radius: 50%;
+    padding: 13px 10px;
+  }
+  .nav-wechat-recent {
+    width: 50px;
+    height: 50px;
+    background-color: #ffbb00;
+    color: #fff;
+    border-radius: 50%;
+    padding: 10px 12px;
+  }
+  .block-title {
+    margin: 20px 0px;
+  }
+  .block-title h4 {
+    padding-left: 5px;
+    border-left: 5px solid #e84f17;
+  }
+  .block-title h4 small {
+    padding-right: 5px;
+  }
 </style>
 <div class="main-wrapper">
   <div class="container" style="background-color: #fff;">
@@ -120,12 +120,17 @@
         </a>
       </div>
       <div class="col-md-3 col-xs-3 col-sm-3">
-        <a href="/wechat" class="grey-text">
-          <div class="nav-wechat-recent">
-            <i class="fa fa-flag fa-2x"></i>
+        <% if Keystore.value_for('recent-hot-spots').present? %>
+          <div class="tr-ad">
+            <% recent_hot_spots = Keystore.value_for('recent-hot-spots').split('|') %>
+            <a href="<%= recent_hot_spots[1] || 'javascript:void(0)' %>" class="grey-text">
+              <div class="nav-wechat-recent">
+                <i class="fa fa-flag fa-2x"></i>
+              </div>
+              <small><%= recent_hot_spots[0] %></small>
+            </a>
           </div>
-          <small>近期热点</small>
-        </a>
+        <% end %>
       </div>
     </div>
   </div>
