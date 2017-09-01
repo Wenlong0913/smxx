@@ -70,7 +70,7 @@
           <div class="address white-space-nomal">
             <small>地址: <%= product.address_line1 %></small>
           </div>
-          <small class="time">活动时间: <%= product.date.present? ? product.date : ( product.time.presence || "尚未发布" )%></small>
+          <small class="time">活动时间: <%= product.date.present? ? product.date : ''%> <%= product.time.presence || '' %> </small>
           <% if product.status == 'open' %>
             <span class='pull-right text-warning'>
               <strong>
@@ -108,6 +108,8 @@
   </div>
   <%= paginate @products %>
 </div>
+<%= render file: 'frontend/micro_website/_footer.html.erb' %>
+
 <style lang="css">
   .custom-list .title{
     display: -webkit-box;
@@ -133,7 +135,7 @@
   }
   .custom-list .image-dom{
     width: 100%;
-    height: 130px;
+    height: 200px;
     background-size: cover;
     background-repeat: no-repeat;
   }
