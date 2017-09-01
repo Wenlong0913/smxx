@@ -7,8 +7,8 @@
   .grey-text {
     color: #333 !important;
   }
-  .padding-right-0 {
-    padding-right: 0px !important;
+  .padding-10 {
+    padding: 10px !important;
   }
   .nav-wechat-products {
     width: 50px;
@@ -98,6 +98,46 @@
 
     <!-- nav -->
     <div class="row text-center" style="margin: 20px 0px;">
+      <% if Keystore.value_for('wechat-nav-hot-product').present? %>
+      <% wechat_nav_hot_product = Keystore.value_for('wechat-nav-hot-product').split('|') %>
+      <div class="col-md-3 col-xs-3 col-sm-3 padding-10">
+        <a href="<%= wechat_nav_hot_product[1] || 'javascript:void(0)' %>" class="grey-text">
+          <img src="<%= wechat_nav_hot_product[0] %>" class="img-responsive" >
+        </a>
+      </div>
+      <% end %>
+
+      <% if Keystore.value_for('wechat-nav-hot-site').present? %>
+      <% wechat_nav_hot_site = Keystore.value_for('wechat-nav-hot-site').split('|') %>
+      <div class="col-md-3 col-xs-3 col-sm-3 padding-10">
+        <a href="<%= wechat_nav_hot_site[1] || 'javascript:void(0)' %>" class="grey-text">
+          <img src="<%= wechat_nav_hot_site[0] %>" class="img-responsive" >
+        </a>
+      </div>
+      <% end %>
+
+      <% if Keystore.value_for('wechat-nav-hot-news').present? %>
+      <% wechat_nav_hot_news = Keystore.value_for('wechat-nav-hot-news').split('|') %>
+      <div class="col-md-3 col-xs-3 col-sm-3 padding-10">
+        <a href="<%= wechat_nav_hot_news[1] || 'javascript:void(0)' %>" class="grey-text">
+          <img src="<%= wechat_nav_hot_news[0] %>" class="img-responsive" >
+        </a>
+      </div>
+      <% end %>
+
+      <% if Keystore.value_for('wechat-nav-hot-recent').present? %>
+      <% wechat_nav_hot_recent = Keystore.value_for('wechat-nav-hot-recent').split('|') %>
+      <div class="col-md-3 col-xs-3 col-sm-3 padding-10">
+        <a href="<%= wechat_nav_hot_recent[1] || 'javascript:void(0)' %>" class="grey-text">
+          <img src="<%= wechat_nav_hot_recent[0] %>" class="img-responsive" >
+        </a>
+      </div>
+      <% end %>
+      
+    </div>
+
+    <!-- nav -->
+    <!-- <div class="row text-center" style="margin: 20px 0px;">
       <div class="col-md-3 col-xs-3 col-sm-3 padding-right-0">
         <a href="/micro_website/wechat_products" class="grey-text">
           <div class="nav-wechat-products">
@@ -135,7 +175,7 @@
           </div>
         <% end %>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <!-- 热门活动 -->
@@ -192,10 +232,12 @@
           <li>
             <div class="entertainment">
               <div class="entertainment-image">
-                <img class="img-responsive" src="<%= site.first_image %>" alt="Image">
+                <a href="<%= wechat_site_micro_website_path(id: site.id) %>">
+                  <img class="img-responsive" src="<%= site.first_image %>" alt="Image">
+                </a>
               </div>
               <div class="entertainment-info text-left">
-                <h2><%= site.title %></h2>
+                <h2><a href="<%= wechat_site_micro_website_path(id: site.id) %>" style="color: #616161;"><%= site.title %></a></h2>
                 <p>地址：
                   <% if site.address_line.present? %>
                     <%= site.address_line %>
