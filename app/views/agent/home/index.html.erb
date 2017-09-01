@@ -2,7 +2,7 @@
 <div id="about-us-cover" class="has-bg section-container">
     <!-- BEGIN cover-bg -->
     <div class="cover-bg">
-        <img src="http://song-dev.qiniudn.com/about-us-cover.jpg" alt="德格Dagle" />
+      <img src="http://song-dev.qiniudn.com/about-us-cover.jpg" alt="<%= Settings.site.name%>" />
     </div>
     <!-- END cover-bg -->
     <!-- BEGIN container -->
@@ -15,15 +15,19 @@
         <!-- END breadcrumb -->
         <!-- BEGIN about-us -->
         <div class="about-us text-center">
-            <h1>欢迎使用商家端</h1>
-            <p>
-              打通O2O全网营销模式，开启新零售之路。
-            </p>
-            <p>
-              <% unless @site.agent_plan_id %>
-                <a href="<%=agent_agent_plans_path%>" class="btn btn-info">查看商家套餐</a>
-              <% end %>
-            </p>
+            <% if Settings.project.wgtong? %>
+              <h1><%= @site.title %></h1>
+            <% else %>
+              <h1>欢迎使用商家端</h1>
+              <p>
+                打通O2O全网营销模式，开启新零售之路。
+              </p>
+              <p>
+                <% unless @site.agent_plan_id %>
+                  <a href="<%=agent_agent_plans_path%>" class="btn btn-info">查看商家套餐</a>
+                <% end %>
+              </p>
+            <% end%>
         </div>
         <!-- END about-us -->
     </div>
