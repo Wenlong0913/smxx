@@ -39,6 +39,8 @@ class Site < ApplicationRecord
     image_items.first.try(:image_url) || 'http://song-dev.qiniudn.com/site.jpg'
   end
 
+  acts_as_tree
+
   store_accessor :features, :description, :properties, :business_hours,
                 :recommendation, :good_summary, :bad_summary, :parking,
                 :wifi, :contact_name, :contact_phone, :has_contract, :contract_note,
