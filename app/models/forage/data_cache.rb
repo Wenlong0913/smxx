@@ -5,6 +5,12 @@ class Forage::DataCache < ApplicationRecord
   belongs_to :source, polymorphic: true
   belongs_to :processed_user, class_name: 'User', foreign_key: :processed_by
 
+  MIGRATE_TO_HASH = {
+    "product": "产品",
+    "site": "店铺",
+    "cms_page": "新闻"
+  }
+
   MATCHED_STATUS = {
     "multiple": "重复匹配",
     "only_one": "唯一匹配",

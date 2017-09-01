@@ -67,7 +67,7 @@
         .col-xs-3
           p
             h5
-              | 合并到：#{@forage_data_cache.migrate_to}
+              | 合并到：#{Forage::DataCache::MIGRATE_TO_HASH[@forage_data_cache.migrate_to.to_sym]}
           - if @forage_data_cache.matched_status == 'none'
             = f.input :catalog_id, collection: @catalogs, include_blank: false
           - if @forage_data_cache.migrate_to == 'product'
