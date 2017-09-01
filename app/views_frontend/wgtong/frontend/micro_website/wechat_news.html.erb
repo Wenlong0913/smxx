@@ -14,7 +14,7 @@
             </div>
           </div>
           <div class="col-xs-4" style="padding: 0px 15px 0px 0px;">
-            <div class="image-dom" style="background-image: url('<%= page.image_path %>')"></div>
+            <div class="image-dom" style="background-image: url('<%= page.image_path? ? page.image_path : 'http://song-dev.qiniudn.com/product.jpg' %>')"></div>
           </div>
         </div>
       </a>
@@ -22,6 +22,8 @@
   </div>
 </div>
 <%= paginate @pages %>
+<%= render file: 'frontend/micro_website/_footer.html.erb' %>
+
 <style lang="css">
   .custom-list .title{
     display: -webkit-box;

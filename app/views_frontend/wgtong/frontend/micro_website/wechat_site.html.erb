@@ -28,7 +28,7 @@
 	                        <% elsif @site.phone.present? %>
 														<p><i class="fa fa-mobile fa-lg contact-fa"></i>联系电话：<%= @site.phone %></p>
 													<% else %>
-														
+
 	                        <% end %>
 
 												<p><i class="fa fa-clock-o contact-fa"></i>营业时间：
@@ -99,3 +99,4 @@
 		</div>
 	</div>
 </div>
+<%= render file: 'frontend/micro_website/_footer.html.erb' %>
