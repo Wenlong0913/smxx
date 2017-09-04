@@ -21,11 +21,22 @@
           ul.nav
             li
               a href="/agent"  首页
-            - if Settings.project.dagle? || Settings.project.grand?
-              = render "layouts/agent/header_all"
-            - elsif Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei? || Settings.project.wgtong?
-              = render "layouts/agent/header_ecommerce"
-
+            li.dropdown.dropdown-hover
+              a data-toggle="dropdown" href="javascript:void(0);"
+                | 产品管理
+                i.fa.fa-angle-down
+                span.arrow.top
+              ul.dropdown-menu
+                li = link_to '产品列表', agent_products_path
+                li = link_to '发布新品', new_agent_product_path, 'data-turbolinks': false
+            li.dropdown.dropdown-hover
+              a data-toggle="dropdown" href="javascript:void(0);"
+                | 订单管理
+                i.fa.fa-angle-down
+                span.arrow.top
+              ul.dropdown-menu
+                li = link_to '订单列表', agent_orders_path
+                / li = link_to '订单创建', new_agent_order_pa th
             li.dropdown.dropdown-hover
               a data-toggle="dropdown" href="#"
                 | 客户CRM
@@ -74,4 +85,32 @@
                 li = link_to '账单查询', agent_finance_bills_path
                 li = link_to '资金管理', fund_agent_finance_bills_path
       /! END header-nav
-= render 'agent/preorder_conversitions/new'
+      .header-nav
+        ul.nav.pull-right.nav-head-push-messages
+          li.dropdown.dropdown-hover
+            a.header-cart[href="#" data-toggle="dropdown"]
+              i.fa.fa-bell-o
+              span.total
+                | {{messages.length}}
+              span.arrow.top
+            .dropdown-menu.dropdown-menu-cart.p-0
+              .cart-header
+                h4.cart-title
+                  span 最新&nbsp;
+                  span.total.text-info
+                    | {{messages.length > 5 ? 5 : messages.length}}
+                  span &nbsp;条未处理消息
+              .cart-body
+                ul.cart-item
+                  li[v-for="message, index in messages.slice(0, 5)"]
+                    a.cart-item-info[@click='redirectTo(message, index)']
+                      h4
+                        | {{message.content}}
+                      p.price
+                        | {{(new Date(message.created_at)).toLocaleString()}}
+                    .cart-item-close
+                      span[data-toggle="tooltip" data-title="Remove" @click="removeItem(message, index)"] ×
+              .cart-footer
+                .row.row-space-10
+                  .col-xs-12
+                    = link_to '查看全部', agent_messages_path, class: 'btn btn-default btn-block'

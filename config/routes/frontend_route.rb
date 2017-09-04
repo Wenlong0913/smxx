@@ -60,8 +60,11 @@ module FrontendRoute
       resource :micro_website, only: [], controller: 'frontend/micro_website' do
         get 'wechat_sites' # 场馆列表
         get 'wechat_products' # 活动列表
+        get 'wechat_news' # 新闻
+        
         get 'wechat_product/:id', action: 'wechat_product', as: 'wechat_product'
         get 'wechat_site/:id', action: 'wechat_site', as: 'wechat_site'
+        get 'wechat_new/:id', action: 'wechat_new', as: 'wechat_new'
       end
 
       namespace :frontend do

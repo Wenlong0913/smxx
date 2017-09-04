@@ -8,6 +8,7 @@ module AgentBackendRoute
         get 'assets/intranet_images'
         get 'assets/extranet_images'
 
+        resources 'messages', only: [:index, :update]
         resources 'sites'
         resources 'products' do
           commentable

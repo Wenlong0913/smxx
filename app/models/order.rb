@@ -123,7 +123,23 @@ class Order < ApplicationRecord
     # 判断是否要发支付成功的短信
     @should_send_paid_message = self.status_change == ['open', 'paid'] || self.status_change == ['pending', 'paid']
     # self.user = self.member.user
-    Notification.notice(self.user.id, nil, '订单', '状态更新了', self, 'code') if self.status_changed? && self.id.present?
+    # 订单状态改变消息提醒
+    if self.status_changed? && !self.new_record? && self.user
+      if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei? || Settings.project.wgtong?
+        content = nil
+        case self.status
+        when 'paid'
+          content = '有新的订单已支付: '
+        when 'cancelled'
+          content = '订单已取消: '
+        when 'completed'
+          content = '订单已完成: '
+        end
+        Notification.notice(self.user.id, nil, '订单', content + self.code.to_s, self, 'code') if content.present?
+      else
+        Notification.notice(self.user.id, nil, '订单', '订单状态更新了', self, 'code')
+      end
+    end
   end
 
   after_commit do

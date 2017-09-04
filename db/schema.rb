@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170727061700) do
+ActiveRecord::Schema.define(version: 20170901115846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -271,9 +271,13 @@ ActiveRecord::Schema.define(version: 20170727061700) do
     t.string   "contact"
     t.text     "content"
     t.jsonb    "features"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "site_id",    null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "site_id",                     null: false
+    t.string   "source_type"
+    t.integer  "source_id"
+    t.integer  "user_id"
+    t.boolean  "is_published", default: true
     t.index ["site_id"], name: "index_cms_comments_on_site_id", using: :btree
   end
 
@@ -301,6 +305,8 @@ ActiveRecord::Schema.define(version: 20170727061700) do
     t.string   "properties",        default: [],              array: true
     t.integer  "impressions_count", default: 0
     t.integer  "comments_count",    default: 0
+    t.jsonb    "forage"
+    t.index "((forage ->> 'is_foraged'::text))", name: "index_cms_pages_on_forage_is_forage", using: :btree
     t.index ["channel_id"], name: "index_cms_pages_on_channel_id", using: :btree
     t.index ["properties"], name: "index_cms_pages_on_properties", using: :gin
     t.index ["short_title"], name: "index_cms_pages_on_short_title", using: :btree
@@ -334,6 +340,7 @@ ActiveRecord::Schema.define(version: 20170727061700) do
     t.integer  "likes_count",      default: 0
     t.integer  "complaints_count", default: 0
     t.boolean  "is_complainted",   default: false
+    t.boolean  "is_published",     default: true
     t.index ["resource_type", "resource_id"], name: "index_comment_entries_on_resource_type_and_resource_id", using: :btree
   end
 
@@ -412,6 +419,23 @@ ActiveRecord::Schema.define(version: 20170727061700) do
     t.index ["owner_type", "owner_id"], name: "index_finance_histories_on_owner_type_and_owner_id", using: :btree
   end
 
+  create_table "forage_data_caches", force: :cascade do |t|
+    t.string   "source_type"
+    t.integer  "source_id"
+    t.string   "title"
+    t.string   "url"
+    t.jsonb    "data"
+    t.integer  "processed_by"
+    t.boolean  "auto_merge",   default: false
+    t.integer  "is_merged",    default: 0
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["is_merged"], name: "index_forage_data_caches_on_is_merged", using: :btree
+    t.index ["source_type", "source_id"], name: "index_forage_data_caches_on_source_type_and_source_id", using: :btree
+    t.index ["title"], name: "index_forage_data_caches_on_title", using: :btree
+    t.index ["url"], name: "index_forage_data_caches_on_url", using: :btree
+  end
+
   create_table "forage_details", force: :cascade do |t|
     t.integer  "simple_id",                     null: false
     t.string   "url",                           null: false
@@ -436,30 +460,31 @@ ActiveRecord::Schema.define(version: 20170727061700) do
     t.jsonb    "features"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.string   "is_merged",     default: "n"
     t.index ["simple_id"], name: "index_forage_details_on_simple_id", using: :btree
   end
 
   create_table "forage_run_keys", force: :cascade do |t|
-    t.integer  "source_id",                    null: false
-    t.datetime "date"
-    t.boolean  "is_processed", default: false
+    t.integer  "source_id",                  null: false
+    t.date     "date"
+    t.string   "is_processed", default: "n"
     t.datetime "processed_at"
     t.integer  "total_count",  default: 0
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["source_id"], name: "index_forage_run_keys_on_source_id", using: :btree
   end
 
   create_table "forage_simples", force: :cascade do |t|
-    t.integer  "run_key_id",                   null: false
+    t.integer  "run_key_id",                 null: false
     t.string   "catalog"
     t.string   "title"
-    t.string   "url",                          null: false
+    t.string   "url",                        null: false
     t.jsonb    "features"
-    t.boolean  "is_processed", default: false
+    t.string   "is_processed", default: "n"
     t.string   "processed_at"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["run_key_id"], name: "index_forage_simples_on_run_key_id", using: :btree
   end
 
@@ -683,6 +708,8 @@ ActiveRecord::Schema.define(version: 20170727061700) do
     t.integer  "visits_count",    default: 0
     t.integer  "likes_count",     default: 0
     t.integer  "sales_count",     default: 0
+    t.jsonb    "forage"
+    t.index "((forage ->> 'is_foraged'::text))", name: "index_items_on_forage_is_forage", using: :btree
     t.index ["site_id"], name: "index_items_on_site_id", using: :btree
   end
 
@@ -842,6 +869,31 @@ ActiveRecord::Schema.define(version: 20170727061700) do
     t.string   "owned"
     t.index ["site_id"], name: "index_members_on_site_id", using: :btree
     t.index ["user_id"], name: "index_members_on_user_id", using: :btree
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "user_id",            null: false
+    t.integer  "actor_id"
+    t.string   "notify_type",        null: false
+    t.string   "target_type"
+    t.integer  "target_id"
+    t.string   "target_url"
+    t.string   "target_name"
+    t.string   "second_target_type"
+    t.integer  "second_target_id"
+    t.string   "second_target_url"
+    t.string   "second_target_name"
+    t.string   "third_target_type"
+    t.integer  "third_target_id"
+    t.string   "third_target_url"
+    t.string   "third_target_name"
+    t.string   "content"
+    t.datetime "read_at"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["second_target_type", "second_target_id"], name: "index_notifications_on_second_target_type_and_second_target_id", using: :btree
+    t.index ["target_type", "target_id"], name: "index_notifications_on_target_type_and_target_id", using: :btree
+    t.index ["third_target_type", "third_target_id"], name: "index_notifications_on_third_target_type_and_third_target_id", using: :btree
   end
 
   create_table "order_cvs", force: :cascade do |t|
@@ -1008,19 +1060,26 @@ ActiveRecord::Schema.define(version: 20170727061700) do
   create_table "sites", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                                                      null: false
+    t.datetime "updated_at",                                                      null: false
     t.jsonb    "features"
     t.string   "type"
     t.integer  "address_alias_id"
     t.string   "address_line"
     t.integer  "catalog_id"
-    t.integer  "favorites_count",       default: 0
-    t.integer  "visits_count",          default: 0
+    t.integer  "favorites_count",                                 default: 0
+    t.integer  "visits_count",                                    default: 0
     t.integer  "comments_count"
     t.integer  "agent_plan_id"
     t.datetime "paid_at"
-    t.boolean  "is_flatform_recommend", default: false
+    t.boolean  "is_flatform_recommend",                           default: false
+    t.decimal  "lng",                   precision: 20, scale: 14
+    t.decimal  "lat",                   precision: 20, scale: 14
+    t.jsonb    "forage"
+    t.integer  "parent_id"
+    t.index "((forage ->> 'is_foraged'::text))", name: "index_sites_on_forage_is_forage", using: :btree
+    t.index "ll_to_earth((lat)::double precision, (lng)::double precision)", name: "idx__gnomon_site", using: :gist
+    t.index ["parent_id"], name: "index_sites_on_parent_id", using: :btree
     t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
   end
 

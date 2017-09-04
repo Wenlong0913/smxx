@@ -23,6 +23,7 @@ default: &default
     templates:
       order_succeed_to_user: "【陌邻社区】恭喜你下单成功，商家(#site_name#)商家电话(#phone#)"
       order_succeed_to_agent: "【陌邻社区】新增用户订单，金额(#price#)，请及时登录商家后台处理"
+      order_completed_to_user: "【陌邻社区】您的(#order_code#)号订单已#from#确认收货,如有疑问您可以进行申诉"
   mobile:
     auth_token_template: "【陌邻社区】您的验证码是#code#。如非本人操作，请忽略本短信。"
 
