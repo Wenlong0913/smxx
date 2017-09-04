@@ -18,7 +18,9 @@ class Product < Item
   store_accessor :features, :price, :image, :responsive_person, :warning_message, :service_time, :month_number, :unit, :stock,
     :description, :content, :discount, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values,
     :is_shelves, :is_fee, :shopping_fee, :hot, :recommend, :event, :promotion, :discount, :properties, :is_manager_recommend,
-    :video_url, :status, :address_line1, :address_line2, :date, :time, :phone, :can_purchase, :note
+    :video_url, :status, :address_line1, :address_line2, :date, :time, :phone, :can_purchase, :note, :purchase_type,
+    # 通过报名参加的产品时需要设置的一些属性
+    :maximum_for_one_account, :maximum_for_one_order, :member_attributes
   store_accessor :forage, :forage_url, :forage_price, :is_foraged, :external_purchase_url
 
   acts_as_taggable
@@ -51,6 +53,16 @@ class Product < Item
       discount: "折扣"
     }
   end
+  PURCHASE_TYPE = {
+    online_payment: '在线支付',
+    sign_up: '报名',
+    external: '外链'
+  }
+  MEMBER_ATTRIBUTES = {
+    name: '姓名',
+    mobile: '电话',
+    card_id: '身份证'
+  }
   # Product.hot()
   # Product.recommend(6)
   # Product.recommend(6, catalog_id: 1)

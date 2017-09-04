@@ -87,10 +87,23 @@ class Frontend::OrdersController < Frontend::BaseController
     else
       order = Order.new(user: current_user)
       product = Product.find(params[:order][:product][:id])
-      order.order_products.new(product_id: product.id, amount: params[:order][:product][:number], price: product.sell_price)
-      order.delivery_phone = params[:order][:delivery_phone]
+      product_amount = params[:order][:product][:number].presence || 1
+      if params[:order][:member_attributes].present?
+        if product.purchase_type && product.purchase_type.include?("sign_up")
+          order.member_attributes = params[:order][:member_attributes].values
+          product_amount =  params[:order][:member_attributes].keys.count
+          unless valid_order_members?(order)
+            render js: <<-JS
+            onOrderCreate('#{order.errors.messages.to_json}')
+            JS
+            return
+          end
+        end
+      end
+      order.order_products.new(product_id: product.id, amount: product_amount, price: product.sell_price)
+      order.delivery_phone = params[:order][:delivery_phone] if params[:order][:delivery_phone].present?
       order.site = product.site
-      order.price = product.sell_price.to_f * params[:order][:product][:number].to_i
+      order.price = product.sell_price.to_f * product_amount.to_i
       order.save!
     end
     callback_url = URI(Settings.site.host)
@@ -184,5 +197,18 @@ class Frontend::OrdersController < Frontend::BaseController
 
     def ensure_login!
       redirect_to admin_sign_in_path unless current_user
+    end
+
+    def valid_order_members?(order)
+      flag = true
+      order_member_attributes = params[:order][:member_attributes]
+      order_member_attributes.each_pair do |key, value|
+        order_member = OrderMember.new(order_member_attributes[key])
+        flag &&= order_member.valid?
+        unless order_member.valid?
+          order.errors.add "member_attributes_#{key}".to_sym, order_member.errors.messages
+        end
+      end
+      flag
     end
 end

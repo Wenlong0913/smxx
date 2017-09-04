@@ -99,6 +99,9 @@ class Agent::ProductsController < Agent::BaseController
     @product.site = @site
     authorize @product
     filter_additional_attribute
+    if params[:product][:member_attributes].present? || params[:product][:member_attributes_others].present?
+      params[:product][:member_attributes] = params[:product][:member_attributes] + params[:product][:member_attributes_others].split(/,/)
+    end
     if @product.save
       # redirect_to agent_product_path(@product), notice: 'Product 创建成功.'
       render json: {url: agent_product_path(@product)}
@@ -110,6 +113,10 @@ class Agent::ProductsController < Agent::BaseController
   def update
     authorize @product
     filter_additional_attribute
+    if params[:product][:member_attributes].present? || params[:product][:member_attributes_others].present?
+      params[:product][:member_attributes] = params[:product][:member_attributes] + params[:product][:member_attributes_others].split(/,/)
+      params[:product][:member_attributes] = params[:product][:member_attributes].delete_if{|ma| ma.blank?}
+    end
     if @product.update(permitted_attributes(@product))
       redirect_to agent_product_path(@product), notice: "#{Product.model_name.human}更新成功."
     else

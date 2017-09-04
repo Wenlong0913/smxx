@@ -86,6 +86,28 @@
                 label.control-label.string.optional 其他
                 .
                   = f.collection_check_boxes :properties, Cms::Page::PROPERTIES, :first, :last, checked: @cms_page.try(:properties)
+            .col-xs-12.purchase_type
+              hr
+              .form-group.col-xs-2
+                label.control-label.string.optional 购买方式:
+              .form-group.col-xs-10
+                = f.collection_check_boxes :purchase_type, Product::PURCHASE_TYPE, :first, :last, checked: @product.try(:purchase_type)
+            .signup_attributes
+              .col-xs-6
+                .form-group
+                  = f.input :maximum_for_one_account
+              .col-xs-6
+                .form-group
+                  = f.input :maximum_for_one_order
+              .col-xs-12
+                .col-xs-4
+                  .input-group
+                    label.control-label.string.optional 报名需要填写的属性:&nbsp;&nbsp;
+                    = f.collection_check_boxes :member_attributes, Product::MEMBER_ATTRIBUTES, :first, :last, checked: @product.try(:member_attributes)
+                .col-xs-8
+                  .input-group
+                    label.input-group-addon.control-label.string.optional 其他附加属性:
+                    input[name="product[member_attributes_others]" class="form-control" placeholder="属性之间用逗号隔开" value="#{@product.member_attributes ? (@product.member_attributes-Product::MEMBER_ATTRIBUTES.keys.map(&:to_s)).join(',') : ''}"]
             .col-xs-12
               hr
               div[rel="attr_list_vue" data-values="#{@product.additional_attribute_values.to_json}" data-keys="#{@product.additional_attribute_keys.to_json}"]
