@@ -1,6 +1,6 @@
 class Agent::ProductsController < Agent::BaseController
   before_action :set_current_user_products
-  before_action :set_product, only: [:show, :edit, :update, :destroy, :process_shelves, :sales_distribution]
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :process_shelves, :sales_distribution, :download_signup_members]
   before_action :set_site_tags, only: [:edit, :new]
   before_action :set_product_price, only: [:create, :update, :index]
   acts_as_trackable user_id: :get_user_id,
@@ -79,6 +79,9 @@ class Agent::ProductsController < Agent::BaseController
         @catalog_ancestors = (@catalog_ancestors + @product.catalog.ancestors).reverse
       end
     end
+    if @product.purchase_type && @product.purchase_type.include?('sign_up')
+      @orders = OrderProduct.where(product_id: @product.id).map{|order_product| order_product.order}
+    end
     respond_to do |format|
       format.html
       format.json { render json: @product }
@@ -152,6 +155,17 @@ class Agent::ProductsController < Agent::BaseController
     }
   end
 
+  def download_signup_members
+    # binding.pry
+    if params[:format] == 'csv'
+      if @product.purchase_type && @product.purchase_type.include?('sign_up')
+        orders = OrderProduct.where(product_id: @product.id).map{|order_product| order_product.order}
+        members = orders.map{|o| o.member_attributes}.flatten.compact
+      end
+      send_data(to_csv(members, @product), filename: "products-members-signup-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv")
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
@@ -199,5 +213,23 @@ class Agent::ProductsController < Agent::BaseController
 
     def get_visit_resource
       @product
+    end
+
+    def to_csv(objects, product)
+      return [] if objects.nil?
+      # make excel using utf8 to open csv file
+      head = 'EF BB BF'.split(' ').map{|a|a.hex.chr}.join()
+      CSV.generate(head) do |csv|
+        # 获取字段名称
+        column_names = product.member_attributes.map{|attr| Product::MEMBER_ATTRIBUTES[attr.to_sym] || attr }
+        csv << column_names        
+        objects.each do |obj|
+          values = []
+          product.member_attributes.each do |attr|
+            values << "\t" + obj[attr]
+          end
+          csv << values
+        end
+      end
     end
 end
