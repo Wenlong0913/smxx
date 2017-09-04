@@ -8,7 +8,7 @@ $(document).ready ->
       data:
         defaultvalues: {}
         defaultkeys: {}
-        members: []
+        members: [{key: (new Date()).getTime()}]
       methods:
         addMembers: ->
           console.log('add members')
