@@ -21,13 +21,6 @@
           ul.nav
             li
               a href="/agent"  首页
-<<<<<<< HEAD:app/themes/color_admin/layouts/agent/_header.html.slim
-            - if Settings.project.dagle? || Settings.project.grand?
-              = render "layouts/agent/header_all"
-            - elsif Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei? || Settings.project.wgtong?
-              = render "layouts/agent/header_ecommerce"
-=======
-
             li.dropdown.dropdown-hover
               a data-toggle="dropdown" href="javascript:void(0);"
                 | 产品管理
@@ -44,8 +37,6 @@
               ul.dropdown-menu
                 li = link_to '订单列表', agent_orders_path
                 / li = link_to '订单创建', new_agent_order_path
->>>>>>> wgtong:app/themes/color_admin/layouts/agent/header/_header.imolin.html.slim
-
             li.dropdown.dropdown-hover
               a data-toggle="dropdown" href="#"
                 | 客户CRM
