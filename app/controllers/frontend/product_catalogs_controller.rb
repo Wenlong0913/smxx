@@ -7,9 +7,9 @@ class Frontend::ProductCatalogsController < Frontend::BaseController
   def show
     @product_catalog = ProductCatalog.find(params[:id])
     # 当前分类下的所有产品
-    @products = @product_catalog.products.order(updated_at: :desc)
+    @products = @product_catalog.products.where("features ->>  'is_shelves' = ?", '1')
     # 已上架
-    @products = @products.where("features ->>  'is_shelves' = ?", '1').page(params[:page])
+    @products = @products.order(updated_at: :desc).page(params[:page])
 
   end
   private
