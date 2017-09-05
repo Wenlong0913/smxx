@@ -135,55 +135,13 @@
       <% end %>
       
     </div>
-
-    <!-- nav -->
-    <!-- <div class="row text-center" style="margin: 20px 0px;">
-      <div class="col-md-3 col-xs-3 col-sm-3 padding-right-0">
-        <a href="/micro_website/wechat_products" class="grey-text">
-          <div class="nav-wechat-products">
-            <i class="fa fa-list fa-2x"></i>
-          </div>
-          <small>活动报名</small>
-        </a>
-      </div>
-      <div class="col-md-3 col-xs-3 col-sm-3 padding-right-0">
-        <a href="/micro_website/wechat_sites" class="grey-text">
-          <div class="nav-wechat-sites">
-            <i class="fa fa-cube fa-2x"></i>
-          </div>
-          <small>场馆信息</small>
-        </a>
-      </div>
-      <div class="col-md-3 col-xs-3 col-sm-3 padding-right-0">
-        <a href="/micro_website/wechat_news" class="grey-text">
-          <div class="nav-wechat-news">
-            <i class="fa fa-newspaper-o fa-2x"></i>
-          </div>
-          <small>新闻资讯</small>
-        </a>
-      </div>
-      <div class="col-md-3 col-xs-3 col-sm-3 padding-right-0">
-        <% if Keystore.value_for('recent-hot-spots').present? %>
-          <div class="tr-ad">
-            <% recent_hot_spots = Keystore.value_for('recent-hot-spots').split('|') %>
-            <a href="<%= recent_hot_spots[1] || 'javascript:void(0)' %>" class="grey-text">
-              <div class="nav-wechat-recent">
-                <i class="fa fa-flag fa-2x"></i>
-              </div>
-              <small><%= recent_hot_spots[0] %></small>
-            </a>
-          </div>
-        <% end %>
-      </div>
-    </div> -->
   </div>
 
   <!-- 热门活动 -->
   <div class="container-fulid">
     <div class="row block-title">
       <h4>热门活动 <small class="pull-right"><a href="/micro_website/wechat_products">查看更多&gt;&gt;</a></small></h4>
-
-      <% @wechat_index_hot_product.each do |product| %>
+      <% @products.hot(4).each do |product| %>
         <div class="col-md-12 col-xs-12 col-sm-12" style="padding: 5px;">
           <a href="<%= wechat_product_micro_website_path(id: product.id) %>">
             <img src="<%= product.first_image %>" class="img-responsive" >
@@ -228,7 +186,7 @@
     <div class="row block-title">
       <h4>热门场馆<small class="pull-right"><a href="/micro_website/wechat_sites">查看更多&gt;&gt;</a></small></h4>
       <ul class="entertainment-slider" style="padding: 0px;">
-        <% @wechat_index_hot_site.each do |site| %>
+        <% @sites.hot(4).each do |site| %>
           <li>
             <div class="entertainment">
               <div class="entertainment-image">

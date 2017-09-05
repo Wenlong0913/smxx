@@ -1,7 +1,7 @@
 class Frontend::MicroWebsiteController < Frontend::BaseController
   def index
-    @wechat_index_hot_product = Product.hot(4)
-    @wechat_index_hot_site = Site.hot(4)
+    @products = Product.where("features ->> 'is_shelves' = ?", '1').all
+    @sites = Site.where("features ->> 'is_published' = ?", '1').all
   end
 
   def wechat_sites
