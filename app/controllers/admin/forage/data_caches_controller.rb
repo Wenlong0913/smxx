@@ -8,8 +8,15 @@ class Admin::Forage::DataCachesController < Admin::Forage::BaseController
   def index
     authorize ::Forage::DataCache
     @filter_colums = %w(title migrate_to)
-    @forage_data_caches = Forage::DataCache.all.order(is_merged: :asc, created_at: :asc)
-    @forage_data_caches = build_query_filter(@forage_data_caches, only: @filter_colums).page(params[:page])
+    @forage_data_caches = Forage::DataCache.all
+    if params[:filters]
+      @forage_data_caches = @forage_data_caches.where("data ->> 'migrate_to' = ?", ::Forage::DataCache::MIGRATE_TO_HASH.key(params[:filters][:migrate_to]).to_s) if params[:filters][:migrate_to]
+      @forage_data_caches = @forage_data_caches.where(title: params[:filters][:title]) if params[:filters][:title]
+    elsif params[:search] && params[:search][:keywords]
+      @forage_data_caches = @forage_data_caches.where("title like ?", "%#{params[:search][:keywords]}%")
+    end
+    @forage_data_caches = @forage_data_caches.order(is_merged: :asc, created_at: :asc)
+    @forage_data_caches = @forage_data_caches.page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@forage_data_caches.to_json, filename: "forage_data_caches-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
