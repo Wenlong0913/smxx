@@ -261,8 +261,11 @@
             .p 标签（可多选）
             = f.collection_check_boxes :properties, Product::PROPERTIES, :first, :last, checked: @product.try(:properties)
           .div class="col-md-6"
-            = f.input :status, collection: enum_options_for_select(Product, :status), as: :radio_buttons, label: false
-
+            .row
+              .col-md-6
+                = f.input :status, collection: enum_options_for_select(Product, :status), as: :radio_buttons, label: false
+              .col-md-6
+                = f.input :is_shelves, as: :boolean
 
         = f.input :content,as: :ckeditor
         .form-group
