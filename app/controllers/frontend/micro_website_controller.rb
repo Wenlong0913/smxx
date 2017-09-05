@@ -22,7 +22,7 @@ class Frontend::MicroWebsiteController < Frontend::BaseController
     else
       @products = Product.all
     end
-    @products = @products.where("features ->> 'status' = ?", params[:type]). if %w(pending open completed closed).include?(params[:type])
+    @products = @products.where("features ->> 'status' = ?", params[:type]) if %w(pending open completed closed).include?(params[:type])
     @products = @products.order(updated_at: :desc).page(params[:page])
   end
 

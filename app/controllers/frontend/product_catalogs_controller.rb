@@ -9,7 +9,7 @@ class Frontend::ProductCatalogsController < Frontend::BaseController
     # 当前分类下的所有产品
     @products = @product_catalog.products.order(updated_at: :desc)
     # 已上架
-    @products.where("features ->>  'is_shelves' = ?", '1').page(params[:page])
+    @products = @products.where("features ->>  'is_shelves' = ?", '1').page(params[:page])
 
   end
   private
