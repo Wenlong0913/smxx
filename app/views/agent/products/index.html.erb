@@ -91,6 +91,7 @@
                     </div>
                   </div>
                   <%= link_to '删除', agent_product_path(product), method: :delete, data: { confirm: '确定要删除吗?' }, class: 'btn btn-sm btn-danger pull-right' %>
+                  <%= link_to '查看订单', orders_agent_product_path(product), class: 'btn btn-sm btn-primary pull-right' %>
               </div>
             <!-- END item-row -->
             <% if index%3 == 2 || index+1 == @products.size %>
