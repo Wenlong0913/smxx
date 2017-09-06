@@ -34,10 +34,10 @@
         i.fa.fa-close[style="position: absolute;top: -2px;right: 3px;" @click="removeMembers(index)"]
         input[type="hidden" :name="'order[member_attributes]['+mem.key+'][product_id]'" value="#{@product.id}"]
         - @product.member_attributes.each do |attr|
-          label.col-sm-1.control-label.text-left
-            = Product::MEMBER_ATTRIBUTES[attr.to_sym] || attr
-          .col-sm-3
-            input[type="text" required="true" :name="'order[member_attributes]['+mem.key+'][#{attr}]'" class="form-control" :id="'member_attributes_'+mem.key+'_#{attr}'" style="margin-bottom: -5px;"]
+            label.col-sm-2.control-label.text-left
+              = Product::MEMBER_ATTRIBUTES[attr.to_sym] || attr
+            .col-sm-4
+              input[type="text" required="true" :name="'order[member_attributes]['+mem.key+'][#{attr}]'" class="form-control" :id="'member_attributes_'+mem.key+'_#{attr}'"]
 
     - else
       .form-group
