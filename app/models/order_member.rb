@@ -11,6 +11,7 @@ class OrderMember
     message: "身份证号格式不正确" }, allow_blank: true
 
   validate :unique_card_id_with_product_id
+  validate :unique_mobile_with_product_id
   validates_presence_of :name
 
   def initialize(order_member)
@@ -34,5 +35,17 @@ class OrderMember
         end
       end
     end
+  end
+
+  def unique_mobile_with_product_id
+    if self.product_id && self.mobile
+      order_products = OrderProduct.where(product_id: self.product_id)
+      order_products.each do |order_product|
+        order = order_product.order
+        if order.member_attributes && order.member_attributes.map{|om| om["mobile"]}.include?(self.mobile)
+          errors.add(:mobile, "已经存在")
+        end
+      end
+    end    
   end
 end

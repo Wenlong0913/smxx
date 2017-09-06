@@ -12,7 +12,7 @@
         p
           span[class="orderPrice"]
             small 价格:
-            = (@product.sell_price/100.0).to_s + '元'
+            = @product.sell_price/100.0 == 0 ? '免费' : ((@product.sell_price/100.0).to_s + '元')
         p
           span
             i[class="fa fa-map-marker productColorIcon"]
@@ -26,9 +26,10 @@
             = @product.date.to_s + ' ' + @product.time.to_s
       input[type="hidden" name="order[product][id]" value="#{@product.id}"]
     - if @product.purchase_type && @product.purchase_type.include?('sign_up')
-      h3 
+      h3
         | 活动报名 &nbsp;&nbsp;
         button.btn.btn-primary[type="button" @click="addMembers"] 添加报名人员信息
+      p[id="order_account_signup"] &nbsp;
       .form-group.well[v-for="(mem, index) in members" :key="mem" style="position: relative;"]
         i.fa.fa-close[style="position: absolute;top: -2px;right: 3px;" @click="removeMembers(index)"]
         input[type="hidden" :name="'order[member_attributes]['+mem.key+'][product_id]'" value="#{@product.id}"]
@@ -78,10 +79,19 @@ javascript:
     console.log(errors)
     $('.small-error-hint').empty()
     var errors = JSON.parse(errors)
+    if (errors.redirect_url) {
+      window.location = errors.redirect_url
+      return
+    }
+    console.log(errors)
     for(var key in errors) {
-      for(var attr in errors[key][0]) {
-        console.log(key+ '_' + attr)
-        $('#' + key+ '_' + attr).after("<small class='small-error-hint' style='color: red;'>" + errors[key][0][attr] + "</small>")
+      if (key == 'order_account_signup') {
+        $('#' + key).after("<small class='small-error-hint' style='color: red;'>" + errors[key][0] + "</small>")
+      } else {
+        for(var attr in errors[key][0]) {
+          console.log(key+ '_' + attr)
+          $('#' + key+ '_' + attr).after("<small class='small-error-hint' style='color: red;'>" + errors[key][0][attr] + "</small>")
+        }
       }
     }
   }

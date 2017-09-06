@@ -14,7 +14,10 @@ $(document).ready ->
           console.log('add members')
           this.members.push({key: (new Date()).getTime()})
         removeMembers: (index)->
-          this.members.splice(index, 1)
+          if (this.members.length > 1)
+            this.members.splice(index, 1)
+          else
+            alert('至少填写一个名额')
     # defaultkeys = bodyEdit.find("div[rel='attr_list_vue']").data('keys')
     # defaultvalues = bodyEdit.find("div[rel='attr_list_vue']").data('values')
     # attrList.lists = []
