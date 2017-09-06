@@ -144,7 +144,7 @@
       <% @products.hot(4).each do |product| %>
         <div class="col-md-12 col-xs-12 col-sm-12" style="padding: 5px;">
           <a href="<%= wechat_product_micro_website_path(id: product.id) %>">
-            <img src="<%= product.first_image %>" class="img-responsive" >
+            <img src="<%= product.first_image %>" class="img-responsive" style="width: 100%;" >
           </a>
           <div style="border: 1px solid #ddd;padding: 5px;">
             <h4><a href="<%= wechat_product_micro_website_path(id: product.id) %>" style="color: #222629;"><%= product.name.truncate(20) %></a></h4>
