@@ -87,11 +87,32 @@ class Frontend::OrdersController < Frontend::BaseController
     else
       order = Order.new(user: current_user)
       product = Product.find(params[:order][:product][:id])
-      order.order_products.new(product_id: product.id, amount: params[:order][:product][:number], price: product.sell_price)
-      order.delivery_phone = params[:order][:delivery_phone]
+      product_amount = params[:order][:product][:number].presence || 1
+      if params[:order][:member_attributes].present?
+        if product.purchase_type && product.purchase_type.include?("sign_up")
+          order.member_attributes = params[:order][:member_attributes].values
+          product_amount =  params[:order][:member_attributes].keys.count
+          unless valid_order_members?(order)
+            render js: <<-JS
+            onOrderCreate('#{order.errors.messages.to_json}')
+            JS
+            return
+          end
+        end
+      end
+      order.order_products.new(product_id: product.id, amount: product_amount, price: product.sell_price)
+      order.delivery_phone = params[:order][:delivery_phone] if params[:order][:delivery_phone].present?
       order.site = product.site
-      order.price = product.sell_price.to_f * params[:order][:product][:number].to_i
+      order.price = product.sell_price.to_f * product_amount.to_i
       order.save!
+    end
+
+    if order.price == 0
+      order.paid!
+      render js: <<-JS
+      onOrderCreate('#{{redirect_url: frontend_order_url(order)}.to_json}')
+      JS
+      return
     end
     callback_url = URI(Settings.site.host)
     options = 'frontend/orders/' + order.id.to_s + '/paid_success'
@@ -157,6 +178,9 @@ class Frontend::OrdersController < Frontend::BaseController
       product = order_product.product
       product.sales_count += order_product.amount
       product.save!
+      if product.purchase_type && product.purchase_type.include?('sign_up')
+        add_members(@order)
+      end
     end
     redirect_to frontend_order_path(@order)
   end
@@ -184,5 +208,60 @@ class Frontend::OrdersController < Frontend::BaseController
 
     def ensure_login!
       redirect_to admin_sign_in_path unless current_user
+    end
+
+    def valid_order_members?(order)
+      flag = true
+      order_member_attributes = params[:order][:member_attributes]
+
+      Product::MEMBER_ATTRIBUTES.keys.each do |pma|
+        attrs = order_member_attributes.values.map{|oma| oma[pma]} 
+        if attrs.compact.uniq!
+          flag = false
+          order.errors.add 'order_account_signup'.to_sym, "#{Product::MEMBER_ATTRIBUTES[pma]}重复了,请检查!"
+          break
+        end
+      end
+
+      return flag unless flag
+
+      if order_member_attributes.keys.count == 0
+        flag = false
+        order.errors.add 'order_account_signup'.to_sym, "至少填写一个名额!"
+        return
+      end
+
+      product = Product.find_by(id: params[:order][:product][:id])
+      one_account_orders = Order.joins(:order_products).where(user_id: current_user.id).where("order_products.product_id = ?", product.id)
+      if product.maximum_for_one_account.to_i < one_account_orders.count
+        order.errors.add 'order_account_signup'.to_sym, "一个账户最多定#{product.maximum_for_one_account}次!"
+        flag = false
+        return flag
+      end
+      if product.maximum_for_one_order.to_i < order_member_attributes.keys.count
+        order.errors.add 'order_account_signup'.to_sym, "一个订单最多定#{product.maximum_for_one_order}个!"
+        flag = false
+        return flag
+      end
+      order_member_attributes.each_pair do |key, value|
+        order_member = OrderMember.new(order_member_attributes[key])
+        flag &&= order_member.valid?
+        unless order_member.valid?
+          order.errors.add "member_attributes_#{key}".to_sym, order_member.errors.messages
+        end
+      end
+      flag
+    end
+
+    def add_members(order)
+      site = order.site
+      order.member_attributes.each do |oma|
+        member = Member.new(site: site)
+        member.name = oma["name"]
+        member.mobile_phone = oma["mobile"]
+        member.card_id = oma["card_id"]
+        member.features = member.features.merge(oma.slice!("name", "mobile", "card_id", "product_id"))
+        member.save
+      end
     end
 end

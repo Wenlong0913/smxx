@@ -21,7 +21,8 @@
 class Order < ApplicationRecord
   audited
   if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.wgtong?
-    store_accessor :features, :delivery_username, :delivery_phone, :delivery_address, :delivery_fee
+    store_accessor :features, :delivery_username, :delivery_phone, :delivery_address, :delivery_fee,
+      :member_attributes
   end
   if Settings.project.meikemei?
     store_accessor :features, :staff_id, :service_time
@@ -83,6 +84,9 @@ class Order < ApplicationRecord
   has_many :finance_histories, as: :owner, dependent: :destroy
   has_one :charge, dependent: :destroy
   has_one :refund, dependent: :destroy
+
+  # has_many :order_members
+  # accepts_nested_attributes_for :order_members, allow_destroy: true, reject_if: proc { |attributes| attributes['name'].blank? }
 
   before_create :generate_code
   # before_validation :check_member

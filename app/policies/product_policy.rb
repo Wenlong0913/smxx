@@ -46,6 +46,7 @@ class ProductPolicy < ApplicationPolicy
         :content, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values,
         :is_shelves, :is_fee, :shopping_fee, :catalog_id, :hot, :recommend, :event, :promotion, :discount, :is_manager_recommend, :video_url, :status, :address_line1, :address_line2, :date, :time, :phone, :can_purchase, :note,
         :external_purchase_url, :forage_url, :forage_price, :is_foraged,
+        :maximum_for_one_account, :maximum_for_one_order, :member_attributes => [], :purchase_type => [],
         :properties => [], :image_item_ids => [], :tag_list => []]
       #=======
       #[:site_id, :name, :price, :stock, :unit, :discount, :description, :content, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values, :is_shelves, :is_fee, :shopping_fee, :catalog_id, :hot, :recommend, :event, :promotion, :discount, :image_item_ids => [], :tag_list => []]

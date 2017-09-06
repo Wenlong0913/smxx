@@ -1,5 +1,5 @@
 = form_for(@order, url: charge_frontend_orders_path, remote: true, html: {class: 'form-horizontal'}) do |f|
-  .tr-section.text-left
+  .tr-section.text-left[rel="signup_members_vue"]
     .row.mb-30
       .col-md-3
         .productImg
@@ -12,7 +12,7 @@
         p
           span[class="orderPrice"]
             small 价格:
-            = (@product.sell_price/100.0).to_s + '元'
+            = @product.sell_price/100.0 == 0 ? '免费' : ((@product.sell_price/100.0).to_s + '元')
         p
           span
             i[class="fa fa-map-marker productColorIcon"]
@@ -23,16 +23,31 @@
         p
           span
             i[class="fa fa-clock-o productColorIcon"]
-            = @product.date + ' ' + @product.time
-    .form-group
-      label[for="inputPhone" class="col-sm-2 control-label text-left"] 手机号
-      .col-sm-10
-        input[type="text" name="order[delivery_phone]" class="form-control" id="inputPhone" value="#{current_user.mobile.phone_number}" style="width: 200px;"]
-    .form-group
-      label[for="inputNumber" class="col-sm-2 control-label"] 数量：
-      .col-sm-10
-        input[type="hidden" name="order[product][id]" value="#{@product.id}"]
-        input[type="number" name="order[product][number]" class="form-control" id="inputNumber" value="1" style="width: 120px;"]
+            = @product.date.to_s + ' ' + @product.time.to_s
+      input[type="hidden" name="order[product][id]" value="#{@product.id}"]
+    - if @product.purchase_type && @product.purchase_type.include?('sign_up')
+      h3
+        | 活动报名 &nbsp;&nbsp;
+        button.btn.btn-primary[type="button" @click="addMembers"] 添加报名人员信息
+      p[id="order_account_signup"] &nbsp;
+      .form-group.well[v-for="(mem, index) in members" :key="mem" style="position: relative;"]
+        i.fa.fa-close[style="position: absolute;top: -2px;right: 3px;" @click="removeMembers(index)"]
+        input[type="hidden" :name="'order[member_attributes]['+mem.key+'][product_id]'" value="#{@product.id}"]
+        - @product.member_attributes.each do |attr|
+          label.col-sm-1.control-label.text-left
+            = Product::MEMBER_ATTRIBUTES[attr.to_sym] || attr
+          .col-sm-3
+            input[type="text" required="true" :name="'order[member_attributes]['+mem.key+'][#{attr}]'" class="form-control" :id="'member_attributes_'+mem.key+'_#{attr}'" style="margin-bottom: -5px;"]
+
+    - else
+      .form-group
+        label[for="inputPhone" class="col-sm-2 control-label text-left"] 手机号
+        .col-sm-10
+          input[type="text" name="order[delivery_phone]" class="form-control" id="inputPhone" value="#{current_user.mobile.phone_number}" style="width: 200px;"]
+      .form-group
+        label[for="inputNumber" class="col-sm-2 control-label"] 数量：
+        .col-sm-10
+          input[type="number" name="order[product][number]" class="form-control" id="inputNumber" value="1" style="width: 120px;"]
     article[style="border: 1px solid #ccc;"]
       h3[class="text-warning" style="padding-left: 20px;"] 预定须知
       ol
@@ -58,4 +73,25 @@ javascript:
           // 微信公众账号支付取消支付
       }
     });
+  }
+
+  function onOrderCreate(errors) {
+    console.log(errors)
+    $('.small-error-hint').empty()
+    var errors = JSON.parse(errors)
+    if (errors.redirect_url) {
+      window.location = errors.redirect_url
+      return
+    }
+    console.log(errors)
+    for(var key in errors) {
+      if (key == 'order_account_signup') {
+        $('#' + key).after("<small class='small-error-hint' style='color: red;'>" + errors[key][0] + "</small>")
+      } else {
+        for(var attr in errors[key][0]) {
+          console.log(key+ '_' + attr)
+          $('#' + key+ '_' + attr).after("<small class='small-error-hint' style='color: red;'>" + errors[key][0][attr] + "</small>")
+        }
+      }
+    }
   }

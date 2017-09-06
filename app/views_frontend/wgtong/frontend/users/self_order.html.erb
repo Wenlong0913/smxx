@@ -132,7 +132,7 @@
                       </p> -->
                       <p>
                         <span><i class="fa fa-map-marker productColorIcon"></i>  <%= order_product.product.address_line1 %></span>
-                        <span><i class="fa fa-clock-o productColorIcon"></i> <%= order_product.product.date + ' '  + order_product.product.time%></span>
+                        <span><i class="fa fa-clock-o productColorIcon"></i> <%= order_product.product.date.to_s + ' '  + order_product.product.time.to_s%></span>
                       </p>
 
                       <p class="orderDescription"><%= order_product.product.description %></p>

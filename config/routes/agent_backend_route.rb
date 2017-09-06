@@ -15,6 +15,7 @@ module AgentBackendRoute
           member do
             post 'process_shelves'
             post 'sales_distribution'
+            get 'download_signup_members'
           end
         end
         resources 'orders' do

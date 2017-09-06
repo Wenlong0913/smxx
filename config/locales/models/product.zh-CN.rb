@@ -48,6 +48,9 @@ zh-CN:
           open: 进行中
           completed: 已满员/售完
           closed:  已结束/关闭
+        maximum_for_one_account: 一个账号可以报几次名
+        maximum_for_one_order: 一个订单最多可以报名人数
+        member_attributes: 报名需要填写的属性
     errors:
       models:
         product:
