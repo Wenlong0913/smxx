@@ -104,6 +104,7 @@ class Agent::ProductsController < Agent::BaseController
     filter_additional_attribute
     if params[:product][:member_attributes].present? || params[:product][:member_attributes_others].present?
       params[:product][:member_attributes] = params[:product][:member_attributes] + params[:product][:member_attributes_others].split(/,/)
+      params[:product][:member_attributes] = params[:product][:member_attributes].delete_if{|ma| ma.blank?}
     end
     if @product.save
       # redirect_to agent_product_path(@product), notice: 'Product 创建成功.'
