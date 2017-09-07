@@ -10,38 +10,6 @@
   .padding-10 {
     padding: 10px !important;
   }
-  .nav-wechat-products {
-    width: 50px;
-    height: 50px;
-    background-color: #e84f17;
-    color: #fff;
-    border-radius: 50%;
-    padding: 13px 10px;
-  }
-  .nav-wechat-sites {
-    width: 50px;
-    height: 50px;
-    background-color: #7cba00;
-    color: #fff;
-    border-radius: 50%;
-    padding: 10px 12px;
-  }
-  .nav-wechat-news {
-    width: 50px;
-    height: 50px;
-    background-color: #00a2f2;
-    color: #fff;
-    border-radius: 50%;
-    padding: 13px 10px;
-  }
-  .nav-wechat-recent {
-    width: 50px;
-    height: 50px;
-    background-color: #ffbb00;
-    color: #fff;
-    border-radius: 50%;
-    padding: 10px 12px;
-  }
   .block-title {
     margin: 20px 0px;
   }
@@ -72,7 +40,7 @@
             <% if Keystore.value_for('wechat-index-banner01-380×200').present? %>
               <% wechat_index_banner01 = Keystore.value_for('wechat-index-banner01-380×200').split('|') %>
               <a href="<%= wechat_index_banner01[1] || 'javascript:void(0)' %>">
-                <img src="<%= wechat_index_banner01[0] %>" alt="" style="width: 100%;" >
+                <img src="<%= wechat_index_banner01[0] %>" alt="" class="img-responsive" >
               </a>
             <% end %>
           </div>
@@ -80,7 +48,7 @@
             <% if Keystore.value_for('wechat-index-banner02-380×200').present? %>
               <% wechat_index_banner02 = Keystore.value_for('wechat-index-banner02-380×200').split('|') %>
               <a href="<%= wechat_index_banner02[1] || 'javascript:void(0)' %>">
-                <img src="<%= wechat_index_banner02[0] %>" alt="" style="width: 100%;">
+                <img src="<%= wechat_index_banner02[0] %>" alt="" class="img-responsive" >
               </a>
             <% end %>
           </div>
@@ -88,7 +56,7 @@
             <% if Keystore.value_for('wechat-index-banner03-380×200').present? %>
               <% wechat_index_banner03 = Keystore.value_for('wechat-index-banner03-380×200').split('|') %>
               <a href="<%= wechat_index_banner03[1] || 'javascript:void(0)' %>">
-                <img src="<%= wechat_index_banner03[0] %>" alt="" style="width: 100%;">
+                <img src="<%= wechat_index_banner03[0] %>" alt="" class="img-responsive" >
               </a>
             <% end %>
           </div>
