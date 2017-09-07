@@ -20,7 +20,7 @@ h1.page-header
       .toolbar.row
         .col-md-6.m-b-15
           .input-group.search_all
-            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '关键字搜索...'
+            = f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', placeholder: '标题搜索...'
             span.input-group-btn
               button.btn.btn-inverse[type='submit']
                 i.fa.fa-search
@@ -77,10 +77,10 @@ h1.page-header
               td = Forage::DataCache::MATCHED_STATUS[forage_data_cache.matched_status.to_sym]
               td = enum_l(forage_data_cache, :is_merged)
               td
-                => link_to '查看', admin_forage_data_cach_path(forage_data_cache), class: 'btn btn-xs btn-default'
+                => link_to '查看', admin_forage_data_cach_path(forage_data_cache), class: 'btn btn-xs btn-primary'
                 - if forage_data_cache.unmerged?
-                  => link_to '编辑', edit_admin_forage_data_cach_path(forage_data_cache), class: 'btn btn-xs btn-default'
-                  = link_to '不合并', admin_forage_data_cach_path(forage_data_cache), data: { confirm: '确定不合并祠内偶然那个?' }, method: :delete, class: 'btn btn-xs btn-danger'
+                  => link_to '合并', edit_admin_forage_data_cach_path(forage_data_cache), class: 'btn btn-xs btn-success'
+                  = link_to '不合并', admin_forage_data_cach_path(forage_data_cache), data: { confirm: '确定不合并本条数据吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
       = paginate @forage_data_caches
 
 / TODO: move this code to application.js
