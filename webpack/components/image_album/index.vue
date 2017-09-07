@@ -140,6 +140,18 @@
       height: 90%;
   }
 
+  .gallery .image img {
+    width: 100%;
+    height: 200px;
+    -webkit-border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+  }
+
+  img {
+    vertical-align: middle;
+  }
+
   .gallery-option-set{
     margin: 3px 15px;
   }
