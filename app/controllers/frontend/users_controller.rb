@@ -60,6 +60,7 @@ class Frontend::UsersController < Frontend::BaseController
   end
 
   def binding_phone
+    @return_url = params[:return_url] if params[:return_url].present?
     if params['user']
       t = Sms::Token.new(params['user']['mobile'])
       if t.valid?(params['user']['code'])

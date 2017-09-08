@@ -18,6 +18,7 @@ class Frontend::OrdersController < Frontend::BaseController
   end
 
   def new
+    redirect_to binding_phone_users_url(return_url: new_frontend_order_url(product_id: params[:product_id])) unless current_user.try(:mobile).try(:phone_number)
     @order = Order.new
     @product = Product.find(params[:product_id])
   end
