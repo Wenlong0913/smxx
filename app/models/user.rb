@@ -63,6 +63,7 @@ class User < ApplicationRecord
   validates_uniqueness_of :nickname, allow_blank: true
   attr_accessor :mobile_phone
   validates :mobile_phone, mobile_phone: true, allow_blank: true
+  validates :email, format: { with: /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i, message: '请填写正确的邮箱格式' }, if: :password_and_password_confirmation?
   enum gender: {
     female: 0, # 女
     male: 1,  # 男
@@ -160,4 +161,7 @@ class User < ApplicationRecord
     end
   end
 
+  def password_and_password_confirmation?
+    self.password.present? && self.password_confirmation.present?
+  end
 end
