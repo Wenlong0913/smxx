@@ -70,7 +70,7 @@
           <div class="address white-space-nomal">
             <small>地址: <%= product.address_line1 %></small>
           </div>
-          <small class="time">活动时间: <%= product.date.present? ? product.date : ''%> <%= product.time.presence || '' %> </small>
+          <small class="time text-overflow">活动时间: <%= product.date.present? ? product.date : ''%> <%= product.time.presence || '' %> </small>
           <% if product.status == 'open' %>
             <span class='pull-right text-warning'>
               <strong>
@@ -135,7 +135,7 @@
   }
   .custom-list .image-dom{
     width: 100%;
-    height: 200px;
+    height: 25vh;
     background-size: cover;
     background-repeat: no-repeat;
   }
