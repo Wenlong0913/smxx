@@ -12,15 +12,38 @@ def quit(msg)
   exit(1)
 end
 
+puts <<-MSG.yellow
+Cap参数说明：
+APP_NAME=dagle REPO=dagle PROJECT_NAME=sxhop DEPLOY_TO=demo cap production deploy
+
+APP_NAME: 这个名字决定了 sidekiq 等服务生产的文件名，不填默认就是PROJECT_NAME
+REPO: 对应gitlab仓库项目的名字，不填默认就是dagle
+PROJECT_NAME: 项目名称，必填
+DEPLOY_TO: 部署到哪个目录，不填默认就是 APP_NAME 或 PROJECT_NAME，这个参数可以部署多个dagle系统给客户演示
+
+例如，临时部署dagle系统给一个客户做演示，给客户演示的域名是 nj1688.dagle.cn：
+
+APP_NAME=nj1688.dagle REPO=dagle PROJECT_NAME=dagle DEPLOY_TO=nj1688.dagle cap production deploy
+
+可以简化为：
+
+APP_NAME=nj1688.dagle REPO=dagle PROJECT_NAME=dagle DEPLOY_TO=nj1688.dagle cap production deploy
+
+又例如我们像改变自有的dagle系统部署的目录，那么可以这样：
+
+PROJECT_NAME=dagle DEPLOY_TO=new-dagle cap production deploy
+
+  MSG
+
 quit("项目名PROJECT_NAME必须填写在命令行中提供") unless ENV['PROJECT_NAME']
-set :application, ENV['PROJECT_NAME']
+set :application, ENV['APP_NAME'] || ENV['PROJECT_NAME']
 set :default_env, {
   'PROJECT_NAME' => ENV['PROJECT_NAME']
 }
 
 set :repo_url, "git@gitlab.tanmer.com:tanmer/#{ENV['REPO'] || ENV['PROJECT_NAME']}.git"
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
-set :deploy_to, "/data/www/#{fetch(:application)}"
+set :deploy_to, "/data/www/#{ENV['DEPLOY_TO'] || fetch(:application)}"
 
 set :rvm_ruby_version, '2.3.3'
 
@@ -33,14 +56,10 @@ before "deploy", :check_branch do
   end
 
   puts <<-MSG.green
+        app name: #{fetch(:application)}
 real repo url is: #{fetch(:repo_url)}
   real branch is: #{fetch(:branch)}
        deploy to: #{fetch(:deploy_to)}
-  MSG
-
-  puts <<-MSG.yellow
-如果要修改git仓库的名字，请在命令行中提供REPO，如：
-REPO=dagle PROJECT_NAME=sxhop cap production deploy
   MSG
 
   ask(:is_start_to_deploy, 'start to deploy? (y/n, default=n)', 'n')
