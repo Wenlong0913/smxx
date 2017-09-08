@@ -37,7 +37,7 @@
                     <div class="text-center text-danger title_error">
                     </div>
                     <div class="form-group">
-                      <%= f.submit '提交保存', class: 'btn btn-info', id: 'click_login', data:{href: users_path}%>
+                      <%= f.submit '提交保存', class: 'btn btn-info', id: 'click_login', data:{href: @return_url ? @return_url : users_path}%>
                     </div>
                   <%end%>
                 </div>
