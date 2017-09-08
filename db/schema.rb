@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170901115846) do
+ActiveRecord::Schema.define(version: 20170908032810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,15 +52,6 @@ ActiveRecord::Schema.define(version: 20170901115846) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["user_id"], name: "index_address_books_on_user_id", using: :btree
-  end
-
-  create_table "agent_plans", force: :cascade do |t|
-    t.string   "name"
-    t.string   "features",                 array: true
-    t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "price"
   end
 
   create_table "api_tokens", force: :cascade do |t|
@@ -1072,14 +1063,12 @@ ActiveRecord::Schema.define(version: 20170901115846) do
     t.integer  "comments_count"
     t.integer  "agent_plan_id"
     t.datetime "paid_at"
-    t.boolean  "is_flatform_recommend",                           default: false
     t.decimal  "lng",                   precision: 20, scale: 14
     t.decimal  "lat",                   precision: 20, scale: 14
+    t.boolean  "is_flatform_recommend",                           default: false
     t.jsonb    "forage"
-    t.integer  "parent_id"
     t.index "((forage ->> 'is_foraged'::text))", name: "index_sites_on_forage_is_forage", using: :btree
     t.index "ll_to_earth((lat)::double precision, (lng)::double precision)", name: "idx__gnomon_site", using: :gist
-    t.index ["parent_id"], name: "index_sites_on_parent_id", using: :btree
     t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
   end
 
@@ -1291,16 +1280,6 @@ ActiveRecord::Schema.define(version: 20170901115846) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
-  create_table "users_chat_rooms", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "chat_room_id"
-    t.integer  "last_message_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.index ["chat_room_id"], name: "index_users_chat_rooms_on_chat_room_id", using: :btree
-    t.index ["user_id"], name: "index_users_chat_rooms_on_user_id", using: :btree
-  end
-
   create_table "users_permissions", force: :cascade do |t|
     t.integer "user_id"
     t.integer "permission_id"
@@ -1360,6 +1339,4 @@ ActiveRecord::Schema.define(version: 20170901115846) do
   add_foreign_key "user_communities", "users"
   add_foreign_key "user_mobiles", "users"
   add_foreign_key "user_weixins", "users"
-  add_foreign_key "users_chat_rooms", "chat_rooms"
-  add_foreign_key "users_chat_rooms", "users"
 end
