@@ -113,7 +113,7 @@ class Order < ApplicationRecord
     if self.price.blank?
       self.price = 0
     end
-    if Settings.project.grand? || Settings.project.demo? || Settings.project.dagle? 
+    if Settings.project.grand? || Settings.project.demo? || Settings.project.dagle?
       self.user = self.member.user
     end
     # 判断是否要发支付成功的短信
@@ -131,9 +131,9 @@ class Order < ApplicationRecord
         when 'completed'
           content = '订单已完成: '
         end
-        Notification.notice(self.user.id, nil, '订单', content + self.code.to_s, self, 'code') if content.present?
+        Notification.notice(self.site.user.id, nil, '订单', content + self.code.to_s, self, 'code') if content.present? && self.site.user
       else
-        Notification.notice(self.user.id, nil, '订单', '订单状态更新了', self, 'code')
+        Notification.notice(self.site.user.id, nil, '订单', '订单状态更新了', self, 'code') if self.site.user
       end
     end
   end
