@@ -239,7 +239,7 @@ class Frontend::OrdersController < Frontend::BaseController
       end
 
       product = Product.find_by(id: params[:order][:product][:id])
-      one_account_orders = Order.joins(:order_products).where(user_id: current_user.id).where("order_products.product_id = ?", product.id)
+      one_account_orders = Order.joins(:order_products).where(user_id: current_user.id, status: ['paid', 'completed']).where("order_products.product_id = ?", product.id)
       if product.maximum_for_one_account.to_i < one_account_orders.count
         order.errors.add 'order_account_signup'.to_sym, "一个账户最多定#{product.maximum_for_one_account}次!"
         flag = false
