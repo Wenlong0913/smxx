@@ -70,7 +70,7 @@ class Frontend::UsersController < Frontend::BaseController
         if mobile.save
           render json: {}
         else
-          render json: {error: mobile.errors.full_messsages}
+          render json: {error: mobile.errors.full_messages}
         end
       else
         render json: {error: '验证码不正确！'}
