@@ -6,6 +6,7 @@
 #= require agent/sites
 #= require agent/preorder_conversitions
 #= require agent/new_preorder_conversitions
+#= require agent/new_product
 #= require agent/orders
 #= require agent/members
 #= require agent/finance_bills

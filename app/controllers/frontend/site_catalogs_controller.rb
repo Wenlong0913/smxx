@@ -7,7 +7,9 @@ class Frontend::SiteCatalogsController < Frontend::BaseController
   def show
     @site_catalog =SiteCatalog.find(params[:id])
     # 当前分类下的所有场馆
-    @sites = @site_catalog.sites.order(updated_at: :desc).page(params[:page])
+    @sites = @site_catalog.sites
+    # 发布的所有商家
+    @sites = @sites.where("features ->> 'is_published' = ?", '1').order(updated_at: :desc).page(params[:page])
   end
 
 

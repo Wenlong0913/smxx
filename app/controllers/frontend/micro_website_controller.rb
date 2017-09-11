@@ -1,7 +1,8 @@
 class Frontend::MicroWebsiteController < Frontend::BaseController
+  before_action :ensure_wechat_login!, except: [:wechat_login]
   def index
-    @wechat_index_hot_product = Product.hot(4)
-    @wechat_index_hot_site = Site.hot(4)
+    @products = Product.where("features ->> 'is_shelves' = ?", '1').all
+    @sites = Site.where("features ->> 'is_published' = ?", '1').all
   end
 
   def wechat_sites
@@ -22,7 +23,7 @@ class Frontend::MicroWebsiteController < Frontend::BaseController
     else
       @products = Product.all
     end
-    @products = @products.where("features ->> 'status' = ?", params[:type]). if %w(pending open completed closed).include?(params[:type])
+    @products = @products.where("features ->> 'status' = ?", params[:type]) if %w(pending open completed closed).include?(params[:type])
     @products = @products.order(updated_at: :desc).page(params[:page])
   end
 
@@ -42,4 +43,37 @@ class Frontend::MicroWebsiteController < Frontend::BaseController
 		@site = Site.find(params[:id])
 	end
 
+  def wechat_login
+    if params[:code]
+      conn = Faraday.new(:url => 'http://wxopen.tanmer.com')
+      response = conn.get('/wx/mp_auth/wx4c40bb18df07aafc/fetch_uid/%s' % params[:code])
+      data = JSON.parse(response.body)
+      if data['uid']
+        weixin = User::Weixin.find_or_create_by(uid: data['uid'])
+        if current_user
+          current_user.weixin = weixin
+        else
+          user = weixin.user || User.new(nickname: weixin.name, password: 'tanmer.com')
+          user.weixin = weixin
+          user.save
+          sign_in user
+          redirect_to micro_website_index_url
+        end
+      end
+    end
+  end
+
+  private
+    # wechat_login_micro_website_url
+    def ensure_wechat_login!
+      return if current_user
+      conn = Faraday.new(:url => 'http://wxopen.tanmer.com')
+      appid = 'wx4c40bb18df07aafc'
+      response_code = conn.get("/wx/mp_auth/qrcode/#{appid}.json")
+      data = JSON.parse(response_code.body)
+      uri = URI("http://#{appid}.wxopen.tanmer.com/wx/mp_auth")
+      params = {code: data['code'], origin: wechat_login_micro_website_url}
+      uri.query = URI.encode_www_form URI.decode_www_form(uri.query || '').concat(params.to_a)
+      redirect_to uri.to_s
+    end
 end

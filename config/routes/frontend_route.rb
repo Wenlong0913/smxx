@@ -61,6 +61,7 @@ module FrontendRoute
         get 'wechat_sites' # 场馆列表
         get 'wechat_products' # 活动列表
         get 'wechat_news' # 新闻
+        get 'wechat_login' #微信登录
         
         get 'wechat_product/:id', action: 'wechat_product', as: 'wechat_product'
         get 'wechat_site/:id', action: 'wechat_site', as: 'wechat_site'

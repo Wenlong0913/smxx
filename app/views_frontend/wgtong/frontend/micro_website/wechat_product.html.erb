@@ -56,8 +56,10 @@
 	                    <% end %>
 	                    <p>
 	                      <% if @product.sell_price > 0 %>
-	                        <a href="<%= new_frontend_order_path(product_id: @product.id) %>" class="btn btn-block btn-lg btn-success">马上预订</a>
-	                      <%end%>
+													<a href="<%= new_frontend_order_path(product_id: @product.id) %>" class="btn btn-block btn-lg btn-success">马上预订</a>
+												<% elsif @product.is_foraged %>
+													<a href="<%= @product.external_purchase_url %>" class="btn btn-block btn-lg btn-success">马上预订</a>
+	                      <% end %>
 	                    </p>
 	                  </div>
 	                </div>

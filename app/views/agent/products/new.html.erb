@@ -257,6 +257,40 @@
                         </div>
                       </div>
                     </div>
+                    <div class="col-xs-12 purchase_type">
+                      <div class="form-group col-xs-2">
+                        <label class="control-label string optional">购买方式:</label>
+                      </div>
+                      <div class="form-group col-xs-10">
+                        <%= f.collection_check_boxes :purchase_type, Product::PURCHASE_TYPE, :first, :last, checked: @product.try(:purchase_type)%>
+                      </div>
+                    </div>
+                    <div class='signup_attributes'>
+                      <div class="col-xs-6">
+                        <div class="form-group">
+                          <%= f.input :maximum_for_one_account %>
+                        </div>
+                      </div>
+                      <div class="col-xs-6">
+                        <div class="form-group">
+                          <%= f.input :maximum_for_one_order %>
+                        </div>
+                      </div>
+                      <div class="col-xs-12">
+                        <div class="col-xs-4">
+                          <div class="input-group">
+                            <label class="control-label string optional"> 报名需要填写的属性:&nbsp;&nbsp;</label>
+                            <%= f.collection_check_boxes :member_attributes, Product::MEMBER_ATTRIBUTES, :first, :last, checked: @product.try(:member_attributes)%>
+                          </div>
+                        </div>
+                        <div class="col-xs-8">
+                          <div class="input-group"> 
+                            <label class="control-label input-group-addon string optional"> 其他附加属性:&nbsp;&nbsp;</label>
+                            <input name="product[member_attributes_others]" class="form-control" placeholder="属性之间用逗号隔开" value=""/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <div class="col-xs-12">
                       <div class="form-group">
                         <%= f.input :description, as: :text %>

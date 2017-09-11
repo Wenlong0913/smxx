@@ -307,6 +307,31 @@
                             </div>
                           </div>
                         </div>
+                        <% if @product.purchase_type && @product.purchase_type.include?('sign_up') %>
+                          <h3>
+                            报名统计信息
+                            <a class="btn btn-primary pull-right" href="<%=download_signup_members_agent_product_path(product_id: @product.id,format: 'csv') %>">下载</a>
+                          </h3>
+                          <div class="row">
+                            <table class="table table-bordered">
+                              <tr>
+                                <% @product.member_attributes.each do |attr| %>
+                                  <th> <%= Product::MEMBER_ATTRIBUTES[attr.to_sym] || attr %></th>
+                                <% end %>
+                              </tr>
+                              <% @orders.each do |order| %>
+                                <% next unless order.member_attributes%>
+                                <% order.member_attributes.each do |mem_attr|%>
+                                  <tr>
+                                    <% @product.member_attributes.each do |attr| %>
+                                      <th> <%= mem_attr[attr] %></th>
+                                    <% end %>
+                                  </tr>
+                                <%end%>
+                              <% end %>
+                            </table>
+                          </div>
+                        <%end%>
                       </div>
                     </div>
                     <!-- END #product-info -->

@@ -1,6 +1,6 @@
 class Agent::ProductsController < Agent::BaseController
   before_action :set_current_user_products
-  before_action :set_product, only: [:show, :edit, :update, :destroy, :process_shelves, :sales_distribution]
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :process_shelves, :sales_distribution, :download_signup_members, :orders]
   before_action :set_site_tags, only: [:edit, :new]
   before_action :set_product_price, only: [:create, :update, :index]
   acts_as_trackable user_id: :get_user_id,
@@ -79,6 +79,9 @@ class Agent::ProductsController < Agent::BaseController
         @catalog_ancestors = (@catalog_ancestors + @product.catalog.ancestors).reverse
       end
     end
+    if @product.purchase_type && @product.purchase_type.include?('sign_up')
+      @orders = OrderProduct.where(product_id: @product.id).map{|order_product| order_product.order}
+    end
     respond_to do |format|
       format.html
       format.json { render json: @product }
@@ -99,6 +102,10 @@ class Agent::ProductsController < Agent::BaseController
     @product.site = @site
     authorize @product
     filter_additional_attribute
+    if params[:product][:member_attributes].present? || params[:product][:member_attributes_others].present?
+      params[:product][:member_attributes] = params[:product][:member_attributes] + params[:product][:member_attributes_others].split(/,/)
+      params[:product][:member_attributes] = params[:product][:member_attributes].delete_if{|ma| ma.blank?}
+    end
     if @product.save
       # redirect_to agent_product_path(@product), notice: 'Product 创建成功.'
       render json: {url: agent_product_path(@product)}
@@ -110,6 +117,10 @@ class Agent::ProductsController < Agent::BaseController
   def update
     authorize @product
     filter_additional_attribute
+    if params[:product][:member_attributes].present? || params[:product][:member_attributes_others].present?
+      params[:product][:member_attributes] = params[:product][:member_attributes] + params[:product][:member_attributes_others].split(/,/)
+      params[:product][:member_attributes] = params[:product][:member_attributes].delete_if{|ma| ma.blank?}
+    end
     if @product.update(permitted_attributes(@product))
       redirect_to agent_product_path(@product), notice: "#{Product.model_name.human}更新成功."
     else
@@ -143,6 +154,24 @@ class Agent::ProductsController < Agent::BaseController
       code: resource.code,
       share_path: URI(request.scheme + "://" + request.host + ":" + request.port.to_s).merge(resource.share_path).to_s
     }
+  end
+
+  def download_signup_members
+    if params[:format] == 'csv'
+      if @product.purchase_type && @product.purchase_type.include?('sign_up')
+        orders = OrderProduct.where(product_id: @product.id).map{|order_product| order_product.order}
+        members = orders.map{|o| o.member_attributes}.flatten.compact
+      end
+      send_data(to_csv(members, @product), filename: "products-members-signup-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv")
+    end
+  end
+
+  def orders
+    @orders_all = @product.orders
+    @orders = @orders_all.page(params[:page])
+    if params[:format] == 'csv'
+      send_data(to_orders_csv(@orders_all), filename: "products-#{@product.id}-orders-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv")
+    end
   end
 
   private
@@ -192,5 +221,44 @@ class Agent::ProductsController < Agent::BaseController
 
     def get_visit_resource
       @product
+    end
+
+
+    def to_orders_csv(orders)
+      return [] if orders.nil?
+      # make excel using utf8 to open csv file
+      head = 'EF BB BF'.split(' ').map{|a|a.hex.chr}.join()
+      CSV.generate(head) do |csv|
+        # 获取字段名称
+        column_names = ['产品名称', '订单号', '订单金额', '客户', '状态']
+        csv << column_names        
+        orders.each do |order|
+          values = []
+          values << @product.name
+          values << order.code
+          values << order.price
+          values << order.user.nickname
+          values << I18n.t("activerecord.attributes.order.statuses.#{order.status}")
+          csv << values
+        end
+      end
+    end
+
+    def to_csv(objects, product)
+      return [] if objects.nil?
+      # make excel using utf8 to open csv file
+      head = 'EF BB BF'.split(' ').map{|a|a.hex.chr}.join()
+      CSV.generate(head) do |csv|
+        # 获取字段名称
+        column_names = product.member_attributes.map{|attr| Product::MEMBER_ATTRIBUTES[attr.to_sym] || attr }
+        csv << column_names        
+        objects.each do |obj|
+          values = []
+          product.member_attributes.each do |attr|
+            values << "\t" + obj[attr]
+          end
+          csv << values
+        end
+      end
     end
 end
