@@ -1,8 +1,8 @@
 class Frontend::MicroWebsiteController < Frontend::BaseController
   before_action :ensure_wechat_login!, except: [:wechat_login]
   def index
-    @products = Product.where("features ->> 'is_shelves' = ?", '1').all
-    @sites = Site.where("features ->> 'is_published' = ?", '1').all
+    @products = Product.where("features ->> 'is_shelves' = ?", '1').limit(20)
+    @sites = Site.where("features ->> 'is_published' = ?", '1').limit(20)
   end
 
   def wechat_sites

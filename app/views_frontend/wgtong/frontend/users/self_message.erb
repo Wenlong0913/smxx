@@ -83,7 +83,7 @@
                 <div class="feed pull-right">
                   <span class="fa fa-bell" style="font-size: 20px; color: #f0ad4e; text-shadow: 1px 1px 1px #dfdfdf;"></span>
                 </div>
-                <h4 class="media-heading">文管员</h4>
+                <h4 class="media-heading"><%= current_user.name %></h4>
                 <p class="orderDescription">你的<%= notice.notify_type%>
                   <a href="<%=notice.target_url %>"><%= notice.target.send(notice.target_name)%></a>
                   <%= notice.content%>
