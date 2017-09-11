@@ -134,7 +134,13 @@ class Frontend::OrdersController < Frontend::BaseController
   end
 
   def paid_success
+    order_status = if params[:is_success] == 'T'
+      'paid'
+    end
     order = Order.find_by_code(params[:out_trade_no])
+    if order.present?
+      order.update(status: order_status)
+    end
     redirect_to frontend_order_path(order)
   end
 
