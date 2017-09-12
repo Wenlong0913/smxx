@@ -22,6 +22,9 @@ default: &default
       api_key: c97380fa188341572c1bcdadf383dfc2
     templates:
       order_notification: "【文广通】您单号为#order#的订单当前的状态为:#message#。我们将时刻提醒您订单的状态"
+      order_succeed_to_user: "【文广通】恭喜你下单成功，商家(#site_name#)商家电话(#phone#)"
+      order_succeed_to_agent: "【文广通】新增用户订单，金额(#price#)，请及时登录商家后台处理"
+      order_completed_to_user: "【文广通】您的(#order_code#)号订单已#from#确认消费,如有疑问您可以进行申诉"
   mobile:
     auth_token_template: "【文广通】您的验证码是#code#。如非本人操作，请忽略本短信。"
 
