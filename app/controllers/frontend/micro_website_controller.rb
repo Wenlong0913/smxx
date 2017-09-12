@@ -80,8 +80,10 @@ class Frontend::MicroWebsiteController < Frontend::BaseController
           user.weixin = weixin
           user.save
           sign_in user
-          redirect_to params[:request_url].present? ? params[:request_url] : micro_website_index_url
         end
+        redirect_to params[:request_url].present? ? params[:request_url] : micro_website_index_url
+      else
+        render js: "alert('wechat uid not found')"
       end
     end
   end
