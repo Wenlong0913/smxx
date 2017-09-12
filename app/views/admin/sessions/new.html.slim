@@ -27,7 +27,7 @@
               |微信扫码登录
             - unless Settings.project.wgtong?
               button#email-login.btn.btn-info.btn-block.btn-lg[data-toggle='modal' data-target='#email_login_modal'] 邮箱密码登录
-        .weixin-login-container.hide[data-session-url=admin_sign_in_with_weixin_url data-verify-url="#{Settings.weixin_login.host}/wx/mp_auth/qrcode/#{Settings.weixin_login_appid}.json?title=#{URI.encode(Settings.site.name)}"]
+        .weixin-login-container.hide[data-session-url=admin_sign_in_with_weixin_url data-verify-url="#{Settings.weixin_login.host}/wx/mp_auth/qrcode/#{Settings.weixin_login.appid}.json?title=#{URI.encode(Settings.site.name)}"]
           img.weixin-login-qrcode
           p.weixin-login-message
         hr
