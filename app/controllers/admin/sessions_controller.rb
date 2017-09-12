@@ -6,7 +6,7 @@ class Admin::SessionsController < Admin::BaseController
   end
 
   def weixin_login
-    conn = Faraday.new(:url => Settings.wexin_login.host)
+    conn = Faraday.new(:url => Settings.weixin_login.host)
     response = conn.get("/wx/mp_auth/%s/fetch_uid/%s" % [Settings.weixin_login.appid, params[:code]])
     data = JSON.parse(response.body)
     if data['uid']
