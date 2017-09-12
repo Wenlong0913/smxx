@@ -57,7 +57,7 @@ class UserPolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     if user.super_admin_or_admin?
-      [:mobile_phone, :nickname, :password, :password_confirmation, :role_ids => []]
+      [:mobile_phone, :nickname, :email, :password, :password_confirmation, :role_ids => []]
     else
       []
     end
