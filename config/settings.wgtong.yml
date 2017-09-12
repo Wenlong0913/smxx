@@ -30,7 +30,9 @@ default: &default
 
   payment: # Ping++支付
     api_id: app_zvv1aDOe5aTCuLOm
-    api_key: sk_live_fzf9S0D0CSOSiLCOu1izDSW5
+    api_key: sk_test_LurPKKzbHOyDPWvLm15OyDuT
+    # Test Secret Key:sk_test_LurPKKzbHOyDPWvLm15OyDuT
+    # Live Secret Key:sk_live_fzf9S0D0CSOSiLCOu1izDSW5
     channels:
     - alipay
     - wx

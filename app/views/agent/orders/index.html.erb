@@ -4,6 +4,7 @@
       <!-- BEGIN search-container -->
     <div class="search-container">
       <!-- BEGIN search-content -->
+      <%= form_for :search, url: agent_orders_path, method: :get do |f| %>
       <div class="search-content">
         <!-- BEGIN search-toolbar -->
         <div class="search-toolbar">
@@ -28,6 +29,7 @@
                 <li class="<%= 'sign' if params[:reorder] == 'price' %>">
                   <%= link_to '价格', agent_orders_path+"?reorder=price" %>
                 </li>
+                <li><button class="btn btn-default" type="submit" name="csv" value="scv">导出订单</button></li>
               </ul>
             </div>
             <!-- END col-6 -->
@@ -147,6 +149,7 @@
         </div>
         <!-- END pagination -->
       </div>
+      <% end %>
       <!-- END search-content -->
       <!-- BEGIN search-sidebar -->
       <div class="search-sidebar">

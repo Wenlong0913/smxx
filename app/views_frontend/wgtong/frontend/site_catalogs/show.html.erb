@@ -121,7 +121,9 @@
                 <% if site_hot.present? %>
                 <div class="tr-post">
                   <div class="entry-header">
-                    <img class="img-responsive" src="<%= site_hot.first_image %>" />
+                    <a href="/frontend/sites/<%= site_hot.id %>">
+                      <img class="img-responsive" src="<%= site_hot.first_image %>" />
+                    </a>
                   </div>
                   <div class="post-content">
                     <div class="author">
