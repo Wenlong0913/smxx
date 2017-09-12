@@ -40,13 +40,13 @@ class Frontend::MicroWebsiteController < Frontend::BaseController
   end
 
   def wechat_site
-		@site = Site.find(params[:id])
+	  @site = Site.find(params[:id])
 	end
 
   def wechat_login
     if params[:code]
-      conn = Faraday.new(:url => 'http://wxopen.tanmer.com')
-      response = conn.get('/wx/mp_auth/wx4c40bb18df07aafc/fetch_uid/%s' % params[:code])
+      conn = Faraday.new(:url => Settings.weixin_login.host)
+      response = conn.get('/wx/mp_auth/%s/fetch_uid/%s' % [Settings.weixin_login.appid, params[:code]])
       data = JSON.parse(response.body)
       if data['uid']
         weixin = User::Weixin.find_or_create_by(uid: data['uid'])
@@ -67,11 +67,11 @@ class Frontend::MicroWebsiteController < Frontend::BaseController
     # wechat_login_micro_website_url
     def ensure_wechat_login!
       return if current_user
-      conn = Faraday.new(:url => 'http://wxopen.tanmer.com')
-      appid = 'wx4c40bb18df07aafc'
-      response_code = conn.get("/wx/mp_auth/qrcode/#{appid}.json")
+      conn = Faraday.new(:url => Settings.weixin_login.host)
+      appid = Settings.weixin_login.appid
+      response_code = conn.get("/wx/mp_auth/qrcode/#{.appid}.json")
       data = JSON.parse(response_code.body)
-      uri = URI("http://#{appid}.wxopen.tanmer.com/wx/mp_auth")
+      uri = URI("#{Settings.weixin_login.host}/wx/mp_auth?appid=#{appid}")
       params = {code: data['code'], origin: wechat_login_micro_website_url}
       uri.query = URI.encode_www_form URI.decode_www_form(uri.query || '').concat(params.to_a)
       redirect_to uri.to_s
