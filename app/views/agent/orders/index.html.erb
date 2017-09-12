@@ -43,10 +43,10 @@
             <!-- list -->
             <ul class="forum-list forum-topic-list">
               <% @orders.each do |order| %>
-                <li data-url="<%= (Settings.project.sxhop? || Settings.project.imolin?) ? agent_order_path(order) : '#'%>" class="link-li">
+                <li data-url="<%= (Settings.project.sxhop? || Settings.project.imolin? || Settings.project.wgtong?) ? agent_order_path(order) : '#'%>" class="link-li">
                   <!-- begin media -->
                   <div class="media">
-                    <% if Settings.project.imolin? || Settings.project.sxhop? %>
+                    <% if Settings.project.imolin? || Settings.project.sxhop? || Settings.project.wgtong? %>
                       <%= image_tag order.products.first.first_image, height: '50px' %>
                     <% else %>
                       <%= image_tag 'no-picture.png' %>
@@ -67,8 +67,8 @@
                           </div>
                           <div class="col-xs-6">
                             客户：
-                            <a href="">
-                              <% if Settings.project.sxhop? || Settings.project.imolin? %>
+                            <a href="javascript:void(0)" style="text-decoration: none;">
+                              <% if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.wgtong? %>
                                 <%= order.user.try(:nickname) %>
                               <% else %>
                                 <%= order.try(:member).try(:name)%>
@@ -76,21 +76,31 @@
                             </a>
                           </div>
                           <div class="col-xs-6">
-                            物流:
+                            
                             <% if Settings.project.sxhop?  || Settings.project.imolin?%>
+                              物流:
                               <%= order.order_deliveries.first.logistics_name + '(' + order.order_deliveries.first.logistics_number + ')' unless order.order_deliveries.first.try(:logistics_name).blank? %>
                             <% elsif Settings.project.grand? %>
+                              物流:
                               <% unless order.order_deliveries.blank? %>
                                   <strong class=" text-primary"><%= order.order_deliveries.first.try{ logistics.map{|log| log.delivery.name + "(" + log.delivery.phone_number.to_s + ")"}.join(" | ") } %></strong>
                               <% end %>
+                            <% elsif Settings.project.wgtong? %>
+                              产品：
+                              <%= order.products.first.try(:name) %>
                             <% end %>
                           </div>
                           <div class="col-xs-6">
+                            <% if Settings.project.wgtong? %>
+                            订单总价：
+                            <span class="text-danger"><%= order.price.to_f / 100 %></span>
+                            <% else %>
                             订单总价(含运费)：
                             <span class="text-danger"><%= order.price.to_f / 100 %></span>
+                            <% end %>
                           </div>
                         </li>
-                        <% if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei?%>
+                        <% if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei? %>
                           <li class="row">
                             <div class="col-xs-6">
                               订单状态:
