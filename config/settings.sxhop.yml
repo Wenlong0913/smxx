@@ -16,6 +16,9 @@ default: &default
   weixin_open_app: # 微信开放平台绑定的APP
     app_id: wx62dfc2a79ccc68c2
     app_secret: 62ce20206028bfd7d2b1720e714ac6c9
+  weixin_login:
+    appid: wx2112a27b1c8bb766 # 微信扫码登录的公众号appid
+    host: 'https://wxopen.tanmer.com'
   sms:
     provider: yun_pian_v1
     yun_pian_v1:

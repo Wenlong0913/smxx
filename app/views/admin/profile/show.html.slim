@@ -11,7 +11,7 @@ h2 绑定微信
     var QrcodeAuth = function (){
       var instance = this;
       this.init = function() {
-        $.getJSON('http://wxopen.tanmer.com/wx/mp_auth/qrcode/wx4c40bb18df07aafc.json', function(data){
+        $.getJSON('#{Settings.weixin_login.host}/wx/mp_auth/qrcode/#{Settings.weixin_login.appid}.json', function(data){
           $('img#qrcode-auth-image').attr('src', data.svg)
           instance.ping(data)
         })
