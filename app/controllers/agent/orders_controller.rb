@@ -1,3 +1,5 @@
+require 'csv'
+
 class Agent::OrdersController < Agent::BaseController
   before_action :set_order, only: [:show, :update, :order_delivery]
   before_action :set_product_price, only: [:index]
@@ -32,6 +34,21 @@ class Agent::OrdersController < Agent::BaseController
       @orders = @orders.order(updated_at: :desc)
     end
     @orders = @orders.page(params[:page]).per(10)
+
+    respond_to do |format|
+      if params[:json].present?
+        # format.json { render json: {:users => @orders.select(:id, :nickname), :total => @orders.size} }
+        format.html { send_data(@orders.to_json, filename: "orders-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
+      elsif params[:xml].present?
+        format.html { send_data(@orders.to_xml, filename: "orders-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.xml") }
+      elsif params[:csv].present?
+        # as_csv =>  () | only: [] | except: []
+        format.html { send_data(@orders.as_csv(), filename: "orders-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
+      else
+        format.html
+        format.json { render json: {:results => @orders.as_json(only: [:id, :code]), :total => @orders.size} }
+      end
+    end
   end
 
   def show
