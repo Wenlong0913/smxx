@@ -140,6 +140,9 @@ class Order < ApplicationRecord
         Notification.notice(self.site.user.id, nil, '订单', '订单状态更新了', self, 'code') if self.site.user
       end
     end
+    if Settings.project.wgtong? && self.completed?
+      OrderCompletedJob.perform_async(self.id, "由商家(#{self.site.title})")
+    end
   end
 
   after_commit do
