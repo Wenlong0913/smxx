@@ -7,7 +7,7 @@ class OrderCompletedJob
       if order.delivering? && from == 'auto'
         order.completed!
         send_sms(order, from)
-      elsif order.completed && from != 'auto'
+      elsif order.completed? && from != 'auto'
         send_sms(order, from)
       end
     end
