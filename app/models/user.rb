@@ -61,7 +61,7 @@ class User < ApplicationRecord
   validates_attachment_file_name :avatar, matches: [/png\z/i, /jpe?g\z/i]
   validates_with AttachmentSizeValidator, attributes: :avatar, less_than: 10.megabytes
   validates_uniqueness_of :nickname, allow_blank: true
-  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, allow_blank: true
+  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_blank: true
   attr_accessor :mobile_phone
   validates :mobile_phone, mobile_phone: true, allow_blank: true
   enum gender: {
