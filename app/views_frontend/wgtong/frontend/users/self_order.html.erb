@@ -116,26 +116,27 @@
                   <div class="row">
                     <div class="col-md-3">
                       <div class="productImg">
-                        <img src="<%= order_product.product.first_image%>" alt="" class="img-responsive"/>
+                        <img src="<%= order_product.try(:product).try(:first_image) %>" alt="" class="img-responsive"/>
                       </div>
                     </div>
 
                     <div class="col-md-9 text-left">
-                      <h4 >
-                        <a href="#" style="color: #2e2e2e;">
-                          <%= order_product.product.name%>
+                      <h4>
+                        <a href="<%= frontend_order_path(order) %>" style="color: #2e2e2e;">
+                          <%= order_product.try(:product).try(:name) %>
                         </a>
-                        <small><%= order_product.product.catalog.try(:name) %></small>
+
+                        <small><%= order_product.try(:product).try(:catalog).try(:name) %></small>
                       </h4>
                       <!-- <p>
                         <span class="orderPrice">¥ 100 .00</span>
                       </p> -->
                       <p>
-                        <span><i class="fa fa-map-marker productColorIcon"></i>  <%= order_product.product.address_line1 %></span>
-                        <span><i class="fa fa-clock-o productColorIcon"></i> <%= order_product.product.date.to_s + ' '  + order_product.product.time.to_s%></span>
+                        <span><i class="fa fa-map-marker productColorIcon"></i>  <%= order_product.try(:product).try(:address_line1) %></span>
+                        <span><i class="fa fa-clock-o productColorIcon"></i> <%= order_product.try(:product).try(:date).to_s + ' '  + order_product.try(:product).try(:time).to_s%></span>
                       </p>
 
-                      <p class="orderDescription"><%= order_product.product.description %></p>
+                      <p class="orderDescription"><%= order_product.try(:product).try(:description) %></p>
                       <div class="btn-group text-right" role="group">
                         <%#<button class="btn btn-default" type="button" name="button" data-toggle="modal" data-target="#deleteSite1">取消预定</button>%>
                       </div>
@@ -148,7 +149,7 @@
                       <p class="text-left">下单时间: <%=distance_of_time_in_words_to_now(order.created_at) %>前</p>
                     </div>
                     <div class="col-md-5">
-                      <p class="text-right">订单状态: 
+                      <p class="text-right">订单状态:
                         <%= enum_l(order, :status)%>
                         <% if order.refund_status %>
                            <small class="text-danger"><%= enum_l(order, :refund_status)%></small>

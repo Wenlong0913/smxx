@@ -4,10 +4,10 @@
     <div class="container">
       <!-- navbar -->
       <div class="tr-breadcrumb">
-  			<div class="title pull-left">
+  			<div class="title <%= 'pull-left' unless mobile_device? %>">
   				<h1>订单详情</h1>
   			</div>
-        <ol class="breadcrumb pull-right">
+        <ol class="breadcrumb <%= 'pull-right' unless mobile_device? %>">
           <li>
             <a href="/">首页</a>
           </li>
@@ -28,10 +28,11 @@
               <div class="row text-left">
                 <div class="col-md-12">
                   <h3 class="clearfix">
-                    <div class="pull-left">
+                    <div class="<%= 'pull-left' unless mobile_device? %>">
                       支付状态：<span class="text-success"><%=  enum_l(@order, :status) %></span>
                     </div>
-                    <div class="pull-right">
+                    <p></p>
+                    <div class="<%= 'pull-right' unless mobile_device? %>">
                       总金额：<span class="text-danger">¥ <%= @order.price/100.0%></span>
                     </div>
                   </h3>
@@ -41,13 +42,13 @@
                     <% if ['open', 'pending'].include?(@order.status) %>
                       <%= link_to '去支付', charge_frontend_orders_path(order_id: @order.id), method: :post, remote: true, class: 'pull-right' %>
                     <% else %>
-                      <a href="<%= self_order_users_path%>" class="pull-right">返回我的订单</a>
+                      <a href="<%= self_order_users_path %>" class="pull-right btn btn-default">返回我的订单</a>
                     <% end %>
                   </p>
                   <div class="row">
                     <div class="col-md-3">
                       <div class="productImg">
-                        <img src="<%= @order.order_products.first.product.first_image%>" alt="" class="img-responsive"/>
+                        <img src="<%= @order.order_products.first.product.first_image %>" alt="" class="img-responsive"/>
                       </div>
                     </div>
                     <div class="col-md-9 text-left">
@@ -71,6 +72,7 @@
                       </p>
                     </div>
                   </div>
+                  <hr>
                   <div class="row">
                     <div class="col-md-3">
                       <p>预留手机号:
@@ -83,14 +85,14 @@
                       </p>
                     </div>
                     <% if @order.paid? %>
-                      <div class="col-md-2">
+                      <div class="col-md-3 col-xs-6">
                         <% if @order.refund_status.blank?%>
-                          <%= link_to '确认消费', confirm_frontend_order_path(@order), method: :post, data: { confirm: "是否确认消费?" }, class: 'btn btn-success' %>
+                          <%= link_to '确认消费', confirm_frontend_order_path(@order), method: :post, data: { confirm: "是否确认消费?" }, class: 'btn btn-success btn-block' %>
                         <% end %>
                       </div>
-                      <div class="col-md-2">
+                      <div class="col-md-3 col-xs-6">
                         <% if @order.refund_status.blank?%>
-                          <%= link_to '退款申请', refund_frontend_order_path(@order), method: :post, data: { confirm: "是否需要退款?" }, class: 'btn btn-warning' %>
+                          <%= link_to '退款申请', refund_frontend_order_path(@order), method: :post, data: { confirm: "是否需要退款?" }, class: 'btn btn-warning btn-block' %>
                         <% else %>
                           <p><%= enum_l(@order, :refund_status) %> </p>
                         <% end %>
@@ -103,7 +105,7 @@
           </div>
         </div>
 
-        <div class="col-sm-5 col-md-4 tr-sticky" >
+        <div class="col-sm-5 col-md-4 tr-sticky hidden-xs" >
           <%= render file: 'frontend/users/_nav_sidebar.html.erb' %>
         </div>
       </div>
