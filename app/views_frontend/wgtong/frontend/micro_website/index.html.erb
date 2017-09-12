@@ -154,7 +154,7 @@
     <div class="row block-title">
       <h4>热门场馆<small class="pull-right"><a href="/micro_website/wechat_sites">查看更多&gt;&gt;</a></small></h4>
       <ul class="entertainment-slider" style="padding: 0px;">
-        <% @sites.each do |site| %>
+        <% @sites.hot(4).each do |site| %>
           <li>
             <div class="entertainment">
               <div class="entertainment-image">
