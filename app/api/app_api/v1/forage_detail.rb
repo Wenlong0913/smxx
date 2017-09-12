@@ -25,6 +25,7 @@ module AppAPI::V1
       end
       post do
         if Settings.project.wgtong?
+          message = {}
           begin
             forage_detail = ::Forage::Detail.new(title: params[:title], url: params[:url])
             forage_detail.migrate_to = params[:migrate_to]
@@ -45,13 +46,14 @@ module AppAPI::V1
             forage_detail.note = params[:note]
             forage_detail.simple_id = params[:simple_id]
             forage_detail.save
-            flag = true
-          rescue
-            flag = false
+            message[:flag] = true
+          rescue => e
+            message[:errors] = e.message
+            message[:flag] = false
           end
-          present import_status: flag
+          present message: message
         else
-          present notice: "notice"
+          present notice: "只能wgtong使用"
         end
       end
     end
