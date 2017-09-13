@@ -75,7 +75,7 @@ li class=("has-sub #{'active' if page?('admin/orders', 'admin/produces', 'admin/
     i.fa.fa-cube
     span 订单管理
   ul.sub-menu
-    li[class=('active' if page?('admin/orders#new'))]
+    /li[class=('active' if page?('admin/orders#new'))]
       = link_to "创建#{Order.model_name.human}", new_admin_order_path
     li[class=('active' if page?('admin/orders#index'))]
       = link_to "#{Order.model_name.human}管理", admin_orders_path
