@@ -27,7 +27,7 @@ APP_NAME=nj1688.dagle REPO=dagle PROJECT_NAME=dagle DEPLOY_TO=nj1688.dagle cap p
 
 可以简化为：
 
-APP_NAME=nj1688.dagle REPO=dagle PROJECT_NAME=dagle DEPLOY_TO=nj1688.dagle cap production deploy
+APP_NAME=nj1688.dagle REPO=dagle PROJECT_NAME=dagle cap production deploy
 
 又例如我们像改变自有的dagle系统部署的目录，那么可以这样：
 
@@ -57,6 +57,7 @@ before "deploy", :check_branch do
 
   puts <<-MSG.green
         app name: #{fetch(:application)}
+    project name: #{ENV['PROJECT_NAME']}
 real repo url is: #{fetch(:repo_url)}
   real branch is: #{fetch(:branch)}
        deploy to: #{fetch(:deploy_to)}
