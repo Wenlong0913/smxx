@@ -119,8 +119,7 @@ class Frontend::OrdersController < Frontend::BaseController
     options = 'frontend/orders/' + order.id.to_s + '/paid_success'
     json = PaymentCore.create_charge(
       order_no: order.code, # 订单号
-      # channel: 'alipay_pc_direct', # 支付宝电脑端网页支付
-      channel: 'wx_pub',
+      channel: 'alipay_pc_direct', # 支付宝电脑端网页支付
       amount: order.price, # 1分钱
       client_ip: request.remote_addr,
       subject: "购买#{product.name.truncate(20)}",
