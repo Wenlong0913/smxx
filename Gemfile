@@ -154,7 +154,7 @@ gem 'grape-swagger-rails'#, group: [:development]
 gem 'rack-cors', '~> 0.4.1'
 
 # 调试性能，调试完后需要去掉
-gem 'ruby-prof'
+# gem 'ruby-prof'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
