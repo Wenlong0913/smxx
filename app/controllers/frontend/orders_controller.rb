@@ -219,11 +219,13 @@ class Frontend::OrdersController < Frontend::BaseController
 
     def valid_order_members?(order)
       flag = true
+      product = Product.find_by(id: params[:order][:product][:id])
       order_member_attributes = params[:order][:member_attributes]
 
       Product::MEMBER_ATTRIBUTES.keys.each do |pma|
-        attrs = order_member_attributes.values.map{|oma| oma[pma]} 
-        if attrs.compact.uniq!
+        attrs = order_member_attributes.values.map{|oma| oma[pma]}
+        validates = product.member_attribute_validates[pma.to_s] if product.member_attribute_validates
+        if validates && validates.include?('uniqueness') && attrs.compact.uniq!
           flag = false
           order.errors.add 'order_account_signup'.to_sym, "#{Product::MEMBER_ATTRIBUTES[pma]}重复了,请检查!"
           break
@@ -238,7 +240,6 @@ class Frontend::OrdersController < Frontend::BaseController
         return
       end
 
-      product = Product.find_by(id: params[:order][:product][:id])
       one_account_orders = Order.joins(:order_products).where(user_id: current_user.id, status: ['paid', 'completed']).where("order_products.product_id = ?", product.id)
       if product.maximum_for_one_account.to_i < one_account_orders.count
         order.errors.add 'order_account_signup'.to_sym, "一个账户最多定#{product.maximum_for_one_account}次!"
