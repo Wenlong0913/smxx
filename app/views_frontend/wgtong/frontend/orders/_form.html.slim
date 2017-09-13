@@ -1,5 +1,5 @@
 = form_for(@order, url: charge_frontend_orders_path, remote: true, html: {class: 'form-horizontal'}) do |f|
-  .tr-section.text-left[rel="signup_members_vue"]
+  .tr-section.text-left[rel="signup_members_vue" data-maximum-for-one-order="#{@product.maximum_for_one_order}"]
     .row.mb-30
       .col-md-3
         .productImg
@@ -30,15 +30,18 @@
         | 活动报名 &nbsp;&nbsp;
         button.btn.btn-primary[type="button" @click="addMembers"] 添加报名人员信息
       p[id="order_account_signup"] &nbsp;
-      .form-group.well[v-for="(mem, index) in members" :key="mem" style="position: relative;"]
+      .form-group.row.well[v-for="(mem, index) in members" :key="mem" style="position: relative;"]
         i.fa.fa-close[style="position: absolute;top: -2px;right: 3px;" @click="removeMembers(index)"]
         input[type="hidden" :name="'order[member_attributes]['+mem.key+'][product_id]'" value="#{@product.id}"]
         - @product.member_attributes.each do |attr|
-            - next if attr == ''
+          - next if attr == ''
+          p
             label.col-sm-2.control-label.text-left
               = Product::MEMBER_ATTRIBUTES[attr.to_sym] || attr
-            .col-sm-4
-              input[type="text" required="true" :name="'order[member_attributes]['+mem.key+'][#{attr}]'" class="form-control" :id="'member_attributes_'+mem.key+'_#{attr}'"]
+          .col-sm-4
+            - flag = @product.member_attribute_validates[attr] ? @product.member_attribute_validates[attr].include?('presence') : false
+            input[type="text" :required="#{flag}" :name="'order[member_attributes]['+mem.key+'][#{attr}]'" class="form-control" :id="'member_attributes_'+mem.key+'_#{attr}'"]
+            / small = @product.member_attribute_validates[attr] ? @product.member_attribute_validates[attr].map{|v| Product::MEMBER_ATTRIBUTE_VALIDATES[v.to_sym]}.join(',') : ''
 
     - else
       .form-group
