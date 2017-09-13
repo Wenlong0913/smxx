@@ -521,6 +521,7 @@ GEM
     rspec-support (3.5.0)
     ruby-graphviz (1.2.3)
     ruby-ole (1.2.12.1)
+    ruby-prof (0.16.2)
     rubyzip (1.2.1)
     rufus-scheduler (3.4.2)
       et-orbi (~> 1.0)
@@ -731,6 +732,7 @@ DEPENDENCIES
   roo-xls
   rqrcode (~> 0.10.1)
   rspec-rails (~> 3.5)
+  ruby-prof
   sales_distribution (= 0.1.0)!
   sass-rails (~> 5.0)
   select2-rails
