@@ -39,7 +39,7 @@ class Member < ApplicationRecord
   has_many :member_notes, dependent: :destroy
   has_many :orders
 
-  store_accessor :features, :card_id
+  store_accessor :features, :card_id, :member_real_name, :member_id_card
 
   def last_updated_at
     member_notes.any? ? member_notes.last.updated_at : updated_at

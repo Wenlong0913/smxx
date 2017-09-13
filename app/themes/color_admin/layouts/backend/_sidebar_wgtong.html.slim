@@ -101,3 +101,11 @@ li class=("has-sub #{'active' if page?('admin/forage/sources', 'admin/forage/run
     / li class=("#{'active' if page?('admin/forage/simples')}") = link_to '数据清单', admin_forage_simples_path
     / li class=("#{'active' if page?('admin/forage/details')}") = link_to '数据详情', admin_forage_details_path
     li class=("#{'active' if page?('admin/forage/data_caches')}") = link_to '数据合并', admin_forage_data_caches_path
+
+li class=("has-sub #{'active' if page?('admin/member_catalogs')}")
+  a href="javascript:;"
+    b.caret.pull-right
+    i.fa.fa-inbox
+    span 会员分类管理
+  ul.sub-menu
+    li class=("#{'active' if page?('admin/member_catalogs')}") = link_to '会员分类', admin_member_catalogs_path

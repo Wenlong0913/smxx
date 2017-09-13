@@ -20,10 +20,13 @@
           div style="padding: 0px 20px;"
             = f.input :name, required: true
             = f.input :mobile_phone, required: true
+            = f.input :member_real_name
+            = f.input :member_id_card
             = f.input :typo, collection: ['正式', '非正式']
             = f.input :from, collection: ['网络', '线下', '活动']
             = f.input :owned, as: :hidden, input_html: {value: '系统'}
             = f.input :tel_phone
+            = f.input :birth, as: :string
             = f.input :email
             = f.input :qq
             = f.input :wechat
@@ -42,7 +45,8 @@
                 label: false,
                 item_wrapper_class: 'a radio-inline'
           hr
-          = f.input :birth, as: :string
+          label 附加信息
+               
           = f.input :note, as: :text
 
       .form-group
