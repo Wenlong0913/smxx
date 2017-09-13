@@ -118,6 +118,7 @@ class Agent::ProductsController < Agent::BaseController
     if params[:product][:member_attributes].present? || params[:product][:member_attributes_others].present?
       params[:product][:member_attributes] = params[:product][:member_attributes] + params[:product][:member_attributes_others].split(/,/)
       params[:product][:member_attributes] = params[:product][:member_attributes].delete_if{|ma| ma.blank?}
+      @product.member_attribute_validates = params[:product][:member_attribute_validates] if params[:product][:member_attribute_validates].present?
     end
     if @product.save
       # redirect_to agent_product_path(@product), notice: 'Product 创建成功.'
@@ -133,6 +134,7 @@ class Agent::ProductsController < Agent::BaseController
     if params[:product][:member_attributes].present? || params[:product][:member_attributes_others].present?
       params[:product][:member_attributes] = params[:product][:member_attributes] + params[:product][:member_attributes_others].split(/,/)
       params[:product][:member_attributes] = params[:product][:member_attributes].delete_if{|ma| ma.blank?}
+      @product.member_attribute_validates = params[:product][:member_attribute_validates] if params[:product][:member_attribute_validates].present?
     end
     if @product.update(permitted_attributes(@product))
       redirect_to agent_product_path(@product), notice: "#{Product.model_name.human}更新成功."

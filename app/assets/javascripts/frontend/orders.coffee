@@ -3,6 +3,7 @@ $(document).ready ->
   if forms.length > 0
     # 附加属性添加
     attrListDom = forms.find("div[rel='signup_members_vue']")
+    maximumForOneOrder = attrListDom.data("maximum-for-one-order")
     attrList = new Vue
       el: attrListDom[0]
       data:
@@ -11,8 +12,11 @@ $(document).ready ->
         members: [{key: (new Date()).getTime()}]
       methods:
         addMembers: ->
-          console.log('add members')
-          this.members.push({key: (new Date()).getTime()})
+          if (this.members.length >= maximumForOneOrder)
+            alert('一个订单最多定' + maximumForOneOrder + '个!')
+          else
+            console.log('add members')
+            this.members.push({key: (new Date()).getTime()})
         removeMembers: (index)->
           if (this.members.length > 1)
             this.members.splice(index, 1)
