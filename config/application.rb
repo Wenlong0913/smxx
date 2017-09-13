@@ -73,7 +73,7 @@ module Tmf
         resource '*', :headers => :any, :methods => [:get, :post, :options, :put, :update, :delete]
       end
     end
-    use Rack::RubyProf, :path => '/temp/profile'
+    config.middleware.use Rack::RubyProf, :path => '/temp/profile'
     config.middleware.insert_after Warden::Manager, SalesDistribution::Middleware do |config|
       config.route_prefix = 'code-'
       config.current_user = ->(env) { env['warden'].user }
