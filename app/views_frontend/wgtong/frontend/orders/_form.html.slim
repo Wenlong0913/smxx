@@ -1,5 +1,5 @@
 = form_for(@order, url: charge_frontend_orders_path, remote: true, html: {class: 'form-horizontal'}) do |f|
-  .tr-section.text-left[rel="signup_members_vue"]
+  .tr-section.text-left[rel="signup_members_vue" data-maximum-for-one-order="#{@product.maximum_for_one_order}"]
     .row.mb-30
       .col-md-3
         .productImg
@@ -30,14 +30,20 @@
         | 活动报名 &nbsp;&nbsp;
         button.btn.btn-primary[type="button" @click="addMembers"] 添加报名人员信息
       p[id="order_account_signup"] &nbsp;
-      .form-group.well[v-for="(mem, index) in members" :key="mem" style="position: relative;"]
+      .form-group.row.well[v-for="(mem, index) in members" :key="mem" style="position: relative;"]
         i.fa.fa-close[style="position: absolute;top: -2px;right: 3px;" @click="removeMembers(index)"]
         input[type="hidden" :name="'order[member_attributes]['+mem.key+'][product_id]'" value="#{@product.id}"]
         - @product.member_attributes.each do |attr|
-            label.col-sm-2.control-label.text-left
+          - next if attr == ''
+          .col-md-2.col-xs-3.col-sm-3.text-right
+            label.control-label
               = Product::MEMBER_ATTRIBUTES[attr.to_sym] || attr
-            .col-sm-4
-              input[type="text" required="true" :name="'order[member_attributes]['+mem.key+'][#{attr}]'" class="form-control" :id="'member_attributes_'+mem.key+'_#{attr}'"]
+          .col-md-4.col-xs-9.col-sm-9[style="padding: 0px;"]
+            div[style="display: inline-flex;"]
+              - flag = (@product.member_attribute_validates && @product.member_attribute_validates[attr]) ? @product.member_attribute_validates[attr].include?('presence') : false
+              input[type="text" :required="#{flag}" :name="'order[member_attributes]['+mem.key+'][#{attr}]'" class="form-control" :id="'member_attributes_'+mem.key+'_#{attr}'"]
+              small[style="padding: 5px;color: #ff3f13;"]
+                = (@product.member_attribute_validates && @product.member_attribute_validates[attr]) ? @product.member_attribute_validates[attr].map{|v| Product::MEMBER_ATTRIBUTE_VALIDATES[v.to_sym]}.join(' ') : ''
 
     - else
       .form-group
@@ -48,16 +54,16 @@
         label[for="inputNumber" class="col-sm-2 control-label"] 数量：
         .col-sm-10
           input[type="number" name="order[product][number]" class="form-control" id="inputNumber" value="1" style="width: 120px;"]
-    article[style="border: 1px solid #ccc;"]
+    article[style="border: 1px solid #ccc;margin-bottom: 20px;"]
       h3[class="text-warning" style="padding-left: 20px;"] 预定须知
       ol
         li 全年未入场票数达10张，将被取消当年预订资格；
-        li 如需退票，请至“我的空间-活动管理“，退票截止至活动前一天（活动当天不可退票）；
         li 如因不可控因素导致活动无法进行，举办方有权延期或取消活动，并以短信方式通知订票人；
         li 如参加区图书馆、文化馆活动的市民，由于停车位有限，建议读者搭乘公共交通前往；
         li 活动最终解释权归举办方所有。
-  p[class="text-center read_content"] 提交订单表示您已阅读预定须知
-  button[type="submit" class="btn btn-danger btn-md"] 去支付
+        li 确认支付则表示同意预订须知
+    .row.text-center
+      button[type="submit" class="btn btn-danger btn-md"] 立即支付
 = javascript_include_tag 'payment_core/pingpp'
 javascript:
   function onStartCharging(charge){
@@ -85,12 +91,14 @@ javascript:
     }
     console.log(errors)
     for(var key in errors) {
-      if (key == 'order_account_signup') {
-        $('#' + key).after("<small class='small-error-hint' style='color: red;'>" + errors[key][0] + "</small>")
+      if (key == 'order_reserve_datetime' || key == 'order_product_stock' || key == 'order_account_signup') {
+        alert(errors[key][0])
       } else {
         for(var attr in errors[key][0]) {
           console.log(key+ '_' + attr)
           $('#' + key+ '_' + attr).after("<small class='small-error-hint' style='color: red;'>" + errors[key][0][attr] + "</small>")
+          alert(errors[key][0][attr]);
+          $('#' + key+ '_' + attr).focus();
         }
       }
     }

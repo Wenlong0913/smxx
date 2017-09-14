@@ -23,11 +23,23 @@
 
           hr
           p
+            |真实姓名：
+            = @agent_member.real_name
+          p
+            |身份证：
+            = @agent_member.card_id
+          p
+            |生日：
+            = @agent_member.birth
+          p
             |座机：
             = @agent_member.tel_phone
           p
             |邮箱：
             = @agent_member.email
+          p
+            |微信号：
+            = @agent_member.wechat
           p
             |QQ：
             = @agent_member.qq

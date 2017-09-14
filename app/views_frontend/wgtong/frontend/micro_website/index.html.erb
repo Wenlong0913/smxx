@@ -101,7 +101,7 @@
         </a>
       </div>
       <% end %>
-      
+
     </div>
   </div>
 
@@ -178,7 +178,7 @@
                     <%= site.phone %>
                   <% end %>
                 </p>
-                <p><%= site.description.truncate(70) %></p>
+                <p><%= site.description && site.description.truncate(70) %></p>
               </div>
             </div>
           </li>

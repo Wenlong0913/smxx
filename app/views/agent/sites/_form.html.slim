@@ -67,7 +67,7 @@
           = f.input :description, as: :text, input_html: {rows: 10}
           .form-group
             image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@agent_site.image_item_ids.join(', ')}"]
-        - elsif Settings.project.imolin? || Settings.project.wgtong?
+        - elsif Settings.project.imolin?
           = f.input :title
           = f.input :address_line
           div class="row"
@@ -87,6 +87,25 @@
               = f.input :is_published, as: :boolean, label: false, label: '是否发布'
             div class="col-md-4 col-sm-12"
               = f.input :delivery_fee, input_html: { value: @agent_site.new_record? ? '' : (@agent_site.delivery_fee.to_f / 100) }, as: :integer
+          .form-group
+            image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@agent_site.image_item_ids.join(', ')}"]
+          = f.input :content, as: :ckeditor
+        - elsif Settings.project.wgtong?
+          div class="row"
+            div class="col-md-4 col-sm-12"
+              = f.input :title
+            div class="col-md-4 col-sm-12"
+              = f.input :address_line
+            div class="col-md-4 col-sm-12"
+              = f.input :business_hours, input_html: {placeholder: "09:00-22:00"}
+            div class="col-md-4 col-sm-12"
+              = f.input :contact_name
+            div class="col-md-4 col-sm-12"
+              = f.input :phone
+            div class="col-md-4 col-sm-12"
+              = f.input :avg_price, input_html: {placeholder: "50"}
+            div class="col-md-12 col-sm-12"
+              = f.input :description, as: :text, input_html: {rows: "3", placeholder: "请简要描述您的信息，我们会将此信息展示给用户浏览！"}
           .form-group
             image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@agent_site.image_item_ids.join(', ')}"]
           = f.input :content, as: :ckeditor

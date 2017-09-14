@@ -62,9 +62,22 @@
 											<p><i class="fa fa-bullhorn"></i>状态：<%= enum_i18n(Product, :status, @product.status) %></p>
 										<% end %>
 										<p>
-											<% if @product.sell_price > 0 || (@product.purchase_type && @product.purchase_type.include?('sign_up')) %>
-												<a href="<%= new_frontend_order_path(product_id: @product.id) %>" class="btn btn-block btn-lg btn-success">马上预订</a>
-											<%end%>
+											<% if @product.is_foraged %>
+												<a href="<%= @product.external_purchase_url.blank? ? @product.forage_url : @product.external_purchase_url %>" target="_blank", class="btn btn-block btn-lg btn-success">马上预订</a>
+											<% else %>
+												<% if @product.sell_price > 0 || (@product.purchase_type && @product.purchase_type.include?('sign_up')) %>
+													<% if @product.stock.to_i > 0 && (@product.reserve_datetime.blank? || @product.reserve_datetime.to_time.to_i <= Time.now.to_i) %>
+														<a href="<%= new_frontend_order_path(product_id: @product.id) %>" class="btn btn-block btn-lg btn-success">马上预订</a>
+													<% elsif  @product.stock.to_i <= 0 %>
+															<a href="#" class="btn btn-block btn-lg btn-success disabled">已售完</a>
+													<% elsif @product.reserve_datetime.present?  %>
+														<p>
+															<i class="fa fa-clock-o"></i>开始预定时间：
+															<%= @product.reserve_datetime.gsub('T', ' ') %>
+														</p>
+													<% end %>
+												<%end%>
+											<% end %>
 										</p>
 									</div>
 								</div>

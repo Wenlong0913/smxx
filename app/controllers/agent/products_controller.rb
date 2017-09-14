@@ -85,6 +85,19 @@ class Agent::ProductsController < Agent::BaseController
     respond_to do |format|
       format.html
       format.json { render json: @product }
+      format.png do
+        qrcode = RQRCode::QRCode.new(wechat_orders_micro_website_url(product_id: @product.id))
+        send_data qrcode.as_png(
+          resize_gte_to: false,
+          resize_exactly_to: false,
+          fill: 'white',
+          color: 'black',
+          size: 240,
+          border_modules: 4,
+          module_px_size: 6,
+          file: nil
+        )
+      end
     end
   end
 
@@ -105,6 +118,7 @@ class Agent::ProductsController < Agent::BaseController
     if params[:product][:member_attributes].present? || params[:product][:member_attributes_others].present?
       params[:product][:member_attributes] = params[:product][:member_attributes] + params[:product][:member_attributes_others].split(/,/)
       params[:product][:member_attributes] = params[:product][:member_attributes].delete_if{|ma| ma.blank?}
+      @product.member_attribute_validates = params[:product][:member_attribute_validates] if params[:product][:member_attribute_validates].present?
     end
     if @product.save
       # redirect_to agent_product_path(@product), notice: 'Product 创建成功.'
@@ -120,6 +134,7 @@ class Agent::ProductsController < Agent::BaseController
     if params[:product][:member_attributes].present? || params[:product][:member_attributes_others].present?
       params[:product][:member_attributes] = params[:product][:member_attributes] + params[:product][:member_attributes_others].split(/,/)
       params[:product][:member_attributes] = params[:product][:member_attributes].delete_if{|ma| ma.blank?}
+      @product.member_attribute_validates = params[:product][:member_attribute_validates] if params[:product][:member_attribute_validates].present?
     end
     if @product.update(permitted_attributes(@product))
       redirect_to agent_product_path(@product), notice: "#{Product.model_name.human}更新成功."

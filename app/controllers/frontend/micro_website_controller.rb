@@ -1,8 +1,8 @@
 class Frontend::MicroWebsiteController < Frontend::BaseController
   before_action :ensure_wechat_login!, except: [:wechat_login]
   def index
-    @products = Product.where("features ->> 'is_shelves' = ?", '1').all
-    @sites = Site.where("features ->> 'is_published' = ?", '1').all
+    @products = Product.where("features ->> 'is_shelves' = ?", '1').limit(20)
+    @sites = Site.where("features ->> 'is_published' = ?", '1').limit(20)
   end
 
   def wechat_sites
@@ -43,6 +43,29 @@ class Frontend::MicroWebsiteController < Frontend::BaseController
 	  @site = Site.find(params[:id])
 	end
 
+  def wechat_orders
+    @orders = current_user.orders.joins(:order_products).where(status: 'paid').where("order_products.product_id = ? ", params[:product_id])
+    if @orders.length == 1
+      redirect_to wechat_order_micro_website_url(id: @orders.first.id)
+      return
+    end
+  end
+
+  def wechat_order
+    @order = Order.find(params[:id])
+  end
+
+  def wechat_confirm_order
+    @order = Order.find(params[:id])
+    @message = ''
+    if @order.paid?
+      @order.completed!
+      @message = '验票成功!'
+    else
+      @message = '订单状态不正确,请检查!'
+    end
+  end
+
   def wechat_login
     if params[:code]
       conn = Faraday.new(:url => Settings.weixin_login.host)
@@ -57,8 +80,10 @@ class Frontend::MicroWebsiteController < Frontend::BaseController
           user.weixin = weixin
           user.save
           sign_in user
-          redirect_to micro_website_index_url
         end
+        redirect_to params[:request_url].present? ? params[:request_url] : micro_website_index_url
+      else
+        render js: "alert('wechat uid not found')"
       end
     end
   end
@@ -66,13 +91,14 @@ class Frontend::MicroWebsiteController < Frontend::BaseController
   private
     # wechat_login_micro_website_url
     def ensure_wechat_login!
+      request_url = request.url
       return if current_user
       conn = Faraday.new(:url => Settings.weixin_login.host)
       appid = Settings.weixin_login.appid
       response_code = conn.get("/wx/mp_auth/qrcode/#{appid}.json")
       data = JSON.parse(response_code.body)
       uri = URI("#{Settings.weixin_login.host}/wx/mp_auth?appid=#{appid}")
-      params = {code: data['code'], origin: wechat_login_micro_website_url}
+      params = {code: data['code'], origin: wechat_login_micro_website_url(request_url: request_url)}
       uri.query = URI.encode_www_form URI.decode_www_form(uri.query || '').concat(params.to_a)
       redirect_to uri.to_s
     end

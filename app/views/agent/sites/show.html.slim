@@ -49,6 +49,8 @@
                     img[src="#{image.image_url}"]
                   .image-caption
                     =image.name
+- elsif Settings.project.wgtong?
+  == render 'show_wgtong'
 - else
   .container
     h1

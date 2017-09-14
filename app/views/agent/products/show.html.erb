@@ -230,6 +230,17 @@
                 <% end %>
                 <!-- END product-info -->
             </div>
+            <div class="product-attr-info">
+              <div class="row">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-2">
+                  产品二维码：
+                </div>
+                <div class="col-xs-8">
+                  <%= image_tag agent_product_path(product_id: @product.id, format: :png)%>
+                </div>
+              </div>
+            </div>
             <!-- END product-detail -->
             <!-- 内容展示/产品评论/产品统计报表 -->
             <!-- BEGIN product-tab -->

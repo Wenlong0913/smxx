@@ -94,10 +94,11 @@
             })
           }
         })
-
+    - elsif Settings.project.wgtong?
+      = render 'show_wgtong'
     - else
       = render 'edit_modal'
-      ol.breadcrumb
+      ol.breadcrumb 
         li
           = link_to '订单列表', agent_orders_path
         li.active
