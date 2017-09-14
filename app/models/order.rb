@@ -152,7 +152,11 @@ class Order < ApplicationRecord
       end
       # 确认消费后给用户发送短信通知
       if self.completed?
-        OrderCompletedJob.perform_async(self.id, "由商家(#{self.site.title})")
+        msg = Settings.sms.templates.order_completed_to_user.gsub('#order_code#', self.code).gsub('#from#',"商家")
+        body = OpenStruct.new(mobile_phone: self.user.mobile.phone_number, message: msg)
+        response = Sms.service.(body)
+        response.valid!
+        # OrderCompletedJob.perform_async(self.id, "由商家(#{self.site.title})")
       end
     end
 
