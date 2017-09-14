@@ -143,6 +143,8 @@
                     </div>
                   </div>
                 </div>
+                <% elsif Settings.project.wgtong? %>
+                  <%= render partial: 'show.wgtong' %>
                 <% else %>
                 <div class="product-info">
                     <!-- BEGIN product-info-header -->
