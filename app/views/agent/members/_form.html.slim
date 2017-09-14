@@ -20,8 +20,8 @@
           div style="padding: 0px 20px;"
             = f.input :name, required: true
             = f.input :mobile_phone, required: true
-            = f.input :member_real_name
-            = f.input :member_id_card
+            = f.input :real_name
+            = f.input :card_id
             = f.input :typo, collection: ['正式', '非正式']
             = f.input :from, collection: ['网络', '线下', '活动']
             = f.input :owned, as: :hidden, input_html: {value: '系统'}
@@ -45,9 +45,7 @@
                 label: false,
                 item_wrapper_class: 'a radio-inline'
           hr
-          label 附加信息
-               
-          = f.input :note, as: :text
+          = f.input :note, as: :text, input_html: {rows: "6"}
 
       .form-group
         .col-md-12
@@ -57,7 +55,7 @@ javascript:
   $('#member_birth').datetimepicker({
     format: 'yyyy-mm-dd',
     startView: 2,
-    minView: 1,
+    minView: 2,
     minuteStep: 60,
     language: 'zh-CN'
   });

@@ -26,8 +26,8 @@ zh-CN:
         address: 地址
         note: 备注
         features: 更多内容
-        member_real_name: 真实姓名
-        member_id_card: 身份证
+        real_name: 真实姓名
+        card_id: 身份证
     errors:
       models:
         member:
