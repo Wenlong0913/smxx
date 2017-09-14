@@ -3,9 +3,6 @@
     | 编辑基本信息
     .pull-right
       => link_to '查看', agent_site_path(@agent_site), class: 'btn btn-primary'
-      - if Settings.project.meikemei?
-      
-      - else
-        => link_to '返回', agent_root_path, class: 'btn btn-default'
+      => link_to '返回', agent_root_path, class: 'btn btn-default'
 
   == render 'form'
