@@ -8,4 +8,4 @@ test:
 
 production:
   adapter: redis
-  url: redis://localhost:6379/1
+  url: # we get url from redis.yml, see initializers/cable.rb

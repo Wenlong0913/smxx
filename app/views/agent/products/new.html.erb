@@ -171,6 +171,8 @@
                     </div>
 
                   </div>
+                  <% elsif Settings.project.wgtong? %>
+                    <%= render partial: 'new.wgtong', locals: { f: f } %>
                   <% else %>
                   <div class="col-xs-8 left-form-content row">
                     <div class="col-xs-6">

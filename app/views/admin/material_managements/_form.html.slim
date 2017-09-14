@@ -70,6 +70,8 @@
               |库存
             th
               |数量
+            th[v-show="#{@material_management.operate_type == 'input'}"]
+              |价格
             th
               button[type="button" class="btn btn-info btn-sm" @click="showModel=true"] 选择物料
         tbody
@@ -84,6 +86,9 @@
               |{{mo.stock}}
             td
               input[type="number" v-model="mo.number" class="form-control input-sm" :name="'material_management[material_management_details_attributes]['+index+'][number]'"]
+              input[type="hidden" :value="mo.id" :name="'material_management[material_management_details_attributes]['+index+'][material_id]'"]
+            td[v-show="#{@material_management.operate_type == 'input'}"]
+              input[type="number" v-model="mo.price" class="form-control input-sm" :name="'material_management[material_management_details_attributes]['+index+'][price]'"]
               input[type="hidden" :value="mo.id" :name="'material_management[material_management_details_attributes]['+index+'][material_id]'"]
             td
               button[type="button" class="btn btn-xs btn-danger" @click="deleteDetail(mo.id, index)"] 删除

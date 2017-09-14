@@ -8,9 +8,11 @@
 # server "db.example.com", user: "deploy", roles: %w{db}
 
 host =
-  case ENV['PROJECT_NAME']
-  when 'imolin', 'meikemei'
+  case (ENV['APP_NAME'] || ENV['PROJECT_NAME'])
+  when 'imolin', 'meikemei', 'wgtong'
     'prod2uc.corp.tanmer.com'
+  when 'nj1688.dagle'
+    'web1uc.corp.tanmer.com'
   else
     'prod1uc.corp.tanmer.com'
   end
