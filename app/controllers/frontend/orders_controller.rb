@@ -89,6 +89,16 @@ class Frontend::OrdersController < Frontend::BaseController
       order = Order.new(user: current_user)
       product = Product.find(params[:order][:product][:id])
       product_amount = params[:order][:product][:number].presence || 1
+
+      # 是否在预售期内
+      if product.reserve_datetime.present? && product.reserve_datetime.to_time.to_i > Time.now.to_i 
+        order.errors.add 'order_reserve_datetime'.to_sym, '还未开始发售!'
+        render js: <<-JS
+          onOrderCreate('#{order.errors.messages.to_json}')
+        JS
+        return
+      end
+
       if params[:order][:member_attributes].present?
         if product.purchase_type && product.purchase_type.include?("sign_up")
           order.member_attributes = params[:order][:member_attributes].values
@@ -100,6 +110,15 @@ class Frontend::OrdersController < Frontend::BaseController
             return
           end
         end
+      end
+
+      # 产品库存是否满足
+      if product.stock.to_i < product_amount.to_i
+        order.errors.add 'order_product_stock'.to_sym, "剩余座位#{product.stock}个!"
+        render js: <<-JS
+          onOrderCreate('#{order.errors.messages.to_json}')
+        JS
+        return
       end
       order.order_products.new(product_id: product.id, amount: product_amount, price: product.sell_price)
       order.delivery_phone = params[:order][:delivery_phone] if params[:order][:delivery_phone].present?

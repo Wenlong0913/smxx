@@ -81,11 +81,14 @@
             .col-xs-12
               .form-group
                 = f.input :description, as: :text
-            .col-xs-12
+            .col-xs-6
               .form-group.check-group
                 label.control-label.string.optional 其他
                 .
                   = f.collection_check_boxes :properties, Cms::Page::PROPERTIES, :first, :last, checked: @cms_page.try(:properties)
+            .col-xs-6
+              .form-group
+                = f.input :reserve_datetime, as: :datetime, html5: true, input_html: {value: @product.reserve_datetime}
             .col-xs-12.purchase_type
               hr
               .form-group.col-xs-2

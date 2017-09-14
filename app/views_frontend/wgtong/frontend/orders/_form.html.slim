@@ -39,7 +39,7 @@
             label.col-sm-2.control-label.text-left
               = Product::MEMBER_ATTRIBUTES[attr.to_sym] || attr
           .col-sm-4
-            - flag = @product.member_attribute_validates[attr] ? @product.member_attribute_validates[attr].include?('presence') : false
+            - flag = (@product.member_attribute_validates && @product.member_attribute_validates[attr]) ? @product.member_attribute_validates[attr].include?('presence') : false
             input[type="text" :required="#{flag}" :name="'order[member_attributes]['+mem.key+'][#{attr}]'" class="form-control" :id="'member_attributes_'+mem.key+'_#{attr}'"]
             / small = @product.member_attribute_validates[attr] ? @product.member_attribute_validates[attr].map{|v| Product::MEMBER_ATTRIBUTE_VALIDATES[v.to_sym]}.join(',') : ''
 
@@ -89,8 +89,8 @@ javascript:
     }
     console.log(errors)
     for(var key in errors) {
-      if (key == 'order_account_signup') {
-        $('#' + key).after("<small class='small-error-hint' style='color: red;'>" + errors[key][0] + "</small>")
+      if (key == 'order_reserve_datetime' || key == 'order_product_stock' || key == 'order_account_signup') {
+        alert(errors[key][0])
       } else {
         for(var attr in errors[key][0]) {
           console.log(key+ '_' + attr)

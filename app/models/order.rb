@@ -140,8 +140,31 @@ class Order < ApplicationRecord
         Notification.notice(self.site.user.id, nil, '订单', '订单状态更新了', self, 'code') if self.site.user
       end
     end
-    if Settings.project.wgtong? && self.completed?
-      OrderCompletedJob.perform_async(self.id, "由商家(#{self.site.title})")
+
+    if self.status_changed?
+      # 支付成功后修改产品库存
+      if self.paid?
+        self.order_products.each do |op|
+          p = op.product
+          p.stock = p.stock - op.amount
+          p.save!
+        end
+      end
+      # 确认消费后给用户发送短信通知
+      if self.completed?
+        OrderCompletedJob.perform_async(self.id, "由商家(#{self.site.title})")
+      end
+    end
+
+    if self.refund_status_changed?
+      # 订单退款成功后修改产品库存
+      if self.refunded?
+        self.order_products.each do |op|
+          p = op.product
+          p.stock = p.stock + op.amount
+          p.save!
+        end
+      end
     end
   end
 

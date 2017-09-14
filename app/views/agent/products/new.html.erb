@@ -243,9 +243,12 @@
                       </div>
                     </div>
                     <div class="col-xs-12">
-                      <div class="form-group check-group">
+                      <div class="form-group check-group col-xs-6">
                         <label class="control-label string optional">其他</>
                         <%= f.collection_check_boxes :properties, Product::PROPERTIES, :first, :last, checked: @product.try(:properties)%>
+                      </div>
+                      <div class="form-group check-group col-xs-6">
+                        <%= f.input :reserve_datetime, as: :datetime, html5: true %>
                       </div>
                     </div>
                     <div class="col-xs-12 purchase_type">

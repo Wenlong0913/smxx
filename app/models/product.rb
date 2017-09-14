@@ -20,7 +20,9 @@ class Product < Item
     :is_shelves, :is_fee, :shopping_fee, :hot, :recommend, :event, :promotion, :discount, :properties, :is_manager_recommend,
     :video_url, :status, :address_line1, :address_line2, :date, :time, :phone, :can_purchase, :note, :purchase_type,
     # 通过报名参加的产品时需要设置的一些属性
-    :maximum_for_one_account, :maximum_for_one_order, :member_attributes, :member_attribute_validates
+    :maximum_for_one_account, :maximum_for_one_order, :member_attributes, :member_attribute_validates,
+    # 产品开始预定时间
+    :reserve_datetime
   store_accessor :forage, :forage_url, :forage_price, :is_foraged, :external_purchase_url
 
   acts_as_taggable
