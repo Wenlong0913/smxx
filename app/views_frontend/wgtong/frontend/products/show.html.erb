@@ -62,9 +62,13 @@
 											<p><i class="fa fa-bullhorn"></i>状态：<%= enum_i18n(Product, :status, @product.status) %></p>
 										<% end %>
 										<p>
-											<% if @product.sell_price > 0 || (@product.purchase_type && @product.purchase_type.include?('sign_up')) %>
-												<a href="<%= new_frontend_order_path(product_id: @product.id) %>" class="btn btn-block btn-lg btn-success">马上预订</a>
-											<%end%>
+											<% if @product.is_foraged %>
+												<a href="<%= @product.external_purchase_url.blank? ? @product.forage_url : @product.external_purchase_url %>" target="_blank", class="btn btn-block btn-lg btn-success">马上预订</a>
+											<% else %>
+												<% if @product.sell_price > 0 || (@product.purchase_type && @product.purchase_type.include?('sign_up')) %>
+													<a href="<%= new_frontend_order_path(product_id: @product.id) %>" class="btn btn-block btn-lg btn-success">马上预订</a>
+												<%end%>
+											<% end %>
 										</p>
 									</div>
 								</div>
