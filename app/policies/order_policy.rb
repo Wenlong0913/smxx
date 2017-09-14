@@ -10,7 +10,7 @@ class OrderPolicy < ApplicationPolicy
   end
 
   def update?
-    user.super_admin_or_admin? || user.permission?([:order_material_split, :confirm_delivery])
+    user.super_admin_or_admin? || user.permission?([:order_material_split, :confirm_delivery]) || user.has_role?(:agent)
   end
 
   def update_code?

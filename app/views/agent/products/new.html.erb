@@ -171,6 +171,8 @@
                     </div>
 
                   </div>
+                  <% elsif Settings.project.wgtong? %>
+                    <%= render partial: 'new.wgtong', locals: { f: f } %>
                   <% else %>
                   <div class="col-xs-8 left-form-content row">
                     <div class="col-xs-6">
@@ -284,7 +286,7 @@
                           </div>
                         </div>
                         <div class="col-xs-8">
-                          <div class="input-group"> 
+                          <div class="input-group">
                             <label class="control-label input-group-addon string optional"> 其他附加属性:&nbsp;&nbsp;</label>
                             <input name="product[member_attributes_others]" class="form-control" placeholder="属性之间用逗号隔开" value=""/>
                           </div>
