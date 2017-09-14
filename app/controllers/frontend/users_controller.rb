@@ -65,12 +65,30 @@ class Frontend::UsersController < Frontend::BaseController
       t = Sms::Token.new(params['user']['mobile'])
       if t.valid?(params['user']['code'])
         t.destroy!
-        mobile = current_user.mobile || current_user.build_mobile
-        mobile.phone_number = params['user']['mobile']
-        if mobile.save
-          render json: {}
+        mobile_user = User::Mobile.find_by(phone_number: params['user']['mobile']).try(:user)
+        if mobile_user
+          if mobile_user.id != current_user.id
+            if current_user.mobile
+              render json: {error: '您有两个手机账号!'}  
+            else
+              if current_user.weixin && !mobile_user.weixin
+                mobile_user.create_weixin(uid: current_user.weixin.uid)
+              end
+              current_user.destroy!
+              sign_in mobile_user
+              render json: {}
+            end
+          else
+            render json: {error: '您已经绑定了该手机号!'}
+          end
         else
-          render json: {error: mobile.errors.full_messages}
+          mobile = current_user.mobile || current_user.build_mobile
+          mobile.phone_number = params['user']['mobile']
+          if mobile.save
+            render json: {}
+          else
+            render json: {error: mobile.errors.full_messages}
+          end
         end
       else
         render json: {error: '验证码不正确！'}
