@@ -1,5 +1,7 @@
+require_relative 'sidekiq'
 RestClient.log = Logger.new(STDOUT) unless Rails.env.production?
 Sms.setup do |s|
+  s.redis = Redis.current
   s.service =
     lambda do |token_body|
       if (Rails.env.staging? || Rails.env.production?) && token_body.mobile_phone != Settings.test_account.mobile_phone
