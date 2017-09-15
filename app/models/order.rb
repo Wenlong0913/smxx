@@ -146,17 +146,13 @@ class Order < ApplicationRecord
       if self.paid?
         self.order_products.each do |op|
           p = op.product
-          p.stock = p.stock - op.amount
+          p.stock = p.stock.to_i - op.amount
           p.save!
         end
       end
       # 确认消费后给用户发送短信通知
       if self.completed?
-        msg = Settings.sms.templates.order_completed_to_user.gsub('#order_code#', self.code).gsub('#from#',"商家")
-        body = OpenStruct.new(mobile_phone: self.user.mobile.phone_number, message: msg)
-        response = Sms.service.(body)
-        response.valid!
-        # OrderCompletedJob.perform_async(self.id, "由商家(#{self.site.title})")
+        OrderCompletedJob.perform_async(self.id, "由商家(#{self.site.title})")
       end
     end
 
@@ -165,7 +161,7 @@ class Order < ApplicationRecord
       if self.refunded?
         self.order_products.each do |op|
           p = op.product
-          p.stock = p.stock + op.amount
+          p.stock = p.stock.to_i + op.amount
           p.save!
         end
       end

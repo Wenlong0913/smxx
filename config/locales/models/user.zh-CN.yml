@@ -9,6 +9,7 @@ zh-CN:
         nickname: 别名
         role_ids: 角色
         gender: 性别
+        weixin: 微信号
         genders:
           secret: 保密
           male: 男
