@@ -38,7 +38,9 @@
                     <div class="<%= 'pull-left' unless mobile_device? %>">
                       支付状态：<span class="text-success"><%=  enum_l(@order, :status) %></span>
                     </div>
-                    <!-- <p></p> -->
+                    <% if mobile_device? %>
+                    <p></p>
+                    <% end %>
                     <div class="<%= 'pull-right' unless mobile_device? %>">
                       总金额：<span class="text-danger">¥ <%= @order.price/100.0%></span>
                     </div>
@@ -105,11 +107,11 @@
                         <% end %>
                       </div>
                     <% elsif ['open', 'pending'].include?(@order.status) %>
-                      <div class="col-md-3 col-xs-6">
+                      <div class="col-md-3 col-xs-12">
                         <%= link_to '去支付', charge_frontend_orders_path(order_id: @order.id), method: :post, remote: true, class: 'pull-right btn btn-success' %>
                       </div>
                     <% else %>
-                      <div class="col-md-3 col-xs-6">
+                      <div class="col-md-3 col-xs-12">
                         <a href="<%= self_order_users_path %>" class="pull-right btn btn-default">返回我的订单</a>
                       </div>
                     <% end %>
