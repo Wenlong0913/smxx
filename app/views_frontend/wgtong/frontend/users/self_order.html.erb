@@ -43,8 +43,8 @@
     white-space: nowrap
   }
   .productImg {
-    max-height: 150px;
-    max-width: 150px;
+    max-height: 120px;
+    /*max-width: 220px;*/
     overflow: hidden;
   }
 </style>
@@ -68,30 +68,30 @@
         <div class="col-sm-8 col-md-8 tr-sticky">
           <div class="theiaStickySidebar">
             <!-- 筛选分类 -->
-            <div class="tr-section">
+            <!-- <div class="tr-section">
               <p class="text-left">
                 订单类型：
                 <a href="<%= self_order_users_path %>" class="btn btn-default <%= params[:type].blank? ? 'btn-success' : '' %>">
                   全部
                 </a>
-                 <a href="<%= self_order_users_path(type: 'paid') %>" class="btn btn-default <%= params[:type] == 'paid' ? 'btn-success' : '' %>">
-                   <span class="successOrder siteOrderBg"></span>
+                <a href="<%= self_order_users_path(type: 'paid') %>" class="btn btn-default <%= params[:type] == 'paid' ? 'btn-success' : '' %>">
+                  <span class="successOrder siteOrderBg"></span>
                    已付款
-                 </a>
-                 <a href="<%= self_order_users_path(type: 'open') %>" class="btn btn-default <%= params[:type] == 'open' ? 'btn-warning' : '' %>">
-                   <span class="warningOrder productOrderBg"></span>
+                </a>
+                <a href="<%= self_order_users_path(type: 'open') %>" class="btn btn-default <%= params[:type] == 'open' ? 'btn-warning' : '' %>">
+                  <span class="warningOrder productOrderBg"></span>
                    未付款
-                 </a>
-                 <a href="<%= self_order_users_path(type: 'completed') %>" class="btn btn-default <%= params[:type] == 'completed' ? 'btn-info' : '' %>">
-                   <span class="warningOrder productOrderBg"></span>
+                </a>
+                <a href="<%= self_order_users_path(type: 'completed') %>" class="btn btn-default <%= params[:type] == 'completed' ? 'btn-info' : '' %>">
+                  <span class="warningOrder productOrderBg"></span>
                    已消费
-                 </a>
-                 <a href="<%= self_order_users_path(type: 'cancelled') %>" class="btn btn-default <%= params[:type] == 'cancelled' ? 'btn-danger' : '' %>">
-                   <span class="warningOrder productOrderBg"></span>
+                </a>
+                <a href="<%= self_order_users_path(type: 'cancelled') %>" class="btn btn-default <%= params[:type] == 'cancelled' ? 'btn-danger' : '' %>">
+                  <span class="warningOrder productOrderBg"></span>
                    已取消
-                 </a>
+                </a>
               </p>
-            </div>
+            </div> -->
             <% if @user_orders.any? %>
               <% @user_orders.each_with_index do |order| %>
                 <% next if order.order_products.empty? %>
@@ -102,39 +102,36 @@
                       <p class="clearfix">
                         <span class="pull-left">
                           <a href="<%=frontend_order_path(order) %>">
-                            <code class="productOrderBg" style="color: #fff;"><i class="fa fa-share-alt"></i> 订单号:   <%= order.code%></code>
+                            <code class="productOrderBg" style="color: #fff;"><i class="fa fa-share-alt"></i> 订单号:<%= order.code%></code>
                           </a>
                         </span>
 
                         <span class="pull-right">
-                          票数：x<%= order.order_products.first.amount%>
+                          <%=distance_of_time_in_words_to_now(order.created_at) %>前
                         </span>
                       </p>
                     </div>
                   </div>
                   <% order.order_products.each_with_index do |order_product| %>
                   <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                       <div class="productImg">
                         <img src="<%= order_product.try(:product).try(:first_image) %>" alt="" class="img-responsive"/>
                       </div>
                     </div>
 
-                    <div class="col-md-9 text-left">
+                    <div class="col-md-8 text-left">
                       <h4>
                         <a href="<%= frontend_order_path(order) %>" style="color: #2e2e2e;">
                           <%= order_product.try(:product).try(:name) %>
                         </a>
-
                         <small><%= order_product.try(:product).try(:catalog).try(:name) %></small>
                       </h4>
                       <!-- <p>
                         <span class="orderPrice">¥ 100 .00</span>
                       </p> -->
-                      <p>
-                        <span><i class="fa fa-map-marker productColorIcon"></i>  <%= order_product.try(:product).try(:address_line1) %></span>
-                        <span><i class="fa fa-clock-o productColorIcon"></i> <%= order_product.try(:product).try(:date).to_s + ' '  + order_product.try(:product).try(:time).to_s%></span>
-                      </p>
+                      <p><i class="fa fa-map-marker productColorIcon"></i>  <%= order_product.try(:product).try(:address_line1) %></p>
+                      <p><i class="fa fa-clock-o productColorIcon"></i> <%= order_product.try(:product).try(:date).to_s + ' '  + order_product.try(:product).try(:time).to_s%></p>
 
                       <p class="orderDescription"><%= order_product.try(:product).try(:description) %></p>
                       <div class="btn-group text-right" role="group">
@@ -144,22 +141,20 @@
                   </div>
                   <%end%>
                   <div class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-3">
-                      <p class="text-left">下单时间: <%=distance_of_time_in_words_to_now(order.created_at) %>前</p>
-                    </div>
-                    <div class="col-md-5">
-                      <p class="text-right">订单状态:
-                        <%= enum_l(order, :status)%>
+                    <div class="col-md-4 col-md-offset-8">
+                      <p class="text-right">
+                        <a href="<%= frontend_order_path(order) %>" class="btn btn-success"><%= enum_l(order, :status)%></a>
                         <% if order.refund_status %>
-                           <small class="text-danger"><%= enum_l(order, :refund_status)%></small>
+                          <small class="text-danger"><%= enum_l(order, :refund_status)%></small>
                         <%end%>
                       </p>
                     </div>
                   </div>
                 </div>
               <% end %>
-              <%= paginate @user_orders %>
+              <div class="row text-center">
+                <%= paginate @user_orders %>
+              </div>
             <% else %>
               <div class="row">
                 <div class="col-md-12 text-center">
