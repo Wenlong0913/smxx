@@ -67,6 +67,7 @@ class Frontend::MicroWebsiteController < Frontend::BaseController
   end
 
   def wechat_login
+    @message = '微信登录失败'
     if params[:code]
       conn = Faraday.new(:url => Settings.weixin_login.host)
       response = conn.get('/wx/mp_auth/%s/fetch_uid/%s' % [Settings.weixin_login.appid, params[:code]])
@@ -82,11 +83,7 @@ class Frontend::MicroWebsiteController < Frontend::BaseController
           sign_in user
         end
         redirect_to params[:request_url].present? ? params[:request_url] : micro_website_index_url
-      else
-        render js: "alert('wechat uid not found')"
       end
-    else
-      render js: "alert('wechat code not found')"
     end
   end
 
