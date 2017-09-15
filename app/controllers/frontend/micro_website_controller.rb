@@ -85,6 +85,8 @@ class Frontend::MicroWebsiteController < Frontend::BaseController
       else
         render js: "alert('wechat uid not found')"
       end
+    else
+      render js: "alert('wechat code not found')"
     end
   end
 
