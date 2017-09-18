@@ -147,7 +147,7 @@ class Frontend::OrdersController < Frontend::BaseController
       body: product.name,
       extra: {
         success_url: callback_url.merge(options).to_s,
-        open_id: current_user.weixin.try(:uid),
+        open_id: current_user.weixin.try(:uid)
       }
     )
     render js: <<-JS
