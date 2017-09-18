@@ -62,11 +62,10 @@ h1.page-header
         thead
           tr
             th 名称
-            - if Settings.project.meikemei?
-              th 联系人
-              th 联系人电话
-              th 地址
-              th 是否签约
+            th 联系人
+            th 联系人电话
+            th 地址
+            th 是否签约
             th 更新历史
             th 操作
 
@@ -78,14 +77,15 @@ h1.page-header
                   => link_to "#{site.id}. #{site.title}", admin_site_products_path(site)
                   small
                     => link_to '详情', admin_site_path(site), class: 'btn btn-xs btn-default'
-                - if Settings.project.imolin? || Settings.project.wgtong?
-                  => site.address_line
-                - else
-                  => site.user.try(:nickname)
-              - if Settings.project.meikemei?
+                    br
+                    => link_to site.user.try(:nickname), admin_user_path(site.user)
+                    => site.address_line
                 td = site.contact_name
                 td = site.contact_phone
-                td = site.address_line
+                td
+                  => site.address_line
+                  br
+                  => link_to '重新定位', edit_admin_site_path(site, map: true), class: 'btn btn-xs btn-info', 'data-turbolinks': false
                 td
                   - if site.has_contract == "1"
                     => link_to "已签约", '#', class: 'btn btn-xs btn-success'
@@ -112,10 +112,10 @@ h1.page-header
                     => link_to "未发布", '#', class: 'btn btn-xs btn-warning'
                   => link_to "商品数：#{site.products.count}", admin_site_products_path(site), class: 'btn btn-xs btn-info'
               td
+                => link_to '添加下级商家', new_admin_site_path(parent_id: site.id), class: 'btn btn-xs btn-primary'
+                => link_to '添加产品', new_admin_site_product_path(site), class: 'btn btn-xs btn-primary'
                 => link_to '信息修改', edit_admin_site_path(site), class: 'btn btn-xs btn-primary', 'data-turbolinks': false
-                - if Settings.project.imolin? || Settings.project.wgtong?
-                  => link_to '重新定位', edit_admin_site_path(site, map: true), class: 'btn btn-xs btn-primary', 'data-turbolinks': false
-                => link_to '删除', admin_site_path(site), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+                => link_to '删除', admin_site_path(site), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-default'
     .pull-right
       = paginate @sites
 / TODO: move this code to application.js

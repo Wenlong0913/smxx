@@ -16,6 +16,8 @@
       <img id="sidebarImg" src="<%= current_user.display_headshot %>" alt="" class="img-circle" width="150px">
     </div>
     <h3><%= current_user.nickname %></h3>
+    <%= link_to '基本信息修改', edit_users_path, class: "btn btn-info btn-md", style: "display: inlin-block; margin: 30px 0px 15px 0px;" %>
+
     <hr>
     <div class="collapse navbar-collapse" id="editSelf">
       <ul class="nav">

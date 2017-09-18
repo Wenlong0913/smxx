@@ -14,4 +14,4 @@
 #= require select2_locale_zh-CN
 #= require select2_js
 #= rquire  plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js
-#= require agent/push_message
+# require agent/push_message

@@ -22,6 +22,7 @@ zh-CN:
         avg_price: 人均消费
         is_sign: 是否签约
         sign_note: 签约备注
+        parent_id: 父级商家
         score: 星级评分
         comment: 营销备注
         description: 简要描述

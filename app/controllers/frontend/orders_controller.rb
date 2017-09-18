@@ -134,17 +134,20 @@ class Frontend::OrdersController < Frontend::BaseController
       JS
       return
     end
+    pay_channel = params[:order][:pay_channel] || 'alipay_pc_direct'
     callback_url = URI(Settings.site.host)
     options = 'frontend/orders/' + order.id.to_s + '/paid_success'
     json = PaymentCore.create_charge(
       order_no: order.code, # 订单号
-      channel: 'alipay_pc_direct', # 支付宝电脑端网页支付
+      # channel: 'alipay_pc_direct', # 支付宝电脑端网页支付
+      channel: pay_channel, #微信公众号支付 || 支付宝电脑端网页支付
       amount: order.price, # 1分钱
       client_ip: request.remote_addr,
       subject: "购买#{product.name.truncate(20)}",
       body: product.name,
       extra: {
-        success_url: callback_url.merge(options).to_s
+        success_url: callback_url.merge(options).to_s,
+        open_id: current_user.weixin.try(:uid)
       }
     )
     render js: <<-JS

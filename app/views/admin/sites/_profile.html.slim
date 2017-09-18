@@ -5,6 +5,10 @@
       td
         a
           = @site.user && decorate(@site.user).display_name
+      td.field 商家上级：
+      td
+        - if @site.parent
+          = link_to @site.parent.title, admin_site_path(@site.parent)
       td.field 联系电话：
       td
         = @site.phone
@@ -43,7 +47,7 @@
     tr
       td.field 商家描述：
       td
-        = @site.description    
+        = @site.description
     tr.divider
       td[colspan='2']
 .gallery#gallery

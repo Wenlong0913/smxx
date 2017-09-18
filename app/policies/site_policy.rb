@@ -38,19 +38,22 @@ class SitePolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
+    fields = []
     if user.super_admin_or_admin? || user.has_role?(:agent) || user.permission?([:agent_insert, :agent_update])
-      [:user_id, :title, :description, :content, :business_hours,
+      fields = [:user_id, :title, :description, :content, :business_hours,
         :recommendation, :good_summary, :bad_summary, :parking,
         :wifi, :contact_name, :contact_phone, :has_contract, :contract_note,
         :avg_price, :is_published, :phone, :photos, :province, :city, :area, :business_area,
         :lat, :lng, :catalog_id, :address_line, :content, :is_sign, :sign_note, :score, :comment, :is_flatform_recommend, :delivery_fee,
-        :forage_url, :is_foraged,
+        :forage_url, :is_foraged, :parent_id,
         :properties => [], :image_item_ids => []]
     elsif user.has_role?(:agent) && user.sites.empty?
-      [:title]
+      fields = [:title]
     else
-      []
+      fields = []
     end
+    fields.push(:parent_id) if user.super_admin_or_admin?
+    fields
   end
 
   def permitted_attributes_for_update

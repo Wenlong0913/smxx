@@ -1,4 +1,4 @@
-= form_for(@order, url: charge_frontend_orders_path, remote: true, html: {class: 'form-horizontal'}) do |f|
+= form_for(@order, url: charge_frontend_orders_path, remote: true, html: {class: 'form-horizontal', id: "frontend-order-new"}) do |f|
   .tr-section.text-left[rel="signup_members_vue" data-maximum-for-one-order="#{@product.maximum_for_one_order}"]
     .row.mb-30
       .col-md-3
@@ -54,6 +54,9 @@
         label[for="inputNumber" class="col-sm-2 control-label"] 数量：
         .col-sm-10
           input[type="number" name="order[product][number]" class="form-control" id="inputNumber" value="1" style="width: 120px;"]
+    input[type="number" name="order[product][number]" class="form-control" id="inputNumber" value="1" style="width: 120px;" disabled]
+        .text-center[style="margin-bottom: 20px;"]
+          button[type="submit" class="btn btn-danger btn-md"] 立即支付
     article[style="border: 1px solid #ccc;margin-bottom: 20px;"]
       h3[class="text-warning" style="padding-left: 20px;"] 预定须知
       ol
@@ -62,16 +65,25 @@
         li 如参加区图书馆、文化馆活动的市民，由于停车位有限，建议读者搭乘公共交通前往；
         li 活动最终解释权归举办方所有。
         li 确认支付则表示同意预订须知
-    .row.text-center
-      button[type="submit" class="btn btn-danger btn-md"] 立即支付
 = javascript_include_tag 'payment_core/pingpp'
 javascript:
+  $(document).ready(function (){
+    var form = $("#frontend-order-new");
+    if (form.length > 0) {
+      var ua = window.navigator.userAgent.toLowerCase();
+      //判断是否是微信端
+      if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+        $("#order-pay-channel").val('wx_pub');
+      }
+    }
+  })
   function onStartCharging(charge){
     pingpp.createPayment(charge, function(result, err){
       console.log(result);
       console.log(err.msg);
       console.log(err.extra);
       if (result == "success") {
+        console.log('sfds')
           // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的支付结果都会跳转到 extra 中对应的 URL。
       } else if (result == "fail") {
           // charge 不正确或者微信公众账号支付失败时会在此处返回
