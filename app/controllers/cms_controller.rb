@@ -3,6 +3,7 @@ class CmsController < ApplicationController
   helper Cms::ApplicationHelper
   include Cms::ApplicationHelper
   before_action :check_subdomain!
+  before_action :check_weixin_login!, except: [:wechat_login]
 
   #{"controller"=>"welcome", "action"=>"index", "channel"=>"fw", "id"=>"2", "tag" => "tagkey"}
   #params
@@ -137,12 +138,48 @@ class CmsController < ApplicationController
     end
   end
 
+  def wechat_login
+    @message = '微信登录失败'
+    if params[:code]
+      conn = Faraday.new(:url => Settings.weixin_login.host)
+      response = conn.get('/wx/mp_auth/%s/fetch_uid/%s' % [Settings.weixin_login.appid, params[:code]])
+      data = JSON.parse(response.body)
+      if data['uid']
+        weixin = User::Weixin.find_or_create_by(uid: data['uid'])
+        if current_user
+          current_user.weixin = weixin
+        else
+          user = weixin.user || User.new(nickname: weixin.name, password: 'tanmer.com')
+          user.weixin = weixin
+          user.save
+          sign_in user
+        end
+        redirect_to params[:request_url].present? ? params[:request_url] : root_url
+      end
+    end
+  end
+
   private
 
   def check_subdomain!
     @cms_site = Cms::Site.where("domain = ? OR root_domain = ?", request.subdomains, request.domain).first
     logger.info "----subdomain:#{request.subdomain}---domain: #{request.domain}-------cms_site: #{@cms_site.try(:id)}---"
     redirect_to root_url(subdomain: nil) if @cms_site.nil? || !@cms_site.is_published
+  end
+
+  def check_weixin_login!
+    if Settings.project.wgtong? && wechat_device?
+      request_url = request.url
+      return if current_user
+      conn = Faraday.new(:url => Settings.weixin_login.host)
+      appid = Settings.weixin_login.appid
+      response_code = conn.get("/wx/mp_auth/qrcode/#{appid}.json")
+      data = JSON.parse(response_code.body)
+      uri = URI("#{Settings.weixin_login.host}/wx/mp_auth?appid=#{appid}")
+      params = {code: data['code'], origin: cms_frontend_wechat_login_url(request_url: request_url)}
+      uri.query = URI.encode_www_form URI.decode_www_form(uri.query || '').concat(params.to_a)
+      redirect_to uri.to_s
+    end
   end
 
 end
