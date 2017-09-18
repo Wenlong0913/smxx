@@ -29,6 +29,8 @@
         - if Settings.project.grand? || Settings.project.cms? || Settings.project.dagle?
           label[class="control-label"] 商家所有者
           select.select2.form-control[id="dropdown" name="site[user_id]" data-url="#{admin_users_url}"  data-id="#{@site.user_id}" data-name="#{User.find_by(id: @site.user).try(:nickname)}" ]
+
+          / select.select2.form-control[id="dropdown" name="site[user_id]" data-url="#{admin_users_url}"  data-id="#{@site.user_id}" data-name="#{User.find_by(id: @site.user).try(:nickname)}" ]
           = f.input :title
           = f.input :description, as: :text, input_html: {rows: 10}
           .form-group
@@ -79,6 +81,9 @@
                   label[class="control-label"] 上级商家
                   = link_to @site.parent.title, admin_site_path(@site.parent)
                   = f.hidden_field :parent_id
+
+          = f.input :parent_id, collection: Site.all.map{|s| [s.title, s.id]}
+
           .row
             div class="col-md-6 col-sm-12"
               label[class="control-label"] 商家所有者
