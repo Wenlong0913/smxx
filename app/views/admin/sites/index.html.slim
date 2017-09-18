@@ -78,7 +78,7 @@ h1.page-header
                   small
                     => link_to '详情', admin_site_path(site), class: 'btn btn-xs btn-default'
                     br
-                    => link_to site.user.try(:nickname), admin_user_path(site.user)
+
                     => site.address_line
                 td = site.contact_name
                 td = site.contact_phone
