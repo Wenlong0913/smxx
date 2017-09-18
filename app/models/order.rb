@@ -146,7 +146,7 @@ class Order < ApplicationRecord
       if self.paid?
         self.order_products.each do |op|
           p = op.product
-          p.stock = p.stock - op.amount
+          p.stock = p.stock.to_i - op.amount
           p.save!
         end
       end
@@ -161,7 +161,7 @@ class Order < ApplicationRecord
       if self.refunded?
         self.order_products.each do |op|
           p = op.product
-          p.stock = p.stock + op.amount
+          p.stock = p.stock.to_i + op.amount
           p.save!
         end
       end
