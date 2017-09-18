@@ -45,7 +45,7 @@ class Admin::SitesController < Admin::BaseController
   # GET /admin/sites/new
   def new
     authorize Site
-    @site = Site.new
+    @site = Site.new(parent: Site.find_by(id: params[:parent_id]))
   end
 
   # GET /admin/sites/1/edit

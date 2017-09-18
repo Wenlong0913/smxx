@@ -73,6 +73,12 @@
           .form-group
             image-select[server="#{image_items_path}" name="site[image_item_ids][]" selected-ids="#{@site.image_item_ids.join(', ')}"]
         - elsif Settings.project.imolin? || Settings.project.wgtong?
+          - if @site.parent
+            .row
+                div class="col-md-12 col-sm-12"
+                  label[class="control-label"] 上级商家
+                  = link_to @site.parent.title, admin_site_path(@site.parent)
+                  = f.hidden_field :parent_id
           .row
             div class="col-md-6 col-sm-12"
               label[class="control-label"] 商家所有者
