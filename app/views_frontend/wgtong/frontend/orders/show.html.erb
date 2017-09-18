@@ -36,7 +36,13 @@
                 <div class="col-md-12">
                   <h3 class="clearfix">
                     <div class="<%= 'pull-left' unless mobile_device? %>">
-                      支付状态：<span class="text-success"><%=  enum_l(@order, :status) %></span>
+                      <% if ['open', 'pending'].include?(@order.status) %>
+                        支付状态：<span class="text-danger"><%=  enum_l(@order, :status) %></span>
+                      <% elsif @order.paid? %>
+                        支付状态：<span class="text-success"><%=  enum_l(@order, :status) %></span>
+                      <% else %>
+                        支付状态：<span class="text-success"><%=  enum_l(@order, :status) %></span>
+                      <% end %>
                     </div>
                     <% if mobile_device? %>
                     <p></p>
@@ -46,23 +52,15 @@
                     </div>
                   </h3>
                   <hr>
-                  <!-- <p class="clearfix"> -->
-                    <!-- 订单信息： -->
-                    <%# if ['open', 'pending'].include?(@order.status) %>
-                      <%#= link_to '去支付', charge_frontend_orders_path(order_id: @order.id), method: :post, remote: true, class: 'pull-right' %>
-                    <%# else %>
-                      <!-- <a href="<%= self_order_users_path %>" class="pull-right btn btn-default">返回我的订单</a> -->
-                    <%# end %>
-                  <!-- </p> -->
                   <div class="row">
                     <div class="col-md-4">
                       <div class="productImg">
-                        <img src="<%= @order.order_products.first.product.first_image %>" alt="" class="img-responsive"/> 
+                        <img src="<%= @order.order_products.first.product.first_image %>" alt="" class="img-responsive"/>
                       </div>
                     </div>
                     <div class="col-md-8 text-left">
-                      <h4 >
-                        <a href="<%= frontend_product_path(@order.order_products.first.product) %>" style="color: #2e2e2e;">
+                      <h4>
+                        <a href="<%= frontend_product_path(@order.products.first) %>" style="color: #2e2e2e;">
                           <%= @order.order_products.first.product.name%>
                         </a>
                         <small><%= @order.order_products.first.product.catalog.try(:name)%></small>
@@ -75,13 +73,14 @@
                       </p>
                       <p>
                         <span>
-                          <i class="fa fa-clock-o productColorIcon"></i> 
+                          <i class="fa fa-clock-o productColorIcon"></i>
                           <%= @order.order_products.first.product.date.to_s + @order.order_products.first.product.time.to_s %>
                         </span>
                       </p>
                     </div>
                   </div>
                   <hr>
+
                   <div class="row">
                     <div class="col-md-3">
                       <p>预留手机号:
@@ -94,25 +93,25 @@
                       </p>
                     </div>
                     <% if @order.paid? %>
-                      <div class="col-md-3 col-xs-6">
+                      <div class="col-md-3 col-xs-6 text-center">
                         <% if @order.refund_status.blank?%>
-                          <%= link_to '确认消费', confirm_frontend_order_path(@order), method: :post, data: { confirm: "是否确认消费?" }, class: 'btn btn-success btn-block' %>
+                          <%= link_to '已到场消费', confirm_frontend_order_path(@order), method: :post, data: { confirm: "您‘确认’已经到场消费该活动?" }, class: 'btn btn-danger' %>
                         <% end %>
                       </div>
-                      <div class="col-md-3 col-xs-6">
+                      <div class="col-md-3 col-xs-6 text-center">
                         <% if @order.refund_status.blank?%>
-                          <%= link_to '退款申请', refund_frontend_order_path(@order), method: :post, data: { confirm: "是否需要退款?" }, class: 'btn btn-warning btn-block' %>
+                          <%= link_to '退款申请', refund_frontend_order_path(@order), method: :post, data: { confirm: "是否需要退款?" }, class: 'btn btn-default' %>
                         <% else %>
                           <p><%= enum_l(@order, :refund_status) %> </p>
                         <% end %>
                       </div>
                     <% elsif ['open', 'pending'].include?(@order.status) %>
-                      <div class="col-md-3 col-xs-12">
-                        <%= link_to '去支付', charge_frontend_orders_path(order_id: @order.id), method: :post, remote: true, class: 'pull-right btn btn-success' %>
+                      <div class="col-md-6 col-xs-12 text-right">
+                        <%= link_to '去支付', charge_frontend_orders_path(order_id: @order.id), method: :post, remote: true, class: 'btn btn-danger' %>
                       </div>
                     <% else %>
-                      <div class="col-md-3 col-xs-12">
-                        <a href="<%= self_order_users_path %>" class="pull-right btn btn-default">返回我的订单</a>
+                      <div class="col-md-6 col-xs-12 text-right">
+                        <a href="<%= self_order_users_path %>" class="btn btn-default">返回我的订单</a>
                       </div>
                     <% end %>
                   </div>
