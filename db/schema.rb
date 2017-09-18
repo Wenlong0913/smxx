@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170901123757) do
-
+ActiveRecord::Schema.define(version: 20170908032810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1076,8 +1075,10 @@ ActiveRecord::Schema.define(version: 20170901123757) do
     t.decimal  "lat",                   precision: 20, scale: 14
     t.boolean  "is_flatform_recommend",                           default: false
     t.jsonb    "forage"
+    t.integer  "parent_id"
     t.index "((forage ->> 'is_foraged'::text))", name: "index_sites_on_forage_is_forage", using: :btree
     t.index "ll_to_earth((lat)::double precision, (lng)::double precision)", name: "idx__gnomon_site", using: :gist
+    t.index ["parent_id"], name: "index_sites_on_parent_id", using: :btree
     t.index ["user_id"], name: "index_sites_on_user_id", using: :btree
   end
 
