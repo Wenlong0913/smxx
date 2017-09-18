@@ -54,6 +54,9 @@
         label[for="inputNumber" class="col-sm-2 control-label"] 数量：
         .col-sm-10
           input[type="number" name="order[product][number]" class="form-control" id="inputNumber" value="1" style="width: 120px;"]
+    input[type="number" name="order[product][number]" class="form-control" id="inputNumber" value="1" style="width: 120px;" disabled]
+        .text-center[style="margin-bottom: 20px;"]
+          button[type="submit" class="btn btn-danger btn-md"] 立即支付
     article[style="border: 1px solid #ccc;margin-bottom: 20px;"]
       h3[class="text-warning" style="padding-left: 20px;"] 预定须知
       ol
@@ -62,17 +65,14 @@
         li 如参加区图书馆、文化馆活动的市民，由于停车位有限，建议读者搭乘公共交通前往；
         li 活动最终解释权归举办方所有。
         li 确认支付则表示同意预订须知
-    .row.text-center
-      input[type="hidden" name="order[pay_channel]" id="order-pay-channel" value="alipay_pc_direct"]
-      button[type="submit" class="btn btn-danger btn-md"] 立即支付
 = javascript_include_tag 'payment_core/pingpp'
 javascript:
   $(document).ready(function (){
     var form = $("#frontend-order-new");
     if (form.length > 0) {
-      var ua = window.navigator.userAgent.toLowerCase(); 
+      var ua = window.navigator.userAgent.toLowerCase();
       //判断是否是微信端
-      if(ua.match(/MicroMessenger/i) == 'micromessenger'){ 
+      if(ua.match(/MicroMessenger/i) == 'micromessenger'){
         $("#order-pay-channel").val('wx_pub');
       }
     }
