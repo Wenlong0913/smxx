@@ -127,9 +127,6 @@
                         </a>
                         <small><%= order_product.try(:product).try(:catalog).try(:name) %></small>
                       </h4>
-                      <!-- <p>
-                        <span class="orderPrice">¥ 100 .00</span>
-                      </p> -->
                       <p><i class="fa fa-map-marker productColorIcon"></i>  <%= order_product.try(:product).try(:address_line1) %></p>
                       <p><i class="fa fa-clock-o productColorIcon"></i> <%= order_product.try(:product).try(:date).to_s + ' '  + order_product.try(:product).try(:time).to_s%></p>
 
@@ -143,10 +140,13 @@
                   <div class="row">
                     <div class="col-md-4 col-md-offset-8">
                       <p class="text-right">
-                        <a href="<%= frontend_order_path(order) %>" class="btn btn-success"><%= enum_l(order, :status)%></a>
-                        <% if order.refund_status %>
-                          <small class="text-danger"><%= enum_l(order, :refund_status)%></small>
-                        <%end%>
+                        <% if ['open', 'pending'].include?(order.status) %>
+                          <a href="<%= frontend_order_path(order) %>" class="btn btn-danger"><%= enum_l(order, :status)%></a>
+                        <% elsif order.paid? %>
+                          <button href="<%= frontend_order_path(order) %>" class="btn btn-default" disabled><%= enum_l(order, :status)%></button>
+                        <% else %>
+                          <button class="btn btn-default" disabled><%= enum_l(order, :status)%></button>
+                        <% end %>
                       </p>
                     </div>
                   </div>
