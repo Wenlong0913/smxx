@@ -18,7 +18,11 @@ class ApplicationController < ActionController::Base
   def mobile_device?
     !!(request.user_agent =~ /Mobile|webOS/i)
   end
-  helper_method :mobile_device?
+
+  def wechat_device?
+    !!(request.user_agent =~ /MicroMessenger/i)
+  end
+  helper_method :mobile_device?, :wechat_device?
 
   private
   def user_not_authorized
