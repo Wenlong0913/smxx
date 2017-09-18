@@ -2,6 +2,11 @@ class Agent::SitesController < Agent::BaseController
   skip_before_action :set_current_site
   before_action :set_site, only: [:show, :edit, :update, :destroy]
   before_action :set_delivery_fee, only: [:create, :update]
+
+  def index
+    @agent_sites = @site.sites
+  end
+
   def new
     authorize Site
     @agent_site = Site.new
