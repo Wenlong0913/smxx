@@ -111,7 +111,7 @@
                       <div class="col-sm-10">
                         <p class="form-control-static text-left">
                           <% if current_user.weixin %>
-                            <%= current_user.weixin.try(:name) %>
+                            <%= current_user.weixin.try(:name) || '匿名' %>
                           <% else %>
                             <%= link_to '立即绑定', binding_weixin_users_path, style: "margin-left: 15px;" %>
                           <% end %>
