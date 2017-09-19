@@ -1,14 +1,66 @@
-<h1>订单列表</h1>
-<% @orders.each do |order|%>
-  <div class="panel panel-default show-order" data-url="<%= wechat_order_micro_website_url(id: order.id)%>">
-    <div class="panel-body">
-      <h3>订单号: <%= order.code%></h3>
-      <p>订单金额: &nbsp;&nbsp;<%= order.price/100.0%>元</p>
-      <p>订单状态: &nbsp;&nbsp;<%= enum_l(order, :status)%></p>
-    </div>
+<%= render file: @cms_site.template_dir + '_header.html' %>
+<% if @orders.present? %>
+  <div style="text-align: center">
+    <h2>订单列表</h2>
   </div>
+  <% @orders.each do |order|%>
+    <div class="panel panel-default show-order" data-url="<%= wechat_order_micro_website_url(id: order.id)%>">
+      <div class="panel-body">
+        <h3>订单号: <%= order.code%></h3>
+        <p>订单金额: &nbsp;&nbsp;<%= order.price/100.0%>元</p>
+        <p>订单状态: &nbsp;&nbsp;<%= enum_l(order, :status)%></p>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <div style="text-align: center">
+    <h3><i class="fa fa-dropbox"></i>&nbsp;您还没有相关订单</h3>
+    <p>去下一单试试吧</p>
+  </div>
+  <% Product.where("features ->> 'is_shelves' = ?", '1').where(site: @cms_site.site.self_and_descendants).hot(3).each do |product| %>
+    <div class="col-md-12 col-xs-12 col-sm-12" style="padding: 5px;">
+      <a href="/product?product_id=<%= product.id %>">
+        <img src="<%= product.first_image %>" class="img-responsive" style="max-height: 185px;width:100%;">
+      </a>
+      <div style="border: 1px solid #ddd;padding: 5px;">
+        <h4 style="padding-left: 5px;border-left: 5px solid #e84f17;"><a href="/product?product_id=<%= product.id %>" style="color: #blue;"><%= product.name.truncate(20) %></a>
+          <% if product.status == 'open' %>
+            <span class="label label-info pull-right">进行中</span>
+          <% elsif product.status == 'completed' %>
+            <span class="label label-default pull-right">已售完</span>
+          <% elsif product.status == 'pending' %>
+            <span class="label label-default pull-right">未开始</span>
+          <% elsif product.status == 'closed' %>
+            <span class="label label-default pull-right">已结束</span>
+          <% else %>
+            <span class="label label-default pull-right">未发布</span>
+          <% end %>
+        </h4>
+        <div class="row">
+          <div class="col-xs-9">
+            <p>
+              <% if product.sell_price > 0 %>
+              ￥<%= product.sell_price / 100.0 %>元
+              <% else %>
+                免费
+              <% end %>
+            </p>
+            <p>时间：<%= product.date %></p>
+            <p>地点：<%= product.address_line1 %><%= product.address_line2 %></p>
+          </div>
+          <div class="col-xs-3">
+            <% if product.status == 'open' %>
+              <a href="<%= new_frontend_order_path(product_id: product.id) %>" class="btn btn-lg btn-success" >立即<br/>预定</a>
+            <% else %>
+              <a href="/product?product_id=<%= product.id %>" class="btn btn-lg btn-default" >查看<br/>详情</a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 <% end %>
-
+<%= render file: @cms_site.template_dir + '_footer.html' %>
 <script type="text/javascript">
   $(function() {
     $('.show-order').on('click', function(){
