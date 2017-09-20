@@ -131,6 +131,26 @@
                 </div>
               </div>
             </div>
+            <% if @order.member_attributes.present? %>
+              <div class="tr-section">
+                <h3>报名人员信息</h3>
+                <% @order.member_attributes.each do |attr| %>
+                  <div class="panel panel-default" style="margin-top: 5px;">
+                    <div class="panel-body">
+                      <table class="table">
+                        <% attr.each_pair do |key, v| %>
+                          <% next if key == 'product_id'%>
+                          <tr>
+                            <td><%= Product::MEMBER_ATTRIBUTES[key.to_sym] || key %></td>
+                            <td><%= v %></td>
+                          </tr>
+                        <% end %>
+                      </table>
+                    </div>
+                  </div>
+                <%end%>
+              </div>
+            <% end %>
           </div>
         </div>
 
@@ -141,6 +161,7 @@
 
     </div>
   </section>
+
   <%= render file: @cms_site.template_dir + '_footer.html' %>
 </div>
 <%= javascript_include_tag 'payment_core/pingpp' %>
@@ -151,12 +172,22 @@
       console.log(err.msg);
       console.log(err.extra);
       if (result == "success") {
-          // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的支付结果都会跳转到 extra 中对应的 URL。
+        location.reload();
+        // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的支付结果都会跳转到 extra 中对应的 URL。
       } else if (result == "fail") {
           // charge 不正确或者微信公众账号支付失败时会在此处返回
       } else if (result == "cancel") {
           // 微信公众账号支付取消支付
       }
     });
+  }
+
+  function onOrderCreate(errors) {
+    var errors = JSON.parse(errors)
+    for(var key in errors) {
+      if (key == 'order_product_stock') {
+        alert(errors[key][0])
+      }
+    }
   }
 </script>

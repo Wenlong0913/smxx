@@ -36,8 +36,8 @@ zh-CN:
         is_manager_recommend: 是否设为站长推荐
         is_shelves: 商品上架
         video_url: 视频链接
-        date: 日期
-        time: 时间
+        date: 演出日期
+        time: 演出时间
         address_line1: 地址1
         address_line2: 地址2
         phone: 联系方式
