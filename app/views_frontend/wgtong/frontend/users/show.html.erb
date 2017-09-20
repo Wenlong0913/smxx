@@ -72,8 +72,14 @@
 
               <hr>
               <div class="row">
-                <div class="col-md-4 col-xs-12 text-left">
-                  <h3>欢迎，<%= current_user.nickname %></h3>
+                <div class="col-md-4 col-xs-12">
+                  <div class="user-logo">
+                    <img src="<%= current_user.display_headshot %>" alt="" class="img-circle" width="150px">
+                  </div>
+                </div>
+                <div class="col-md-4 col-xs-12">
+                  <h3><%= current_user.nickname %></h3>
+                  <%= link_to '基本信息修改', edit_users_path, class: "btn btn-default btn-md", style: "display: inlin-block; margin: 30px 0px 15px 0px;" %>
                 </div>
               </div>
 
@@ -81,30 +87,33 @@
                 <div class="col-md-9 col-md-offset-1 col-xs-12">
                   <div class="form-horizontal">
                     <div class="form-group">
+                      <label class="col-sm-2 control-label">邮箱：</label>
                       <div class="col-sm-10">
                         <% if current_user.email.present? %>
                           <p class="form-control-static text-left"><%= current_user.email %></p>
                         <% else %>
-                          <p class="form-control-static text-left"><i class="fa fa-envelope"></i> <%= link_to '绑定邮箱', edit_users_path %></p>
+                          <p class="form-control-static text-left"><%= link_to '绑定邮箱', edit_users_path %></p>
                         <% end %>
                       </div>
                     </div>
                     <div class="form-group">
+                      <label class="col-sm-2 control-label">电话：</label>
                       <div class="col-sm-10">
                         <% if current_user.try(:mobile).try(:phone_number).present? %>
-                          <p class="form-control-static text-left"><i class="fa fa-phone"></i> <%= current_user.mobile.phone_number %> <%= link_to '手机绑定', binding_phone_users_path, style: "margin-left: 15px;" %> </p>
+                          <p class="form-control-static text-left"><%= current_user.mobile.phone_number %> <%= link_to '重新绑定', binding_phone_users_path, style: "margin-left: 15px;" %> </p>
                         <% else %>
-                          <p class="form-control-static text-left"><i class="fa fa-phone"></i> 暂无手机号 <%= link_to '手机绑定', binding_phone_users_path, style: "margin-left: 15px;" %> </p>
+                          <p class="form-control-static text-left">暂无手机号 <%= link_to '立即绑定', binding_phone_users_path, style: "margin-left: 15px;" %> </p>
                         <% end %>
                       </div>
                     </div>
                     <div class="form-group">
+                      <label class="col-sm-2 control-label">微信：</label>
                       <div class="col-sm-10">
                         <p class="form-control-static text-left">
                           <% if current_user.weixin %>
-                            <%= current_user.weixin.try(:uid) %>
+                            <%= current_user.weixin.try(:name) || '匿名' %>
                           <% else %>
-                            <i class="fa fa-wechat"></i>  <%= link_to '微信绑定', binding_weixin_users_path, style: "margin-left: 15px;" %>
+                            <%= link_to '立即绑定', binding_weixin_users_path, style: "margin-left: 15px;" %>
                           <% end %>
                         </p>
                       </div>
