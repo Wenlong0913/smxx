@@ -134,7 +134,15 @@ class Frontend::OrdersController < Frontend::BaseController
       JS
       return
     end
-    pay_channel = params[:order][:pay_channel] || 'alipay_pc_direct'
+    # 产品库存是否满足
+    if product.stock.to_i < order.order_products.where(product_id: product.id).map(&:amount).sum()
+      order.errors.add 'order_product_stock'.to_sym, "剩余座位#{product.stock}个!"
+      render js: <<-JS
+        onOrderCreate('#{order.errors.messages.to_json}')
+      JS
+      return
+    end
+    pay_channel =  wechat_device? ? 'wx_pub' : 'alipay_pc_direct'
     callback_url = URI(Settings.site.host)
     options = 'frontend/orders/' + order.id.to_s + '/paid_success'
     json = PaymentCore.create_charge(

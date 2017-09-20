@@ -275,7 +275,6 @@
                       <div class="col-xs-12">
                         <div class="input-group">
                           <label class="control-label string optional"> 报名需要填写的属性:&nbsp;&nbsp;</label>
-                          <%#= f.collection_check_boxes :member_attributes, Product::MEMBER_ATTRIBUTES, :first, :last, checked: @product.try(:member_attributes)%>
                           <div>
                             <% Product::MEMBER_ATTRIBUTES.each_pair do |key1, val1| %>
                               <label class="control-label string optional"><%= val1 %></label>
