@@ -36,13 +36,7 @@
                 <div class="col-md-12">
                   <h3 class="clearfix">
                     <div class="<%= 'pull-left' unless mobile_device? %>">
-                      <% if ['open', 'pending'].include?(@order.status) %>
-                        支付状态：<span class="text-danger"><%=  enum_l(@order, :status) %></span>
-                      <% elsif @order.paid? %>
-                        支付状态：<span class="text-success"><%=  enum_l(@order, :status) %></span>
-                      <% else %>
-                        支付状态：<span class="text-success"><%=  enum_l(@order, :status) %></span>
-                      <% end %>
+                      支付状态：<span class="text-<%= ['open', 'pending'].include?(@order.status) ? 'danger' : 'success' %>"><%=  enum_l(@order, :status) %></span>
                     </div>
                     <% if mobile_device? %>
                     <p></p>
@@ -55,26 +49,28 @@
                   <div class="row">
                     <div class="col-md-4">
                       <div class="productImg">
-                        <img src="<%= @order.order_products.first.product.first_image %>" alt="" class="img-responsive"/>
+                        <a href="<%= frontend_product_path(@order.products.first) %>">
+                          <img src="<%= @order.products.first.first_image %>" alt="" class="img-responsive"/>
+                        </a>
                       </div>
                     </div>
                     <div class="col-md-8 text-left">
                       <h4>
                         <a href="<%= frontend_product_path(@order.products.first) %>" style="color: #2e2e2e;">
-                          <%= @order.order_products.first.product.name%>
+                          <%= @order.products.first.name%>
                         </a>
-                        <small><%= @order.order_products.first.product.catalog.try(:name)%></small>
+                        <small><%= @order.products.first.catalog.try(:name)%></small>
                       </h4>
                       <p>
                         <span>
                           <i class="fa fa-map-marker productColorIcon"></i>
-                          <%= @order.order_products.first.product.address_line1%>
+                          <%= @order.products.first.address_line1%>
                         </span>
                       </p>
                       <p>
                         <span>
                           <i class="fa fa-clock-o productColorIcon"></i>
-                          <%= @order.order_products.first.product.date.to_s + @order.order_products.first.product.time.to_s %>
+                          <%= @order.products.first.date.to_s + @order.products.first.time.to_s %>
                         </span>
                       </p>
                     </div>
@@ -114,6 +110,23 @@
                         <a href="<%= self_order_users_path %>" class="btn btn-default">返回我的订单列表</a>
                       </div>
                     <% end %>
+                  </div>
+
+                  <div class="row" style="margin-top: 15px">
+                    <% if @order.member_attributes.present? %>
+                      <% @order.member_attributes.each do |attr| %>
+                        <table class="table">
+                          <% attr.each_pair do |key, v| %>
+                            <% next if key == 'product_id'%>
+                            <tr>
+                              <td><%= Product::MEMBER_ATTRIBUTES[key.to_sym] || key %></td>
+                              <td><%= v %></td>
+                            </tr>
+                          <% end %>
+                        </table>
+                      <%end%>
+                    <% end %>
+
                   </div>
                 </div>
               </div>
