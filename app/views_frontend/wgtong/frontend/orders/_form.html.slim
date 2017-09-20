@@ -28,10 +28,10 @@
     - if @product.purchase_type && @product.purchase_type.include?('sign_up')
       h3
         | 活动报名 &nbsp;&nbsp;
-        button.btn.btn-primary[type="button" @click="addMembers"] 添加报名人员信息
+        button.btn.btn-danger[type="button" @click="addMembers"] 添加报名人员信息
       p[id="order_account_signup"] &nbsp;
       .form-group.row.well[v-for="(mem, index) in members" :key="mem" style="position: relative;"]
-        i.fa.fa-close[style="position: absolute;top: -2px;right: 3px;" @click="removeMembers(index)"]
+        i.fa.fa-close[style="position: absolute;top: 10px;right: 10px; cursor: pointer" @click="removeMembers(index)"]
         input[type="hidden" :name="'order[member_attributes]['+mem.key+'][product_id]'" value="#{@product.id}"]
         - @product.member_attributes.each do |attr|
           - next if attr == ''
@@ -44,7 +44,6 @@
               input[type="text" :required="#{flag}" :name="'order[member_attributes]['+mem.key+'][#{attr}]'" class="form-control" :id="'member_attributes_'+mem.key+'_#{attr}'"]
               small[style="padding: 5px;color: #ff3f13;"]
                 = (@product.member_attribute_validates && @product.member_attribute_validates[attr]) ? @product.member_attribute_validates[attr].map{|v| Product::MEMBER_ATTRIBUTE_VALIDATES[v.to_sym]}.join(' ') : ''
-
     - else
       .form-group
         label[for="inputPhone" class="col-sm-2 control-label text-left"] 手机号
