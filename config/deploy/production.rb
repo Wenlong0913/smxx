@@ -9,9 +9,9 @@
 
 host =
   case (ENV['APP_NAME'] || ENV['PROJECT_NAME'])
-  when 'imolin', 'meikemei', 'wgtong'
+  when 'imolin', 'meikemei', 'wgtong', 'demo.dagle'
     'prod2uc.corp.tanmer.com'
-  when 'nj1688.dagle'
+  when 'nj1688.dagle', 'pilele.dagle'
     'web1uc.corp.tanmer.com'
   else
     'prod1uc.corp.tanmer.com'
