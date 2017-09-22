@@ -1,26 +1,32 @@
 #!/bin/sh
 set -e
+
+pushd .
+cd $PWD/$(dirname $0)/..
+rails_root=`pwd`
+popd
+
 cat << EOS > /etc/nginx/conf.d/dagle.conf
 
 upstream rails {
-  server unix:///srv/dagle/tmp/sockets/rails.sock fail_timeout=0;
+  server unix://${rails_root}/tmp/sockets/rails.sock fail_timeout=0;
 }
 
 upstream cable {
-  server unix:///srv/dagle/tmp/sockets/cable.sock fail_timeout=0;
+  server unix://${rails_root}/tmp/sockets/cable.sock fail_timeout=0;
 }
 
 server {
   listen 80;
   server_name $DOMAIN;
-  root /srv/dagle/public;
+  root ${rails_root}/public;
   try_files $uri/index.html $uri @rails;
 
   client_max_body_size 32M;
   keepalive_timeout 10;
 
-  access_log /srv/dagle/log/nginx.access.log;
-  error_log /srv/dagle/log/nginx.error.log;
+  access_log ${rails_root}/log/nginx.access.log;
+  error_log ${rails_root}/log/nginx.error.log;
   
   location @rails {
     proxy_pass http://rails;
