@@ -26,6 +26,7 @@ td
     - product.tags.each do |tag|
       => link_to tag.name, '#', class: 'btn btn-xs btn-success'
   td
+    - unless product.status.blank?
       = link_to enum_i18n(Product, :status, product.status), '#', class: 'btn btn-xs btn-info'
 - else
   td = product.price.to_f / 100
