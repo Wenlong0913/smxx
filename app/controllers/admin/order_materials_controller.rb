@@ -8,7 +8,7 @@ class Admin::OrderMaterialsController < Admin::BaseController
   def index
     authorize OrderMaterial
     @filter_colums = %w(id)
-    @order_materials = build_query_filter(OrderMaterial.all, only: @filter_colums).page(params[:page])
+    @order_materials = build_query_filter(OrderMaterial.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@order_materials.to_json, filename: "order_materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

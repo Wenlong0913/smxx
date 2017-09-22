@@ -3,7 +3,7 @@ class Admin::RolesController < Admin::BaseController
 
   def index
     authorize Role
-    @admin_roles = Role.all.page params[:page]
+    @admin_roles = Role.all.order(updated_at: :desc).page params[:page]
     respond_to do |format|
       format.html
       format.json { render json: {admin_roles: @admin_roles.as_json(only: [:id], methods: [:role_name])} }

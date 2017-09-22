@@ -25,7 +25,7 @@ class Admin::MaterialPurchasesController < Admin::BaseController
       date_range = params["daterange"].split(' - ').map(&:strip).map(&:to_date)
       @material_purchases_all = @material_purchases_all.where("Date(material_purchases.created_at) in (?)", date_range[0]..date_range[-1])
     end
-    @material_purchases = @material_purchases_all.includes(:vendor).page(params[:page])
+    @material_purchases = @material_purchases_all.includes(:vendor).order(updated_at: :desc).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@material_purchases.to_json, filename: "material_purchases-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

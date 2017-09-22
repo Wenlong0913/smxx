@@ -7,7 +7,7 @@ class Admin::AppSettingsController < Admin::BaseController
   def index
     authorize AppSetting
     @filter_colums = %w(id)
-    @app_settings = build_query_filter(AppSetting.all, only: @filter_colums).page(params[:page])
+    @app_settings = build_query_filter(AppSetting.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@app_settings.to_json, filename: "app_settings-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

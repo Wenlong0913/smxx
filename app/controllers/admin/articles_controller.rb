@@ -13,7 +13,7 @@ class Admin::ArticlesController < Admin::BaseController
     else
       @community.articles
     end
-    @articles = build_query_filter(@articles, only: @filter_colums).page(params[:page])
+    @articles = build_query_filter(@articles, only: @filter_colums).order(updated_at: :desc).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@articles.to_json, filename: "articles-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

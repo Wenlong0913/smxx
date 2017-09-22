@@ -17,7 +17,7 @@ class Admin::MaterialManagementsController < Admin::BaseController
       date_range = params["daterange"].split(' - ').map(&:strip).map(&:to_date)
       @material_managements_all = @material_managements_all.where("operate_date in (?)", date_range[0]..date_range[1])
     end
-    @material_managements = @material_managements_all.page(params[:page])
+    @material_managements = @material_managements_all.order(updated_at: :desc).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@material_managements.to_json, filename: "material_managements-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
@@ -103,7 +103,7 @@ class Admin::MaterialManagementsController < Admin::BaseController
         csv << [type + '总量', objects.sum{ |p| p.material_management_details.sum(:number) }, type + '总金额', objects.sum{ |p| p.material_management_details.sum{|mmd| mmd.number * (mmd.price || mmd.material.price) } }]
         # 获取字段名称
         column_names = [ type + '日期','物料名称', '编码', '价格', '数量', '总金额']
-        csv << column_names        
+        csv << column_names
         objects.each do |obj|
           obj.material_management_details.each do |mmd|
             values = []

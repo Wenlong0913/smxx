@@ -38,7 +38,7 @@ class Admin::OrdersController < Admin::BaseController
       date_range = params["daterange"].split(' - ').map(&:strip).map(&:to_date)
       @orders_all = @orders_all.where("Date(orders.created_at) in (?)", date_range[0]..date_range[-1])
     end
-    @orders = @orders_all.includes(:site, :order_materials).page(params[:page])
+    @orders = @orders_all.includes(:site, :order_materials).order(updated_at: :desc).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         # format.json { render json: {:users => @orders.select(:id, :nickname), :total => @orders.size} }
