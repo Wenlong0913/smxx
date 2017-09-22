@@ -14,4 +14,3 @@ RUN apk --update add --virtual build_deps \
 COPY . .
 RUN rm -rf vendor/cache
 EXPOSE 3000
-CMD ["compose/startup.sh"]

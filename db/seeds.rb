@@ -82,7 +82,8 @@ Keystore.put('cms_template_names', "['default','dagle','app-landing-spotlight','
 create_if_not_exist Cms::Site.create_with(
   name: '企业官网',
   domain: 'www',
-  template: 'newshub',
+  # 这里如果不是文广通，newshub模版中就缺少Product.hot方法，所以做个判断。
+  template: Settings.project.wgtong? ? 'newshub' : 'default',
   description: '这是用CMS搭建的官网'), site_id: site.id do |cms_site|
     puts "创建CMS官网"
   # Cms::Site 在创建时，会自动执行模版中的db_init.rb文件，所以这里不需要在创建channel和page

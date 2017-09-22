@@ -12,7 +12,7 @@ build_assets () {
 }
 
 build_docker () {
-    docker build -t dagle -f composer/Dockerfile \
+    docker build -t registry.corp.tanmer.com:5000/products/dagle:`date +%Y%m%d%H%M%S` -f composer/Dockerfile \
     --build-arg BUNDLE_GEMS__TANMER__COM=${BUNDLE_GEMS__TANMER__COM} \
     .
 }

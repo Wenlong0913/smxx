@@ -35,7 +35,9 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
   # Mount Action Cable outside main process or domain
-  # config.action_cable.mount_path = nil
+  # 在生产环境，把cable服务独立出来运行，运行代码是:
+  # rackup <project>/cable/config.ru
+  config.action_cable.mount_path = nil unless ENV['ENABLE_ACTION_CABLE']
   # config.action_cable.url = 'wss://example.com/cable'
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
