@@ -23,25 +23,18 @@ server {
   error_log /srv/dagle/log/nginx.error.log;
   
   location @rails {
+    proxy_pass http://rails;
+    proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
     proxy_set_header Host \$http_host;
     proxy_redirect off;
-    proxy_set_header Upgrade \$http_upgrade;
-    proxy_set_header Connection "Upgrade";
-    proxy_set_header X-Forwarded-Proto https;
-    proxy_pass http://rails;
-    # limit_req zone=one;
   }
 
-  location ^~ /cable/ {
-    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-    proxy_set_header Host \$http_host;
-    proxy_set_header SERVICE Cable;
-    proxy_redirect off;
-    proxy_set_header Upgrade \$http_upgrade;
-    proxy_set_header Connection "Upgrade";
-    proxy_set_header X-Forwarded-Proto https;
+  location /cable {
     proxy_pass http://cable;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
   }
 
   location ^~ /assets/ {
