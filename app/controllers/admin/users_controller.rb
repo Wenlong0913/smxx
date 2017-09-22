@@ -11,9 +11,9 @@ class Admin::UsersController < Admin::BaseController
     @admin_users = @admin_users.joins(:roles).where("roles.id = ?", params[:role_id])if params[:role_id]
     @admin_users = @admin_users.where("nickname like ?", "%#{params['q']}%") if params["q"].present?
     if params[:search] && params[:search][:keywords]
-      @admin_users = @admin_users.joins(:mobile).where("nickname like :key OR email like :key OR user_mobiles.phone_number like :key", {key: "%#{params[:search][:keywords]}%"}) 
+      @admin_users = @admin_users.joins(:mobile).where("nickname like :key OR email like :key OR user_mobiles.phone_number like :key", {key: "%#{params[:search][:keywords]}%"})
     end
-    @admin_users = @admin_users.includes(:roles, :mobile).page params[:page]
+    @admin_users = @admin_users.includes(:roles, :mobile).order(updated_at: :desc).page params[:page]
     respond_to do |format|
       format.html
       format.json { render json: {:results => @admin_users.select(:id, :nickname), :total => @admin_users.size} }
