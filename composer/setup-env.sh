@@ -15,4 +15,12 @@ EOS
 
 echo "${SETTINGS_YML}" > /srv/dagle/config/settings.${PROJECT_NAME}.yml
 
-bundle exec rails db:create db:migrate db:seed
+# link cms-templates
+if [ -L /srv/dagle/public/templetes ]; then unlink /srv/dagle/public/templetes ;fi
+if [ -d /srv/dagle/public/templetes ]; then rmdir -rf /srv/dagle/public/templetes ;fi
+ln -sf /srv/cms-templates /srv/dagle/public/templetes
+
+# seed db if database doesn't exists
+(bundle exec rails r "1" 2>&1|grep "NoDatabaseError" || \
+ bundle exec rails r "puts User.table_exists?" | grep "false"
+) && bundle exec rails db:setup
