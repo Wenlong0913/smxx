@@ -5,11 +5,20 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+def create_if_not_exist(assoc, hash)
+  rec = assoc.find_or_initialize_by(hash)
+  if rec.new_record?
+    rec.save!
+    yield rec
+  end
+  rec
+end
+
 %w(super_admin admin agent).each do |name|
-  role = Role.find_or_initialize_by name: name
-  if role.new_record?
+  create_if_not_exist Role, name: name do |rec|
     puts "创建用户/权限: " + name
-    role.save!
   end
 end
 
@@ -54,14 +63,13 @@ end
 site = Site.create_with(user: admin, address_line: '成都市成华区二环路东二段龙湖三千城').find_or_create_by!(title: '官网')
 raise "创建的第一个商家ID不等于1!!!" unless site.id == 1
 
-# 德格角色
-# 总经销商，厂长，库管员，设计，工人，拆单员（物料分配）, 采购
-%w(product_manager factory_manager storekeeper designer worker allocator purchase).each do |name|
-  Role.find_or_create_by name: name
-  role = Role.find_or_initialize_by name: name
-  if role.new_record?
-    puts "创建角色: " + name
-    role.save!
+if Settings.project.dagle?
+  # 德格角色
+  # 总经销商，厂长，库管员，设计，工人，拆单员（物料分配）, 采购
+  %w(product_manager factory_manager storekeeper designer worker allocator purchase).each do |name|
+    create_if_not_exist Role, name: name do |rec|
+      puts "创建角色: " + name
+    end
   end
 end
 
@@ -70,94 +78,65 @@ Keystore.put('cms_template_names', "['default','dagle','app-landing-spotlight','
 
 # init Cms
 # visit: http://localhost:3000/cms_1/
-cms_site = Cms::Site.find_or_initialize_by(site_id: site.id)
-if cms_site.new_record?
-  puts "创建CMS官网"
-  cms_site.name         = '企业官网'
-  cms_site.domain       = 'www'
-  cms_site.template     = 'newshub'
-  cms_site.description  = '这是用CMS搭建的官网'
-  cms_site.save!
-end
-# Cms::Site after_create :initialize_channel　已经存在，会自动创建一个首页
-# cms_channel = Cms::Channel.create!(site_id: cms_site.reload.id, title: '首页', description: '这里是首页的栏目描述', short_title: 'index', tmp_index: 'temp_index.html.erb', tmp_detail: 'temp_detail.html.erb')
 
-cms_channel = Cms::Channel.find_or_initialize_by(site_id: cms_site.reload.id)
-if cms_channel.new_record?
-  puts "创建CMS官网"
-  cms_channel.title        = '新闻列表'
-  cms_channel.tmp_index    = 'temp_news_list.html.erb'
-  cms_channel.tmp_detail   = 'temp_detail.html.erb'
-  cms_channel.short_title  = 'news'
-  cms_channel.description  = '这里是新闻的栏目描述'
-  cms_channel.save!
+create_if_not_exist Cms::Site.create_with(
+  name: '企业官网',
+  domain: 'www',
+  template: 'newshub',
+  description: '这是用CMS搭建的官网'), site_id: site.id do |cms_site|
+    puts "创建CMS官网"
+  # Cms::Site 在创建时，会自动执行模版中的db_init.rb文件，所以这里不需要在创建channel和page
 end
 
-content = ''
-5.times{|i| content += '<p>这是内容部分!</p>'}
-5.times do
-  cms_page = Cms::Page.find_or_create_by(channel_id: cms_channel.reload.id, title: '这是新闻标题', description: '这里是页面的描述', content: content)
-end
+if Settings.project.wgtong?
+  %w(场馆 剧院 图书馆 社团 志愿者 其他).each do |name|
+    create_if_not_exist SiteCatalog, name: name do
+      puts '创建商家、社团分类:' + name
+    end
+  end
 
-%w(场馆 剧院 图书馆 社团 志愿者 其他).each do |name|
-  siteCatalog = SiteCatalog.find_or_initialize_by(name: name)
-  if siteCatalog.new_record?
-    puts '创建商家、社团分类:' + name
-    siteCatalog.save!
+  %w(演出 讲座 展览 体育 培训 赛事 亲子 读书 音乐影视 其他).each do |name|
+    create_if_not_exist ProductCatalog, name: name do
+      puts '创建产品分类:' + name
+    end
   end
 end
 
-%w(演出 讲座 展览 体育 培训 赛事 亲子 读书 音乐影视 其他).each do |name|
-  productPatalog = ProductCatalog.find_or_initialize_by(name: name)
-  if productPatalog.new_record?
-    puts '创建产品分类:' + name
-    productPatalog.save!
+if Settings.project.dagle?
+  # 德格供应商
+  %w(自购 舞东风 联合100 友达 顺丰 壹佰 盛世百龙 义力).each_with_index do |name, idx|
+    create_if_not_exist Vendor.create_with(
+      contact_name: "#{name}联系人", 
+      phone_number: "139#{'0' * (8 - idx.to_s.length)}#{idx}"), name: name do
+        puts "创建供应商:" + name
+    end
   end
-end
 
-# 德格供应商
-%w(自购 舞东风 联合100 友达 顺丰 壹佰 盛世百龙 义力).each do |vendor_name|
-  vendor = Vendor.find_or_initialize_by(name: vendor_name)
-  if vendor.new_record?
-    puts "创建供应商:" + vendor_name
-    vendor.contact_name = vendor_name + '联系人'
-    vendor.phone_number = '152133643' + (10..99).to_a.sample(1).join
-    vendor.save!
+  # 创建仓库
+  unless MaterialWarehouse.exists?(site_id: site.id)
+    puts "创建初始仓库"
+    MaterialWarehouse::Create.(site_id: site.id, name: '初始仓库')
   end
-end
 
-# 创建仓库
-unless MaterialWarehouse.exists?(site_id: Site.first.id)
-  puts "创建初始仓库"
-  MaterialWarehouse::Create.(site_id: Site.first.id, name: '初始仓库')
-end
-
-# 德格物料分类 & 物料
-material_catalogs = {
-  "柜体": [{'板材': []}, {'五金': []}, {'封边带': []}, {'纸箱': []}, {'气泡垫/珍珠棉': []}, {'油漆': []}, {'刀具': []}, {'封口胶': []}, {'胶': []}, {'旋转鞋柜': []}, {'密码抽': []}, {'反转床': []}, {'穿衣镜': []}],
-  "移门": [{'五金': []}, {'皮纹/软包': []}, {'玻璃/腰线': []}, {'型材': []}],
-  "平开门": [{'五金': []}, {'吸塑': []}]
-}
-material_catalogs.each_pair do |material_catalog, sub_material_catalos|
-  material_catalog = MaterialCatalog.find_or_initialize_by(name: material_catalog)
-  if material_catalog.new_record?
-    puts "创建物料分类: " + material_catalog.name.to_s
-    material_catalog.save!
-  end
-  sub_material_catalos.each do |sub_material|
-    sub_material.each_pair do |next_catalog, materials|
-      next_catalog = MaterialCatalog.find_or_initialize_by(name: next_catalog, parent: material_catalog)
-      if next_catalog.new_record?
-        puts "创建物料分类: " + next_catalog.name.to_s
-        next_catalog.save!
-      end
-      5.times do | index |
-        material = Material.find_or_initialize_by(name: next_catalog.name + (index+1).to_s)
-        if material.new_record?
-          material.catalog = next_catalog
-          material.site_id = Site.first.id
-          puts "创建物料: " + material.name.to_s
-          material.save!
+  # 德格物料分类 & 物料
+  material_catalogs = {
+    "柜体": [{'板材': []}, {'五金': []}, {'封边带': []}, {'纸箱': []}, {'气泡垫/珍珠棉': []}, {'油漆': []}, {'刀具': []}, {'封口胶': []}, {'胶': []}, {'旋转鞋柜': []}, {'密码抽': []}, {'反转床': []}, {'穿衣镜': []}],
+    "移门": [{'五金': []}, {'皮纹/软包': []}, {'玻璃/腰线': []}, {'型材': []}],
+    "平开门": [{'五金': []}, {'吸塑': []}]
+  }
+  material_catalogs.each_pair do |name_1, sub_name_pairs|
+    create_if_not_exist MaterialCatalog, name: name_1 do |cata_1|
+      puts "创建物料分类: #{name_1}" 
+      sub_name_pairs.each do |sub_name_pair|
+        sub_name_pair.each_pair do |name_2, _|
+          create_if_not_exist MaterialCatalog, name: name_2, parent: cata_1 do |cata_2|
+            puts "创建下级分类: #{name_2}"
+            5.times do | index |
+              create_if_not_exist Material.create_with(catalog: cata_2, site_id: site.id), name: "#{name_2}#{index + 1}" do |material|
+                puts "创建物料: " + material.name
+              end
+            end
+          end
         end
       end
     end
@@ -174,51 +153,43 @@ memberCatalogs = [
   {key: '客户活跃频次', value: '{很少,一般,高,很高}'}
 ]
 memberCatalogs.each do |x|
-  memberCatalog = MemberCatalog.find_or_initialize_by(x)
-  if memberCatalog.new_record?
+  create_if_not_exist MemberCatalog, x do
     puts "创建客户分类: " + x.to_s
-    memberCatalog.save!
   end
 end
 
 # 营销页
 %w(博客 活动 招商 会员拉新).each do |name|
-  marketCatalog = MarketCatalog.find_or_initialize_by(name: name)
-  if marketCatalog.new_record?
+  create_if_not_exist MarketCatalog, name: name do
     puts "创建营销页分类: " + name
-    marketCatalog.save!
+    create_if_not_exist MarketTemplate.create_with(
+      base_path: 'templetes/market/default',
+      keywords: '营销页测试页',
+      description: '这只是一个测试页面，可以实现类似一篇博客文章发布',
+      image_path: '/templetes/market/default/previews/demo-1.png',
+      html_source: '
+        <html lang="zh-CN">
+          <head>
+            <meta charset="utf-8"/>
+            <title><%= @market_page.name %></title>
+            <meta content="<%= @market_page.description %>" name="description"/>
+          </head>
+          <body style="text-align: center;">
+            <div style="margin: 0 auto; width:640px;">
+              <h2><%= @market_page.value_for("title", title: "文章标题", typo: "string", default: "文章标题") %></h2><hr/>
+              <div style="text-align:left;"><%= simple_format @market_page.value_for("content", title: "正文", typo: "text", default: "文章内容") %></div>
+              <% @market_page.image_items.each do |img| %>
+               <%= image_tag img.image_url, style: "width:100%;" %>
+              <% end %>
+            </div>
+          </body>
+        </html>'
+    ), name: 'default', catalog_id: 1 do
+      puts '创建营销页测试页'
+    end
   end
 end
 
-marketTemplate = MarketTemplate.find_or_initialize_by(
-  catalog_id: 1,
-  base_path: 'templetes/market/default',
-  name: 'default',
-  keywords: '营销页测试页',
-  description: '这只是一个测试页面，可以实现类似一篇博客文章发布',
-  image_path: '/templetes/market/default/previews/demo-1.png',
-  html_source: '
-    <html lang="zh-CN">
-      <head>
-        <meta charset="utf-8"/>
-        <title><%= @market_page.name %></title>
-        <meta content="<%= @market_page.description %>" name="description"/>
-      </head>
-      <body style="text-align: center;">
-        <div style="margin: 0 auto; width:640px;">
-          <h2><%= @market_page.value_for("title", title: "文章标题", typo: "string", default: "文章标题") %></h2><hr/>
-          <div style="text-align:left;"><%= simple_format @market_page.value_for("content", title: "正文", typo: "text", default: "文章内容") %></div>
-          <% @market_page.image_items.each do |img| %>
-           <%= image_tag img.image_url, style: "width:100%;" %>
-          <% end %>
-        </div>
-      </body>
-    </html>'
-)
-if marketTemplate.new_record?
-  puts '创建营销页测试页'
-  marketTemplate.save!
-end
 
 if Settings.project.imolin?
 
