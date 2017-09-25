@@ -1,10 +1,10 @@
 #!/bin/sh
 set -e
 
-pushd .
-cd $PWD/$(dirname $0)/..
+dir=`pwd`
+cd $(dirname $0)/..
 rails_root=`pwd`
-popd
+cd $dir
 
 # bundle exec puma -C config/puma.rb -b unix://${rails_root}/tmp/sockets/cable.sock ${rails_root}/cable/config.ru
 mkdir -p ${rails_root}/tmp/sockets

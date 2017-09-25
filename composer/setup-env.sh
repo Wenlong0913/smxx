@@ -1,11 +1,10 @@
 #!/bin/sh
-
 set -e
 
-pushd .
-cd $PWD/$(dirname $0)/..
+dir=`pwd`
+cd $(dirname $0)/..
 rails_root=`pwd`
-popd
+cd $dir
 
 cat << EOS > ${rails_root}/config/application.yml
 PROJECT_NAME: ${PROJECT_NAME}
