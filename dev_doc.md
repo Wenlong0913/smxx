@@ -335,3 +335,44 @@ Mac系统必须执行`brew install geckodriver`安装插件`geckodriver`
             }
     }
 
+
+    在服务器上，建议action cable有独立的进程运行，因为我们在prod1uc服务器上就遇到了这种情况：当有人停留在agent端是，action cable建立了连接，这时访问主网站就卡死不动了，因此优化Nginx配置如下：
+
+    server {
+        listen 80;
+
+        root /data/www/nj1688.dagle/current/public;
+        # index index.html index.htm;
+
+        # Make site accessible from http://localhost/
+        server_name nj1688.dagle.cn;
+        passenger_enabled on;
+        passenger_friendly_error_pages off;
+        rails_env production;
+        access_log /var/log/nginx/nj1688.dagle.access.log;
+        error_log /var/log/nginx/nj1688.dagle.error.log warn;
+
+        location ~ ^/assets/ {
+                root /data/www/nj1688.dagle/current/public;
+                gzip_static on;
+                expires max;
+                add_header Cache-Control public;
+        }
+
+        location ~ ^/cable {
+            passenger_app_group_name dagle_nj1688_cable;
+            passenger_app_root /data/www/nj1688.dagle/current/;
+            passenger_document_root /data/www/nj1688.dagle/current/public;
+            passenger_enabled on;
+            rails_env production;
+            passenger_env_var PROJECT_NAME dagle;
+            passenger_env_var ENABLE_ACTION_CABLE true;
+            access_log /var/log/nginx/nj1688.dagle.cable.access.log vhost;
+            error_log /var/log/nginx/nj1688.dagle.cable.error.log warn;
+
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "Upgrade";
+            #return 404;
+        }
+    }
