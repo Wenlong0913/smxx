@@ -17,7 +17,7 @@ class Admin::MaterialsController < Admin::BaseController
       @materials_all = @materials_all.where(catalog_id: catalog_ids)
     end
 
-    @materials = @materials_all.page(params[:page])
+    @materials = @materials_all.order(updated_at: :desc).page(params[:page])
     respond_to do |format|
       if params[:format] == "json"
         # format.html { send_data(@materials.to_json, filename: "materials-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
@@ -93,7 +93,7 @@ class Admin::MaterialsController < Admin::BaseController
         csv << ['物料总量', objects.sum{ |p| p.stock }, '总金额', objects.sum{ |p| p.price * p.stock }]
         # 获取字段名称
         column_names = [ '物料名称', '编码', '价格', '数量', '总金额', '物料分类']
-        csv << column_names        
+        csv << column_names
         objects.each do |obj|
           values = []
           values << obj.name

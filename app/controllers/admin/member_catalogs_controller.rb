@@ -7,7 +7,7 @@ class Admin::MemberCatalogsController < Admin::BaseController
   def index
     authorize MemberCatalog
     @filter_colums = %w(id)
-    @member_catalogs = build_query_filter(MemberCatalog.all, only: @filter_colums).page(params[:page])
+    @member_catalogs = build_query_filter(MemberCatalog.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@member_catalogs.to_json, filename: "member_catalogs-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

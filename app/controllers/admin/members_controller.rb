@@ -12,7 +12,7 @@ class Admin::MembersController < Admin::BaseController
   def index
     authorize @site.members
     @filter_colums = %w(name qq email)
-    @members = build_query_filter(@site.members.all, only: @filter_colums).page(params[:page])
+    @members = build_query_filter(@site.members.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@members.to_json, filename: "members-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

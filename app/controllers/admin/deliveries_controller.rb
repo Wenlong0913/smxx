@@ -8,7 +8,7 @@ class Admin::DeliveriesController < Admin::BaseController
   def index
     authorize Delivery
     @filter_colums = %w(name)
-    @deliveries = build_query_filter(Delivery.all, only: @filter_colums).page(params[:page])
+    @deliveries = build_query_filter(Delivery.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@deliveries.to_json, filename: "deliveries-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

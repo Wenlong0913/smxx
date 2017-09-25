@@ -7,7 +7,7 @@ class Admin::MarketTemplatesController < Admin::BaseController
   def index
     authorize MarketTemplate
     @filter_colums = %w(id)
-    @market_templates = build_query_filter(MarketTemplate.all, only: @filter_colums).page(params[:page])
+    @market_templates = build_query_filter(MarketTemplate.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@market_templates.to_json, filename: "market_templates-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

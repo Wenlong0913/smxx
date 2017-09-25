@@ -8,7 +8,7 @@ class Admin::AddressBooksController < Admin::BaseController
   def index
     authorize AddressBook
     @filter_colums = %w(id)
-    @address_books = build_query_filter(AddressBook.all, only: @filter_colums).page(params[:page])
+    @address_books = build_query_filter(AddressBook.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@address_books.to_json, filename: "address_books-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

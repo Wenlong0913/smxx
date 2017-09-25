@@ -7,7 +7,7 @@ class Admin::VendorsController < Admin::BaseController
   def index
     authorize Vendor
     @filter_colums = %w(id)
-    @vendors = build_query_filter(Vendor.all, only: @filter_colums).page(params[:page])
+    @vendors = build_query_filter(Vendor.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@vendors.to_json, filename: "vendors-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

@@ -9,7 +9,7 @@ class Admin::AgentPlansController < Admin::BaseController
     authorize Product
     @filter_colums = %w(id)
     catalog_id = ProductCatalog.find_by(name: '商家套餐').try(:id)
-    @agent_plans = build_query_filter(Product.where(catalog_id: catalog_id), only: @filter_colums).page(params[:page])
+    @agent_plans = build_query_filter(Product.where(catalog_id: catalog_id), only: @filter_colums).order(updated_at: :desc).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@agent_plans.to_json, filename: "agent_plans-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
