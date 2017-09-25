@@ -23,5 +23,5 @@ build_docker && echo "
 you can push image to out reigistry with this command:
 
     docker tag registry.corp.tanmer.com:5000/products/dagle:{${version},latest}
-    docker push registry.corp.tanmer.com:5000/products/dagle
+    docker push registry.corp.tanmer.com:5000/products/dagle:latest
 "

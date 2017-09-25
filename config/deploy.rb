@@ -60,9 +60,10 @@ before "deploy", :check_branch do
     project name: #{ENV['PROJECT_NAME']}
 real repo url is: #{fetch(:repo_url)}
   real branch is: #{fetch(:branch)}
-       deploy to: #{fetch(:deploy_to)}
+       deploy to: #{fetch(:deploy_to)} on #{env.servers.map(&:hostname).join(', ')}
   MSG
-
+  # require 'pry-rails'
+  # binding.pry
   ask(:is_start_to_deploy, 'start to deploy? (y/n, default=n)', 'n')
 
   quit("aborted") if fetch(:is_start_to_deploy).strip.downcase != 'y'

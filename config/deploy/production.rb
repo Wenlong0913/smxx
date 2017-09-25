@@ -12,7 +12,7 @@ host =
   when 'imolin', 'meikemei', 'wgtong', 'demo.dagle'
     'prod2uc.corp.tanmer.com'
   when 'nj1688.dagle', 'pilele.dagle'
-    'web1uc.corp.tanmer.com'
+    'prod1uc.corp.tanmer.com'
   else
     'prod1uc.corp.tanmer.com'
   end
