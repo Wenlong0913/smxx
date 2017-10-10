@@ -52,6 +52,7 @@ zh-CN:
         maximum_for_one_order: 一个订单最多可以报名人数
         member_attributes: 报名需要填写的属性
         reserve_datetime: 预定时间
+        external_purchase_url: 外链地址
     errors:
       models:
         product:
