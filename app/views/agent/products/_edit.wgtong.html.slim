@@ -66,7 +66,7 @@ div
         p
           label 标签（可多选）:
         .
-          = f.collection_check_boxes :properties, Cms::Page::PROPERTIES, :first, :last, checked: @cms_page.try(:properties)
+          = f.collection_check_boxes :properties, Cms::Page::PROPERTIES, :first, :last, checked: @product.try(:properties)
     .col-xs-6.col-md-6
       .form-group
         = f.input :is_manager_recommend, as: :boolean
@@ -113,6 +113,10 @@ div
           .input-group
             label.input-group-addon.control-label.string.optional 其他附加属性:
             input[name="product[member_attributes_others]" class="form-control" placeholder="属性之间用逗号隔开" value="#{@product.member_attributes ? (@product.member_attributes-Product::MEMBER_ATTRIBUTES.keys.map(&:to_s)).join(',') : ''}"]
+    .external_attributes
+      .col-xs-12
+        .form-group
+          = f.input :external_purchase_url
     .col-xs-12
       hr
       div[rel="attr_list_vue" data-values="#{@product.additional_attribute_values.to_json}" data-keys="#{@product.additional_attribute_keys.to_json}"]
