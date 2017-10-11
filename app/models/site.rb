@@ -33,6 +33,7 @@ class Site < ApplicationRecord
   has_many :deliveries, dependent: :destroy
   has_one :cms_site, class_name: '::Cms::Site', dependent: :destroy
   belongs_to :agent_plan, optional: true
+  has_many :diymenus, dependent: :destroy
   # store_accessor :features, :business_hours, :content, :contact_phone, :contact_name, :is_sign, :sign_note,
   # :score, :comment, :properties, :updated_by, :has_contract, :is_published, :phone, :lat, :lng
   def first_image

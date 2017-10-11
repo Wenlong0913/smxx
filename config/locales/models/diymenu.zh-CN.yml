@@ -1,0 +1,12 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      diymenu: Diymenu
+    attributes:
+      diymenu: {}
+    errors:
+      models:
+        diymenu: 
+  helpers:
+    diymenu: 
