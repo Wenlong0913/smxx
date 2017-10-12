@@ -365,7 +365,6 @@ Mac系统必须执行`brew install geckodriver`安装插件`geckodriver`
             passenger_document_root /data/www/nj1688.dagle/current/public;
             passenger_enabled on;
             rails_env production;
-            passenger_env_var PROJECT_NAME dagle;
             passenger_env_var ENABLE_ACTION_CABLE true;
             access_log /var/log/nginx/nj1688.dagle.cable.access.log vhost;
             error_log /var/log/nginx/nj1688.dagle.cable.error.log warn;
