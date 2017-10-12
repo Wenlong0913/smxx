@@ -2,9 +2,13 @@
 zh-CN:
   activerecord:
     models:
-      diymenu: Diymenu
+      diymenu: 自定义微信菜单
     attributes:
-      diymenu: {}
+      diymenu:
+        name: 菜单名称
+        button_type: 菜单类型
+        key: KEY(click：点击推事件)
+        url: URL(view：跳转URL)
     errors:
       models:
         diymenu: 

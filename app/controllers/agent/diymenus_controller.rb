@@ -22,7 +22,7 @@ class Agent::DiymenusController < Agent::BaseController
     @diymenu = @site.diymenus.new(diymenu_params)
 
     if @diymenu.save
-      redirect_to agent_diymenus_path(@site), notice: '菜单创建成功.'
+      redirect_to agent_diymenus_path, notice: '菜单创建成功.'
     else
       render :new
     end
@@ -39,7 +39,7 @@ class Agent::DiymenusController < Agent::BaseController
   # DELETE /diymenus/1
   def destroy
     @diymenu.destroy
-    redirect_to agent_diymenus_path(@site), notice: '删除菜单成功.'
+    redirect_to agent_diymenus_path, notice: '删除菜单成功.'
   end
 
   def sort
