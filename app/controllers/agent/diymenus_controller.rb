@@ -1,4 +1,4 @@
-class Agent::DiymenusController < ApplicationController
+class Agent::DiymenusController < Agent::BaseController
   before_action :set_site
   before_action :set_diymenu, only: [:show, :edit, :update, :destroy]
 
