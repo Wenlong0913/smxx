@@ -13,6 +13,8 @@
 *= require agent/comments
 *= require agent/member
 *= require agent/message
+*= require agent/diymenus
+*= require agent/jquery-dragable
 *= require cms/pages
 *= require tracker
 *= require_self
