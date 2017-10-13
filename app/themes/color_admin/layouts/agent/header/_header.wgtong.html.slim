@@ -63,8 +63,7 @@
                           | &nbsp;添加页面
                   - else
                     li = link_to '添加站点', new_cms_site_path
-            li
-              = link_to '图片资源', agent_assets_index_path
+            
             li.dropdown.dropdown-hover
               a data-toggle="dropdown" href="#"
                 | 访客统计
@@ -87,6 +86,15 @@
                   - @site.descendants.each do |s|
                     li = link_to s.title
 
+            li.dropdown.dropdown-hover
+              a data-toggle="dropdown" href="#"
+                | 更多
+                i.fa.fa-angle-down
+                span.arrow.top
+              ul.dropdown-menu                
+                li = link_to '图片资源', agent_assets_index_path
+                li = link_to '自定义微信菜单', agent_diymenus_path
+                
       /! END header-nav
       .header-nav
         ul.nav.pull-right.nav-head-push-messages

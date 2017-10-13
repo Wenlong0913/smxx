@@ -68,6 +68,14 @@ module AgentBackendRoute
             get "fund"
           end
         end
+        # 一键更新微信菜单
+        resources :diymenus, except: :show do
+          collection do
+            post :sort
+            post :upload
+            post :download
+          end
+        end
         # resources :finances, only: [:index]
       end
     end
