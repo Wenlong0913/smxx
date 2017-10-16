@@ -26,6 +26,8 @@ zh-CN:
         site_name: 场馆名
         note: 备注
         features: 特征
+        original_catalog: 原始分类
+        district_from: 地区
     errors:
       models:
         detail:

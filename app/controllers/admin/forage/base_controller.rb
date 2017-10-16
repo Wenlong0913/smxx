@@ -17,7 +17,7 @@ class Admin::Forage::BaseController < Admin::BaseController
       when 'site'
         [Site.where(id: multiple_ids).map{|s| [s.id, s.title, admin_site_path(s)]}, SiteCatalog.roots.map{|c| [c.name, c.id]}]
       when 'cms_page'
-        [::Cms::Page.where(id: multiple_ids).map{|c| [c.id, c.title, '']}, ::Cms::Channel.all.map{|c| [c.title, c.id]}]
+        [::Cms::Page.where(id: multiple_ids).map{|c| [c.id, c.title, '']}, ::Cms::Site.all.map{|c| [c.name, c.id]}]
       end
     end
 
@@ -28,7 +28,8 @@ class Admin::Forage::BaseController < Admin::BaseController
       matched_id = assign_paramter_hash[:matched_id] || @forage_data_cache.matched_id
       # special parameters
       if @forage_data_cache.migrate_to == 'product'
-        @merge_source = matched_id.blank? ? Product.new(name: assign_paramter_hash[:title], catalog_id: assign_paramter_hash[:catalog_id], site_id: Site::MAIN_ID) : Product.find(matched_id)
+        site_id = assign_paramter_hash[:site_id].blank? ? Site::MAIN_ID : assign_paramter_hash[:site_id]
+        @merge_source = matched_id.blank? ? Product.new(name: assign_paramter_hash[:title], catalog_id: assign_paramter_hash[:catalog_id], site_id: site_id) : Product.find(matched_id)
         @merge_source.image         = assign_paramter_hash[:image]
         @merge_source.address_line1 = assign_paramter_hash[:address_line1]
         @merge_source.address_line2 = assign_paramter_hash[:address_line2]

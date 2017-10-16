@@ -20,6 +20,7 @@ class Admin::Cms::ChannelsController < Admin::Cms::BaseController
         format.html { send_data(@cms_channels.as_csv(only: []), filename: "cms_channels-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
+        format.json {render json: @cms_site.channels.select{|channel| !channel.new_record?}.as_json(only: [:id, :title])}
       end
     end
   end

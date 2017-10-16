@@ -25,7 +25,7 @@ h1.page-header
               button.btn.btn-inverse[type='submit']
                 i.fa.fa-search
         .col-md-6.m-b-15
-          .btn-group
+          /.btn-group
             button.btn.btn-default.dropdown-toggle[type='button'data-toggle='dropdown']
               | 筛选列名
               span.caret
@@ -33,6 +33,11 @@ h1.page-header
               - @filter_colums.each do |filter_colum|
                 li
                   a[href='javascript:;' data-key=filter_colum] = Forage::DataCache.human_attribute_name(filter_colum.to_sym)
+          .btn-group
+            => link_to '所有', admin_forage_data_caches_url, class: 'button btn btn-default'
+            => link_to '产品', admin_forage_data_caches_url(migrate_to: 'product'), class: 'button btn btn-default'
+            => link_to '场馆', admin_forage_data_caches_url(migrate_to: 'site'), class: 'button btn btn-default'
+            => link_to '新闻', admin_forage_data_caches_url(migrate_to: 'cms_page'), class: 'button btn btn-default'
           /.btn-group.pull-right[data-toggle='tooltip'title='导出文件'data-placement='left']
             button.btn.btn-default[type='submit'name='json'value='json'] json
             button.btn.btn-default[type='submit'name='xml'value='xml'] xml
@@ -67,6 +72,9 @@ h1.page-header
             th = Forage::DataCache.human_attribute_name(:migrate_to)
             th = Forage::DataCache.human_attribute_name(:matched_status)
             th = Forage::DataCache.human_attribute_name(:is_merged)
+            th = Forage::DataCache.human_attribute_name(:district_from)
+            th = Forage::DataCache.human_attribute_name(:time)
+            th = Forage::DataCache.human_attribute_name(:original_catalog)
             th
         tbody
           - @forage_data_caches.each do |forage_data_cache|
@@ -76,11 +84,14 @@ h1.page-header
               td = Forage::DataCache::MIGRATE_TO_HASH[forage_data_cache.migrate_to.to_sym]
               td = Forage::DataCache::MATCHED_STATUS[forage_data_cache.matched_status.to_sym]
               td = enum_l(forage_data_cache, :is_merged)
+              td = forage_data_cache.from
+              td = forage_data_cache.time
+              td = forage_data_cache.original_catalog
               td
-                => link_to '查看', admin_forage_data_cach_path(forage_data_cache), class: 'btn btn-xs btn-primary'
+                => link_to '查看', admin_forage_data_cach_path(forage_data_cache, migrate_to: params[:migrate_to]), class: 'btn btn-xs btn-primary'
                 - if forage_data_cache.unmerged?
-                  => link_to '合并', edit_admin_forage_data_cach_path(forage_data_cache), class: 'btn btn-xs btn-success'
-                  = link_to '不合并', admin_forage_data_cach_path(forage_data_cache), data: { confirm: '确定不合并本条数据吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+                  => link_to '合并', edit_admin_forage_data_cach_path(forage_data_cache, migrate_to: params[:migrate_to]), class: 'btn btn-xs btn-success'
+                  = link_to '不合并', admin_forage_data_cach_path(forage_data_cache, migrate_to: params[:migrate_to]), data: { confirm: '确定不合并本条数据吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
       = paginate @forage_data_caches
 
 / TODO: move this code to application.js
