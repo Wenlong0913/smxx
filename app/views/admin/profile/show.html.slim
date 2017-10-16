@@ -11,7 +11,7 @@ h2 绑定微信
     var QrcodeAuth = function (){
       var instance = this;
       this.init = function() {
-        $.getJSON('#{Settings.weixin_login.host}/wx/mp_auth/qrcode/#{Settings.weixin_login.appid}.json', function(data){
+        $.getJSON('#{Settings.weixin_login.host}/wx/mp_auth/qrcode/#{Settings.weixin_login.appid}.json?title=#{URI.encode(Settings.site.name)}', function(data){
           $('img#qrcode-auth-image').attr('src', data.svg)
           instance.ping(data)
         })
