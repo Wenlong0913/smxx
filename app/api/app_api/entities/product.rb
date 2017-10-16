@@ -14,6 +14,10 @@ module AppAPI
         expose :tag_list, documentation: {desc: '标签'}
       end
 
+      if Settings.project.imolin?
+        expose :catalog, documentation: {desc: '产品分类'}
+      end
+
       with_options if: ->(product, options) { options[:type] == :full_product } do |f|
         expose :sales_count, documentation: {desc: '产品的销量', type: Integer }
         expose :stock, documentation: { desc: '产品库存', type: Integer }
@@ -49,6 +53,10 @@ module AppAPI
 
       def content
         object.content && object.content.gsub('src="/ckeditor_assets/', 'src="%sckeditor_assets/' % URI(Settings.site.host).merge('/').to_s)
+      end
+
+      def catalog
+        object.catalog.as_json(only: [:name, :id])
       end
     end
   end
