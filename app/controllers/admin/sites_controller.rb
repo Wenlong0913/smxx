@@ -21,6 +21,7 @@ class Admin::SitesController < Admin::BaseController
       build_query_filter(Site.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
     end
     @sites = @sites.where(is_flatform_recommend: params[:search][:recommend]) if params[:search]&&params[:search][:recommend]
+    # @sites = @sites.where("title like ?", "%#{params['q']}%") if params["q"].present?
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@sites.to_json, filename: "products-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }
@@ -31,6 +32,7 @@ class Admin::SitesController < Admin::BaseController
         format.html { send_data(@sites.as_csv(), filename: "sites-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv") }
       else
         format.html
+        format.json { render json: {:results => @sites.select(:id, :title)} }
       end
     end
   end

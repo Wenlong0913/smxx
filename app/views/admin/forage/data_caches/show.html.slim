@@ -1,8 +1,8 @@
 h1.page-header
   | 查看#{Forage::DataCache.model_name.human}
   .pull-right
-    => link_to '编辑', edit_admin_forage_data_cach_path(@forage_data_cache), class: 'btn btn-primary' if @forage_data_cache.unmerged?
-    = link_to '返回', admin_forage_data_caches_path, class: 'btn btn-primary'
+    => link_to '编辑', edit_admin_forage_data_cach_path(@forage_data_cache, migrate_to: @migrate_to), class: 'btn btn-primary' if @forage_data_cache.unmerged?
+    = link_to '返回', admin_forage_data_caches_path(migrate_to: @migrate_to), class: 'btn btn-primary'
 
 .panel
   .panel-heading

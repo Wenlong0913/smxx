@@ -1,13 +1,13 @@
 class Forage::DataCache < ApplicationRecord
   audited
 
-  store_accessor :data, :migrate_to, :catalog_id, :matched_status, :matched_ids, :matched_id, :can_purchase, :external_purchase_url, :keywords, :image, :description, :content, :date, :time, :address_line1, :address_line2, :phone, :price, :from, :site_name, :note
+  store_accessor :data, :migrate_to, :catalog_id, :matched_status, :matched_ids, :matched_id, :can_purchase, :external_purchase_url, :keywords, :image, :description, :content, :date, :time, :address_line1, :address_line2, :phone, :price, :from, :site_name, :note, :original_catalog, :district_from
   belongs_to :source, polymorphic: true
   belongs_to :processed_user, class_name: 'User', foreign_key: :processed_by
 
   MIGRATE_TO_HASH = {
     "product": "产品",
-    "site": "店铺",
+    "site": "场馆",
     "cms_page": "新闻"
   }
 

@@ -14,7 +14,7 @@ zh-CN:
         description: 描述
         content: 内容
         date: 日期
-        time: 时间
+        time: 活动时间
         address_line1: 地址1
         address_line2: 地址2
         phone: 联系方式
@@ -22,6 +22,8 @@ zh-CN:
         from: 来源
         site_name: 场馆名
         note: 备注
+        original_catalog: 原始分类
+        district_from: 地区
         matched_status: 匹配状态
         matched_ids: 匹配结果
         migrate_to: 合并到

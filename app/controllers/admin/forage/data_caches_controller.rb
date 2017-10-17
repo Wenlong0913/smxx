@@ -9,13 +9,12 @@ class Admin::Forage::DataCachesController < Admin::Forage::BaseController
     authorize ::Forage::DataCache
     @filter_colums = %w(title migrate_to)
     @forage_data_caches = Forage::DataCache.all
-    if params[:filters]
-      @forage_data_caches = @forage_data_caches.where("data ->> 'migrate_to' = ?", ::Forage::DataCache::MIGRATE_TO_HASH.key(params[:filters][:migrate_to]).to_s) if params[:filters][:migrate_to]
-      @forage_data_caches = @forage_data_caches.where(title: params[:filters][:title]) if params[:filters][:title]
+    if params[:migrate_to]
+      @forage_data_caches = @forage_data_caches.where("data ->> 'migrate_to' = ?", params[:migrate_to])
     elsif params[:search] && params[:search][:keywords]
       @forage_data_caches = @forage_data_caches.where("title like ?", "%#{params[:search][:keywords]}%")
     end
-    @forage_data_caches = @forage_data_caches.order(is_merged: :asc, created_at: :asc)
+    @forage_data_caches = @forage_data_caches.order(is_merged: :asc, created_at: :desc)
     @forage_data_caches = @forage_data_caches.page(params[:page])
     respond_to do |format|
       if params[:json].present?
@@ -35,11 +34,13 @@ class Admin::Forage::DataCachesController < Admin::Forage::BaseController
   def show
     authorize @forage_data_cache
     @merge_url = @forage_data_cache.merged? ? source_redirect_url : nil
+    @migrate_to = params[:migrate_to]
   end
 
   # GET /admin/forage/data_caches/1/edit
   def edit
     authorize @forage_data_cache
+    @migrate_to = params[:migrate_to]
   end
 
   # PATCH/PUT /admin/forage/data_caches/1
@@ -68,7 +69,7 @@ class Admin::Forage::DataCachesController < Admin::Forage::BaseController
   def destroy
     authorize @forage_data_cache
     @forage_data_cache.cancelled!
-    redirect_to admin_forage_data_caches_url, notice: "#{Forage::DataCache.model_name.human} 删除成功."
+    redirect_to admin_forage_data_caches_url(migrate_to: params[:migrate_to]), notice: "#{Forage::DataCache.model_name.human} 删除成功."
   end
 
   private
