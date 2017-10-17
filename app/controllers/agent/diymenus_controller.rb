@@ -63,7 +63,7 @@ class Agent::DiymenusController < Agent::BaseController
   def download
     @site.download_menu!
     flash[:notice] = '下载成功.'
-    render js: "Turbolinks.visit('#{agent_diymenus_path(@site)}');"
+    render js: "Turbolinks.visit('#{agent_diymenus_path}');"
   rescue ApiError::FailedResult => ex
     render json: { action: :download, error: "#{ex.message} - #{ex.result.cn_msg}" }
   end
@@ -73,7 +73,9 @@ class Agent::DiymenusController < Agent::BaseController
     conn = Faraday.new(:url => 'https://wxopen.tanmer.com')
     response = conn.get("api/mp/token?code=#{code}&name=wgtong")
     data = JSON.parse(response.body)
-    binding.pry
+    @site.tanmer_wxopen_token = data['token']
+    @site.save!
+    redirect_to agent_diymenus_path
   end
 
   private

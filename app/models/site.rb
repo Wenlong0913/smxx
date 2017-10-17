@@ -133,4 +133,28 @@ class Site < ApplicationRecord
     end
   end
 
+  def wxopen_info
+    # site.wxopen_info
+    conn = Faraday.new(:url => 'https://wxopen.tanmer.com')
+    conn.headers[Faraday::Request::Authorization::KEY] = "Bear #{tanmer_wxopen_token}"
+    begin
+      response = conn.get("api/mp/info")
+      JSON.parse(response.body)
+    rescue
+      nil
+    end
+  end
+
+  def download_menu!
+    conn = Faraday.new(:url => 'https://wxopen.tanmer.com')
+    # 疑问Bear后面加空格返回的数据不对，反之正确
+    conn.headers[Faraday::Request::Authorization::KEY] = "Bear#{tanmer_wxopen_token}"
+    begin
+      response = conn.get("api/mp/menu")
+      JSON.parse(response.body)
+    rescue
+      nil
+    end
+  end
+
 end
