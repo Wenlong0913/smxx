@@ -68,6 +68,14 @@ class Agent::DiymenusController < Agent::BaseController
     render json: { action: :download, error: "#{ex.message} - #{ex.result.cn_msg}" }
   end
 
+  def connect_mp_callback
+    code = params[:code]
+    conn = Faraday.new(:url => 'https://wxopen.tanmer.com')
+    response = conn.get("api/mp/token?code=#{code}&name=wgtong")
+    data = JSON.parse(response.body)
+    binding.pry
+  end
+
   private
 
     def save_sorted_menus(state, enabled)

@@ -74,6 +74,7 @@ module AgentBackendRoute
             post :sort
             post :upload
             post :download
+            get :connect_mp_callback
           end
         end
         # resources :finances, only: [:index]

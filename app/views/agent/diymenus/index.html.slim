@@ -33,3 +33,4 @@
         => link_to fa_icon('cloud-download', text: '下载公众号菜单'), download_agent_diymenus_path, class: 'btn btn-danger', id: 'upload-menu-to-weixin', remote: true, method: :post,  data: { confirm: '确定要下载公众号菜单吗？下载后，当前页面上的菜单将被放入“未启用”队列', disable_with: "<i class='fa fa-spin fa-cog'></i> 正在下载中..." }
         => link_to fa_icon('pencil', text: '添加菜单'), new_agent_diymenu_path, class: 'btn btn-default'
         = link_to fa_icon('reply', text: '返回'), agent_root_path, class: 'btn btn-default'
+        => link_to fa_icon('weixin', text: '绑定公众号'), 'https://wxopen.tanmer.com/connect_mp?origin=http%3A%2F%2Fwgtong.lvh.me:5000%2Fagent%2Fdiymenus%2Fconnect_mp_callback', class: 'btn btn-primary'
