@@ -69,13 +69,27 @@ class Agent::DiymenusController < Agent::BaseController
   end
 
   def connect_mp_callback
-    code = params[:code]
     conn = Faraday.new(:url => 'https://wxopen.tanmer.com')
-    response = conn.get("api/mp/token?code=#{code}&name=#{@site.title}")
-    data = JSON.parse(response.body)
-    @site.tanmer_wxopen_token = data['token']
-    @site.save!
-    redirect_to agent_diymenus_path
+    if params[:code] 
+      code = params[:code]
+      response = conn.get("api/mp/token?code=#{code}&name=#{@site.title}")
+      data = JSON.parse(response.body)
+      @site.tanmer_wxopen_token = data['token']
+      @site.save!
+      redirect_to agent_diymenus_path
+    elsif params[:site][:tanmer_wxopen_token]
+      submit_token = params[:site][:tanmer_wxopen_token]
+      conn.headers[Faraday::Request::Authorization::KEY] = "Bear #{submit_token}"
+      response = conn.get("api/mp/info")
+      data = JSON.parse(response.body)
+      if data['code'] == -1
+        render js: "alert('输入的token错误');"
+      else
+        @site.tanmer_wxopen_token = submit_token
+        @site.save!
+        redirect_to agent_diymenus_path
+      end
+    end
   end
 
   private

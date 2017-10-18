@@ -4,6 +4,9 @@
       - if @site.tanmer_wxopen_token.empty?
         h3 #{@site.title} - 暂未绑定微信公众号，点击下面按钮进行绑定
         => link_to fa_icon('weixin', text: '绑定公众号'), "https://wxopen.tanmer.com/connect_mp?origin=http%3A%2F%2F#{request.raw_host_with_port}%2Fagent%2Fdiymenus%2Fconnect_mp_callback", class: 'btn btn-primary'
+        = simple_form_for @site, url: connect_mp_callback_agent_diymenus_path, method: :post, remote: true do |f|
+          = f.input :tanmer_wxopen_token
+          = f.submit '提交', class: 'btn btn-success'
       - else
         h3 #{@site.title} - 已绑定微信公众号信息        
         .row

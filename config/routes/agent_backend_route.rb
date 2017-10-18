@@ -74,6 +74,7 @@ module AgentBackendRoute
             post :sort
             post :upload
             post :download
+            post :connect_mp_callback
             get :connect_mp_callback
           end
         end
