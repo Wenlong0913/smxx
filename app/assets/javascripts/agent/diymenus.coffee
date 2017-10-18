@@ -49,20 +49,20 @@ $(document).ready ->
       switch status.action
         when 'upload'
           if status.ok
-            appendFlashMessage 'success', '上传成功'
+            alert("上传成功")
           else
-            appendFlashMessage 'danger', '上传失败，失败原因：' + status.msg
+            alert("上传失败，失败原因：" + status.msg)
         when 'sort'
-          appendFlashMessage 'success', '微信菜单保存成功'
+            appendFlashMessage 'success', '微信菜单保存成功'
         when 'download'
           if status.error
-            appendFlashMessage 'danger', '下载失败，失败原因：' + status.error
+            alert("下载失败，失败原因：" + status.error)
         else
-          appendFlashMessage 'success', '请求成功'
+          alert("请求成功，点击确定开始加载")
           break
       return
     ).on 'ajax:error', (xhr, status, error) ->
-      appendFlashMessage 'danger', '请求失败'
+      alert("请求失败，请重新尝试")
       return
     sortMenuEle = $('ol.sortMenu')
     sortGroup = sortMenuEle.sortable(
