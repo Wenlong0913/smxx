@@ -2,6 +2,19 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+appendFlashMessage = (type, message) ->
+  el = $('<div class="alert alert-' + type + '"></div>')
+  el.append '<button class=\'close\' data-dismiss=\'alert\'>x</button>'
+  el.append message
+  el.prependTo 'div#flash-message-box'
+  setTimeout (->
+    el.fadeOut 2000, ->
+      $(this).remove()
+      return
+    return
+  ), 5000
+  return
+
 $(document).ready ->
 
   setSubMenusMargin = ->
