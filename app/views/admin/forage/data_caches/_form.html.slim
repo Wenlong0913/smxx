@@ -36,8 +36,13 @@
                     br
                 - elsif @forage_data_cache.matched_status == 'only_one'
                   = link_to @multiple_sources.first[1], @multiple_sources.first[2], target: "_blank"
+            
         hr[style="color: 'black'"]
         .col-xs-9.left-form-content
+          .col-md-6
+            = f.input :district_from, input_html: {disabled: true}
+          .col-md-6
+            = f.input :original_catalog, input_html: {disabled: true}
           .col-md-6
             = f.input :title
           .col-md-6
