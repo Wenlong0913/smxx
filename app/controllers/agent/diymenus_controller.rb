@@ -31,9 +31,10 @@ class Agent::DiymenusController < Agent::BaseController
   # PATCH/PUT /diymenus/1
   def update
     if @diymenu.update(diymenu_params)
-      flash[:notice] = '修改成功.'
+      redirect_to agent_diymenus_path, notice: '菜单修改成功.'
+    else
+      render :edit
     end
-    render :edit
   end
 
   # DELETE /diymenus/1
@@ -70,7 +71,7 @@ class Agent::DiymenusController < Agent::BaseController
   def connect_mp_callback
     code = params[:code]
     conn = Faraday.new(:url => 'https://wxopen.tanmer.com')
-    response = conn.get("api/mp/token?code=#{code}&name=wgtong")
+    response = conn.get("api/mp/token?code=#{code}&name=#{@site.title}")
     data = JSON.parse(response.body)
     @site.tanmer_wxopen_token = data['token']
     @site.save!

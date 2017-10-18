@@ -117,7 +117,6 @@ class Site < ApplicationRecord
   end
 
   def wxopen_info
-    # site.wxopen_info
     conn = Faraday.new(:url => 'https://wxopen.tanmer.com')
     conn.headers[Faraday::Request::Authorization::KEY] = "Bear #{tanmer_wxopen_token}"
     begin
