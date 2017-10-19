@@ -22,6 +22,8 @@ module AppAPI::V1
         optional :from, type: String, desc: '来源'
         optional :site_name, type: String, desc: '场馆名'
         optional :note, type: String, desc: '备注'
+        optional :original_catalog, type: String, desc: '原始分类'
+        optional :district_from, type: String, desc: '地区'
       end
       post do
         if Settings.project.wgtong?
@@ -44,6 +46,8 @@ module AppAPI::V1
             forage_detail.from = params[:from]
             forage_detail.site_name = params[:site_name]
             forage_detail.note = params[:note]
+            forage_detail.original_catalog = params[:original_catalog]
+            forage_detail.district_from = params[:district_from]
             forage_detail.simple_id = params[:simple_id]
             forage_detail.save
             message[:flag] = true
