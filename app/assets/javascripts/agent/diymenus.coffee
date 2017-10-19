@@ -48,10 +48,10 @@ $(document).ready ->
     formEle.on('ajax:success', (data, status, xhr) ->
       switch status.action
         when 'upload'
-          if status.ok
+          if parseInt(JSON.parse(status.msg).code) == 0
             alert("上传成功")
           else
-            alert("上传失败，失败原因：" + status.msg)
+            alert("上传失败，失败原因：" + JSON.parse(status.msg).message)
         when 'sort'
             appendFlashMessage 'success', '微信菜单保存成功'
         when 'download'
@@ -62,7 +62,7 @@ $(document).ready ->
           break
       return
     ).on 'ajax:error', (xhr, status, error) ->
-      alert("请求失败，请重新尝试")
+      alert("请求失败，请检查网络并重新尝试")
       return
     sortMenuEle = $('ol.sortMenu')
     sortGroup = sortMenuEle.sortable(
