@@ -81,13 +81,13 @@ h1.page-header
               td.field
                 | #{Forage::DataCache.human_attribute_name(:price)}
               td
-                  = @forage_data_cache.time
+                  = @forage_data_cache.price
             tr.divider
             tr
               td.field
                 | #{Forage::DataCache.human_attribute_name(:from)}
               td
-                  = @forage_data_cache.address_line1
+                  = @forage_data_cache.from
             tr.divider
             tr
               td.field
