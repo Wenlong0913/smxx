@@ -58,7 +58,7 @@ $(document).ready ->
           if status.error
             alert("下载失败，失败原因：" + status.error)
         else
-          alert("请求成功，点击确定开始加载")
+          alert("下载成功，点击确定开始加载")
           break
       return
     ).on 'ajax:error', (xhr, status, error) ->

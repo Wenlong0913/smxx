@@ -54,9 +54,9 @@ class Agent::DiymenusController < Agent::BaseController
 
   def upload
     result = @site.upload_menu
-    flash[:notice] = '上传成功.'
     render json: {
-      action: :upload
+      action: :upload,
+      msg: result.body
     }
   end
 
