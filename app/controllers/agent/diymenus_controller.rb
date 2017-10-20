@@ -57,7 +57,7 @@ class Agent::DiymenusController < Agent::BaseController
     result = @site.upload_wx_menu
     render json: {
       action: :upload_wx_menu,
-      msg: JSON.parse(result.body)
+      msg: result
     }
   end
 

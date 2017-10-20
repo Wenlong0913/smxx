@@ -117,6 +117,7 @@ class Site < ApplicationRecord
   end
 
   def wxopen_info
+    return nil if tanmer_wxopen_token.blank?
     conn = Faraday.new(:url => 'https://wxopen.tanmer.com')
     conn.headers[Faraday::Request::Authorization::KEY] = "Bear #{tanmer_wxopen_token}"
     begin
@@ -128,10 +129,12 @@ class Site < ApplicationRecord
   end
 
   def upload_wx_menu
+    raise "no tanmer wxopen token" if tanmer_wxopen_token.blank?
     conn = Faraday.new(:url => 'https://wxopen.tanmer.com')
     conn.headers[Faraday::Request::Authorization::KEY] = "Bear #{tanmer_wxopen_token}"
     conn.headers['Content-Type'] = 'application/json'
     conn.put 'api/mp/menu', build_wx_menu
+    JSON.parse(conn.body)
   end
 
   def build_wx_menu
@@ -157,37 +160,32 @@ class Site < ApplicationRecord
     conn.headers[Faraday::Request::Authorization::KEY] = "Bear #{tanmer_wxopen_token}"
     response = conn.get("api/mp/menu")
     data = JSON.parse(response.body)
-    if data['code'] == -1
-      return data
-    else
+    if data['code'] == 0
       diymenus.where(parent: nil).update_all(is_show: false)
-      return unless data.key?('menu') && data['menu'].key?('button')
+      if data.key?('menu') && data['menu'].key?('button')
+        data['menu']['button'].each_with_index do |button, i|
+          sub_buttons = button.delete('sub_button')
+          button['button_type'] = Diymenu::button_types[button.delete('type')]
+          parent_menu = diymenus.find_or_initialize_by(button)
+          parent_menu.parent = nil
+          parent_menu.is_show = true
+          parent_menu.sort = i + 1
+          parent_menu.save! if parent_menu.changed?
+          parent_menu.diymenus.update_all(parent_id: nil, is_show: false)
 
-      i = 0
-      data['menu']['button'].each do |button|
-        i += 1
-        sub_buttons = button.delete('sub_button')
-        button['button_type'] = Diymenu::button_types[button.delete('type')]
-        parent_menu = diymenus.find_or_initialize_by(button)
-        parent_menu.parent = nil
-        parent_menu.is_show = true
-        parent_menu.sort = i
-        parent_menu.save! if parent_menu.changed?
-        parent_menu.diymenus.update_all(parent_id: nil, is_show: false)
-
-        j = 0
-        sub_buttons.each do |sub_button|
-          j += 1
-          sub_button.delete('sub_button')
-          sub_button['button_type'] = Diymenu::button_types[sub_button.delete('type')]
-          sub_menu = diymenus.find_or_initialize_by(sub_button)
-          sub_menu.parent = parent_menu
-          sub_menu.is_show = true
-          sub_menu.sort = j
-          sub_menu.save! if sub_menu.changed?
+          sub_buttons.each_with_index do |sub_button, j|
+            sub_button.delete('sub_button')
+            sub_button['button_type'] = Diymenu::button_types[sub_button.delete('type')]
+            sub_menu = diymenus.find_or_initialize_by(sub_button)
+            sub_menu.parent = parent_menu
+            sub_menu.is_show = true
+            sub_menu.sort = j + 1
+            sub_menu.save! if sub_menu.changed?
+          end
         end
       end
     end
+    data
   end
 
 end
