@@ -46,49 +46,27 @@ class Agent::DiymenusController < Agent::BaseController
   def sort
     state = JSON.parse(params[:state])
     enabled_menus, disabled_menus = state
-
     save_sorted_menus enabled_menus, true
     save_sorted_menus disabled_menus, false
-    render json: { action: :sort }
-  end
-
-  def upload
-    result = @site.upload_menu
     render json: {
-      action: :upload,
-      msg: result.body
+      action: :sort 
     }
   end
 
-  def download
-    @site.download_menu!
-    render js: "Turbolinks.visit('#{agent_diymenus_path}');"
-  rescue ApiError::FailedResult => ex
-    render json: { action: :download, error: "#{ex.message} - #{ex.result.cn_msg}" }
+  def upload_wx_menu
+    result = @site.upload_wx_menu
+    render json: {
+      action: :upload_wx_menu,
+      msg: JSON.parse(result.body)
+    }
   end
 
-  def connect_mp_callback
-    conn = Faraday.new(:url => 'https://wxopen.tanmer.com')
-    if params[:code] 
-      code = params[:code]
-      response = conn.get("api/mp/token?code=#{code}&name=#{@site.title}")
-      data = JSON.parse(response.body)
-      @site.tanmer_wxopen_token = data['token']
-      @site.save!
-      redirect_to agent_diymenus_path
-    elsif params[:site][:tanmer_wxopen_token]
-      submit_token = params[:site][:tanmer_wxopen_token]
-      conn.headers[Faraday::Request::Authorization::KEY] = "Bear #{submit_token}"
-      response = conn.get("api/mp/info")
-      data = JSON.parse(response.body)
-      if data['code'] == -1
-        render js: "alert('输入的token错误');"
-      else
-        @site.tanmer_wxopen_token = submit_token
-        @site.save!
-        redirect_to agent_diymenus_path
-      end
-    end
+  def download_wx_menu
+    result = @site.download_wx_menu!
+    render json: {
+      action: :download_wx_menu,
+      msg: result
+    }
   end
 
   private
@@ -104,8 +82,7 @@ class Agent::DiymenusController < Agent::BaseController
     end
 
     def set_site
-      @site = Site.find_by(user_id: current_user.id)
-      not_found! if @site.nil?
+      @site = Site.find_by!(user_id: current_user.id)
     end
 
     # Use callbacks to share common setup or constraints between actions.

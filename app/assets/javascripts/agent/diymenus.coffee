@@ -2,19 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-appendFlashMessage = (type, message) ->
-  el = $('<div class="alert alert-' + type + '"></div>')
-  el.append '<button class=\'close\' data-dismiss=\'alert\'>x</button>'
-  el.append message
-  el.prependTo 'div#flash-message-box'
-  setTimeout (->
-    el.fadeOut 2000, ->
-      $(this).remove()
-      return
-    return
-  ), 5000
-  return
-
 $(document).ready ->
 
   setSubMenusMargin = ->
@@ -47,19 +34,19 @@ $(document).ready ->
     formEle = $('form#form-sort-diymenu')
     formEle.on('ajax:success', (data, status, xhr) ->
       switch status.action
-        when 'upload'
-          if parseInt(JSON.parse(status.msg).code) == 0
+        when 'upload_wx_menu'
+          if parseInt(status.msg.code) == 0
             alert("上传成功")
           else
-            alert("上传失败，失败原因：" + JSON.parse(status.msg).message)
-        when 'sort'
-            appendFlashMessage 'success', '微信菜单保存成功'
-        when 'download'
-          if status.error
-            alert("下载失败，失败原因：" + status.error)
-        else
-          alert("下载成功，点击确定开始加载")
-          break
+            alert("上传失败，失败原因：" + status.msg.message)
+        #when 'sort'
+        #  appendFlashMessage 'success', '微信菜单保存成功'
+        when 'download_wx_menu'
+          if parseInt(status.msg.code) == -1
+            alert("下载失败，失败原因：" + status.msg.message)
+          else
+            alert("下载成功，点击确定开始加载")
+            break
       return
     ).on 'ajax:error', (xhr, status, error) ->
       alert("请求失败，请检查网络并重新尝试")
