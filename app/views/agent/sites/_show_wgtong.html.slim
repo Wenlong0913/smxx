@@ -15,6 +15,40 @@
     .panel-body
       .profile-container
         .row
+          - if @agent_site.tanmer_wxopen_token.presence
+            p
+              | 已绑定公众号信息：
+            .col-md-2
+              p
+                | 公众号头像：
+                - if @agent_site.wxopen_info['head_img'] == nil
+                  暂无头像
+                - else
+                  img[src="#{@agent_site.wxopen_info['head_img']}" style="width: 80px; height: 80px;"]
+                
+            .col-md-10
+              p
+                | 公众号名称：
+                = @agent_site.wxopen_info['nick_name']
+              p
+                | 公众号类型：
+                = @agent_site.wxopen_info['service_type_info_name']
+              p
+                | 认证情况：
+                = @agent_site.wxopen_info['verify_type_info_name']
+              p
+                | 主体信息：
+                = @agent_site.wxopen_info['principal_name']
+          - else
+            .col-md-12
+              => link_to fa_icon('weixin', text: '点击绑定公众号'), "https://wxopen.tanmer.com/connect_mp?origin=#{CGI.escape(agent_site_binding_wx_callback_url(site_id: @agent_site.id))}", class: 'btn btn-primary'
+            .col-md-6
+              h5 手动输入token进行绑定
+              = simple_form_for @agent_site, url: agent_site_binding_wx_callback_path(@agent_site.id), method: :post, remote: true do |f|
+                = f.input :tanmer_wxopen_token
+                = f.submit '提交', class: 'btn btn-success'
+
+        .row
           .col-md-4.col-xs-6.col-sm-6.p-10
             span 名称：
             span = @agent_site.title

@@ -31,9 +31,10 @@ class Agent::DiymenusController < Agent::BaseController
   # PATCH/PUT /diymenus/1
   def update
     if @diymenu.update(diymenu_params)
-      flash[:notice] = '修改成功.'
+      redirect_to agent_diymenus_path, notice: '菜单修改成功.'
+    else
+      render :edit
     end
-    render :edit
   end
 
   # DELETE /diymenus/1
@@ -45,27 +46,27 @@ class Agent::DiymenusController < Agent::BaseController
   def sort
     state = JSON.parse(params[:state])
     enabled_menus, disabled_menus = state
-
     save_sorted_menus enabled_menus, true
     save_sorted_menus disabled_menus, false
-    render json: { action: :sort }
-  end
-
-  def upload
-    result = @site.upload_menu
     render json: {
-      action: :upload,
-      ok: result.ok?,
-      msg: result.cn_msg
+      action: :sort 
     }
   end
 
-  def download
-    @site.download_menu!
-    flash[:notice] = '下载成功.'
-    render js: "Turbolinks.visit('#{agent_diymenus_path(@site)}');"
-  rescue ApiError::FailedResult => ex
-    render json: { action: :download, error: "#{ex.message} - #{ex.result.cn_msg}" }
+  def upload_wx_menu
+    result = @site.upload_wx_menu
+    render json: {
+      action: :upload_wx_menu,
+      msg: result
+    }
+  end
+
+  def download_wx_menu
+    result = @site.download_wx_menu!
+    render json: {
+      action: :download_wx_menu,
+      msg: result
+    }
   end
 
   private
@@ -81,8 +82,7 @@ class Agent::DiymenusController < Agent::BaseController
     end
 
     def set_site
-      @site = Site.find_by(user_id: current_user.id)
-      not_found! if @site.nil?
+      @site = Site.find_by!(user_id: current_user.id)
     end
 
     # Use callbacks to share common setup or constraints between actions.

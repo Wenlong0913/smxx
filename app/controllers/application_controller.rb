@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   include QueryFilterControllerConcern
   protect_from_forgery with: :exception
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found!
   impersonates :user
 
   #render 404 error
