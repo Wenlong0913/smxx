@@ -46,6 +46,7 @@ $(document).ready ->
             alert("下载失败，失败原因：" + status.msg.message)
           else
             alert("下载成功，点击确定开始加载")
+            window.location.reload()
             break
       return
     ).on 'ajax:error', (xhr, status, error) ->
