@@ -81,8 +81,8 @@
                   label[class="control-label"] 上级商家
                   = link_to @site.parent.title, admin_site_path(@site.parent)
                   = f.hidden_field :parent_id
-
-          = f.input :parent_id, collection: Site.all.map{|s| [s.title, s.id]}
+          / 不能使用site.all
+          / = f.input :parent_id, collection: Site.all.map{|s| [s.title, s.id]}
 
           .row
             div class="col-md-6 col-sm-12"
