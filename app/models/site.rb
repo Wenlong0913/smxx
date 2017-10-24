@@ -134,7 +134,6 @@ class Site < ApplicationRecord
     conn.headers[Faraday::Request::Authorization::KEY] = "Bear #{tanmer_wxopen_token}"
     conn.headers['Content-Type'] = 'application/json'
     conn.put 'api/mp/menu', build_wx_menu
-    JSON.parse(conn.body)
   end
 
   def build_wx_menu
@@ -160,7 +159,7 @@ class Site < ApplicationRecord
     conn.headers[Faraday::Request::Authorization::KEY] = "Bear #{tanmer_wxopen_token}"
     response = conn.get("api/mp/menu")
     data = JSON.parse(response.body)
-    if data['code'] == 0
+    if data['menu'].present?
       diymenus.where(parent: nil).update_all(is_show: false)
       if data.key?('menu') && data['menu'].key?('button')
         data['menu']['button'].each_with_index do |button, i|
