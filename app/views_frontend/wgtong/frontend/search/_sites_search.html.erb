@@ -14,11 +14,10 @@
         </div>
         <div class="post-content">
           <div class="author">
-            <a href="/frontend/sites/<%= site.id %>"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/user.png" alt="Image"></a>
+            <a href="javascript:void(0)"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/user.png" alt="Image"></a>
           </div>
           <div class="entry-meta">
             <ul>
-              <li><a href="/frontend/sites/<%= site.id %>"><i class="fa fa-user-circle-o"></i> <%= @cms_site.name %></a></li>
               <li><a href="/frontend/sites/<%= site.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(site.updated_at) %>前</a></li>
               <li><a href="/frontend/sites/<%= site.id %>"><i class="fa fa-eye"></i> <%= site.visits_count %>阅读</a></li>
               <li><a href="/frontend/sites/<%= site.id %>"><i class="fa fa-comments-o"></i> <%= site.comments_count %>评论</a></li>
@@ -27,7 +26,7 @@
           <h2 class="entry-title">
             <%= link_to site.title, frontend_site_path(site) %>
           </h2>
-          <p><%= site.description.truncate(74) %></p>
+          
           <div class="read-more">
             <div class="continue-reading pull-left">
               <a href="<%= frontend_site_path(site) %>">了解更多 <i class="fa fa-angle-right"></i></a>
