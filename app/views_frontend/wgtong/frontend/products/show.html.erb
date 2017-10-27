@@ -11,26 +11,22 @@
 						<div class="tr-post">
 							<div class="entry-header">
 								<div class="row">
-									<div class="col-md-8">
+									<div class="col-md-7">
 										<div class="entry-thumbnail">
-											<img class="img-responsive" src="<%= @product.first_image %>" alt="<%= @product.name %>">
+											<img class="img-responsive" src="<%= @product.first_image %>" alt="<%= @product.name %>" style="max-height: 350px;">
 										</div>
 									</div>
-									<div class="col-md-4 post-content prodShowRight m-0">
-										<!-- <p><i class="fa fa-map-marker"></i> 上海市崇明区城桥镇崇明大道7887号</p>
-										<p><i class="fa fa-calendar"></i> 2017年03月25日 - 2017年03月25日 </p>
-										<p><i class="fa fa-clock-o"></i> 13:30-15:00 </p>
-										<p><i class="fa fa-phone-square"></i> 02159626867-3019</p>
-										<p><i class="fa fa-cny"></i> 免费</p> -->
-										<% if @product.sell_price > 0 %>
-											<p><i class="fa fa-cny"></i>价格： <%= @product.sell_price / 100.0 %></p>
-										<% else %>
-											<p><i class="fa fa-cny"></i>价格： 免费</p>
-										<% end %>
+									<div class="col-md-5 post-content prodShowRight m-0">
+										<p><i class="fa fa-cny"></i>价格：
+                      <% if @product.sell_price > 0 %>
+                        <%= @product.sell_price / 100 %>
+                      <% else %>
+                        免费
+                      <% end %>
+                    </p>
 
 										<% if @product.address_line1.present? %>
-											<p>
-												<i class="fa fa-map-marker  %>"></i>地址：
+											<p><i class="fa fa-map-marker  %>"></i>地址：
 												<%= @product.address_line1 %>
 												<br/>
 												<small><%= @product.address_line2 %></small>
@@ -38,32 +34,23 @@
 										<% end %>
 
 										<% if @product.date.present? %>
-											<p>
-												<i class="fa fa-calendar"></i>日期：
+											<p><i class="fa fa-calendar"></i>日期：
 												<%= @product.date %>
 											</p>
 										<% end %>
 
 										<% if @product.time.present? %>
-											<p>
-												<i class="fa fa-clock-o"></i>时间：
+											<p><i class="fa fa-clock-o"></i>时间：
 												<%= @product.time %>
 											</p>
 										<% end %>
 
 										<% if @product.phone.present? %>
-											<p>
-												<i class="fa fa-phone-square"></i>联系方式：
+											<p><i class="fa fa-phone-square"></i>联系方式：
 												<%= @product.phone %>
 											</p>
 										<% end %>
 
-										<% if @product.status.present? %>
-											<p><i class="fa fa-bullhorn"></i>状态：<%= enum_i18n(Product, :status, @product.status) %></p>
-										<% end %>
-										<% if @product.reserve_datetime.present? %>
-											<p><i class="fa fa-clock-o"></i>开始预定时间：<%= @product.reserve_datetime.gsub('T', ' ') %></p>
-										<% end %>
 										<% if @product.stock.present? %>
 											<p><i class="fa fa-bullhorn"></i>剩余座位：<%= @product.stock.to_s + @product.unit %></p>
 										<% end %>
