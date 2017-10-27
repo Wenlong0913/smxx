@@ -15,7 +15,7 @@
     .panel-body
       .profile-container
         .row
-          - if @agent_site.tanmer_wxopen_token.presence
+          - if @agent_site.tanmer_wxopen_token.blank?
             p
               | 已绑定公众号信息：
             .col-md-2
