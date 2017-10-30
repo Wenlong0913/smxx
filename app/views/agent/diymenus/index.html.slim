@@ -1,7 +1,7 @@
 .panel
   .panel-body
     .container
-      - if @site.tanmer_wxopen_token.empty?
+      - if @site.tanmer_wxopen_token.blank?
         h3 暂未绑定任何微信公众号
         => link_to '现在去绑定微信公众号', agent_site_path(@site.id), class: 'btn btn-primary'
       - else
