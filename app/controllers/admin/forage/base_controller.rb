@@ -54,6 +54,9 @@ class Admin::Forage::BaseController < Admin::BaseController
 
       # common parameters
       @merge_source.forage_url = assign_paramter_hash[:url] || @forage_data_cache.url
+      @merge_source.forage_from = assign_paramter_hash[:from]
+      @merge_source.forage_district_from = assign_paramter_hash[:district_from]
+      @merge_source.forage_image = assign_paramter_hash[:image]
       @merge_source.is_foraged = true
     end
 

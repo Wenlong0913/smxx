@@ -23,7 +23,7 @@ class Product < Item
     :maximum_for_one_account, :maximum_for_one_order, :member_attributes, :member_attribute_validates,
     # 产品开始预定时间
     :reserve_datetime
-  store_accessor :forage, :forage_url, :forage_price, :is_foraged, :external_purchase_url
+  store_accessor :forage, :forage_url, :forage_price, :is_foraged, :external_purchase_url, :forage_from, :forage_district_from, :forage_image
 
   acts_as_taggable
   #store_accessor :features, :price, :unit, :stock, :description, :content, :discount, :weight, :weight_unit, :additional_attribute_keys, :additional_attribute_values, :is_shelves, :is_fee, :shopping_fee, :hot, :recommend, :event, :promotion, :discount
