@@ -73,7 +73,7 @@ div
         = f.input :is_shelves, as: :boolean
     .col-xs-6.col-md-6
       .form-group
-        = f.input :reserve_datetime, as: :datetime, html5: true, input_html: {value: @product.reserve_datetime}
+        = f.input :reserve_datetime, as: :datetime, html5: true, input_html: {value: @product.reserve_datetime}, hint: '精确到时分秒'
     .col-xs-12.purchase_type
       hr
       .form-group

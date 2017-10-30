@@ -19,14 +19,14 @@
                 <span class="faild-text"><%= params[:search][:keywords] %></span>相关内容
               </h3>
             <% else %>
-              <h3 style="margin-bottom: 30px;">
+              <h3 style="margin-bottom: 30px;font-weight: 300;">
                 <i class="fa fa-frown-o"></i>抱歉：暂无
                 <span class="faild-text">
                   <%= params[:search][:keywords] %>
                 </span>相关内容
               </h3>
               <%= form_for :search, url: search_result_path, method: :get, class: 'btn-input' do |f| %>
-                <%= f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', autocomplete: "off", placeholder: '请输入关键词，回车' %>
+                <%= f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', autocomplete: "off", placeholder: '请输入关键词，回车开始搜索' %>
               <% end %>
             <% end %>
             <div style="margin-top: 30px;margin-bottom: 30px;">
