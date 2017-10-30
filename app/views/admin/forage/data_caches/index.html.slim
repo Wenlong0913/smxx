@@ -73,7 +73,7 @@ h1.page-header
             th = Forage::DataCache.human_attribute_name(:matched_status)
             th = Forage::DataCache.human_attribute_name(:is_merged)
             th = Forage::DataCache.human_attribute_name(:district_from)
-            th = Forage::DataCache.human_attribute_name(:time)
+            th = Forage::DataCache.human_attribute_name(:date)
             th = Forage::DataCache.human_attribute_name(:original_catalog)
             th
         tbody
@@ -85,7 +85,7 @@ h1.page-header
               td = Forage::DataCache::MATCHED_STATUS[forage_data_cache.matched_status.to_sym]
               td = enum_l(forage_data_cache, :is_merged)
               td = forage_data_cache.district_from
-              td = forage_data_cache.time
+              td = forage_data_cache.date
               td = forage_data_cache.original_catalog
               td
                 => link_to '查看', admin_forage_data_cach_path(forage_data_cache, migrate_to: params[:migrate_to]), class: 'btn btn-xs btn-primary'
