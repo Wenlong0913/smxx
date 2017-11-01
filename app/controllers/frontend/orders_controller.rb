@@ -170,6 +170,12 @@ class Frontend::OrdersController < Frontend::BaseController
     order = Order.find_by_code(params[:out_trade_no])
     if order.present?
       order.update(status: order_status)
+      product = order.order_products.first.product
+      product.stock - 1
+      if product.stock == 0
+        product.update(status: 'completed')
+      end
+      product.save!
     end
     redirect_to frontend_order_path(order)
   end
