@@ -9,7 +9,7 @@ class MigrateToForageDataCacheJob
             # first: find in data_cache
             old_caches = Forage::DataCache.where("data ->> 'migrate_to' = ? AND (title = ? OR url = ?)", forage_detail.migrate_to, forage_detail.title, forage_detail.url)
             old_cache_ids = old_caches.map(&:matched_id).uniq.compact
-            if old_caches.size == 1
+            if old_cache_ids.size == 1
               matched_id = old_cache_ids.first
               matched_ids = old_cache_ids
               matched_status = 'only_one'
