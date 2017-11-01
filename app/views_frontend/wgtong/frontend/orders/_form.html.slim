@@ -1,12 +1,12 @@
 = form_for(@order, url: charge_frontend_orders_path, remote: true, html: {class: 'form-horizontal', id: "frontend-order-new"}) do |f|
   .tr-section.text-left[rel="signup_members_vue" data-maximum-for-one-order="#{@product.maximum_for_one_order}"]
     .row.mb-30
-      .col-md-3
+      .col-md-6
         .productImg
-          img[src="#{@product.first_image}" alt="" class="img-responsive"]
-      .col-md-9.text-left
+          img[src="#{@product.first_image}" alt="" class="img-responsive" style="max-height: 200px;"]
+      .col-md-6.text-left
         h4
-          a[href="#" class="color2e"]
+          a[href="javascript:void(0)" class="color2e"]
             = @product.name
           small = @product.catalog.try(:name)
         p
@@ -52,7 +52,8 @@
       .form-group
         label[for="inputNumber" class="col-sm-2 control-label"] 数量：
         .col-sm-10
-          input[type="number" name="order[product][number]" class="form-control" id="inputNumber" value="1" style="width: 120px;"]
+          input[type="number" name="order[product][number]" class="form-control" id="inputNumber" value="1" min="1" max="#{@product.stock}" style="width: 120px;"]
+          small 剩余可预定数量为：#{@product.stock}
     .text-center[style="margin-bottom: 20px;"]
       button[type="submit" class="btn btn-danger btn-md"] 立即支付
     article[style="border: 1px solid #ccc;margin-bottom: 20px;"]
@@ -61,6 +62,7 @@
         li 全年未入场票数达10张，将被取消当年预订资格；
         li 如因不可控因素导致活动无法进行，举办方有权延期或取消活动，并以短信方式通知订票人；
         li 如参加区图书馆、文化馆活动的市民，由于停车位有限，建议读者搭乘公共交通前往；
+        li 预定后请留意商家短信通知，有问题请及时与商家联系；
         li 活动最终解释权归举办方所有。
         li 确认支付则表示同意预订须知
 = javascript_include_tag 'payment_core/pingpp'

@@ -171,7 +171,9 @@ class Frontend::OrdersController < Frontend::BaseController
     if order.present?
       order.update(status: order_status)
       product = order.order_products.first.product
-      product.stock - 1
+      order_products = order.order_products.find(order)
+      purchase_amount = order_products.amount
+      product.stock - purchase_amount
       if product.stock == 0
         product.update(status: 'completed')
       end
