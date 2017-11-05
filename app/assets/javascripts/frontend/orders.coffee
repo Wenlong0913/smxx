@@ -1,5 +1,5 @@
 $(document).ready ->
-  forms = $('form#new_order')
+  forms = $('form#frontend-order-new')
   if forms.length > 0
     # 附加属性添加
     attrListDom = forms.find("div[rel='signup_members_vue']")

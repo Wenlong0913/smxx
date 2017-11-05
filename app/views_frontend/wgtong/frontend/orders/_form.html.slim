@@ -28,10 +28,10 @@
     - if @product.purchase_type && @product.purchase_type.include?('sign_up')
       h3
         | 活动报名 &nbsp;&nbsp;
-        button.btn.btn-primary[type="button" @click="addMembers"] 添加报名人员信息
+        button.btn.btn-danger[type="button" @click="addMembers"] 添加报名人员信息
       p[id="order_account_signup"] &nbsp;
       .form-group.row.well[v-for="(mem, index) in members" :key="mem" style="position: relative;"]
-        i.fa.fa-close[style="position: absolute;top: -2px;right: 3px;" @click="removeMembers(index)"]
+        i.fa.fa-close[style="position: absolute;top: 10px;right: 10px; cursor: pointer" @click="removeMembers(index)"]
         input[type="hidden" :name="'order[member_attributes]['+mem.key+'][product_id]'" value="#{@product.id}"]
         - @product.member_attributes.each do |attr|
           - next if attr == ''
@@ -44,7 +44,6 @@
               input[type="text" :required="#{flag}" :name="'order[member_attributes]['+mem.key+'][#{attr}]'" class="form-control" :id="'member_attributes_'+mem.key+'_#{attr}'"]
               small[style="padding: 5px;color: #ff3f13;"]
                 = (@product.member_attribute_validates && @product.member_attribute_validates[attr]) ? @product.member_attribute_validates[attr].map{|v| Product::MEMBER_ATTRIBUTE_VALIDATES[v.to_sym]}.join(' ') : ''
-
     - else
       .form-group
         label[for="inputPhone" class="col-sm-2 control-label text-left"] 手机号
@@ -54,9 +53,8 @@
         label[for="inputNumber" class="col-sm-2 control-label"] 数量：
         .col-sm-10
           input[type="number" name="order[product][number]" class="form-control" id="inputNumber" value="1" style="width: 120px;"]
-    input[type="number" name="order[product][number]" class="form-control" id="inputNumber" value="1" style="width: 120px;" disabled]
-        .text-center[style="margin-bottom: 20px;"]
-          button[type="submit" class="btn btn-danger btn-md"] 立即支付
+    .text-center[style="margin-bottom: 20px;"]
+      button[type="submit" class="btn btn-danger btn-md"] 立即支付
     article[style="border: 1px solid #ccc;margin-bottom: 20px;"]
       h3[class="text-warning" style="padding-left: 20px;"] 预定须知
       ol
@@ -67,23 +65,13 @@
         li 确认支付则表示同意预订须知
 = javascript_include_tag 'payment_core/pingpp'
 javascript:
-  $(document).ready(function (){
-    var form = $("#frontend-order-new");
-    if (form.length > 0) {
-      var ua = window.navigator.userAgent.toLowerCase();
-      //判断是否是微信端
-      if(ua.match(/MicroMessenger/i) == 'micromessenger'){
-        $("#order-pay-channel").val('wx_pub');
-      }
-    }
-  })
   function onStartCharging(charge){
     pingpp.createPayment(charge, function(result, err){
       console.log(result);
       console.log(err.msg);
       console.log(err.extra);
       if (result == "success") {
-        console.log('sfds')
+        window.location= "<%= self_order_users_url %>"
           // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的支付结果都会跳转到 extra 中对应的 URL。
       } else if (result == "fail") {
           // charge 不正确或者微信公众账号支付失败时会在此处返回
@@ -94,7 +82,6 @@ javascript:
   }
 
   function onOrderCreate(errors) {
-    console.log(errors)
     $('.small-error-hint').empty()
     var errors = JSON.parse(errors)
     if (errors.redirect_url) {

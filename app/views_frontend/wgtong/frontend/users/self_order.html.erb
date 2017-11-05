@@ -116,7 +116,9 @@
                   <div class="row">
                     <div class="col-md-4">
                       <div class="productImg">
-                        <img src="<%= order_product.try(:product).try(:first_image) %>" alt="" class="img-responsive"/>
+                        <a href="<%= frontend_order_path(order) %>">
+                          <img src="<%= order_product.try(:product).try(:first_image) %>" alt="" class="img-responsive"/>
+                        </a>
                       </div>
                     </div>
 

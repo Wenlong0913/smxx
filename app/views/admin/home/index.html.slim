@@ -14,8 +14,7 @@ ol.breadcrumb.pull-right
 /! end breadcrumb
 /! begin page-header
 h1.page-header
-  | 概览
-  small 综述...
+  | 数据概览
 /! end page-header
 /! begin row
 .row
@@ -26,7 +25,7 @@ h1.page-header
         i.fa.fa-desktop
       .stats-info
         h4 产品
-        p= Product.count
+        p = Product.count
       .stats-link
         a href="/admin/products"
           | 查看详细
@@ -39,7 +38,7 @@ h1.page-header
         i.fa.fa-chain-broken
       .stats-info
         h4 订单
-        p= Order.count
+        p = Order.count
       .stats-link
         a href="/admin/orders"
           | 查看详细
@@ -52,7 +51,7 @@ h1.page-header
         i.fa.fa-users
       .stats-info
         h4 用户
-        p= User.count
+        p = User.count
       .stats-link
         a href="/admin/users"
           | 查看详细
@@ -65,7 +64,7 @@ h1.page-header
         i.fa.fa-clock-o
       .stats-info
         h4 CMS 文章
-        p= Cms::Page.count
+        p = Cms::Page.count
       .stats-link
         a href="/admin/cms/sites"
           | 查看纤细
@@ -74,8 +73,7 @@ h1.page-header
 /! end row
 /! begin page-header
 h1.page-header
-  | 导航
-  small 快速...
+  | 快速导航
 /! end page-header
 /! begin row
 .row
@@ -85,8 +83,7 @@ h1.page-header
       .stats-icon
         i.fa.fa-desktop
       .stats-info
-        h4 新建
-        p 用户
+        p 新建用户
       .stats-link
         a href="/admin/users/new"
           | 点击进入
@@ -98,8 +95,7 @@ h1.page-header
       .stats-icon
         i.fa.fa-chain-broken
       .stats-info
-        h4 添加
-        p 文章
+        p 添加文章
       .stats-link
         a href="/cms/sites"
           | 点击进入
@@ -112,8 +108,7 @@ h1.page-header
         .stats-icon
           i.fa.fa-users
         .stats-info
-          h4 管理
-          p 任务
+          p 管理任务
         .stats-link
           a href="/admin/produces"
             | 点击进入
@@ -125,8 +120,7 @@ h1.page-header
       .stats-icon
         i.fa.fa-clock-o
       .stats-info
-        h4 管理
-        p 订单
+        p 管理订单
       .stats-link
         a href="/admin/orders"
           | 点击进入

@@ -10,6 +10,8 @@
 #= require agent/orders
 #= require agent/members
 #= require agent/finance_bills
+#= require agent/diymenus
+#= require agent/jquery-sortable.js
 #= require select2
 #= require select2_locale_zh-CN
 #= require select2_js

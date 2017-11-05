@@ -1,8 +1,8 @@
 h1.page-header
   | 查看#{Forage::DataCache.model_name.human}
   .pull-right
-    => link_to '编辑', edit_admin_forage_data_cach_path(@forage_data_cache), class: 'btn btn-primary' if @forage_data_cache.unmerged?
-    = link_to '返回', admin_forage_data_caches_path, class: 'btn btn-primary'
+    => link_to '编辑', edit_admin_forage_data_cach_path(@forage_data_cache, migrate_to: @migrate_to), class: 'btn btn-primary' if @forage_data_cache.unmerged?
+    = link_to '返回', admin_forage_data_caches_path(migrate_to: @migrate_to), class: 'btn btn-primary'
 
 .panel
   .panel-heading
@@ -81,13 +81,13 @@ h1.page-header
               td.field
                 | #{Forage::DataCache.human_attribute_name(:price)}
               td
-                  = @forage_data_cache.time
+                  = @forage_data_cache.price
             tr.divider
             tr
               td.field
                 | #{Forage::DataCache.human_attribute_name(:from)}
               td
-                  = @forage_data_cache.address_line1
+                  = @forage_data_cache.from
             tr.divider
             tr
               td.field

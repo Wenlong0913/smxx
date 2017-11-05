@@ -36,13 +36,7 @@
                 <div class="col-md-12">
                   <h3 class="clearfix">
                     <div class="<%= 'pull-left' unless mobile_device? %>">
-                      <% if ['open', 'pending'].include?(@order.status) %>
-                        支付状态：<span class="text-danger"><%=  enum_l(@order, :status) %></span>
-                      <% elsif @order.paid? %>
-                        支付状态：<span class="text-success"><%=  enum_l(@order, :status) %></span>
-                      <% else %>
-                        支付状态：<span class="text-success"><%=  enum_l(@order, :status) %></span>
-                      <% end %>
+                      支付状态：<span class="text-<%= ['open', 'pending'].include?(@order.status) ? 'danger' : 'success' %>"><%=  enum_l(@order, :status) %></span>
                     </div>
                     <% if mobile_device? %>
                     <p></p>
@@ -55,26 +49,28 @@
                   <div class="row">
                     <div class="col-md-4">
                       <div class="productImg">
-                        <img src="<%= @order.order_products.first.product.first_image %>" alt="" class="img-responsive"/>
+                        <a href="<%= frontend_product_path(@order.products.first) %>">
+                          <img src="<%= @order.products.first.first_image %>" alt="" class="img-responsive"/>
+                        </a>
                       </div>
                     </div>
                     <div class="col-md-8 text-left">
                       <h4>
                         <a href="<%= frontend_product_path(@order.products.first) %>" style="color: #2e2e2e;">
-                          <%= @order.order_products.first.product.name%>
+                          <%= @order.products.first.name%>
                         </a>
-                        <small><%= @order.order_products.first.product.catalog.try(:name)%></small>
+                        <small><%= @order.products.first.catalog.try(:name)%></small>
                       </h4>
                       <p>
                         <span>
                           <i class="fa fa-map-marker productColorIcon"></i>
-                          <%= @order.order_products.first.product.address_line1%>
+                          <%= @order.products.first.address_line1%>
                         </span>
                       </p>
                       <p>
                         <span>
                           <i class="fa fa-clock-o productColorIcon"></i>
-                          <%= @order.order_products.first.product.date.to_s + @order.order_products.first.product.time.to_s %>
+                          <%= @order.products.first.date.to_s + @order.products.first.time.to_s %>
                         </span>
                       </p>
                     </div>
@@ -115,9 +111,46 @@
                       </div>
                     <% end %>
                   </div>
+
+                  <div class="row" style="margin-top: 15px">
+                    <% if @order.member_attributes.present? %>
+                      <% @order.member_attributes.each do |attr| %>
+                        <table class="table">
+                          <% attr.each_pair do |key, v| %>
+                            <% next if key == 'product_id'%>
+                            <tr>
+                              <td><%= Product::MEMBER_ATTRIBUTES[key.to_sym] || key %></td>
+                              <td><%= v %></td>
+                            </tr>
+                          <% end %>
+                        </table>
+                      <%end%>
+                    <% end %>
+
+                  </div>
                 </div>
               </div>
             </div>
+            <% if @order.member_attributes.present? %>
+              <div class="tr-section">
+                <h3>报名人员信息</h3>
+                <% @order.member_attributes.each do |attr| %>
+                  <div class="panel panel-default" style="margin-top: 5px;">
+                    <div class="panel-body">
+                      <table class="table">
+                        <% attr.each_pair do |key, v| %>
+                          <% next if key == 'product_id'%>
+                          <tr>
+                            <td><%= Product::MEMBER_ATTRIBUTES[key.to_sym] || key %></td>
+                            <td><%= v %></td>
+                          </tr>
+                        <% end %>
+                      </table>
+                    </div>
+                  </div>
+                <%end%>
+              </div>
+            <% end %>
           </div>
         </div>
 
@@ -128,6 +161,7 @@
 
     </div>
   </section>
+
   <%= render file: @cms_site.template_dir + '_footer.html' %>
 </div>
 <%= javascript_include_tag 'payment_core/pingpp' %>
@@ -138,12 +172,22 @@
       console.log(err.msg);
       console.log(err.extra);
       if (result == "success") {
-          // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的支付结果都会跳转到 extra 中对应的 URL。
+        location.reload();
+        // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的支付结果都会跳转到 extra 中对应的 URL。
       } else if (result == "fail") {
           // charge 不正确或者微信公众账号支付失败时会在此处返回
       } else if (result == "cancel") {
           // 微信公众账号支付取消支付
       }
     });
+  }
+
+  function onOrderCreate(errors) {
+    var errors = JSON.parse(errors)
+    for(var key in errors) {
+      if (key == 'order_product_stock') {
+        alert(errors[key][0])
+      }
+    }
   }
 </script>

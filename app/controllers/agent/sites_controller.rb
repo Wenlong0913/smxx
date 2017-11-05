@@ -1,6 +1,6 @@
 class Agent::SitesController < Agent::BaseController
   skip_before_action :set_current_site
-  before_action :set_site, only: [:show, :edit, :update, :destroy]
+  before_action :set_site, only: [:show, :edit, :update, :destroy, :binding_wx_callback]
   before_action :set_delivery_fee, only: [:create, :update]
 
   def index
@@ -50,10 +50,34 @@ class Agent::SitesController < Agent::BaseController
     end
   end
 
+  def binding_wx_callback
+    conn = Faraday.new(:url => 'https://wxopen.tanmer.com')
+    if params[:code] 
+      code = params[:code]
+      response = conn.get("api/mp/token?code=#{code}&name=#{@agent_site.title}")
+      data = JSON.parse(response.body)
+      @agent_site.tanmer_wxopen_token = data['token']
+      @agent_site.save!
+      redirect_to agent_site_path(@agent_site)
+    elsif params[:site][:tanmer_wxopen_token]
+      submit_token = params[:site][:tanmer_wxopen_token]
+      conn.headers[Faraday::Request::Authorization::KEY] = "Bear #{submit_token}"
+      response = conn.get("api/mp/info")
+      data = JSON.parse(response.body)
+      if data['code'] == -1
+        render js: "alert('输入的token错误，请检查后重新输入');"
+      else
+        @agent_site.tanmer_wxopen_token = submit_token
+        @agent_site.save!
+        redirect_to agent_site_path(@agent_site)
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_site
-      @agent_site = Site.find(params[:id])
+      @agent_site = Site.find_by!(user_id: current_user.id)
     end
 
     def set_delivery_fee

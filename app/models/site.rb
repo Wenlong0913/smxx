@@ -33,6 +33,8 @@ class Site < ApplicationRecord
   has_many :deliveries, dependent: :destroy
   has_one :cms_site, class_name: '::Cms::Site', dependent: :destroy
   belongs_to :agent_plan, optional: true
+  has_many :diymenus, dependent: :destroy
+  has_many :parent_menus, -> { includes(:sub_menus).where(parent_id: nil, is_show: true).order("sort").limit(3) }, class_name: "Diymenu", foreign_key: :site_id
   # store_accessor :features, :business_hours, :content, :contact_phone, :contact_name, :is_sign, :sign_note,
   # :score, :comment, :properties, :updated_by, :has_contract, :is_published, :phone, :lat, :lng
   def first_image
@@ -46,8 +48,8 @@ class Site < ApplicationRecord
                 :wifi, :contact_name, :contact_phone, :has_contract, :contract_note,
                 :avg_price, :is_published, :phone, :photos, :province, :real_city, :city, :district, :business_area,
                 :updated_by, :content, :delivery_fee
-  store_accessor :forage, :forage_url, :is_foraged
-  
+  store_accessor :forage, :forage_url, :is_foraged, :forage_from, :forage_district_from, :forage_image
+
   validates_presence_of :title, :address_line#, :user_id
   validates_uniqueness_of :title, scope: [:address_line]
 
@@ -112,6 +114,77 @@ class Site < ApplicationRecord
 
   def available_phone
     contact_phone.presence || phone.presence || user.try(:mobile).try(:phone_number)
+  end
+
+  def wxopen_info
+    return nil if tanmer_wxopen_token.blank?
+    conn = Faraday.new(:url => 'https://wxopen.tanmer.com')
+    conn.headers[Faraday::Request::Authorization::KEY] = "Bear #{tanmer_wxopen_token}"
+    begin
+      response = conn.get("api/mp/info")
+      JSON.parse(response.body)
+    rescue
+      nil
+    end
+  end
+
+  def upload_wx_menu
+    raise "no tanmer wxopen token" if tanmer_wxopen_token.blank?
+    conn = Faraday.new(:url => 'https://wxopen.tanmer.com')
+    conn.headers[Faraday::Request::Authorization::KEY] = "Bear #{tanmer_wxopen_token}"
+    conn.headers['Content-Type'] = 'application/json'
+    conn.put 'api/mp/menu', build_wx_menu
+  end
+
+  def build_wx_menu
+    Jbuilder.encode do |json|
+      json.button(parent_menus) do |menu|
+        json.name menu.name
+        if menu.has_sub_menu?
+          json.sub_button(menu.sub_menus) do |sub_menu|
+            json.type sub_menu.button_type
+            json.name sub_menu.name
+            sub_menu.button_type_json(json)
+          end
+        else
+          json.type menu.button_type
+          menu.button_type_json(json)
+        end
+      end
+    end
+  end
+
+  def download_wx_menu!
+    conn = Faraday.new(:url => 'https://wxopen.tanmer.com')
+    conn.headers[Faraday::Request::Authorization::KEY] = "Bear #{tanmer_wxopen_token}"
+    response = conn.get("api/mp/menu")
+    data = JSON.parse(response.body)
+    if data['menu'].present?
+      diymenus.where(parent: nil).update_all(is_show: false)
+      if data.key?('menu') && data['menu'].key?('button')
+        data['menu']['button'].each_with_index do |button, i|
+          sub_buttons = button.delete('sub_button')
+          button['button_type'] = Diymenu::button_types[button.delete('type')]
+          parent_menu = diymenus.find_or_initialize_by(button)
+          parent_menu.parent = nil
+          parent_menu.is_show = true
+          parent_menu.sort = i + 1
+          parent_menu.save! if parent_menu.changed?
+          parent_menu.diymenus.update_all(parent_id: nil, is_show: false)
+
+          sub_buttons.each_with_index do |sub_button, j|
+            sub_button.delete('sub_button')
+            sub_button['button_type'] = Diymenu::button_types[sub_button.delete('type')]
+            sub_menu = diymenus.find_or_initialize_by(sub_button)
+            sub_menu.parent = parent_menu
+            sub_menu.is_show = true
+            sub_menu.sort = j + 1
+            sub_menu.save! if sub_menu.changed?
+          end
+        end
+      end
+    end
+    data
   end
 
 end

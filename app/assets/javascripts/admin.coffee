@@ -20,6 +20,7 @@
 #= require admin/audit_statistics
 #= require admin/article
 #= require admin/agent_plans
+#= require admin/forage_datacache
 #= require select2
 #= require select2_locale_zh-CN
 #= require select2_js

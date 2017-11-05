@@ -9,7 +9,10 @@ module AgentBackendRoute
         get 'assets/extranet_images'
 
         resources 'messages', only: [:index, :update]
-        resources 'sites'
+        resources 'sites' do
+          post :binding_wx_callback
+          get :binding_wx_callback
+        end
         resources 'products' do
           commentable
           member do
@@ -66,6 +69,14 @@ module AgentBackendRoute
         resources :finance_bills, only: [:index, :new, :create] do
           collection do
             get "fund"
+          end
+        end
+        # 一键更新微信菜单
+        resources :diymenus, except: :show do
+          collection do
+            post :sort
+            post :upload_wx_menu
+            post :download_wx_menu
           end
         end
         # resources :finances, only: [:index]

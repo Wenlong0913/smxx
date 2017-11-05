@@ -111,15 +111,15 @@ class Agent::ProductsController < Agent::BaseController
   end
 
   def create
+    if params[:product][:member_attributes].present? || params[:product][:member_attributes_others].present?
+      params[:product][:member_attributes] = params[:product][:member_attributes] + params[:product][:member_attributes_others].split(/,/)
+      params[:product][:member_attributes] = params[:product][:member_attributes].delete_if{|ma| ma.blank?}
+    end
     @product = Product.new(permitted_attributes(Product))
     @product.site = @site
     authorize @product
     filter_additional_attribute
-    if params[:product][:member_attributes].present? || params[:product][:member_attributes_others].present?
-      params[:product][:member_attributes] = params[:product][:member_attributes] + params[:product][:member_attributes_others].split(/,/)
-      params[:product][:member_attributes] = params[:product][:member_attributes].delete_if{|ma| ma.blank?}
-      @product.member_attribute_validates = params[:product][:member_attribute_validates] if params[:product][:member_attribute_validates].present?
-    end
+    @product.member_attribute_validates = params[:product][:member_attribute_validates] if params[:product][:member_attribute_validates].present?
     if @product.save
       # redirect_to agent_product_path(@product), notice: 'Product 创建成功.'
       render json: {url: agent_product_path(@product)}

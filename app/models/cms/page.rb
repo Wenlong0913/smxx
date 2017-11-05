@@ -17,7 +17,7 @@
 
 class Cms::Page < ApplicationRecord
   audited
-  store_accessor :forage, :forage_url, :is_foraged
+  store_accessor :forage, :forage_url, :is_foraged, :forage_from, :forage_district_from, :forage_image
 
   is_impressionable :counter_cache => true
   acts_as_taggable

@@ -36,8 +36,8 @@ zh-CN:
         is_manager_recommend: 是否设为站长推荐
         is_shelves: 商品上架
         video_url: 视频链接
-        date: 日期
-        time: 时间
+        date: 演出日期
+        time: 演出时间
         address_line1: 地址1
         address_line2: 地址2
         phone: 联系方式
@@ -52,6 +52,7 @@ zh-CN:
         maximum_for_one_order: 一个订单最多可以报名人数
         member_attributes: 报名需要填写的属性
         reserve_datetime: 预定时间
+        external_purchase_url: 外链地址
     errors:
       models:
         product:

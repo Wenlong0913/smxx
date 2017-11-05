@@ -36,8 +36,13 @@
                     br
                 - elsif @forage_data_cache.matched_status == 'only_one'
                   = link_to @multiple_sources.first[1], @multiple_sources.first[2], target: "_blank"
+            
         hr[style="color: 'black'"]
         .col-xs-9.left-form-content
+          .col-md-6
+            = f.input :district_from, input_html: {disabled: true}
+          .col-md-6
+            = f.input :original_catalog, input_html: {disabled: true}
           .col-md-6
             = f.input :title
           .col-md-6
@@ -69,8 +74,21 @@
             h5
               | 合并到：#{Forage::DataCache::MIGRATE_TO_HASH[@forage_data_cache.migrate_to.to_sym]}
           - if @forage_data_cache.matched_status == 'none'
-            = f.input :catalog_id, collection: @catalogs, include_blank: false
+            - if @forage_data_cache.migrate_to == 'cms_page'
+              .form-group.select.optional
+                label.control-label.select.optional 站点
+                select.form-control.select.optional.select-cms-site[name="forage_data_cache[cms_site_id]" include_blank=true]
+                  option
+                  - @catalogs.each do |catalog|
+                    option[value=catalog[1]] = catalog[0]
+              .form-group.select.optional
+                label.control-label.select.optional 栏目
+                select.form-control.select.optional.select-cms-channel[name="forage_data_cache[catalog_id]"]
+            - else
+              = f.input :catalog_id, collection: @catalogs, include_blank: true
           - if @forage_data_cache.migrate_to == 'product'
+            label[class="control-label"] 产品所有者
+            select.select2.form-control[id="choose-site" name="forage_data_cache[site_id]" data-url="#{admin_sites_url}" data-id="", data-name=""]
             = f.input :can_purchase, as: :radio_buttons
             = f.input :external_purchase_url
           = f.submit class: 'btn btn-success btn-block'

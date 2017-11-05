@@ -31,6 +31,12 @@ div
         = f.input :address_line2
     .col-xs-6
       .form-group
+        = f.input :date
+    .col-xs-6
+      .form-group
+        = f.input :time
+    .col-xs-6
+      .form-group
         = f.input :phone
     .col-xs-6
       .form-group.col-xs-8.p-l-0.m-0
@@ -60,11 +66,14 @@ div
         p
           label 标签（可多选）:
         .
-          = f.collection_check_boxes :properties, Cms::Page::PROPERTIES, :first, :last, checked: @cms_page.try(:properties)
+          = f.collection_check_boxes :properties, Cms::Page::PROPERTIES, :first, :last, checked: @product.try(:properties)
     .col-xs-6.col-md-6
       .form-group
         = f.input :is_manager_recommend, as: :boolean
         = f.input :is_shelves, as: :boolean
+    .col-xs-6.col-md-6
+      .form-group
+        = f.input :reserve_datetime, as: :datetime, html5: true, input_html: {value: @product.reserve_datetime}, hint: '精确到时分秒'
     .col-xs-12.purchase_type
       hr
       .form-group
@@ -79,14 +88,35 @@ div
         .form-group
           = f.input :maximum_for_one_order
       .col-xs-12
-        .col-xs-4
+        .col-xs-12
           .input-group
             label.control-label.string.optional 报名需要填写的属性:&nbsp;&nbsp;
-            = f.collection_check_boxes :member_attributes, Product::MEMBER_ATTRIBUTES, :first, :last, checked: @product.try(:member_attributes)
-        .col-xs-8
+            / = f.collection_check_boxes :member_attributes, Product::MEMBER_ATTRIBUTES, :first, :last, checked: @product.try(:member_attributes)
+            div
+              - Product::MEMBER_ATTRIBUTES.each_pair do |key1, val1|
+                label.control-label.string.optional
+                  = val1
+                input[type="checkbox" value="#{key1}"
+                      name="product[member_attributes][]"
+                      id="product_member_attributes_#{key1}"
+                      checked=("checked" if @product.member_attributes && @product.member_attributes.include?(key1.to_s) )]
+                | (
+                - Product::MEMBER_ATTRIBUTE_VALIDATES.each_pair do |key2, val2|
+                  label.control-label.string.optional
+                    = val2
+                  input[type="checkbox" value="#{key2}"
+                        name="product[member_attribute_validates][#{key1}][]"
+                        id="product_member_attributes_validates_#{key1.to_s + '_' + key2.to_s}"
+                        checked=("checked" if @product.member_attribute_validates && @product.member_attribute_validates[key1.to_s] && @product.member_attribute_validates[key1.to_s].include?(key2.to_s) )]
+                | ) &nbsp;&nbsp;&nbsp;&nbsp;
+        .col-xs-12
           .input-group
             label.input-group-addon.control-label.string.optional 其他附加属性:
             input[name="product[member_attributes_others]" class="form-control" placeholder="属性之间用逗号隔开" value="#{@product.member_attributes ? (@product.member_attributes-Product::MEMBER_ATTRIBUTES.keys.map(&:to_s)).join(',') : ''}"]
+    .external_attributes
+      .col-xs-12
+        .form-group
+          = f.input :external_purchase_url
     .col-xs-12
       hr
       div[rel="attr_list_vue" data-values="#{@product.additional_attribute_values.to_json}" data-keys="#{@product.additional_attribute_keys.to_json}"]
