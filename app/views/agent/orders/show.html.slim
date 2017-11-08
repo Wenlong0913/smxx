@@ -130,6 +130,23 @@
                 /     = decorate(@order).display_status
                 li
                   label.control-label
+                    span #{Order.human_attribute_name(:delivery_fee)}：
+                  = @order.delivery_fee.to_f/100
+                li
+                  label.control-label
+                    span #{Order.human_attribute_name(:delivery_username)}：
+                  = @order.delivery_username
+                li
+                  label.control-label
+                    span #{Order.human_attribute_name(:delivery_phone)}：
+                  = @order.delivery_phone
+                li
+                  label.control-label
+                    span #{Order.human_attribute_name(:delivery_address)}：
+                  = @order.delivery_address
+
+                li
+                  label.control-label
                     span 订单物流：
                     span.display_order_delivery[style='width: auto;']
                       = @order.order_deliveries.first.logistics_name + '(' + @order.order_deliveries.first.logistics_number + ')' unless @order.order_deliveries.first.try(:logistics_name).blank?
