@@ -72,6 +72,31 @@ h1.page-header
                 td
                   a
                     = @order.price.to_f/100
+              tr
+                td.field
+                  | #{Order.human_attribute_name(:delivery_fee)}
+                td
+                  a
+                    = @order.delivery_fee.to_f/100
+              tr
+                td.field
+                  | #{Order.human_attribute_name(:delivery_username)}
+                td
+                  a
+                    = @order.delivery_username
+              tr
+                td.field
+                  | #{Order.human_attribute_name(:delivery_phone)}
+                td
+                  a
+                    = @order.delivery_phone
+              tr
+                td.field
+                  | #{Order.human_attribute_name(:delivery_address)}
+                td
+                  a
+                    = @order.delivery_address
+
               tr.divider
                 td[colspan='2']
           == render 'refund_modal'
