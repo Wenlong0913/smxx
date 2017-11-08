@@ -6,19 +6,20 @@ cd $(dirname $0)/..
 rails_root=`pwd`
 cd $dir
 
-cat << EOS > /etc/nginx/conf.d/dagle.conf
+mkdir -p /etc/nginx/conf.d/
 
-upstream rails {
-  server unix://${rails_root}/tmp/sockets/rails.sock fail_timeout=0;
+cat << EOS > /etc/nginx/conf.d/default.conf
+
+upstream railsstream {
+  server rails:3000 fail_timeout=0;
 }
 
-upstream cable {
-  server unix://${rails_root}/tmp/sockets/cable.sock fail_timeout=0;
+upstream cablestream {
+  server cable:5000 fail_timeout=0;
 }
 
 server {
-  listen 80;
-  server_name $DOMAIN;
+  listen 80 default;
   root ${rails_root}/public;
   try_files \$uri/index.html \$uri @rails;
 
@@ -29,7 +30,7 @@ server {
   error_log ${rails_root}/log/nginx.error.log;
   
   location @rails {
-    proxy_pass http://rails;
+    proxy_pass http://railsstream;
     proxy_set_header X-Real-IP \$remote_addr;
     proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
     proxy_set_header Host \$http_host;
@@ -37,7 +38,7 @@ server {
   }
 
   location /cable {
-    proxy_pass http://cable;
+    proxy_pass http://cablestream;
     proxy_http_version 1.1;
     proxy_set_header Upgrade \$http_upgrade;
     proxy_set_header Connection "upgrade";
@@ -54,3 +55,5 @@ server {
   }
 }
 EOS
+
+exit 0
