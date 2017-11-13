@@ -6,12 +6,12 @@ cd $(dirname $0)/..
 rails_root=`pwd`
 cd $dir
 
-mkdir -p /etc/nginx/conf.d/
+mkdir -p /srv/${APP_NAME}/nginx/
 
-cat << EOS > /etc/nginx/conf.d/default.conf
+cat << EOS > /srv/${APP_NAME}/nginx/default.conf
 
-upstream railsstream {
-  server rails:3000 fail_timeout=0;
+upstream webstream {
+  server web:3000 fail_timeout=0;
 }
 
 upstream cablestream {
@@ -21,16 +21,16 @@ upstream cablestream {
 server {
   listen 80 default;
   root ${rails_root}/public;
-  try_files \$uri/index.html \$uri @rails;
+  try_files \$uri/index.html \$uri @web;
 
   client_max_body_size 32M;
   keepalive_timeout 10;
 
-  access_log ${rails_root}/log/nginx.access.log;
-  error_log ${rails_root}/log/nginx.error.log;
+  access_log /var/log/nginx.access.log;
+  error_log /var/log/nginx.error.log;
   
-  location @rails {
-    proxy_pass http://railsstream;
+  location @web {
+    proxy_pass http://webstream;
     proxy_set_header X-Real-IP \$remote_addr;
     proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
     proxy_set_header Host \$http_host;
@@ -55,5 +55,7 @@ server {
   }
 }
 EOS
+
+cp /srv/dagle/docker/start-nginx.sh /srv/${APP_NAME}/
 
 exit 0
