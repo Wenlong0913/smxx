@@ -182,6 +182,8 @@ class Order < ApplicationRecord
     paid > (price/100) ? '已结清' : '未结清'
   end
 
+  scope :undeleted, -> { where(deleted: false)}
+
   # def member
   #   return nil unless site
   #   return site.members.where(user: user).first if user

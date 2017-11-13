@@ -78,8 +78,12 @@ module AppAPI::V1
       end
       delete do
         authenticate!
-        order = current_user.orders.find(params[:id]).destroy
-        present order, with: AppAPI::Entities::OrderSimple, action: :destroy
+        order = current_user.orders.find(params[:id])
+        if order.update_attributes(deleted: true)
+          present order, with: AppAPI::Entities::OrderSimple
+        else
+          error! '删除失败'
+        end
       end
 
       desc '获取订单列表' do
@@ -92,7 +96,7 @@ module AppAPI::V1
       end
       get do
         authenticate!
-        orders = current_user.orders
+        orders = current_user.orders.undeleted
         if params[:status]
           orders = orders.where(status: params[:status])
         end
