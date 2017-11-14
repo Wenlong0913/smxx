@@ -1,5 +1,5 @@
 module AppAPI::V1
-  class Article < Grape::API
+  class Article < AppAPI::BaseAPI
     helpers AppAPI::SharedParams
     resources :articles do
 

@@ -1,5 +1,5 @@
 module AppAPI::V1
-  class AppSettings < Grape::API
+  class AppSettings < AppAPI::BaseAPI
     helpers AppAPI::SharedParams
     resources :app_settings do
 

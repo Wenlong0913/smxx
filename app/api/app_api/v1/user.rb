@@ -1,5 +1,5 @@
 module AppAPI::V1
-  class User < Grape::API
+  class User < AppAPI::BaseAPI
     helpers AppAPI::SharedParams
     resources :users do
       desc 'Ping status'

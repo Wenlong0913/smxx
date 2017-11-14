@@ -1,5 +1,5 @@
 module AppAPI::V1
-  class Complaint < Grape::API
+  class Complaint < AppAPI::BaseAPI
     resources :complaints do
 
       desc '投诉'
