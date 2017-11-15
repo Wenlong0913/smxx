@@ -44,7 +44,13 @@ server {
     proxy_set_header Connection "upgrade";
   }
 
-  location ^~ /(assets|webpack)/ {
+  location ^~ /assets/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+  }
+
+  location ^~ /webpack/ {
     gzip_static on;
     expires max;
     add_header Cache-Control public;
