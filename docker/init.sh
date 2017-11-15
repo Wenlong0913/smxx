@@ -10,3 +10,4 @@ echo "Settting up env..."
 ${rails_root}/docker/setup-env.sh
 echo "Setting up Nginx"
 ${rails_root}/docker/setup-nginx.sh
+echo "Completed."

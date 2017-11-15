@@ -13,5 +13,4 @@ ln -sf /srv/${APP_NAME}/config/application.yml config/
 rm config/settings.${PROJECT_NAME}.yml
 ln -sf /srv/${APP_NAME}/config/settings.${PROJECT_NAME}.yml config/
 
-${rails_root}/docker/init-db.sh
-bundle exec puma -C config/puma.rb -b tcp://0.0.0.0 -p 3000
+API_ONLY=true bundle exec puma -C config/puma.rb -b tcp://0.0.0.0 -p 3000

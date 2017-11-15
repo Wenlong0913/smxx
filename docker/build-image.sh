@@ -7,7 +7,11 @@ workdir=`pwd`
 cd $dir
 
 RAILS_ENV=${RAILS_ENV:-production}
+branch_name=$(git symbolic-ref -q HEAD)
+branch_name=${branch_name##refs/heads/}
+branch_name=${branch_name:-HEAD}
 version=`date +%Y%m%d%H%M%S`
+version=${branch_name}-${version}
 build_assets () {
     PROJECT_NAME=${PROJECT_NAME:-dagle} bundle exec \
         rails dbadapter=nulldb \

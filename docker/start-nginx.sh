@@ -1,4 +1,5 @@
 #!/bin/sh
 set -e
-ln -sf /srv/${APP_NAME}/nginx/default.conf /etc/nginx/conf.d/
+rm -rf /etc/nginx/conf.d/
+ln -sf /srv/${APP_NAME}/nginx /etc/nginx/conf.d
 nginx -g 'daemon off;'

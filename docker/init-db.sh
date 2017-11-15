@@ -12,4 +12,6 @@ cd $dir
  bundle exec rails r "puts User.table_exists?" | grep "false"
 ) && bundle exec rails db:setup
 
+bundle exec rails db:migrate
+
 exit 0
