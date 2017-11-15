@@ -10,7 +10,7 @@
           = image_tag user.display_headshot
         .info
           = user.display_name
-          small= user.display_role
+          small = user.display_role
     /! end sidebar user
     /! begin sidebar nav
     ul.nav
@@ -28,12 +28,12 @@
       - elsif Settings.project.eqxiyi?
         = render "layouts/backend/sidebar_eqxiyi"
       - elsif Settings.project.wgtong?
-         = render "layouts/backend/sidebar_wgtong"
+        = render "layouts/backend/sidebar_wgtong"
 
       li class=("has-sub #{'active' if page?('admin/cms/sites', "admin/cms/channels")}")
         a href="javascript:;"
           b.caret.pull-right
-          i.fa.fa-leaf
+          i.fa.fa-th-list
           span 网站管理系统
         ul.sub-menu
           li class=("#{'active' if page?('admin/cms/sites')}")
@@ -48,7 +48,7 @@
       li class=("has-sub #{'active' if page?('admin/tracker/home', 'admin/tracker/shares/home')}")
         a href="javascript:;"
           b.caret.pull-right
-          i.fa.fa-inbox
+          i.fa.fa-th-list
           span 站点统计
         ul.sub-menu
           li[class=('active' if page?('admin/tracker/home#index'))]
@@ -58,7 +58,7 @@
       li class=("has-sub")
         a href="javascript:;"
           b.caret.pull-right
-          i.fa.fa-question-circle
+          i.fa.fa-th-list
           span 帮助文档
         ul.sub-menu
           li
@@ -70,17 +70,17 @@
       li class=("has-sub #{'active' if page?('admin/audits', 'admin/audits/statistics')}")
         a href="javascript:;"
           b.leaf.pull-right
-          i.fa.fa-inbox
+          i.fa.fa-th-list
           span 操作日志
         ul.sub-menu
           li class=("#{'active' if page?('admin/audits#index')}") = link_to '操作日志', admin_audits_path
           li class=("#{'active' if page?('admin/audits#statistics')}") = link_to '统计报表', statistics_admin_audits_path
       li
         = link_to admin_keystores_path do
-          = fa_icon 'key', text: '参数管理'
+          = fa_icon 'th-list', text: '参数管理'
       li
         = link_to admin_profile_path do
-          = fa_icon 'key', text: '我的用户信息'
+          = fa_icon 'user-o', text: '我的用户信息'
       li
         = link_to sign_out_path, method: :delete do
           = fa_icon 'sign-out', text: '退出系统'
