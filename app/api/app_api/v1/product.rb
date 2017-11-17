@@ -1,5 +1,5 @@
 module AppAPI::V1
-  class Product < Grape::API
+  class Product < AppAPI::BaseAPI
     helpers AppAPI::SharedParams
     resources :products do
 

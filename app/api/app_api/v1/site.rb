@@ -1,5 +1,5 @@
 module AppAPI::V1
-  class Site < Grape::API
+  class Site < AppAPI::BaseAPI
     helpers AppAPI::SharedParams
     resources :sites do
 

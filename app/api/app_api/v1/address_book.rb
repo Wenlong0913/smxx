@@ -1,10 +1,10 @@
 module AppAPI::V1
-  class AddressBook < Grape::API
+  class AddressBook < AppAPI::BaseAPI
     helpers AppAPI::SharedParams
     resources :address_books do
 
       desc "创建地址簿" do
-        success AppAPI::Entities::AddressBook 
+        success AppAPI::Entities::AddressBook
       end
       params do
         requires :name, type: String, desc: '收货人名字'
@@ -22,7 +22,7 @@ module AppAPI::V1
       end
 
       desc "修改地址簿" do
-        success AppAPI::Entities::AddressBook 
+        success AppAPI::Entities::AddressBook
       end
       params do
         requires :id, type: Integer, desc: '地址薄ID'

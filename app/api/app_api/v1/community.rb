@@ -1,5 +1,5 @@
 module AppAPI::V1
-  class Community < Grape::API
+  class Community < AppAPI::BaseAPI
     helpers AppAPI::SharedParams
     resources :communities do
       desc '小区列表' do

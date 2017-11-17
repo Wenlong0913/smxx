@@ -1,8 +1,7 @@
 module AppAPI::V1
-  class Order < Grape::API
+  class Order < AppAPI::BaseAPI
     helpers AppAPI::SharedParams
     resources :orders do
-
       desc '订单信息' do
         success AppAPI::Entities::Order
       end
