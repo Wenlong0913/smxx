@@ -122,4 +122,9 @@ class Frontend::UsersController < Frontend::BaseController
     end
   end
 
+  def favorites
+    @favorites_sites = current_user.favorites.where(resource_type: 'Site').order(updated_at: :desc)
+    @favorites_products = current_user.favorites.where(resource_type: 'Item').order(updated_at: :desc)
+  end
+
 end

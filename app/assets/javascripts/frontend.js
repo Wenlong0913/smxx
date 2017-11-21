@@ -12,3 +12,4 @@
 //= require frontend/orders
 // require frontend/bootstrap.min
 //= require frontend/slim.jquery.min
+//= require favorites
