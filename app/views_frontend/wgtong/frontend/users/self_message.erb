@@ -6,6 +6,16 @@
   overflow: hidden;
   white-space: nowrap
 }
+.status_bar1 {
+  font-size: 20px;
+  color: #dfdfdf; 
+  text-shadow: 1px 1px 1px #dfdfdf;
+}
+.status_bar2 {
+  font-size: 20px;
+  color: #f0ad4e; 
+  text-shadow: 1px 1px 1px #dfdfdf;
+}
 </style>
 <div id="wrap">
   <section id="start" class="padding-top-bottom text-center">
@@ -13,9 +23,7 @@
       <!-- header start -->
       <div class="tr-breadcrumb">
   			<div class="title pull-left">
-  				<h1>
-            消息中心
-          </h1>
+  				<h1>消息中心</h1>
   			</div>
         <ol class="breadcrumb pull-right">
           <li><a href="/">首页</a></li>
@@ -25,17 +33,17 @@
 
       <!-- content start -->
       <div class="row">
-        <div class="col-sm-8 col-md-8 tr-sticky">
+        <div class="col-md-8 col-xs-12 tr-sticky">
           <!-- message types -->
           <div class="tr-section">
             <p class="text-left">
               状态：
                <a href="<%= self_message_users_path(type: 'unread') %>" class="btn btn-default  <%= params[:type] == 'unread' ? 'active' : '' %>">
-                 <span class="fa fa-bell" style="font-size: 20px; color: #dfdfdf; text-shadow: 1px 1px 1px #dfdfdf;"></span>
+                 <span class="fa fa-bell status_bar1"></span>
                  未阅读
                </a>
                <a href="<%= self_message_users_path() %>" class="btn btn-default  <%= params[:type].blank? ? 'active' : '' %>">
-                 <span class="fa fa-bell" style="font-size: 20px; color: #f0ad4e; text-shadow: 1px 1px 1px #dfdfdf;"></span>
+                 <span class="fa fa-bell status_bar2"></span>
                  已阅读
                </a>
             </p>
@@ -53,7 +61,7 @@
                 <ul>
                   <li>
                     <img src="<%= notice.actor_avatar_url%>" alt="" class="img-circle" width="80px">
-                    <a href="#"><%= notice.actor_name%></a>
+                    <a href="javascript:void(0)"><%= notice.actor_name%></a>
                   </li>
                 </ul>
               </div>
@@ -75,7 +83,7 @@
           <div class="tr-section text-left">
             <div class="media row">
               <div class="col-md-1 col-xs-1">
-                <a href="#">
+                <a href="javascritpt:void(0)">
                   <img class="img-responsive" src="/templetes/newshub/images/ico/apple-touch-icon-57-precomposed.png" alt="...">
                 </a>
               </div>
@@ -96,7 +104,7 @@
               </div>
             </div>
           </div>
-          <%end%>
+          <% end %>
           <% else %>
             <div class="row">
               <div class="col-md-12 text-center">
@@ -109,13 +117,12 @@
           <% end %>
         </div>
         <!-- nav_sidebar -->
-        <div class="col-sm-5 col-md-4 tr-sticky" >
+        <div class="col-md-4 col-xs-12 tr-sticky" >
           <%= render file: 'frontend/users/_nav_sidebar.html.erb' %>
         </div>
       </div>
       <!-- content end -->
-
     </div>
   </section>
-  <%= render file: @cms_site.template_dir + '_footer.html' %>
 </div>
+<%= render file: @cms_site.template_dir + '_footer.html' %>
