@@ -112,14 +112,6 @@ class Frontend::OrdersController < Frontend::BaseController
         end
       end
 
-      # 产品库存是否满足
-      if product.stock.to_i < product_amount.to_i
-        order.errors.add 'order_product_stock'.to_sym, "剩余座位#{product.stock}个!"
-        render js: <<-JS
-          onOrderCreate('#{order.errors.messages.to_json}')
-        JS
-        return
-      end
       order.order_products.new(product_id: product.id, amount: product_amount, price: product.sell_price)
       order.delivery_phone = params[:order][:delivery_phone] if params[:order][:delivery_phone].present?
       order.site = product.site
@@ -170,6 +162,14 @@ class Frontend::OrdersController < Frontend::BaseController
     order = Order.find_by_code(params[:out_trade_no])
     if order.present?
       order.update(status: order_status)
+      product = order.order_products.first.product
+      order_products = order.order_products.find(order)
+      purchase_amount = order_products.amount
+      product.stock - purchase_amount
+      if product.stock == 0
+        product.update(status: 'completed')
+      end
+      product.save!
     end
     redirect_to frontend_order_path(order)
   end
