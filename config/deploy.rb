@@ -45,7 +45,7 @@ set :repo_url, "git@gitlab.tanmer.com:tanmer/#{ENV['REPO'] || ENV['PROJECT_NAME'
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :deploy_to, "/data/www/#{ENV['DEPLOY_TO'] || fetch(:application)}"
 
-set :rvm_ruby_version, '2.3.3'
+set :rvm_ruby_version, '2.3.4'
 
 before "deploy", :check_branch do
 
@@ -91,3 +91,7 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/asse
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
+# Setup for puma
+set :nginx_config_name, 'sinotekusa.com'
+set :nginx_server_name, 'sinotekusa.com'
+set :nginx_use_ssl, false
