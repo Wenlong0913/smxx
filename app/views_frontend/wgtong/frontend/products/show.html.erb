@@ -1,17 +1,25 @@
 <div class="main-wrapper">
 	<%= render file: 'public/templetes/newshub/_header.html.erb' %>
 	<div class="container">
-		<!-- [[header start]] -->
-	  <%= render file: 'public/templetes/newshub/_top_menu.html.erb' %>
-		<!-- [[header end]] -->
 		<div class="row">
+      <div class="col-md-12">
+        <div class="tr-breadcrumb">
+          <div class="title pull-left">
+            <h1><%= @product.name %></h1>
+          </div>
+          <ol class="breadcrumb pull-right">
+            <li><a href="/">首页</a></li>
+            <li class="active"><%= @product.catalog.name %></li>
+          </ol>
+        </div>
+      </div>
 			<div class="col-sm-9 tr-sticky">
 				<div class="tr-content theiaStickySidebar">
 					<div class="tr-section">
 						<div class="tr-post">
 							<div class="entry-header">
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-5">
 										<div class="entry-thumbnail">
 											<img class="img-responsive" src="<%= @product.first_image %>" alt="<%= @product.name %>" style="max-height: 350px;">
 										</div>
@@ -35,7 +43,7 @@
                       </div><!-- /.entry-meta -->
                     </div>
 									</div>
-									<div class="col-md-6 post-content prodShowRight m-0">
+									<div class="col-md-7 post-content prodShowRight m-0">
                     <div class="row">
                       <div class="col-md-9">
                         <h2 class="entry-title weight-300"><%= @product.name %></h2>
@@ -44,8 +52,8 @@
                         <!-- 关注插件 -->
                         <% if current_user %>
                           <div rel="favorite-button" data-url="<%= favorite_frontend_product_path(@product) %>" >
-                            <button v-if="isFavorite" v-on:click="deleteFavorite">取消关注</button>
-                            <button v-else v-on:click="postFavorite">关注</button>
+                            <button v-if="isFavorite" v-on:click="deleteFavorite" class="btn btn-default">取消关注</button>
+                            <button v-else v-on:click="postFavorite" class="btn btn-success" >关注</button>
                           </div>
                         <% else %>
                           <%= link_to '关注', admin_sign_in_path, class: 'btn btn-default btn-sm' %>

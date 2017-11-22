@@ -1,5 +1,5 @@
-<%= render file: @cms_site.template_dir + '_header.html' %>
 <div id="wrap">
+  <%= render file: @cms_site.template_dir + '_header.html' %>
   <section id="start" class="padding-top-bottom text-center">
     <div class="container">
       <div class="tr-breadcrumb">
@@ -8,6 +8,7 @@
   			</div>
         <ol class="breadcrumb pull-right">
           <li><a href="/">首页</a></li>
+          <li><a href="javascript:;">个人中心</a></li>
         </ol>
   		</div>
       <% if notice %>
@@ -17,59 +18,54 @@
         </div>
       <% end %>
       <div class="row">
-        <div class="col-md-8 col-xs-8">
+        <div class="col-md-12 col-xs-12">
           <div class="theiaStickySidebar">
             <div class="tr-section">
-              <div class="row">
-                <div class="col-md-2 col-xs-12">
-                  <div class="user-logo">
-                    <img src="<%= current_user.display_headshot %>" alt="" class="img-circle" width="80" height="80">
-                  </div>
-                  <h5>
-                    <%= link_to current_user.nickname, edit_users_path %>
-                  </h5>
+              <div class="col-md-2 col-xs-12">
+                <div class="user-logo">
+                  <img src="<%= current_user.display_headshot %>" alt="" class="img-circle" width="80" height="80">
                 </div>
-                <div class="col-md-10 col-xs-12">
-                  <div class="row" style="margin-top: 15px;">
-                    <div class="col-md-2 col-xs-4">邮箱：</div>
-                    <div class="col-md-10 col-xs-8 text-left">
-                      <% if current_user.email.present? %>
-                        <%= current_user.email %>
-                      <% else %>
-                        <%= link_to '绑定邮箱', edit_users_path %>
-                      <% end %>
-                    </div>
+                <h5>
+                  <%= link_to current_user.nickname, edit_users_path %>
+                </h5>
+              </div>
+              <div class="col-md-10 col-xs-12">
+                <div class="row" style="margin-top: 15px;">
+                  <div class="col-md-2 col-xs-4">邮箱：</div>
+                  <div class="col-md-10 col-xs-8 text-left">
+                    <% if current_user.email.present? %>
+                      <%= current_user.email %>
+                    <% else %>
+                      <%= link_to '绑定邮箱', edit_users_path %>
+                    <% end %>
                   </div>
-                  <div class="row" style="margin-top: 15px;">
-                    <div class="col-md-2 col-xs-4">电话：</div>
-                    <div class="col-md-10 col-xs-8 text-left">
-                      <% if current_user.try(:mobile).try(:phone_number).present? %>
-                        <%= current_user.mobile.phone_number %> <%= link_to '重新绑定', binding_phone_users_path %>
-                      <% else %>
-                        暂无手机号 <%= link_to '立即绑定', binding_phone_users_path %>
-                      <% end %>
-                    </div>
+                </div>
+                <div class="row" style="margin-top: 15px;">
+                  <div class="col-md-2 col-xs-4">电话：</div>
+                  <div class="col-md-10 col-xs-8 text-left">
+                    <% if current_user.try(:mobile).try(:phone_number).present? %>
+                      <%= current_user.mobile.phone_number %> <%= link_to '重新绑定', binding_phone_users_path %>
+                    <% else %>
+                      暂无手机号 <%= link_to '立即绑定', binding_phone_users_path %>
+                    <% end %>
                   </div>
-                  <div class="row" style="margin-top: 15px;">
-                    <div class="col-md-2 col-xs-4">微信：</div>
-                    <div class="col-md-10 col-xs-8 text-left">
-                      <% if current_user.weixin %>
-                        <%= current_user.weixin.try(:name) || '匿名' %>
-                      <% else %>
-                        <%= link_to '立即绑定', binding_weixin_users_path%>
-                      <% end %>
-                    </div>
+                </div>
+                <div class="row" style="margin-top: 15px;">
+                  <div class="col-md-2 col-xs-4">微信：</div>
+                  <div class="col-md-10 col-xs-8 text-left">
+                    <% if current_user.weixin %>
+                      <%= current_user.weixin.try(:name) || '匿名' %>
+                    <% else %>
+                      <%= link_to '立即绑定', binding_weixin_users_path%>
+                    <% end %>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-md-4 col-xs-4">
-          <%= render file: 'frontend/users/_nav_sidebar.html.erb' %>
-        </div>
       </div>
     </div>
   </section>
+  <%= render file: @cms_site.template_dir + '_footer.html' %>
 </div>
-<%= render file: @cms_site.template_dir + '_footer.html' %>

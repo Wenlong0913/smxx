@@ -1,10 +1,10 @@
-<%= render file: @cms_site.template_dir + '_header.html' %>
 <style type="text/css">
   .active {
     background-color: #fff !important;
   }
 </style>
 <div id="wrap">
+  <%= render file: @cms_site.template_dir + '_header.html' %>
   <section id="start" class="padding-top-bottom text-center">
     <div class="container">
       <div class="tr-breadcrumb">
@@ -12,13 +12,13 @@
           <h1>关注&middot;收藏</h1>
         </div>
         <ol class="breadcrumb pull-right">
-          <li><a href="javascript:;">关注&middot;收藏</a></li>
           <li><a href="/">首页</a></li>
+          <li><%= link_to '个人中心', users_path %></li>
         </ol>
       </div>
 
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
           <div class="meta-widget meta-color">
             <ul class="nav nav-tabs row" role="tablist">
               <li role="presentation" class="active col-md-3 col-xs-6"><a href="#favorites" data-toggle="tab">关注</a></li>
@@ -88,13 +88,8 @@
             </div>
           </div>
         </div>
-        <% unless mobile_device? %>
-          <div class="col-md-4 col-xs-12 tr-sticky" >
-            <%= render file: 'frontend/users/_nav_sidebar.html.erb' %>
-          </div>
-        <% end %>
       </div>
     </div>
   </section>
+  <%= render file: @cms_site.template_dir + '_footer.html' %>
 </div>
-<%= render file: @cms_site.template_dir + '_footer.html' %>

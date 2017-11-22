@@ -2,11 +2,13 @@
 	<%= render file: 'public/templetes/newshub/_header.html.erb' %>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-3 tr-sidebar tr-sticky">
+      <% unless mobile_device? %>
+			<div class="col-md-2 tr-sidebar tr-sticky">
 				<%= render file: 'public/templetes/newshub/_side_menu.html.erb' %>
 			</div>
+      <% end %>
       <!-- search_results 搜索结果 -->
-			<div class="col-sm-6">
+			<div class="col-md-7">
         <div class="tr-content">
           <div class="tr-section ">
             <div class="section-title">
@@ -40,7 +42,6 @@
 
 				<div class="tr-content">
 					<div class="tr-section bg-transparent">
-
 						<% if @search_results.any? %>
               <% if params[:type] == 'sites' %>
                 <%= render file: 'frontend/search/_sites_search.html.erb' %>
@@ -49,9 +50,6 @@
               <% else %>
                 <%= render file: 'frontend/search/_cms_pages_search.html.erb' %>
               <% end %>
-            <% else %>
-
-
             <% end %>
 					</div>
 
@@ -68,7 +66,7 @@
         </div>
 			</div>
 
-			<div class="col-sm-3 tr-sidebar tr-sticky">
+			<div class="col-md-3 tr-sidebar tr-sticky">
 				<%= render file: 'public/templetes/newshub/_sidebar.html.erb' %>
 			</div>
 		</div>
