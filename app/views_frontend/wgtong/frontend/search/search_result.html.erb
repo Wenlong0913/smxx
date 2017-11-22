@@ -2,45 +2,43 @@
 	<%= render file: 'public/templetes/newshub/_header.html.erb' %>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-3 tr-sidebar tr-sticky">
+      <% unless mobile_device? %>
+			<div class="col-md-2 tr-sidebar tr-sticky">
 				<%= render file: 'public/templetes/newshub/_side_menu.html.erb' %>
 			</div>
+      <% end %>
       <!-- search_results 搜索结果 -->
-			<div class="col-sm-6">
+			<div class="col-md-7">
         <div class="tr-content">
           <div class="tr-section ">
-            <div class="section-title">
-							<h1><a href="javascript:void(0)"> <i class="fa fa-th" aria-hidden="true"></i> 搜索结果</a></h1>
-						</div>
+            <div class="row">
+              <div class="tr-section">
+                <%= form_for :search, url: search_result_path, method: :get, class: 'widget_search' do |f| %>
+                  <%= f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'sidebar-search-form', autocomplete: "off", placeholder: '请输入要搜索的内容' %>
+                  <%= f.submit '继续搜索', class: 'btn btn-primary' %>
+                <% end %>
+              </div>
+            </div>
             <% if @search_results.any? %>
-	            <h3>
-                <i class="fa fa-smile-o"></i>找到
-                <span class="faild-text"><%= @search_results.size %></span>条与
-                <span class="faild-text"><%= params[:search][:keywords] %></span>相关内容
-              </h3>
+	            <h4>找到<span class="faild-text"><%= @search_results.size %></span>条相关内容
+              </h4>
             <% else %>
-              <h3 style="margin-bottom: 30px;font-weight: 300;">
-                <i class="fa fa-frown-o"></i>抱歉：暂无
-                <span class="faild-text">
-                  <%= params[:search][:keywords] %>
-                </span>相关内容
-              </h3>
-              <%= form_for :search, url: search_result_path, method: :get, class: 'btn-input' do |f| %>
-                <%= f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', autocomplete: "off", placeholder: '请输入关键词，回车开始搜索' %>
-              <% end %>
+              <h4>抱歉暂无相关内容</h4>
             <% end %>
-            <div style="margin-top: 30px;margin-bottom: 30px;">
-              <span>分类筛选：</span>
-              <a href="<%= search_result_path(type: 'cms_pages', search: params[:search]) %>" class="btn <%= params[:type] == nil || params[:type] == 'cms_pages' ? 'btn-danger disabled' : 'btn-default' %>">新闻阅读</a>
-              <a href="<%= search_result_path(type: 'sites', search: params[:search]) %>" class="btn <%= params[:type] == 'sites' ? 'btn-danger disabled' : 'btn-default' %>">场馆信息</a>
-              <a href="<%= search_result_path(type: 'products', search: params[:search]) %>" class="btn <%= params[:type] == 'products' ? 'btn-danger disabled' : 'btn-default' %>">活动信息</a>
+            <div class="row">
+              <div class="col-md-12">
+                <p>点击分类可进行筛选：</p>
+                <br>
+                <a href="<%= search_result_path(type: 'cms_pages', search: params[:search]) %>" class="btn <%= params[:type] == nil || params[:type] == 'cms_pages' ? 'btn-danger disabled' : 'btn-default' %>">新闻资讯</a>
+                <a href="<%= search_result_path(type: 'products', search: params[:search]) %>" class="btn <%= params[:type] == 'products' ? 'btn-danger disabled' : 'btn-default' %>">活动预告</a>
+                <a href="<%= search_result_path(type: 'sites', search: params[:search]) %>" class="btn <%= params[:type] == 'sites' ? 'btn-danger disabled' : 'btn-default' %>">入驻场馆</a>
+              </div>
             </div>
           </div>
         </div>
 
 				<div class="tr-content">
 					<div class="tr-section bg-transparent">
-
 						<% if @search_results.any? %>
               <% if params[:type] == 'sites' %>
                 <%= render file: 'frontend/search/_sites_search.html.erb' %>
@@ -49,9 +47,6 @@
               <% else %>
                 <%= render file: 'frontend/search/_cms_pages_search.html.erb' %>
               <% end %>
-            <% else %>
-
-
             <% end %>
 					</div>
 
@@ -68,9 +63,11 @@
         </div>
 			</div>
 
-			<div class="col-sm-3 tr-sidebar tr-sticky">
+      <% unless mobile_device? %>
+			<div class="col-md-3 tr-sidebar tr-sticky">
 				<%= render file: 'public/templetes/newshub/_sidebar.html.erb' %>
 			</div>
+      <% end %>
 		</div>
 	</div>
 </div>

@@ -1,22 +1,66 @@
 <div class="main-wrapper">
 	<%= render file: 'public/templetes/newshub/_header.html.erb' %>
 	<div class="container">
-		<!-- [[header start]] -->
-	  <%= render file: 'public/templetes/newshub/_top_menu.html.erb' %>
-		<!-- [[header end]] -->
 		<div class="row">
+      <div class="col-md-12">
+        <div class="tr-breadcrumb">
+          <div class="title pull-left">
+            <h1><%= @product.name %></h1>
+          </div>
+          <ol class="breadcrumb pull-right">
+            <li><a href="/">首页</a></li>
+            <li class="active"><%= @product.catalog.name %></li>
+          </ol>
+        </div>
+      </div>
 			<div class="col-sm-9 tr-sticky">
 				<div class="tr-content theiaStickySidebar">
 					<div class="tr-section">
 						<div class="tr-post">
 							<div class="entry-header">
 								<div class="row">
-									<div class="col-md-7">
+									<div class="col-md-5">
 										<div class="entry-thumbnail">
 											<img class="img-responsive" src="<%= @product.first_image %>" alt="<%= @product.name %>" style="max-height: 350px;">
 										</div>
+                    <div class="post-content">
+                      <div class="entry-meta">
+                        <ul>
+                          <li><a href="javascript:void(0)"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(@product.updated_at) %>前</a></li>
+                          <li><a href="javascript:void(0)"><i class="fa fa-eye"></i> <%= @product.visits_count %>阅读</a></li>
+                          <li><a href="javascript:void(0)"><i class="fa fa-comments-o"></i> <%= @product.comments_count %>评论</a></li>
+                          <li>
+                            <ul>
+                              <div class="bdsharebuttonbox" data-tag="share_1">
+                                <a class="bds_qzone" data-cmd="qzone"></a>
+                                <a class="bds_tsina" data-cmd="tsina"></a>
+                                <a class="bds_sqq" data-cmd="sqq"></a>
+                                <a class="bds_weixin" data-cmd="weixin"></a>
+                              </div>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div><!-- /.entry-meta -->
+                    </div>
 									</div>
-									<div class="col-md-5 post-content prodShowRight m-0">
+									<div class="col-md-7 post-content prodShowRight m-0">
+                    <div class="row">
+                      <div class="col-md-9">
+                        <h2 class="entry-title weight-300"><%= @product.name %></h2>
+                      </div>
+                      <div class="col-md-3">
+                        <!-- 关注插件 -->
+                        <% if current_user %>
+                          <div rel="favorite-button" data-url="<%= favorite_frontend_product_path(@product) %>" >
+                            <button v-if="isFavorite" v-on:click="deleteFavorite" class="btn btn-default">取消关注</button>
+                            <button v-else v-on:click="postFavorite" class="btn btn-success" >关注</button>
+                          </div>
+                        <% else %>
+                          <%= link_to '关注', admin_sign_in_path, class: 'btn btn-default btn-sm' %>
+                        <% end %>
+                        <!-- 关注插件 -->
+                      </div>
+                    </div>
 										<p><i class="fa fa-cny"></i>价格：
                       <% if @product.sell_price > 0 %>
                         <%= @product.sell_price / 100 %>
@@ -28,8 +72,6 @@
 										<% if @product.address_line1.present? %>
 											<p><i class="fa fa-map-marker  %>"></i>地址：
 												<%= @product.address_line1 %>
-												<br/>
-												<small><%= @product.address_line2 %></small>
 											</p>
 										<% end %>
 
@@ -56,16 +98,16 @@
 										<% end %>
 										<p>
 											<% if @product.external_purchase_url.presence %>
-                        <a href="<%= @product.external_purchase_url %>" target="_blank", class="btn btn-block btn-lg btn-success">马上预订</a>
+                        <a href="<%= @product.external_purchase_url %>" target="_blank", class="btn btn-lg btn-success">马上预订</a>
                       <% else %>
                         <% if @product.is_foraged %>
-                          <a href="<%= @product.forage_url %>" target="_blank", class="btn btn-block btn-lg btn-success">马上预订</a>
+                          <a href="<%= @product.forage_url %>" target="_blank", class="btn btn-lg btn-success">马上预订</a>
                         <% else %>
                           <% if @product.sell_price > 0 || (@product.purchase_type && @product.purchase_type.include?('sign_up')) %>
                             <% if @product.stock.to_i > 0 && (@product.reserve_datetime.blank? || @product.reserve_datetime.to_time.to_i <= Time.now.to_i) %>
-                              <a href="<%= new_frontend_order_path(product_id: @product.id) %>" class="btn btn-block btn-lg btn-success">马上预订</a>
+                              <a href="<%= new_frontend_order_path(product_id: @product.id) %>" class="btn btn-lg btn-success">马上预订</a>
                               <% elsif  @product.stock.to_i <= 0 %>
-                                <a href="javascript:void(0)" class="btn btn-block btn-lg btn-default disabled">已售完</a>
+                                <a href="javascript:void(0)" class="btn btn-lg btn-default disabled">已售完</a>
                               <% elsif @product.reserve_datetime.present?  %>
                               <p>
                                 <i class="fa fa-clock-o"></i>开始预定时间：
@@ -79,31 +121,6 @@
 									</div>
 								</div>
 							</div>
-							<div class="post-content">
-								<div class="author">
-									<img class="img-responsive img-circle" src="/templetes/newshub/images/others/user.png" alt="Image">
-								</div>
-								<div class="entry-meta">
-									<ul>
-										<li><a href="javascript:void(0)"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(@product.updated_at) %>前</a></li>
-                    <li><a href="javascript:void(0)"><i class="fa fa-eye"></i> <%= @product.visits_count %>阅读</a></li>
-                    <li><a href="javascript:void(0)"><i class="fa fa-comments-o"></i> <%= @product.comments_count %>评论</a></li>
-										<li>
-											<ul>
-												<div class="bdsharebuttonbox" data-tag="share_1">
-	                        <a class="bds_qzone" data-cmd="qzone"></a>
-	                        <a class="bds_tsina" data-cmd="tsina"></a>
-	                        <a class="bds_sqq" data-cmd="sqq"></a>
-	                        <a class="bds_weixin" data-cmd="weixin"></a>
-	                      </div>
-											</ul>
-										</li>
-									</ul>
-								</div><!-- /.entry-meta -->
-								<h2 class="entry-title">
-									<%= @product.name %>
-								</h2>
-							</div><!-- /.post-content -->
 						</div>
 
 						<div class="tr-details">
