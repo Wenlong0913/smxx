@@ -7,6 +7,7 @@ rails_root=`pwd`
 cd $dir
 
 echo "Settting up env..."
-${rails_root}/composer/setup-env.sh
+${rails_root}/docker/setup-env.sh
 echo "Setting up Nginx"
-${rails_root}/composer/setup-nginx.sh
+${rails_root}/docker/setup-nginx.sh
+echo "Completed."

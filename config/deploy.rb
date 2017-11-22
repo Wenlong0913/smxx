@@ -45,7 +45,7 @@ set :repo_url, "git@gitlab.tanmer.com:tanmer/#{ENV['REPO'] || ENV['PROJECT_NAME'
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :deploy_to, "/data/www/#{ENV['DEPLOY_TO'] || fetch(:application)}"
 
-set :rvm_ruby_version, '2.3.3'
+set :rvm_ruby_version, '2.3.4'
 
 before "deploy", :check_branch do
 
@@ -81,7 +81,7 @@ end
 # set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, "config/settings.#{ENV['PROJECT_NAME']}.yml", "config/app_settings.yml", "config/application.yml"
+append :linked_files, "config/settings.#{ENV['PROJECT_NAME']}.yml", "config/application.yml"
 
 # Default value for linked_dirs is []
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/assets", "public/ckeditor_assets", 'node_modules', 'public/photos', 'public/attachments', 'public/templetes', 'public/system'

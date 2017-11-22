@@ -13,6 +13,8 @@ host =
     'prod2uc.corp.tanmer.com'
   when 'nj1688.dagle', 'pilele.dagle'
     'prod1uc.corp.tanmer.com'
+  when 'rizhao'
+    'www.sinotekusa.com'
   else
     'prod1uc.corp.tanmer.com'
   end
