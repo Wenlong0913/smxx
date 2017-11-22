@@ -149,6 +149,8 @@ GEM
       capistrano (~> 3.1)
       sshkit (~> 1.2)
     capistrano-harrow (0.5.3)
+    capistrano-passenger (0.2.0)
+      capistrano (~> 3.0)
     capistrano-rails (1.2.3)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
@@ -158,10 +160,6 @@ GEM
     capistrano-sidekiq (0.10.0)
       capistrano
       sidekiq (>= 3.4)
-    capistrano3-puma (3.1.1)
-      capistrano (~> 3.7)
-      capistrano-bundler
-      puma (~> 3.4)
     capybara (2.13.0)
       addressable
       mime-types (>= 1.16)
@@ -668,10 +666,10 @@ DEPENDENCIES
   bower-rails
   byebug
   capistrano (~> 3.7.1)
+  capistrano-passenger
   capistrano-rails
   capistrano-rvm
   capistrano-sidekiq
-  capistrano3-puma (~> 3.1)
   capybara
   chinese_pinyin
   ckeditor (~> 4.2.2)

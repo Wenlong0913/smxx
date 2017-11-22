@@ -199,10 +199,9 @@ end
 group :deployment do
   gem 'capistrano', '~> 3.7.1'
   gem 'capistrano-rvm'
-  # gem 'capistrano-passenger'
+  gem 'capistrano-passenger'
   gem 'capistrano-rails'
   gem 'capistrano-sidekiq'
-  gem 'capistrano3-puma', '~> 3.1'
 end
 
 gem 'colorize', group: [:development, :test, :deployment]
