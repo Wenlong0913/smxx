@@ -9,7 +9,7 @@ namespace :webpack do
   task :install do
     on roles(:assets) do |h|
       within release_path do
-        execute :npm, :install
+        execute :yarn
       end
     end
   end
