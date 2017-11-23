@@ -25,7 +25,7 @@
           </ol>
         </div>
       </div>
-			<div class="col-sm-9 tr-sticky">
+			<div class="col-sm-9 col-xs-12 tr-sticky">
 				<div class="tr-content theiaStickySidebar">
 					<div class="tr-section">
 						<div class="tr-post">
@@ -101,16 +101,32 @@
               <h4><%= @site.title %>产品</h4>
 							<div class="row">
                 <% if @site.products.present? %>
-                  <% @site.products.each do |product| %>
+                  <% @site.products.where("features ->> 'is_shelves' = ?", '1').each do |product| %>
+                    <%
+                      doc = Nokogiri::HTML(product.try(:content))
+                      img_srcs = doc.css('img').map{ |i| i['src'] }
+                    %>
                     <div class="col-md-6" style="margin: 10px 0;">
                       <div class="col-md-3">
-                        <a href="<%= frontend_product_path(product) %>">
-                          <img src="<%= product.first_image %>" class="img-responsive" >
+                        <% if product.external_purchase_url.presence %>
+                          <a href="<%= product.external_purchase_url %>" target="_blank">
+                        <% elsif product.is_foraged %>
+                          <a href="<%= product.forage_url %>" target="_blank">
+                        <% else %>
+                          <a href="<%= frontend_product_path(product) %>">
+                        <% end %>
+                          <img src="<%= img_srcs[0].present? ? img_srcs[0] : product.first_image %>" class="img-responsive" >
                         </a>
                       </div>
                       <div class="col-md-9">
-                        <a href="<%= frontend_product_path(product) %>" >
-                          <%= product.name.truncate(15) %>
+                        <% if product.external_purchase_url.presence %>
+                          <a href="<%= product.external_purchase_url %>" target="_blank">
+                        <% elsif product.is_foraged %>
+                          <a href="<%= product.forage_url %>" target="_blank">
+                        <% else %>
+                          <a href="<%= frontend_product_path(product) %>">
+                        <% end %>
+                          <%= product.name %>
                         </a>
                       </div>
                     </div>
@@ -133,9 +149,11 @@
 				</div><!-- /.tr-content -->
 			</div><!-- /.tr-sticky -->
 
+      <% unless mobile_device? %>
 			<div class="col-sm-3 tr-sidebar tr-sticky">
 				<%= render file: 'public/templetes/newshub/_sidebar.html.erb' %>
 			</div>
+      <% end %>
 		</div><!-- /.row -->
 
 		<% if Keystore.value_for('banner-site-bottom-center-819×119').present? %>

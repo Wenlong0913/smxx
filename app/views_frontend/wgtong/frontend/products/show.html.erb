@@ -13,7 +13,7 @@
           </ol>
         </div>
       </div>
-			<div class="col-sm-9 tr-sticky">
+			<div class="col-sm-9 col-xs-12 tr-sticky">
 				<div class="tr-content theiaStickySidebar">
 					<div class="tr-section">
 						<div class="tr-post">
@@ -98,10 +98,10 @@
 										<% end %>
 										<p>
 											<% if @product.external_purchase_url.presence %>
-                        <a href="<%= @product.external_purchase_url %>" target="_blank", class="btn btn-lg btn-success">马上预订</a>
+                        <a href="<%= @product.external_purchase_url %>" target="_blank" class="btn btn-lg btn-success">马上预订</a>
                       <% else %>
                         <% if @product.is_foraged %>
-                          <a href="<%= @product.forage_url %>" target="_blank", class="btn btn-lg btn-success">马上预订</a>
+                          <a href="<%= @product.forage_url %>" target="_blank" class="btn btn-lg btn-success">马上预订</a>
                         <% else %>
                           <% if @product.sell_price > 0 || (@product.purchase_type && @product.purchase_type.include?('sign_up')) %>
                             <% if @product.stock.to_i > 0 && (@product.reserve_datetime.blank? || @product.reserve_datetime.to_time.to_i <= Time.now.to_i) %>
@@ -139,9 +139,11 @@
 				</div>
 			</div>
 
+      <% unless mobile_device? %>
 			<div class="col-sm-3 tr-sidebar tr-sticky">
 				<%= render file: 'public/templetes/newshub/_sidebar.html.erb' %>
 			</div>
+      <% end %>
 		</div>
 
 		<% if Keystore.value_for('banner-product-bottom-center-819×119').present? %>
