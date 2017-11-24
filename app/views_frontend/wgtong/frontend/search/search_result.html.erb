@@ -14,8 +14,8 @@
             <div class="row">
               <div class="tr-section">
                 <%= form_for :search, url: search_result_path, method: :get, class: 'widget_search' do |f| %>
-                  <%= f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'sidebar-search-form', autocomplete: "off", placeholder: '请输入要搜索的内容' %>
-                  <%= f.submit '继续搜索', class: 'btn btn-primary' %>
+                  <%= f.text_field :keywords, value: params[:search] && params[:search][:keywords], class: 'sidebar-search-form', autocomplete: "off", placeholder: '请输入要搜索的内容' %>
+                  <button type="submit" class="btn btn-primary">搜索</button>
                 <% end %>
               </div>
             </div>
@@ -29,8 +29,8 @@
               <div class="col-md-12">
                 <p>点击分类可进行筛选：</p>
                 <br>
-                <a href="<%= search_result_path(type: 'cms_pages', search: params[:search]) %>" class="btn <%= params[:type] == nil || params[:type] == 'cms_pages' ? 'btn-danger disabled' : 'btn-default' %>">新闻资讯</a>
-                <a href="<%= search_result_path(type: 'products', search: params[:search]) %>" class="btn <%= params[:type] == 'products' ? 'btn-danger disabled' : 'btn-default' %>">活动预告</a>
+                <a href="<%= search_result_path(type: 'products', search: params[:search]) %>" class="btn <%= params[:type] == nil || params[:type] == 'products' ? 'btn-danger disabled' : 'btn-default' %>">活动预告</a>
+                <a href="<%= search_result_path(type: 'cms_pages', search: params[:search]) %>" class="btn <%= params[:type] == 'cms_pages' ? 'btn-danger disabled' : 'btn-default' %>">新闻资讯</a>
                 <a href="<%= search_result_path(type: 'sites', search: params[:search]) %>" class="btn <%= params[:type] == 'sites' ? 'btn-danger disabled' : 'btn-default' %>">入驻场馆</a>
               </div>
             </div>
@@ -42,10 +42,10 @@
 						<% if @search_results.any? %>
               <% if params[:type] == 'sites' %>
                 <%= render file: 'frontend/search/_sites_search.html.erb' %>
-              <% elsif params[:type] == 'products' %>
-                <%= render file: 'frontend/search/_products_search.html.erb' %>
-              <% else %>
+              <% elsif params[:type] == 'cms_pages' %>
                 <%= render file: 'frontend/search/_cms_pages_search.html.erb' %>
+              <% else %>
+                <%= render file: 'frontend/search/_products_search.html.erb' %>
               <% end %>
             <% end %>
 					</div>
