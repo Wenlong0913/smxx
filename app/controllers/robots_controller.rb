@@ -15,8 +15,7 @@ class RobotsController < ActionController::Base
   def subdomain_entries
     if CmsSubdomain.matches?(request) && request.subdomain != 'www'
       <<-ROBOTS.strip_heredoc
-      User-agent: *
-      Disallow:
+      Disallow: /
       ROBOTS
     end
   end
