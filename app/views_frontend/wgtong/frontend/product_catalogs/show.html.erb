@@ -38,7 +38,7 @@
                         <% else %>
                           <a href="<%= frontend_product_path(product) %>">
                         <% end %>
-                          <img class="img-responsive" src="<%= img_srcs[0].present? ? img_srcs[0] : product.first_image %>" style="height: 100px;">
+                          <img class="img-responsive thumb-img" src="<%= img_srcs[0].present? ? img_srcs[0] : product.first_image %>">
                         </a>
                       </div>
                       <div class="col-md-8 col-xs-8">
@@ -51,7 +51,7 @@
                             <% else %>
                               <a href="<%= frontend_product_path(product) %>">
                             <% end %>
-                              <%= product.name.truncate(40) %>
+                              <%= product.name.truncate(24) %>
                             </a>
                           </h4>
                           <div class="info">
@@ -59,13 +59,13 @@
                             <a href="javascript:;"><%= product.date %></a>
                             <span>&middot;</span>
                             <% end %>
-                            <a href="javascript:;"><%= product.address_line1 %></a>
+                            <% if product.address_line1.present? %>
+                            <a href="javascript:;"><%= product.address_line1.truncate(11) %></a>
+                            <% end %>
                           </div>
                           <div class="info">
-                            <a class="pro_catalog<%= rand(1..3)%>" href="javascript:;"><%= product.catalog.name %></a>
                             <a href="<%= frontend_site_path(product.site) %>"><img src="/templetes/newshub/images/others/user.png" alt="">&nbsp;<%= product.site.title %></a>
-                            <span>&middot;</span>
-                            <a href="javascript:;"><%= product.comments_count %>评论</a>
+                            <a class="pro_catalog<%= rand(1..3)%>" href="javascript:;"><%= product.catalog.name %></a>
                           </div>
                         </div>
                       </div>
@@ -98,7 +98,7 @@
                             <% else %>
                               <a href="<%= frontend_product_path(product) %>">
                             <% end %>
-                              <img class="img-responsive" src="<%= img_srcs[index] %>" alt="<%= product.name %>" style="height: 100px;">
+                              <img class="img-responsive thumb-img" src="<%= img_srcs[index] %>" alt="<%= product.name %>">
                             </a>
                           </div>
                         <% end %>
@@ -106,10 +106,8 @@
                       <div class="col-md-12 col-xs-12">
                         <div class="header-text">
                           <div class="info">
-                            <a class="pro_catalog<%= rand(1..3)%>" href="javascript:;"><%= product.catalog.name %></a>
                             <a href="<%= frontend_site_path(product.site) %>"><img src="/templetes/newshub/images/others/user.png" alt="">&nbsp;<%= product.site.title %></a>
-                            <span>&middot;</span>
-                            <a href="javascript:;"><%= product.comments_count %>评论</a>
+                            <a class="pro_catalog<%= rand(1..3)%>" href="javascript:;"><%= product.catalog.name %></a>
                           </div>
                         </div>
                       </div>

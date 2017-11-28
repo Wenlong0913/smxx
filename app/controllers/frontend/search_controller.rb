@@ -7,7 +7,7 @@ class Frontend::SearchController < Frontend::BaseController
 
     if params[:type] == 'cms_pages'
       @filter_colums = %w(title description)
-      @search_results = build_query_filter(@cms_site.pages.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
+      @search_results = build_query_filter(Cms::Page.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
     end
 
     if params[:type] == 'sites'
