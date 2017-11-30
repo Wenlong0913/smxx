@@ -14,8 +14,8 @@
 	<%= render file: 'public/templetes/newshub/_header.html.erb' %>
 	<div class="container">
 		<div class="row">
-      <div class="col-md-12">
-        <div class="tr-breadcrumb">
+      <div class="col-md-12 <%= 'padding-0' if mobile_device? %>">
+        <div class="tr-breadcrumb margin-top-15">
           <div class="title pull-left">
             <h1><%= @site.title %></h1>
           </div>
@@ -25,7 +25,7 @@
           </ol>
         </div>
       </div>
-			<div class="col-sm-9 col-xs-12 tr-sticky">
+			<div class="col-sm-9 col-xs-12 tr-sticky <%= 'padding-0' if mobile_device? %>">
 				<div class="tr-content theiaStickySidebar">
 					<div class="tr-section">
 						<div class="tr-post">
@@ -37,10 +37,10 @@
 									<div class="col-md-8">
 										<div class="post-content margin-top-10">
                       <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-9 col-xs-9">
   											  <h2 class="entry-title weight-300"><%= @site.title %></h2>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 col-xs-3">
                           <!-- 关注插件 -->
                           <% if current_user %>
                             <div rel="favorite-button" data-url="<%= favorite_frontend_site_path(@site) %>" >
