@@ -38,10 +38,11 @@
                         <% else %>
                           <a href="<%= frontend_product_path(product) %>">
                         <% end %>
-                          <img class="img-responsive thumb-img" src="<%= img_srcs[0].present? ? img_srcs[0] : product.first_image %>">
+                          <div class="cover_one_img" style="background: no-repeat center url('<%= img_srcs[0].present? ? img_srcs[0] : product.first_image %>');">
+                          </div>
                         </a>
                       </div>
-                      <div class="col-md-8 col-xs-8 padding-right-0">
+                      <div class="col-md-8 col-xs-8 <%= 'padding-0' unless mobile_device? %>">
                         <div class="header-text">
                           <h4>
                             <% if product.external_purchase_url.presence %>
@@ -98,8 +99,9 @@
                               <a href="<%= product.forage_url %>" target="_blank">
                             <% else %>
                               <a href="<%= frontend_product_path(product) %>">
-                            <% end %>
-                              <img class="img-responsive thumb-img" src="<%= img_srcs[index] %>" alt="<%= product.name %>">
+                            <% end %> 
+                              <div class="cover_three_img" style="background: no-repeat center url('<%= img_srcs[index] %>');">
+                              </div>
                             </a>
                           </div>
                         <% end %>
