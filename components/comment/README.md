@@ -12,17 +12,17 @@ Short description and motivation.
 在你的controller文件中, 加入下面3种的任何一种的内容:
 
     acts_as_commentable resource: Post
-    
+
 或者
-    
+
     acts_as_commentable resource: :get_resource_of_comments
 
     def get_resource_of_comments
       Post.find(params[:id])
     end
-    
+
 或者
-    
+
     acts_as_commentable resource: -> { Post.find(params[:id]) }
 
 在你的routes文件中, 加入下面的内容，配置路由:
@@ -72,7 +72,15 @@ Short description and motivation.
       end
       return comment_info
     end
-
+3、这个指令保持在元素上直到关联实例结束编译。和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕。
+  CSS
+  [v-cloak] {
+  display: none;
+  }
+  HTML:
+  <div v-cloak>
+  {{ message }}
+  </div>
 
 # 测试
 
