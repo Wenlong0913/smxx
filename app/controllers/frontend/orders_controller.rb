@@ -85,6 +85,14 @@ class Frontend::OrdersController < Frontend::BaseController
     if params[:order_id]
       order = Order.find(params[:order_id])
       product = order.order_products.first.product
+      one_account_orders = Order.joins(:order_products).where(user_id: current_user.id, status: ['paid', 'completed']).where("order_products.product_id = ?", product.id)
+      if product.maximum_for_one_account.to_i <= one_account_orders.count
+        order.errors.add 'order_account_signup'.to_sym, "一个账户最多定#{product.maximum_for_one_account}次!"
+        render js: <<-JS
+          window.alert('一个账户最多定#{product.maximum_for_one_account}次!')
+          JS
+        return
+      end
     else
       order = Order.new(user: current_user)
       product = Product.find(params[:order][:product][:id])
@@ -119,13 +127,7 @@ class Frontend::OrdersController < Frontend::BaseController
       order.save!
     end
 
-    if order.price == 0
-      order.paid!
-      render js: <<-JS
-      onOrderCreate('#{{redirect_url: frontend_order_url(order)}.to_json}')
-      JS
-      return
-    end
+
     # 产品库存是否满足
     if product.stock.to_i < order.order_products.where(product_id: product.id).map(&:amount).sum()
       order.errors.add 'order_product_stock'.to_sym, "剩余座位#{product.stock}个!"
@@ -134,6 +136,15 @@ class Frontend::OrdersController < Frontend::BaseController
       JS
       return
     end
+
+    if order.price == 0
+      order.paid!
+      render js: <<-JS
+      onOrderCreate('#{{redirect_url: frontend_order_url(order)}.to_json}')
+      JS
+      return
+    end
+
     pay_channel =  wechat_device? ? 'wx_pub' : 'alipay_pc_direct'
     callback_url = URI(Settings.site.host)
     options = 'frontend/orders/' + order.id.to_s + '/paid_success'
@@ -162,14 +173,6 @@ class Frontend::OrdersController < Frontend::BaseController
     order = Order.find_by_code(params[:out_trade_no])
     if order.present?
       order.update(status: order_status)
-      product = order.order_products.first.product
-      order_products = order.order_products.find(order)
-      purchase_amount = order_products.amount
-      product.stock - purchase_amount
-      if product.stock == 0
-        product.update(status: 'completed')
-      end
-      product.save!
     end
     redirect_to frontend_order_path(order)
   end
@@ -271,7 +274,7 @@ class Frontend::OrdersController < Frontend::BaseController
       end
 
       one_account_orders = Order.joins(:order_products).where(user_id: current_user.id, status: ['paid', 'completed']).where("order_products.product_id = ?", product.id)
-      if product.maximum_for_one_account.to_i < one_account_orders.count
+      if product.maximum_for_one_account.to_i <= one_account_orders.count
         order.errors.add 'order_account_signup'.to_sym, "一个账户最多定#{product.maximum_for_one_account}次!"
         flag = false
         return flag
