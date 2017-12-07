@@ -1,15 +1,12 @@
-<div class="tr-post">
-  <% @search_results.each do |page| %>
-    <% if @cms_site.pages.ids.present? && @cms_site.pages.ids.include?(page.id) %>
-    <div class="row">
-      <div class="col-md-4 col-xs-4">
-        <a href="<%= get_cms_url(page) %>"><img class="img-responsive" src="<%= page.image_path %>" alt="<%= page.title %>"></a>
-      </div>
-      <div class="col-md-8 col-xs-8">
-        <h5><%= link_to page.title, get_cms_url(page) %></h5>
-      </div>
-    </div>
-    <hr>
-    <% end %>
-  <% end %>
+<% if @cms_site.pages.ids.present? && @cms_site.pages.ids.include?(page.id) %>
+<div class="row" style="margin: 10px 0;">
+  <div class="col-md-4 col-xs-4">
+    <a href="<%= get_cms_url(page) %>"><img class="img-responsive" src="<%= page.image_path %>" alt="<%= page.title %>"></a>
+  </div>
+  <div class="col-md-8 col-xs-8">
+    <h5><%= link_to page.title, get_cms_url(page) %></h5>
+  </div>
 </div>
+<hr style="margin: 10px 0px;">
+<% end %>
+

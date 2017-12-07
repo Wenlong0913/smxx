@@ -8,59 +8,35 @@
 			</div>
       <% end %>
       <!-- search_results 搜索结果 -->
-			<div class="col-md-7">
+			<div class="col-md-7 col-xs-12 <%= 'padding-0' if mobile_device? %>">
         <div class="tr-content">
-          <div class="tr-section ">
-            <div class="row">
-              <div class="tr-section">
-                <%= form_for :search, url: search_result_path, method: :get, class: 'widget_search' do |f| %>
-                  <%= f.text_field :keywords, value: params[:search] && params[:search][:keywords], class: 'sidebar-search-form', autocomplete: "off", placeholder: '请输入要搜索的内容' %>
-                  <button type="submit" class="btn btn-primary">搜索</button>
-                <% end %>
-              </div>
-            </div>
-            <% if @search_results.any? %>
-	            <h4>找到<span class="faild-text"><%= @search_results.size %></span>条相关内容
+          <div class="tr-section">
+            <% if @search_results.present? %>
+	            <h4 class="text-center">共找到&nbsp;&nbsp;<span class="faild-text"><%= @search_results.size %>条</span><span class="faild-text"><%= params[:search][:keywords] %></span>&nbsp;&nbsp;相关的内容
               </h4>
             <% else %>
-              <h4>抱歉暂无相关内容</h4>
+              <h4 class="text-center">抱歉暂无相关内容，请重新输入关键词搜索</h4>
             <% end %>
-            <div class="row">
-              <div class="col-md-12">
-                <p>点击分类可进行筛选：</p>
-                <br>
-                <a href="<%= search_result_path(type: 'products', search: params[:search]) %>" class="btn <%= params[:type] == nil || params[:type] == 'products' ? 'btn-danger disabled' : 'btn-default' %>">活动预告</a>
-                <a href="<%= search_result_path(type: 'cms_pages', search: params[:search]) %>" class="btn <%= params[:type] == 'cms_pages' ? 'btn-danger disabled' : 'btn-default' %>">新闻资讯</a>
-                <a href="<%= search_result_path(type: 'sites', search: params[:search]) %>" class="btn <%= params[:type] == 'sites' ? 'btn-danger disabled' : 'btn-default' %>">入驻场馆</a>
-              </div>
-            </div>
           </div>
         </div>
 
+        <% if @search_results.present? %>
 				<div class="tr-content">
 					<div class="tr-section bg-transparent">
-						<% if @search_results.any? %>
-              <% if params[:type] == 'sites' %>
-                <%= render file: 'frontend/search/_sites_search.html.erb' %>
-              <% elsif params[:type] == 'cms_pages' %>
-                <%= render file: 'frontend/search/_cms_pages_search.html.erb' %>
-              <% else %>
-                <%= render file: 'frontend/search/_products_search.html.erb' %>
+            <div class="tr-post">
+              <% @search_results.each do |result| %>
+                <% if result.class.to_s == 'Product' %>
+                  <%= render :partial => "products_search", :locals => { :product => result } %>
+                <% elsif result.class.to_s == 'Cms::Page' %>
+                  <%= render :partial => "cms_pages_search", :locals => { :page => result } %>
+                <% elsif result.class.to_s == 'Site' %>
+                  <%= render :partial => "sites_search", :locals => { :site => result } %>
+                <% end %>
               <% end %>
-            <% end %>
+            </div>
 					</div>
-
-					<% if Keystore.value_for('banner-index-center-center-773x84').present? %>
-					<div class="tr-ad">
-						<% banner_index_center_center = Keystore.value_for('banner-index-center-center-773x84').split('|') %>
-						<a href="<%= banner_index_center_center[1] || 'javascript:void(0)' %>" targrt="_blank" ><img class="img-responsive" src="<%= banner_index_center_center[0] %>" alt="首页居中横幅"></a>
-					</div>
-					<% end %>
-
 				</div>
-        <div class="row text-center">
-          <%= paginate @search_results, remote: true %>
-        </div>
+        <% end %>
 			</div>
 
       <% unless mobile_device? %>

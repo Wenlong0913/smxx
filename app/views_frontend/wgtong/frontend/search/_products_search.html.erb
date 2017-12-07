@@ -1,12 +1,24 @@
-<div class="tr-post">
-  <% @search_results.each do |product| %>
-    <%
-      doc = Nokogiri::HTML(product.try(:content))
-      img_srcs = doc.css('img').map{ |i| i['src'] }
-    %>
-    <% if img_srcs.size < 4 %>
-      <div class="row" style="margin: 10px 0;">
-        <div class="col-md-4 col-xs-4 <%= 'padding-0' if mobile_device? %>">
+<%
+  doc = Nokogiri::HTML(product.try(:content))
+  img_srcs = doc.css('img').map{ |i| i['src'] }
+%>
+<% if img_srcs.size < 4 %>
+  <div class="row" style="margin: 10px 0;">
+    <div class="col-md-4 col-xs-4 <%= 'padding-0' if mobile_device? %>">
+      <% if product.external_purchase_url.presence %>
+        <a href="<%= product.external_purchase_url %>" target="_blank">
+      <% elsif product.is_foraged %>
+        <a href="<%= product.forage_url %>" target="_blank">
+      <% else %>
+        <a href="<%= frontend_product_path(product) %>">
+      <% end %>
+        <div class="cover_one_img" style="background: no-repeat center url('<%= img_srcs[0].present? ? img_srcs[0] : product.first_image %>');">
+        </div>
+      </a>
+    </div>
+    <div class="col-md-8 col-xs-8 <%= 'padding-0' unless mobile_device? %>">
+      <div class="header-text">
+        <h4>
           <% if product.external_purchase_url.presence %>
             <a href="<%= product.external_purchase_url %>" target="_blank">
           <% elsif product.is_foraged %>
@@ -14,81 +26,71 @@
           <% else %>
             <a href="<%= frontend_product_path(product) %>">
           <% end %>
-            <img class="img-responsive thumb-img" src="<%= img_srcs[0].present? ? img_srcs[0] : product.first_image %>">
+            <%= product.name.truncate(24) %>
           </a>
-        </div>
-        <div class="col-md-8 col-xs-8">
-          <div class="header-text">
-            <h4>
-              <% if product.external_purchase_url.presence %>
-                <a href="<%= product.external_purchase_url %>" target="_blank">
-              <% elsif product.is_foraged %>
-                <a href="<%= product.forage_url %>" target="_blank">
-              <% else %>
-                <a href="<%= frontend_product_path(product) %>">
-              <% end %>
-                <%= product.name.truncate(24) %>
-              </a>
-            </h4>
-            <div class="info">
-              <% if product.date.present? %>
-              <a href="javascript:;"><%= product.date %></a>
-              <span>&middot;</span>
-              <% end %>
-              <% if product.address_line1.present? %>
-              <a href="javascript:;"><%= product.address_line1.truncate(11) %></a>
-              <% end %>
-            </div>
-            <div class="info">
-              <a href="<%= frontend_site_path(product.site) %>"><img src="/templetes/newshub/images/others/user.png" alt="">&nbsp;<%= product.site.title %></a>
-              <a class="pro_catalog<%= rand(1..3)%>" href="javascript:;"><%= product.catalog.name %></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% else %>
-      <div class="row" style="margin: 10px 0;">
-        <div class="col-md-12 col-xs-12">
-          <div class="header-text">
-            <h4>
-              <% if product.external_purchase_url.presence %>
-                <a href="<%= product.external_purchase_url %>" target="_blank">
-              <% elsif product.is_foraged %>
-                <a href="<%= product.forage_url %>" target="_blank">
-              <% else %>
-                <a href="<%= frontend_product_path(product) %>">
-              <% end %>
-                <%= product.name.truncate(30) %>
-              </a>
-            </h4>
-          </div>
-        </div>
-        <div class="row" style="padding: 15px;">
-          <% loop_count = mobile_device? ? 3 : 4 %>
-          <% loop_count.times.each_with_index do |tim, index| %>
-            <div class="col-md-3 col-xs-4">
-              <% if product.external_purchase_url.presence %>
-                <a href="<%= product.external_purchase_url %>" target="_blank">
-              <% elsif product.is_foraged %>
-                <a href="<%= product.forage_url %>" target="_blank">
-              <% else %>
-                <a href="<%= frontend_product_path(product) %>">
-              <% end %>
-                <img class="img-responsive thumb-img" src="<%= img_srcs[index] %>" alt="<%= product.name %>">
-              </a>
-            </div>
+        </h4>
+        <div class="info">
+          <% if product.date.present? %>
+          <a href="javascript:;"><%= product.date %></a>
+          <a href="javascript:;">&middot;</a>
+          <% end %>
+          <% if product.address_line1.present? %>
+          <a href="javascript:;"><%= product.address_line1.truncate(11) %></a>
           <% end %>
         </div>
-        <div class="col-md-12 col-xs-12">
-          <div class="header-text">
-            <div class="info">
-              <a href="<%= frontend_site_path(product.site) %>"><img src="/templetes/newshub/images/others/user.png" alt="">&nbsp;<%= product.site.title %></a>
-              <a class="pro_catalog<%= rand(1..3)%>" href="javascript:;"><%= product.catalog.name %></a>
-            </div>
-          </div>
+        <div class="info">
+          <a href="<%= frontend_site_path(product.site) %>"><%= product.site.title %></a>
+          <a href="javascript:;">&middot;</a>
+          <a href="javascript:;"><%= product.catalog.name %></a>
         </div>
       </div>
-    <% end %>
-    <hr>
-  <% end %>
-</div>
+    </div>
+  </div>
+<% else %>
+  <div class="row" style="margin: 10px 0;">
+    <div class="col-md-12 col-xs-12 <%= 'padding-0' if mobile_device? %>">
+      <div class="header-text">
+        <h4>
+          <% if product.external_purchase_url.presence %>
+            <a href="<%= product.external_purchase_url %>" target="_blank">
+          <% elsif product.is_foraged %>
+            <a href="<%= product.forage_url %>" target="_blank">
+          <% else %>
+            <a href="<%= frontend_product_path(product) %>">
+          <% end %>
+            <%= product.name.truncate(30) %>
+          </a>
+        </h4>
+      </div>
+    </div>
+    <div class="row" style="padding: 0 15px;">
+      <% loop_count = mobile_device? ? 3 : 4 %>
+      <% loop_count.times.each_with_index do |tim, index| %>
+        <div class="col-md-3 col-xs-4 <%= 'padding-2' if mobile_device? %>">
+          <% if product.external_purchase_url.presence %>
+            <a href="<%= product.external_purchase_url %>" target="_blank">
+          <% elsif product.is_foraged %>
+            <a href="<%= product.forage_url %>" target="_blank">
+          <% else %>
+            <a href="<%= frontend_product_path(product) %>">
+          <% end %> 
+            <div class="cover_three_img" style="background: no-repeat center url('<%= img_srcs[index] %>');">
+            </div>
+          </a>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-12 col-xs-12 <%= 'padding-0' if mobile_device? %>">
+      <div class="header-text">
+        <div class="info">
+          <a href="<%= frontend_site_path(product.site) %>"><%= product.site.title %></a>
+          <a>&middot;</a>
+          <a href="javascript:;"><%= product.catalog.name %></a>
+          <a>&middot;</a>
+          <a href="javascript:;"><%= product.date %></a>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<hr style="margin: 10px 0px;">
