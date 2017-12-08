@@ -39,7 +39,11 @@
           <% end %>
         </div>
         <div class="info">
-          <a href="<%= frontend_site_path(product.site) %>"><%= product.site.title %></a>
+          <% if product.is_foraged %>
+            <a href="javascript:;"><%= product.forage["forage_from"] %></a>
+          <% else %>
+            <a href="<%= frontend_site_path(product.site) %>"><%= product.site.title %></a>
+          <% end %>
           <a href="javascript:;">&middot;</a>
           <a href="javascript:;"><%= product.catalog.name %></a>
         </div>
@@ -83,7 +87,11 @@
     <div class="col-md-12 col-xs-12 <%= 'padding-0' if mobile_device? %>">
       <div class="header-text">
         <div class="info">
-          <a href="<%= frontend_site_path(product.site) %>"><%= product.site.title %></a>
+          <% if product.is_foraged %>
+            <a href="javascript:;"><%= product.forage["forage_from"] %></a>
+          <% else %>
+            <a href="<%= frontend_site_path(product.site) %>"><%= product.site.title %></a>
+          <% end %>
           <a>&middot;</a>
           <a href="javascript:;"><%= product.catalog.name %></a>
           <a>&middot;</a>

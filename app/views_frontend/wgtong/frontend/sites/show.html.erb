@@ -138,13 +138,6 @@
 						</div>
 					</div>
 
-					<% if Keystore.value_for('banner-site-center-center-773x84').present? %>
-          <div class="tr-ad">
-            <% banner_site_center_center = Keystore.value_for('banner-site-center-center-773x84').split('|') %>
-            <a href="<%= banner_site_center_center[1] || 'javascript:void(0)' %>" target="_blank" ><img class="img-responsive" src="<%= banner_site_center_center[0] %>" alt="广告横幅773x84"></a>
-          </div>
-          <% end %>
-
 					<%= render file: 'public/templetes/newshub/_comments.html.erb' %>
 				</div><!-- /.tr-content -->
 			</div><!-- /.tr-sticky -->
@@ -155,13 +148,6 @@
 			</div>
       <% end %>
 		</div><!-- /.row -->
-
-		<% if Keystore.value_for('banner-site-bottom-center-819×119').present? %>
-		<div class="tr-ad ad-bottom ad-image text-center">
-      <% banner_site_bottom_center = Keystore.value_for('banner-site-bottom-center-819×119').split('|') %>
-			<a href="<%= banner_site_bottom_center[1] || 'javascript:void(0)' %>" target="_blank" ><img class="img-responsive" src="<%= banner_site_bottom_center[0] %>" alt="广告横幅819×119"></a>
-		</div>
-    <% end %>
 
 	</div><!-- /.container-fulid -->
 </div><!-- /.main-wrapper -->
