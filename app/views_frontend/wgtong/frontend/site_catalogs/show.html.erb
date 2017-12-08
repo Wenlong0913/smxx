@@ -54,13 +54,6 @@
       <% end %>
     </div>
 
-		<% if Keystore.value_for('banner-site-bottom-center-819×119').present? %>
-		<div class="tr-ad ad-bottom ad-image text-center">
-      <% banner_site_bottom_center = Keystore.value_for('banner-site-bottom-center-819×119').split('|') %>
-			<a href="<%= banner_site_bottom_center[1] || 'javascript:void(0)' %>" target="_blank" ><img class="img-responsive" src="<%= banner_site_bottom_center[0] %>" alt="广告横幅819×119"></a>
-		</div>
-    <% end %>
-
 	</div><!-- /.container-fluid -->
 </div><!-- main-wrapper -->
 <%= render file: 'public/templetes/newshub/_footer.html.erb' %>

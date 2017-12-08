@@ -22,8 +22,8 @@
         <div class="tr-content">
           <div class="tr-section bg-transparent">
             <div class="tr-section">
-              <% if @products.present? %>
-                <% @products.each_with_index do |product, index| %>
+              <% if @products.present? %> 
+                <% @products.where(site: @cms_site.site.self_and_descendants).or(@products.where(site: @cms_site.site.parent)).each_with_index do |product, index| %>
                   <%
                     doc = Nokogiri::HTML(product.try(:content))
                     img_srcs = doc.css('img').map{ |i| i['src'] }
@@ -65,7 +65,11 @@
                             <% end %>
                           </div>
                           <div class="info">
-                            <a href="<%= frontend_site_path(product.site) %>"><%= product.site.title %></a>
+                            <% if product.is_foraged %>
+                              <a href="javascript:;"><%= product.forage["forage_from"] %></a>
+                            <% else %>
+                              <a href="<%= frontend_site_path(product.site) %>"><%= product.site.title %></a>
+                            <% end %>
                             <a href="javascript:;">&middot;</a>
                             <a href="javascript:;"><%= product.catalog.name %></a>
                           </div>
@@ -109,7 +113,11 @@
                       <div class="col-md-12 col-xs-12 <%= 'padding-0' if mobile_device? %>">
                         <div class="header-text">
                           <div class="info">
-                            <a href="<%= frontend_site_path(product.site) %>"><%= product.site.title %></a>
+                            <% if product.is_foraged %>
+                              <a href="javascript:;"><%= product.forage["forage_from"] %></a>
+                            <% else %>
+                              <a href="<%= frontend_site_path(product.site) %>"><%= product.site.title %></a>
+                            <% end %>
                             <a>&middot;</a>
                             <a href="javascript:;"><%= product.catalog.name %></a>
                             <a>&middot;</a>
@@ -121,6 +129,10 @@
                   <% end %>
                   <hr style="margin: 10px 0px;">
                 <% end %>
+
+                <div class="row text-center">
+                  <%= paginate @products %>
+                </div>
               <% else %>
                 <h4 class="text-center">当前分类下暂无活动</h4>
               <% end %>
@@ -136,12 +148,6 @@
       <% end %>
     </div>
 
-    <% if Keystore.value_for('banner-product-bottom-center-819×119').present? %>
-		<div class="tr-ad ad-bottom ad-image text-center">
-      <% banner_product_bottom_center = Keystore.value_for('banner-product-bottom-center-819×119').split('|') %>
-			<a href="<%= banner_product_bottom_center[1] || 'javascript:void(0)' %>" target="_blank" ><img class="img-responsive" src="<%= banner_product_bottom_center[0] %>" alt="广告横幅819×119"></a>
-		</div>
-    <% end %>
 	</div>
 </div>
 <%= render file: 'public/templetes/newshub/_footer.html.erb' %>

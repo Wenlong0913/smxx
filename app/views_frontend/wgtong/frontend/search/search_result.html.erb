@@ -17,6 +17,10 @@
             <% else %>
               <h4 class="text-center">抱歉暂无相关内容，请重新输入关键词搜索</h4>
             <% end %>
+            <%= form_for :search, url: search_result_path, method: :get, class: 'widget_search' do |f| %>
+              <%= f.text_field :keywords, class: 'sidebar-search-form', autocomplete: "off", placeholder: '请输入关键字搜索，如：活动预告，活动报名，抢票，免费，公益，福利，赠票，领票，预约' %>
+              <button type="submit" class="btn btn-primary">搜索</button>
+            <% end %>
           </div>
         </div>
 
