@@ -1,14 +1,67 @@
 <% if @cms_site.pages.ids.present? && @cms_site.pages.ids.include?(page.id) %>
-<div class="row" style="margin: 10px 0;">
-  <div class="col-md-4 col-xs-4">
-    <a href="<%= get_cms_url(page) %>"><img class="img-responsive" src="<%= page.thumb_image_path %>" alt="<%= page.title %>"></a>
-  </div>
-  <div class="col-md-8 col-xs-8">
-    <div class="header-text">
-      <h4><%= link_to page.title, get_cms_url(page) %></h4>
+  <%
+    doc = Nokogiri::HTML(page.try(:content))
+    img_srcs = doc.css('img').map{ |i| i['src'] }
+  %>
+  <% if img_srcs.size < 4 %>
+    <div class="row" style="margin: 10px 0;">
+      <div class="col-md-4 col-xs-4 <%= 'padding-0' if mobile_device? %>">
+        <a href="<%= get_cms_url(page) %>">
+          <div class="cover_one_img" style="background: no-repeat center url('<%= img_srcs[0].present? ? img_srcs[0] : page.thumb_image_path %>');">
+          </div>
+        </a>
+      </div>
+      <div class="col-md-8 col-xs-8 <%= 'padding-0' unless mobile_device? %>">
+        <div class="header-text">
+          <h4>
+            <a href="<%= get_cms_url(page) %>">
+              <%= page.title.truncate(40) %>
+            </a>
+          </h4>
+          <div class="info">
+            <% if page.is_foraged %>
+              <a href="javascript:;"><%= page.forage["forage_from"] %></a>
+            <% else %>
+              <a href="<%= get_cms_url(page.channel) %>"><%= page.channel.title %></a>
+            <% end %>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-<hr style="margin: 10px 0px;">
+  <% else %>
+    <div class="row" style="margin: 10px 0;">
+      <div class="col-md-12 col-xs-12 <%= 'padding-0' if mobile_device? %>">
+        <div class="header-text">
+          <h4>
+            <a href="<%= get_cms_url(page) %>">
+              <%= page.title.truncate(30) %>
+            </a>
+          </h4>
+        </div>
+      </div>
+      <div class="row" style="padding: 0 15px;">
+        <% loop_count = mobile_device? ? 3 : 4 %>
+        <% loop_count.times.each_with_index do |tim, index| %>
+          <div class="col-md-3 col-xs-4 <%= 'padding-2' if mobile_device? %>">
+            <a href="<%= get_cms_url(page) %>">
+              <div class="cover_three_img" style="background: no-repeat center url('<%= img_srcs[index] %>');">
+              </div>
+            </a>
+          </div>
+        <% end %>
+      </div>
+      <div class="col-md-12 col-xs-12 <%= 'padding-0' if mobile_device? %>">
+        <div class="header-text">
+          <div class="info">
+            <% if page.is_foraged %>
+              <a href="javascript:;"><%= page.forage["forage_from"] %></a>
+            <% else %>
+              <a href="<%= get_cms_url(page.channel) %>"><%= page.channel.title %></a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <hr style="margin: 10px 0px;">
 <% end %>
-
