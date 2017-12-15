@@ -80,8 +80,7 @@ class Agent::ProductsController < Agent::BaseController
       end
     end
     if @product.purchase_type && @product.purchase_type.include?('sign_up')
-      @orders = OrderProduct.where(product_id: @product.id).map{|order_product| order_product.order}
-      @orders = @orders.select{|o| o.paid? || o.completed? }
+      @orders = @product.orders.where(status: ['paid','completed'])
     end
     respond_to do |format|
       format.html
@@ -175,8 +174,7 @@ class Agent::ProductsController < Agent::BaseController
   def download_signup_members
     if params[:format] == 'csv'
       if @product.purchase_type && @product.purchase_type.include?('sign_up')
-        @orders = OrderProduct.where(product_id: @product.id).map{|order_product| order_product.order}
-        @orders = @orders.select{|o| o.paid? || o.completed? }
+        @orders = @product.orders.where(status: ['paid','completed'])
         members = @orders.map{|o| o.member_attributes}.flatten.compact
       end
       send_data(to_csv(members, @product), filename: "products-members-signup-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv")
