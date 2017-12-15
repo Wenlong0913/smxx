@@ -47,7 +47,9 @@
                   <!-- begin media -->
                   <div class="media">
                     <% if Settings.project.imolin? || Settings.project.sxhop? || Settings.project.wgtong? %>
-                      <%= image_tag order.products.first.first_image, height: '50px' %>
+                      <% if order.products.present? %>
+                        <%= image_tag order.products.first.first_image, height: '50px' %>
+                      <% end %>
                     <% else %>
                       <%= image_tag 'no-picture.png' %>
                     <% end %>
