@@ -2,6 +2,8 @@ if ENV['API_ONLY']
   Rails.application.routes.draw do
     extend ApiRoute
   end
+elsif ENV['ACTION_CABLE_ONLY']
+  # 不加载任何路由，只负责Cable
 else
   Rails.application.routes.draw do
 

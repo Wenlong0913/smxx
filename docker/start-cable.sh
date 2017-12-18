@@ -13,4 +13,4 @@ ln -sf /srv/${APP_NAME}/config/application.yml config/
 rm config/settings.${PROJECT_NAME}.yml
 ln -sf /srv/${APP_NAME}/config/settings.${PROJECT_NAME}.yml config/
 
-ENABLE_ACTION_CABLE=true bundle exec puma -C config/puma.rb -b tcp://0.0.0.0 -p 5000
+ENABLE_ACTION_CABLE=true ACTION_CABLE_ONLY=true bundle exec puma -C config/puma.rb -b tcp://0.0.0.0 -p 5000
