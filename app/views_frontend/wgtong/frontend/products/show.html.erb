@@ -2,10 +2,11 @@
 	<%= render file: 'public/templetes/newshub/_header.html.erb' %>
 	<div class="container">
 		<div class="row">
+      <% unless mobile_device? %>
       <div class="col-md-12 <%= 'padding-0' if mobile_device? %>">
         <div class="tr-breadcrumb margin-top-15">
           <div class="title pull-left">
-            <h1><%= @product.name %></h1>
+            <h5><%= @product.name %></h5>
           </div>
           <ol class="breadcrumb pull-right">
             <li><a href="/">首页</a></li>
@@ -13,10 +14,11 @@
           </ol>
         </div>
       </div>
+      <% end %>
 			<div class="col-sm-9 col-xs-12 tr-sticky <%= 'padding-0' if mobile_device? %>">
 				<div class="tr-content theiaStickySidebar">
 					<div class="tr-section">
-						<div class="tr-post">
+						<div class="tr-post <%= 'margin-top-10' if mobile_device? %>">
 							<div class="entry-header">
 								<div class="row">
 									<div class="col-md-5">
@@ -46,7 +48,7 @@
 									<div class="col-md-7 post-content prodShowRight m-0">
                     <div class="row">
                       <div class="col-md-9 col-xs-9">
-                        <h2 class="entry-title weight-300"><%= @product.name %></h2>
+                        <h1 class="entry-title weight-300"><%= @product.name %></h1>
                       </div>
                       <div class="col-md-3 col-xs-3">
                         <!-- 关注插件 -->
