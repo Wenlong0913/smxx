@@ -10,34 +10,39 @@ module AppAPI::V1
         requires :sign2, type: String, desc: 'sign2'
         requires :timestamp, type: Integer, desc: '时间戳'
         optional :crawl_time, type: Integer, desc: '爬取时间'
+        optional :pk, type: String, desc: '数据版本的唯一标识'
       end
       post do
         if Settings.project.wgtong?
           begin
-            user_secret = "k5NDhiNjExMjA1Nj-699cabea0493204"
-            if Digest::MD5.hexdigest(user_secret + params[:timestamp].to_s) == params[:sign2]
-              data = JSON.parse(params[:data])
-              title = data["article_title"]
-              migrate_to, original_catalog = if title =~ /.*(活动预告|活动报名|抢票|免费|公益|福利|赠票|领票|预约|享活动|活动早知道|展览预告|看展览|听讲座|讲座通知|讲坛|鉴赏会|周末耍事|展讯|佳片有约).*/
-                ['product', $1]
-              else
-                ['cms_page']
-              end
-              data_cache = Forage::DataCache.new(title: title, url: data["__url"])
-              data_cache.migrate_to            = migrate_to
-              data_cache.matched_status        = 'none'
-              data_cache.image                 = data["article_thumbnail"]
-              data_cache.content               = data["article_content"]
-              data_cache.date                  = Time.at(data["article_publish_time"]).to_date.to_s
-              data_cache.from                  = data["weixin_nickname"]
-              data_cache.original_catalog      = original_catalog
-              if data_cache.save
-                present params[:data_key]
-              else
-                error! data_cache.errors
-              end
+            if params[:sign2] == "bf075a51a1294c8e1824ad7c3d75ae67"
+              present params[:data_key]
             else
-              error! "数据不合法"
+              user_secret = "k5NDhiNjExMjA1Nj-699cabea0493204"
+              if Digest::MD5.hexdigest("#{params[:url]}#{user_secret}#{params[:timestamp]}") == params[:sign2]
+                data = JSON.parse(params[:data])
+                title = data["article_title"]
+                migrate_to, original_catalog = if title =~ /.*(活动预告|活动报名|抢票|免费|公益|福利|赠票|领票|预约|享活动|活动早知道|展览预告|看展览|听讲座|讲座通知|讲坛|鉴赏会|周末耍事|展讯|佳片有约).*/
+                  ['product', $1]
+                else
+                  ['cms_page']
+                end
+                data_cache = Forage::DataCache.new(title: title, url: data["__url"])
+                data_cache.migrate_to            = migrate_to
+                data_cache.matched_status        = 'none'
+                data_cache.image                 = data["article_thumbnail"]
+                data_cache.content               = data["article_content"]
+                data_cache.date                  = Time.at(data["article_publish_time"]).to_date.to_s
+                data_cache.from                  = data["weixin_nickname"]
+                data_cache.original_catalog      = original_catalog
+                if data_cache.save
+                  present params[:data_key]
+                else
+                  error! data_cache.errors
+                end
+              else
+                error! "数据不合法"
+              end
             end
           rescue => e
             error! e.message
