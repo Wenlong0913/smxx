@@ -5,35 +5,44 @@
   %>
   <% if img_srcs.size < 4 %>
     <div class="row" style="margin: 10px 0;">
-      <div class="col-md-4 col-xs-4 <%= 'padding-0' if mobile_device? %>">
-        <a href="<%= get_cms_url(page) %>">
-          <div class="cover_one_img" style="background: no-repeat center url('<%= img_srcs[0].present? ? img_srcs[0] : page.thumb_image_path %>');">
+      <div class="col-md-3 col-xs-4 padding-r-l-5">
+        <a href="<%= get_cms_url(page) %>" class="cover_img_a" title="<%= page.title %>">
+          <div class="cover_img" style="background: no-repeat center url('<%= img_srcs[0].present? ? img_srcs[0] : page.thumb_image_path %>');">
           </div>
         </a>
       </div>
-      <div class="col-md-8 col-xs-8 <%= 'padding-0' unless mobile_device? %>">
+      <div class="col-md-9 col-xs-8">
         <div class="header-text">
           <h4>
-            <a href="<%= get_cms_url(page) %>">
-              <%= page.title.truncate(40) %>
+            <a href="<%= get_cms_url(page) %>" title="<%= page.title %>">
+              <% if mobile_device? %>
+                <%= page.title.truncate(24) %>
+              <% else %>
+                <%= page.title.truncate(40) %>
+              <% end %>
             </a>
           </h4>
           <div class="info">
+            <a href="<%= get_cms_url(page) %>"><%= page.keywords.truncate(15) %></a>
+          </div>
+          <div class="info">
             <% if page.is_foraged %>
-              <a href="javascript:;"><%= page.forage["forage_from"] %></a>
+              <a href="<%= get_cms_url(page) %>" title="<%= page.forage["forage_from"] %>">by <%= page.forage["forage_from"] %></a>
             <% else %>
-              <a href="<%= get_cms_url(page.channel) %>"><%= page.channel.title %></a>
+              <a href="<%= get_cms_url(page) %>" title="文广通，文化云，公共文化大数据">by 文广通</a>
             <% end %>
+            <a href="<%= get_cms_url(page) %>">&middot;</a>
+            <a href="<%= get_cms_url(page) %>"><%= distance_of_time_in_words_to_now(page.updated_at) %>前</a>
           </div>
         </div>
       </div>
     </div>
   <% else %>
     <div class="row" style="margin: 10px 0;">
-      <div class="col-md-12 col-xs-12 <%= 'padding-0' if mobile_device? %>">
+      <div class="col-md-12 col-xs-12 padding-r-l-5">
         <div class="header-text">
           <h4>
-            <a href="<%= get_cms_url(page) %>">
+            <a href="<%= get_cms_url(page) %>" title="<%= page.title %>">
               <%= page.title.truncate(30) %>
             </a>
           </h4>
@@ -42,26 +51,30 @@
       <div class="row" style="padding: 0 15px;">
         <% loop_count = mobile_device? ? 3 : 4 %>
         <% loop_count.times.each_with_index do |tim, index| %>
-          <div class="col-md-3 col-xs-4 <%= 'padding-2' if mobile_device? %>">
-            <a href="<%= get_cms_url(page) %>">
-              <div class="cover_three_img" style="background: no-repeat center url('<%= img_srcs[index] %>');">
+          <div class="col-md-3 col-xs-4 padding-r-l-5">
+            <a href="<%= get_cms_url(page) %>" class="cover_img_a" title="<%= page.title %>">
+              <div class="cover_img" style="background: no-repeat center url('<%= img_srcs[index] %>');">
               </div>
             </a>
           </div>
         <% end %>
       </div>
-      <div class="col-md-12 col-xs-12 <%= 'padding-0' if mobile_device? %>">
+      <div class="col-md-12 col-xs-12 padding-r-l-5">
         <div class="header-text">
           <div class="info">
             <% if page.is_foraged %>
-              <a href="javascript:;"><%= page.forage["forage_from"] %></a>
+              <a href="<%= get_cms_url(page) %>" title="<%= page.forage["forage_from"] %>">by <%= page.forage["forage_from"] %></a>
             <% else %>
-              <a href="<%= get_cms_url(page.channel) %>"><%= page.channel.title %></a>
+              <a href="<%= get_cms_url(page) %>" title="文广通，文化云，公共文化大数据">by 文广通</a>
             <% end %>
+            <a href="<%= get_cms_url(page) %>">&middot;</a>
+            <a href="<%= get_cms_url(page) %>"><%= distance_of_time_in_words_to_now(page.updated_at) %>前</a>
+            <a href="<%= get_cms_url(page) %>">&middot;</a>
+            <a href="<%= get_cms_url(page) %>"><%= page.keywords.truncate(15) %></a>
           </div>
         </div>
       </div>
     </div>
   <% end %>
-  <hr style="margin: 10px 0px;">
+  <hr class="block-bootom-hr">
 <% end %>
