@@ -32,7 +32,7 @@ module AppAPI::V1
                 data_cache.matched_status        = 'none'
                 data_cache.image                 = data["article_thumbnail"]
                 data_cache.content               = data["article_content"]
-                data_cache.date                  = Time.at(data["article_publish_time"]).to_date.to_s
+                data_cache.date                  = Time.at(data["article_publish_time"].to_i).to_date.to_s
                 data_cache.from                  = data["weixin_nickname"]
                 data_cache.original_catalog      = original_catalog
                 if data_cache.save
