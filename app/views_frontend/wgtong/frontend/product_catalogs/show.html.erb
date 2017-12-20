@@ -30,19 +30,19 @@
                   %>
                   <% if img_srcs.size < 4 %>
                     <div class="row" style="margin: 10px 0;">
-                      <div class="col-md-4 col-xs-4 <%= 'padding-0' if mobile_device? %>">
+                      <div class="col-md-3 col-xs-4 padding-r-l-5">
                         <% if product.external_purchase_url.presence %>
-                          <a href="<%= product.external_purchase_url %>" target="_blank" title="<%= product.name %>">
+                          <a href="<%= product.external_purchase_url %>" class="cover_img_a" target="_blank" title="<%= product.name %>">
                         <% elsif product.is_foraged %>
-                          <a href="<%= product.forage_url %>" target="_blank" title="<%= product.name %>">
+                          <a href="<%= product.forage_url %>" class="cover_img_a" target="_blank" title="<%= product.name %>">
                         <% else %>
-                          <a href="<%= frontend_product_path(product) %>" title="<%= product.name %>">
+                          <a href="<%= frontend_product_path(product) %>" class="cover_img_a" title="<%= product.name %>">
                         <% end %>
-                          <div class="cover_one_img" style="background: no-repeat center url('<%= img_srcs[0].present? ? img_srcs[0] : product.first_image %>');">
+                          <div class="cover_img" style="background: no-repeat center url('<%= img_srcs[0].present? ? img_srcs[0] : product.first_image %>');">
                           </div>
                         </a>
                       </div>
-                      <div class="col-md-8 col-xs-8 <%= 'padding-0' unless mobile_device? %>">
+                      <div class="col-md-9 col-xs-8">
                         <div class="header-text">
                           <h4>
                             <% if product.external_purchase_url.presence %>
@@ -72,13 +72,21 @@
                             <% end %>
                             <a href="javascript:;">&middot;</a>
                             <a href="javascript:;" title="<%= product.catalog.name %>"><%= product.catalog.name %></a>
+                            <a href="javascript:;">&middot;</a>
+                            <a href="javascript:;" title="">
+                              <% if product.sell_price && product.sell_price > 0 %>
+                                ￥<%= product.sell_price / 100 %>
+                              <% else %>
+                                免费
+                              <% end %>
+                            </a>
                           </div>
                         </div>
                       </div>
                     </div>
                   <% else %>
                     <div class="row" style="margin: 10px 0;">
-                      <div class="col-md-12 col-xs-12 <%= 'padding-0' if mobile_device? %>">
+                      <div class="col-md-12 col-xs-12 padding-r-l-5">
                         <div class="header-text">
                           <h4>
                             <% if product.external_purchase_url.presence %>
@@ -96,21 +104,21 @@
                       <div class="row" style="padding: 0 15px;">
                         <% loop_count = mobile_device? ? 3 : 4 %>
                         <% loop_count.times.each_with_index do |tim, index| %>
-                          <div class="col-md-3 col-xs-4 <%= 'padding-2' if mobile_device? %>">
+                          <div class="col-md-3 col-xs-4 padding-r-l-5">
                             <% if product.external_purchase_url.presence %>
-                              <a href="<%= product.external_purchase_url %>" target="_blank" title="<%= product.name %>">
+                              <a href="<%= product.external_purchase_url %>" class="cover_img_a" target="_blank" title="<%= product.name %>">
                             <% elsif product.is_foraged %>
-                              <a href="<%= product.forage_url %>" target="_blank" title="<%= product.name %>">
+                              <a href="<%= product.forage_url %>" class="cover_img_a" target="_blank" title="<%= product.name %>">
                             <% else %>
-                              <a href="<%= frontend_product_path(product) %>" title="<%= product.name %>">
+                              <a href="<%= frontend_product_path(product) %>" class="cover_img_a" title="<%= product.name %>">
                             <% end %> 
-                              <div class="cover_three_img" style="background: no-repeat center url('<%= img_srcs[index] %>');">
+                              <div class="cover_img" style="background: no-repeat center url('<%= img_srcs[index] %>');">
                               </div>
                             </a>
                           </div>
                         <% end %>
                       </div>
-                      <div class="col-md-12 col-xs-12 <%= 'padding-0' if mobile_device? %>">
+                      <div class="col-md-12 col-xs-12 padding-r-l-5">
                         <div class="header-text">
                           <div class="info">
                             <% if product.is_foraged %>
@@ -122,12 +130,20 @@
                             <a href="javascript:;" title="<%= product.catalog.name %>"><%= product.catalog.name %></a>
                             <a>&middot;</a>
                             <a href="javascript:;" title="<%= product.date %>"><%= product.date %></a>
+                            <a href="javascript:;">&middot;</a>
+                            <a href="javascript:;" title="">
+                              <% if product.sell_price && product.sell_price > 0 %>
+                                ￥<%= product.sell_price / 100 %>
+                              <% else %>
+                                免费
+                              <% end %>
+                            </a>
                           </div>
                         </div>
                       </div>
                     </div>
                   <% end %>
-                  <hr style="margin: 10px 0px;">
+                  <hr class="block-bootom-hr">
                 <% end %>
 
                 <div class="row text-center">

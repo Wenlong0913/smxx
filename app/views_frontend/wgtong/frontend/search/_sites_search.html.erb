@@ -1,14 +1,14 @@
 <div class="row" style="margin: 10px 0;">
-  <div class="col-md-4 col-xs-4">
-    <a href="<%= frontend_site_path(site) %>" title="<%= site.title %>">
-      <div class="cover_one_img" style="background: no-repeat center url('<%= site.first_image %>');">
+  <div class="col-md-3 col-xs-4 padding-r-l-5">
+    <a href="<%= frontend_site_path(site) %>" class="cover_img_a" title="<%= site.title %>">
+      <div class="cover_img" style="background: no-repeat center url('<%= site.first_image %>');">
       </div>
     </a>
   </div>
-  <div class="col-md-8 col-xs-8">
+  <div class="col-md-9 col-xs-8">
     <div class="header-text">
       <h4><%= link_to site.title, frontend_site_path(site) %></h4>
     </div>
   </div>
 </div>
-<hr style="margin: 10px 0px;">
+<hr class="block-bootom-hr">
