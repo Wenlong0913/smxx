@@ -46,6 +46,14 @@
           <% end %>
           <a href="javascript:;">&middot;</a>
           <a href="javascript:;" title="<%= product.catalog.name %>"><%= product.catalog.name %></a>
+          <a href="javascript:;">&middot;</a>
+          <a href="javascript:;" title="">
+            <% if product.sell_price && product.sell_price > 0 %>
+              ￥<%= product.sell_price / 100 %>
+            <% else %>
+              免费
+            <% end %>
+          </a>
         </div>
       </div>
     </div>
@@ -96,6 +104,14 @@
           <a href="javascript:;" title="<%= product.catalog.name %>"><%= product.catalog.name %></a>
           <a>&middot;</a>
           <a href="javascript:;" title="<%= product.date %>"><%= product.date %></a>
+          <a href="javascript:;">&middot;</a>
+          <a href="javascript:;" title="">
+            <% if product.sell_price && product.sell_price > 0 %>
+              ￥<%= product.sell_price / 100 %>
+            <% else %>
+              免费
+            <% end %>
+          </a>
         </div>
       </div>
     </div>

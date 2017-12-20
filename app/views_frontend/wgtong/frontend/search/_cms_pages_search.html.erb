@@ -15,15 +15,24 @@
         <div class="header-text">
           <h4>
             <a href="<%= get_cms_url(page) %>" title="<%= page.title %>">
-              <%= page.title.truncate(40) %>
+              <% if mobile_device? %>
+                <%= page.title.truncate(24) %>
+              <% else %>
+                <%= page.title.truncate(40) %>
+              <% end %>
             </a>
           </h4>
           <div class="info">
+            <a href="<%= get_cms_url(page) %>"><%= page.keywords.truncate(15) %></a>
+          </div>
+          <div class="info">
             <% if page.is_foraged %>
-              <a href="javascript:;" title="<%= page.forage["forage_from"] %>"><%= page.forage["forage_from"] %></a>
+              <a href="<%= get_cms_url(page) %>" title="<%= page.forage["forage_from"] %>">by <%= page.forage["forage_from"] %></a>
             <% else %>
-              <a href="<%= get_cms_url(page.channel) %>" title="<%= page.channel.title %>"><%= page.channel.title %></a>
+              <a href="<%= get_cms_url(page) %>" title="文广通，文化云，公共文化大数据">by 文广通</a>
             <% end %>
+            <a href="<%= get_cms_url(page) %>">&middot;</a>
+            <a href="<%= get_cms_url(page) %>"><%= distance_of_time_in_words_to_now(page.updated_at) %>前</a>
           </div>
         </div>
       </div>
@@ -54,10 +63,14 @@
         <div class="header-text">
           <div class="info">
             <% if page.is_foraged %>
-              <a href="javascript:;" title="<%= page.forage["forage_from"] %>"><%= page.forage["forage_from"] %></a>
+              <a href="<%= get_cms_url(page) %>" title="<%= page.forage["forage_from"] %>">by <%= page.forage["forage_from"] %></a>
             <% else %>
-              <a href="<%= get_cms_url(page.channel) %>" title="<%= page.channel.title %>"><%= page.channel.title %></a>
+              <a href="<%= get_cms_url(page) %>" title="文广通，文化云，公共文化大数据">by 文广通</a>
             <% end %>
+            <a href="<%= get_cms_url(page) %>">&middot;</a>
+            <a href="<%= get_cms_url(page) %>"><%= distance_of_time_in_words_to_now(page.updated_at) %>前</a>
+            <a href="<%= get_cms_url(page) %>">&middot;</a>
+            <a href="<%= get_cms_url(page) %>"><%= page.keywords.truncate(15) %></a>
           </div>
         </div>
       </div>
