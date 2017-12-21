@@ -13,6 +13,7 @@ module AppAPI::V1
         optional :pk, type: String, desc: '数据版本的唯一标识'
       end
       post do
+        status(200)
         if Settings.project.wgtong?
           begin
             if params[:sign2] == "bf075a51a1294c8e1824ad7c3d75ae67"
@@ -27,7 +28,7 @@ module AppAPI::V1
                 else
                   ['cms_page']
                 end
-                data_cache = Forage::DataCache.new(title: title, url: data["__url"])
+                data_cache = Forage::DataCache.find_or_create_by(title: title, url: data["__url"])
                 data_cache.migrate_to            = migrate_to
                 data_cache.matched_status        = 'none'
                 data_cache.image                 = data["article_thumbnail"]
