@@ -1,4 +1,8 @@
-### 美客美
+# dagel通用网站系统
+
+## 部署
+
+最新的部署方式，参考 [docker/README.md](docker/README.md)
 
 #### 服务器部署地址：
 
