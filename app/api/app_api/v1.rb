@@ -26,5 +26,6 @@ module AppAPI::V1
     mount AppAPI::V1::AppSettings
     mount AppAPI::V1::Complaint
     mount AppAPI::V1::ForageDetail
+    mount AppAPI::V1::ForageDatacache
   end
 end
