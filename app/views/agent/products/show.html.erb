@@ -329,6 +329,7 @@
                             <table class="table table-bordered">
                               <tr>
                                 <th>订单编号</th>
+                                <th>下单用户</th>
                                 <% @product.member_attributes.each do |attr| %>
                                   <th> <%= Product::MEMBER_ATTRIBUTES[attr.to_sym] || attr %></th>
                                 <% end %>
@@ -338,6 +339,7 @@
                                 <% order.member_attributes.each do |mem_attr|%>
                                   <tr>
                                     <th><%= order.code %></th>
+                                    <th><%= order.user.name %></th>
                                     <% @product.member_attributes.each do |attr| %>
                                       <th> <%= mem_attr[attr] %></th>
                                     <% end %>
