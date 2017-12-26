@@ -36,7 +36,7 @@
           - 1.upto(@product.maximum_for_one_order.to_i).each do |v|
             option[value=v] =v
       p[id="order_account_signup"] &nbsp;
-      .form-group.row.well[v-for="(mem, index) in members" :key="mem" style="position: relative;"]
+      .form-group.row.well[v-for="(mem, index) in members" :key="mem.key" style="position: relative;"]
         i.fa.fa-close[style="position: absolute;top: 10px;right: 10px; cursor: pointer" @click="removeMembers(index)"]
         input[type="hidden" :name="'order[member_attributes]['+mem.key+'][product_id]'" value="#{@product.id}"]
         - @product.member_attributes.each do |attr|
