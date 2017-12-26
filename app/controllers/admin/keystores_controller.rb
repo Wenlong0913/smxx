@@ -6,7 +6,7 @@ class Admin::KeystoresController < Admin::BaseController
   # GET /admin/keystores
   def index
     authorize Keystore
-    @filter_colums = %w(id)
+    @filter_colums = %w(id key value)
     @keystores = build_query_filter(Keystore.all, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?
