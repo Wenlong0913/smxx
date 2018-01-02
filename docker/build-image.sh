@@ -33,6 +33,7 @@ build_docker && echo "
 
 you can push image to out reigistry with this command:
 
-    docker tag docker.corp.tanmer.com/tanmer/dagle:{${version},latest}
-    docker push docker.corp.tanmer.com/tanmer/dagle:latest
+    docker tag docker.corp.tanmer.com/tanmer/dagle:{${version},${branch_name}}
+    docker push docker.corp.tanmer.com/tanmer/dagle:${version}
+    docker push docker.corp.tanmer.com/tanmer/dagle:${branch_name}
 "
