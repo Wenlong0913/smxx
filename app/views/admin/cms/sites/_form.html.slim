@@ -14,7 +14,7 @@
             - @cms_site.errors.full_messages.each do |message|
               li = message
 
-      = f.association :site
+      = f.input :site_id
       = f.input :template, collection: eval(Keystore.value_for('cms_template_names'))
       = f.input :name
       = f.input :domain
