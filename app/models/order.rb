@@ -16,6 +16,15 @@
 #  preorder_conversition_id :integer
 #  create_by                :integer
 #  update_by                :integer
+#  resource_url             :string
+#  delivery_date            :date
+#  finance_bill_id          :integer
+#  refund_status            :integer
+#  apply_refund_by          :integer
+#  refund_description       :text
+#  comments_count           :integer          default(0)
+#  features                 :jsonb
+#  deleted                  :boolean          default(FALSE)
 #
 
 class Order < ApplicationRecord

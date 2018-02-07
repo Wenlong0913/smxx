@@ -17,6 +17,13 @@
 #  current_sign_in_ip     :string
 #  last_sign_in_ip        :string
 #  username               :string
+#  headshot               :string
+#  avatar_file_name       :string
+#  avatar_content_type    :string
+#  avatar_file_size       :integer
+#  avatar_updated_at      :datetime
+#  description            :string(500)
+#  gender                 :integer
 #
 
 class User < ApplicationRecord

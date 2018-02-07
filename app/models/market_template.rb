@@ -2,18 +2,18 @@
 #
 # Table name: market_templates
 #
-#  id          :integer          not null, primary key
-#  catalog_id  :integer          not null
-#  base_path   :string           not null
-#  name        :string           not null
-#  keywords    :string
-#  description :string
-#  image_path  :string
-#  html_source :text
-#  form_source :text
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  features    :jsonb
+#  id           :integer          not null, primary key
+#  catalog_id   :integer          not null
+#  base_path    :string           not null
+#  name         :string           not null
+#  keywords     :string
+#  description  :string
+#  image_path   :string
+#  html_source  :text
+#  form_source  :text
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  is_published :boolean          default(TRUE)
 #
 
 class MarketTemplate < ApplicationRecord

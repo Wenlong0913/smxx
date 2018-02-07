@@ -1,9 +1,9 @@
 # == Schema Information
 #
-# Table name: sites
+# Table name: staffs
 #
 #  id         :integer          not null, primary key
-#  site_id    :integer
+#  user_id    :integer
 #  title      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

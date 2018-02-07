@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: import_failed_informations
+#
+#  id           :integer          not null, primary key
+#  origin_type  :string
+#  file_name    :string
+#  line         :integer
+#  name         :string
+#  features     :jsonb
+#  is_processed :string           default("n")
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
 class ImportFailedInformation < ApplicationRecord
   # audited
 
