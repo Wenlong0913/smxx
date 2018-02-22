@@ -234,6 +234,7 @@ class Order < ApplicationRecord
     today = Time.now.beginning_of_day
     todayFirstOrder = self.class.where("? <= created_at", today).order(created_at: :asc).first
     number = todayFirstOrder && self.id - todayFirstOrder.id + 1 || 1
-    self.update(code: "#{today.strftime('%Y%m%d')}#{number.to_s.rjust(3, '0')}")
+    raise '订单当日数量超出系统限制' if number.to_s.length > 5
+    self.update(code: "#{today.strftime('%Y%m%d')}#{number.to_s.rjust(5, '0')}")
   end
 end
