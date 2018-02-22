@@ -16,11 +16,11 @@
       - unless @order.new_record?
         = f.input :code, disabled: true
       - if Settings.project.dagle?
-        = f.association :site, collection: Site.all.map{|s| [s.user.nickname, s.id]}, label: Site.model_name.human
+        = f.association :site, collection: Site.all.map{|s| [s.user.nickname + '-' + s.id.to_s, s.id]}.uniq, label: Site.model_name.human
         = f.input :member_id, placeholder: "需要实现：选择#{::Site.model_name.human}后，动态更新客户列表", collection: Member.all, selected: @order.member_id, include_blank: true
       / = f.input :member_id, input_html: {value: (@order.member_id if @order.member_id)}
       / = f.input :mobile_phone, input_html: {value: (@order.member.mobile_phone if @order.member)}
-      = f.input :price, value: (@order.price.to_f / 100 unless @order.price.blank?), placeholder: Settings.project.grand? ? '创建时，不填价格，价格在拆单后由拆单人员填写' : '填入价格'
+      = f.input :price, value: (@order.price.to_f / 100 unless @order.price.blank?), placeholder: Settings.project.grand? ? '创建时，不填价格，价格在拆单后由拆单人员填写' : '填入价格', input_html: {min: '0'}
       = f.input :description, as: :text, placeholder: '这里填写用户需求'
       = f.input :images do
         image-select[server=image_items_path name="order[image_item_ids][]" selected-ids="#{@order.image_item_ids.join(',')}"]
