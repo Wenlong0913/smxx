@@ -63,8 +63,9 @@ class Site < ApplicationRecord
                 :avg_price, :is_published, :phone, :photos, :province, :real_city, :city, :district, :business_area,
                 :updated_by, :content, :delivery_fee
   store_accessor :forage, :forage_url, :is_foraged, :forage_from, :forage_district_from, :forage_image
-
-  validates_presence_of :title, :address_line#, :user_id
+  if Settings.project.imolin? || Settings.project.wgtong?
+    validates_presence_of :title, :address_line#, :user_id
+  end
   validates_uniqueness_of :title, scope: [:address_line]
 
 

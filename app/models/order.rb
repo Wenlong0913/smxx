@@ -97,13 +97,13 @@ class Order < ApplicationRecord
   # has_many :order_members
   # accepts_nested_attributes_for :order_members, allow_destroy: true, reject_if: proc { |attributes| attributes['name'].blank? }
 
-  before_create :generate_code
+  # before_create :generate_code
   # before_validation :check_member
 
   validates_presence_of :site
   # validates_presence_of :member_name, message: '客户名称错误'
   # validates_presence_of :member
-  validates_uniqueness_of :code
+  validates_uniqueness_of :code, allow_blank: true
 
   # attr_accessor :mobile_phone, :member_name
   #
@@ -150,7 +150,7 @@ class Order < ApplicationRecord
       end
     end
 
-    if self.status_changed?
+    if self.status_changed? && (Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei? || Settings.project.wgtong?)
       # 支付成功后修改产品库存
       if self.paid?
         self.order_products.each do |op|
@@ -177,6 +177,7 @@ class Order < ApplicationRecord
     end
   end
 
+  after_create_commit :generate_code
   after_commit do
     if @should_send_paid_message && (Settings.project.imolin? || Settings.project.meikemei? || Settings.project.wgtong?)
       OrderNotificationJob.perform_async(self.id)
@@ -230,12 +231,10 @@ class Order < ApplicationRecord
 
   def generate_code
     return if (Settings.project.grand? || Settings.project.demo? || Settings.project.dagle?) && self.code.present?
-    prefix = Time.now.strftime('%Y%m%d')
-    number = self.class.where("code LIKE ?", prefix+'%').count
-    loop do
-      self.code = "#{prefix}#{(number + 1).to_s.rjust(3, '0')}"
-      break unless self.class.where(code: self.code).exists?
-      number += 1
-    end
+    today = Time.now.beginning_of_day
+    todayFirstOrder = self.class.where("? <= created_at", today).order(created_at: :asc).first
+    number = todayFirstOrder && self.id - todayFirstOrder.id + 1 || 1
+    raise '订单当日数量超出系统限制' if number.to_s.length > 5
+    self.update(code: "#{today.strftime('%Y%m%d')}#{number.to_s.rjust(5, '0')}")
   end
 end
