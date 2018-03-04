@@ -5,7 +5,7 @@ source /etc/profile
 dir=`pwd`
 cd $(dirname $0)/..
 rails_root=`pwd`
-cd $dir
+# cd $dir
 
 mkdir -p /srv/${APP_NAME}/config/
 
