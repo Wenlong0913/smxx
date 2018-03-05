@@ -13,5 +13,5 @@ RUN git checkout -- . && echo $(git rev-parse --short HEAD) > public/VERSION && 
 COPY public/assets public/assets
 COPY public/webpack public/webpack
 COPY public/ckeditor_assets public/ckeditor_assets
-
+RUN cd public && ln -sf ../../cms-templates templetes
 EXPOSE 3000
