@@ -1,0 +1,39 @@
+# 路由
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "helm.fullname" . }}
+  labels:
+    app: {{ template "helm.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "30s"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "30s"
+    nginx.ingress.kubernetes.io/proxy-body-size: "30m"
+spec:
+  rules:
+  - host: api.imolin.cn
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ template "helm.fullname" . }}-api
+          servicePort: 80
+      - path: /cable
+        backend:
+          serviceName: {{ template "helm.fullname" . }}-cable
+          servicePort: 80
+  - host: admin.imolin.cn
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ template "helm.fullname" . }}-admin
+          servicePort: 80
+      - path: /cable
+        backend:
+          serviceName: {{ template "helm.fullname" . }}-cable
+          servicePort: 80

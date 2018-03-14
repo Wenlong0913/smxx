@@ -1,0 +1,51 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "helm.fullname" . }}-backend
+  labels:
+    app: {{ template "helm.name" . }}-backend
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ template "helm.name" . }}-backend
+        release: {{ .Release.Name }}
+    spec:
+      volumes:
+      - name: railsconfig
+        secret:
+          secretName: {{ .Values.rails_config }}
+      - name: shared-data
+        emptyDir: {}
+      - name: public-dir
+        persistentVolumeClaim:
+          claimName: imolin-pvc
+      {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.image.pullSecrets | indent 6 }}
+      {{- end}}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        # command: ['sleep', '99999']
+        command: ['./entrypoint.sh', 'bundle', 'exec', 'sidekiq']
+        resources:
+          requests:
+            cpu: 10m
+            memory: 200Mi
+          limits:
+            cpu: 500m
+            memory: 600Mi
+        volumeMounts:
+        - name: railsconfig
+          mountPath: /etc/railsconfig
+          readOnly: true
+        env:
+        - name: RAILS_ENV
+          value: production
