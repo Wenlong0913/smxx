@@ -14,6 +14,7 @@ ADD public/ckeditor_assets public/ckeditor_assets
 
 RUN cd public \
     && ln -sf ../../cms-templates templetes \
+    && cd .. \
     && git checkout -- . \
     && echo $(git rev-parse --short HEAD) > public/VERSION \
     && rm -rf .git .ruby-version .ruby-gemset
