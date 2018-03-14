@@ -3,7 +3,7 @@ RUN apt-get update && apt-get install imagemagick -y
 WORKDIR /srv/app
 ADD Gemfile Gemfile
 ADD Gemfile.lock Gemfile.lock
-ADD components /srv/dagle/components
+ADD components /srv/app/components
 ADD vendor/cache vendor/cache
 # ADD client client
 RUN bash -l -c "bundle i --without development test"
