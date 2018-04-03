@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171113112554) do
+ActiveRecord::Schema.define(version: 20180403043550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -369,6 +369,17 @@ ActiveRecord::Schema.define(version: 20171113112554) do
     t.index ["user_id"], name: "index_complaints_on_user_id", using: :btree
   end
 
+  create_table "courses", force: :cascade do |t|
+    t.string   "name"
+    t.string   "course_type"
+    t.string   "introduction"
+    t.integer  "site_id"
+    t.integer  "teacher_id"
+    t.jsonb    "features"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "discovers", force: :cascade do |t|
     t.string   "resource_type"
     t.integer  "resource_id"
@@ -445,6 +456,7 @@ ActiveRecord::Schema.define(version: 20171113112554) do
   end
 
   create_table "forage_details", force: :cascade do |t|
+    t.integer  "simple_id",                     null: false
     t.string   "url",                           null: false
     t.string   "migrate_to"
     t.boolean  "can_purchase",  default: false
@@ -467,21 +479,23 @@ ActiveRecord::Schema.define(version: 20171113112554) do
     t.jsonb    "features"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
-    t.integer  "simple_id",                     null: false
     t.string   "is_merged",     default: "n"
+    t.index ["simple_id"], name: "index_forage_details_on_simple_id", using: :btree
   end
 
   create_table "forage_run_keys", force: :cascade do |t|
+    t.integer  "source_id",                  null: false
     t.date     "date"
     t.string   "is_processed", default: "n"
     t.datetime "processed_at"
     t.integer  "total_count",  default: 0
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.integer  "source_id",                  null: false
+    t.index ["source_id"], name: "index_forage_run_keys_on_source_id", using: :btree
   end
 
   create_table "forage_simples", force: :cascade do |t|
+    t.integer  "run_key_id",                 null: false
     t.string   "catalog"
     t.string   "title"
     t.string   "url",                        null: false
@@ -490,7 +504,7 @@ ActiveRecord::Schema.define(version: 20171113112554) do
     t.string   "processed_at"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.integer  "run_key_id",                 null: false
+    t.index ["run_key_id"], name: "index_forage_simples_on_run_key_id", using: :btree
   end
 
   create_table "forage_sources", force: :cascade do |t|
@@ -957,10 +971,10 @@ ActiveRecord::Schema.define(version: 20171113112554) do
     t.integer  "update_by"
     t.string   "resource_url"
     t.date     "delivery_date"
-    t.integer  "finance_bill_id"
     t.integer  "refund_status"
     t.integer  "apply_refund_by"
     t.text     "refund_description"
+    t.integer  "finance_bill_id"
     t.integer  "comments_count",           default: 0
     t.jsonb    "features"
     t.boolean  "deleted",                  default: false
@@ -1086,9 +1100,9 @@ ActiveRecord::Schema.define(version: 20171113112554) do
     t.integer  "comments_count"
     t.integer  "agent_plan_id"
     t.datetime "paid_at"
-    t.boolean  "is_flatform_recommend",                           default: false
     t.decimal  "lng",                   precision: 20, scale: 14
     t.decimal  "lat",                   precision: 20, scale: 14
+    t.boolean  "is_flatform_recommend",                           default: false
     t.jsonb    "forage"
     t.integer  "parent_id"
     t.string   "tanmer_wxopen_token"
@@ -1157,6 +1171,17 @@ ActiveRecord::Schema.define(version: 20171113112554) do
     t.integer  "status"
     t.index ["resource_type", "resource_id"], name: "index_tasks_on_resource_type_and_resource_id", using: :btree
     t.index ["site_id"], name: "index_tasks_on_site_id", using: :btree
+  end
+
+  create_table "teachers", force: :cascade do |t|
+    t.integer  "site_id"
+    t.string   "name"
+    t.string   "phone"
+    t.string   "IDcard"
+    t.string   "email"
+    t.string   "address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "theme_configs", force: :cascade do |t|
@@ -1306,16 +1331,6 @@ ActiveRecord::Schema.define(version: 20171113112554) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
-  create_table "users_chat_rooms", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "chat_room_id"
-    t.integer  "last_message_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.index ["chat_room_id"], name: "index_users_chat_rooms_on_chat_room_id", using: :btree
-    t.index ["user_id"], name: "index_users_chat_rooms_on_user_id", using: :btree
-  end
-
   create_table "users_permissions", force: :cascade do |t|
     t.integer "user_id"
     t.integer "permission_id"
@@ -1375,6 +1390,4 @@ ActiveRecord::Schema.define(version: 20171113112554) do
   add_foreign_key "user_communities", "users"
   add_foreign_key "user_mobiles", "users"
   add_foreign_key "user_weixins", "users"
-  add_foreign_key "users_chat_rooms", "chat_rooms"
-  add_foreign_key "users_chat_rooms", "users"
 end

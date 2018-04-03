@@ -1,0 +1,25 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      course: 课程
+    attributes:
+      course:
+        name: 课程名
+        course_type: 类型
+        introduction: 课程简介
+        limit_number: 人数限制
+        age_range: 年龄范围
+        sex_limit: 性别限制
+        class_week: 上课周期
+        class_day: 上课时间段
+        class_time: 上课具体时间
+        selected_number: 已选人数
+        class_place: 上课地点
+        class_level: 课程级别
+        teacher_name: 老师姓名
+    errors:
+      models:
+        course: 
+  helpers:
+    course: 

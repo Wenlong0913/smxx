@@ -1,0 +1,19 @@
+td
+  h4 style="margin:0px;"
+    => link_to "#{teacher.id}. #{teacher.name}", admin_site_teacher_path(teacher.site, teacher)
+    
+  span style="margin-left:30px;"
+  => link_to teacher.site.title, admin_site_teachers_path(teacher.site)
+  td
+    =teacher.phone
+  td
+    =teacher.IDcard
+  td
+    =teacher.email
+  td
+    =teacher.address
+  
+
+td
+  => link_to '编辑', edit_admin_site_teacher_path(teacher.site, teacher), class: 'btn btn-xs btn-default'
+  = link_to '删除', admin_site_teacher_path(teacher.site, teacher), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'

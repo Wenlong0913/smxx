@@ -1,0 +1,17 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      teacher: 老师信息
+    attributes:
+      teacher:
+        name: 姓名
+        phone: 电话号码
+        IDcard: 身份证
+        email: 邮箱
+        address: 地址
+    errors:
+      models:
+        teacher: 
+  helpers:
+    teacher: 

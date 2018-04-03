@@ -1,0 +1,50 @@
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+    h4 =Teacher.model_name.human
+  .panel-body
+    = simple_form_for @teacher, url: @teacher.new_record? ? admin_site_teachers_path(@site) : admin_site_teacher_path(@site, @teacher) do |f|
+      - if @teacher.errors.any?
+          #error_explanation
+            ul
+              - @teacher.errors.full_messages.each do |message|
+                li = message
+      / = f.input :name
+      .div class="row"
+        .div class="col-md-6"
+          = f.input :name
+          / = f.association :site
+          / = f.input :site_id, input_html: {value: @site.title}, disabled: true, hint: '姓名不可修改'
+        .div class="col-md-6"
+          = f.input :phone
+      .div class="row"
+          .div class="col-md-6"
+            = f.input :IDcard
+          .div class="col-md-6"
+            = f.input :email
+      .div class="row"
+          .div class="col-md-6"
+            = f.input :address
+
+      .form-group
+        image-select[server="#{image_items_path}" name="teacher[image_item_ids][]" selected-ids="#{@teacher.image_item_ids.join(', ')}"]
+
+      .form-actions
+        = f.submit class: 'btn btn-success btn-block'
+javascript:
+  $(document).ready (function(){
+    var pages = $('body.admin-teachers');
+    
+      if (pages.length > 0){
+        var image_container = pages.find('image-select');
+       var  image = new Vue({
+          el: image_container[0]
+       });
+      }
+
+          
+    });

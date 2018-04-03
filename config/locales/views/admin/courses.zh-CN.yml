@@ -1,0 +1,22 @@
+---
+zh-CN:
+  admin:
+    courses:
+      index:
+        title: Courses
+      show:
+        title: Course
+      edit:
+        title: Editing Course
+      new:
+        title: New Course
+  flash:
+    admin:
+      courses:
+        create:
+          notice: "%{resource_name} was successfully created."
+        update:
+          notice: "%{resource_name} was successfully updated."
+        destroy:
+          notice: "%{resource_name} was successfully deleted."
+          alert: "%{resource_name} could not be deleted."
