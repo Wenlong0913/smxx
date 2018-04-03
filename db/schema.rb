@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180403043550) do
+ActiveRecord::Schema.define(version: 20180403062140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -237,6 +237,20 @@ ActiveRecord::Schema.define(version: 20180403043550) do
     t.index ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
     t.index ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
     t.index ["type"], name: "index_ckeditor_assets_on_type", using: :btree
+  end
+
+  create_table "classorders", force: :cascade do |t|
+    t.string   "user_id"
+    t.integer  "course_id"
+    t.string   "name"
+    t.string   "teacher_name"
+    t.string   "weeknu"
+    t.string   "class_day"
+    t.string   "class_week"
+    t.string   "class_time"
+    t.jsonb    "class_place"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "cms_channels", force: :cascade do |t|
