@@ -9,9 +9,9 @@ zh-CN:
         teacher_name: Teacher name
         weeknu: Weeknu
         class_day: Class day
+        class_week: Class week
         class_time: Class time
         class_place: Class place
-        class_week: Class week
     errors:
       models:
         classorder: 

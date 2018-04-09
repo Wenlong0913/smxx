@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: member_notes
+#
+#  id         :integer          not null, primary key
+#  member_id  :integer
+#  user_id    :integer
+#  message    :text             not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe MemberNote, type: :model do

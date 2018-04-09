@@ -53,10 +53,6 @@ module FrontendRoute
         post "binding_weixin"
         post "binding_phone"
       end
-
-
-      
-      
       # [ 商家, 产品, 新闻 ] 查询路由配置
       get :search_result, to: 'frontend/search#search_result'
       # 文广痛微场馆路由配置

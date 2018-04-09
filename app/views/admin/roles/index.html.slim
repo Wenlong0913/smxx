@@ -31,6 +31,5 @@ h1.page-header
                   => link_to '删除', admin_role_path(role.id), method: :delete, data: {confirm: '确定要删除吗？很危险哦'}, class: 'btn btn-xs btn-success'
 
                 => link_to '用户列表', admin_role_users_path(role_id: role.id), class: 'btn btn-xs btn-primary'
-                => link_to '修改权限', edit_permission_admin_role_path(role), class: 'btn btn-xs btn-primary' 
-            
+                => link_to '修改权限', edit_permission_admin_role_path(role), class: 'btn btn-xs btn-primary' unless ['super_admin', 'admin', 'agent'].include?(role.name)
 = paginate @admin_roles

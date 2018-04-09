@@ -1,0 +1,55 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "helm.fullname" . }}-cable
+  labels:
+    app: {{ template "helm.name" . }}-cable
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: {{ template "helm.name" . }}-cable
+        release: {{ .Release.Name }}
+    spec:
+      volumes:
+      - name: railsconfig
+        secret:
+          secretName: {{ .Values.rails_config }}
+      - name: shared-data
+        emptyDir: {}
+      - name: public-dir
+        persistentVolumeClaim:
+          claimName: imolin-pvc
+      {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.image.pullSecrets | indent 8 }}
+      {{- end}}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        # command: ['sleep', '99999']
+        command: ['./entrypoint.sh', 'bundle', 'exec', 'rails', 's', '-b', '0.0.0.0', '-p', '80']
+        resources:
+          requests:
+            cpu: 10m
+            memory: 200Mi
+          limits:
+            cpu: 500m
+            memory: 600Mi
+        volumeMounts:
+        - name: railsconfig
+          mountPath: /etc/railsconfig
+          readOnly: true
+        env:
+        - name: RAILS_ENV
+          value: production
+        - name: ENABLE_ACTION_CABLE
+          value: 'true'
+        - name: ACTION_CABLE_ONLY
+          value: 'true'

@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: forage_sources
+#
+#  id           :integer          not null, primary key
+#  name         :string           not null
+#  catalog_name :string
+#  url          :string
+#  note         :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe Forage::Source, type: :model do

@@ -8,6 +8,7 @@
 #  resource_id   :integer
 #  created_at    :datetime
 #  updated_at    :datetime
+#  role_name     :string
 #
 
 class Role < ApplicationRecord

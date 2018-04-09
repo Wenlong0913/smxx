@@ -2,15 +2,16 @@
 #
 # Table name: tickets
 #
-#  id         :integer          not null, primary key
-#  site_id    :integer
-#  user_id    :integer
-#  title      :string
-#  content    :string
-#  type       :string
-#  features   :jsonb
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id             :integer          not null, primary key
+#  site_id        :integer
+#  user_id        :integer
+#  title          :string
+#  content        :string
+#  type           :string
+#  features       :jsonb
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  comments_count :integer          default(0)
 #
 
 class PreorderConversition < Ticket

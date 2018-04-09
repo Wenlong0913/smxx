@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: cms_keystores
+#
+#  id          :integer          not null, primary key
+#  site_id     :integer
+#  key         :string           not null
+#  value       :string           not null
+#  description :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe Cms::Keystore, type: :model do

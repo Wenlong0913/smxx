@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: cms_pages
+#
+#  id                :integer          not null, primary key
+#  channel_id        :integer          not null
+#  title             :string           not null
+#  short_title       :string           not null
+#  keywords          :string
+#  description       :string
+#  image_path        :string
+#  content           :text
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  properties        :string           default([]), is an Array
+#  impressions_count :integer          default(0)
+#  comments_count    :integer          default(0)
+#  forage            :jsonb
+#
+
 require 'rails_helper'
 
 RSpec.describe Cms::Page, type: :model do

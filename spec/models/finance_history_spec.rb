@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: finance_histories
+#
+#  id           :integer          not null, primary key
+#  operate_date :date
+#  amount       :decimal(8, 2)
+#  operate_type :integer
+#  owner_type   :string
+#  owner_id     :integer
+#  created_by   :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  features     :jsonb
+#
+
 require 'rails_helper'
 
 RSpec.describe FinanceHistory, type: :model do

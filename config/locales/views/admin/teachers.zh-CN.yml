@@ -1,0 +1,22 @@
+---
+zh-CN:
+  admin:
+    teachers:
+      index:
+        title: Teachers
+      show:
+        title: Teacher
+      edit:
+        title: Editing Teacher
+      new:
+        title: New Teacher
+  flash:
+    admin:
+      teachers:
+        create:
+          notice: "%{resource_name} was successfully created."
+        update:
+          notice: "%{resource_name} was successfully updated."
+        destroy:
+          notice: "%{resource_name} was successfully deleted."
+          alert: "%{resource_name} could not be deleted."

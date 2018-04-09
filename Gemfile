@@ -186,6 +186,7 @@ group :development do
   gem 'guard-rails'
   gem 'guard-livereload'
   gem "rails-erd"
+  gem 'railroady'
 end
 
 group :development, :doc do

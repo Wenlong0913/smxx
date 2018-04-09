@@ -42,7 +42,6 @@ class ImageItemsController < ApplicationController
     else
       render json: @image_item.errors, status: :failed
     end
-    binding.pry
   end
 
   def update

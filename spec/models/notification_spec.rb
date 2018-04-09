@@ -1,3 +1,29 @@
+# == Schema Information
+#
+# Table name: notifications
+#
+#  id                 :integer          not null, primary key
+#  user_id            :integer          not null
+#  actor_id           :integer
+#  notify_type        :string           not null
+#  target_type        :string
+#  target_id          :integer
+#  target_url         :string
+#  target_name        :string
+#  second_target_type :string
+#  second_target_id   :integer
+#  second_target_url  :string
+#  second_target_name :string
+#  third_target_type  :string
+#  third_target_id    :integer
+#  third_target_url   :string
+#  third_target_name  :string
+#  content            :string
+#  read_at            :datetime
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe Notification, type: :model do

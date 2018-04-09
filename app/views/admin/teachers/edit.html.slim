@@ -1,0 +1,9 @@
+h1.page-header
+  | 编辑#{Teacher.model_name.human}
+  .pull-right
+    => link_to '查看', @site ? admin_site_teacher_path(@site, @teacher) : admin_teacher_path(@teacher), class: 'btn btn-primary'
+    
+    = link_to '返回', @site ? admin_site_teachers_path(@site) : admin_teachers_path, class: 'btn btn-primary'
+
+== render 'form'
+

@@ -10,6 +10,8 @@
 #  features           :jsonb
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  impressions_count  :integer          default(0)
+#  content            :text
 #
 
 class MarketPage <  ApplicationRecord

@@ -32,7 +32,7 @@ h1.page-header
                     span.btn.btn-xs.btn-success
                       = enum_l(@order, :status)
                     | &nbsp;
-                    - if @order.paid?
+                    - if (Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei? || Settings.project.wgtong?) && @order.paid?
                       span.refund-button
                         - if @order.refund_status.blank?
                           button.btn.btn-primary.btn-xs[data-toggle="modal" data-target="#refundModal"] 申请退款
@@ -72,30 +72,31 @@ h1.page-header
                 td
                   a
                     = @order.price.to_f/100
-              tr
-                td.field
-                  | #{Order.human_attribute_name(:delivery_fee)}
-                td
-                  a
-                    = @order.delivery_fee.to_f/100
-              tr
-                td.field
-                  | #{Order.human_attribute_name(:delivery_username)}
-                td
-                  a
-                    = @order.delivery_username
-              tr
-                td.field
-                  | #{Order.human_attribute_name(:delivery_phone)}
-                td
-                  a
-                    = @order.delivery_phone
-              tr
-                td.field
-                  | #{Order.human_attribute_name(:delivery_address)}
-                td
-                  a
-                    = @order.delivery_address
+              - if (Settings.project.sxhop? || Settings.project.imolin?)
+                tr
+                  td.field
+                    | #{Order.human_attribute_name(:delivery_fee)}
+                  td
+                    a
+                      = @order.delivery_fee.to_f/100
+                tr
+                  td.field
+                    | #{Order.human_attribute_name(:delivery_username)}
+                  td
+                    a
+                      = @order.delivery_username
+                tr
+                  td.field
+                    | #{Order.human_attribute_name(:delivery_phone)}
+                  td
+                    a
+                      = @order.delivery_phone
+                tr
+                  td.field
+                    | #{Order.human_attribute_name(:delivery_address)}
+                  td
+                    a
+                      = @order.delivery_address
 
               tr.divider
                 td[colspan='2']
@@ -137,7 +138,7 @@ h1.page-header
                   td
                     = link_to order_product.product.name, admin_site_product_path(@order.site, order_product.product)
                   td = order_product.product.discount.to_f / 100 || order_product.product.price.to_f / 100
-                  td = "#{order_product.amount}"
+                  td = "#{order_product.amount}#{order_product.product.unit}"
                   td = order_product.price.to_f / 100
 - if Settings.project.grand?
   .panel

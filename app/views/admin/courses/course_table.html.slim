@@ -1,0 +1,167 @@
+h1.page-header
+  = "#{Site.model_name.human}:#{@site.title}" if @site
+  | #{Course.model_name.human}表
+  .pull-right
+    => link_to "#{Site.model_name.human}详情", admin_site_path(@site), class: 'btn btn-info' if @site
+    .pull-right
+    = link_to '返回',  admin_sites_path, class: 'btn btn-primary'
+.table-responsive.row.m-0
+      table.table.table-striped.table-bordered
+        thead
+          tr
+            th 
+            th 星期一
+            th 星期二
+            th 星期三
+            th 星期四
+            th 星期五
+            th 星期六
+            th 星期日
+            
+
+            
+        tbody
+          tr height="100px"
+            td
+              span 上午
+            td
+              - @courses.each do |course|
+                -if course.class_week.present?
+                  - course.class_week.each do |k,v|
+                    -if v=="星期一" && course.class_day[k]=="上午"
+                        ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                        br 
+                /-binding.pry
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期二" && course.class_day[k]=="上午"
+                      ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                      br 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期三" && course.class_day[k]=="上午"
+                      ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                      br 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期四" && course.class_day[k]=="上午"
+                      ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                      br 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期五" && course.class_day[k]=="上午"
+                      ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                      br 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期六" && course.class_day[k]=="上午"
+                      ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                      br 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期日" && course.class_day[k]=="上午"
+                    ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                    br 
+          tr height="100px"
+            td
+              span 下午 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期一" && course.class_day[k]=="下午"
+                    ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                    br 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期二" && course.class_day[k]=="下午"
+                    ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                    br 
+                    
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期三" && course.class_day[k]=="下午"
+                    ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                    br 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期四" && course.class_day[k]=="下午"
+                    ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                    br 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期五" && course.class_day[k]=="下午"
+                    ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                    br 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期六" && course.class_day[k]=="下午"
+                    ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                    br 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期日" && course.class_day[k]=="下午"
+                    ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                    br 
+          tr height="100px"
+            td
+              span 晚上 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期一" && course.class_day[k]=="晚上"
+                    ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                    br 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期二" && course.class_day[k]=="晚上"
+                    ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                    br 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期三" && course.class_day[k]=="晚上"
+                    ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                    br 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期四" && course.class_day[k]=="晚上"
+                    ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                    br 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期五" && course.class_day[k]=="晚上"
+                    ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                    br 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期六" && course.class_day[k]=="晚上"
+                    ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                    br 
+            td
+              - @courses.each do |course|
+                - course.class_week.each do |k,v|
+                  -if v=="星期日" && course.class_day[k]=="晚上"
+                    ="【"+course.name+"】"+" "+course.class_time[k]+" "+course.class_place[k]+" "+course.teacher_name
+                    br   
+        
+              
+                        
+                        
+              
+

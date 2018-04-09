@@ -1,0 +1,26 @@
+# Add configuration values here, as shown below.
+#
+# pusher_app_id: "2954"
+# pusher_key: 7381a978f7dd7f9a1117
+# pusher_secret: abdc3b896a0ffb85d373
+# stripe_api_key: sk_test_2J0l093xOyW72XUYJHE4Dv2r
+# stripe_publishable_key: pk_test_ro9jV5SNwGb1yYlQfzG17LHK
+#
+# production:
+#   stripe_api_key: sk_live_EeHnL644i6zo4Iyq4v1KdV9H
+#   stripe_publishable_key: pk_live_9lcthxpSIHbGwmdO941O1XVU
+
+RAILS_ENV: production
+PROJECT_NAME: dagle # 项目名称，如dagle
+APP_NAME: # 应用名称，因为我会把dagle项目部署到多个域名，所以需要区分名称，防止redis或sidekiq把几个项目混在一起运行
+
+# database configuration
+POSTGRESQL_DATABASE_HOST:
+POSTGRESQL_DATABASE_NAME: dagle_dev
+POSTGRESQL_DATABASE_USERNAME: postgres
+POSTGRESQL_DATABASE_PASSWORD: '123456'
+RAILS_MAX_THREADS:
+SECRET_KEY_BASE: xxxx
+
+# redis congifuration
+REDIS_URL: 'redis://127.0.0.1:6379/1' # 带密码的格式： redis://:password@redis_server:6379/1
