@@ -42,21 +42,14 @@ class Site < ApplicationRecord
   has_many :order_comments, through: :orders, source: :comments
   has_many :preorder_conversitions, dependent: :destroy
   has_many :market_pages, dependent: :destroy
-<<<<<<< HEAD
-=======
   has_many :teachers, dependent: :destroy
   has_many :courses, dependent: :destroy
   
->>>>>>> origin/upload_course_image
   has_many_favorites
   has_many_comments
   has_many :deliveries, dependent: :destroy
   has_one :cms_site, class_name: '::Cms::Site', dependent: :destroy
-<<<<<<< HEAD
-  belongs_to :agent_plan, optional: true  #optional 选项设为 true，不会验证关联的对象是否存在
-=======
   belongs_to :agent_plan, optional: true
->>>>>>> origin/upload_course_image
   has_many :diymenus, dependent: :destroy
   has_many :parent_menus, -> { includes(:sub_menus).where(parent_id: nil, is_show: true).order("sort").limit(3) }, class_name: "Diymenu", foreign_key: :site_id
   # store_accessor :features, :business_hours, :content, :contact_phone, :contact_name, :is_sign, :sign_note,
@@ -73,14 +66,9 @@ class Site < ApplicationRecord
                 :avg_price, :is_published, :phone, :photos, :province, :real_city, :city, :district, :business_area,
                 :updated_by, :content, :delivery_fee
   store_accessor :forage, :forage_url, :is_foraged, :forage_from, :forage_district_from, :forage_image
-<<<<<<< HEAD
-
-  validates_presence_of :title, :address_line#, :user_id
-=======
   if Settings.project.imolin? || Settings.project.wgtong?
     validates_presence_of :title, :address_line#, :user_id
   end
->>>>>>> origin/upload_course_image
   validates_uniqueness_of :title, scope: [:address_line]
 
 
