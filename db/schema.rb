@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180403062140) do
+ActiveRecord::Schema.define(version: 20180410054122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -240,17 +240,19 @@ ActiveRecord::Schema.define(version: 20180403062140) do
   end
 
   create_table "classorders", force: :cascade do |t|
-    t.string   "user_id"
+    t.integer  "user_id"
     t.integer  "course_id"
     t.string   "name"
     t.string   "teacher_name"
     t.string   "weeknu"
-    t.string   "class_day"
-    t.string   "class_week"
-    t.string   "class_time"
+    t.jsonb    "class_day"
+    t.jsonb    "class_time"
     t.jsonb    "class_place"
+    t.jsonb    "class_week"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["course_id"], name: "index_classorders_on_course_id", using: :btree
+    t.index ["user_id"], name: "index_classorders_on_user_id", using: :btree
   end
 
   create_table "cms_channels", force: :cascade do |t|
@@ -386,12 +388,12 @@ ActiveRecord::Schema.define(version: 20180403062140) do
   create_table "courses", force: :cascade do |t|
     t.string   "name"
     t.string   "course_type"
-    t.string   "introduction"
+    t.jsonb    "features"
     t.integer  "site_id"
     t.integer  "teacher_id"
-    t.jsonb    "features"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.text     "introduction"
   end
 
   create_table "discovers", force: :cascade do |t|
@@ -1283,6 +1285,18 @@ ActiveRecord::Schema.define(version: 20180403062140) do
     t.index ["user_id"], name: "index_tracker_visits_on_user_id", using: :btree
   end
 
+  create_table "user_births", force: :cascade do |t|
+    t.integer "user_id"
+    t.string  "birth"
+    t.index ["user_id"], name: "index_user_births_on_user_id", using: :btree
+  end
+
+  create_table "user_cardnus", force: :cascade do |t|
+    t.integer "user_id"
+    t.string  "cardnu"
+    t.index ["user_id"], name: "index_user_cardnus_on_user_id", using: :btree
+  end
+
   create_table "user_communities", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "community_id"
@@ -1293,12 +1307,32 @@ ActiveRecord::Schema.define(version: 20180403062140) do
     t.index ["user_id"], name: "index_user_communities_on_user_id", using: :btree
   end
 
+  create_table "user_locities", force: :cascade do |t|
+    t.integer "user_id"
+    t.string  "locity"
+    t.index ["user_id"], name: "index_user_locities_on_user_id", using: :btree
+  end
+
   create_table "user_mobiles", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "phone_number"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["user_id"], name: "index_user_mobiles_on_user_id", using: :btree
+  end
+
+  create_table "user_relnames", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "relname"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_relnames_on_user_id", using: :btree
+  end
+
+  create_table "user_sexes", force: :cascade do |t|
+    t.integer "user_id"
+    t.string  "sex"
+    t.index ["user_id"], name: "index_user_sexes_on_user_id", using: :btree
   end
 
   create_table "user_weixins", force: :cascade do |t|
@@ -1342,6 +1376,11 @@ ActiveRecord::Schema.define(version: 20180403062140) do
     t.datetime "avatar_updated_at"
     t.string   "description",            limit: 500
     t.integer  "gender"
+    t.string   "relname"
+    t.string   "cardnu"
+    t.string   "birth"
+    t.string   "locity"
+    t.string   "sex"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
@@ -1372,6 +1411,8 @@ ActiveRecord::Schema.define(version: 20180403062140) do
   add_foreign_key "article_users", "articles"
   add_foreign_key "attachment_relations", "attachments"
   add_foreign_key "charges", "orders"
+  add_foreign_key "classorders", "courses"
+  add_foreign_key "classorders", "users"
   add_foreign_key "complaints", "users"
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
@@ -1400,8 +1441,13 @@ ActiveRecord::Schema.define(version: 20180403062140) do
   add_foreign_key "tickets", "users"
   add_foreign_key "tracker_visits", "tracker_actions", column: "action_id"
   add_foreign_key "tracker_visits", "tracker_sessions", column: "session_id"
+  add_foreign_key "user_births", "users"
+  add_foreign_key "user_cardnus", "users"
   add_foreign_key "user_communities", "communities"
   add_foreign_key "user_communities", "users"
+  add_foreign_key "user_locities", "users"
   add_foreign_key "user_mobiles", "users"
+  add_foreign_key "user_relnames", "users"
+  add_foreign_key "user_sexes", "users"
   add_foreign_key "user_weixins", "users"
 end

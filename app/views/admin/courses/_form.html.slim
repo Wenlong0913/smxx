@@ -174,19 +174,7 @@ javascript:
     
     
    var dmax = 0,tmax=0,wmax=0,pmax=0,temax=0;
-  if(dayvalues==null&&weekvalues==null&&placevalues==null&&timevalues==null)
-  {
-          for(var i of courseList.lists){
-            
-            i.week.push({key:"1", value: ''});
-            i.day.push({key: '1', value: ''});
-            i.place.push({key: '1', value: ''});
-            i.time.push({key: '1', value: ''});
-            
-            
-            
-          }
-  }
+ 
     for(var k in dayvalues){
       console.log(dayvalues);
       if( parseInt(k) > 0)

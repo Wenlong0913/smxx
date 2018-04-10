@@ -365,7 +365,7 @@
         <% @class.each do |classse|%>
         <% classse.class_day.each do |key,value|%>
           <% classse.class_week.each do |key1,value1|%>
-              <% if value === "下午" && value1 === "星期天"%> 
+              <% if value === "下午" && value1 === "星期日"%> 
                <% classse.class_time.each do |key2,value2|%>
                 <% if key1 === key2 && key === key2%>
                 <%=classse.name%><br>
@@ -548,7 +548,7 @@
      <% @class.each do |classse|%>
       <% classse.class_day.each do |key,value|%>
       <% classse.class_week.each do |key1,value1|%>
-          <% if value === "晚上" && value1 === "星期天"%>
+          <% if value === "晚上" && value1 === "星期日"%>
            <% classse.class_time.each do |key2,value2|%>
             <% if key1 === key2 && key === key2%>
             <%=classse.name%><br>
