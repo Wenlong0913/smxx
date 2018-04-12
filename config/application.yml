@@ -15,8 +15,8 @@ PROJECT_NAME: wgtong # 项目名称，如dagle
 APP_NAME: # 应用名称，因为我会把dagle项目部署到多个域名，所以需要区分名称，防止redis或sidekiq把几个项目混在一起运行
 
 # database configuration
-POSTGRESQL_DATABASE_HOST: localhost
-POSTGRESQL_DATABASE_NAME: 
+POSTGRESQL_DATABASE_HOST: 
+POSTGRESQL_DATABASE_NAME: dagle_dev
 POSTGRESQL_DATABASE_USERNAME: postgres
 POSTGRESQL_DATABASE_PASSWORD: '123456'
 RAILS_MAX_THREADS:
