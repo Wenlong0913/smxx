@@ -1,0 +1,12 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      classorder_course: Classorder course
+    attributes:
+      classorder_course: {}
+    errors:
+      models:
+        classorder_course: 
+  helpers:
+    classorder_course: 
