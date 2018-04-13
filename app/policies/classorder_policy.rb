@@ -5,10 +5,22 @@ class ClassorderPolicy < ApplicationPolicy
     end
   end
 
+  def create?
+    user.super_admin_or_admin? || user.permission?(:create_classorder)||  user.has_role?(:agent)
+  end
+
+  def update?
+    user.super_admin_or_admin? ||  user.has_role?(:agent) || user.permission?(:update_classorder)
+  end
+  def destroy?
+    destroy? 
+  end
+
+
   def permitted_attributes_for_create
-    fail "请在#{__FILE__}中添加params的permit属性"
-    if user.has_role? :admin
-      []
+    if user.super_admin_or_admin? || user.permission?(:create_order) ||  user.has_role?(:agent)
+      [:image_item_ids => [], :code,:user_id,:site_id,:name,:teacher_name,:weeknu,:class_day , :class_time ,:class_place, :class_week ]
+
     else
       []
     end
@@ -16,5 +28,9 @@ class ClassorderPolicy < ApplicationPolicy
 
   def permitted_attributes_for_update
     permitted_attributes_for_create
+  end
+
+  def create_comment?
+    create?
   end
 end

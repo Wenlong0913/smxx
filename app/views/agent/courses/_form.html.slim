@@ -100,52 +100,52 @@
               el: image_container[0]
           });
           }
-      var courseListDom = pages.find("div[rel='course_list_vue']");
-        var courseList = new Vue({
-        el: courseListDom[0],
-          data:{
-            weekvalues: {},
-            dayvalues: {},
-            timevalues: {},
-            placevalues: {},
-            
-            lists: 
-              [{week: [],
-              time: [],
-              day: [],
-              place: []}]
-            ,
-            count: 1
-          },
-          methods:
-            {
-              addCourseList: function(){
-                console.log(this.lists);
-              for(var i of this.lists){
-                console.log(i.day);
-                i.week.push({key: this.count, value: ''});
-                i.day.push({key: this.count, value: ''});
-                i.place.push({key: this.count, value: ''});
-                i.time.push({key: this.count, value: ''});
-                
-                this.count++;
-                
-              }
+        var courseListDom = pages.find("div[rel='course_list_vue']");
+          var courseList = new Vue({
+          el: courseListDom[0],
+            data:{
+              weekvalues: {},
+              dayvalues: {},
+              timevalues: {},
+              placevalues: {},
+              
+              lists: 
+                [{week: [],
+                time: [],
+                day: [],
+                place: []}]
+              ,
+              count: 2
+            },
+            methods:
+              {
+                addCourseList: function(){
+                  console.log(this.lists);
+                for(var i of this.lists){
+                  console.log(i.day);
+                  i.week.push({key: this.count, value: ''});
+                  i.day.push({key: this.count, value: ''});
+                  i.place.push({key: this.count, value: ''});
+                  i.time.push({key: this.count, value: ''});
+                  
+                  this.count++;
+                  
+                }
 
               },
-            removeCourseList: function(index){
-              for(var i of this.lists){
-                i.week.splice(index, 1);
-                i.day.splice(index, 1);
-                i.place.splice(index, 1);
-              
-                i.time.splice(index, 1);
-              console.log(index);
-              }
+              removeCourseList: function(index){
+                for(var i of this.lists){
+                  i.week.splice(index, 1);
+                  i.day.splice(index, 1);
+                  i.place.splice(index, 1);
+                
+                  i.time.splice(index, 1);
+                console.log(index);
+                }
 
-            }
-            }
-        });
+              }
+              }
+            });
       
         var weekvalues = pages.find("div[rel='course_list_vue']").data('week');
         var timevalues = pages.find("div[rel='course_list_vue']").data('time');
@@ -153,19 +153,32 @@
         var placevalues = pages.find("div[rel='course_list_vue']").data('place');
         
         
-      var dmax = 0,tmax=0,wmax=0,pmax=0,temax=0;
-
-        for(var k in dayvalues){
-          console.log(dayvalues);
-          if( parseInt(k) > 0)
+        var dmax = 0,tmax=0,wmax=0,pmax=0,temax=0;
+        if(dayvalues==null&&weekvalues==null&&placevalues==null&&timevalues==null)
           {
-            if( dmax < parseInt(k))
-              dmax = parseInt(k) ;
-            for(var i of courseList.lists)
-              {  i.day.push({key: parseInt(k), value: dayvalues[k]}); }
-            courseList.count = dmax+1;
-          } 
-        }
+                  for(var i of courseList.lists){
+                    
+                    i.week.push({key:"1", value: ''});
+                    i.day.push({key: '1', value: ''});
+                    i.place.push({key: '1', value: ''});
+                    i.time.push({key: '1', value: ''});
+                    
+                    
+                    
+                  }
+          }
+
+          for(var k in dayvalues){
+            console.log(dayvalues);
+            if( parseInt(k) > 0)
+            {
+              if( dmax < parseInt(k))
+                dmax = parseInt(k) ;
+              for(var i of courseList.lists)
+                {  i.day.push({key: parseInt(k), value: dayvalues[k]}); }
+              courseList.count = dmax+1;
+            } 
+          }
 
       
           for(var k in weekvalues){
@@ -205,6 +218,6 @@
         }
 
         
-        });
+      });
 
 

@@ -18,15 +18,15 @@ class TeacherPolicy < ApplicationPolicy
   end
 
   def new?
-    user.super_admin_or_admin? || user.has_role?(:agent) || user.permission?(:product_insert)
+    user.super_admin_or_admin? || user.has_role?(:agent) 
   end
 
   def create?
-    user.super_admin_or_admin? || user.has_role?(:agent)  || user.permission?(:product_insert)
+    user.super_admin_or_admin? || user.has_role?(:agent)  
   end
 
   def edit?
-    user.super_admin_or_admin? || user.has_role?(:agent)  || user.permission?(:product_update)
+    user.super_admin_or_admin? || user.has_role?(:agent) 
   end
 
   def update?
@@ -34,13 +34,13 @@ class TeacherPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.super_admin_or_admin? || user.has_role?(:agent)  || user.permission?(:product_delete)
+    user.super_admin_or_admin? || user.has_role?(:agent) 
   end
 
   def permitted_attributes_for_create
     if user.super_admin_or_admin? || user.has_role?(:agent) 
       
-      [:name, :phone,:IDcard, :email, :address, :site_id]
+      [:name, :phone,:IDcard, :email, :address, :site_id, :image_item_ids => []]
     else
       []
     end

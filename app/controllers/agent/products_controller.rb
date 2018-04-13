@@ -130,6 +130,7 @@ class Agent::ProductsController < Agent::BaseController
     else
       render json: {errors: @product.errors.full_messages.join(',')}
     end
+    
   end
 
   def update

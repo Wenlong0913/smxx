@@ -1,5 +1,5 @@
 
-    = simple_form_for @teacher, url: @teacher.new_record? ? agent_teachers_path(@teacher) : agent_teacher_path(@teacher), html: { class: 'form-horizontal simple_form new_teacher' } do |f|
+= simple_form_for @teacher, url: @teacher.new_record? ? agent_teachers_path(@teacher) : agent_teacher_path(@teacher), html: { class: 'form-horizontal simple_form new_teacher' } do |f|
       - if @teacher.errors.any?
           #error_explanation
             ul
@@ -35,20 +35,23 @@
                   .div class="row"
                       .div class="col-md-6"
                         = f.input :address
+
                   .form-group
                     image-select[server="#{image_items_path}" name="teacher[image_item_ids][]" selected-ids="#{@teacher.image_item_ids.join(', ')}"]
+
                   .form-actions
                     = f.submit class: 'btn btn-success btn-block'
-    javascript:
-      $(document).ready (function(){
-        var pages = $('body.agent_teachers.new');
-        console.log(pages);
-          if (pages.length > 0){
-            var image_container = pages.find('image-select');
-            var  image = new Vue({
-              el: image_container[0]
-            });
-          }
-  
-              
-      });
+javascript:
+  $(document).ready (function(){
+    var pages = $('body.agent-teachers');
+    
+      if (pages.length > 0){
+        var image_container = pages.find('image-select');
+       var  image = new Vue({
+          el: image_container[0]
+       });
+      }
+
+          
+    });    
+ 

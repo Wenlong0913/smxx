@@ -73,12 +73,12 @@
                 
                 <div class="product-attr-info">
                   <div class="row">
-                    <div class="col-xs-2">
+                    <div class="col-xs-3">
                       老师介绍：
                     </div>
-                    <div class="col-xs-10">
+                    <div class="col-xs-9">
                       <% if @teacher.description.present? %>
-                        <%= @teacher.description %>
+                        <%= raw(@teacher.description) %>
                       <% else %>
                         <%= link_to "立即编辑", edit_agent_teacher_path(@teacher), 'data-turbolinks': false %>
                       <% end %>
@@ -96,7 +96,7 @@
                   老师二维码：
                 </div>
                 <div class="col-xs-8">
-                  <%= image_tag agent_teacher_path(teacher_id: @teacher.id, format: :png)%>
+                  
                 </div>
               </div>
             </div> 

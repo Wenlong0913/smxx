@@ -4,7 +4,7 @@ class Agent::CoursesController < Agent::BaseController
   before_action :set_course, only: [:show, :edit, :update, :destroy]
   before_action :set_teacher_id, only: [:create,:update]
   before_action :set_site, only: [:new, :edit, :create, :show, :update, :destroy,:course_table]
-  
+  before_action :set_site_tags, only: [:edit, :new]
    def index
     authorize Course
     # @courses = Course.all.page(params[:page])
@@ -43,8 +43,10 @@ class Agent::CoursesController < Agent::BaseController
   def create
     authorize Course
     @teacher=Teacher.where(site_id: @site.id)
-     binding.pry
+     
     @course = Course.new(permitted_attributes(Course).merge(site_id: @site.id).merge(teacher_id: @teachers.id))
+    @course.site = @site
+   
     filter_week 
     filter_day 
     filter_time 
@@ -52,10 +54,10 @@ class Agent::CoursesController < Agent::BaseController
     if @course.save
       redirect_to agent_course_path( @course), notice: 'Course 创建成功.'
     else
-      render :new
+      render json: {errors: @course.errors.full_messages.join(',')}
     end
 
-
+    
   end
 
   def update
@@ -111,7 +113,10 @@ class Agent::CoursesController < Agent::BaseController
     def set_course
       @course = @courses.find(params[:id])
     end
-
+    def set_site_tags
+      @site_tags      = @site.tags.pluck(:name).uniq
+      @site_most_tags = @site.tags.most_used(5).uniq.map(&:name)
+    end
     # Only allow a trusted parameter "white list" through.
     def course_params
       params.require(:course).permit(:name,:type,:introduction)
@@ -140,4 +145,5 @@ class Agent::CoursesController < Agent::BaseController
         @course.class_place = params[:course][:class_place]
       end
     end
+
 end

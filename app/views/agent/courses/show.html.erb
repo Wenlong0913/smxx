@@ -31,6 +31,7 @@
                 <!-- BEGIN product-main-image -->
                 <div class="product-main-image" data-id="main-image">
                   <%= image_tag @course.image_items.first.try{image_url} || 'no-picture.png'%>
+                  
                 </div>
                 <!-- END product-main-image -->
               </div>
@@ -95,13 +96,24 @@
                 </span>
               </div>
               <div class="product-attr-info">
+                <% if @course.class_week.present? %>
+                  <% @course.class_week.each do |k,v| %>
+                    <span>上课时间和地点</span>:
+                    <span>
+                      <%= v+" "+@course.class_day[k]+" "+@course.class_time[k]+" "+@course.class_place[k]  %>
+                    </span>
+                    <br>
+                  <% end %>
+                <% end %>
+            </div>
+              <div class="product-attr-info">
                 <div class="row">
-                  <div class="col-xs-2">
+                  <div class="col-xs-3">
                     课程介绍：
                   </div>
-                  <div class="col-xs-10">
+                  <div class="col-xs-9">
                     <% if @course.introduction.present? %>
-                      <%= @course.introduction %>
+                      <%= raw(@course.introduction) %>
                     <% else %>
                       <%= link_to "立即编辑", edit_agent_course_path(@course), 'data-turbolinks': false %>
                     <% end %>
@@ -120,17 +132,3 @@
 </div>
 <!-- END #teacher -->
 
-<script>
-
-# bodyShow.find('ul.checkout_image_list li a').on "click", ->
-# imageUrl = $(this).data('url')
-# bodyShow.find(".product-main-image[data-id='main-image'] img").attr('src', imageUrl)
-# bodyShow.find('ul.checkout_image_list li').removeClass('active')
-# $(this).parent().addClass('active')
-# setTimeout ->
-# bodyShow.find('#editModal .modal-content form').on "ajax:success", (event, request)->
-#   if request.hasOwnProperty('error')
-#     $(this).find('.modal-body .alert.alert-danger').removeClass('hide').find('span.title').text(request.error)
-#     $('#editModal').scrollTop(0)
-
-</script>

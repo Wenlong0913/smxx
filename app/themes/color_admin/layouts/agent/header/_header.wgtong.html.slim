@@ -46,7 +46,7 @@
                 -if Catalog.where(id: @site.catalog_id).find_by(name: "学校")
                   li = link_to '订单列表', agent_orders_path
                 -else
-                  li = link_to '订单列表', agent_classorders_path
+                  li = link_to '订单列表', agent_orders_path
                 / li = link_to '订单创建', new_agent_order_path
             li.dropdown.dropdown-hover
               a data-toggle="dropdown" href="#"

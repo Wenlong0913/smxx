@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180412075247) do
+ActiveRecord::Schema.define(version: 20180413031920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -636,6 +636,16 @@ ActiveRecord::Schema.define(version: 20180412075247) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_gnomon_streets_on_name", using: :btree
+  end
+
+  create_table "image_item_courses", force: :cascade do |t|
+    t.integer  "image_item_id"
+    t.string   "courses_type"
+    t.integer  "courses_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["courses_type", "courses_id"], name: "index_image_item_courses_on_courses_type_and_courses_id", using: :btree
+    t.index ["image_item_id"], name: "index_image_item_courses_on_image_item_id", using: :btree
   end
 
   create_table "image_item_relations", force: :cascade do |t|
@@ -1412,6 +1422,7 @@ ActiveRecord::Schema.define(version: 20180412075247) do
   add_foreign_key "charges", "orders"
   add_foreign_key "classorders", "users"
   add_foreign_key "complaints", "users"
+  add_foreign_key "image_item_courses", "image_items"
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
   add_foreign_key "items", "sites"

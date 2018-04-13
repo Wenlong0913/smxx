@@ -60,7 +60,7 @@
                   <h4 class="item-title">
                     <%= link_to course.name, agent_course_path(course) %>
                   </h4>
-                  <p class="item-desc"><%= course.introduction.blank? ? "暂无描述".html_safe :  course.introduction %></p>
+                  <p class="item-desc"><%= course.introduction.blank? ? "暂无描述".html_safe :  raw(course.introduction) %></p>
                  
                 </div>
                 <%= link_to '删除', agent_course_path(course), method: :delete, data: { confirm: '确定要删除吗?' }, class: 'btn btn-sm btn-danger pull-right' %>

@@ -9,7 +9,7 @@ class CoursePolicy < ApplicationPolicy
   end
 
   def index?
-    user.super_admin_or_admin? || user.has_role?(:agent) || user.has_role?(:worker)
+    user.super_admin_or_admin? || user.has_role?(:agent) 
   end
 
   def show?
@@ -18,15 +18,15 @@ class CoursePolicy < ApplicationPolicy
   end
 
   def new?
-    user.super_admin_or_admin? || user.has_role?(:agent) || user.permission?(:product_insert)
+    user.super_admin_or_admin? || user.has_role?(:agent) 
   end
 
   def create?
-    user.super_admin_or_admin? || user.has_role?(:agent)  || user.permission?(:product_insert)
+    user.super_admin_or_admin? || user.has_role?(:agent) 
   end
 
   def edit?
-    user.super_admin_or_admin? || user.has_role?(:agent)  || user.permission?(:product_update)
+    user.super_admin_or_admin? || user.has_role?(:agent)  
   end
 
   def update?
@@ -34,7 +34,7 @@ class CoursePolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.super_admin_or_admin? || user.has_role?(:agent)  || user.permission?(:product_delete)
+    user.super_admin_or_admin? || user.has_role?(:agent)  
   end
 
   def course_table?
@@ -44,7 +44,7 @@ class CoursePolicy < ApplicationPolicy
   def permitted_attributes_for_create
     if user.super_admin_or_admin? || user.has_role?(:agent) 
       [:name, :course_type, :introduction,:limit_number ,:age_range,:sex_limit, :class_week,:class_time,
-      :selected_number,:class_place,:class_level,:teacher_name,:teacher_id,:class_day]
+      :selected_number,:class_place,:class_level,:teacher_name,:teacher_id,:class_day, :image_item_ids => []]
     else
       []
     end
