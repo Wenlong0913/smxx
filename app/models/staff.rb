@@ -46,8 +46,6 @@ class Staff < ApplicationRecord
     image_items.first.try(:image_url)
   end
 
-<<<<<<< HEAD
+
 end
-=======
-end
->>>>>>> origin/upload_course_image
+

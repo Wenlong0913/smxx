@@ -22,7 +22,7 @@ class Frontend::SmusersController < Frontend::BaseController
       end
     end
   
-    def self_order
+    def self_classorder
       if ['pending', 'open', 'paid', 'completed', 'cancelled'].include?(params[:type])
         @user_orders = current_user.orders.where(status: params[:type]).order("updated_at DESC").page(params[:page])
       else

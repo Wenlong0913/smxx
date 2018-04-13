@@ -156,7 +156,7 @@ class Order < ApplicationRecord
         self.order_products.each do |op|
           p = op.product
           stocknu=self.member_attributes[0]["stocknu"]
-          p.stock[stocknu]=p.stock[stocknu]-op.amount
+          p.stock[stocknu]=p.stock[stocknu].to_i-op.amount
           p.save!  
         end
       end
@@ -172,7 +172,7 @@ class Order < ApplicationRecord
         self.order_products.each do |op|
           p = op.product
           stocknu=self.member_attributes[0]["stocknu"]
-          p.stock[stocknu]=p.stock[stocknu]+op.amount
+          p.stock[stocknu]=p.stock[stocknu].to_i+op.amount
           p.save!
         end
       end

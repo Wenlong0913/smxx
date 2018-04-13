@@ -1,0 +1,49 @@
+<%= render file: @cms_site.template_dir + '_header.html' %>
+<% if @user_classorders.any? %>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-bordered">
+        <caption style="text-align:center;">个人选课情况</caption>
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>课程</th>
+                <th>任课教师</th>
+                <th>上课时间</th>
+                <th>上课地点</th>
+                <th>撤销选课</th>
+            </tr>
+            </thead>
+            <tbody> 
+            <% @user_classorders.each_with_index do |order| %>      
+            <tr>
+                <td><%=order.id%></td>
+                <td><%=order.name%></td>
+                <td><%=order.teacher_name%></td>
+                <td> <% order.class_week.each do |key1,value1| %>
+                    <% order.class_time.each do |key,value| %>
+                        <%if key === key1%>
+                         <%=value1 + value%>
+                     <%end%>
+                   <%end%>
+                 <% end %></td>
+                <td><%order.class_place.each do |key,value|%>
+                    <%=value%>
+                    <% end %></td>
+                <td><%= link_to '撤销选课', frontend_classorder_path(order),
+                method: :delete,
+                data: { confirm: '确定要删除这节课吗?' } %></td>
+               
+            </tr> 
+            <%end%>
+            </tbody>
+            </table>
+    </div>
+    </div>
+
+</div>
+
+<%end%>

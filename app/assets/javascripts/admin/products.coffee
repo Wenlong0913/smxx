@@ -120,3 +120,4 @@ $(document).ready ()->
         attrStock .lists.push {key: v, name: parseInt(name), value: defaultvalues[name]}
         attrStock .count = max+1
     attrStock.lists.push {key: ' ', name: attrStock.count, value: ' '}
+    

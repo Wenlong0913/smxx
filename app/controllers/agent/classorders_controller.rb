@@ -38,7 +38,6 @@ class Agent::ClassordersController < Agent::BaseController
       end
   
   end
-
   def show
     authorize @classorder
     respond_to do |format|
@@ -89,7 +88,10 @@ class Agent::ClassordersController < Agent::BaseController
 
   def destroy
     authorize @classorder
-    @classorder.destroy
+   if limit_number
+      @classorder.destroy
+   end
+   
     respond_to do |format|
       format.html { redirect_to agent_classorders_url, notice: 'Classorder 删除成功.' }
       format.json { head 200 }
@@ -102,7 +104,15 @@ class Agent::ClassordersController < Agent::BaseController
     def set_classorder
       @classorder = Classorder.find(params[:id])
     end
-
+    def limit_number
+      @classorder.courses.each do |f|
+        limit_number=f.limit_number.to_i+1        
+        @course=Course.find_by(id: f.id)
+        @course.limit_number=limit_number.to_s
+        @course.save!
+      end
+      
+    end
     # Only allow a trusted parameter "white list" through.
     def classorder_params
       params[:classorder]

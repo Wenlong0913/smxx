@@ -43,6 +43,8 @@ module FrontendRoute
       # 前端页面路由
       resource :users, except: [:create, :destroy, :new], controller: 'frontend/users' do
         get "self_order"
+        get "self_classorder"
+        get "self_showtable"
         get "self_comment"
         get "self_complaint"
         post "self_complaint"
@@ -53,6 +55,11 @@ module FrontendRoute
         post "binding_weixin"
         post "binding_phone"
       end
+
+    
+
+      
+      
       # [ 商家, 产品, 新闻 ] 查询路由配置
       get :search_result, to: 'frontend/search#search_result'
       # 文广痛微场馆路由配置

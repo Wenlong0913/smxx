@@ -46,7 +46,7 @@ class User < ApplicationRecord
   has_many :classorders, dependent: :destroy
   has_many :shopping_carts, dependent: :destroy
   has_many :sites
-  has_many :classorders, dependent: :destroy
+ 
   has_many :preorder_conversitions
   has_many :create_order, class_name: 'Order', foreign_key: :create_by
   has_many :update_order, class_name: 'Order', foreign_key: :update_by

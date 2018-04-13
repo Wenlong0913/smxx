@@ -50,7 +50,7 @@ class Site < ApplicationRecord
   has_many_comments
   has_many :deliveries, dependent: :destroy
   has_one :cms_site, class_name: '::Cms::Site', dependent: :destroy
-  belongs_to :agent_plan, optional: true
+  belongs_to :agent_plan, optional: true  #optional 选项设为 true，不会验证关联的对象是否存在
   has_many :diymenus, dependent: :destroy
   has_many :parent_menus, -> { includes(:sub_menus).where(parent_id: nil, is_show: true).order("sort").limit(3) }, class_name: "Diymenu", foreign_key: :site_id
   # store_accessor :features, :business_hours, :content, :contact_phone, :contact_name, :is_sign, :sign_note,

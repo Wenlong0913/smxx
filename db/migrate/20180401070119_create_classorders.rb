@@ -11,6 +11,7 @@ class CreateClassorders < ActiveRecord::Migration[5.0]
       t.jsonb :class_place
       t.jsonb :class_week
 
+      t.timestamps
     end
   end
 end

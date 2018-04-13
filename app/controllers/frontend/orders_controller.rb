@@ -9,7 +9,6 @@ class Frontend::OrdersController < Frontend::BaseController
       format.json { render json: @orders }
     end
   end
-
   def show
     respond_to do |format|
       format.html
@@ -24,10 +23,16 @@ class Frontend::OrdersController < Frontend::BaseController
    
   end
 
+  def new_classorder
+    redirect_to binding_phone_users_url(return_url: new_frontend_order_url(product_id: params[:product_id])) unless current_user.try(:mobile).try(:phone_number)
+    @order = Order.new
+    @course = Course.find(params[:course_id])
+  end
+
   def edit
   end
 
-  def create
+  def create  
     ActiveRecord::Base.transaction do
       price = 0
       params[:order][:order_products].each do |order_product|
@@ -39,13 +44,12 @@ class Frontend::OrdersController < Frontend::BaseController
       @frontend_order.price = price
       @frontend_order.description = params[:order][:description]
       @frontend_order.create_by = current_user.id
-      @frontend_order.save!
+      @frontend_order.save!    
       params[:order][:order_products].each do |order_product_params|
         order_product = @frontend_order.order_products.build
         order_product.product_id = order_product_params[:id]
         order_product.amount = order_product_params[:amount]
-        order_product.price = order_product_params[:price]
-       
+        order_product.price = order_product_params[:price] 
         order_product.save!
       end
     end
@@ -84,10 +88,12 @@ class Frontend::OrdersController < Frontend::BaseController
   end
 
   def charge
+   
     if params[:order_id]
       order = Order.find(params[:order_id])
       product = order.order_products.first.product
     else
+      
       order = Order.new(user: current_user)
       product = Product.find(params[:order][:product][:id])
       product_amount = params[:order][:product][:number].presence || 1

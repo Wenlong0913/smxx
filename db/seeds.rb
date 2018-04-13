@@ -24,7 +24,7 @@ end
 
 unless User.find_by_phone_number('18080810818')
   puts "创建用户: 管理员"
-  _, admin = User::Create.(mobile_phone: '18080810818', nickname: '管理员', password: 'abcd1234')
+  _, admin = User::Create.(mobile_phone: '18080810818', nickname: '管理员', password: 'abcd1234', email: 'admin@tanmer.com', relname: '小红', cardnu: '511028199612126789', birth: '2010-10-12', locity: '四川成都', sex: '男')
   admin.save!
   raise "创建的第一个用户ID不等于1!!!" unless admin.id == 1
   admin.add_role :admin
@@ -45,11 +45,11 @@ end
 # 测试账号，方便app审核时测试用，手机号验证码是000000，在settings.xx.yml中有设置
 unless User.find_by_phone_number('13900000000')
   puts "创建用户: 测试账号"
-  _, user = User::Create.(mobile_phone: '13900000000', nickname: '测试账号', password: 'xhkafhsafl')
+  _, user = User::Create.(mobile_phone: '13900000000', nickname: '测试账号', password: 'xhkafhsafl', email: 'admin@tanmer.com', relname: '小红', cardnu: '511028199612126789', birth: '2010-10-12', locity: '四川成都', sex: '男')
 end
 
 unless User.find_by_phone_number('11000000000')
-  flag, public_admin = User::Create.(mobile_phone: '11000000000', nickname: '超级管理员', email: 'admin@tanmer.com', password: 'tanmer.com')
+  flag, public_admin = User::Create.(mobile_phone: '11000000000', nickname: '超级管理员', email: 'admin@tanmer.com', password: 'tanmer.com', relname: '小红', cardnu: '511028199612126789', birth: '2010-10-12', locity: '四川成都', sex: '男' )
   if flag
     puts "创建用户: 超级管理员"
     public_admin.save!

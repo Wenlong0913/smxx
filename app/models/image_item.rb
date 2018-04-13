@@ -19,7 +19,6 @@ class ImageItem < ApplicationRecord
   validates_presence_of :owner, :data
   has_many :image_item_tags, dependent: :destroy
   has_many :image_item_relations, dependent: :destroy
- 
 
   store_accessor :data, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at
   has_attached_file :image,

@@ -47,7 +47,6 @@
                   <!-- BEGIN product-main-image -->
                   <div class="product-main-image" data-id="main-image">
                     <%= image_tag @product.image_items.first.try{image_url} || 'no-picture.png'%>
-                   
                   </div>
                   <!-- END product-main-image -->
                 </div>
@@ -166,9 +165,7 @@
                     <!-- END product-info-header -->
                     <div class="product-attr-info">
                         <ul class="list-inline row">
-                          <li class='col-sm-12 col-md-4'>库存: <b class="text-success">
-                          <%= @product.stock %><%= "(#{@product.unit})" if @product.unit.present? %>
-                          </b></li>
+                          <li class='col-sm-12 col-md-4'>库存: <b class="text-success"><%= @product.stock %><%= "(#{@product.unit})" if @product.unit.present? %></b></li>
                           <% if @product.discount.to_f > 0 && @product.discount.to_f < @product.price.to_f %>
 
                             <li class='col-sm-12 col-md-4'>

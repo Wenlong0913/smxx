@@ -15,18 +15,15 @@
                 <div class="row">
                         <div class="ul-margin clearfix ">
                         <% if Classorder.where(user_id: current_user.id).count>=2%>
-                        <h4>每人每学期最多选两门课</h4>
+                        <h3>每人每学期最多选两门课</h3>
                         <%else%>
                         <% @course.each do |course| %>
-                            <%
-                            doc = Nokogiri::HTML(@course.try(:content))
-                            img_srcs = doc.css('img').map{ |i| i['src'] }
-                              %>
-                              <% if img_srcs.size < 4 %>
+                            
+                              
                                 <div class="col-xs-12  col-md-3">
                                     <li> 
                                         <a href="<%= frontend_course_path(course) %>" class="cover_img_a" title="<%=course.name %>">
-                                        <div class="cover_img img1" style="background: no-repeat center url('<%= img_srcs[0].present? ? img_srcs[0] : course.first_image %>')">
+                                        <div class="cover_img img1" style="background: no-repeat center url('<%=course.first_image %>')">
                                         </div>
                                             </a>
                                         

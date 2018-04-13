@@ -26,7 +26,7 @@ class CoursePolicy < ApplicationPolicy
   end
 
   def edit?
-    user.super_admin_or_admin? || user.has_role?(:agent)  
+    user.super_admin_or_admin? || user.has_role?(:agent)
   end
 
   def update?

@@ -239,6 +239,14 @@ ActiveRecord::Schema.define(version: 20180413090306) do
     t.index ["type"], name: "index_ckeditor_assets_on_type", using: :btree
   end
 
+  create_table "classorder_courses", force: :cascade do |t|
+    t.integer "course_id"
+    t.integer "classorder_id"
+    t.integer "amount"
+    t.index ["classorder_id"], name: "index_classorder_courses_on_classorder_id", using: :btree
+    t.index ["course_id"], name: "index_classorder_courses_on_course_id", using: :btree
+  end
+
   create_table "classorders", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "name"
@@ -251,6 +259,9 @@ ActiveRecord::Schema.define(version: 20180413090306) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "site_id"
+    t.string   "relname"
+    t.string   "cardnu"
+    t.string   "code"
     t.index ["site_id"], name: "index_classorders_on_site_id", using: :btree
     t.index ["user_id"], name: "index_classorders_on_user_id", using: :btree
   end

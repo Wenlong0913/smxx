@@ -1,6 +1,6 @@
 FROM docker.corp.tanmer.com/tanmer/dockers/ubuntu:16.04
 
-RUN apt-get update && apt-get update && apt-get install imagemagick libmagickwand-dev git-core -y
+RUN apt-get install imagemagick libmagickwand-dev -y
 ARG BUNDLE_GEMS__TANMER__COM
 WORKDIR /srv/dagle
 COPY Gemfile* /srv/dagle/

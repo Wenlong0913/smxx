@@ -23,6 +23,7 @@ build_assets () {
 build_docker () {
     docker build -t docker.corp.tanmer.com/tanmer/dagle:${version} -f ${workdir}/docker/Dockerfile \
     --build-arg BUNDLE_GEMS__TANMER__COM=${BUNDLE_GEMS__TANMER__COM} \
+    --build-arg PROJECT_NAME=${PROJECT_NAME:-dagle} \
     ${workdir}
 }
 

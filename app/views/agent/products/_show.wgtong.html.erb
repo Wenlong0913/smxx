@@ -16,7 +16,9 @@
   <div class="product-attr-info">
       <ul class="list-inline row">
         <li class='col-sm-12 col-md-4'>库存: <b class="text-success">
-        
+        <% @product.stock.each do |key,value|%>
+           <%=value%>
+        <%end%>
         <% if @product.unit.present? %>
           <%@product.unit.each do |key,value|%>
             <%=value%>
