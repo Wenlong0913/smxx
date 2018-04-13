@@ -1,20 +1,23 @@
 
 <%= render file: @cms_site.template_dir + '_header.html' %>
-<%=form_for(@class, url: frontend_classorders_path) do |f|%>
+<%=form_for(@order, url: create_classorder_frontend_orders_path) do |f|%>
 <div class="container margin-t">
     <div class="person-list">
         <div class="person-info">
             <div class="info">
-            <%= f.hidden_field(:course_id, value:@course.id ) %>
-            <%= f.hidden_field(:user_id, value:current_user.id )%>
-            <%= f.hidden_field(:class_week, value:"#{@course.features["class_week"]}")%>
-            <%= f.hidden_field(:class_time, value:"#{@course.features["class_time"]}")%>
-            <%= f.hidden_field(:class_day, value:"#{@course.features["class_day"]}")%>
-            <%= f.hidden_field(:class_place, value:"#{@course.features["class_place"]}")%>
-            <%= f.hidden_field(:limit_number, value:"#{@course.features["limit_number"]}")%>
-            <%= f.hidden_field(:site_id, value:"#{@course.site_id}")%>
-            <input name = "classorders[course][id]" type="hidden" value="<%=@course.id%>">
-                <ul>           
+            <input name = "order[member_attributes][course_id]" type="hidden" value="<%=@course.id%>">
+            <input name = "order[member_attributes][user_id]" type="hidden" value="<%=current_user.id%>">
+            <input name = "order[member_attributes][class_week]" type="hidden" value="<%=@course.features["class_week"]%>">
+            <input name = "order[member_attributes][class_time]" type="hidden" value="<%=@course.features["class_time"]%>">
+            <input name = "order[member_attributes][class_day]" type="hidden" value="<%=@course.features["class_day"]%>">
+            <input name = "order[member_attributes][class_place]" type="hidden" value="<%=@course.features["class_place"]%>">
+            <input name = "order[member_attributes][limit_number]" type="hidden" value="<%=@course.features["limit_number"]%>">
+            <input name = "order[member_attributes][relname]" type="hidden" value="<%=@user.relname%>">
+            <input name = "order[member_attributes][cardnu]" type="hidden" value="<%=@user.cardnu%>">
+            <input name = "order[member_attributes][name]" type="hidden" value="<%=@course.name%>">
+            <input name = "order[member_attributes][teacher_name]" type="hidden" value="<%=@course.features["teacher_name"]%>">
+            <input name = "order[course][id]" type="hidden" value="<%=@course.id%>">
+                <ul> 
                 <%if @user.relname.present? && @user.cardnu.present? %>
                    <li> 
                    <span>真实姓名:</span>
@@ -52,15 +55,10 @@
                 <%else%>
                 <li><%= link_to '请完善个人信息', frontend_smusers_path, title: '完善个人信息' %></li>
                 <%end%>
-                </ul> 
+                </ul>
                 </div>
             </div>
         </div>
 </div>
 <% end %>
 <%= render file: 'public/templetes/student2/_footer.html.erb' %>
-
- 
-  
-  
- 

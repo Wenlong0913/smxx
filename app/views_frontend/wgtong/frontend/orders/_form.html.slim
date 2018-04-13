@@ -24,7 +24,7 @@
           span
             i[class="fa fa-clock-o productColorIcon"]
             =params[:time]
-  		- binding.pry	       
+  		/- binding.pry	       
       input[type="hidden" name="order[product][id]" value="#{@product.id}"]
       input[type="hidden" name="order[kucun]" value="#{@product.stock[params[:kucun]]}"]
     - if @product.purchase_type && @product.purchase_type.include?('sign_up')

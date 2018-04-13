@@ -9,7 +9,7 @@ RSpec.describe Classorder, type: :model do
   end
 
   it do
-    expect(described_class.attribute_names).to match_array(%w(id name teacher_name weeknu class_day class_time class_place class_week updated_at created_at))
+    expect(described_class.attribute_names).to match_array(%w(id name teacher_name class_day class_time class_place class_week updated_at created_at))
   end
 
   # it { should have_many(:xxx) }

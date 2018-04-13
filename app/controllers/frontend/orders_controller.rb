@@ -9,7 +9,6 @@ class Frontend::OrdersController < Frontend::BaseController
       format.json { render json: @orders }
     end
   end
-
   def show
     respond_to do |format|
       format.html
@@ -20,9 +19,14 @@ class Frontend::OrdersController < Frontend::BaseController
   def new
     redirect_to binding_phone_users_url(return_url: new_frontend_order_url(product_id: params[:product_id])) unless current_user.try(:mobile).try(:phone_number)
     @order = Order.new
-    
     @product = Product.find(params[:product_id])
    
+  end
+
+  def new_classorder
+    redirect_to binding_phone_users_url(return_url: new_frontend_order_url(product_id: params[:product_id])) unless current_user.try(:mobile).try(:phone_number)
+    @order = Order.new
+    @course = Course.find(params[:course_id])
   end
 
   def edit
@@ -84,10 +88,12 @@ class Frontend::OrdersController < Frontend::BaseController
   end
 
   def charge
+   
     if params[:order_id]
       order = Order.find(params[:order_id])
       product = order.order_products.first.product
     else
+      
       order = Order.new(user: current_user)
       product = Product.find(params[:order][:product][:id])
       product_amount = params[:order][:product][:number].presence || 1
@@ -123,6 +129,7 @@ class Frontend::OrdersController < Frontend::BaseController
         JS
         return
       end
+      binding.pry      
       order.order_products.new(product_id: product.id, amount: product_amount, price: product.sell_price)
       order.delivery_phone = params[:order][:delivery_phone] if params[:order][:delivery_phone].present?
       order.site = product.site
