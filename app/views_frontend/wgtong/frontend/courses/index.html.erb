@@ -1,7 +1,6 @@
 <%= render file: @cms_site.template_dir + '_header.html' %>
 <div class="contain clearfix">
     <div class="course-list clearfix">
-
         <div class="course-title clearfix">
             <div class="col-xs-4 col-md-12">
             <h3>最新课程</h3>
@@ -11,22 +10,18 @@
             </div>
         </div>
         <ul class="clearfix">
-      
                 <div class="row">
                         <div class="ul-margin clearfix ">
                         <% if Classorder.where(user_id: current_user.id).count>=2%>
                         <h3>每人每学期最多选两门课</h3>
                         <%else%>
                         <% @course.each do |course| %>
-                            
-                              
                                 <div class="col-xs-12  col-md-3">
                                     <li> 
                                         <a href="<%= frontend_course_path(course) %>" class="cover_img_a" title="<%=course.name %>">
                                         <div class="cover_img img1" style="background: no-repeat center url('<%=course.first_image %>')">
                                         </div>
                                             </a>
-                                        
                                         <div class="text-box" style="height:120px">
                                                 <div class="title">
                                                 <%= link_to  course.name, frontend_course_path(course) %>
@@ -49,21 +44,18 @@
                                                     
                                                 </div>
                                                 <div class="right">
-                                                    
                                                     <span class="tag-item">性别限制</span>
-                                                    <span class="tag-item"><%=course.features["sex_limit"]%></span>
-                                                    
+                                                    <span class="tag-item"><%=course.features["sex_limit"]%></span>    
                                                 </div>
                                             </div>	 
                                         </div>
                                     </li>
                                 </div>
-                               <%end%>
-                                  
+                            <%end%>      
                         <% end %>                      
-                        </div>
+                    </div>
                 </div>	
-        </ul>
+            </ul>
         <div class="clearfix"></div>
     </div>
 </div>

@@ -128,8 +128,7 @@ class Frontend::OrdersController < Frontend::BaseController
           onOrderCreate('#{order.errors.messages.to_json}')
         JS
         return
-      end
-      binding.pry      
+      end    
       order.order_products.new(product_id: product.id, amount: product_amount, price: product.sell_price)
       order.delivery_phone = params[:order][:delivery_phone] if params[:order][:delivery_phone].present?
       order.site = product.site

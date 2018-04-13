@@ -28,7 +28,6 @@
 
   <body>
     <%= yield %>
-
     <%= render file: @cms_site.template_dir + '_foot.html' %>
     <%= yield(:foot) %>
   </body>
