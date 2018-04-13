@@ -4,9 +4,42 @@ class TeacherPolicy < ApplicationPolicy
       scope
     end
   end
+  def dashboard?
+    user.super_admin_or_admin? || user.permission?(:login_admin)
+  end
+
+  def index?
+    user.super_admin_or_admin? || user.has_role?(:agent) || user.has_role?(:worker)
+  end
+
+  def show?
+    return true if user.super_admin_or_admin? || user.has_role?(:worker)
+    user.has_role?(:agent) && record.site.try(:user_id) == user.id
+  end
+
+  def new?
+    user.super_admin_or_admin? || user.has_role?(:agent) || user.permission?(:product_insert)
+  end
+
+  def create?
+    user.super_admin_or_admin? || user.has_role?(:agent)  || user.permission?(:product_insert)
+  end
+
+  def edit?
+    user.super_admin_or_admin? || user.has_role?(:agent)  || user.permission?(:product_update)
+  end
+
+  def update?
+    edit?
+  end
+
+  def destroy?
+    user.super_admin_or_admin? || user.has_role?(:agent)  || user.permission?(:product_delete)
+  end
 
   def permitted_attributes_for_create
-    if user.has_role? :admin
+    if user.super_admin_or_admin? || user.has_role?(:agent) 
+      
       [:name, :phone,:IDcard, :email, :address, :site_id]
     else
       []

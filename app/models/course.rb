@@ -1,6 +1,6 @@
 # id           | integer                     |           | not null | nextval('courses_id_seq'::regclass)
 #name         | character varying           |           |          | 
-#type         | character varying           |           |          | 
+#course_type         | character varying           |           |          | 
 #introduction | text                        |           |          | 
 #created_at   | timestamp without time zone |           | not null | 
 #updated_at   | timestamp without time zone |           | not null | 

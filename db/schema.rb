@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180408100424) do
+ActiveRecord::Schema.define(version: 20180412075247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -384,6 +384,14 @@ ActiveRecord::Schema.define(version: 20180408100424) do
   end
 
   create_table "courses", force: :cascade do |t|
+    t.string   "name"
+    t.string   "course_type"
+    t.text     "introduction"
+    t.integer  "site_id"
+    t.integer  "teacher_id"
+    t.jsonb    "features"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "discovers", force: :cascade do |t|
@@ -1186,8 +1194,9 @@ ActiveRecord::Schema.define(version: 20180408100424) do
     t.string   "IDcard"
     t.string   "email"
     t.string   "address"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.text     "description"
   end
 
   create_table "theme_configs", force: :cascade do |t|

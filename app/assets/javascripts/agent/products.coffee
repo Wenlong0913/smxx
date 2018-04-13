@@ -59,16 +59,7 @@ $(document).ready ->
             alert('错误')
     onCheckShelvesStatus()
     #
-    bodyShow.find('ul.checkout_image_list li a').on "click", ->
-      imageUrl = $(this).data('url')
-      bodyShow.find(".product-main-image[data-id='main-image'] img").attr('src', imageUrl)
-      bodyShow.find('ul.checkout_image_list li').removeClass('active')
-      $(this).parent().addClass('active')
-    setTimeout ->
-      bodyShow.find('#editModal .modal-content form').on "ajax:success", (event, request)->
-        if request.hasOwnProperty('error')
-          $(this).find('.modal-body .alert.alert-danger').removeClass('hide').find('span.title').text(request.error)
-          $('#editModal').scrollTop(0)
+
     # 请求地址
     shareUrl = bodyShow.find(".share[rel='share']").data('url')
     share = new Vue

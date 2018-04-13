@@ -1,0 +1,110 @@
+<div class="container">
+  <h2 class="m-b-0">
+    <%= @teacher.name %>
+    <div class="pull-right">      
+      <%= link_to "编辑信息", edit_agent_teacher_path(@teacher), class: 'btn btn-info btn-default', 'data-turbolinks': false%>
+      <%= link_to '返回', agent_teachers_path, class: 'btn btn-default' %>
+    </div>
+  </h1>
+</div>
+<!-- BEGIN #teacher -->
+<div id="teacher" class="section-container p-0">
+    <!-- BEGIN container -->
+    <div class="container">
+        <!-- BEGIN teacher -->
+        <div class="product p-t-25 m-b-20">
+            <!-- BEGIN product-detail -->
+            <div class="product-detail">
+                <!-- BEGIN product-image -->
+                <div class="product-image">
+                  <% if @teacher.image_items.length > 0 %>
+                    <!-- BEGIN product-thumbnail -->
+                    <div class="product-thumbnail">
+                      <ul class="product-thumbnail-list checkout_image_list">
+                        <% @teacher.image_items.each_with_index do |image, index| %>
+                          <li class="<%= if index < 1 then 'active' end %>"><a href="javascript:void(0)" data-url="<%= image.image_url %>"><%= image_tag image.image_url%></a></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                    <!-- END product-thumbnail -->
+                  <% end %>
+                  <!-- BEGIN product-main-image -->
+                  <div class="product-main-image" data-id="main-image">
+                    <%= image_tag @teacher.image_items.first.try{image_url} || 'no-picture.png'%>
+                  </div>
+                  <!-- END product-main-image -->
+                </div>
+                <!-- END product-image -->
+                <!-- BEGIN product-info -->
+                
+                <div class="product-info">
+                  <div class="product-info-header">
+                      <h1 class="product-title">
+                        <%= @teacher.name %>
+                      </h1>
+                  </div>           
+                <div class="product-attr-info">
+                      <span>电话</span>:
+                      <span>
+                        <%= @teacher.phone %>
+                      </span>
+                </div>
+                
+                <div class="product-attr-info">
+                  <span>邮箱</span>:
+                  <span>
+                    <%= @teacher.email %>
+                  </span>
+                </div>
+                
+                <div class="product-attr-info">
+                  <span>身份证号</span>:
+                  <span>
+                    <%= @teacher.IDcard %>
+                  </span>
+                </div>
+               
+                <div class="product-attr-info">
+                  <span>地址</span>:
+                  <span>
+                    <%= @teacher.address %>
+                  </span>
+                </div>
+                
+                <div class="product-attr-info">
+                  <div class="row">
+                    <div class="col-xs-2">
+                      老师介绍：
+                    </div>
+                    <div class="col-xs-10">
+                      <% if @teacher.description.present? %>
+                        <%= @teacher.description %>
+                      <% else %>
+                        <%= link_to "立即编辑", edit_agent_teacher_path(@teacher), 'data-turbolinks': false %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+                <!-- END product-info -->
+            </div>
+            <div class="product-attr-info">
+              <div class="row">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-2">
+                  老师二维码：
+                </div>
+                <div class="col-xs-8">
+                  <%= image_tag agent_teacher_path(teacher_id: @teacher.id, format: :png)%>
+                </div>
+              </div>
+            </div> 
+        </div>
+        <!-- END teacher -->
+
+    </div>
+    <!-- END container -->
+</div>
+<!-- END #teacher -->
+
