@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180413090306) do
+ActiveRecord::Schema.define(version: 20180414070552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -249,19 +249,21 @@ ActiveRecord::Schema.define(version: 20180413090306) do
 
   create_table "classorders", force: :cascade do |t|
     t.integer  "user_id"
+    t.integer  "course_id"
+    t.integer  "site_id"
     t.string   "name"
     t.string   "teacher_name"
     t.string   "weeknu"
+    t.string   "relname"
+    t.string   "cardnu"
+    t.string   "code"
     t.jsonb    "class_day"
     t.jsonb    "class_time"
     t.jsonb    "class_place"
     t.jsonb    "class_week"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.integer  "site_id"
-    t.string   "relname"
-    t.string   "cardnu"
-    t.string   "code"
+    t.index ["course_id"], name: "index_classorders_on_course_id", using: :btree
     t.index ["site_id"], name: "index_classorders_on_site_id", using: :btree
     t.index ["user_id"], name: "index_classorders_on_user_id", using: :btree
   end
@@ -649,16 +651,6 @@ ActiveRecord::Schema.define(version: 20180413090306) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_gnomon_streets_on_name", using: :btree
-  end
-
-  create_table "image_item_courses", force: :cascade do |t|
-    t.integer  "image_item_id"
-    t.string   "courses_type"
-    t.integer  "courses_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.index ["courses_type", "courses_id"], name: "index_image_item_courses_on_courses_type_and_courses_id", using: :btree
-    t.index ["image_item_id"], name: "index_image_item_courses_on_image_item_id", using: :btree
   end
 
   create_table "image_item_relations", force: :cascade do |t|
@@ -1433,10 +1425,10 @@ ActiveRecord::Schema.define(version: 20180413090306) do
   add_foreign_key "article_users", "articles"
   add_foreign_key "attachment_relations", "attachments"
   add_foreign_key "charges", "orders"
+  add_foreign_key "classorders", "courses"
   add_foreign_key "classorders", "sites"
   add_foreign_key "classorders", "users"
   add_foreign_key "complaints", "users"
-  add_foreign_key "image_item_courses", "image_items"
   add_foreign_key "image_item_relations", "image_items"
   add_foreign_key "image_item_tags", "image_items"
   add_foreign_key "items", "sites"

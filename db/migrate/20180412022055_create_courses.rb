@@ -7,7 +7,6 @@ class CreateCourses < ActiveRecord::Migration[5.0]
       t.integer :site_id
       t.integer :teacher_id
       t.jsonb :features
-
       t.timestamps
     end
   end

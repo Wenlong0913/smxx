@@ -56,24 +56,23 @@
                             <span><%# order.code%></span>
                           </div> 
                           <div class="col-xs-6">
-                          客户：
-                          <a href="javascript:void(0)" style="text-decoration: none;">
-                              
-                           <%= order.user.nickname%>
+                          客户姓名：
+                          <a href="javascript:void(0)" style="text-decoration: none;">    
+                           <%= order.relname%>
                           </a>
                           </div>
                           <div class="col-xs-6">                            
                             课程：
-                            <span><% order.name%></span>
+                            <span><%=order.name%></span>
                           </div>
                           <div class="col-xs-6">                            
                             客户身份证：
-                            <span><%# order.cardnu%></span>
+                            <span><%=order.cardnu%></span>
                           </div>  
                           <div class="col-xs-6">                            
                             
                             老师：
-                            <span><% order.teacher_name%></span>
+                            <span><%=order.teacher_name%></span>
                           </div>
                         </li>                        
                       </ul>
