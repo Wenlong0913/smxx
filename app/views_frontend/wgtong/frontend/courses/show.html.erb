@@ -66,7 +66,7 @@
                        <% if @course.features["limit_number"] == "0" %>
                            <span class="span-lg">报名人数已满</span> 
                        <% else %>
-                           <span class="span-lg">限报人数：<%=@course.features["limit_number"]%></span>
+                           <span class="span-lg">剩余名额：<%=@course.features["limit_number"]%>个</span>
                        <% end %>
                     </p> 
                 </div>
@@ -82,4 +82,3 @@
         </div>
     </div>
 </div>
-<%= render file: 'public/templetes/student2/_footer.html.erb' %>

@@ -1,0 +1,119 @@
+<div class="main-wrapper">
+  <%= render file: 'public/templetes/newshub/_header.html.erb' %>
+	<div class="container">
+    <%= render file: 'public/templetes/newshub/_top_menu.html.erb' %>
+
+		<div class="row tr-content">
+      <% unless mobile_device? %>
+      <div class="col-md-2 tr-sidebar tr-sticky padding-0">
+        <%= render file: 'public/templetes/newshub/_side_menu.html.erb' %>
+      </div>
+      <% end %>
+
+			<div class="col-md-7 col-xs-12 <%= 'padding-0' if mobile_device? %>">
+				<div class="tr-content">
+          <div class="tr-section bg-transparent">
+            <div class="tr-section">
+              <% @pages = Cms::Page.joins(:channel).where(["cms_channels.site_id = ? AND (cms_channels.id = ? OR cms_channels.parent_id = ?)", @cms_site.id, @channel.id, @channel.id]).order("cms_pages.updated_at DESC").page(params[:page]).per(100) %>
+              <% if @pages.present? %>
+      					<% @pages.all.each do |page| %>
+                  <%
+                    doc = Nokogiri::HTML(page.try(:content))
+                    img_srcs = doc.css('img').map{ |i| i['src'] }
+                  %>
+                  <% if img_srcs.size < 4 %>
+                    <div class="row" style="margin: 10px 0;">
+                      <div class="col-md-3 col-xs-4 padding-r-l-5">
+                        <a href="<%= get_cms_url(page) %>" class="cover_img_a" title="<%= page.title %>">
+                          <div class="cover_img" style="background: no-repeat center url('<%= img_srcs[0].present? ? img_srcs[0] : page.thumb_image_path %>');">
+                          </div>
+                        </a>
+                      </div>
+                      <div class="col-md-9 col-xs-8">
+                        <div class="header-text">
+                          <h4>
+                            <a href="<%= get_cms_url(page) %>" title="<%= page.title %>">
+                              <% if mobile_device? %>
+                                <%= page.title.truncate(24) %>
+                              <% else %>
+                                <%= page.title.truncate(40) %>
+                              <% end %>
+                            </a>
+                          </h4>
+                          <div class="info">
+                            <a href="<%= get_cms_url(page) %>"><%= page.keywords.truncate(15) %></a>
+                          </div>
+                          <div class="info">
+                            <% if page.is_foraged %>
+                              <a href="<%= get_cms_url(page) %>" title="<%= page.forage["forage_from"] %>">by <%= page.forage["forage_from"] %></a>
+                            <% else %>
+                              <a href="<%= get_cms_url(page) %>" title="文广通，文化云，公共文化大数据">by 文广通</a>
+                            <% end %>
+                            <a href="<%= get_cms_url(page) %>">&middot;</a>
+                            <a href="<%= get_cms_url(page) %>"><%= distance_of_time_in_words_to_now(page.updated_at) %>前</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <% else %>
+                    <div class="row" style="margin: 10px 0;">
+                      <div class="col-md-12 col-xs-12 padding-r-l-5">
+                        <div class="header-text">
+                          <h4>
+                            <a href="<%= get_cms_url(page) %>" title="<%= page.title %>">
+                              <%= page.title.truncate(30) %>
+                            </a>
+                          </h4>
+                        </div>
+                      </div>
+                      <div class="row" style="padding: 0 15px;">
+                        <% loop_count = mobile_device? ? 3 : 4 %>
+                        <% loop_count.times.each_with_index do |tim, index| %>
+                          <div class="col-md-3 col-xs-4 padding-r-l-5">
+                            <a href="<%= get_cms_url(page) %>" class="cover_img_a" title="<%= page.title %>">
+                              <div class="cover_img" style="background: no-repeat center url('<%= img_srcs[index] %>');">
+                              </div>
+                            </a>
+                          </div>
+                        <% end %>
+                      </div>
+                      <div class="col-md-12 col-xs-12 padding-r-l-5">
+                        <div class="header-text">
+                          <div class="info">
+                            <% if page.is_foraged %>
+                              <a href="<%= get_cms_url(page) %>" title="<%= page.forage["forage_from"] %>">by <%= page.forage["forage_from"] %></a>
+                            <% else %>
+                              <a href="<%= get_cms_url(page) %>" title="文广通，文化云，公共文化大数据">by 文广通</a>
+                            <% end %>
+                            <a href="<%= get_cms_url(page) %>">&middot;</a>
+                            <a href="<%= get_cms_url(page) %>"><%= distance_of_time_in_words_to_now(page.updated_at) %>前</a>
+                            <a href="<%= get_cms_url(page) %>">&middot;</a>
+                            <a href="<%= get_cms_url(page) %>"><%= page.keywords.truncate(15) %></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                  <hr class="block-bootom-hr">
+                <% end %>
+              <% else %>
+                <h4 class="text-center">暂无内容</h4>
+              <% end %>
+              <div class="row text-center">
+                <%= paginate @pages %>
+              </div>
+            </div>
+          </div>
+				</div>
+      </div>
+
+			<% unless mobile_device? %>
+      <div class="col-md-3 tr-sidebar tr-sticky padding-0">
+        <%= render file: 'public/templetes/newshub/_sidebar.html.erb' %>
+      </div>
+      <% end %>
+		</div><!-- /.row -->
+
+	</div><!-- /.container-fluid -->
+</div><!-- main-wrapper -->
+<%= render file: 'public/templetes/newshub/_footer.html.erb' %>

@@ -1,0 +1,38 @@
+
+<!-- [[footer start]] -->
+<style>
+.footer-bottom{
+	background-color:#fff !important;
+
+}
+.footer-logo{
+	position:relative;
+	left:43%
+}
+</style>
+<footer id="footer">
+	<div class="footer-bottom text-center">
+		<div class="container">
+			<div class="footer-bottom-content">
+				<div class="footer-logo">
+					<a href="/" title="给您享要的文化生活"><img class="img-responsive" src="<%= Keystore.value_for('logo-footer-148×55') || '/templetes/newshub/images/footer-logo1.png'  %>" alt="文广通Footer-Logo"></a>
+				</div>
+				<p><%= Keystore.value_for(:footer_description) %></p>
+				<address>
+					<p>&copy; 2017 <a href="javascript:;"><%= Keystore.value_for(:footer_site_name) %></a>. 电子邮件: <a href="mailto:<%= Keystore.value_for(:email) %>"><%= Keystore.value_for(:email) %></a>
+						<br><%= Keystore.value_for(:icp) %>
+					</p>
+				</address>
+			</div><!-- /.footer-bottom-content -->
+		</div><!-- /.container -->
+	</div><!-- /.footer-bottom -->
+</footer><!-- /#footer -->
+
+<% if mobile_device? %>
+<style type="text/css">
+	.widget.widget-menu-2 ul li {
+		width: 20%;
+	}
+</style>
+<% end %>
+<!-- [[footer start]] -->

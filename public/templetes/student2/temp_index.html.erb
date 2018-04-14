@@ -1,0 +1,17 @@
+<style>
+  .course-style{
+      font-size:30px;
+      
+  }
+</style>
+<%= render file: 'public/templetes/student2/_header.html.erb' %>
+<div class="contain clearfix">
+<div class="course-list clearfix">  
+     <% if current_user %>
+        <li><%= link_to '欢迎您来到市民艺术学校报名系统，请开始选课报名', frontend_courses_path, class:"course-style"%></li> 
+     <%else%>
+         <h3>欢迎您来到市民艺术学校报名系统，已有账号，请登录，没有账号请先注册</h3>
+     <% end %>
+    <div class="clearfix"></div>
+</div>
+</div>

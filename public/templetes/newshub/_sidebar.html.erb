@@ -1,0 +1,144 @@
+<!-- [[sidebar start]] -->
+<div class="theiaStickySidebar">
+  <!-- 搜索 -->
+  <div class="tr-section tr-widget">
+    <%= form_for :search, url: search_result_path, method: :get, class: 'widget_search' do |f| %>
+      <%= f.text_field :keywords, class: 'sidebar-search-form', autocomplete: "off", placeholder: '请输入要搜索的内容' %>
+      <button type="submit" class="btn btn-primary">搜索</button>
+    <% end %>
+  </div>
+
+  <!-- 侧边广告条一 -->
+  <% if Keystore.value_for(:sidebar_index_banner_top).present? %>
+    <% sidebar_index_banner_top = Keystore.value_for(:sidebar_index_banner_top).split('|') %>
+    <div class="tr-section tr-ad ad-before">
+      <a href="<%= sidebar_index_banner_top[1] || 'javascript:void(0)' %>" title="文广通">
+        <img src="<%= sidebar_index_banner_top[0] %>" class="img-responsive" alt="文广通，文化云，文化大数据">
+      </a>
+    </div>
+  <% end %>
+
+  <!-- 热门活动 -->
+  <% if @cms_site.site.products.where("features ->> 'is_shelves' = ?", '1').where("(items.features -> 'properties') ? 'hot'").present? %>
+    <div class="tr-section tr-widget">
+      <% @cms_site.site.products.where("features ->> 'is_shelves' = ?", '1').hot(10).order(updated_at: :desc).each do |product| %>
+        <%
+          doc = Nokogiri::HTML(product.try(:content))
+          img_srcs = doc.css('img').map{ |i| i['src'] }
+        %>
+        <div class="row">
+          <div class="col-md-6">
+            <% if product.external_purchase_url.presence %>
+              <a href="<%= product.external_purchase_url %>" class="cover_img_a" target="_blank" title="<%= product.name %>">
+            <% elsif product.is_foraged %>
+              <a href="<%= product.forage_url %>" target="_blank" class="cover_img_a" title="<%= product.name %>">
+            <% else %>
+              <a href="<%= frontend_product_path(product) %>" class="cover_img_a" title="<%= product.name %>">
+            <% end %>
+              <div class="cover_img" style="background: no-repeat center url('<%= img_srcs[0].present? ? img_srcs[0] : product.first_image %>');height: 70px;">
+              </div>
+            </a>
+          </div>
+          <div class="col-md-6 padding-r-l-5">
+            <% if product.external_purchase_url.presence %>
+              <a href="<%= product.external_purchase_url %>" class="sidebar-list-a" target="_blank" title="<%= product.name %>">
+            <% elsif product.is_foraged %>
+              <a href="<%= product.forage_url %>" class="sidebar-list-a" target="_blank" title="<%= product.name %>">
+            <% else %>
+              <a href="<%= frontend_product_path(product) %>" class="sidebar-list-a" title="<%= product.name %>">
+            <% end %>
+              <%= product.name.truncate(25) %>
+            </a>
+          </div>
+        </div>
+        <hr>
+      <% end %>
+    </div>
+  <% end %>
+
+  <!-- 侧边广告条二 -->
+  <% if Keystore.value_for(:sidebar_index_banner_center).present? %>
+    <% sidebar_index_banner_center = Keystore.value_for(:sidebar_index_banner_center).split('|') %>
+    <div class="tr-section tr-ad ad-before">
+      <a href="<%= sidebar_index_banner_center[1] || 'javascript:void(0)' %>" title="文广通">
+        <img src="<%= sidebar_index_banner_center[0] %>" class="img-responsive" alt="文广通，文化云，文化大数据">
+      </a>
+    </div>
+  <% end %>
+
+  <!-- 当前站点资讯 -->
+  <% if @cms_site.pages.present? %>
+  <div class="tr-section tr-widget">
+    <% @cms_site.pages.limit(20).each do |page| %>
+      <%
+        doc = Nokogiri::HTML(page.try(:content))
+        img_srcs = doc.css('img').map{ |i| i['src'] }
+      %>
+      <div class="row">
+        <div class="col-md-6">
+          <a href="<%= get_cms_url(page) %>" class="sidebar-list-a" title="<%= page.title %>"><%= page.title.truncate(25) %></a>
+        </div>
+        <div class="col-md-6">
+          <a href="<%= get_cms_url(page) %>" class="cover_img_a" title="<%= page.title %>">
+            <div class="cover_img" style="background: no-repeat center url('<%= img_srcs[0].present? ? img_srcs[0] : page.thumb_image_path %>');height: 70px;">
+            </div>
+          </a>
+        </div>
+      </div>
+      <hr>
+    <% end %>
+    <div class="text-center">
+      <a href="/news" title="文广通，更多资讯">&gt;&gt;点击查看更多新闻资讯</a>
+    </div>
+  </div>
+  <% end %>
+
+  <!-- 侧边广告条三 -->
+  <% if Keystore.value_for(:sidebar_index_banner_bottom).present? %>
+    <% sidebar_index_banner_bottom = Keystore.value_for(:sidebar_index_banner_bottom).split('|') %>
+    <div class="tr-section tr-ad ad-before">
+      <a href="<%= sidebar_index_banner_bottom[1] || 'javascript:void(0)' %>" title="文广通">
+        <img src="<%= sidebar_index_banner_bottom[0] %>" class="img-responsive" alt="文广通，文化云，文化大数据">
+      </a>
+    </div>
+  <% end %>
+
+  <!-- 更多栏目 -->
+  <div class="tr-section tr-widget">
+    <h4>更多帮助</h4>
+    <div class="row">
+      <% Cms::Channel.find_by(short_title: 'about') && Cms::Channel.find_by(short_title: 'about').children.each do |ch| %>
+        <div class="col-md-6" style="margin: 10px 0;">
+          <a href="<%= get_cms_url(ch) %>" class="sidebar-list-a" title="<%= ch.title %>"><%= ch.title %></a>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- 公司信息 -->
+  <div class="tr-section tr-widget">
+    <p><a href="javascript:;" class="sidebar-list-a" title="© 2017 <%= Keystore.value_for(:site_name) %>">© 2017 <%= Keystore.value_for(:site_name) %></a></p>
+    <p><a href="http://www.12377.cn/" target="_blank" class="sidebar-list-a" title="违法和不良信息举报：12377">违法和不良信息举报：12377</a></p>
+    <p><a href="http://www.wgtong.cn/news-comment-service-agreement" target="_blank" class="sidebar-list-a" title="用户评论服务协议">用户评论服务协议</a></p
+    <p><a href="javascript:;" class="sidebar-list-a" title="<%= Keystore.value_for(:firm_name) %>"><%= Keystore.value_for(:firm_name) %></a></p>
+    <p><a href="javascript:;" class="sidebar-list-a" title="<%= Keystore.value_for(:icp) %>"><%= Keystore.value_for(:icp) %></a></p>
+    <!-- 公众号二维码 -->
+    <div class="row">
+      <% if Keystore.value_for(:wechat_qrcode1).present? %>
+        <% wechat_qrcode1 = Keystore.value_for(:wechat_qrcode1).split('|') %>
+        <div class="col-md-6 text-center">
+          <img src="<%= wechat_qrcode1[0] %>" class="img-responsive" alt="文广通，微信公众号二维码">
+          <p><%= wechat_qrcode1[1] %></p>
+        </div>
+      <% end %>
+      <% if Keystore.value_for(:wechat_qrcode2).present? %>
+        <% wechat_qrcode2 = Keystore.value_for(:wechat_qrcode2).split('|') %>
+        <div class="col-md-6 text-center">
+          <img src="<%= wechat_qrcode2[0] %>" class="img-responsive" alt="文广通，微信公众号二维码">
+          <p><%= wechat_qrcode2[1] %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!-- [[sidebar end]] -->

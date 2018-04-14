@@ -1,0 +1,76 @@
+<meta name="baidu-site-verification" content="fk2s6i1sqr" />
+<!-- CSS -->
+<link rel="stylesheet" href="/templetes/newshub/css/customer.css" >
+<link rel="stylesheet" href="/templetes/newshub/css/bootstrap.min.css" >
+<link rel="stylesheet" href="/templetes/newshub/css/font-awesome.min.css">
+<link rel="stylesheet" href="/templetes/newshub/css/magnific-popup.css">
+<link rel="stylesheet" href="/templetes/newshub/css/animate.css">
+<link rel="stylesheet" href="/templetes/newshub/css/slick.css">
+<link rel="stylesheet" href="/templetes/newshub/css/jplayer.css">
+<link rel="stylesheet" href="/templetes/newshub/css/main.css">
+<link rel="stylesheet" href="/templetes/newshub/css/responsive.css">
+<% content_for(:head) do %>
+	<%= stylesheet_link_tag :frontend %>
+<% end %>
+<script src="/templetes/newshub/js/jquery.min.js"></script>
+
+<!-- icons -->
+<link rel="icon" href="/templetes/newshub/images/ico/favicon.ico">
+<link rel="apple-touch-icon" sizes="144x144" href="/templetes/newshub/images/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/templetes/newshub/images/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/templetes/newshub/images/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon" sizes="57x57" href="/templetes/newshub/images/ico/apple-touch-icon-57-precomposed.png">
+<!-- icons -->
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<% if mobile_device? %>
+  <style type="text/css">
+    .header-text h4 {
+      font-weight: 300;
+      font-size: 16px;
+      margin-bottom: 2px;
+      margin-top: 0;
+    }
+    .header-text h4 a {
+      color: #000;
+    }
+    .header-text .info a {
+      color: #999;
+      margin: 0;
+    }
+    .thumb-img {
+      height: 80px !important;
+    }
+    .tr-section {
+      padding: 15px 10px;
+    }
+    .padding-right-0 {
+      padding-right: 0;
+    }
+    .cover_img {
+      background-size: cover !important;
+      width: 100%;
+      height: 75px;
+    }
+  </style>
+<% else %>
+  <style type="text/css">
+    .header-text h4 {
+      margin-top: 0;
+    }
+    .thumb-img {
+      height: 100px !important;
+    }
+    .cover_img {
+      background-size: cover !important;
+      width: 100%;
+      height: 100px;
+    }
+  </style>
+<% end %>

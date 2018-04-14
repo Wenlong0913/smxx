@@ -1,0 +1,54 @@
+<div class="main-wrapper">
+	<%= render file: 'public/templetes/newshub/_header.html.erb' %>
+	<div class="container">
+		<!-- [[header start]] -->
+	  <%= render file: 'public/templetes/newshub/_top_menu.html.erb' %>
+		<!-- [[header end]] -->
+		<div class="row">
+			<div class="col-sm-9 tr-sticky col-xs-12 tr-sticky <%= 'padding-0' if mobile_device? %>">
+				<div class="tr-content theiaStickySidebar">
+					<div class="tr-section">
+						<div class="tr-post <%= 'margin-top-10' if mobile_device? %>">
+							<div class="post-content">
+								<div class="page-title"><h1 class="weight-300"><%= @page.title %></h1></div>
+								<div class="entry-meta">
+									<ul>
+                    <li><a href="javascript:void(0)"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(@page.updated_at) %>前</a></li>
+                    <li><a href="javascript:void(0)"><i class="fa fa-eye"></i> <%= @page.impressions_count %>阅读</a></li>
+                    <li><a href="javascript:void(0)"><i class="fa fa-comments-o"></i> <%= Cms::Comment.where(source_id: @page.id).size %>评论</a></li>
+										<li>
+											<ul>
+												<div class="bdsharebuttonbox" data-tag="share_1">
+												  <a class="bds_qzone" data-cmd="qzone"></a>
+												  <a class="bds_tsina" data-cmd="tsina"></a>
+												  <a class="bds_sqq" data-cmd="sqq"></a>
+												  <a class="bds_weixin" data-cmd="weixin"></a>
+												</div>
+											</ul>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<div class="tr-details">
+							<%= raw @page.content %>
+						</div>
+					</div>
+
+					<%= render file: 'public/templetes/newshub/_cms_comments.html.erb' %>
+				</div>
+			</div>
+
+			<% unless mobile_device? %>
+			<div class="col-sm-3 tr-sidebar tr-sticky">
+				<%= render file: 'public/templetes/newshub/_sidebar.html.erb' %>
+			</div>
+			<% end %>
+		</div>
+
+	</div>
+</div>
+<!-- [[footer start]] -->
+
+<%= render file: 'public/templetes/newshub/_footer.html.erb' %>

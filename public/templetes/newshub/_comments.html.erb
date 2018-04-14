@@ -1,0 +1,112 @@
+<div rel='comment-block' data-url="<%= @comment_path %>">
+  <div class="tr-comment">
+    <div class="section-title">
+      <h1><span>最新评论</span></h1>
+    </div>
+    <ul class="post-comment" v-cloak>
+      <li v-for="comment in comments">
+        <div class="commenter-avatar">
+          <a href="#"><img class="img-responsive img-circle" :src='comment.user.display_headshot' alt="Image"></a>
+        </div>
+        <div class="media-body">
+          <h2>{{ comment.user.nickname }}<span>{{ formatDate(comment.created_at) }}</span></h2>
+          <span>{{ comment.content }}</span>
+          <div class="review-message">
+            <ul v-if="comment.parent">
+              <hr>
+              <li style="padding: inherit">
+                <div class="commenter-avatar">
+                  <a href="#"><img class="img-responsive img-circle" :src='comment.user.display_headshot' alt="Image"></a>
+                </div>
+                <div class="media-body">
+                  <h2>{{ comment.parent.user.nickname }}<span>{{ formatDate(comment.parent.created_at) }}</span></h2>
+                  <p>{{ comment.parent.content }}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <br>
+          <%# if current_user.present? %>
+          <!-- <a class="reply" v-on:click="replyModel(comment)">回复</a>&nbsp;&nbsp; -->
+          <%# end %>
+          <!-- <i class="fa fa-thumbs-up"></i> <a href="#" class="reply">点赞</a> -->
+        </div>
+        <!-- <br>
+        <div v-if="replying && replyTo == comment">
+          <textarea name="message" v-model="replyContent" rel='reply-block' class="form-control" style="height: 40px; width: 80%; float: left"></textarea>
+          &nbsp;<button class="btn btn-danger btn-sx" v-on:click="postComment('reply')">回复</button>
+        </div> -->
+      </li>
+    </ul>
+  </div><!-- /.comment-section -->
+  <div class="page-bar tr-comment-box" style="margin: auto" v-if="comments.length > 0">
+    <nav aria-label="Page navigation" style='float: right;'>
+      <ul class="pagination">
+        <li class="disabled" v-if="currentPage == 1">
+          <span aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </span>
+        </li>
+        <li v-else>
+          <a aria-label="Previous" v-on:click="loadComments(currentPage--)">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+
+        <li v-for="i in pageCount" :class="i == currentPage ? 'active' : '' ">
+          <a v-on:click="loadComments(currentPage = i)">
+            {{ i }}
+          </a>
+        </li>
+        <li class="disabled" v-if="currentPage == pageCount">
+          <span aria-label="Previous">
+            <span aria-hidden="true">&raquo;</span>
+          </span>
+        </li>
+        <li v-else>
+          <span aria-label="Previous" v-on:click="loadComments(currentPage++)">
+            <span aria-hidden="true">&raquo;</span>
+          </span>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="tr-comment-box">
+    <div class="section-title">
+      <h1><span>发表评论</span></h1>
+    </div>
+    <div class="contact-form">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="four">评论内容</label>
+            <textarea name="message" required="required" class="form-control" rows="7" id="four" v-model='content'></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="form-group text-center">
+        <% if current_user %>
+          <button type="submit" class="btn btn-primary pull-right" v-on:click="postComment('comment')">发表评论</button>
+        <% else %>
+          <div class="row text-center">
+            <div class="col-md-3 col-md-offset-3">
+            <%= link_to '点我登录！', admin_sign_in_path, :class=>'btn btn-success pull-right' %>
+            </div>
+            <div class="col-md-3">
+            <%= link_to '点我注册！', sign_up_path, :class=>'btn btn-danger pull-right' %>
+            </div>
+          </div>
+        <% end %>
+        <small>文明上网理性发言，请大家自觉遵守<a href="/news-comment-service-agreement" target="_blank">《新闻评论服务协议》</a></small>
+      </div>
+    </div><!-- /.contact-form -->
+  </div><!-- /.tr-comment-box -->
+</div>
+
+<style type="text/css">
+/* 实例结束编译时才显示内容（例子： _comments.html.erb） */
+[v-cloak] {
+　display: none;
+}
+/* 结束 */
+</style>

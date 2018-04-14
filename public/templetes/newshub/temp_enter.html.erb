@@ -1,0 +1,100 @@
+<div class="main-wrapper">
+	<%= render file: 'public/templetes/newshub/_header.html.erb' %>
+	<div class="container-fluid">
+		<div class="row"> 
+			<div class="col-sm-9 tr-sticky">
+				<div class="theiaStickySidebar">
+					<div class="tr-comment-box">
+					<% if params[:from_channel_id] %>
+						<% channel = @cms_site.channels.find(params[:from_channel_id])  || @channel %>
+					<% else %>
+						<% channel = @channel %>
+					<% end %>
+					<%= simple_form_for(Cms::Comment.new, url: cms_frontend_comment_create_path, html: { class: 'contact-form', name: 'contact-form'} ) do |f| %>
+						<input type="hidden" class="form-control" name="comment[gender]" value="<%= channel.title %>" >
+						<div class="section-title">
+							<h1><%= channel.title %></h1>
+						</div>	
+				    <div class="row">
+			        <div class="col-sm-6">
+		            <div class="form-group">
+	                <label for="one" id="one_faild">姓名 *</label>
+	                <input type="text" class="form-control" name="comment[name]" id="one">
+		            </div>
+			        </div>
+			        
+			        <div class="col-sm-6">
+		            <div class="form-group">
+	                <label for="two" id="two_faild">电话 *</label>
+	                <input type="text" class="form-control" name="comment[contact]" id="two">
+		            </div> 
+			        </div>
+
+			        <div class="col-sm-6">
+		            <div class="form-group">
+	                <label for="three" id="three_faild">入驻名称 *</label>
+	                <input type="text" class="form-control" name="comment[hobby]" id="three">
+		            </div> 
+			        </div>
+
+			        <div class="col-sm-6">
+		            <div class="form-group">
+	                <label for="five" id="five_faild">入驻地址 *</label>
+	                <input type="text" class="form-control" name="comment[address]" id="five">
+		            </div> 
+			        </div>
+
+			        <div class="col-sm-12">
+		            <div class="form-group">
+	                <label for="four">备注信息</label>
+	                <textarea class="form-control" rows="7" name="comment[content]" id="four"></textarea>
+		            </div>             
+			        </div>
+				    </div>
+				    <div class="form-group text-center">
+				      <a href="javascript:;" class="btn btn-primary pull-right" onclick='submit_form()'>提交入驻申请</a>
+				    </div>
+					<% end %>
+					</div><!-- /.tr-comment-box -->
+					<div class="tr-contact-section tr-section">
+						<ul class="contact-content">
+							<li>
+								<div class="icon">
+									<img src="/templetes/newshub/images/others/cta-icon-1.png" alt="Image" class="img-responsive">
+								</div>
+								<span>
+									<a href="tel:<%= Keystore.value_for(:mobile_phone) %>">联系电话：<%= Keystore.value_for(:mobile_phone) %></a>
+								</span>
+								<span>
+									<a href="tel:<%= Keystore.value_for(:tel_phone) %>">广告联系：<%= Keystore.value_for(:tel_phone) %></a>
+								</span>
+							</li>
+							<li>
+								<div class="icon">
+									<img src="/templetes/newshub/images/others/cta-icon-2.png" alt="Image" class="img-responsive">
+								</div>
+								<span><a href="mailto:<%= Keystore.value_for(:email) %>"><%= Keystore.value_for(:email) %></a></span>
+							</li>
+							<li>
+								<div class="icon">
+									<img src="/templetes/newshub/images/others/cta-icon-3.png" alt="Image" class="img-responsive">
+								</div>
+								<span><%= Keystore.value_for(:address) %></span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<% unless mobile_device? %>
+			<div class="col-sm-3 tr-sidebar tr-sticky">
+				<%= render file: 'public/templetes/newshub/_sidebar.html.erb' %>
+			</div>
+			<% end %>
+		</div>
+
+	</div>
+</div>
+
+<!-- [[footer start]] -->
+<%= render file: 'public/templetes/newshub/_footer.html.erb' %>
+<!-- [[footer end]] -->

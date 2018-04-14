@@ -56,7 +56,6 @@ class Frontend::ClassordersController < Frontend::BaseController
             render json: {errors:'撤销课程失败'}
         end
     end
-
     def showtable
         @class = Classorder.all
     end

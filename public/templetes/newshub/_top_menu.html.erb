@@ -1,0 +1,43 @@
+<!-- [[top_menu start]] -->
+<div class="tr-menu menu-responsive">
+  <nav class="navbar navbar-default">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+      <span class="sr-only">导航</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      </button>
+    </div>
+    <!-- /navbar-header -->
+
+    <div class="collapse navbar-left navbar-collapse" id="navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown menu-item-icon"><a href="javascript:;"><i class="fa fa-bars"></i></a></li>
+
+        <% if @site_catalogs && @site_catalogs.any? %>
+          <% @site_catalogs.each do |catalog| %>
+            <% if catalog.children.any? %>
+              <li class="dropdown <%= 'active' if catalog == @site_catalog %>"><a href="#"><%= catalog.name %></a>
+                <ul class="sub-menu">
+                  <% catalog.children.each do |cc| %>
+                    <li><a href="<%= frontend_site_catalog_path(cc) %>" title="<%= cc.name %>"><%= cc.name %></a></li>
+                  <% end %>
+                </ul>
+              </li>
+            <% else %>
+              <li class="<%= 'active' if catalog == @site_catalog %>"><a href="<%= frontend_site_catalog_path(catalog) %>" title="<%= catalog.name %>"><%= catalog.name %></a></li>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <li><a href="/">首页</a></li>
+        <li><a href="/news"><%= @cms_site.channels.find_by(short_title: 'news').try(:title) %></a></li>
+        <% @cms_site.channels.find_by(short_title: 'news') && @cms_site.channels.find_by(short_title: 'news').children.each do |ch| %>
+          <li><a href="<%= get_cms_url(ch) %>" title="<%= ch.title %>"><%= ch.title %></a></li>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+</div>
+<!-- [[top_menu end]] -->

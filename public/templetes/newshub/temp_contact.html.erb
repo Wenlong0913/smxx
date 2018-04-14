@@ -1,0 +1,77 @@
+<div class="main-wrapper">
+	<%= render file: 'public/templetes/newshub/_header.html.erb' %>
+	<div class="container-fluid">
+		<div class="page-breadcrumb tr-section">
+			<%= raw @channel.content %>
+		</div><!-- /.page-breadcrumb -->
+
+		<div class="tr-contact-section tr-section">
+			<ul class="contact-content">
+				<li>
+					<div class="icon">
+						<img src="/templetes/newshub/images/others/cta-icon-1.png" alt="联系电话" class="img-responsive">
+					</div>
+					<span>
+						<a href="tel:<%= Keystore.value_for(:mobile_phone) %>" title="联系电话">联系电话：<%= Keystore.value_for(:mobile_phone) %></a>
+					</span>
+					<span>
+						<a href="tel:<%= Keystore.value_for(:tel_phone) %>" title="广告联系">广告联系：<%= Keystore.value_for(:tel_phone) %></a>
+					</span>
+				</li>
+				<li>
+					<div class="icon">
+						<img src="/templetes/newshub/images/others/cta-icon-2.png" alt="联系邮箱" class="img-responsive">
+					</div>
+					<span><a href="mailto:<%= Keystore.value_for(:email) %>" title="联系邮箱"><%= Keystore.value_for(:email) %></a></span>
+				</li>
+				<li>
+					<div class="icon">
+						<img src="/templetes/newshub/images/others/cta-icon-3.png" alt="联系地址" class="img-responsive">
+					</div>
+					<span><%= Keystore.value_for(:address) %></span>
+				</li>
+			</ul>
+		</div><!-- /.tr-contact-section -->
+
+		<div class="tr-comment-box">
+			<%= simple_form_for(Cms::Comment.new, url: cms_frontend_comment_create_path, html: { class: 'contact-form', name: 'contact-form'} ) do |f| %>
+				<div class="section-title">
+					<h1>商务咨询</h1>
+				</div>	
+		    <div class="row">
+	        <div class="col-sm-4">
+            <div class="form-group">
+              <label for="one" id="one_faild">姓名 *</label>
+              <input type="text" class="form-control" name="comment[gender]" id="one">
+            </div>
+	        </div>
+	        <div class="col-sm-4">
+            <div class="form-group">
+              <label for="six" id="six_faild">邮箱 *</label>
+              <input type="email" class="form-control" name="comment[email]" id="six">
+            </div>
+	        </div>
+	        <div class="col-sm-4">
+            <div class="form-group">
+              <label for="two" id="two_faild">电话 *</label>
+              <input type="text" class="form-control" name="comment[contact]" id="two">
+            </div>
+	        </div>
+	        <div class="col-sm-12">
+            <div class="form-group">
+              <label for="four">留言备注</label>
+              <textarea name="comment[content]" class="form-control" rows="7" id="four"></textarea>
+            </div>             
+	        </div>     
+		    </div>
+		    <div class="form-group text-center">
+		      <a href="javascript:;" class="btn btn-primary pull-right" onclick='submit_form()'>立即咨询</a>
+		    </div>
+			<% end %><!-- /.contact-form -->			
+		</div><!-- /.tr-comment-box -->
+
+	</div><!-- /.container-fulid -->
+</div><!-- /.main-wrapper -->
+<!-- [[footer start]] -->
+<%= render file: 'public/templetes/newshub/_footer.html.erb' %>
+<!-- [[footer end]] -->

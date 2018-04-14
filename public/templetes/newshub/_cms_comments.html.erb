@@ -1,0 +1,82 @@
+<div rel='comment-block'>
+  <div class="tr-comment">
+    <div class="section-title">
+      <h1><span>最新评论</span></h1>
+    </div>
+    <ul class="post-comment">
+      <% if @comments_list.present? %>
+        <% @comments_list.where(is_published: true).each do |page_comments| %>
+          <% user = User.find(page_comments.user_id) %>
+          <li>
+            <div class="commenter-avatar">
+              <a href="javascript:void(0)"><img class="img-responsive img-circle" src="<%= user.display_headshot %>" alt="Image"></a>
+            </div>
+            <div class="media-body">
+              <h2><%= user.name %><span><%= page_comments.created_at.strftime('%Y-%m-%d %H:%M:%S') %></span></h2>
+              <span><%= page_comments.content %></span>
+            </div>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+    <div class="row text-center">
+      <%= paginate @comments_list, remote: true %>
+    </div>
+  </div><!-- /.comment-section -->
+  
+  <div class="tr-comment-box">
+    <div class="section-title">
+      <h1><span>发表评论</span></h1>
+    </div>
+    <%= simple_form_for(Cms::Comment.new, url: cms_frontend_comment_create_path, html: { class: 'comment-form', name: 'contact-form'} ) do |f| %>
+      <div class="contact-form">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="comment_content">评论内容<small style="color: #999;">（请输入2000字以内的评论！）</small></label>
+              <!-- 当前channel或者当前page -->
+              <% if @page %>
+                <input type="text" name="comment[source_type]" value="<%= @page.class.to_s %>" hidden>
+                <input type="text" name="comment[source_id]" value="<%= @page.id %>" hidden>
+              <% elsif @channel %>
+                <input type="text" name="comment[source_type]" value="<%= @channel.class.to_s %>" hidden>
+                <input type="text" name="comment[source_id]" value="<%= @channel.id %>" hidden>
+              <% end %>
+              <% if current_user %>
+              <input type="text" name="comment[user_id]" value="<%= current_user.id %>" hidden>
+              <% end %>
+              <textarea name="comment[content]" required="required" class="form-control" rows="7" id="comment_content" ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-group text-center">
+          <% if current_user %>
+            <a href="javascript:;" class="btn btn-primary pull-right" onclick='comment_commit()'>发表评论</a>
+          <% else %>
+            <div class="row text-center">
+              <div class="col-md-3 col-md-offset-3">
+              <%= link_to '已有账户？点我登录！', admin_sign_in_path, :class=>'btn btn-success pull-right' %>
+              </div>
+              <div class="col-md-3">
+              <%= link_to '还没有账户？点我注册！', sign_up_path, :class=>'btn btn-danger pull-right' %>
+              </div>
+            </div>
+          <% end %>
+          <small>文明上网理性发言，请大家自觉遵守<a href="/news-comment-service-agreement" target="_blank">《新闻评论服务协议》</a></small>
+        </div>
+      </div><!-- /.contact-form -->
+    <% end %>
+  </div><!-- /.tr-comment-box -->
+</div>
+
+<script type="text/javascript">
+  function comment_commit(){
+    var comment_content = document.getElementById("comment_content").value.length;
+    if (comment_content >= 2000) {
+      alert("请输入2000字以内的评论！");
+      document.getElementById("comment_content").focus();
+    } else {
+      $('.comment-form').submit();
+    };
+  };
+</script>

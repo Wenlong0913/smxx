@@ -1,0 +1,34 @@
+<!-- [[sidebar_menu start]] -->
+<div class="theiaStickySidebar">
+  <div class="tr-menu sidebar-menu sidebar-menu-two menu-responsive">
+    <nav class="navbar navbar-default">
+      <!-- mobile menu -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle toggle-white collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+        <span class="sr-only">导航</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <div class="collapse navbar-collapse text-center" id="navbar-collapse">
+        <% if request.path == '/' %>
+          <a href="/" class="active" title="推荐">推荐</a>
+        <% else %>
+          <a href="/" title="推荐">推荐</a>
+        <% end %>
+        <% ProductCatalog.where("parent_id is null").each do |catalog| %>
+          <a href="<%= frontend_product_catalog_path(catalog) %>" class="<%= 'active' if params[:id].to_i == catalog.id.to_i %>" title="<%= catalog.name %>"><%= catalog.name %></a>
+        <% end %>
+
+        <% if request.path == '/news' %>
+          <a href="/news" class="active"><%= @cms_site.channels.find_by(short_title: 'news').try(:title) %></a>
+        <% else %>
+          <a href="/news"><%= @cms_site.channels.find_by(short_title: 'news').try(:title) %></a>
+        <% end %>
+      </div>
+    </nav>
+  </div>
+</div>
+<!-- [[sidebar_menu end]] -->

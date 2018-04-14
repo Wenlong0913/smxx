@@ -1,0 +1,32 @@
+<div class="main-wrapper">
+	<%= render file: 'public/templetes/newshub/_header.html.erb' %>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-9 tr-sticky">
+				<div class="tr-content theiaStickySidebar">
+					<div class="tr-section" style="padding: 30px;">
+						<div class="tr-post">
+							<div class="post-content">
+								<%= raw @channel.content %>
+								<div class="row">
+									<div class="col-md-4 col-md-offset-4">
+										<a href="http://www.wgtong.cn/enter?from_channel_id=24" target="_blank" class="btn btn-primary btn-block" title="立即申请入驻，期待您的加入！" style="color: #fff;">立即申请入驻，期待您的加入！</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<% unless mobile_device? %>
+			<div class="col-sm-3 tr-sidebar tr-sticky">
+				<%= render file: 'public/templetes/newshub/_sidebar.html.erb' %>
+			</div>
+			<% end %>
+		</div>
+	</div>
+</div>
+<!-- [[footer start]] -->
+<%= render file: 'public/templetes/newshub/_footer.html.erb' %>
+<!-- [[footer end]] -->
