@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: import_informations
+#
+#  id          :integer          not null, primary key
+#  origin_type :string
+#  file_name   :string
+#  line        :integer
+#  name        :string
+#  features    :jsonb
+#  is_parsed   :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 class ImportInformation < ApplicationRecord
   #audited
 

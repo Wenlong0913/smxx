@@ -10,6 +10,7 @@
 #  updated_at :datetime         not null
 #  type       :string
 #  features   :jsonb
+#  is_hot     :boolean          default(FALSE)
 #
 
 class SiteCatalog < Catalog

@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: complaints
+#
+#  id             :integer          not null, primary key
+#  user_id        :integer
+#  source_type    :string
+#  source_id      :integer
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  reason         :text
+#  processed_by   :integer
+#  comment        :text
+#  status         :integer
+#  complaint_type :integer
+#
+
 class Complaint < ApplicationRecord
   audited
 

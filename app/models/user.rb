@@ -17,10 +17,17 @@
 #  current_sign_in_ip     :string
 #  last_sign_in_ip        :string
 #  username               :string
+#  headshot               :string
+#  avatar_file_name       :string
+#  avatar_content_type    :string
+#  avatar_file_size       :integer
+#  avatar_updated_at      :datetime
+#  description            :string(500)
+#  gender                 :integer
 #
 
 class User < ApplicationRecord
-  MAIN_ID = 1 #设置了一个常量 MAIN_ID
+  MAIN_ID = 1
   rolify
   has_and_belongs_to_many :permissions, join_table: 'users_permissions'
   # Include default devise modules. Others available are:
@@ -36,9 +43,10 @@ class User < ApplicationRecord
   has_many :attachments, dependent: :destroy, as: :owner
   has_many :members, dependent: :destroy
   has_many :orders, dependent: :destroy
+  has_many :classorders, dependent: :destroy
   has_many :shopping_carts, dependent: :destroy
   has_many :sites
-  has_many :classorders, dependent: :destroy
+ 
   has_many :preorder_conversitions
   has_many :create_order, class_name: 'Order', foreign_key: :create_by
   has_many :update_order, class_name: 'Order', foreign_key: :update_by

@@ -4,33 +4,31 @@ class ClassorderPolicy < ApplicationPolicy
       scope
     end
   end
+  def index?
+    user.super_admin_or_admin? || user.has_role?(:agent) 
+  end
+
+  def show?
+    return true if user.super_admin_or_admin? || user.has_role?(:worker)
+    user.has_role?(:agent) && record.site.try(:user_id) == user.id
+  end
+
   def create?
-    user.super_admin_or_admin? || user.permission?(:create_order)
+    user.super_admin_or_admin? || user.permission?(:create_classorder)||  user.has_role?(:agent)
   end
 
   def update?
-    user.super_admin_or_admin? || user.permission?([:order_material_split, :confirm_delivery]) || user.has_role?(:agent)
+    user.super_admin_or_admin? ||  user.has_role?(:agent) || user.permission?(:update_classorder)
   end
-  def refund?
-    user.super_admin_or_admin? || user.permission?(:refund_order)
-  end
-
-  def apply_refund?
-    user.super_admin_or_admin? || user.permission?(:refund_order)
+  def destroy?
+    user.super_admin_or_admin? ||  user.has_role?(:agent)
   end
 
-  def refund_success?
-    user.super_admin_or_admin? || user.permission?(:refund_success)
-  end
-
-  def refunds?
-    user.super_admin_or_admin? || user.permission?(:refund_order)
-  end
 
   def permitted_attributes_for_create
-    fail "请在#{__FILE__}中添加params的permit属性"
-    if user.has_role? :admin
-      []
+    if user.super_admin_or_admin? || user.permission?(:create_order) ||  user.has_role?(:agent)
+      [ :code,:user_id,:site_id,:name,:teacher_name,:weeknu,:class_day , :class_time ,:class_place, :class_week ]
+
     else
       []
     end
@@ -40,4 +38,7 @@ class ClassorderPolicy < ApplicationPolicy
     permitted_attributes_for_create
   end
 
+  def create_comment?
+    create?
+  end
 end

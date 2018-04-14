@@ -1,0 +1,134 @@
+<div class="section-container bg-silver m-b-20 primary-content order">
+  <!-- BEGIN container -->
+  <div class="container">
+      <!-- BEGIN search-container -->
+    <div class="search-container">
+      <!-- BEGIN search-content -->
+      <%= form_for :search, url: agent_classorders_path, method: :get do |f| %>
+      <div class="search-content">
+        <!-- BEGIN search-toolbar -->
+        <div class="search-toolbar">
+          <!-- BEGIN row -->
+          <div class="row">
+            <!-- BEGIN col-6 -->
+            <div class="col-md-6">
+              <h4>订单列表
+              <% if params[:search].present? %>
+                <span>: 搜索出 <%= @classorders.size %> 订单</span>
+              <% end %>
+              </h4>
+            </div>
+            <!-- END col-6 -->
+            <!-- BEGIN col-6 -->
+            <div class="col-md-6 text-right">
+              <ul class="sort-list">
+                <li class="text"><i class="fa fa-filter"></i> 排序方式:</li>
+                <li class="<%= 'sign active' unless params[:reorder].present? %>">
+                  <%= link_to '默认', agent_classorders_path %>
+                </li>
+                <li><button class="btn btn-default" type="submit" name="csv" value="scv">导出订单</button></li>
+              </ul>
+            </div>
+            <!-- END col-6 -->
+          </div>
+          <!-- END row -->
+        </div>
+        <!-- END search-toolbar -->
+        <!-- BEGIN container -->
+        <div class="search-item-container container-list">
+          <div class="panel panel-forum">
+            <!-- list -->
+            <ul class="forum-list forum-topic-list">
+              <% @classorders.each do |order| %>
+                <li data-url="<%= Settings.project.wgtong? ? agent_classorder_path(order) : '#'%>" class="link-li">
+                  <div class="media">
+                      <%= image_tag 'no-picture.png' %>
+                  </div>
+                  <!-- begin info-container -->
+                  <div class="info-container" style="height:65px">
+                    <div class="info">
+                      <h4 class="title" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                       </h4>
+                      <ul class="info-start-end">
+                        <li class="row">
+                          <div class="col-xs-6">
+                            订单编号：
+                            <span><%# order.code%></span>
+                          </div> 
+                          <div class="col-xs-6">
+                          客户：
+                          <a href="javascript:void(0)" style="text-decoration: none;">
+                              
+                           <%= order.user.nickname%>
+                          </a>
+                          </div>
+                          <div class="col-xs-6">                            
+                            课程：
+                            <span><% order.name%></span>
+                          </div>
+                          <div class="col-xs-6">                            
+                            客户身份证：
+                            <span><%# order.cardnu%></span>
+                          </div>  
+                          <div class="col-xs-6">                            
+                            
+                            老师：
+                            <span><% order.teacher_name%></span>
+                          </div>
+                        </li>                        
+                      </ul>
+                    </div>
+                    <div class="date-replies">
+                    <div class="time">
+                      <%= order.created_at.strftime("%Y-%m-%d") %>
+                    </div>
+                    <div class="time">
+                      <%= order.created_at.strftime("%H:%M:%S") %>
+                    </div>
+                  
+                  <%= link_to '删除', agent_classorder_path(order), method: :delete, data: { confirm: '确定要删除吗?' }, class: 'btn btn-sm btn-danger pull-center' %>
+                  </div>
+                  </div>
+                  <!-- end info-container -->
+                </li>
+              <% end %>
+            </ul>
+            <!-- list -->
+          </div>
+        </div>
+        <!-- END container -->
+
+        <!-- BEGIN pagination -->
+        <div class="text-center">
+          
+        </div>
+        <!-- END pagination -->
+      </div>
+      <% end %>
+      <!-- END search-content -->
+      <!-- BEGIN search-sidebar -->
+      <div class="search-sidebar">
+          <h4 class="title">查询</h4>
+          <%= form_for :search, url: agent_classorders_path, method: :get do |f| %>
+            <div class="form-group">
+              <label class="control-label">关键字</label>
+              <%= f.text_field :keywords, value: (params[:search][:keywords] if params[:search]), placeholder: '输入查询关键字', class: 'form-control input-sm' %>
+            </div>
+            <div class="m-b-30">
+              <button type="submit" class="btn btn-sm btn-inverse"><i class="fa fa-search"></i> 查询</button>
+            </div>
+          <% end %>
+      </div>
+      <!-- END search-sidebar -->
+    </div>
+    <!-- END search-container -->
+  </div>
+  <!-- END container -->
+</div>
+<script type="text/javascript">
+  $(function() {
+    $('.agent-orders.index li.link-li').on('click', function(){
+      window.location.href = $(this).data('url')
+    })
+  })
+</script>

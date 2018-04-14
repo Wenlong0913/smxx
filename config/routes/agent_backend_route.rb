@@ -7,7 +7,8 @@ module AgentBackendRoute
         get 'assets/index'
         get 'assets/intranet_images'
         get 'assets/extranet_images'
-
+        get '/teachers/new',to: 'teachers#new'
+        get 'course_table', to: 'courses#course_table'
         resources 'messages', only: [:index, :update]
         resources 'sites' do
           post :binding_wx_callback
@@ -32,7 +33,11 @@ module AgentBackendRoute
         resources 'members' do
           resources 'member_notes'
         end
-
+ 
+        resources 'teachers' 
+        resources 'courses' 
+        resources 'classorders' 
+        
         resources 'preorder_conversitions' do
           commentable
           member do

@@ -9,7 +9,7 @@ RSpec.describe Course, type: :model do
   end
 
   it do
-    expect(described_class.attribute_names).to match_array(%w(id name type features updated_at created_at))
+    expect(described_class.attribute_names).to match_array(%w(id name course_type introduction site_id teacher_id features updated_at created_at))
   end
 
   # it { should have_many(:xxx) }

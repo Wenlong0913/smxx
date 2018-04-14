@@ -1,0 +1,134 @@
+<div class="container">
+<h2 class="m-b-0">
+  <%= @course.name %>
+  <div class="pull-right">      
+    <%= link_to "编辑信息", edit_agent_course_path(@course), class: 'btn btn-info btn-default', 'data-turbolinks': false%>
+    <%= link_to '返回', agent_courses_path, class: 'btn btn-default' %>
+  </div>
+</h1>
+</div>
+<!-- BEGIN #teacher -->
+<div id="teacher" class="section-container p-0">
+  <!-- BEGIN container -->
+  <div class="container">
+      <!-- BEGIN teacher -->
+      <div class="product p-t-25 m-b-20">
+          <!-- BEGIN product-detail -->
+          <div class="product-detail">
+              <!-- BEGIN product-image -->
+              <div class="product-image">
+                <% if @course.image_items.length > 0 %>
+                  <!-- BEGIN product-thumbnail -->
+                  <div class="product-thumbnail">
+                    <ul class="product-thumbnail-list checkout_image_list">
+                      <% @course.image_items.each_with_index do |image, index| %>
+                        <li class="<%= if index < 1 then 'active' end %>"><a href="javascript:void(0)" data-url="<%= image.image_url %>"><%= image_tag image.image_url%></a></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                  <!-- END product-thumbnail -->
+                <% end %>
+                <!-- BEGIN product-main-image -->
+                <div class="product-main-image" data-id="main-image">
+                  <%= image_tag @course.image_items.first.try{image_url} || 'no-picture.png'%>
+                  
+                </div>
+                <!-- END product-main-image -->
+              </div>
+              <!-- END product-image -->
+              <!-- BEGIN product-info -->
+              
+              <div class="product-info">
+                <div class="product-info-header">
+                    <h1 class="product-title">
+                      <%= @course.name %>
+                    </h1>
+                </div>           
+              <div class="product-attr-info">
+                    <span>分类</span>:
+                    <span>
+                      <%= @course.course_type %>
+                    </span>
+              </div>
+              
+              <div class="product-attr-info">
+                <span>老师姓名</span>:
+                <span>
+                  <%= @course.teacher_name %>
+                </span>
+              </div>
+              
+              <div class="product-attr-info">
+                <span>难度</span>:
+                <span>
+                  <%= @course.class_level %>
+                </span>
+              </div>
+             
+              <div class="product-attr-info">
+                <span>年龄范围</span>:
+                <span>
+                  <% if @course.age_range.present? %>
+                  <%= @course.age_range %>
+                  <% else %>
+                  无
+                  <%end%>
+                </span>
+              </div>
+              <div class="product-attr-info">
+                <span>性别限制</span>:
+                <span>
+                <% if @course.sex_limit.present? %>
+                    <%= @course.sex_limit %>
+                <% else %>
+                无
+                <% end %>
+                </span>
+              </div>
+              <div class="product-attr-info">
+                <span>人数限制</span>:
+                <span>
+                    <% if @course.limit_number.present? %>
+                    <%= @course.limit_number  %>
+                    <% else %>
+                    无
+                    <% end %>
+                </span>
+              </div>
+              <div class="product-attr-info">
+                <% if @course.class_week.present? %>
+                  <% @course.class_week.each do |k,v| %>
+                    <span>上课时间和地点</span>:
+                    <span>
+                      <%= v+" "+@course.class_day[k]+" "+@course.class_time[k]+" "+@course.class_place[k]  %>
+                    </span>
+                    <br>
+                  <% end %>
+                <% end %>
+            </div>
+              <div class="product-attr-info">
+                <div class="row">
+                  <div class="col-xs-3">
+                    课程介绍：
+                  </div>
+                  <div class="col-xs-9">
+                    <% if @course.introduction.present? %>
+                      <%= raw(@course.introduction) %>
+                    <% else %>
+                      <%= link_to "立即编辑", edit_agent_course_path(@course), 'data-turbolinks': false %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+              <!-- END product-info -->
+          </div>
+      </div>
+      <!-- END teacher -->
+
+  </div>
+  <!-- END container -->
+</div>
+<!-- END #teacher -->
+

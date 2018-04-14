@@ -1,0 +1,14 @@
+# 分配磁盘空间
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: imolin-pvc
+  namespace: imolin
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  volumeName: imolin-pv

@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: cms_comments
+#
+#  id           :integer          not null, primary key
+#  contact      :string
+#  content      :text
+#  features     :jsonb
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  site_id      :integer          not null
+#  source_type  :string
+#  source_id    :integer
+#  user_id      :integer
+#  is_published :boolean          default(TRUE)
+#
+
 require 'rails_helper'
 
 RSpec.describe Cms::Comment, type: :model do

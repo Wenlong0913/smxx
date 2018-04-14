@@ -1,0 +1,15 @@
+# https://github.com/kubernetes/examples/blob/master/staging/volumes/nfs/nfs-pv.yaml
+# 创建之前，请先安装一台nfs服务器
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: imolin-pv
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    # FIXME: use the right IP
+    server: 10.9.171.102
+    path: "/data/imolin"

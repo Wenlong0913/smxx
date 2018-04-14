@@ -1,0 +1,9 @@
+h1.page-header
+  | 编辑#{Course.model_name.human}
+  .pull-right
+    => link_to '查看', @site ? admin_site_course_path(@site, @course) : admin_course_path(@course), class: 'btn btn-primary'
+    
+    = link_to '返回', @site ? admin_site_courses_path(@site) : admin_courses_path, class: 'btn btn-primary'
+
+== render 'form'
+

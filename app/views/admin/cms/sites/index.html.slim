@@ -86,6 +86,7 @@ h1.page-header
                 => link_to '页面列表', admin_cms_site_pages_path(cms_site), class: 'btn btn-xs btn-info'
                 => link_to '编辑', edit_admin_cms_site_path(cms_site), class: 'btn btn-xs btn-info'
                 = link_to '删除', admin_cms_site_path(cms_site), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+    = paginate @cms_sites 
 / TODO: move this code to application.js
 javascript:
   $(document).ready(function(){

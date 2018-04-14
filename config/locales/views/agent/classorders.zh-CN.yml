@@ -1,0 +1,22 @@
+---
+zh-CN:
+  agent:
+    classorders:
+      index:
+        title: Classorders
+      show:
+        title: Classorder
+      edit:
+        title: Editing Classorder
+      new:
+        title: New Classorder
+  flash:
+    agent:
+      classorders:
+        create:
+          notice: "%{resource_name} was successfully created."
+        update:
+          notice: "%{resource_name} was successfully updated."
+        destroy:
+          notice: "%{resource_name} was successfully deleted."
+          alert: "%{resource_name} could not be deleted."

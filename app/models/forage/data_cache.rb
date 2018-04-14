@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: forage_data_caches
+#
+#  id           :integer          not null, primary key
+#  source_type  :string
+#  source_id    :integer
+#  title        :string
+#  url          :string
+#  data         :jsonb
+#  processed_by :integer
+#  auto_merge   :boolean          default(FALSE)
+#  is_merged    :integer          default("unmerged")
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
 class Forage::DataCache < ApplicationRecord
   audited
 

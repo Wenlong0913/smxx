@@ -4,7 +4,7 @@ set -e
 dir=`pwd`
 cd $(dirname $0)/..
 rails_root=`pwd`
-cd $dir
+# cd $dir
 
 mkdir -p /srv/${APP_NAME}/nginx/
 
@@ -28,7 +28,6 @@ server {
 
   access_log /var/log/nginx.access.log;
   error_log /var/log/nginx.error.log;
-  
   location @web {
     proxy_pass http://webstream;
     proxy_set_header X-Real-IP \$remote_addr;
@@ -94,7 +93,6 @@ if [ -n "${API_DOMAIN}" ]; then
 
     access_log /var/log/nginx-api.access.log;
     error_log /var/log/nginx-api.error.log;
-    
     location @web {
       proxy_pass http://apistream;
       proxy_set_header X-Real-IP \$remote_addr;

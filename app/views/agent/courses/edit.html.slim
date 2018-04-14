@@ -1,0 +1,22 @@
+.container
+  .head.h1.text-right
+    = link_to '返回', agent_course_path(@course), class: 'btn btn-default'
+  .edit-product
+    .product-title
+      h4 信息修改
+      hr
+    .product-body
+      = simple_form_for @course, url: agent_course_path, method: :put, remote: true do |f|
+        .div class="row"
+            .div class="col-md-6"
+                = f.input :name, required: true
+            .div class="col-md-6"
+                = f.input :course_type, collection: ['舞蹈','乐器','武术','少儿','书法','其他'], required: true
+
+        = render partial: 'form', locals: { f: f }
+        .product-content.row
+          .col-xs-12
+            .form-group
+              = f.input :introduction, as: :ckeditor
+        .row.text-right
+          = f.submit '保存修改', class: 'btn btn-primary'

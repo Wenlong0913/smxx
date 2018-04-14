@@ -1,0 +1,47 @@
+h1.page-header
+  | 查看#{Teacher.model_name.human}
+  .pull-right
+    => link_to '编辑', @site ? edit_admin_site_teacher_path(@site, @teacher) : edit_admin_teacher_path(@teacher), class: 'btn btn-primary'
+    = link_to '返回', @site ? admin_site_teachers_path(@site) : admin_teachers_path, class: 'btn btn-primary'
+
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+  .panel-body
+      .profile-container
+        .profile-info
+          h4 老师信息
+          .table-responsive
+            table.table.table-profile
+              tr
+                td.field 老师姓名
+                td
+                  a
+                    = @teacher.name
+
+              tr
+                td.field 手机号
+                td
+                  a
+                    = @teacher.phone
+              tr
+                td.field 身份证号
+                td
+                  a
+                    = @teacher.IDcard
+               
+              tr
+                td.field 邮箱
+                td
+                  a
+                    = @teacher.email
+              tr
+                td.field 地址
+                td
+                  a
+                    = @teacher.address
+

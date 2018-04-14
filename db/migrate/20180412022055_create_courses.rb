@@ -2,11 +2,12 @@ class CreateCourses < ActiveRecord::Migration[5.0]
   def change
     create_table :courses do |t|
       t.string :name
-      t.string :coures_type
+      t.string :course_type
       t.text :introduction
-      t.jsonb :features
-      t.integer :teacher_id
       t.integer :site_id
+      t.integer :teacher_id
+      t.jsonb :features
+
       t.timestamps
     end
   end
