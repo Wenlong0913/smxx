@@ -34,10 +34,10 @@
                   
                 </div>
                 <!-- END product-main-image -->
-              </div>
+              
               <!-- END product-image -->
               <!-- BEGIN product-info -->
-              
+              </div>
               <div class="product-info">
                 <div class="product-info-header">
                     <h1 class="product-title">
@@ -123,6 +123,18 @@
             </div>
             
               <!-- END product-info -->
+              </div>
+              <div class="product-attr-info">
+                <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-2">
+                    课程二维码：
+                  </div>
+                  <div class="col-xs-8">
+                    <%= image_tag agent_course_path(course_id: @course.id, format: :png)%>
+                  </div>
+                </div>
+              </div>
           </div>
       </div>
       <!-- END teacher -->
