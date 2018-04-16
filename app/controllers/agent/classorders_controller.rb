@@ -104,11 +104,19 @@ class Agent::ClassordersController < Agent::BaseController
       @classorder = Classorder.find(params[:id])
     end
     def limit_number
+      
       @classorder.courses.each do |f|
-        limit_number=f.limit_number.to_i+1        
+        
         @course=Course.find_by(id: f.id)
-        @course.limit_number=limit_number.to_s
-        @course.save!
+        
+        if f.limit_number=="" || f.limit_number=="不限"|| f.limit_number=="无"
+          
+          @course.save! 
+        else
+          limit_number=f.limit_number.to_i+1                
+          @course.limit_number=limit_number.to_s
+          @course.save!                   
+        end
       end
       
     end

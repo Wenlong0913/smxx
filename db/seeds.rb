@@ -24,7 +24,7 @@ end
 
 unless User.find_by_phone_number('18080810818')
   puts "创建用户: 管理员"
-  _, admin = User::Create.(mobile_phone: '18080810818', nickname: '管理员', password: 'abcd1234', email: 'admin@tanmer.com', relname: '小红', cardnu: '511028199612126789', birth: '2010-10-12', locity: '四川成都', sex: '男')
+  _, admin = User::Create.(mobile_phone: '18080810818', nickname: '管理员', password: 'abcd1234', email: 'admin@tanmer.com')
   admin.save!
   raise "创建的第一个用户ID不等于1!!!" unless admin.id == 1
   admin.add_role :admin
@@ -33,7 +33,7 @@ end
 
 unless User.find_by_phone_number('15983288999')
   puts "创建用户: 商家"
-  _, agent = User::Create.(mobile_phone: '15983288999', nickname: '商家', password: 'abcd1234', email: 'admin@tanmer.com', relname: '小红', cardnu: '511028199612126789', birth: '2010-10-12', locity: '四川成都', sex: '男')
+  _, agent = User::Create.(mobile_phone: '15983288999', nickname: '商家', password: 'abcd1234', email: 'admin@tanmer.com')
   agent.add_role :agent
 end
 

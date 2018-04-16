@@ -14,7 +14,7 @@ class Course < ApplicationRecord
   :selected_number,:class_place,:class_level,:teacher_name,:class_day
   belongs_to :site, optional: true
   belongs_to :teacher
-  has_many :classorder_courses, dependent: :destroy  
+  has_many :classorder_courses, dependent: :destroy 
   has_many :classorders, through: :classorder_courses 
 
   validates_presence_of :teacher_name,:class_level,:name,:course_type#,:class_week,:class_time,:class_day

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180414070552) do
+ActiveRecord::Schema.define(version: 20180416030949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -240,9 +240,8 @@ ActiveRecord::Schema.define(version: 20180414070552) do
   end
 
   create_table "classorder_courses", force: :cascade do |t|
-    t.integer "course_id"
     t.integer "classorder_id"
-    t.integer "amount"
+    t.integer "course_id"
     t.index ["classorder_id"], name: "index_classorder_courses_on_classorder_id", using: :btree
     t.index ["course_id"], name: "index_classorder_courses_on_course_id", using: :btree
   end
@@ -1425,6 +1424,8 @@ ActiveRecord::Schema.define(version: 20180414070552) do
   add_foreign_key "article_users", "articles"
   add_foreign_key "attachment_relations", "attachments"
   add_foreign_key "charges", "orders"
+  add_foreign_key "classorder_courses", "classorders"
+  add_foreign_key "classorder_courses", "courses"
   add_foreign_key "classorders", "courses"
   add_foreign_key "classorders", "sites"
   add_foreign_key "classorders", "users"

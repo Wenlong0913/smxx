@@ -53,6 +53,7 @@ class Frontend::OrdersController < Frontend::BaseController
         order_product.save!
       end
     end
+    
     respond_to do |format|
       format.html do
         if @frontend_order
@@ -88,7 +89,7 @@ class Frontend::OrdersController < Frontend::BaseController
   end
 
   def charge
-   
+    
     if params[:order_id]
       order = Order.find(params[:order_id])
       product = order.order_products.first.product

@@ -71,17 +71,14 @@ module FrontendRoute
         get 'wechat_login' #微信登录
         get 'wechat_orders' #订单列表(验票)
         get 'wechat_order' #订单详细(验票)
-        post 'wechat_confirm_order'
-        
+        post 'wechat_confirm_order'  
         get 'wechat_product/:id', action: 'wechat_product', as: 'wechat_product'
         get 'wechat_site/:id', action: 'wechat_site', as: 'wechat_site'
         get 'wechat_new/:id', action: 'wechat_new', as: 'wechat_new'
       end
 
       namespace :frontend do 
-       
         get 'courses/index'
-        get 'classorders/showtable'
         resources :courses, :classorders  
         resources :smusers   
         get 'home/index'       
@@ -113,10 +110,6 @@ module FrontendRoute
         resources :product_catalogs do
           resources :products
         end
-       
-       
-       
-
       end
     end
   end

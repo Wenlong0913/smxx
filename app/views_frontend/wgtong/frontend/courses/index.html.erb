@@ -33,7 +33,11 @@
                                                     </div>
                                                     <div class="right">
                                                         <span class="tag-item">年龄限制</span>
+                                                        <% if course.features["age_range"] == "不限"|| course.features["age_range"] == ""|| course.features["age_range"] == "无"%>
+                                                        <span class="tag-item">不限</span>
+                                                        <% else %>
                                                         <span class="tag-item"><%= course.features["age_range"]%></span>
+                                                        <% end %>
                                                     </div>
                                                 </div>
                                             <div class="clearfix margin-t">
@@ -44,7 +48,11 @@
                                                 </div>
                                                 <div class="right">
                                                     <span class="tag-item">性别限制</span>
-                                                    <span class="tag-item"><%=course.features["sex_limit"]%></span>    
+                                                    <% if course.features["sex_limit"] == "不限"|| course.features["sex_limit"] == ""|| course.features["sex_limit"]== "无"%>
+                                                    <span class="tag-item">不限</span>
+                                                    <% else %>
+                                                    <span class="tag-item"><%=course.features["sex_limit"]%></span> 
+                                                    <% end %>   
                                                 </div>
                                             </div>	 
                                         </div>

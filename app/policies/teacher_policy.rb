@@ -38,8 +38,7 @@ class TeacherPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    if user.super_admin_or_admin? || user.has_role?(:agent) 
-      
+    if user.super_admin_or_admin? || user.has_role?(:agent)   
       [:name, :phone,:IDcard, :email, :address, :site_id, :image_item_ids => []]
     else
       []

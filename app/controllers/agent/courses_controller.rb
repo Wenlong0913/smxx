@@ -46,7 +46,7 @@ class Agent::CoursesController < Agent::BaseController
      
     @course = Course.new(permitted_attributes(Course).merge(site_id: @site.id).merge(teacher_id: @teachers.id))
     @course.site = @site
-   
+  
     filter_week 
     filter_day 
     filter_time 

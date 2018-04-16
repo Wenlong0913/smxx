@@ -12,16 +12,16 @@
             </div>
             <div class="row">
                     <div class="col-xs-5  col-md-12">
-                        <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
-                        <span class="span-sm"><%=@course.features["introduction"]%></span>
-                        </p>
+                    <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
+                       <span class="span-sm"><%=strip_tags(@course.introduction)%></span>
+                    </p>
                     </div>	
             </div>
             <div class="row">
                 <div class="col-xs-5  col-md-12">
                    <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
                         <span class="span-lg">授课老师</span>
-                        <span class="span-lg"><%=@course.features["teacher_name"]%></span>
+                        <span class="span-lg" ><%=@course.features["teacher_name"]%></span>
                     </p>
                 </div>
             </div>
@@ -56,7 +56,7 @@
             <div class="row">
                 <div class="col-xs-5  col-md-12">
                     <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
-                         <span class="span-sm">如果你在第一学年学习了基础课程，那么你在下一学年中可以选择相应的提高课程，但是如果你是零基础学员，只能报基础课程</span>
+                        <span class="span-sm">如果你在第一学年学习了基础课程，那么你在下一学年中可以选择相应的提高课程，但是如果你是零基础学员，只能报基础课程</span>
                     </p>
                 </div>
             </div>
@@ -66,7 +66,11 @@
                        <% if @course.features["limit_number"] == "0" %>
                            <span class="span-lg">报名人数已满</span> 
                        <% else %>
-                           <span class="span-lg">剩余名额：<%=@course.features["limit_number"]%></span>
+                          <% if @course.features["limit_number"] == "不限"|| @course.features["limit_number"] == ""|| @course.features["limit_number"] == "无"%>
+                           <span class="span-lg">剩余名额：不限</span>
+                           <% else %>
+                            <span class="span-lg">剩余名额：<%=@course.features["limit_number"]%></span>
+                           <% end %>
                        <% end %>
                     </p> 
                 </div>
