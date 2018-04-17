@@ -3,28 +3,37 @@
     <div class="class-detail">
         <h3 class="detail-title">课程介绍</h3>
         <div class="detail-content">
-            <div class="row">
-                <div class="col-xs-5  col-md-12">
-                    <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">               
-                        <img class="img2" src="<%= @course.first_image %>" alt="<%= @course.name %>" style="max-height: 266px;"> 
-                    </p>
-                </div>
-            </div>
-            <div class="row">
+        <!-- <div class="row">
                     <div class="col-xs-5  col-md-12">
                     <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
                        <span class="span-sm"><%=strip_tags(@course.introduction)%></span>
                     </p>
                     </div>	
-            </div>
-            <div class="row">
+            </div> -->
+           <!-- <div class="row">
                 <div class="col-xs-5  col-md-12">
                    <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
                         <span class="span-lg">授课老师</span>
                         <span class="span-lg" ><%=@course.features["teacher_name"]%></span>
                     </p>
                 </div>
-            </div>
+            </div> -->
+             <div class="row">
+                <div class="col-xs-5  col-md-12">
+                    <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
+                        <span class="span-lg">上课时间</span>
+                        <span class="span-text"> 
+                        <% @course.features["class_week"].each do |key1,value1| %>
+                            <% @course.features["class_time"].each do |key,value| %>
+                                <%if key === key1%>
+                                 <%=value1 + value%>
+                             <%end%>
+                           <%end%>
+                         <% end %>
+                        </span>
+                    </p>
+                </div>
+             </div> 
             <div class="row">
                 <div class="col-xs-5">
                      <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
@@ -32,7 +41,14 @@
                      </p>
                 </div>
             </div>
-                <div class="row">
+            <div class="row">
+            <div class="col-xs-5  col-md-12">
+                <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
+                   <span class="span-sm">必须在个人中心中填写你的真实姓名以及你的身份证才可以进行选课</span>
+                </p>
+            </div>
+            </div>
+            <div class="row">
                 <div class="col-xs-5  col-md-12">
                     <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
                        <span class="span-sm">每个学生能在一个学年中报2门不同的学习课程</span>

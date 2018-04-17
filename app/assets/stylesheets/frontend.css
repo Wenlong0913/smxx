@@ -13,3 +13,8 @@
  *= require frontend/search_order
  *= require_self
  */
+ .span-text{
+     color: #666666;
+     margin-left: 5px;
+     font-size:18px;
+ }

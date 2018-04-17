@@ -24,12 +24,11 @@
                                         <div class="text-box" style="height:120px">
                                                 <div class="title">
                                                 <%= link_to  course.name, frontend_course_path(course) %>
-                                                <span class="tag-item text-black"><%= course.features["class_level"]%></span>
                                                 </div>
                                                 <div class="clearfix margin-t">
                                                     <div class="left">
                                                         <span class="tag-item">课程类型</span>
-                                                        <span class="tag-item"><%= course.features["course_type"]%></span>
+                                                        <span class="tag-item"><%= course.course_type%></span>
                                                     </div>
                                                     <div class="right">
                                                         <span class="tag-item">年龄限制</span>
@@ -42,8 +41,8 @@
                                                 </div>
                                             <div class="clearfix margin-t">
                                                 <div class="left">
-                                                    <span class="tag-item">任课老师</span>
-                                                    <span class="tag-item"><%=course.features["teacher_name"]%></span>
+                                                    <span class="tag-item">课程级别</span>
+                                                    <span class="tag-item "><%= course.features["class_level"]%></span>
                                                     
                                                 </div>
                                                 <div class="right">
