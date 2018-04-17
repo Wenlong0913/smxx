@@ -14,26 +14,36 @@ class Frontend::ClassordersController < Frontend::BaseController
         @class.site_id = params[:classorder][:site_id]
         @class.cardnu = params[:classorder][:cardnu]
         @class.teacher_name = params[:classorder][:teacher_name]
-        @class.class_week = JSON.parse(params[:classorder][:class_week].gsub(/=>/,':'))   
-        @class.class_day = JSON.parse(params[:classorder][:class_day].gsub(/=>/,':'))
-        @class.class_time = JSON.parse(params[:classorder][:class_time].gsub(/=>/,':'))
-        @class.class_place = JSON.parse(params[:classorder][:class_place].gsub(/=>/,':'))    
+        @class.class_week = params[:classorder][:class_week]  
+        @class.class_day = params[:classorder][:class_day]
+        @class.class_time = params[:classorder][:class_time]
+        @class.class_place = params[:classorder][:class_place] 
+        @class.features = params[:classorder][:limitnu]    
         if @class.save
+           
+            
         #如果选课成功就让人数减一
             @order_courses=ClassorderCourse.new
             @order_courses.course_id= params[:classorder][:course_id]
             @order_courses.classorder_id= @class.id
             @order_courses.save! 
-            @course = Course.find(params[:classorder][:course_id]);
-            if @course.features["limit_number"] == "不限"|| @course.features["limit_number"] == ""|| @course.features["limit_number"] == "无"
-                flash[:notice] = '选课成功' 
-                redirect_to self_classorder_users_path
-            else
-            @course.features["limit_number"] = ((@course.features["limit_number"]).to_i - 1 ).to_s
-            @course.save!
-            flash[:notice] = '选课成功' 
-            redirect_to self_classorder_users_path
+
+            @class.classorder_courses.each do |f|
+                p = f.course
+                limitnu =  @class.features
+                if p.limit_number[limitnu]== "" || p.limit_number[limitnu]== "不限"|| p.limit_number[limitnu] == "无"
+                    p.save!
+                    flash[:notice] = '选课成功' 
+                    redirect_to self_classorder_users_path
+                else 
+                    p.limit_number[limitnu] = p.limit_number[limitnu].to_i - 1
+                    p.save! 
+                    flash[:notice] = '选课成功' 
+                    redirect_to self_classorder_users_path
+                end
+                    
             end
+            
         else
             render json: {errors:'本课程您已经选择过了,请选择其他课程'}
         end   
@@ -41,26 +51,10 @@ class Frontend::ClassordersController < Frontend::BaseController
     
     def destroy
         @class = Classorder.find(params[:id])
-       if @class.destroy
-         #如果撤课成功就让人数加一
-        @course =  @class.course_id
-        @course1 = Course.find(@course)
-            if @course1.features["limit_number"] == "不限"|| @course1.features["limit_number"] == ""|| @course1.features["limit_number"] == "无"
-                respond_to do |format|
-                    format.html { redirect_to frontend_courses_path, notice: '撤销课程成功' }
-                    format.json { head 200 }
-                end
-            else
-            @course1.features["limit_number"] = ((@course1.features["limit_number"]).to_i + 1 ).to_s
-            @course1.save!
-                respond_to do |format|
-                    format.html { redirect_to frontend_courses_path, notice: '撤销课程成功' }
-                    format.json { head 200 }
-                end
-            end
-        else
-            render json: {errors:'撤销课程失败'}
-        end
+        if limit_number
+             #如果撤课成功就让人数加一
+            @class.destroy
+        end   
     end
     
     private
@@ -73,6 +67,26 @@ class Frontend::ClassordersController < Frontend::BaseController
       
     def get_visit_resource
         @class
+    end
+    def limit_number
+        @class.classorder_courses.each do |f|
+            p = f.course
+            limitnu =  @class.features
+            if  p.limit_number[limitnu] == "" ||  p.limit_number[limitnu] =="不限"||  p.limit_number[limitnu] == "无"
+                p.save!
+                respond_to do |format|
+                    format.html { redirect_to frontend_courses_path, notice: '撤销课程成功' }
+                    format.json { head 200 }
+                end
+            else
+                p.limit_number[limitnu] = p.limit_number[limitnu].to_i + 1
+                p.save! 
+                respond_to do |format|
+                    format.html { redirect_to frontend_courses_path, notice: '撤销课程成功' }
+                    format.json { head 200 }
+                end
+            end           
+        end
     end
    
 end

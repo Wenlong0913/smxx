@@ -7,11 +7,11 @@
             <div class="info">
             <%= f.hidden_field(:course_id, value:@course.id ) %>
             <%= f.hidden_field(:user_id, value:current_user.id )%>
-            <%= f.hidden_field(:class_week, value:"#{@course.features["class_week"]}")%>
-            <%= f.hidden_field(:class_time, value:"#{@course.features["class_time"]}")%>
-            <%= f.hidden_field(:class_day, value:"#{@course.features["class_day"]}")%>
-            <%= f.hidden_field(:class_place, value:"#{@course.features["class_place"]}")%>
-            <%= f.hidden_field(:limit_number, value:"#{@course.features["limit_number"]}")%>
+            <%= f.hidden_field(:class_week, value:"#{params[:week]}")%>
+            <%= f.hidden_field(:class_time, value:"#{params[:time]}")%>
+            <%= f.hidden_field(:class_day, value:"#{params[:day]}")%>
+            <%= f.hidden_field(:limitnu, value:"#{params[:limitnu]}")%>
+            
             <%= f.hidden_field(:site_id, value:"#{@course.site_id}")%>
             <input name = "classorders[course][id]" type="hidden" value="<%=@course.id%>">
                 <ul>           
@@ -28,26 +28,20 @@
                    <span>课程名称:</span>
                    <%= f.text_field :name, value:@course.name %>
                </li>
-               <li> 
+              <!-- <li> 
                <span>任教老师:</span>
                <%= f.text_field :teacher_name, value:@course.features["teacher_name"] %>  
-               </li>
+               </li> -->
                <li> 
                <span>上课时间:</span>
-               <% @course.features["class_week"].each do |key1,value1| %>
-                   <% @course.features["class_time"].each do |key,value| %>
-                       <%if key === key1%>
-                        <%=value1 + value%>
-                    <%end%>
-                  <%end%>
-                <% end %>
+               <%= params[:week] + params[:day] + params[:time] %>
                </li>
-               <li> 
+              <!-- <li> 
                <span>上课地方:</span>
                <% @course.features["class_place"].each do |key,value| %>
                    <%=value%>
                <% end %>
-               </li>
+               </li>-->
                <%= f.submit "立即选课", class:"btn btn-danger btn-right"%>
                 <%else%>
                 <li><%= link_to '请完善个人信息', frontend_smusers_path, title: '完善个人信息' %></li>

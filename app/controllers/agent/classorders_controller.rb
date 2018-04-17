@@ -104,20 +104,16 @@ class Agent::ClassordersController < Agent::BaseController
       @classorder = Classorder.find(params[:id])
     end
     def limit_number
-      
-      @classorder.courses.each do |f|
-        
-        @course=Course.find_by(id: f.id)
-        
-        if f.limit_number=="" || f.limit_number=="不限"|| f.limit_number=="无"
-          
-          @course.save! 
+      @classorder.classorder_courses.each do |f|
+        p = f.course
+        limitnu = @classorder.features
+        if  p.limit_number[limitnu]== "" ||  p.limit_number[limitnu]=="不限" ||  p.limit_number[limitnu] == "无"
+            p.save!
         else
-          limit_number=f.limit_number.to_i+1                
-          @course.limit_number=limit_number.to_s
-          @course.save!                   
-        end
-      end
+            p.limit_number[limitnu] = p.limit_number[limitnu].to_i + 1
+            p.save!  
+        end           
+    end
       
     end
     # Only allow a trusted parameter "white list" through.

@@ -18,22 +18,7 @@
                     </p>
                 </div>
             </div> -->
-             <div class="row">
-                <div class="col-xs-5  col-md-12">
-                    <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
-                        <span class="span-lg">上课时间</span>
-                        <span class="span-text"> 
-                        <% @course.features["class_week"].each do |key1,value1| %>
-                            <% @course.features["class_time"].each do |key,value| %>
-                                <%if key === key1%>
-                                 <%=value1 + value%>
-                             <%end%>
-                           <%end%>
-                         <% end %>
-                        </span>
-                    </p>
-                </div>
-             </div> 
+              
             <div class="row">
                 <div class="col-xs-5">
                      <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
@@ -78,27 +63,102 @@
             </div>
             <div class="row">
                 <div class="col-xs-5  col-md-12">
+                    <div style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px" id="span-week">
+                        <span class="span-lg">上课时间</span>          
+                        <% @course.features["class_week"].each do |key1,value1| %>
+                            <% @course.features["class_time"].each do |key,value| %>
+                                <%if key === key1%>
+                                <li class="a-border a-time">
+                                <span class="span-sm"><%=value1%></span>
+                                <span class="span-sm"><%=@course.features["class_day"][key]%></span>
+                                <span class="span-sm"><%=value %></span>
+                                </li>  
+                            <%end%>
+                        <%end%>
+                        <% end %>
+                    </div>
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-xs-5  col-md-12">
                     <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
-                       <% if @course.features["limit_number"] == "0" %>
-                           <span class="span-lg">报名人数已满</span> 
-                       <% else %>
-                          <% if @course.features["limit_number"] == "不限"|| @course.features["limit_number"] == ""|| @course.features["limit_number"] == "无"%>
-                           <span class="span-lg">剩余名额：不限</span>
-                           <% else %>
-                            <span class="span-lg">剩余名额：<%=@course.features["limit_number"]%></span>
-                           <% end %>
-                       <% end %>
+                                <%@course.features["limit_number"].each do |key1,value1|%>
+                                    <li class="li-limitnu" style="display:none">
+                                        <%@course.features["class_week"].each do |key2,value2|%>
+                                                <%if key1==key2%>
+                                                    <% if value1 == "0" %>
+                                                    <span class="span-lg">报名人员已满</span>
+                                                    <% else %>
+                                                    
+                                                    <%end%>
+                                                    <span class="span-lg">剩余名额：<%=value1%></span>
+                                                <%end%>
+                                        <%end%>
+                                    </li>
+                                <%end%>
                     </p> 
                 </div>
             </div>
+            <script>
+            var time=document.getElementsByClassName('a-time');
+
+            var limit=document.getElementsByClassName('li-limitnu')								 
+            var date=0;	
+            var limit1=0;
+            window.onload=function(){
+                   for (var i=0; i<time.length; i++){
+                       time[i].index=i;				
+                            for (var k = 0; k < time.length; k++) {
+                                time[k].style.borderColor="#22222226";
+                                limit[k].style.display="none";								 
+                                }
+                                time[0].style.borderColor="red";
+                                limit[0].style.display="block";
+                                week=time[0].children[0].innerText;
+                                day=time[0].children[1].innerText;
+                                time1=time[0].children[2].innerText;
+                                limit1=time[0].index+1
+
+                            }
+                           tab();
+               }
+               function tab(){
+               for (var i=0; i<time.length; i++){
+                   time[i].index=i;
+                   time[i].onclick=function(){   
+                        for (var k = 0; k < time.length; k++) {
+                            time[k].style.borderColor="#22222226";
+                            limit[k].style.display="none";								 
+                            }
+                            time[this.index].style.borderColor="red";
+                            limit[this.index].style.display="block";
+                            week=time[this.index].children[0].innerText;
+                            day=time[this.index].children[1].innerText;
+                            time1=time[this.index].children[2].innerText;
+                            limit1=time[this.index].index+1
+                            } 
+                        }
+                   }
+           
+            </script>
             <div class="row">
                 <div class="col-xs-5  col-md-12">
-                    <% if @course.features["limit_number"] == "0" %>
-                    <% else %>
-                    <div class="btn-p"><a href="<%= new_frontend_classorder_path(course_id: @course.id)%>" ><button type="button" class="btn btn-danger ">马上报名</button></a></div>
-                    <% end %>  
+                    
+                        <div class="btn-p"><a href="<%= new_frontend_classorder_path(course_id: @course.id)%>" type="button" class="btn btn-danger" id="a-order1">马上报名</a></div>
+                      
                 </div>
-            </div>  
+            </div>
+            <script>
+            var aOrder=document.getElementById('a-order1');
+            aOrder.onclick=function(){
+            alert(123)
+               var parm1= aOrder.getAttribute("href");		
+               var myurl=parm1+"&week="+week+"&day="+day+"&time="+time1+"&limitnu="+limit1;														
+               aOrder.setAttribute("href", myurl);
+                   }
+            </script>
         </div>
     </div>
 </div>
+
+

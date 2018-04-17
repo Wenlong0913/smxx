@@ -10,8 +10,8 @@
 
 class Course < ApplicationRecord
   audited
-  store_accessor :features,:limit_number ,:age_range,:sex_limit, :class_week,:class_time,
-  :selected_number,:class_place,:class_level,:teacher_name,:class_day
+  store_accessor :features, :limit_number, :age_range, :sex_limit, :class_week, :class_time,
+  :selected_number, :class_place, :class_level, :teacher_name, :class_day
   belongs_to :site, optional: true
   belongs_to :teacher
   has_many :classorder_courses, dependent: :destroy 

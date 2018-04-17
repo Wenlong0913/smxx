@@ -22,11 +22,11 @@ class CoursePolicy < ApplicationPolicy
   end
 
   def create?
-    user.super_admin_or_admin? || user.has_role?(:agent) 
+    user.super_admin_or_admin? || user.has_role?(:agent)  || user.permission?(:create_course)
   end
 
   def edit?
-    user.super_admin_or_admin? || user.has_role?(:agent)
+    user.super_admin_or_admin? || user.has_role?(:agent) || user.permission?(:update_course) 
   end
 
   def update?
@@ -34,7 +34,7 @@ class CoursePolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.super_admin_or_admin? || user.has_role?(:agent)  
+    user.super_admin_or_admin? || user.has_role?(:agent)  || user.permission?(:destroy_course)
   end
 
   def course_table?
@@ -42,15 +42,45 @@ class CoursePolicy < ApplicationPolicy
     
   end
   def permitted_attributes_for_create
-    if user.super_admin_or_admin? || user.has_role?(:agent) 
-      [:name, :course_type, :introduction,:limit_number ,:age_range,:sex_limit, :class_week,:class_time,
-      :selected_number,:class_place,:class_level,:teacher_name,:teacher_id,:class_day, :image_item_ids => []]
+    if user.super_admin_or_admin? || user.has_role?(:agent) || user.permission?([:create_course, :update_course])
+      
+      [:name, :course_type, 
+      :introduction,
+      :age_range,  
+      :sex_limit,
+      :class_level, 
+      :teacher_name, 
+      :teacher_id, 
+      :selected_number,  
+      :limit_number => {}, 
+      :class_week => {}, 
+      :class_time => {}, 
+      :class_place => {}, 
+      :class_day => {}, 
+      :image_item_ids => []]
     else
       []
     end
   end
 
   def permitted_attributes_for_update
-    permitted_attributes_for_create
+    if user.super_admin_or_admin? || user.has_role?(:agent) || user.permission?([:course_insert, :course_update])
+      [:name, :course_type, 
+      :introduction,
+      :age_range,  
+      :sex_limit,
+      :class_level, 
+      :teacher_name, 
+      :teacher_id, 
+      :selected_number,  
+      :limit_number => {}, 
+      :class_week => {}, 
+      :class_time => {}, 
+      :class_place => {}, 
+      :class_day => {}, 
+      :image_item_ids => []]
+    else
+      []
+    end
   end
 end

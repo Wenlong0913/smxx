@@ -3,16 +3,46 @@
           ul
             - @course.errors.full_messages.each do |message|
               li = message
+    .div class="row"           
+        .col-xs-12
+          .form-group
+            div[rel="course_number_vue" data-limitnu="#{@course.limit_number.to_json}"]
+              <abbr title="必填项">*</abbr>  
+                .form-group.row
+                
+                label.control-label.string.optional.col-xs-2 限制人数
+                
+              .additional-item.form-group[v-for="(list,index) in lists"]
+                .row
+                  .col-xs-12.form-group
+                    .row
+                      .col-xs-2
+                        .row
+                          .additional-item.form-group[v-for="limitnu in list.limitnu "]
+                            .col-xs-12
+                              .form-group
+                                input.form-control[type="text" v-model="limitnu.value" :name="'course[limit_number][' + limitnu.key + ']'"]
+                                    
+                  .row
+                    .col-xs-12.form-group[style="margin-top:10px;"]
+                      button.btn.btn-danger.delete.btn-xs[type="button" @click="removecourseNu(i-1)"]
+                          i.fa.fa-trash
+                          span 删除
+                      
+                           
+              span.btn.btn-success.fileinput-button.btn-xs[@click="addcourseNu"]
+                i.fa.fa-plus
+                span 添加其他课程选项
     .div class="row"
-      .div class="col-md-6"
-        = f.input :limit_number
       .div class="col-md-6"
         = f.input :age_range
-    .div class="row"
       .div class="col-md-6"
         = f.input :sex_limit
+    .div class="row"
       .div class="col-md-6"
         = f.input :class_level, required: true,collection:["基础","高级"]
+      .div class="col-md-6"           
+        =f.input :teacher_name, collection: @teacher.map{|t| t.name} 
       /.div class="col-md-6"
         /= f.input :class_place
     /.div class="row"
@@ -20,9 +50,7 @@
         /= f.input :class_week, collection: ['星期一','星期二','星期三','星期四','星期五','星期六','星期日']
       /.div class="col-md-6"
        / =f.input :class_day, collection: ['上午','下午','晚上']
-    .div class="row"
-      .div class="col-md-6"           
-        =f.input :teacher_name, collection: @teacher.map{|t| t.name} 
+      
       
     .div class="row"           
         .col-xs-12
@@ -138,7 +166,6 @@
                   i.week.splice(index, 1);
                   i.day.splice(index, 1);
                   i.place.splice(index, 1);
-                
                   i.time.splice(index, 1);
                 console.log(index);
                 }
@@ -217,7 +244,69 @@
           } 
         }
 
+
+         var pages = $('body.agent-courses');
         
+          if (pages.length > 0){
+            var image_container = pages.find('image-select');
+          var  image = new Vue({
+              el: image_container[0]
+          });
+          }
+        var courseNuDom = pages.find("div[rel='course_number_vue']");
+          var courseNu = new Vue({
+          el: courseNuDom[0],
+            data:{
+              limitnuvalues: {},
+              
+              lists: 
+                [{limitnu: []
+                }]
+              ,
+              count: 2
+            },
+            methods:
+              {
+                addcourseNu: function(){
+                  
+                for(var i of this.lists){
+                  
+                  i.limitnu.push({key: this.count, value: ''}); 
+                  this.count++;
+                  
+                }
+
+              },
+              removecourseNu: function(index){
+                for(var i of this.lists){
+                  i.limitnu.splice(index, 1);
+                console.log(index);
+                }
+
+              }
+              }
+            });
+      
+        var limitnuvalues = pages.find("div[rel='course_number_vue']").data('limitnu');    
+        var dmax = 0,tmax=0,wmax=0,pmax=0,temax=0;
+        if(limitnuvalues==null)
+          {
+            for(var i of courseNu.lists){ 
+            i.limitnu.push({key:"1", value: ''});                   
+            }
+          }
+
+          for(var k in limitnuvalues){
+            console.log(limitnuvalues);
+            if( parseInt(k) > 0)
+            {
+              if( dmax < parseInt(k))
+                dmax = parseInt(k) ;
+              for(var i of courseNu.lists)
+                {  i.limitnu.push({key: parseInt(k), value: limitnuvalues[k]}); }
+                courseNu.count = dmax+1;
+            } 
+          }  
       });
 
 

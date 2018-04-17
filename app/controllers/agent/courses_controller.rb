@@ -60,14 +60,13 @@ class Agent::CoursesController < Agent::BaseController
   def create
     authorize Course
     @teacher=Teacher.where(site_id: @site.id)
-     
     @course = Course.new(permitted_attributes(Course).merge(site_id: @site.id).merge(teacher_id: @teachers.id))
     @course.site = @site
-  
     filter_week 
     filter_day 
     filter_time 
     filter_place 
+    filter_limitnu
     if @course.save
       redirect_to agent_course_path( @course), notice: 'Course 创建成功.'
     else
@@ -78,12 +77,14 @@ class Agent::CoursesController < Agent::BaseController
   end
 
   def update
+    binding.pry
     authorize @course
     @teacher=Teacher.where(site_id: @site.id)
     filter_week
     filter_day 
     filter_time 
     filter_place 
+    filter_limitnu
     if @course.update(permitted_attributes(@course).merge(teacher_id: @teachers.id))
       redirect_to agent_course_path(@course), notice: 'Course 更新成功.'
     else
@@ -136,7 +137,7 @@ class Agent::CoursesController < Agent::BaseController
     end
     # Only allow a trusted parameter "white list" through.
     def course_params
-      params.require(:course).permit(:name,:type,:introduction)
+      params.require(:course).permit(:name, :course_type, :introduction, :class_week => {}, :class_day => {}, :class_time => {}, :class_place => {}, :limit_number => {})
     end
     def filter_week 
       if params[:course][:class_week].present?
@@ -160,6 +161,12 @@ class Agent::CoursesController < Agent::BaseController
       if params[:course][:class_place].present?
         
         @course.class_place = params[:course][:class_place]
+      end
+    end
+    def filter_limitnu 
+      if params[:course][:limit_number].present?
+        
+        @course.limit_number = params[:course][:limit_number]
       end
     end
 

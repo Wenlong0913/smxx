@@ -58,7 +58,6 @@ class Admin::ProductsController < Admin::BaseController
   # POST /admin/products
   def create
     authorize Product
-    
     @product = Product.new(permitted_attributes(Product).merge(site_id: @site.id))
     filter_additional_attribute
     filter_add_date
