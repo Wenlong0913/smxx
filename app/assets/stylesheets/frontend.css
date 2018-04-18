@@ -39,3 +39,39 @@
  }
  .a-text {
     color: #88898a;
+ }
+ .person-info .info ul li span{
+    color: #666666;
+    display: inline!important;
+    font-size: 15px;
+    }
+@media (max-width: 414px){
+   .btn-md{
+       position: relative;
+       left:50px ;
+       top:-20px
+   } 
+   .label-xs {
+    position: relative;
+    left: -114px !important;
+}
+.input-xs {
+    position: relative;
+    left: 84px;
+    top: -24px;
+    width: 198% !important;
+}
+.ul-xs{
+    position: relative;
+    left:-47px ;
+}
+.ul-xs li input{
+    width: 56%!important;
+}
+.img-xs{
+    position: relative;
+    left:-54px ;
+}
+
+}
+     

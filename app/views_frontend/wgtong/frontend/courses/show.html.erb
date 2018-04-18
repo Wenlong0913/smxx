@@ -1,3 +1,20 @@
+<style>
+.btn-sty{
+    width:83px !important;
+    border:1px solid red;
+    text-align: center;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    color: #fff;
+   
+}
+.btn-sty:hover{
+    color: #fff;
+}
+</style>
 <%= render file: @cms_site.template_dir + '_header.html' %>
 <div class="box-content">
     <div class="class-detail">
@@ -29,7 +46,7 @@
             <div class="row">
             <div class="col-xs-5  col-md-12">
                 <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
-                   <span class="span-sm">必须在个人中心中填写你的真实姓名以及你的身份证才可以进行选课</span>
+                   <span class="span-sm">必须在个人中心中填写你的<mark>真实姓名</mark>以及你的<mark>身份证</mark>才可以进行选课</span>
                 </p>
             </div>
             </div>
@@ -64,7 +81,7 @@
             <div class="row">
                 <div class="col-xs-5  col-md-12">
                     <div style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px" id="span-week">
-                        <span class="span-lg">上课时间</span>          
+                        <span class="span-lg">上课时间</span><br>        
                         <% @course.features["class_week"].each do |key1,value1| %>
                             <% @course.features["class_time"].each do |key,value| %>
                                 <%if key === key1%>
@@ -81,27 +98,31 @@
             </div> 
             <div class="row">
                 <div class="col-xs-5  col-md-12">
-                    <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
+                    <div style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
                                 <%@course.features["limit_number"].each do |key1,value1|%>
                                     <li class="li-limitnu" style="display:none">
                                         <%@course.features["class_week"].each do |key2,value2|%>
                                                 <%if key1==key2%>
-                                                    <% if value1 == "0" %>
-                                                    <span class="span-lg">报名人员已满</span>
-                                                    <% else %>
-                                                    
-                                                    <%end%>
-                                                    <span class="span-lg">剩余名额：<%=value1%></span>
+                                                <span class="span-lg">剩余名额：<span class="span-lg"><%=value1%></span></span>
                                                 <%end%>
                                         <%end%>
                                     </li>
-                                <%end%>
-                    </p> 
+                                <%end%></div>
+                    
+                </div>
+            </div>
+            <script>
+          
+           
+            </script>
+            <div class="row">
+                <div class="col-xs-5  col-md-12">
+                        <div class="btn-p"><a href="<%= new_frontend_classorder_path(course_id: @course.id)%>" type="button" class="btn btn-danger" id="a-order1">马上报名</a></div>   
                 </div>
             </div>
             <script>
             var time=document.getElementsByClassName('a-time');
-
+            var aOrder=document.getElementById('a-order1');
             var limit=document.getElementsByClassName('li-limitnu')								 
             var date=0;	
             var limit1=0;
@@ -118,40 +139,52 @@
                                 day=time[0].children[1].innerText;
                                 time1=time[0].children[2].innerText;
                                 limit1=time[0].index+1
-
+                               
                             }
                            tab();
+                           if (limit[0].children[0].children[0].innerText == "0"){
+                            limit[0].children[0].children[0].innerText = "报名人数已满"
+                            document.getElementById('a-order1').style.display="none"
+                           
+                           }else{
+                            document.getElementById('a-order1').style.display="block"
+                            document.getElementById('a-order1').className = "btn-sty"
+                           
+                           }
                }
                function tab(){
-               for (var i=0; i<time.length; i++){
-                   time[i].index=i;
-                   time[i].onclick=function(){   
-                        for (var k = 0; k < time.length; k++) {
-                            time[k].style.borderColor="#22222226";
-                            limit[k].style.display="none";								 
-                            }
-                            time[this.index].style.borderColor="red";
-                            limit[this.index].style.display="block";
-                            week=time[this.index].children[0].innerText;
-                            day=time[this.index].children[1].innerText;
-                            time1=time[this.index].children[2].innerText;
-                            limit1=time[this.index].index+1
-                            } 
-                        }
-                   }
-           
-            </script>
-            <div class="row">
-                <div class="col-xs-5  col-md-12">
-                    
-                        <div class="btn-p"><a href="<%= new_frontend_classorder_path(course_id: @course.id)%>" type="button" class="btn btn-danger" id="a-order1">马上报名</a></div>
+              
+                    for (var i=0; i<time.length; i++){
+                        time[i].index=i;
+                        time[i].onclick=function(){   
+                                for (var k = 0; k < time.length; k++) {
+                                    time[k].style.borderColor="#22222226";
+                                    limit[k].style.display="none";								 
+                                    }
+                                    time[this.index].style.borderColor="red";
+                                    limit[this.index].style.display="block";
+                                    week=time[this.index].children[0].innerText;
+                                    day=time[this.index].children[1].innerText;
+                                    time1=time[this.index].children[2].innerText;
+                                    limit1=time[this.index].index+1
+                                    limit2=time[this.index].index
+                                    if (limit[limit2].children[0].children[0].innerText == "0" || limit[limit2].children[0].children[0].innerText == "报名人数已满"){
+                                        limit[limit2].children[0].children[0].innerText = "报名人数已满"
+                                        document.getElementById('a-order1').style.display="none"
+                                    }else{
+                                        document.getElementById('a-order1').style.display="block"
+                                        document.getElementById('a-order1').className = "btn-sty"
+                                    }             
+                        } 
                       
-                </div>
-            </div>
-            <script>
-            var aOrder=document.getElementById('a-order1');
-            aOrder.onclick=function(){
-            alert(123)
+                                    
+                    }
+               
+
+                }
+               
+                
+               aOrder.onclick=function(){
                var parm1= aOrder.getAttribute("href");		
                var myurl=parm1+"&week="+week+"&day="+day+"&time="+time1+"&limitnu="+limit1;														
                aOrder.setAttribute("href", myurl);

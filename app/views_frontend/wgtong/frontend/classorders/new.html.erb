@@ -14,7 +14,7 @@
             
             <%= f.hidden_field(:site_id, value:"#{@course.site_id}")%>
             <input name = "classorders[course][id]" type="hidden" value="<%=@course.id%>">
-                <ul>           
+                <ul class="ul-xs">           
                 <%if @user.relname.present? && @user.cardnu.present? %>
                    <li> 
                    <span>真实姓名:</span>
@@ -34,7 +34,7 @@
                </li> -->
                <li> 
                <span>上课时间:</span>
-               <%= params[:week] + params[:day] + params[:time] %>
+                  &nbsp&nbsp<span><%= params[:week] + params[:day] + params[:time] %></sapn>
                </li>
               <!-- <li> 
                <span>上课地方:</span>

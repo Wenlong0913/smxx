@@ -60,185 +60,166 @@
                           <% end %>
                       <% end %>  
                     <% end %> 
-                    
                   </td>
                 
                 
                   <td align="center">
-                  <% if @user_showtable.any? %>
+                    <% if @user_showtable.any? %>
+                      <% @user_showtable.each do |classse|%>
+                            <% if classse.class_day === "上午" && classse.class_week === "星期五"%>
+                              <%=classse.name%><br><%=classse.class_time%>
+                            <% end %>
+                      <% end %>  
+                    <% end %> 
+                  </td>
+              
+                  
+                <td align="center">
+                    <% if @user_showtable.any? %>
+                    <% @user_showtable.each do |classse|%>
+                        <% if classse.class_day === "上午" && classse.class_week === "星期六"%>
+                          <%=classse.name%><br><%=classse.class_time%>
+                        <% end %>
+                    <% end %>  
+                  <% end %>  
+                </td>
+
+
+              <td align="center">
+                <% if @user_showtable.any? %>
                   <% @user_showtable.each do |classse|%>
-                      <% if classse.class_day === "上午" && classse.class_week === "星期五"%>
+                      <% if classse.class_day === "上午" && classse.class_week === "星期日"%>
                         <%=classse.name%><br><%=classse.class_time%>
                       <% end %>
                   <% end %>  
                 <% end %> 
-                
-                </td>
-              
-                  
-                <td align="center">
-                <% if @user_showtable.any? %>
-                <% @user_showtable.each do |classse|%>
-                    <% if classse.class_day === "上午" && classse.class_week === "星期六"%>
-                      <%=classse.name%><br><%=classse.class_time%>
-                    <% end %>
-                <% end %>  
-              <% end %> 
-               
               </td>
-
-
-              <td align="center">
-              <% if @user_showtable.any? %>
-              <% @user_showtable.each do |classse|%>
-                  <% if classse.class_day === "上午" && classse.class_week === "星期日"%>
-                    <%=classse.name%><br><%=classse.class_time%>
-                  <% end %>
-              <% end %>  
-            <% end %> 
-             
-            </td>
               </tr>
 
               <tr>
                   <td align="center">下午</td>
                     <td align="center">
-                    <% if @user_showtable.any? %>
-                    <% @user_showtable.each do |classse|%>
-                        <% if classse.class_day === "下午" && classse.class_week === "星期一"%>
-                          <%=classse.name%><br><%=classse.class_time%>
-                        <% end %>
-                    <% end %>  
-                  <% end %> 
-                   
-                  </td>
+                      <% if @user_showtable.any? %>
+                        <% @user_showtable.each do |classse|%>
+                            <% if classse.class_day === "下午" && classse.class_week === "星期一"%>
+                              <%=classse.name%><br><%=classse.class_time%>
+                            <% end %>
+                        <% end %>  
+                      <% end %> 
+                    </td>
                   
                   
                   <td align="center">
-                  <% @user_showtable.each do |classse|%>
-                    <% if classse.class_day === "下午" && classse.class_week === "星期二"%>
-                      <%=classse.name%><br><%=classse.class_time%>
+                    <% @user_showtable.each do |classse|%>
+                      <% if classse.class_day === "下午" && classse.class_week === "星期二"%>
+                        <%=classse.name%><br><%=classse.class_time%>
+                      <% end %>
                     <% end %>
-                <% end %>
-                 
                 </td>
                 
                 
                 <td align="center">
-                <% @user_showtable.each do |classse|%>
-                  <% if classse.class_day === "下午" && classse.class_week === "星期三"%>
-                    <%=classse.name%><br><%=classse.class_time%>
+                  <% @user_showtable.each do |classse|%>
+                    <% if classse.class_day === "下午" && classse.class_week === "星期三"%>
+                      <%=classse.name%><br><%=classse.class_time%>
+                    <% end %>
                   <% end %>
-              <% end %>
-                
-              </td>
+                </td>
                   
                 
               <td align="center">
-              <% @user_showtable.each do |classse|%>
-                <% if classse.class_day === "下午" && classse.class_week === "星期四"%>
-                  <%=classse.name%><br><%=classse.class_time%>
-                <% end %>
-            <% end %>
-             
-            </td>
+                <% @user_showtable.each do |classse|%>
+                  <% if classse.class_day === "下午" && classse.class_week === "星期四"%>
+                    <%=classse.name%><br><%=classse.class_time%>
+                  <% end %>
+                <% end %> 
+              </td>
               
-                <td align="center">
+              <td align="center">
                 <% @user_showtable.each do |classse|%>
                   <% if classse.class_day === "下午" && classse.class_week === "星期五"%>
                     <%=classse.name%><br><%=classse.class_time%>
                   <% end %>
-              <% end %>
-                
+                <% end %>  
               </td>
                   
                   
               <td align="center">
-              <% @user_showtable.each do |classse|%>
-                <% if classse.class_day === "下午" && classse.class_week === "星期六"%>
-                  <%=classse.name%><br><%=classse.class_time%>
+                <% @user_showtable.each do |classse|%>
+                  <% if classse.class_day === "下午" && classse.class_week === "星期六"%>
+                    <%=classse.name%><br><%=classse.class_time%>
+                  <% end %>
                 <% end %>
-            <% end %>
-              
             </td>
                 
                   
               <td align="center">
-              <% @user_showtable.each do |classse|%>
-                <% if classse.class_day === "下午" && classse.class_week === "星期日"%>
-                  <%=classse.name%><br><%=classse.class_time%>
+                <% @user_showtable.each do |classse|%>
+                  <% if classse.class_day === "下午" && classse.class_week === "星期日"%>
+                    <%=classse.name%><br><%=classse.class_time%>
+                  <% end %>
                 <% end %>
-            <% end %>
-              
               </td>
-              
               </tr>
 
               <tr>
-              <td align="center">晚上</td>
-              <td align="center">
-              <% @user_showtable.each do |classse|%>
-                <% if classse.class_day === "晚上" && classse.class_week === "星期一"%>
-                  <%=classse.name%><br><%=classse.class_time%>
-                <% end %>
-            <% end %>
-                    
+                  <td align="center">晚上</td>
+                  <td align="center">
+                    <% @user_showtable.each do |classse|%>
+                      <% if classse.class_day === "晚上" && classse.class_week === "星期一"%>
+                        <%=classse.name%><br><%=classse.class_time%>
+                      <% end %>
+                    <% end %>     
                   </td>
 
                   <td align="center">
-                  <% @user_showtable.each do |classse|%>
-                    <% if classse.class_day === "晚上" && classse.class_week === "星期二"%>
-                      <%=classse.name%><br><%=classse.class_time%>
+                    <% @user_showtable.each do |classse|%>
+                      <% if classse.class_day === "晚上" && classse.class_week === "星期二"%>
+                        <%=classse.name%><br><%=classse.class_time%>
+                      <% end %>
                     <% end %>
-                <% end %>
-                  
-                </td>
+                  </td>
 
-            
-                <td align="center">
-                <% @user_showtable.each do |classse|%>
-                  <% if classse.class_day === "晚上" && classse.class_week === "星期三"%>
-                    <%=classse.name%><br><%=classse.class_time%>
-                  <% end %>
-              <% end %>
-                
-              </td>
-            
-              <td align="center">
-              <% @user_showtable.each do |classse|%>
-                <% if classse.class_day === "晚上" && classse.class_week === "星期四"%>
-                  <%=classse.name%><br><%=classse.class_time%>
-                <% end %>
-            <% end %>
               
-            </td>
-            
-            <td align="center">
-            <% @user_showtable.each do |classse|%>
-              <% if classse.class_day === "晚上" && classse.class_week === "星期五"%>
-                <%=classse.name%><br><%=classse.class_time%>
-              <% end %>
-          <% end %>
-            
-            </td>
-              
-                <td align="center">
-                <% @user_showtable.each do |classse|%>
-                  <% if classse.class_day === "晚上" && classse.class_week === "星期六"%>
-                    <%=classse.name%><br><%=classse.class_time%>
-                  <% end %>
-              <% end %>
-                
-              </td>
-
                   <td align="center">
+                    <% @user_showtable.each do |classse|%>
+                      <% if classse.class_day === "晚上" && classse.class_week === "星期三"%>
+                        <%=classse.name%><br><%=classse.class_time%>
+                      <% end %>
+                    <% end %>  
+                  </td>
+              
+                <td align="center">
                   <% @user_showtable.each do |classse|%>
-                    <% if classse.class_day === "晚上" && classse.class_week === "星期日"%>
+                    <% if classse.class_day === "晚上" && classse.class_week === "星期四"%>
                       <%=classse.name%><br><%=classse.class_time%>
                     <% end %>
-                <% end %>
-
+                  <% end %> 
                 </td>
+              
+              <td align="center">
+                <% @user_showtable.each do |classse|%>
+                  <% if classse.class_day === "晚上" && classse.class_week === "星期五"%>
+                    <%=classse.name%><br><%=classse.class_time%>
+                  <% end %>
+                <% end %>
+              </td>
+                
+              <td align="center">
+                  <% @user_showtable.each do |classse|%>
+                    <% if classse.class_day === "晚上" && classse.class_week === "星期六"%>
+                      <%=classse.name%><br><%=classse.class_time%>
+                    <% end %>
+                  <% end %>  
+              </td>
+
+              <td align="center">
+                  <% @user_showtable.each do |classse|%>
+                      <% if classse.class_day === "晚上" && classse.class_week === "星期日"%>
+                        <%=classse.name%><br><%=classse.class_time%>
+                      <% end %>
+                  <% end %>
+              </td>
             </tr>
           </tbody>
         </table>

@@ -52,13 +52,7 @@ class Agent::CoursesController < Agent::BaseController
    
   end
 
-  def edit
-    authorize @course
-    @teacher=Teacher.where(site_id: @site.id)
-  end
-
   def create
-    authorize Course
     @teacher=Teacher.where(site_id: @site.id)
     @course = Course.new(permitted_attributes(Course).merge(site_id: @site.id).merge(teacher_id: @teachers.id))
     @course.site = @site
@@ -71,13 +65,15 @@ class Agent::CoursesController < Agent::BaseController
       redirect_to agent_course_path( @course), notice: 'Course 创建成功.'
     else
       render json: {errors: @course.errors.full_messages.join(',')}
-    end
+    end 
+  end
 
-    
+  def edit
+    authorize @course
+    @teacher=Teacher.where(site_id: @site.id)
   end
 
   def update
-    binding.pry
     authorize @course
     @teacher=Teacher.where(site_id: @site.id)
     filter_week
@@ -164,8 +160,7 @@ class Agent::CoursesController < Agent::BaseController
       end
     end
     def filter_limitnu 
-      if params[:course][:limit_number].present?
-        
+      if params[:course][:limit_number].present? 
         @course.limit_number = params[:course][:limit_number]
       end
     end

@@ -10,7 +10,11 @@ if Permission.table_exists?
 
       {symbol_name: 'product_insert', name: '产品添加', group_name: '产品管理', description: ''},
       {symbol_name: 'product_update', name: '产品修改', group_name: '产品管理', description: ''},
-      {symbol_name: 'product_delete', name: '产品删除', group_name: '产品管理', description: ''}
+      {symbol_name: 'product_delete', name: '产品删除', group_name: '产品管理', description: ''},
+
+      {symbol_name: 'course_insert', name: '课程添加', group_name: '课程管理', description: ''},
+      {symbol_name: 'course_update', name: '课程修改', group_name: '课程管理', description: ''},
+      {symbol_name: 'course_delete', name: '课程删除', group_name: '课程管理', description: ''},
     ]
     if Settings.project.dagle?
       permissions << {symbol_name: 'login_desktop', name: '登陆桌面端', group_name: '登陆', description: ''}
