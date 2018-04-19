@@ -186,7 +186,9 @@ ul.sub-menu li a:hover{
 .text-black{
   color :black
 }
-
+.class-info{
+  margin-left: 36%
+}
 @media (max-width:375px) {
  .topbar-right{
    position: relative;
@@ -215,5 +217,42 @@ ul.sub-menu li a:hover{
  }
  .h-margin{
    margin-left:92px !important
+ }
+ .class-info{
+  margin-left: 6%
+ }
+ .control-label{
+   position: relative;
+   left:-103px
+ }
+ .input-md{
+  position: relative;
+  left:3px;
+  top:4px;
+  width:181px;
+   
+ }
+ #user_nickname{
+  position: relative;
+  left:-2px;
+  top:3px;
+  width:149px
+}
+#user_email{
+  position: relative;
+  left:-2px;
+  top:3px;
+  width:149px
+  }
+ #bind-wechat .text-center{
+   position: relative;
+   left:-53px ;
+ }
+}
+@media (max-width: 414px){
+.btn-md {
+    position: relative;
+    left: 22px !important;
+    top: -20px !important;
  }
 }

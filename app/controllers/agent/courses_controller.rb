@@ -120,8 +120,7 @@ class Agent::CoursesController < Agent::BaseController
       end
 
     end
-    def set_site
-      
+    def set_site 
       @site = Site.find(@site.id)
     end
     def set_course
@@ -142,20 +141,17 @@ class Agent::CoursesController < Agent::BaseController
       end
     end
     def filter_day 
-      if params[:course][:class_day].present?
-        
+      if params[:course][:class_day].present? 
         @course.class_day = params[:course][:class_day]
       end
     end
     def filter_time
-      if params[:course][:class_time].present?
-        
+      if params[:course][:class_time].present?  
         @course.class_time = params[:course][:class_time]
       end
     end
     def filter_place 
-      if params[:course][:class_place].present?
-        
+      if params[:course][:class_place].present? 
         @course.class_place = params[:course][:class_place]
       end
     end

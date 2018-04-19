@@ -45,13 +45,19 @@
     display: inline!important;
     font-size: 15px;
     }
+
+.btn-md{
+    position: relative;
+    left:50px ;
+    top:-20px
+    } 
 @media (max-width: 414px){
-   .btn-md{
+.btn-md{
        position: relative;
        left:50px ;
        top:-20px
-   } 
-   .label-xs {
+} 
+.label-xs {
     position: relative;
     left: -114px !important;
 }
@@ -72,6 +78,8 @@
     position: relative;
     left:-54px ;
 }
-
+.navbar-default .navbar-nav > li > a:focus{
+ color: red
+}
 }
      

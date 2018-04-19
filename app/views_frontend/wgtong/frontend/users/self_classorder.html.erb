@@ -9,7 +9,6 @@
                     <tr>
                         <th>课程</th>
                         <th>上课时间</th>
-                        
                         <th>撤销选课</th>
                     </tr>
                     </thead>
@@ -17,7 +16,6 @@
                         <% @user_classorders.each do |order| %>      
                             <tr>
                                 <td><%=order.name%></td>
-                               
                                 <td><%=order.class_week + order.class_day + order.class_time%></td>
                                 <td><%= link_to '撤销选课', frontend_classorder_path(order),
                                 method: :delete,
@@ -30,7 +28,7 @@
         </div>
     </div>
     <%else%>
-    <div style="margin-left:36%">
+    <div class="class-info">
     <h2>您还没选课，请进行<%= link_to '选课', frontend_courses_path%></h2>
     </div>
 <%end%>

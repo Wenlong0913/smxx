@@ -15,7 +15,7 @@
                         <% if Classorder.where(user_id: current_user.id).count>=2%>
                         <h3>每人每学期最多选两门课</h3>
                         <%else%>
-                        <% @course.each do |course| %>
+                        <% @course1.each do |course| %>
                                 <div class="col-xs-12  col-md-3">
                                     <li> 
                                         <a href="<%= frontend_course_path(course) %>" class="cover_img_a" title="<%=course.name %>">

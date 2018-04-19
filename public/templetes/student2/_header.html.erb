@@ -53,6 +53,24 @@ ul.sub-menu li a:hover{
   border-top:1px solid #f0f3f5;
   display:block 
 }
+@media (max-width:375px) {
+  .topbar-right .user{
+    display: inline-block;
+    position: relative;
+    left:-16px!important;
+    top:-6px!important
+  }
+  ul.sub-menu{
+    background-color: #e81a1b;
+    position: absolute;
+    top:100%;  
+    z-index:1000;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    min-width: 100% ;
+    display: block;
+  }
+ 
+ }
 
 </style>
 <div class="header">
