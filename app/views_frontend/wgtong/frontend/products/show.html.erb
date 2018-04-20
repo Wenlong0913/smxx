@@ -137,24 +137,16 @@ li{
                           <a href="<%= @product.forage_url %>" target="_blank", class="btn btn-block btn-lg btn-success">马上预订</a>
                         <% else %>
                           <% if @product.sell_price > 0 || (@product.purchase_type && @product.purchase_type.include?('sign_up')) %>
-                            <% if @product.reserve_datetime.blank? || @product.reserve_datetime.to_time.to_i <= Time.now.to_i %>
-															<a href="<%= new_frontend_order_path(product_id: @product.id)%>" class="btn btn-block btn-lg btn-success" id="a-order">马上预订</a>
-															 <script>
-															 var aOrder=document.getElementById('a-order');
-															 aOrder.onclick=function(){
-																var parm1= aOrder.getAttribute("href");
-																var myurl=parm1+"&time="+date+"&kucun="+liStock1;
-																aOrder.setAttribute("href", myurl);
-															        }
-															 </script>
-                              <% elsif  @product.stock.to_i <= 0 %>
-                                <a href="javascript:void(0)" class="btn btn-block btn-lg btn-default disabled">已售完</a>
-                              <% elsif @product.reserve_datetime.present?  %>
-                              <p>
-                                <i class="fa fa-clock-o"></i>开始预定时间：
-                                <%= @product.reserve_datetime.gsub('T', ' ') %>
-                              </p>
-                            <% end %>
+														<% if @product.stock.to_i > 0 && (@product.reserve_datetime.blank? || @product.reserve_datetime.to_time.to_i <= Time.now.to_i) %>
+															<a href="<%= new_frontend_order_path(product_id: @product.id) %>" class="btn btn-lg btn-success">马上预订</a>
+															<% elsif  @product.stock.to_i <= 0 %>
+																<a href="javascript:void(0)" class="btn btn-lg btn-default disabled">已售完</a>
+															<% elsif @product.reserve_datetime.present?  %>
+															<p>
+																<i class="fa fa-clock-o"></i>开始预定时间：
+																<%= @product.reserve_datetime.gsub('T', ' ') %>
+															</p>
+														<% end %>
                           <% end %>
                         <% end %>
 											<% end %>
