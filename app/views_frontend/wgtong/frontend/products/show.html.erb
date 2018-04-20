@@ -8,7 +8,7 @@
 	vertical-align:center;
 	padding:4px;
 	margin-bottom:5px;
-	
+
 }
 .a-text{
 	color:#88898a
@@ -64,52 +64,52 @@ li{
 
 										<% if @product.time.present?%>
 										 <p><i class="fa fa-calendar"></i>选择时间：
-										  <ul id="a-time"><% @product.time.each do |key,value| %> 
+										  <ul id="a-time"><% @product.time.each do |key,value| %>
 											<li class="a-border"><a href="javascript:;" class="a-text"><%=value%></a></li>
 							      <% end %></ul>
 									</p>
-						
-									<script>	
-									
+
+									<script>
+
 									 var time=document.getElementById('a-time').getElementsByTagName("li");
-									 var liStock=document.getElementsByClassName('li-stock')								 
-									 var date=0;	
+									 var liStock=document.getElementsByClassName('li-stock')
+									 var date=0;
 									 var liStock1=0;
                     window.onload=function(){
 											for (var i=0; i<time.length; i++){
-												time[i].index=i;				
+												time[i].index=i;
 													 for (var k = 0; k < time.length; k++) {
 														 time[k].style.borderColor="#22222226";
-														 liStock[k].style.display="none";								 
+														 liStock[k].style.display="none";
 														 }
 														 time[0].style.borderColor="red";
-														 liStock[0].style.display="block"; 
+														 liStock[0].style.display="block";
 														 date=time[0].innerText;
-														 liStock1=time[0].index+1;	
+														 liStock1=time[0].index+1;
 													 }
 													tab();
 										}
 										function tab(){
 										for (var i=0; i<time.length; i++){
 											time[i].index=i;
-											time[i].onclick=function(){  
-									            
+											time[i].onclick=function(){
+
 												 for (var k = 0; k < time.length; k++) {
 													 time[k].style.borderColor="#22222226";
-													 liStock[k].style.display="none";								 
+													 liStock[k].style.display="none";
 													 }
 													 time[this.index].style.borderColor="red";
-													 liStock[this.index].style.display="block"; 
+													 liStock[this.index].style.display="block";
 													 date=this.innerText;
 													 liStock1=this.index+1;
-											
-													 } 
+
+													 }
 												 }
 											}
-									
-								
+
+
 									</script>
-									
+
 									<% end %>
 
 										<!--<% if @product.time.present? %>
@@ -123,13 +123,13 @@ li{
 												<%= @product.phone %>
 											</p>
 										<% end %>
-										<% @product.stock.each do |key1,value1| %>
+										<!-- <% @product.stock.each do |key1,value1| %>
 											  <li class="li-stock" style="display:none"><%@product.time.each do |key2,value2|%>
 											    <%if key1==key2%>
 											      <p class="stock1><i class="fa fa-bullhorn"></i>剩余座位：<%=value1%></p>
 											    <%end%>
 											 <%end%></li>
-                    <% end %>                  
+                    <% end %>                   -->
 											<% if @product.external_purchase_url.presence %>
                         <a href="<%= @product.external_purchase_url%>" target="_blank", class="btn btn-block btn-lg btn-success">马上预订</a>
                       <% else %>
@@ -143,7 +143,7 @@ li{
 															 var aOrder=document.getElementById('a-order');
 															 aOrder.onclick=function(){
 																var parm1= aOrder.getAttribute("href");
-																var myurl=parm1+"&time="+date+"&kucun="+liStock1;														
+																var myurl=parm1+"&time="+date+"&kucun="+liStock1;
 																aOrder.setAttribute("href", myurl);
 															        }
 															 </script>
@@ -158,13 +158,13 @@ li{
                           <% end %>
                         <% end %>
 											<% end %>
-									
+
 										</p>
 									</div>
 								</div>
 							</div>
-							
-						
+
+
 							<div class="post-content">
 								<div class="author">
 									<img class="img-responsive img-circle" src="/templetes/newshub/images/others/user.png" alt="Image">
