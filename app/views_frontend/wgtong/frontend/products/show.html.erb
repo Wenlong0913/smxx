@@ -62,12 +62,15 @@ li{
 											</p>
 										<% end %> -->
 
-										<% if @product.time.present?%>
-										 <p><i class="fa fa-calendar"></i>选择时间：
-										  <ul id="a-time"><% @product.time.each do |key,value| %>
-											<li class="a-border"><a href="javascript:;" class="a-text"><%=value%></a></li>
-							      <% end %></ul>
-									</p>
+									<% if @product.time.present?%>
+									 <p><i class="fa fa-calendar"></i>选择时间：
+										  <ul id="a-time">
+												<% @product.time.each do |key,value| %>
+													<li class="a-border"><a href="javascript:;" class="a-text"><%=value%></a></li>
+							      		<% end %>
+											</ul>
+										</p>
+									<% end %>
 
 									<script>
 
@@ -140,15 +143,15 @@ li{
 															<% elsif  @product.stock.to_i <= 0 %>
 																<a href="javascript:void(0)" class="btn btn-lg btn-default disabled">已售完</a>
 															<% elsif @product.reserve_datetime.present?  %>
-															<p>
-																<i class="fa fa-clock-o"></i>开始预定时间：
-																<%= @product.reserve_datetime.gsub('T', ' ') %>
-															</p>
-														<% end %>
-                          <% end %>
-                        <% end %>
+																<p>
+																	<i class="fa fa-clock-o"></i>开始预定时间：
+																	<%= @product.reserve_datetime.gsub('T', ' ') %>
+																</p>
+															<% end %>
+                          	<% end %>
+                        	<% end %>
+												<% end %>
 											<% end %>
-
 										</p>
 									</div>
 								</div>
@@ -188,10 +191,10 @@ li{
 					</div>
 
 					<% if Keystore.value_for('banner-product-center-center-773x84').present? %>
-          <div class="tr-ad">
-            <% banner_product_center_center = Keystore.value_for('banner-product-center-center-773x84').split('|') %>
-            <a href="<%= banner_product_center_center[1] || 'javascript:void(0)' %>" target="_blank" ><img class="img-responsive" src="<%= banner_product_center_center[0] %>" alt="广告横幅773x84"></a>
-          </div>
+	          <div class="tr-ad">
+	            <% banner_product_center_center = Keystore.value_for('banner-product-center-center-773x84').split('|') %>
+	            <a href="<%= banner_product_center_center[1] || 'javascript:void(0)' %>" target="_blank" ><img class="img-responsive" src="<%= banner_product_center_center[0] %>" alt="广告横幅773x84"></a>
+	          </div>
           <% end %>
 
 					<%= render file: 'public/templetes/newshub/_comments.html.erb' %>
@@ -204,10 +207,10 @@ li{
 		</div>
 
 		<% if Keystore.value_for('banner-product-bottom-center-819×119').present? %>
-		<div class="tr-ad ad-bottom ad-image text-center">
-      <% banner_product_bottom_center = Keystore.value_for('banner-product-bottom-center-819×119').split('|') %>
-			<a href="<%= banner_product_bottom_center[1] || 'javascript:void(0)' %>"><img class="img-responsive" src="<%= banner_product_bottom_center[0] %>" alt="广告横幅819×119"></a>
-		</div><!-- /.tr-ad -->
+			<div class="tr-ad ad-bottom ad-image text-center">
+	      <% banner_product_bottom_center = Keystore.value_for('banner-product-bottom-center-819×119').split('|') %>
+				<a href="<%= banner_product_bottom_center[1] || 'javascript:void(0)' %>"><img class="img-responsive" src="<%= banner_product_bottom_center[0] %>" alt="广告横幅819×119"></a>
+			</div><!-- /.tr-ad -->
     <% end %>
 
 	</div>
