@@ -123,13 +123,13 @@ li{
 												<%= @product.phone %>
 											</p>
 										<% end %>
-										<!-- <% @product.stock.each do |key1,value1| %>
-											  <li class="li-stock" style="display:none"><%@product.time.each do |key2,value2|%>
-											    <%if key1==key2%>
-											      <p class="stock1><i class="fa fa-bullhorn"></i>剩余座位：<%=value1%></p>
-											    <%end%>
-											 <%end%></li>
-                    <% end %>                   -->
+										<!-- <%# @product.stock.each do |key1,value1| %>
+											  <li class="li-stock" style="display:none"><%#@product.time.each do |key2,value2|%>
+											    <%#if key1==key2%>
+											      <p class="stock1><i class="fa fa-bullhorn"></i>剩余座位：<%=#value1%></p>
+											    <%#end%>
+											 <%#end%></li>
+                    <%# end %>                   -->
 											<% if @product.external_purchase_url.presence %>
                         <a href="<%= @product.external_purchase_url%>" target="_blank", class="btn btn-block btn-lg btn-success">马上预订</a>
                       <% else %>
