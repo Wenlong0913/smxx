@@ -54,12 +54,13 @@ module FrontendRoute
         get "binding_weixin"
         post "binding_weixin"
         post "binding_phone"
+        get "favorites"
       end
 
-    
 
-      
-      
+
+
+
       # [ 商家, 产品, 新闻 ] 查询路由配置
       get :search_result, to: 'frontend/search#search_result'
       # 文广痛微场馆路由配置
@@ -71,17 +72,17 @@ module FrontendRoute
         get 'wechat_login' #微信登录
         get 'wechat_orders' #订单列表(验票)
         get 'wechat_order' #订单详细(验票)
-        post 'wechat_confirm_order'  
+        post 'wechat_confirm_order'
         get 'wechat_product/:id', action: 'wechat_product', as: 'wechat_product'
         get 'wechat_site/:id', action: 'wechat_site', as: 'wechat_site'
         get 'wechat_new/:id', action: 'wechat_new', as: 'wechat_new'
       end
 
-      namespace :frontend do 
+      namespace :frontend do
         get 'courses/index'
-        resources :courses, :classorders  
-        resources :smusers   
-        get 'home/index'       
+        resources :courses, :classorders
+        resources :smusers
+        get 'home/index'
         match 'share/(:class/:id)', to: "share#index", via: :get
         resources :orders do
           collection do
