@@ -1,5 +1,5 @@
 source "https://gems.ruby-china.org"
-ruby '2.3.3'
+ruby '2.3.4'
 
 # set api key with
 #   bundle config gems.tanmer.com your_api_key
