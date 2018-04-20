@@ -70,11 +70,7 @@
                       <p>
                         <span>
                           <i class="fa fa-clock-o productColorIcon"></i>
-                          <%@order.member_attributes[0].each do |key,value|%>
-                            <% if key=="datatime" %>
-                              <%=value%>
-                            <%end%>
-                          <%end%>
+                          <%= @order.products.first.date.to_s + @order.products.first.time.to_s %>
                         </span>
                       </p>
                     </div>
@@ -121,7 +117,7 @@
                       <% @order.member_attributes.each do |attr| %>
                         <table class="table">
                           <% attr.each_pair do |key, v| %>
-                            <% next if key == 'product_id' || key == 'stocknu' || key == 'datatime'%>
+                            <% next if key == 'product_id'%>
                             <tr>
                               <td><%= Product::MEMBER_ATTRIBUTES[key.to_sym] || key %></td>
                               <td><%= v %></td>
@@ -143,7 +139,7 @@
                     <div class="panel-body">
                       <table class="table">
                         <% attr.each_pair do |key, v| %>
-                          <% next if key == 'product_id' || key == 'stocknu' || key == 'datatime'%>
+                          <% next if key == 'product_id'%>
                           <tr>
                             <td><%= Product::MEMBER_ATTRIBUTES[key.to_sym] || key %></td>
                             <td><%= v %></td>

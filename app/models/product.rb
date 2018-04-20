@@ -116,7 +116,7 @@ class Product < Item
     self.price = price.to_f.round(2)
     self.discount = (discount.to_f == 0 || discount.to_f > price.to_f ) ? price.to_f.round(2) : discount.to_f.round(2)
     self.weight = weight.to_f.round(2)
-    
+    self.stock = stock.to_i
   end
 
   after_save do

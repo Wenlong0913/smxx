@@ -26,7 +26,6 @@
             =params[:time]
   		/- binding.pry	       
       input[type="hidden" name="order[product][id]" value="#{@product.id}"]
-      input[type="hidden" name="order[kucun]" value="#{@product.stock[params[:kucun]]}"]
     - if @product.purchase_type && @product.purchase_type.include?('sign_up')
       h3
         | 活动报名 &nbsp;&nbsp;
@@ -34,11 +33,7 @@
       p[id="order_account_signup"] &nbsp;
       .form-group.row.well[v-for="(mem, index) in members" :key="mem" style="position: relative;"]
         i.fa.fa-close[style="position: absolute;top: 10px;right: 10px; cursor: pointer" @click="removeMembers(index)"]
-        input[type="hidden" :name="'order[member_attributes]['+mem.key+'][product_id]'" value="#{@product.id}"]
-        input[type="hidden" :name="'order[member_attributes]['+mem.key+'][datatime]'" value="#{params[:time]}"]
-        input[type="hidden" :name="'order[member_attributes]['+mem.key+'][stocknu]'" value="#{params[:kucun]}"]
-        
-       
+        input[type="hidden" :name="'order[member_attributes]['+mem.key+'][product_id]'" value="#{@product.id}"]              
         - @product.member_attributes.each do |attr|
           - next if attr == ''
           .col-md-2.col-xs-3.col-sm-3.text-right

@@ -1,26 +1,3 @@
-<style>
-.a-border{
-	display: block;
-	max-width:56%;
-	height:30px ;
-	border: 1px solid #22222226;
-	text-align: center;
-	vertical-align:center;
-	padding:4px;
-	margin-bottom:5px;
-	
-}
-.a-text{
-	color:#88898a
-}
-li{
-	list-style: none
-}
-.a-border a:focus{
-	color:red !important
-}
-.on{display:block}
-</style>
 <div class="main-wrapper">
 	<%= render file: 'public/templetes/newshub/_header.html.erb' %>
 	<div class="container">
@@ -56,115 +33,58 @@ li{
 											</p>
 										<% end %>
 
-										<!-- <% if @product.date.present? %>
+										<% if @product.date.present? %>
 											<p><i class="fa fa-calendar"></i>日期：
 												<%= @product.date %>
 											</p>
-										<% end %> -->
+										<% end %> 
 
-										<% if @product.time.present?%>
-										 <p><i class="fa fa-calendar"></i>选择时间：
-										  <ul id="a-time"><% @product.time.each do |key,value| %> 
-											<li class="a-border"><a href="javascript:;" class="a-text"><%=value%></a></li>
-							      <% end %></ul>
-									</p>
-						
-									<script>	
-									
-									 var time=document.getElementById('a-time').getElementsByTagName("li");
-									 var liStock=document.getElementsByClassName('li-stock')								 
-									 var date=0;	
-									 var liStock1=0;
-                    window.onload=function(){
-											for (var i=0; i<time.length; i++){
-												time[i].index=i;				
-													 for (var k = 0; k < time.length; k++) {
-														 time[k].style.borderColor="#22222226";
-														 liStock[k].style.display="none";								 
-														 }
-														 time[0].style.borderColor="red";
-														 liStock[0].style.display="block"; 
-														 date=time[0].innerText;
-														 liStock1=time[0].index+1;	
-													 }
-													tab();
-										}
-										function tab(){
-										for (var i=0; i<time.length; i++){
-											time[i].index=i;
-											time[i].onclick=function(){  
-									            
-												 for (var k = 0; k < time.length; k++) {
-													 time[k].style.borderColor="#22222226";
-													 liStock[k].style.display="none";								 
-													 }
-													 time[this.index].style.borderColor="red";
-													 liStock[this.index].style.display="block"; 
-													 date=this.innerText;
-													 liStock1=this.index+1;
-											
-													 } 
-												 }
-											}
-									
-								
-									</script>
-									
-									<% end %>
-
-										<!--<% if @product.time.present? %>
+										<% if @product.time.present? %>
 											<p><i class="fa fa-clock-o"></i>时间：
 												<%= @product.time %>
 											</p>
-										<% end %>-->
+										 <% end %>
+										 
+								  	<% if @product.time.present? %>
+											<p><i class="fa fa-clock-o"></i>时间：
+												<%= @product.time %>
+											</p>
+										<% end %>
 
 										<% if @product.phone.present? %>
 											<p><i class="fa fa-phone-square"></i>联系方式：
 												<%= @product.phone %>
 											</p>
 										<% end %>
-										<% @product.stock.each do |key1,value1| %>
-											  <li class="li-stock" style="display:none"><%@product.time.each do |key2,value2|%>
-											    <%if key1==key2%>
-											      <p class="stock1><i class="fa fa-bullhorn"></i>剩余座位：<%=value1%></p>
-											    <%end%>
-											 <%end%></li>
-                    <% end %>                  
+							          
+										<% if @product.stock.present? %>
+											<p><i class="fa fa-bullhorn"></i>剩余座位：<%= @product.stock.to_s + @product.unit %></p>
+										<% end %>
+										<p>
 											<% if @product.external_purchase_url.presence %>
-                        <a href="<%= @product.external_purchase_url%>" target="_blank", class="btn btn-block btn-lg btn-success">马上预订</a>
-                      <% else %>
-                        <% if @product.is_foraged %>
-                          <a href="<%= @product.forage_url %>" target="_blank", class="btn btn-block btn-lg btn-success">马上预订</a>
-                        <% else %>
-                          <% if @product.sell_price > 0 || (@product.purchase_type && @product.purchase_type.include?('sign_up')) %>
-                            <% if @product.reserve_datetime.blank? || @product.reserve_datetime.to_time.to_i <= Time.now.to_i %>
-															<a href="<%= new_frontend_order_path(product_id: @product.id)%>" class="btn btn-block btn-lg btn-success" id="a-order">马上预订</a>
-															 <script>
-															 var aOrder=document.getElementById('a-order');
-															 aOrder.onclick=function(){
-																var parm1= aOrder.getAttribute("href");
-																var myurl=parm1+"&time="+date+"&kucun="+liStock1;														
-																aOrder.setAttribute("href", myurl);
-															        }
-															 </script>
-                              <% elsif  @product.stock.to_i <= 0 %>
-                                <a href="javascript:void(0)" class="btn btn-block btn-lg btn-default disabled">已售完</a>
-                              <% elsif @product.reserve_datetime.present?  %>
-                              <p>
-                                <i class="fa fa-clock-o"></i>开始预定时间：
-                                <%= @product.reserve_datetime.gsub('T', ' ') %>
-                              </p>
-                            <% end %>
-                          <% end %>
-                        <% end %>
+												<a href="<%= @product.external_purchase_url %>" target="_blank", class="btn btn-block btn-lg btn-success">马上预订</a>
+											<% else %>
+												<% if @product.is_foraged %>
+													<a href="<%= @product.forage_url %>" target="_blank", class="btn btn-block btn-lg btn-success">马上预订</a>
+												<% else %>
+													<% if @product.sell_price > 0 || (@product.purchase_type && @product.purchase_type.include?('sign_up')) %>
+														<% if @product.stock.to_i > 0 && (@product.reserve_datetime.blank? || @product.reserve_datetime.to_time.to_i <= Time.now.to_i) %>
+															<a href="<%= new_frontend_order_path(product_id: @product.id) %>" class="btn btn-block btn-lg btn-success">马上预订</a>
+															<% elsif  @product.stock.to_i <= 0 %>
+																<a href="javascript:void(0)" class="btn btn-block btn-lg btn-default disabled">已售完</a>
+															<% elsif @product.reserve_datetime.present?  %>
+															<p>
+																<i class="fa fa-clock-o"></i>开始预定时间：
+																<%= @product.reserve_datetime.gsub('T', ' ') %>
+															</p>
+														<% end %>
+													<% end %>
+												<% end %>
 											<% end %>
-									
-										</p>
-									</div>
+									  </p>
 								</div>
 							</div>
-							
-						
+						</div>
 							<div class="post-content">
 								<div class="author">
 									<img class="img-responsive img-circle" src="/templetes/newshub/images/others/user.png" alt="Image">

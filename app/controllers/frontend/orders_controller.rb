@@ -52,8 +52,7 @@ class Frontend::OrdersController < Frontend::BaseController
         order_product.price = order_product_params[:price] 
         order_product.save!
       end
-    end
-    
+    end    
     respond_to do |format|
       format.html do
         if @frontend_order
@@ -89,12 +88,10 @@ class Frontend::OrdersController < Frontend::BaseController
   end
 
   def charge
-    
     if params[:order_id]
       order = Order.find(params[:order_id])
       product = order.order_products.first.product
     else
-      
       order = Order.new(user: current_user)
       product = Product.find(params[:order][:product][:id])
       product_amount = params[:order][:product][:number].presence || 1
@@ -121,8 +118,7 @@ class Frontend::OrdersController < Frontend::BaseController
         end
       end
 
-      # 产品库存是否满足 
-      
+      # 产品库存是否满足   
       if params[:order][:kucun].to_i< product_amount.to_i
         order.errors.add 'order_product_stock'.to_sym, "剩余座位#{product.stock}个!"
         render js: <<-JS

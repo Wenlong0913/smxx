@@ -121,8 +121,6 @@ class Agent::ProductsController < Agent::BaseController
     @product.site = @site
     authorize @product
     filter_additional_attribute
-    filter_add_date
-    filter_add_stock
     @product.member_attribute_validates = params[:product][:member_attribute_validates] if params[:product][:member_attribute_validates].present?
     if @product.save
       # redirect_to agent_product_path(@product), notice: 'Product 创建成功.'
@@ -135,8 +133,6 @@ class Agent::ProductsController < Agent::BaseController
   def update
     authorize @product
     filter_additional_attribute
-    filter_add_date
-    filter_add_stock
     if params[:product][:member_attributes].present? || params[:product][:member_attributes_others].present?
       params[:product][:member_attributes] = params[:product][:member_attributes] + params[:product][:member_attributes_others].split(/,/)
       params[:product][:member_attributes] = params[:product][:member_attributes].delete_if{|ma| ma.blank?}
@@ -220,37 +216,7 @@ class Agent::ProductsController < Agent::BaseController
         @product.additional_attribute_values = params[:product][:additional_attribute_values]
       end
     end
-    
-    def filter_add_date
-      if params[:product][:date].present?
-         params[:product][:date].each_pair do |k, v|
-          if v.blank?
-            params[:product][:date].delete(k)
-            params[:product][:time].delete(k)
-          end
-        end
-      end
-      if params[:product][:date].present?
-        @product.date = params[:product][:date]
-        @product.time = params[:product][:time]
-      end
-    end
-
-    def filter_add_stock
-      if params[:product][:stock].present?
-         params[:product][:stock].each_pair do |k, v|
-          if v.blank?
-            params[:product][:stock].delete(k)
-            params[:product][:unit].delete(k)
-          end
-        end
-      end
-      if params[:product][:stock].present?
-       @product.stock = params[:product][:stock]
-       @product.unit = params[:product][:unit]
-      end
-    end
-
+     
     def set_site_tags
       @site_tags      = @site.tags.pluck(:name).uniq
       @site_most_tags = @site.tags.most_used(5).uniq.map(&:name)
@@ -274,7 +240,6 @@ class Agent::ProductsController < Agent::BaseController
     def get_visit_resource
       @product
     end
-
 
     def to_orders_csv(orders)
       return [] if orders.nil?
