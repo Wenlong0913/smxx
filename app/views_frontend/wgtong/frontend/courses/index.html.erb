@@ -18,9 +18,9 @@
                         <% @course1.each do |course| %>
                                 <div class="col-xs-12  col-md-3">
                                     <li> 
-                                        <a href="<%= frontend_course_path(course) %>" class="cover_img_a" title="<%=course.name %>">
+                                        <!--<a href="<%= frontend_course_path(course) %>" class="cover_img_a" title="<%=course.name %>">
                                            <img class="img1" src="<%=course.first_image %>" alt="<%= course.name %>">
-                                            </a>
+                                            </a>-->
                                         <div class="text-box" style="height:120px">
                                                 <div class="title">
                                                 <%= link_to  course.name, frontend_course_path(course) %>

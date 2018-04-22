@@ -88,7 +88,7 @@
                       </div>  
                   </div>
 
-                    <div class="form-group">
+                  <!--  <div class="form-group">
                       <label class="col-sm-2 control-label label-xs" style='color:black'>邮箱：</label>
                       <div class="col-sm-10">
                         <% if current_user.email.present? %>
@@ -97,9 +97,9 @@
                           <p class="form-control-static text-left p-xs"><%= link_to '绑定邮箱', edit_frontend_smuser_path(current_user.id) %></p>
                         <% end %>
                       </div>
-                    </div>
+                    </div> -->
 
-                    <div class="form-group">
+                  <!-- <div class="form-group">
                     <label class="col-sm-2 control-label label-xs" style='color:black'>家庭地址：</label>
                     <div class="col-sm-10">
                       <% if current_user.locity.present? %>
@@ -108,9 +108,9 @@
                         <p class="form-control-static text-left p-xs"><%= link_to '绑定家庭地址', edit_frontend_smuser_path(current_user.id) %></p>
                       <% end %>
                     </div>
-                  </div>
+                  </div> -->
 
-                  <div class="form-group">
+                <!--  <div class="form-group">
                   <label class="col-sm-2 control-label label-xs" style='color:black'>出生年月：</label>
                   <div class="col-sm-10">
                     <% if current_user.birth.present? %>
@@ -119,7 +119,7 @@
                       <p class="form-control-static text-left p-xs"><%= link_to '绑定出生年月', edit_frontend_smuser_path(current_user.id) %></p>
                     <% end %>
                   </div>
-                </div>
+                </div> -->
 
                     <div class="form-group">
                       <label class="col-sm-2 control-label label-xs" style='color:black'>电话：</label>
@@ -131,7 +131,7 @@
                         <% end %>
                       </div>
                     </div>
-                    <div class="form-group">
+                <!-- <div class="form-group">
                       <label class="col-sm-2 control-label label-xs" style='color:black'>微信：</label>
                       <div class="col-sm-10">
                         <p class="form-control-static text-left p-xs">
@@ -142,25 +142,24 @@
                           <% end %>
                         </p>
                       </div>
-                    </div>
+                    </div> -->
                     
-                    <div class="form-group">
-                    <label class="col-sm-2 control-label label-xs" style='color:black'>性别：</label>
-                    <div class="col-sm-10">
-                      <% if current_user.sex.present? %>
-                        <p class="form-control-static text-left p-xs"><%= current_user.sex%></p>
-                      <% else %>
-                        <p class="form-control-static text-left p-xs"><%= link_to '绑定性别', edit_frontend_smuser_path(current_user.id) %></p>
-                      <% end %>
-                    </div>
-                  </div>
+                  <!-- <div class="form-group">
+                      <label class="col-sm-2 control-label label-xs" style='color:black'>性别：</label>
+                      <div class="col-sm-10">
+                        <% if current_user.sex.present? %>
+                          <p class="form-control-static text-left p-xs"><%= current_user.sex%></p>
+                        <% else %>
+                          <p class="form-control-static text-left p-xs"><%= link_to '绑定性别', edit_frontend_smuser_path(current_user.id) %></p>
+                        <% end %>
+                      </div>
+                    </div> -->
                   </div>
                 </div>
             </div>
           </div>
         </div> 
       </div>
-
     </div>
   </section>
   <%= render file: @cms_site.template_dir + '_footer.html' %>
