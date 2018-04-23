@@ -1,5 +1,5 @@
 <%= render file: @cms_site.template_dir + '_header.html' %>
-<div class="contain clearfix">
+<div class="container clearfix">
     <div class="course-list clearfix">
         <div class="course-title clearfix">
             <div class="col-xs-4 col-md-12">
@@ -16,51 +16,40 @@
                         <h3 class="h-xs">每人每学期最多选两门课</h3>
                         <%else%>
                         <% @course1.each do |course| %>
-                                <div class="col-xs-12  col-md-3">
+                                <div class="col-xs-12  col-md-3" style="height:52px ">
                                     <li> 
                                         <!--<a href="<%= frontend_course_path(course) %>" class="cover_img_a" title="<%=course.name %>">
                                            <img class="img1" src="<%=course.first_image %>" alt="<%= course.name %>">
                                             </a>-->
-                                        <div class="text-box" style="height:120px">
+                                        <div class="text-box" style="height:48px">
                                                 <div class="title">
                                                 <%= link_to  course.name, frontend_course_path(course) %>
-                                                </div>
-                                                <div class="clearfix margin-t">
-                                                    <div class="left">
-                                                        <span class="tag-item">课程类型</span>
-                                                        <span class="tag-item"><%= course.course_type%></span>
-                                                    </div>
-                                                    <div class="right">
-                                                        <span class="tag-item">年龄限制</span>
-                                                        <% if course.features["age_range"] == "不限"|| course.features["age_range"] == ""|| course.features["age_range"] == "无"%>
-                                                        <span class="tag-item">不限</span>
-                                                        <% else %>
-                                                        <span class="tag-item"><%= course.features["age_range"]%></span>
-                                                        <% end %>
-                                                    </div>
-                                                </div>
+                                                <% if course.features["sex_limit"] == "不限"|| course.features["sex_limit"] == ""|| course.features["sex_limit"]== "无"%>
+                                                <% else %>
+                                                <span class="tag-item">限<%=course.features["sex_limit"]%></span> 
+                                                <% end %>   
+                                                <% if course.features["age_range"] == "不限"|| course.features["age_range"] == ""|| course.features["age_range"] == "无"%>
+                                                <% else %>
+                                                <span class="tag-item">限<%= course.features["age_range"]%></span>
+                                                <% end %>
+                                                </div>       
                                             <div class="clearfix margin-t">
-                                                <div class="left">
+                                                <!--<div class="left">
                                                     <span class="tag-item">课程级别</span>
-                                                    <span class="tag-item "><%= course.features["class_level"]%></span>
-                                                    
-                                                </div>
-                                                <div class="right">
-                                                    <span class="tag-item">性别限制</span>
-                                                    <% if course.features["sex_limit"] == "不限"|| course.features["sex_limit"] == ""|| course.features["sex_limit"]== "无"%>
-                                                    <span class="tag-item">不限</span>
-                                                    <% else %>
-                                                    <span class="tag-item"><%=course.features["sex_limit"]%></span> 
-                                                    <% end %>   
-                                                </div>
-                                            </div>	 
+                                                    <span class="tag-item "><%= course.features["class_level"]%></span>   
+                                                </div> -->
+                                                <!--  <div class="left">
+                                                <span class="tag-item">课程类型</span>
+                                                <span class="tag-item"><%= course.course_type%></span>
+                                            </div> --> 
+                                            </div>   
                                         </div>
                                     </li>
                                 </div>
                             <%end%>      
                         <% end %>                      
                     </div>
-                </div>	
+                </div>  
             </ul>
         <div class="clearfix"></div>
     </div>
