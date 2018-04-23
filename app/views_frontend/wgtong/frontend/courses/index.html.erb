@@ -16,12 +16,12 @@
                         <h3 class="h-xs">每人每学期最多选两门课</h3>
                         <%else%>
                         <% @course1.each do |course| %>
-                                <div class="col-xs-12  col-md-3" style="height:52px ">
+                                <div class="col-xs-12  col-md-3 content-h">
                                     <li> 
                                         <!--<a href="<%= frontend_course_path(course) %>" class="cover_img_a" title="<%=course.name %>">
                                            <img class="img1" src="<%=course.first_image %>" alt="<%= course.name %>">
                                             </a>-->
-                                        <div class="text-box" style="height:48px">
+                                        <div class="text-box">
                                                 <div class="title">
                                                 <%= link_to  course.name, frontend_course_path(course) %>
                                                 <% if course.features["sex_limit"] == "不限"|| course.features["sex_limit"] == ""|| course.features["sex_limit"]== "无"%>
