@@ -94,7 +94,6 @@
 												<%= @product.phone %>
 											</p>
 										<% end %>
-
 										<% if @product.stock.present? %>
 											<p><i class="fa fa-bullhorn"></i>剩余座位：<%= @product.stock.to_s + @product.unit %></p>
 										<% end %>

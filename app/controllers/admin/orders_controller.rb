@@ -64,7 +64,6 @@ class Admin::OrdersController < Admin::BaseController
   def new
     authorize Order
     @order = Order.new
-   
   end
 
   # GET /admin/orders/1/edit

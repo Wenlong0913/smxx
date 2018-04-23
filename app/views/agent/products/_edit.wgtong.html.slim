@@ -29,51 +29,20 @@ div
     .col-xs-6
       .form-group
         = f.input :address_line2
-    .col-xs-12
-      hr
-      div[rel="attr_date" data-values="#{@product.time.to_json}" data-keys="#{@product.date.to_json}"]
-        .form-group.row
-          label.col-xs-6 演出日期
-          label.col-xs-6 演出时间
-        .additional-item.form-group[v-for="(list, index) in lists"]
-          .row[:key="index"]
-            .col-xs-3
-              .form-group
-                input.form-control[type="text" v-model="list.key" :name="'product[date][' + list.name + ']'"]
-            .col-xs-8
-              input.form-control[type="text" v-model="list.value" :name="'product[time][' + list.name + ']'"]
-            .col-xs-1
-              button.btn.btn-danger.delete.btn-xs[type="button" @click="removeInputList2(index)"]
-                i.fa.fa-trash
-                span 删除
-        span.btn.btn-success.fileinput-button.btn-xs[@click="addInputList2"]
-          i.fa.fa-plus
-          span 添加其他产品选项
-      hr
-    .col-xs-12
+    .col-xs-6
+      .form-group
+        = f.input :date
+    .col-xs-6
+      .form-group
+        = f.input :time
+    .col-xs-6
       .form-group
         = f.input :phone
-    .col-xs-12
-      hr
-      div[rel="attr-stock" data-values="#{@product.unit.to_json}" data-keys="#{@product.stock.to_json}"]
-        .form-group.row
-          label.col-xs-6 库存
-          label.col-xs-6 库存单位
-        .additional-item.form-group[v-for="(list, index) in lists"]
-          .row[:key="index"]
-            .col-xs-3
-              .form-group
-                input.form-control[type="text" v-model="list.key" :name="'product[stock][' + list.name + ']'"]
-            .col-xs-8
-              input.form-control[type="text" v-model="list.value" :name="'product[unit][' + list.name + ']'"]
-            .col-xs-1
-              button.btn.btn-danger.delete.btn-xs[type="button" @click="removeInputList3(index)"]
-                i.fa.fa-trash
-                span 删除
-        span.btn.btn-success.fileinput-button.btn-xs[@click="addInputList3"]
-          i.fa.fa-plus
-          span 添加其他库存选项
-      hr
+    .col-xs-6
+      .form-group.col-xs-8.p-l-0.m-0
+        = f.input :stock
+      .form-group.col-xs-4.p-0.m-0
+        = f.input :unit
     .col-xs-12
       .form-group.string.optional.product_tag
         label.control-label.string.optional 商品标签

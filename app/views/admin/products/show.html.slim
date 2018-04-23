@@ -154,8 +154,8 @@ h1.page-header
                 td.field 日期
                 td		
                   a 
-                  -@product.time.each do |key,value|
-                   a[style="margin-left:5px"]  =value
+                    = @product.date
+                    = @product.time
               tr
                 td.field 地址
                 td

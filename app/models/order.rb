@@ -155,9 +155,8 @@ class Order < ApplicationRecord
       if self.paid?
         self.order_products.each do |op|
           p = op.product
-          stocknu=self.member_attributes[0]["stocknu"]
-          p.stock[stocknu]=p.stock[stocknu].to_i-op.amount
-          p.save!  
+          p.stock = p.stock.to_i - op.amount
+          p.save! 
         end
       end
       # 确认消费后给用户发送短信通知
@@ -171,8 +170,7 @@ class Order < ApplicationRecord
       if self.refunded?
         self.order_products.each do |op|
           p = op.product
-          stocknu=self.member_attributes[0]["stocknu"]
-          p.stock[stocknu]=p.stock[stocknu].to_i+op.amount
+          p.stock = p.stock.to_i + op.amount
           p.save!
         end
       end
