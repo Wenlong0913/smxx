@@ -6,6 +6,7 @@ class Frontend::ClassordersController < Frontend::BaseController
         @course = Course.find(params[:course_id]);  
         @user = current_user
     end
+    
     def create
         @class = Classorder.new(user: current_user)
         @class.course_id = params[:classorder][:course_id]
@@ -18,10 +19,10 @@ class Frontend::ClassordersController < Frontend::BaseController
         @class.class_day = params[:classorder][:class_day]
         @class.class_time = params[:classorder][:class_time]
         @class.class_place = params[:classorder][:class_place] 
-        @class.features = params[:classorder][:limitnu]    
+        @class.features = params[:classorder][:limitnu]
+        @class.phone_number = current_user.mobile.phone_number  
         if @class.save
-           
-            
+                  
         #如果选课成功就让人数减一
             @order_courses=ClassorderCourse.new
             @order_courses.course_id= params[:classorder][:course_id]

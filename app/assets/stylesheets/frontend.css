@@ -45,23 +45,34 @@
     display: inline!important;
     font-size: 15px;
     }
-
-.btn-md{
-    position: relative;
-    left:50px ;
-    top:-20px
+.box-boby .class-detail h3.detail-title{
+        height: 60px;
+        line-height: 60px;
+        color: #303332;
+        font-size: 16px;
+        padding-left: 20px;
+        border-bottom: 1px solid #f2f2f2;
+        background-color: #FFFFFF;
+     }
+.box-boby .class-detail h3{
+        float: none
+ }
+.content-h{
+    height:52px 
     } 
+.text-box{
+    height:48px
+}
+.detail-content-top{
+    position: relative;
+    left:358px ;
+}
 @media (max-width: 414px){
-.btn-md{
-       position: relative;
-       left:50px ;
-       top:-20px
-} 
-.label-xs {
+.label-xs{
     position: relative;
     left: -114px !important;
 }
-.input-xs {
+.input-xs{
     position: relative;
     left: 84px;
     top: -24px;
@@ -69,7 +80,7 @@
 }
 .ul-xs{
     position: relative;
-    left:-47px ;
+    left:0px ;
 }
 .ul-xs li input{
     width: 56%!important;
@@ -85,17 +96,17 @@
    position: relative;
    left:-98px ;     
  }
- .box-boby .class-detail h3.detail-title{
-    height: 60px;
-    line-height: 60px;
-    color: #303332;
-    font-size: 16px;
-    padding-left: 20px;
-    border-bottom: 1px solid #f2f2f2;
-    background-color: #FFFFFF;
- }
- .box-boby .class-detail h3{
-     float: none
- }
+.person-info .info{
+    position: relative;
+    left:0px ;   
+}
+.detail-content-top{
+    position: relative;
+    left:0px ;
+}
+.btn-p {
+    position: relative;
+    left: 0px;
+}
 }
      
