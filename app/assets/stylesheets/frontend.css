@@ -14,7 +14,7 @@
  *= require_self
  */
  a{
-     text-decoration:none 
+     text-decoration:none
  }
  .span-text{
      color: #666666;
@@ -35,7 +35,7 @@
    color: red;
  }
  .a-border:focus{
-     color: red; 
+     color: red;
  }
  .a-text {
     color: #88898a;
@@ -58,15 +58,15 @@
         float: none
  }
 .content-h{
-    height:52px 
-    } 
+    height:52px
+    }
 .text-box{
     height:48px
 }
-.detail-content-top{
+/* .detail-content-top{
     position: relative;
     left:358px ;
-}
+} */
 @media (max-width: 414px){
 .label-xs{
     position: relative;
@@ -94,19 +94,18 @@
 }
 .h-xs{
    position: relative;
-   left:-98px ;     
+   left:-98px ;
  }
 .person-info .info{
     position: relative;
-    left:0px ;   
-}
-.detail-content-top{
-    position: relative;
     left:0px ;
 }
+/* .detail-content-top{
+    position: relative;
+    left:0px ;
+} */
 .btn-p {
     position: relative;
     left: 0px;
 }
 }
-     

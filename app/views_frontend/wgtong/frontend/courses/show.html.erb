@@ -28,41 +28,23 @@
             </p>
           </div>
         </div>
+
         <div class="row">
-          <div class="col-xs-12  col-md-12">
+          <div class="col-md-12">
             <p style="line-height:normal;margin-top:10px;margin-bottom:20px">
             <span class="span-sm">必须在个人中心中填写你的<mark>真实姓名</mark>、你的<mark>身份证</mark>和你的<mark>电话号码</mark>才可以进行选课</span>
             </p>
           </div>
         </div>
+
         <div class="row">
-          <div class="col-xs-12  col-md-12">
+          <div class="col-md-12">
             <p style="line-height:normal;margin-top:10px;margin-bottom:20px">
             <span class="span-sm">每个学生能在一个学年中报2门不同的学习课程</span>
             </p>
           </div>
         </div>
-    <!-- <div class="row">
-            <div class="col-xs-5 col-md-12">
-                <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
-                    <span class="span-sm">老师可以根据学生的报名二维码来统计和监督学生出勤情况</span>
-                </p>
-            </div>
-        </div> -->
-    <!-- <div class="row">
-            <div class="col-xs-5  col-md-12">
-                <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
-                    <span class="span-sm">如果学生一门课程有3次及以上缺课，则取消下一年的报名资格</span>
-                </p>
-            </div>
-        </div> -->
-        <!-- <div class="row">
-            <div class="col-xs-5  col-md-12">
-                <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
-                    <span class="span-sm">如果你在第一学年学习了基础课程，那么你在下一学年中可以选择相应的提高课程，但是如果你是零基础学员，只能报基础课程</span>
-                </p>
-            </div>
-        </div> -->
+
         <div class="row">
           <div class="col-xs-12  col-md-8">
             <div style="line-height:normal;margin-top:10px;margin-bottom:20px" id="span-week">
@@ -81,6 +63,7 @@
               </div>
           </div>
         </div>
+
         <div class="row">
           <div class="col-xs-12 col-md-12">
             <div style="line-height:normal;margin-top:10px;margin-bottom:20px">
@@ -97,85 +80,86 @@
             </div>
           </div>
         </div>
-        </div>
+
         <div class="row">
-          <div class="col-xs-5  col-md-12">
-            <div class="btn-p">
-              <a href="<%= new_frontend_classorder_path(course_id: @course.id)%>" type="button" class="btn btn-danger" id="a-order1">马上报名</a>
-            </div>
+          <div class="col-md-12">
+            <a href="<%= new_frontend_classorder_path(course_id: @course.id)%>" type="button" class="btn btn-danger" id="a-order1">马上报名</a>
           </div>
         </div>
+
         <div class="row text-center">
-          <div class="col-xs-12 col-md-3 col-md-offset-3">
+          <div class="col-xs-12 col-md-3">
             <%= image_tag 'longquan_wechat.png', class: "img-responsive" %>
             <p>[ 关注公众号查看报名结果 ]</p>
           </div>
         </div>
-        <script>
-          var time=document.getElementsByClassName('a-time');
-              var aOrder=document.getElementById('a-order1');
-              var limit=document.getElementsByClassName('li-limitnu')
-              var date=0;
-              var limit1=0;
-              window.onload=function(){
-                for (var i=0; i<time.length; i++){
-                  time[i].index=i;
-                              for (var k = 0; k < time.length; k++) {
-                                time[k].style.borderColor="#22222226";
-                                limit[k].style.display="none";
-                                }
-                                time[0].style.borderColor="red";
-                                limit[0].style.display="block";
-                                week=time[0].children[0].innerText;
-                                day=time[0].children[1].innerText;
-                                time1=time[0].children[2].innerText;
-                                limit1=time[0].index+1
-                              }
-                          tab();
-                          if (limit[0].children[0].children[0].innerText == "0"){
-                              limit[0].children[0].children[0].innerText = "报名人数已满"
-                              document.getElementById('a-order1').style.display="none"
 
-                          }else{
-                              document.getElementById('a-order1').style.display="block"
-                              document.getElementById('a-order1').className = "btn-sty"
-
-                          }
-              }
-              function tab(){
-
-                for (var i=0; i<time.length; i++){
-                  time[i].index=i;
-                  time[i].onclick=function(){
-                  for (var k = 0; k < time.length; k++) {
-                      time[k].style.borderColor="#22222226";
-                      limit[k].style.display="none";
-                      }
-                      time[this.index].style.borderColor="red";
-                      limit[this.index].style.display="block";
-                      week=time[this.index].children[0].innerText;
-                      day=time[this.index].children[1].innerText;
-                      time1=time[this.index].children[2].innerText;
-                      limit1=time[this.index].index+1
-                      limit2=time[this.index].index
-                      if (limit[limit2].children[0].children[0].innerText == "0" || limit[limit2].children[0].children[0].innerText == "报名人数已满"){
-                          limit[limit2].children[0].children[0].innerText = "报名人数已满"
-                          document.getElementById('a-order1').style.display="none"
-                      }else{
-                          document.getElementById('a-order1').style.display="block"
-                          document.getElementById('a-order1').className = "btn-sty"
-                      }
-                    }
-                }
-              }
-
-              aOrder.onclick=function(){
-              var parm1= aOrder.getAttribute("href");
-              var myurl=parm1+"&week="+week+"&day="+day+"&time="+time1+"&limitnu="+limit1;
-              aOrder.setAttribute("href", myurl);
-                  }
-            </script>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  var time=document.getElementsByClassName('a-time');
+      var aOrder=document.getElementById('a-order1');
+      var limit=document.getElementsByClassName('li-limitnu')
+      var date=0;
+      var limit1=0;
+      window.onload=function(){
+        for (var i=0; i<time.length; i++){
+          time[i].index=i;
+                      for (var k = 0; k < time.length; k++) {
+                        time[k].style.borderColor="#22222226";
+                        limit[k].style.display="none";
+                        }
+                        time[0].style.borderColor="red";
+                        limit[0].style.display="block";
+                        week=time[0].children[0].innerText;
+                        day=time[0].children[1].innerText;
+                        time1=time[0].children[2].innerText;
+                        limit1=time[0].index+1
+                      }
+                  tab();
+                  if (limit[0].children[0].children[0].innerText == "0"){
+                      limit[0].children[0].children[0].innerText = "报名人数已满"
+                      document.getElementById('a-order1').style.display="none"
+
+                  }else{
+                      document.getElementById('a-order1').style.display="block"
+                      document.getElementById('a-order1').className = "btn-sty"
+
+                  }
+      }
+      function tab(){
+
+        for (var i=0; i<time.length; i++){
+          time[i].index=i;
+          time[i].onclick=function(){
+          for (var k = 0; k < time.length; k++) {
+              time[k].style.borderColor="#22222226";
+              limit[k].style.display="none";
+              }
+              time[this.index].style.borderColor="red";
+              limit[this.index].style.display="block";
+              week=time[this.index].children[0].innerText;
+              day=time[this.index].children[1].innerText;
+              time1=time[this.index].children[2].innerText;
+              limit1=time[this.index].index+1
+              limit2=time[this.index].index
+              if (limit[limit2].children[0].children[0].innerText == "0" || limit[limit2].children[0].children[0].innerText == "报名人数已满"){
+                  limit[limit2].children[0].children[0].innerText = "报名人数已满"
+                  document.getElementById('a-order1').style.display="none"
+              }else{
+                  document.getElementById('a-order1').style.display="block"
+                  document.getElementById('a-order1').className = "btn-sty"
+              }
+            }
+        }
+      }
+
+      aOrder.onclick=function(){
+      var parm1= aOrder.getAttribute("href");
+      var myurl=parm1+"&week="+week+"&day="+day+"&time="+time1+"&limitnu="+limit1;
+      aOrder.setAttribute("href", myurl);
+          }
+    </script>
