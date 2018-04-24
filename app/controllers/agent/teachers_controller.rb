@@ -3,7 +3,7 @@ class Agent::TeachersController < Agent::BaseController
   before_action :set_current_user_teachers
   before_action :set_teacher, only: [:show, :edit, :update, :destroy]
   before_action :set_site_tags, only: [:edit, :new]
-  
+
   before_action :set_site, only: [:new, :edit, :create, :show, :update, :destroy]
   def index
     authorize Teacher
@@ -45,14 +45,14 @@ class Agent::TeachersController < Agent::BaseController
   end
 
   def new
-    authorize Teacher  
+    authorize Teacher
     @teacher = Teacher.new
-    
+
   end
 
   def edit
     authorize @teacher
-    binding.pry
+    # binding.pry
   end
 
   def create
