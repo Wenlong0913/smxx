@@ -13,7 +13,7 @@ class Frontend::ClassordersController < Frontend::BaseController
       # 找到课程的对应报名余数
       remainder = @course.features["limit_number"][params[:classorder][:limitnu]]
 
-      if remainder > 0
+      if remainder && remainder.to_i > 0
 
         @classorder = Classorder.new(user: current_user)
         @classorder.course_id = params[:classorder][:course_id]
