@@ -61,7 +61,7 @@
                   </div>
                   <h3><%= current_user.nickname %></h3>
                   <% if current_user.try(:mobile).try(:phone_number).present? %>
-                      <%= link_to '修改基本信息', edit_frontend_smuser_path(current_user.id), class: "btn btn-default btn-md", style: "display: inlin-block; margin: 80px 0px 15px -200px;" %>
+                      <%= link_to '修改基本信息', edit_frontend_smuser_path(current_user.id), class: "btn btn-default", style: "display: inlin-block; margin: 80px 0px 15px -200px;" %>
                   <% else %>
                     <h3>请先绑定你的手机号码</h3>
                   <%end%>
