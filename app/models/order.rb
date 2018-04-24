@@ -123,6 +123,7 @@ class Order < ApplicationRecord
   end
 
   before_save do
+    
     if self.price.blank?
       self.price = 0
     end
@@ -156,7 +157,7 @@ class Order < ApplicationRecord
         self.order_products.each do |op|
           p = op.product
           p.stock = p.stock.to_i - op.amount
-          p.save! 
+          p.save!
         end
       end
       # 确认消费后给用户发送短信通知
