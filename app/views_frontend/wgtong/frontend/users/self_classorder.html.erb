@@ -1,9 +1,38 @@
+<style media="screen">
+  .wechat_qrode {
+    padding: 10px 40px;
+  }
+  .margin-top-10 {
+    margin-top: 10px;
+  }
+  .margin-bottom-10 {
+    margin-bottom: 10px;
+  }
+</style>
 <%= render file: @cms_site.template_dir + '_header.html' %>
-<% if @user_classorders.any? %>
+
+<div class="container confirm">
+  <div class="row text-center">
+    <div class="col-md-12">
+      <h2 class="margin-top-10">报名信息提交成功</h2>
+      <p class="margin-bottom-10">当前报名人数较多，系统正在处理中...</p>
+      <p class="margin-bottom-10">关注下方公众号，查看报名是否成功</p>
+    </div>
+  </div>
+  <div class="row text-center">
+    <div class="col-md-4 col-md-offset-4">
+      <div class="wechat_qrode">
+        <%= image_tag 'longquan_wechat.png', class: "img-responsive" %>
+      </div>
+      <p class="margin-bottom-10">[ 关注公众号查看报名结果 ]</p>
+    </div>
+  </div>
+</div>
+<!-- <% if @user_classorders.any? %>
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <table class="table table-bordered"> 
+                <table class="table table-bordered">
                     <caption style="text-align:center;">个人选课情况</caption>
                     <thead>
                     <tr>
@@ -12,15 +41,15 @@
                         <th>撤销选课</th>
                     </tr>
                     </thead>
-                    <tbody> 
-                        <% @user_classorders.each do |order| %>      
+                    <tbody>
+                        <% @user_classorders.each do |order| %>
                             <tr>
                                 <td><%=order.name%></td>
                                 <td><%=order.class_week + order.class_day + order.class_time%></td>
                                 <td><%= link_to '撤销选课', frontend_classorder_path(order),
                                 method: :delete,
                                 data: { confirm: '确定要删除这节课吗?' } %></td>
-                            </tr> 
+                            </tr>
                         <%end%>
                     </tbody>
                 </table>
@@ -31,5 +60,4 @@
     <div class="class-info">
     <h2>您还没选课，请进行<%= link_to '选课', frontend_courses_path%></h2>
     </div>
-<%end%>
-
+<%end%> -->
