@@ -57,10 +57,6 @@ module FrontendRoute
         get "favorites"
       end
 
-
-
-
-
       # [ 商家, 产品, 新闻 ] 查询路由配置
       get :search_result, to: 'frontend/search#search_result'
       # 文广痛微场馆路由配置
@@ -101,12 +97,14 @@ module FrontendRoute
         resources :communites
         resources :sites do
           commentable
+          favoriteable
         end
         resources :site_catalogs do
           resources :sites
         end
         resources :products do
           commentable
+          favoriteable
         end
         resources :product_catalogs do
           resources :products
