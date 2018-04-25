@@ -57,23 +57,23 @@
                           </div> -->
                           <div class="col-xs-6">
                           客户姓名：
-                          <a href="javascript:void(0)" style="text-decoration: none;">    
+                          <a href="javascript:void(0)" style="text-decoration: none;">
                            <%= order.relname%>
                           </a>
                           </div>
-                          <div class="col-xs-6">                            
+                          <div class="col-xs-6">
                             课程：
                             <span><%=order.name%></span>
                           </div>
-                          <div class="col-xs-6">                            
+                          <div class="col-xs-6">
                             客户身份证：
                             <span><%=order.cardnu%></span>
-                          </div>  
-                          <div class="col-xs-6">                             
+                          </div>
+                          <div class="col-xs-6">
                             老师：
                             <span><%=order.teacher_name%></span>
                           </div>
-                        </li>                        
+                        </li>
                       </ul>
                     </div>
                     <div class="date-replies">
@@ -83,7 +83,7 @@
                     <div class="time">
                       <%= order.created_at.strftime("%H:%M:%S") %>
                     </div>
-                  
+
                   <%= link_to '删除', agent_classorder_path(order), method: :delete, data: { confirm: '确定要删除吗?' }, class: 'btn btn-sm btn-danger pull-center' %>
                   </div>
                   </div>
@@ -98,7 +98,7 @@
 
         <!-- BEGIN pagination -->
         <div class="text-center">
-          
+          <%= paginate @classorders %>
         </div>
         <!-- END pagination -->
       </div>
