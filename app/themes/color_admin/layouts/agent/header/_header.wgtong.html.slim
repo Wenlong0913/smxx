@@ -27,7 +27,7 @@
                 i.fa.fa-angle-down
                 span.arrow.top
               ul.dropdown-menu
-                -if @site && @site.catalog.name == "学校"
+                -if @site && @site.catalog && @site.catalog.name == "学校"
                   li = link_to '老师列表', agent_teachers_path
                   li = link_to '课程列表', agent_courses_path, 'data-turbolinks': false
                   li = link_to '添加老师', new_agent_teacher_path, 'data-turbolinks': false
@@ -43,7 +43,7 @@
                 i.fa.fa-angle-down
                 span.arrow.top
               ul.dropdown-menu
-                -if @site && @site.catalog.name == "学校"
+                -if @site && @site.catalog && @site.catalog.name == "学校"
                   li = link_to '订单列表', agent_classorders_path
                 -else
                   li = link_to '订单列表', agent_orders_path
