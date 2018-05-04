@@ -12,6 +12,7 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  site_id      :integer
+#  root_domain  :string
 #
 
 class Cms::Site < ApplicationRecord
@@ -81,7 +82,11 @@ class Cms::Site < ApplicationRecord
   end
 
   def db_init
-    return true if eval("@cms_site = Cms::Site.find(#{self.id})") && eval(open(File.join(template_dir,'db_init.rb')).read)
-    return false
+    begin
+      return true if eval("@cms_site = Cms::Site.find(#{self.id})") && eval(open(File.join(template_dir,'db_init.rb')).read)
+      return false
+    rescue => ex
+      puts ".........................#{ex.message}"
+    end
   end
 end

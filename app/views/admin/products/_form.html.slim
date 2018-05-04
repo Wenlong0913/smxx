@@ -224,75 +224,23 @@
         .div class="row"
           .div class="col-md-6"
             = f.input :phone
-
           .div class="col-md-6"
-            .col-xs-12
-              div[rel="attr_stock" data-values="#{@product.unit.to_json}" data-keys="#{@product.stock.to_json}"]
-                .form-group.row
-                  label.col-xs-6 库存量
-                  label.col-xs-6 库存时间
-                .additional-item.form-group[v-for="(list, index) in lists"]
-                  .row[:key="index"]
-                    .col-xs-3
-                      .form-group
-                        input.form-control[type="text" v-model="list.key" :name="'product[stock][' + list.name + ']'"]
-                    .col-xs-8
-                      input.form-control[type="text" v-model="list.value" :name="'product[unit][' + list.name + ']'"]
-                    .col-xs-1
-                      button.btn.btn-danger.delete.btn-xs[type="button" @click="removeInputList1(index)"]
-                        i.fa.fa-trash
-                        span 删除
-                span.btn.btn-success.fileinput-button.btn-xs[@click="addInputList1"]
-                  i.fa.fa-plus
-                  span 添加其他库存选项  
-
-          .div class="col-md-6"
-            .col-xs-12
-              div[rel="attr_date" data-values="#{@product.time.to_json}" data-keys="#{@product.date.to_json}"]
-                .form-group.row
-                  label.col-xs-6 演出日期
-                  label.col-xs-6 演出时间
-                .additional-item.form-group[v-for="(list, index) in lists"]
-                  .row[:key="index"]
-                    .col-xs-3
-                      .form-group
-                        input.form-control[type="text" v-model="list.key" :name="'product[date][' + list.name + ']'"]
-                    .col-xs-8
-                      input.form-control[type="text" v-model="list.value" :name="'product[time][' + list.name + ']'"]
-                    .col-xs-1
-                      button.btn.btn-danger.delete.btn-xs[type="button" @click="removeInputList(index)"]
-                        i.fa.fa-trash
-                        span 删除
-                span.btn.btn-success.fileinput-button.btn-xs[@click="addInputList"]
-                  i.fa.fa-plus
-                  span 添加其他产品选项 
-
+            .div class="row"
+              .div class="col-md-4"
+                =f.input :date
+              .div class="col-md-4"
+                = f.input :time
+              .div class="col-md-4"
+                .div class="row"
+                  .div class="col-md-6"
+                    = f.input :stock
+                  .div class="col-md-6"
+                    = f.input :unit
         .div class="row"
           .div class="col-md-6"
             = f.input :address_line1
-            = f.input :address_line2
           .div class="col-md-6"
-             .col-xs-12
-              div[rel="attr_list_vue" data-values="#{@product.additional_attribute_values.to_json}" data-keys="#{@product.additional_attribute_keys.to_json}"]
-                .form-group.row
-                  label.col-xs-6 属性名称
-                  label.col-xs-6 属性值
-                .additional-item.form-group[v-for="(list, index) in lists"]
-                  .row[:key="index"]
-                    .col-xs-3
-                      .form-group
-                        input.form-control[type="text" v-model="list.key" :name="'product[additional_attribute_keys][' + list.name + ']'"]
-                    .col-xs-8
-                      input.form-control[type="text" v-model="list.value" :name="'product[additional_attribute_values][' + list.name + ']'"]
-                    .col-xs-1
-                      button.btn.btn-danger.delete.btn-xs[type="button" @click="removeInputList(index)"]
-                        i.fa.fa-trash
-                        span 删除
-                span.btn.btn-success.fileinput-button.btn-xs[@click="addInputList"]
-                  i.fa.fa-plus
-                  span 添加其他产品选项
-              
-                  
+            = f.input :address_line2
         .div class="row"
           .div class="col-md-6"
             = f.input :description, as: :text, input_html: {rows: 3}

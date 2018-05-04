@@ -20,76 +20,32 @@
         <%= f.input :address_line2, input_html: { value: '' } %>
       </div>
     </div>
-    <div class="col-xs-12">
-        <div rel="add_stock" >
-            <div class="form-group row">
-              <label class="col-xs-6">库存</label>
-              <label class="col-xs-6">库存单位</label>
-            </div>
-          <div class="additional-item form-group" v-for="(list, index) in lists">
-            <div class="row" :key="index">
-              <div class="col-xs-3">
-                <div class="form-group">
-                  <input class="form-control" type="text" v-model="list.key" :name="'product[stock][' + list.name + ']'">
-                </div>
-              </div>
-              <div class="col-xs-8">
-                <input class="form-control" type="text" v-model="list.value" :name="'product[unit][' + list.name + ']'">
-              </div>
-              <div class="col-xs-1">
-                <button type="button" class="btn btn-danger delete btn-xs" @click="removeInputList3(index)">
-                  <i class="fa fa-trash"></i>
-                  <span>删除</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <span class="btn btn-success fileinput-button btn-xs" @click="addInputList3">
-            <i class="fa fa-plus"></i>
-            <span>添加其他库存选项</span>
-          </span>
+    <div class="col-xs-6">
+      <div class="form-group col-xs-8 p-l-0 m-0">
+        <%= f.input :stock %>
+      </div>
+      <div class="form-group col-xs-4 p-0 m-0">
+        <%= f.input :unit %>
       </div>
     </div>
-    <div class="col-md-12">
-        <div rel="additional-data" >
-            <div class="form-group row">
-              <label class="col-xs-6">演出日期</label>
-              <label class="col-xs-6">演出时间</label>
-            </div>
-            <div class="additional-item form-group" v-for="(list, index) in lists">
-              <div class="row" :key="index">
-                <div class="col-xs-3">
-                  <div class="form-group">
-                    <input class="form-control" type="text" v-model="list.key" :name="'product[date][' + list.name + ']'">
-                  </div>
-                </div>
-                <div class="col-xs-8">
-                  <input class="form-control" type="text" v-model="list.value" :name="'product[time][' + list.name + ']'">
-                </div>
-                <div class="col-xs-1">
-                  <button type="button" class="btn btn-danger delete btn-xs" @click="removeInputList1(index)">
-                    <i class="fa fa-trash"></i>
-                    <span>删除</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <span class="btn btn-success fileinput-button btn-xs" @click="addInputList1">
-              <i class="fa fa-plus"></i>
-              <span>添加其他日期选项</span>
-            </span>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.input :date, input_html: { value: '' } %>
         </div>
+        <div class="col-md-6">
+          <%= f.input :time, input_html: { value: '' } %>
+        </div>
+      </div>
     </div>
-        <div class="col-xs-12 col-md-6">
-          <div class="form-group">
-            <%= f.input :description, as: :text, input_html: {rows: 3} %>
-            <div class="form-group">
-              <%= f.input :note, as: :text, input_html: {rows: 3} %>
-            </div>
-          </div>
-     </div>
+    <div class="col-xs-12 col-md-6">
+      <div class="form-group">
+        <%= f.input :description, as: :text, input_html: {rows: 3} %>
+        <div class="form-group">
+          <%= f.input :note, as: :text, input_html: {rows: 3} %>
+        </div>
+      </div>
+    </div>
     <div class="col-xs-12 col-md-6">
       <div class="form-group">
         <%= f.input :phone, input_html: { value: '' } %>

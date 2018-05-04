@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: user_communities
+#
+#  id           :integer          not null, primary key
+#  user_id      :integer
+#  community_id :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  is_current   :boolean          default(FALSE)
+#
+
 require 'rails_helper'
 
 RSpec.describe UserCommunity, type: :model do

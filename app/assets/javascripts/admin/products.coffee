@@ -40,8 +40,6 @@ $(document).ready ()->
         attrList.lists.push {key: v, name: parseInt(name), value: defaultvalues[name]}
         attrList.count = max+1
     attrList.lists.push {key: ' ', name: attrList.count, value: ' '}
-
-
     # vue catalog / image-select
     container = pages.find('.catalog-list')
     if container.length > 0
@@ -68,55 +66,3 @@ $(document).ready ()->
       image_container = pages.find('image-select')
       image = new Vue
         el: image_container[0]
-
-    # 附加日期添加
-    attrDateDom = pages.find("div[rel='attr_date']")
-    attrDate = new Vue
-      el: attrDateDom[0]
-      data:
-        defaultvalues: {}
-        defaultkeys: {}
-        lists: []
-        count: 1
-      methods:
-        addInputList: ->
-          this.count++
-          this.lists.push({key: '', value: '', name: this.count})
-        removeInputList: (index)->
-          this.lists.splice(index, 1)
-    defaultkeys = pages.find("div[rel='attr_date']").data('keys')
-    defaultvalues = pages.find("div[rel='attr_date']").data('values')
-    attrDate.lists = []
-    max = 0
-    for name, v of defaultkeys
-      if parseInt(name) > 0
-        max = parseInt(name) if max < parseInt(name)
-        attrDate.lists.push {key: v, name: parseInt(name), value: defaultvalues[name]}
-        attrDate.count = max+1
-    attrDate.lists.push {key: ' ', name: attrDate.count, value: ' '}
-
-    # 附加库存添加
-    attrStockDom = pages.find("div[rel='attr_stock']")
-    attrStock = new Vue
-      el: attrStockDom[0]
-      data:
-        defaultvalues: {}
-        defaultkeys: {}
-        lists: []
-        count: 1
-      methods:
-        addInputList1: ->
-          this.count++
-          this.lists.push({key: '', value: '', name: this.count})
-        removeInputList1: (index)->
-          this.lists.splice(index, 1)
-    defaultkeys = pages.find("div[rel='attr_stock']").data('keys')
-    defaultvalues = pages.find("div[rel='attr_stock']").data('values')
-    attrStock.lists = []
-    max = 0
-    for name, v of defaultkeys
-      if parseInt(name) > 0
-        max = parseInt(name) if max < parseInt(name)
-        attrStock .lists.push {key: v, name: parseInt(name), value: defaultvalues[name]}
-        attrStock .count = max+1
-    attrStock.lists.push {key: ' ', name: attrStock.count, value: ' '}

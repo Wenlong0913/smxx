@@ -15,17 +15,7 @@
   </div>
   <div class="product-attr-info">
       <ul class="list-inline row">
-        <li class='col-sm-12 col-md-4'>库存: <b class="text-success">
-        <% @product.stock.each do |key,value|%>
-           <%=value%>
-        <%end%>
-        <% if @product.unit.present? %>
-          <%@product.unit.each do |key,value|%>
-            <%=value%>
-          <%end%>
-        <%end%>
-        </b>
-        </li>
+        <li class='col-sm-12 col-md-4'>库存: <b class="text-success"><%= @product.stock %><%= "(#{@product.unit})" if @product.unit.present? %></b></li>
         <% if @product.discount.to_f > 0 && @product.discount.to_f < @product.price.to_f %>
 
           <li class='col-sm-12 col-md-4'>
@@ -93,15 +83,14 @@
         </span>
       </li>
     <% end %>
-    <% if  @product.time.present? %>
+    <% if @product.date.present? || @product.time.present? %>
       <li>
         <i class="fa fa-clock-o"></i>
         <span>时间</span>:
-        <% @product.time.each do |key,value|%>
         <span>
-          <%=value %>
+          <%= @product.date %>
+          <%= @product.time %>
         </span>
-        <%end%>
       </li>
     <% end %>
     <% if @product.additional_attribute_keys.present? %>

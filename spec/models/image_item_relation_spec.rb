@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: image_item_relations
+#
+#  id            :integer          not null, primary key
+#  image_item_id :integer
+#  relation_type :string
+#  relation_id   :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe ImageItemRelation, type: :model do

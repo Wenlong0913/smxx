@@ -134,8 +134,8 @@ $(document).ready ->
       el: "div[rel='additional-attributes']"
       data:
         lists: [
-          {key: '', value: '', name: '1'}
-          {key: '', value: '', name: '2'}
+          {key: '尺寸', value: '', name: '1'}
+          {key: '颜色', value: '', name: '2'}
         ]
         count: 3
       methods:
@@ -144,38 +144,6 @@ $(document).ready ->
           this.count++
         removeInputList: (index)->
           this.lists.splice(index, 1)
-
-    adddata= new Vue
-      el: "div[rel='additional-data']"
-      data:
-        lists: [
-          {key: '', value: '', name: '1'}
-          {key: '', value: '', name: '2'}
-        ]
-        count: 3
-      methods:
-        addInputList1: ->
-          this.lists.push({key: '', value: '', name: this.count})
-          this.count++
-        removeInputList1: (index)->
-          this.lists.splice(index, 1)
-
-    addstock= new Vue
-      el: "div[rel='add_stock']"
-      data:
-        lists: [
-          {key: '', value: '', name: '1'}
-          {key: '', value: '', name: '2'}
-        ]
-        count: 3
-      methods:
-        addInputList3: ->
-          this.lists.push({key: '', value: '', name: this.count})
-          this.count++
-        removeInputList3: (index)->
-          this.lists.splice(index, 1)
-
-
     bodyNew.find('.change-step').on 'click', ->
       $(window).scrollTop(0)
       change_step_class = $(this).attr("href").replace("#", "")
@@ -258,55 +226,3 @@ $(document).ready ->
         attrList.lists.push {key: v, name: parseInt(name), value: defaultvalues[name]}
         attrList.count = max+1
     attrList.lists.push {key: ' ', name: attrList.count, value: ' '}
-
- # 附加日期添加
-    attrDateDom = bodyEdit.find("div[rel='attr_date']")
-    attrDate = new Vue
-      el: attrDateDom[0]
-      data:
-        defaultvalues: {}
-        defaultkeys: {}
-        lists: []
-        count: 1
-      methods:
-        addInputList2: ->
-          this.count++
-          this.lists.push({key: '', value: '', name: this.count})
-        removeInputList2: (index)->
-          this.lists.splice(index, 1)
-    defaultkeys = bodyEdit.find("div[rel='attr_date']").data('keys')
-    defaultvalues = bodyEdit.find("div[rel='attr_date']").data('values')
-    attrDate.lists = []
-    max = 0
-    for name, v of defaultkeys
-      if parseInt(name) > 0
-        max = parseInt(name) if max < parseInt(name)
-        attrDate.lists.push {key: v, name: parseInt(name), value: defaultvalues[name]}
-        attrDate.count = max+1
-     attrDate.lists.push {key: ' ', name: attrDate.count, value: ' '}
-
-#附加库存选择
-    attrStockDom = bodyEdit.find("div[rel='attr-stock']")
-    attrStock = new Vue
-      el: attrStockDom[0]
-      data:
-        defaultvalues: {}
-        defaultkeys: {}
-        lists: []
-        count: 1
-      methods:
-        addInputList3: ->
-          this.count++
-          this.lists.push({key: '', value: '', name: this.count})
-        removeInputList3: (index)->
-          this.lists.splice(index, 1)
-    defaultkeys = bodyEdit.find("div[rel='attr-stock']").data('keys')
-    defaultvalues = bodyEdit.find("div[rel='attr-stock']").data('values')
-    attrStock.lists = []
-    max = 0
-    for name, v of defaultkeys
-      if parseInt(name) > 0
-        max = parseInt(name) if max < parseInt(name)
-        attrStock.lists.push {key: v, name: parseInt(name), value: defaultvalues[name]}
-        attrStock.count = max+1
-     attrStock.lists.push {key: ' ', name: attrStock.count, value: ' '}

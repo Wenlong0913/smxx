@@ -13,6 +13,7 @@ db/schema.rb
 /coverage/
 public/system/
 public/attachments/
+public/templetes
 public/ckeditor_assets/
 
 # Ignore application configuration

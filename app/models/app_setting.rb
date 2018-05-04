@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: app_settings
+#
+#  id         :integer          not null, primary key
+#  name       :string
+#  key_word   :string
+#  app_data   :json
+#  active     :boolean          default(FALSE)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class AppSetting < ApplicationRecord
   audited
 

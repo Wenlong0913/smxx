@@ -17,34 +17,14 @@ class Frontend::UsersController < Frontend::BaseController
     end
   end
 
-  def self_classorder
-    if ['pending', 'open', 'paid', 'completed', 'cancelled'].include?(params[:type])
-      @user_classorders = current_user.classorders.where(status: params[:type]).order("updated_at DESC").page(params[:page])
-    else
-      @user_classorders = current_user.classorders.order("updated_at DESC").page(params[:page])
-    end
-   
-   
-  end
-
-  def self_showtable
-    if ['pending', 'open', 'paid', 'completed', 'cancelled'].include?(params[:type])
-      @user_showtable = current_user.classorders.where(status: params[:type]).order("updated_at DESC").page(params[:page])
-    else
-      @user_showtable = current_user.classorders.order("updated_at DESC").page(params[:page])
-    end
-   
-   
-  end
   def self_order
     if ['pending', 'open', 'paid', 'completed', 'cancelled'].include?(params[:type])
       @user_orders = current_user.orders.where(status: params[:type]).order("updated_at DESC").page(params[:page])
     else
       @user_orders = current_user.orders.order("updated_at DESC").page(params[:page])
     end
-   
-   
   end
+
   def self_comment
     if params[:type]
       @comments = Comment::Entry.where(user_id: current_user.id, resource_type: params[:type]).order("updated_at DESC").page(params[:page])
@@ -140,6 +120,26 @@ class Frontend::UsersController < Frontend::BaseController
     else
       render :edit
     end
+  end
+
+  def self_classorder
+    if ['pending', 'open', 'paid', 'completed', 'cancelled'].include?(params[:type])
+      @user_classorders = current_user.classorders.where(status: params[:type]).order("updated_at DESC").page(params[:page])
+    else
+      @user_classorders = current_user.classorders.order("updated_at DESC").page(params[:page])
+    end
+   
+   
+  end
+
+  def self_showtable
+    if ['pending', 'open', 'paid', 'completed', 'cancelled'].include?(params[:type])
+      @user_showtable = current_user.classorders.where(status: params[:type]).order("updated_at DESC").page(params[:page])
+    else
+      @user_showtable = current_user.classorders.order("updated_at DESC").page(params[:page])
+    end
+   
+   
   end
 
 end

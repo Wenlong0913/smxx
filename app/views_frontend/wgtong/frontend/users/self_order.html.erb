@@ -130,15 +130,8 @@
                         <small><%= order_product.try(:product).try(:catalog).try(:name) %></small>
                       </h4>
                       <p><i class="fa fa-map-marker productColorIcon"></i>  <%= order_product.try(:product).try(:address_line1) %></p>
-                      <p><i class="fa fa-clock-o productColorIcon"></i>                   
-                          <% order.features.each do |key,value|%>                
-                            <%value[0].each do |key,value|%>  
-                              <%if key=='datatime'%>
-                                <%=value%>
-                              <%end%>
-                            <%end%>
-                          <%end%>
-                        </p>
+                      <p><i class="fa fa-clock-o productColorIcon"></i> <%= order_product.try(:product).try(:date).to_s + ' '  + order_product.try(:product).try(:time).to_s%></p>
+
                       <p class="orderDescription"><%= order_product.try(:product).try(:description) %></p>
                       <div class="btn-group text-right" role="group">
                         <%#<button class="btn btn-default" type="button" name="button" data-toggle="modal" data-target="#deleteSite1">取消预定</button>%>

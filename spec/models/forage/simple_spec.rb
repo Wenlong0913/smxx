@@ -1,3 +1,22 @@
+<<<<<<< HEAD
+=======
+# == Schema Information
+#
+# Table name: forage_simples
+#
+#  id           :integer          not null, primary key
+#  catalog      :string
+#  title        :string
+#  url          :string           not null
+#  features     :jsonb
+#  is_processed :string           default("n")
+#  processed_at :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  run_key_id   :integer          not null
+#
+
+>>>>>>> 60108ba2b98d9283f2800983444413f0b911c825
 require 'rails_helper'
 
 RSpec.describe Forage::Simple, type: :model do

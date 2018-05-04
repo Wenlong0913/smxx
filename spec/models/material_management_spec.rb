@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: material_managements
+#
+#  id                    :integer          not null, primary key
+#  note                  :string
+#  operate_type          :integer
+#  operate_date          :date
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  material_warehouse_id :integer
+#  order_code            :string
+#  created_by            :string
+#
+
 require 'rails_helper'
 
 RSpec.describe MaterialManagement, type: :model do

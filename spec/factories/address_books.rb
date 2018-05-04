@@ -1,3 +1,24 @@
+<<<<<<< HEAD
+=======
+# == Schema Information
+#
+# Table name: address_books
+#
+#  id           :integer          not null, primary key
+#  user_id      :integer
+#  name         :string           not null
+#  gender       :string
+#  mobile_phone :string           not null
+#  city         :string           not null
+#  street       :string           not null
+#  house_number :string
+#  features     :jsonb
+#  note         :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
+>>>>>>> 60108ba2b98d9283f2800983444413f0b911c825
 FactoryGirl.define do
   factory :address_book do
     user nil

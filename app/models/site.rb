@@ -2,20 +2,29 @@
 #
 # Table name: sites
 #
-#  id         :integer          not null, primary key
-#  user_id    :integer
-#  title      :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  features   :jsonb
-#  type       :string
+#  id                    :integer          not null, primary key
+#  user_id               :integer
+#  title                 :string
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  features              :jsonb
+#  type                  :string
+#  address_alias_id      :integer
+#  address_line          :string
+#  catalog_id            :integer
+#  favorites_count       :integer          default(0)
+#  visits_count          :integer          default(0)
+#  comments_count        :integer
+#  agent_plan_id         :integer
+#  paid_at               :datetime
+#  is_flatform_recommend :boolean          default(FALSE)
+#  lng                   :decimal(20, 14)
+#  lat                   :decimal(20, 14)
+#  forage                :jsonb
+#  parent_id             :integer
+#  tanmer_wxopen_token   :string
 #
 
-
-# diymenu这个model主要功能是这样，我们会借助我们的微信开放平台获得用户公众号的微信授权，这样就可以在我们的平台上面托管微信功能，好处就是可以有多人共同管理，而它里面主要的功能在model里面都有介绍，但在文广通项目里面我们用到的主要就是
-# 1.绑定商家微信账号
-# 2.实现商家微信公众号菜单栏按钮的CRUD
-# 3.实现内部公众账号绑定
 class Site < ApplicationRecord
   MAIN_ID = 1
   belongs_to :user, optional: true
@@ -37,7 +46,7 @@ class Site < ApplicationRecord
   has_many_comments
   has_many :deliveries, dependent: :destroy
   has_one :cms_site, class_name: '::Cms::Site', dependent: :destroy
-  belongs_to :agent_plan, optional: true  #optional 选项设为 true，不会验证关联的对象是否存在
+  belongs_to :agent_plan, optional: true
   has_many :diymenus, dependent: :destroy
   has_many :parent_menus, -> { includes(:sub_menus).where(parent_id: nil, is_show: true).order("sort").limit(3) }, class_name: "Diymenu", foreign_key: :site_id
   # store_accessor :features, :business_hours, :content, :contact_phone, :contact_name, :is_sign, :sign_note,
@@ -54,8 +63,9 @@ class Site < ApplicationRecord
                 :avg_price, :is_published, :phone, :photos, :province, :real_city, :city, :district, :business_area,
                 :updated_by, :content, :delivery_fee
   store_accessor :forage, :forage_url, :is_foraged, :forage_from, :forage_district_from, :forage_image
-
-  validates_presence_of :title, :address_line#, :user_id
+  if Settings.project.imolin? || Settings.project.wgtong?
+    validates_presence_of :title, :address_line#, :user_id
+  end
   validates_uniqueness_of :title, scope: [:address_line]
 
 

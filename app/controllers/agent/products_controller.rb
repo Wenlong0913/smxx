@@ -104,7 +104,6 @@ class Agent::ProductsController < Agent::BaseController
   def new
     authorize Product
     @product = Product.new
-    
   end
 
   def edit
@@ -112,7 +111,6 @@ class Agent::ProductsController < Agent::BaseController
   end
 
   def create
-   
     if params[:product][:member_attributes].present? || params[:product][:member_attributes_others].present?
       params[:product][:member_attributes] = params[:product][:member_attributes] + params[:product][:member_attributes_others].split(/,/)
       params[:product][:member_attributes] = params[:product][:member_attributes].delete_if{|ma| ma.blank?}
@@ -121,8 +119,6 @@ class Agent::ProductsController < Agent::BaseController
     @product.site = @site
     authorize @product
     filter_additional_attribute
-    filter_add_date
-    filter_add_stock
     @product.member_attribute_validates = params[:product][:member_attribute_validates] if params[:product][:member_attribute_validates].present?
     if @product.save
       # redirect_to agent_product_path(@product), notice: 'Product 创建成功.'
@@ -135,8 +131,6 @@ class Agent::ProductsController < Agent::BaseController
   def update
     authorize @product
     filter_additional_attribute
-    filter_add_date
-    filter_add_stock
     if params[:product][:member_attributes].present? || params[:product][:member_attributes_others].present?
       params[:product][:member_attributes] = params[:product][:member_attributes] + params[:product][:member_attributes_others].split(/,/)
       params[:product][:member_attributes] = params[:product][:member_attributes].delete_if{|ma| ma.blank?}
@@ -208,7 +202,6 @@ class Agent::ProductsController < Agent::BaseController
     def filter_additional_attribute
       if params[:product][:additional_attribute_keys].present?
         params[:product][:additional_attribute_keys].each_pair do |k, v|
-          # 这里的意思是只要它的value值是有的那就可以修改成功，但是一旦value为空就把整个这一条信息给删除
           if v.blank?
             params[:product][:additional_attribute_keys].delete(k)
             params[:product][:additional_attribute_values].delete(k)
@@ -218,36 +211,6 @@ class Agent::ProductsController < Agent::BaseController
       if params[:product][:additional_attribute_keys].present?
         @product.additional_attribute_keys = params[:product][:additional_attribute_keys]
         @product.additional_attribute_values = params[:product][:additional_attribute_values]
-      end
-    end
-    
-    def filter_add_date
-      if params[:product][:date].present?
-         params[:product][:date].each_pair do |k, v|
-          if v.blank?
-            params[:product][:date].delete(k)
-            params[:product][:time].delete(k)
-          end
-        end
-      end
-      if params[:product][:date].present?
-        @product.date = params[:product][:date]
-        @product.time = params[:product][:time]
-      end
-    end
-
-    def filter_add_stock
-      if params[:product][:stock].present?
-         params[:product][:stock].each_pair do |k, v|
-          if v.blank?
-            params[:product][:stock].delete(k)
-            params[:product][:unit].delete(k)
-          end
-        end
-      end
-      if params[:product][:stock].present?
-       @product.stock = params[:product][:stock]
-       @product.unit = params[:product][:unit]
       end
     end
 

@@ -1,3 +1,23 @@
+<<<<<<< HEAD
+=======
+# == Schema Information
+#
+# Table name: cms_comments
+#
+#  id           :integer          not null, primary key
+#  contact      :string
+#  content      :text
+#  features     :jsonb
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  site_id      :integer          not null
+#  source_type  :string
+#  source_id    :integer
+#  user_id      :integer
+#  is_published :boolean          default(TRUE)
+#
+
+>>>>>>> 60108ba2b98d9283f2800983444413f0b911c825
 FactoryGirl.define do
   factory :cms_comment, class: 'Cms::Comment' do
     site nil

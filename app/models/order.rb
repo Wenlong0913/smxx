@@ -16,6 +16,15 @@
 #  preorder_conversition_id :integer
 #  create_by                :integer
 #  update_by                :integer
+#  resource_url             :string
+#  delivery_date            :date
+#  finance_bill_id          :integer
+#  refund_status            :integer
+#  apply_refund_by          :integer
+#  refund_description       :text
+#  comments_count           :integer          default(0)
+#  features                 :jsonb
+#  deleted                  :boolean          default(FALSE)
 #
 
 class Order < ApplicationRecord
@@ -88,13 +97,13 @@ class Order < ApplicationRecord
   # has_many :order_members
   # accepts_nested_attributes_for :order_members, allow_destroy: true, reject_if: proc { |attributes| attributes['name'].blank? }
 
-  before_create :generate_code
+  # before_create :generate_code
   # before_validation :check_member
 
   validates_presence_of :site
   # validates_presence_of :member_name, message: '客户名称错误'
   # validates_presence_of :member
-  validates_uniqueness_of :code
+  validates_uniqueness_of :code, allow_blank: true
 
   # attr_accessor :mobile_phone, :member_name
   #
@@ -140,15 +149,14 @@ class Order < ApplicationRecord
         Notification.notice(self.site.user.id, nil, '订单', '订单状态更新了', self, 'code') if self.site.user
       end
     end
-     
-    if self.status_changed?
+
+    if self.status_changed? && (Settings.project.sxhop? || Settings.project.imolin? || Settings.project.meikemei? || Settings.project.wgtong?)
       # 支付成功后修改产品库存
       if self.paid?
         self.order_products.each do |op|
           p = op.product
-          stocknu=self.member_attributes[0]["stocknu"]
-          p.stock[stocknu]=p.stock[stocknu].to_i-op.amount
-          p.save!  
+          p.stock = p.stock.to_i - op.amount
+          p.save!
         end
       end
       # 确认消费后给用户发送短信通知
@@ -162,14 +170,14 @@ class Order < ApplicationRecord
       if self.refunded?
         self.order_products.each do |op|
           p = op.product
-          stocknu=self.member_attributes[0]["stocknu"]
-          p.stock[stocknu]=p.stock[stocknu].to_i+op.amount
+          p.stock = p.stock.to_i + op.amount
           p.save!
         end
       end
     end
   end
 
+  after_create_commit :generate_code
   after_commit do
     if @should_send_paid_message && (Settings.project.imolin? || Settings.project.meikemei? || Settings.project.wgtong?)
       OrderNotificationJob.perform_async(self.id)
@@ -223,12 +231,10 @@ class Order < ApplicationRecord
 
   def generate_code
     return if (Settings.project.grand? || Settings.project.demo? || Settings.project.dagle?) && self.code.present?
-    prefix = Time.now.strftime('%Y%m%d')
-    number = self.class.where("code LIKE ?", prefix+'%').count
-    loop do
-      self.code = "#{prefix}#{(number + 1).to_s.rjust(3, '0')}"
-      break unless self.class.where(code: self.code).exists?
-      number += 1
-    end
+    today = Time.now.beginning_of_day
+    todayFirstOrder = self.class.where("? <= created_at", today).order(created_at: :asc).first
+    number = todayFirstOrder && self.id - todayFirstOrder.id + 1 || 1
+    raise '订单当日数量超出系统限制' if number.to_s.length > 5
+    self.update(code: "#{today.strftime('%Y%m%d')}#{number.to_s.rjust(5, '0')}")
   end
 end
