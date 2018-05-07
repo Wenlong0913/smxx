@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # == Schema Information
 #
 # Table name: cms_keystores
@@ -13,7 +11,6 @@
 #  updated_at  :datetime         not null
 #
 
->>>>>>> 60108ba2b98d9283f2800983444413f0b911c825
 FactoryGirl.define do
   factory :cms_keystore, class: 'Cms::Keystore' do
     site nil

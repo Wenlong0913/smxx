@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # == Schema Information
 #
 # Table name: forage_run_keys
@@ -14,7 +12,6 @@
 #  source_id    :integer          not null
 #
 
->>>>>>> 60108ba2b98d9283f2800983444413f0b911c825
 require 'rails_helper'
 
 RSpec.describe Forage::RunKey, type: :model do

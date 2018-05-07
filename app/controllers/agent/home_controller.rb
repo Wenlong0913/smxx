@@ -8,7 +8,11 @@ class Agent::HomeController < Agent::BaseController
     end
     @preorder_conversition_total_count = @site.preorder_conversitions.count
     @product_total_count = @site.products.count
-    @order_total_count = @site.orders.count
+    if Catalog.where(id: @site.catalog_id).find_by(name: "学校")
+      @order_total_count = @site.classorders.count
+    else
+      @order_total_count = @site.orders.count
+    end
     @deliveries_total_count = @site.deliveries.count
   end
 end

@@ -38,10 +38,14 @@ class Site < ApplicationRecord
   has_many :members, dependent: :destroy
   has_many :products, dependent: :destroy
   has_many :tags, through: :products
+  has_many :classorders, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :order_comments, through: :orders, source: :comments
   has_many :preorder_conversitions, dependent: :destroy
   has_many :market_pages, dependent: :destroy
+  has_many :teachers, dependent: :destroy
+  has_many :courses, dependent: :destroy
+  
   has_many_favorites
   has_many_comments
   has_many :deliveries, dependent: :destroy

@@ -89,13 +89,30 @@ module AdminRoute
             get 'dashboard', to: 'products#dashboard'
           end
         end
-        resources :sites, :concerns => :paginatable do
-          resources :members, :concerns => :paginatable
-          resources :products, :concerns => :paginatable
-          collection do
-            get 'dashboard', to: 'sites#dashboard'
-          end
-        end
+         # 学校路由
+         if Settings.project.wgtong?
+          
+         resources :teachers, :concerns => :paginatable, only: [:index] do
+           collection do
+             get 'dashboard', to: 'products#dashboard'
+           end
+         end
+         resources :courses,:concerns => :paginatable do
+           collection do
+             get 'dashboard', to: 'courses#dashboard'
+           end
+         end
+       end
+         resources :sites, :concerns => :paginatable do
+           get 'course_table', to: 'courses#course_table'
+           resources :members, :concerns => :paginatable
+           resources :teachers, :concerns => :paginatable
+           resources :courses,:concerns => :paginatable
+           resources :products, :concerns => :paginatable          
+           collection do
+             get 'dashboard', to: 'sites#dashboard'
+           end
+         end
 
         if Settings.project.meikemei?
           resources :staffs, :concerns => :paginatable do

@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # == Schema Information
 #
 # Table name: account_histories
@@ -14,7 +12,6 @@
 #  updated_at       :datetime         not null
 #
 
->>>>>>> 60108ba2b98d9283f2800983444413f0b911c825
 FactoryGirl.define do
   factory :account_history do
     account nil

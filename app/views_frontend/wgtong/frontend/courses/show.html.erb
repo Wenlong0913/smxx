@@ -1,84 +1,165 @@
+<style>
+.btn-sty{
+  width:83px !important;
+  border:1px solid red;
+  text-align: center;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+  color: #fff;
+
+}
+.btn-sty:hover{
+  color: #fff;
+}
+</style>
 <%= render file: @cms_site.template_dir + '_header.html' %>
-<div class="box-content">
-    <div class="class-detail">
-        <h3 class="detail-title">课程介绍</h3>
-        <div class="detail-content">
-            <div class="row">
-                <div class="col-xs-5  col-md-12">
-                    <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">               
-                        <img class="img-responsive img2" src="<%= @course.first_image %>" alt="<%= @course.name %>" style="max-height: 266px;"> 
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                    <div class="col-xs-5  col-md-12">
-                        <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
-                        <span class="span-sm"><%=@course.features["introduction"]%></span>
-                        </p>
-                    </div>	
-            </div>
-            <div class="row">
-                <div class="col-xs-5  col-md-12">
-                   <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
-                        <span class="span-lg">授课老师</span>
-                        <span class="span-lg"><%=@course.features["teacher_name"]%></span>
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-5">
-                     <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
-                        <span class="span-lg">学员须知</span>
-                     </p>
-                </div>
-            </div>
-                <div class="row">
-                <div class="col-xs-5  col-md-12">
-                    <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
-                       <span class="span-sm">每个学生能在一个学年中报2门不同的学习课程</span>
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-5  col-md-12">
-                    <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
-                        <span class="span-sm">老师可以根据学生的报名二维码来统计和监督学生出勤情况</span>
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-5  col-md-12">
-                    <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
-                        <span class="span-sm">如果学生一门课程有3次及以上缺课，则取消下一年的报名资格</span>
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-5  col-md-12">
-                    <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
-                         <span class="span-sm">如果你在第一学年学习了基础课程，那么你在下一学年中可以选择相应的提高课程，但是如果你是零基础学员，只能报基础课程</span>
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-5  col-md-12">
-                    <p style="padding:0px 20px;line-height:normal;margin-top:10px;margin-bottom:20px">
-                       <% if @course.features["limit_number"] == "0" %>
-                           <span class="span-lg">报名人数已满</span> 
-                       <% else %>
-                           <span class="span-lg">剩余名额：<%=@course.features["limit_number"]%>个</span>
-                       <% end %>
-                    </p> 
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-5  col-md-12">
-                    <% if @course.features["limit_number"] == "0" %>
-                    <% else %>
-                    <div class="btn-p"><a href="<%= new_frontend_classorder_path(course_id: @course.id)%>" ><button type="button" class="btn btn-danger ">马上报名</button></a></div>
-                    <% end %>  
-                </div>
-            </div>  
+<div class="container box-boby">
+  <div class="class-detail">
+    <h3 class="detail-title">课程介绍</h3>
+    <div class="detail-content">
+      <div class="detail-content-top">
+        <div class="row">
+          <div class="col-xs-5">
+            <p style="line-height:normal;margin-top:10px;margin-bottom:20px">
+              <span class="span-lg">学员须知</span>
+            </p>
+          </div>
         </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <p style="line-height:normal;margin-top:10px;margin-bottom:20px">
+            <span class="span-sm">必须在个人中心中填写你的<mark>真实姓名</mark>、你的<mark>身份证</mark>和你的<mark>电话号码</mark>才可以进行选课</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <p style="line-height:normal;margin-top:10px;margin-bottom:20px">
+            <span class="span-sm">每个学生能在一个学年中报2门不同的学习课程</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12  col-md-8">
+            <div style="line-height:normal;margin-top:10px;margin-bottom:20px" id="span-week">
+                  <span class="span-lg">上课时间</span><br>
+                  <% @course.features["class_week"].each do |key1,value1| %>
+                      <% @course.features["class_time"].each do |key,value| %>
+                          <%if key === key1%>
+                          <li class="a-border a-time">
+                          <span class="span-sm"><%=value1%></span>
+                          <span class="span-sm"><%=@course.features["class_day"][key]%></span>
+                          <span class="span-sm"><%=value %></span>
+                          </li>
+                      <%end%>
+                  <%end%>
+                  <% end %>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <div style="line-height:normal;margin-top:10px;margin-bottom:20px">
+              <%@course.features["limit_number"].each do |key1,value1|%>
+                <li class="li-limitnu" style="display:none">
+                  <%@course.features["class_week"].each do |key2,value2|%>
+                    <%if key1==key2%>
+                      <span class="span-lg">剩余名额：<span class="span-lg"><%=value1%></span></span>
+                      <span style="color: #444;">（当前报名人数较多，最终结果以公众号公示为准）</span>
+                    <%end%>
+                  <%end%>
+                </li>
+              <%end%>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <a href="<%= new_frontend_classorder_path(course_id: @course.id)%>" type="button" class="btn btn-danger" id="a-order1">马上报名</a>
+          </div>
+        </div>
+
+        <div class="row text-center">
+          <div class="col-xs-12 col-md-3">
+            <%= image_tag 'longquan_wechat.png', class: "img-responsive" %>
+            <p>[ 关注公众号查看报名结果 ]</p>
+          </div>
+        </div>
+
+      </div>
     </div>
+  </div>
 </div>
+
+<script>
+  var time=document.getElementsByClassName('a-time');
+      var aOrder=document.getElementById('a-order1');
+      var limit=document.getElementsByClassName('li-limitnu')
+      var date=0;
+      var limit1=0;
+      window.onload=function(){
+        for (var i=0; i<time.length; i++){
+          time[i].index=i;
+                      for (var k = 0; k < time.length; k++) {
+                        time[k].style.borderColor="#22222226";
+                        limit[k].style.display="none";
+                        }
+                        time[0].style.borderColor="red";
+                        limit[0].style.display="block";
+                        week=time[0].children[0].innerText;
+                        day=time[0].children[1].innerText;
+                        time1=time[0].children[2].innerText;
+                        limit1=time[0].index+1
+                      }
+                  tab();
+                  if (limit[0].children[0].children[0].innerText == "0"){
+                      limit[0].children[0].children[0].innerText = "报名人数已满"
+                      document.getElementById('a-order1').style.display="none"
+
+                  }else{
+                      document.getElementById('a-order1').style.display="block"
+                      document.getElementById('a-order1').className = "btn-sty"
+
+                  }
+      }
+      function tab(){
+
+        for (var i=0; i<time.length; i++){
+          time[i].index=i;
+          time[i].onclick=function(){
+          for (var k = 0; k < time.length; k++) {
+              time[k].style.borderColor="#22222226";
+              limit[k].style.display="none";
+              }
+              time[this.index].style.borderColor="red";
+              limit[this.index].style.display="block";
+              week=time[this.index].children[0].innerText;
+              day=time[this.index].children[1].innerText;
+              time1=time[this.index].children[2].innerText;
+              limit1=time[this.index].index+1
+              limit2=time[this.index].index
+              if (limit[limit2].children[0].children[0].innerText == "0" || limit[limit2].children[0].children[0].innerText == "报名人数已满"){
+                  limit[limit2].children[0].children[0].innerText = "报名人数已满"
+                  document.getElementById('a-order1').style.display="none"
+              }else{
+                  document.getElementById('a-order1').style.display="block"
+                  document.getElementById('a-order1').className = "btn-sty"
+              }
+            }
+        }
+      }
+
+      aOrder.onclick=function(){
+      var parm1= aOrder.getAttribute("href");
+      var myurl=parm1+"&week="+week+"&day="+day+"&time="+time1+"&limitnu="+limit1;
+      aOrder.setAttribute("href", myurl);
+          }
+    </script>

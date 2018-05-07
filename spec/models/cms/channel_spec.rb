@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # == Schema Information
 #
 # Table name: cms_channels
@@ -21,7 +19,6 @@
 #  impressions_count :integer          default(0)
 #
 
->>>>>>> 60108ba2b98d9283f2800983444413f0b911c825
 require 'rails_helper'
 
 RSpec.describe Cms::Channel, type: :model do

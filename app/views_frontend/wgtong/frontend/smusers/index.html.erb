@@ -60,7 +60,12 @@
                     
                   </div>
                   <h3><%= current_user.nickname %></h3>
-                  <%= link_to '修改基本信息', edit_frontend_smuser_path(current_user.id), class: "btn btn-default btn-md", style: "display: inlin-block; margin: 80px 0px 15px -200px;" %>
+                  <% if current_user.try(:mobile).try(:phone_number).present? %>
+                      <%= link_to '修改基本信息', edit_frontend_smuser_path(current_user.id), class: "btn btn-default", style: "display: inlin-block; margin: 80px 0px 15px -200px;" %>
+                  <% else %>
+                    <h3>请先绑定你的手机号码</h3>
+                  <%end%>
+                 
                 </div> 
                
                 <div class="col-md-8  col-xs-12">
@@ -72,23 +77,23 @@
                     <% if current_user.relname.present? %>
                       <p class="form-control-static text-left p-xs"><%= current_user.relname %></p>
                     <% else %>
-                      <p class="form-control-static text-left p-xs"><%= link_to '绑定真实姓名', edit_frontend_smuser_path(current_user.id) %></p>
+                      <p class="form-control-static text-left p-xs">暂无姓名
                     <% end %>
                   </div>
                 </div>
                    
                     <div class="form-group">
                     <label class="col-sm-2 control-label label-xs " style='color:black'>身份证：</label>
-                    <div class="col-sm-10">
-                      <% if current_user.cardnu.present? %>
-                        <p class="form-control-static text-left p-xs"><%= current_user.cardnu %></p>
-                      <% else %>
-                        <p class="form-control-static text-left p-xs"><%= link_to '绑定身份证', edit_frontend_smuser_path(current_user.id) %></p>
-                      <% end %>
-                    </div>
+                      <div class="col-sm-10">
+                        <% if current_user.cardnu.present? %>
+                          <p class="form-control-static text-left p-xs"><%= current_user.cardnu %></p>
+                        <% else %>
+                          <p class="form-control-static text-left p-xs">暂无身份证
+                        <% end %>
+                      </div>  
                   </div>
 
-                    <div class="form-group">
+                  <!--  <div class="form-group">
                       <label class="col-sm-2 control-label label-xs" style='color:black'>邮箱：</label>
                       <div class="col-sm-10">
                         <% if current_user.email.present? %>
@@ -97,9 +102,9 @@
                           <p class="form-control-static text-left p-xs"><%= link_to '绑定邮箱', edit_frontend_smuser_path(current_user.id) %></p>
                         <% end %>
                       </div>
-                    </div>
+                    </div> -->
 
-                    <div class="form-group">
+                  <!-- <div class="form-group">
                     <label class="col-sm-2 control-label label-xs" style='color:black'>家庭地址：</label>
                     <div class="col-sm-10">
                       <% if current_user.locity.present? %>
@@ -108,9 +113,9 @@
                         <p class="form-control-static text-left p-xs"><%= link_to '绑定家庭地址', edit_frontend_smuser_path(current_user.id) %></p>
                       <% end %>
                     </div>
-                  </div>
+                  </div> -->
 
-                  <div class="form-group">
+                <!--  <div class="form-group">
                   <label class="col-sm-2 control-label label-xs" style='color:black'>出生年月：</label>
                   <div class="col-sm-10">
                     <% if current_user.birth.present? %>
@@ -119,7 +124,7 @@
                       <p class="form-control-static text-left p-xs"><%= link_to '绑定出生年月', edit_frontend_smuser_path(current_user.id) %></p>
                     <% end %>
                   </div>
-                </div>
+                </div> -->
 
                     <div class="form-group">
                       <label class="col-sm-2 control-label label-xs" style='color:black'>电话：</label>
@@ -131,7 +136,7 @@
                         <% end %>
                       </div>
                     </div>
-                    <div class="form-group">
+                <div class="form-group">
                       <label class="col-sm-2 control-label label-xs" style='color:black'>微信：</label>
                       <div class="col-sm-10">
                         <p class="form-control-static text-left p-xs">
@@ -143,29 +148,23 @@
                         </p>
                       </div>
                     </div>
-                     
-                    <div class="form-group">
-                    <label class="col-sm-2 control-label label-xs" style='color:black'>性别：</label>
-                    <div class="col-sm-10">
-                      <% if current_user.sex.present? %>
-                        <p class="form-control-static text-left p-xs"><%= current_user.sex%></p>
-                      <% else %>
-                        <p class="form-control-static text-left p-xs"><%= link_to '绑定性别', edit_frontend_smuser_path(current_user.id) %></p>
-                      <% end %>
-                    </div>
-                  </div>
                     
-
+                  <!-- <div class="form-group">
+                      <label class="col-sm-2 control-label label-xs" style='color:black'>性别：</label>
+                      <div class="col-sm-10">
+                        <% if current_user.sex.present? %>
+                          <p class="form-control-static text-left p-xs"><%= current_user.sex%></p>
+                        <% else %>
+                          <p class="form-control-static text-left p-xs"><%= link_to '绑定性别', edit_frontend_smuser_path(current_user.id) %></p>
+                        <% end %>
+                      </div>
+                    </div> -->
                   </div>
                 </div>
-              
-
-
             </div>
           </div>
         </div> 
       </div>
-
     </div>
   </section>
   <%= render file: @cms_site.template_dir + '_footer.html' %>

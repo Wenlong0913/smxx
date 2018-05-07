@@ -5,6 +5,7 @@ class Frontend::CoursesController < Frontend::BaseController
     @news_channel = @cms_site.channels.find_by(short_title: 'index')
     @class = Classorder.all
     @course = Course.all
+    @course1 = @course.order(created_at: :desc)
     @user = current_user
   end
   def show 

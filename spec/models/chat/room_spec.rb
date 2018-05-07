@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # == Schema Information
 #
 # Table name: chat_rooms
@@ -13,7 +11,6 @@
 #  created_by :integer
 #
 
->>>>>>> 60108ba2b98d9283f2800983444413f0b911c825
 require 'rails_helper'
 
 RSpec.describe Chat::Room, type: :model do

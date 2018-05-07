@@ -1,0 +1,30 @@
+td
+  h4 style="margin:0px;"
+    => link_to "#{course.id}. #{course.name}", admin_site_course_path(course.site, course)
+    
+  span style="margin-left:30px;"
+  => link_to course.site.title, admin_site_courses_path(course.site)
+  td
+    =course.course_type
+  td
+    =course.teacher_name
+  td
+    =course.limit_number
+  td
+    =course.age_range
+  td 
+    =course.sex_limit
+
+  td 
+    =course.selected_number
+  td
+    -if course.class_week.present?
+      -course.class_week.each do |k,v|
+        ="【"+v+" "+course.class_day[k]+" "+course.class_time[k]+" ("+course.class_place[k]+")】"
+        br
+  td 
+    =course.class_level
+
+td
+  => link_to '编辑', edit_admin_site_course_path(course.site, course), class: 'btn btn-xs btn-default'
+  = link_to '删除', admin_site_course_path(course.site, course), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'

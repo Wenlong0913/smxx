@@ -1,0 +1,312 @@
+    - if @course.errors.any?
+        #error_explanation
+          ul
+            - @course.errors.full_messages.each do |message|
+              li = message
+    .div class="row"           
+        .col-xs-12
+          .form-group
+            div[rel="course_number_vue" data-limitnu="#{@course.limit_number.to_json}"]
+              <abbr title="必填项">*</abbr>  
+                .form-group.row
+                
+                label.control-label.string.optional.col-xs-2 限制人数
+                
+              .additional-item.form-group[v-for="(list,index) in lists"]
+                .row
+                  .col-xs-12.form-group
+                    .row
+                      .col-xs-2
+                        .row
+                          .additional-item.form-group[v-for="limitnu in list.limitnu "]
+                            .col-xs-12
+                              .form-group
+                                input.form-control[type="text" v-model="limitnu.value" :name="'course[limit_number][' + limitnu.key + ']'"]
+                                    
+                  .row
+                    .col-xs-12.form-group[style="margin-top:10px;"]
+                      button.btn.btn-danger.delete.btn-xs[type="button" @click="removecourseNu(i-1)"]
+                          i.fa.fa-trash
+                          span 删除
+                      
+                           
+              span.btn.btn-success.fileinput-button.btn-xs[@click="addcourseNu"]
+                i.fa.fa-plus
+                span 添加其他课程选项
+    .div class="row"
+      .div class="col-md-6"
+        = f.input :age_range
+      .div class="col-md-6"
+        = f.input :sex_limit
+    .div class="row"
+      .div class="col-md-6"
+        = f.input :class_level, required: true,collection:["基础","高级"]
+      .div class="col-md-6"           
+        =f.input :teacher_name, collection: @teacher.map{|t| t.name} 
+      /.div class="col-md-6"
+        /= f.input :class_place
+    /.div class="row"
+      /.div class="col-md-6"
+        /= f.input :class_week, collection: ['星期一','星期二','星期三','星期四','星期五','星期六','星期日']
+      /.div class="col-md-6"
+       / =f.input :class_day, collection: ['上午','下午','晚上']
+      
+      
+    .div class="row"           
+        .col-xs-12
+          .form-group
+            div[rel="course_list_vue" data-day="#{@course.class_day.to_json}" data-week="#{@course.class_week.to_json}" data-place="#{@course.class_place.to_json}" data-time="#{@course.class_time.to_json}"]
+              <abbr title="必填项">*</abbr>  
+                .form-group.row
+                
+                label.control-label.string.optional.col-xs-2 上课周期
+                label.control-label.string.optional.col-xs-2 上课时间段
+                label.control-label.string.optional.col-xs-2 上课具体时间
+                label.control-label.string.optional.col-xs-2 上课地点
+                
+              .additional-item.form-group[v-for="(list,index) in lists"]
+                .row
+                  .col-xs-12.form-group
+                    .row
+                      .col-xs-2
+                        .row
+                          .additional-item.form-group[v-for="week in list.week"]
+                            .col-xs-12
+                              .form-group 
+                                select.form-control[type="text" v-model="week.value" :name="'course[class_week][' + week.key + ']'"] 
+                                  option 星期一
+                                  option 星期二
+                                  option 星期三
+                                  option 星期四
+                                  option 星期五
+                                  option 星期六
+                                  option 星期日
+                      .col-xs-2
+                        .row
+                          .additional-item.form-group[v-for="day in list.day"]
+                            .col-xs-12
+                              .form-group
+                                select.form-control[type="text" v-model="day.value" :name="'course[class_day][' + day.key + ']'"]
+                                  option 上午
+                                  option 下午
+                                  option 晚上
+
+                      .col-xs-2
+                        .row
+                          .additional-item.form-group[v-for="time in list.time"]
+                            .col-xs-12
+                              .form-group
+                                input.form-control[type="text" v-model="time.value" :name="'course[class_time][' + time.key + ']'"]
+                      .col-xs-2
+                        .row
+                          .additional-item.form-group[v-for="place in list.place"]
+                            .col-xs-12
+                              .form-group
+                                input.form-control[type="text" v-model="place.value" :name="'course[class_place][' + place.key + ']'"]
+
+                      .form-group.col-xs-2
+                        .row
+                          .additional-item.form-group[v-for="i in list.week.length"]
+                            .col-xs-12.form-group[style="margin-top:10px;"]
+                              button.btn.btn-danger.delete.btn-xs[type="button" @click="removeCourseList(i-1)"]
+                                i.fa.fa-trash
+                                span 删除
+              span.btn.btn-success.fileinput-button.btn-xs[@click="addCourseList"]
+                i.fa.fa-plus
+                span 添加其他课程选项
+
+    .form-group
+      image-select[server="#{image_items_path}" name="course[image_item_ids][]" selected-ids="#{@course.image_item_ids.join(', ')}"]
+    
+    javascript:
+      $(document).ready (function(){
+        var pages = $('body.agent-courses');
+        
+          if (pages.length > 0){
+            var image_container = pages.find('image-select');
+          var  image = new Vue({
+              el: image_container[0]
+          });
+          }
+        var courseListDom = pages.find("div[rel='course_list_vue']");
+          var courseList = new Vue({
+          el: courseListDom[0],
+            data:{
+              weekvalues: {},
+              dayvalues: {},
+              timevalues: {},
+              placevalues: {},
+              
+              lists: 
+                [{week: [],
+                time: [],
+                day: [],
+                place: []}]
+              ,
+              count: 2
+            },
+            methods:
+              {
+                addCourseList: function(){
+                  console.log(this.lists);
+                for(var i of this.lists){
+                  console.log(i.day);
+                  i.week.push({key: this.count, value: ''});
+                  i.day.push({key: this.count, value: ''});
+                  i.place.push({key: this.count, value: ''});
+                  i.time.push({key: this.count, value: ''});
+                  
+                  this.count++;
+                  
+                }
+
+              },
+              removeCourseList: function(index){
+                for(var i of this.lists){
+                  i.week.splice(index, 1);
+                  i.day.splice(index, 1);
+                  i.place.splice(index, 1);
+                  i.time.splice(index, 1);
+                console.log(index);
+                }
+
+              }
+              }
+            });
+      
+        var weekvalues = pages.find("div[rel='course_list_vue']").data('week');
+        var timevalues = pages.find("div[rel='course_list_vue']").data('time');
+        var dayvalues = pages.find("div[rel='course_list_vue']").data('day');
+        var placevalues = pages.find("div[rel='course_list_vue']").data('place');
+        
+        
+        var dmax = 0,tmax=0,wmax=0,pmax=0,temax=0;
+        if(dayvalues==null&&weekvalues==null&&placevalues==null&&timevalues==null)
+          {
+                  for(var i of courseList.lists){
+                    
+                    i.week.push({key:"1", value: ''});
+                    i.day.push({key: '1', value: ''});
+                    i.place.push({key: '1', value: ''});
+                    i.time.push({key: '1', value: ''});
+                    
+                    
+                    
+                  }
+          }
+
+          for(var k in dayvalues){
+            console.log(dayvalues);
+            if( parseInt(k) > 0)
+            {
+              if( dmax < parseInt(k))
+                dmax = parseInt(k) ;
+              for(var i of courseList.lists)
+                {  i.day.push({key: parseInt(k), value: dayvalues[k]}); }
+              courseList.count = dmax+1;
+            } 
+          }
+
+      
+          for(var k in weekvalues){
+            
+          if( parseInt(k) > 0)
+          {
+            if( wmax < parseInt(k))
+              wmax = parseInt(k) ;
+            for(var i of courseList.lists)
+              {  i.week.push({key: parseInt(k), value: weekvalues[k]}); }
+            courseList.count = wmax+1;
+          } 
+        }
+      
+
+          for(var k in placevalues){
+          if(parseInt(k) > 0)
+          {
+            if( pmax < parseInt(k))
+              pmax = parseInt(k) ;
+            for(var i of courseList.lists)
+              {  i.place.push({key: parseInt(k), value: placevalues[k]}); }
+            courseList.count = pmax+1;
+          } 
+        }
+      
+
+          for(var k in timevalues){
+          if(parseInt(k) > 0)
+          {
+            if( tmax < parseInt(k))
+              tmax = parseInt(k) ;
+            for(var i of courseList.lists)
+              {  i.time.push({key: parseInt(k), value: timevalues[k]}); }
+            courseList.count = tmax+1;
+          } 
+        }
+
+
+         var pages = $('body.agent-courses');
+        
+          if (pages.length > 0){
+            var image_container = pages.find('image-select');
+          var  image = new Vue({
+              el: image_container[0]
+          });
+          }
+        var courseNuDom = pages.find("div[rel='course_number_vue']");
+          var courseNu = new Vue({
+          el: courseNuDom[0],
+            data:{
+              limitnuvalues: {},
+              
+              lists: 
+                [{limitnu: []
+                }]
+              ,
+              count: 2
+            },
+            methods:
+              {
+                addcourseNu: function(){
+                  
+                for(var i of this.lists){
+                  
+                  i.limitnu.push({key: this.count, value: ''}); 
+                  this.count++;
+                  
+                }
+
+              },
+              removecourseNu: function(index){
+                for(var i of this.lists){
+                  i.limitnu.splice(index, 1);
+                console.log(index);
+                }
+
+              }
+              }
+            });
+      
+        var limitnuvalues = pages.find("div[rel='course_number_vue']").data('limitnu');    
+        var dmax = 0,tmax=0,wmax=0,pmax=0,temax=0;
+        if(limitnuvalues==null)
+          {
+            for(var i of courseNu.lists){ 
+            i.limitnu.push({key:"1", value: ''});                   
+            }
+          }
+
+          for(var k in limitnuvalues){
+            console.log(limitnuvalues);
+            if( parseInt(k) > 0)
+            {
+              if( dmax < parseInt(k))
+                dmax = parseInt(k) ;
+              for(var i of courseNu.lists)
+                {  i.limitnu.push({key: parseInt(k), value: limitnuvalues[k]}); }
+                courseNu.count = dmax+1;
+            } 
+          }  
+      });
+
+

@@ -1347,7 +1347,7 @@ h2.typoh2{
 	}
 	.label {
 		font-size: 60%;
-	}
+    }
 }
 @media (max-width:480px){
 	.banner {
@@ -1366,11 +1366,11 @@ h2.typoh2{
 		font-size: 53%;
 	}
 	.alert,p {
-		font-size: 14px;
+        font-size: 14px;
 	}
 	.pagination {
 		margin: 20px 0 0px;
-	}
+    }
 }
 @media (max-width: 320px){
 	.grid_4 {

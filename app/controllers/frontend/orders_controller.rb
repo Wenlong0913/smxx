@@ -45,7 +45,7 @@ class Frontend::OrdersController < Frontend::BaseController
         order_product.price = order_product_params[:price]
         order_product.save!
       end
-    end
+    end    
     respond_to do |format|
       format.html do
         if @frontend_order

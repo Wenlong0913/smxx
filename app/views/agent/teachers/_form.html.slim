@@ -1,0 +1,57 @@
+
+= simple_form_for @teacher, url: @teacher.new_record? ? agent_teachers_path(@teacher) : agent_teacher_path(@teacher), html: { class: 'form-horizontal simple_form new_teacher' } do |f|
+      - if @teacher.errors.any?
+          #error_explanation
+            ul
+              - @teacher.errors.full_messages.each do |message|
+                li = message
+      / = f.input :name
+      .div class="section-container"
+        .div class="container"
+          .div class="checkout"
+            .checkout-header
+              .row  
+                .col-md-12.col-sm-12
+                  .div class="basicInformation step active"
+                    .span style="color: #D9D9D9"
+                      .div class="info p-l-20"
+                        .div class="title" 老师基本信息
+                        .div class="desc" Basic information of teachers
+            .div class="tab-content"
+              .div role="tabpanel" class="tab-pane fade in active" rel="basicInformation"
+                .div class="checkout-body"
+                  .div class="row"
+                    .div class="col-md-6"
+                      = f.input :name
+                      / = f.association :site
+                      / = f.input :site_id, input_html: {value: @site.title}, disabled: true, hint: '姓名不可修改'
+                    .div class="col-md-6"
+                      = f.input :phone
+                  .div class="row"
+                      .div class="col-md-6"
+                        = f.input :IDcard
+                      .div class="col-md-6"
+                        = f.input :email
+                  .div class="row"
+                      .div class="col-md-6"
+                        = f.input :address
+
+                  .form-group
+                    image-select[server="#{image_items_path}" name="teacher[image_item_ids][]" selected-ids="#{@teacher.image_item_ids.join(', ')}"]
+
+                  .form-actions
+                    = f.submit class: 'btn btn-success btn-block'
+javascript:
+  $(document).ready (function(){
+    var pages = $('body.agent-teachers');
+    
+      if (pages.length > 0){
+        var image_container = pages.find('image-select');
+       var  image = new Vue({
+          el: image_container[0]
+       });
+      }
+
+          
+    });    
+ 

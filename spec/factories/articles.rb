@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # == Schema Information
 #
 # Table name: articles
@@ -24,7 +22,6 @@
 #  is_flatform_recommend :boolean          default(FALSE)
 #
 
->>>>>>> 60108ba2b98d9283f2800983444413f0b911c825
 FactoryGirl.define do
   factory :article do
     title "MyString"

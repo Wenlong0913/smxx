@@ -213,7 +213,6 @@ class Agent::ProductsController < Agent::BaseController
         @product.additional_attribute_values = params[:product][:additional_attribute_values]
       end
     end
-
     def set_site_tags
       @site_tags      = @site.tags.pluck(:name).uniq
       @site_most_tags = @site.tags.most_used(5).uniq.map(&:name)
@@ -237,7 +236,6 @@ class Agent::ProductsController < Agent::BaseController
     def get_visit_resource
       @product
     end
-
 
     def to_orders_csv(orders)
       return [] if orders.nil?

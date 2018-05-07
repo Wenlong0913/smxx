@@ -1,0 +1,68 @@
+h1.page-header
+  | 查看#{Course.model_name.human}
+  .pull-right
+    => link_to '编辑', @site ? edit_admin_site_course_path(@site, @course) : edit_admin_course_path(@course), class: 'btn btn-primary'
+    = link_to '返回', @site ? admin_site_courses_path(@site) : admin_courses_path, class: 'btn btn-primary'
+
+.panel
+  .panel-heading
+    .panel-heading-btn
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"
+        i class="fa fa-expand"
+      a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"
+        i class="fa fa-minus"
+  .panel-body
+      .profile-container
+        .profile-info
+          h4 课程信息
+          .table-responsive
+            table.table.table-profile
+              tr
+                td.field 课程名
+                td
+                  a
+                    = @course.name
+                td.field 课程类型
+                td
+                  a
+                    = @course.course_type
+
+              tr
+                td.field 人数限制
+                td
+                  a
+                    = @course.limit_number
+                td.field 年龄范围
+                td
+                  a
+                    = @course.age_range
+              tr
+                td.field 性别限制
+                td
+                  a
+                    = @course.sex_limit
+                td.field 老师姓名
+                td
+                  a
+                    = @course.teacher_name
+              tr
+                td.field 上课时间
+                td
+                 -if @course.class_week.present?
+                    -@course.class_week.each do |k,v|           
+                      a
+                        =  v+" "+ @course.class_day[k]+" "+@course.class_time[k]
+                      p 
+                        =" 上课地点:"+@course.class_place[k]
+
+              tr
+                td.field 课程级别
+                td
+                  a
+                    = @course.class_level
+
+              tr
+                td.field 课程简介
+                td
+                  a
+                    = raw(@course.introduction)

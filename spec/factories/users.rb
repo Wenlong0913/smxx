@@ -17,8 +17,6 @@
 #  current_sign_in_ip     :string
 #  last_sign_in_ip        :string
 #  username               :string
-<<<<<<< HEAD
-=======
 #  headshot               :string
 #  avatar_file_name       :string
 #  avatar_content_type    :string
@@ -26,7 +24,6 @@
 #  avatar_updated_at      :datetime
 #  description            :string(500)
 #  gender                 :integer
->>>>>>> 60108ba2b98d9283f2800983444413f0b911c825
 #
 
 FactoryGirl.define do

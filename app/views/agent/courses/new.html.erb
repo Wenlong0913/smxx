@@ -1,0 +1,148 @@
+<%= simple_form_for @course, url: agent_courses_path(@course), remote: true do |f| %>
+    <!-- BEGIN #checkout-cart -->
+      <div class="section-container" id="teachers_new">
+          <!-- BEGIN container -->
+          <div class="container">
+              <!-- BEGIN checkout -->
+              <div class="checkout">
+                <!-- BEGIN checkout-header -->
+                <div class="checkout-header">
+                    <!-- BEGIN row -->
+                    <div class="row">
+                        <!-- BEGIN col-3 -->
+                        <div class="col-md-4 col-sm-4">
+                          <div class="basicInformation step active">
+                              <span style="color: #D9D9D9">
+                                <div class="number">1</div>
+                                <div class="info p-l-20">
+                                    <div class="title">课程基本信息</div>
+                                    <div class="desc"> Basic information of courses</div>
+                                </div>
+                              </span>
+                          </div>
+                        </div>
+                        <!-- END col-3 -->
+                        <!-- BEGIN col-3 -->
+                        <div class="col-md-4 col-sm-4">
+                          <div class="configurationInformation step">
+                            <span style="color: #D9D9D9">
+                              <div class="number">2</div>
+                              <div class="info p-l-20">
+                                  <div class="title">课程配置信息</div>
+                                  <div class="desc">course configuration information.</div>
+                              </div>
+                            </span>
+                          </div>
+                        </div>
+                        <!-- END col-3 -->
+                        <!-- BEGIN col-3 -->
+                        <div class="col-md-4 col-sm-4">
+                            <div class="last step">
+                              <span style="color: #D9D9D9">
+                                <div class="number">3</div>
+                                <div class="info p-l-20">
+                                  <div class="title">发布成功与分享</div>
+                                  <div class="desc">course created and share</div>
+                                </div>
+                              </span>
+                            </div>
+                        </div>
+                        <!-- END col-3 -->
+                    </div>
+                    <!-- END row -->
+                </div>
+                <!-- END checkout-header -->
+    
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane fade in active" id="basicInformation" rel="basicInformation">
+                    <!-- BEGIN checkout-body -->
+                    <div class="checkout-body">
+                      <div class="col-xs-8 left-form-content">
+                        <div class="form-group">
+                          <%= f.input :name, input_html: { value: '' } %>
+                        </div>
+                        <div rel="catalog-list">
+                          <div class="form-group catalog-list" >
+                            <%= f.input :course_type, collection: ['舞蹈','乐器','武术','少儿','书法','美术','声乐','其他'], required: true %>
+                            
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputFile">课程主图</label>
+                            <image-select name="course[image_item_ids][]" server="<%= image_items_path %>"></image-select>
+                          </div>
+                        </div>
+    
+                      </div>
+                      <div class="col-xs-4">
+                        <ul type="none">
+                          <li class="text-muted m-b-10"><i class="fa fa-circle"></i> 课程名称注意不可重复</li>
+                          <li class="text-muted m-b-10"><i class="fa fa-circle"></i> 请上传多张课程图片</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- END checkout-body -->
+                    <!-- BEGIN checkout-footer -->
+                    <div class="checkout-footer">
+                      <a href="#configurationInformation" role="tab" data-toggle="tab" class="change-step btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10">下一步</a>
+                    </div>
+                    <!-- END checkout-footer -->
+                  </div>
+                  <div role="tabpanel" class="tab-pane fade" id="configurationInformation">
+                    <!-- BEGIN checkout-body -->
+                    <div class="checkout-body">
+      
+                        <%= render partial: 'form', locals: { f: f } %>
+                    
+                  </div>
+                    <!-- END checkout-body -->
+                    <!-- BEGIN checkout-footer -->
+                    <div class="checkout-footer">
+                      <a href="#basicInformation" role="tab" data-toggle="tab" class="change-step btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10">上一步</a>
+                      <%= f.submit '添加课程', class: 'btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10' %>
+                    </div>
+                    <!-- END checkout-footer -->
+                  </div>
+                  <div role="tabpanel" class="tab-pane fade" id="LogisticsInformation">                   
+                    <!-- BEGIN checkout-footer -->
+                    <div class="checkout-footer">
+                        <!-- <a href="#" class="btn btn-white btn-lg pull-left">Continue Shopping</a> -->
+                        <button type="submit" class="btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10">下一步</button>
+                    </div>
+                    <!-- END checkout-footer -->
+                  </div>
+                  <div role="tabpanel" class="tab-pane fade" id="last">
+                    <!-- BEGIN checkout-body -->
+                    <div class="checkout-body">
+                      <div class="jumbotron">
+                        <h3>商品创建成功...</h3>
+                        <p>点击跳转到此商品展示页面...</p>
+                        <p>
+                          <div class="product-social">
+                            <a class="new-product btn btn-primary btn-lg pull-left" href="#" role="button">查看</a>
+                            <!-- <ul class="pull-right">
+                                <li><a href="javascript:;" class="facebook" data-toggle="tooltip" data-trigger="hover" data-title="Facebook" data-placement="top"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="javascript:;" class="twitter" data-toggle="tooltip" data-trigger="hover" data-title="Twitter" data-placement="top"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="javascript:;" class="google-plus" data-toggle="tooltip" data-trigger="hover" data-title="Google Plus" data-placement="top"><i class="fa fa-google-plus"></i></a></li>
+                                <li><a href="javascript:;" class="whatsapp" data-toggle="tooltip" data-trigger="hover" data-title="Whatsapp" data-placement="top"><i class="fa fa-whatsapp"></i></a></li>
+                                <li><a href="javascript:;" class="tumblr" data-toggle="tooltip" data-trigger="hover" data-title="Tumblr" data-placement="top"><i class="fa fa-tumblr"></i></a></li>
+                            </ul> -->
+                          </div></p>
+                      </div>
+                    </div>
+                    <!-- END checkout-body -->
+    
+                    <!-- BEGIN checkout-footer -->
+                    <div class="checkout-footer text-center p-40">
+                    </div>
+                    <!-- END checkout-footer -->
+                  </div>
+                </div>
+                <!-- End Tab panes -->
+              </div>
+              <!-- END checkout -->
+          </div>
+          <!-- END container -->
+      </div>
+      <!-- END #checkout-cart -->
+    <% end %>

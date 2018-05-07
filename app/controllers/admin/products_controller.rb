@@ -125,7 +125,6 @@ class Admin::ProductsController < Admin::BaseController
       end
       params[:product][:tag_list] = [] if params[:product][:tag_list].blank?
     end
-
     def set_product_price
       params[:product][:price] = params[:product][:price].to_f * 100 unless params[:product][:price].blank?
       params[:product][:discount] = params[:product][:discount].to_f * 100 unless params[:product][:discount].blank?

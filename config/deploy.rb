@@ -45,7 +45,7 @@ set :repo_url, "git@gitlab.tanmer.com:tanmer/#{ENV['REPO'] || ENV['PROJECT_NAME'
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :deploy_to, "/data/www/#{ENV['DEPLOY_TO'] || fetch(:application)}"
 
-set :rvm_ruby_version, '2.3.4'
+set :rvm_ruby_version, '2.3.3'
 
 before "deploy", :check_branch do
 

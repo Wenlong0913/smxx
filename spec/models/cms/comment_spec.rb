@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # == Schema Information
 #
 # Table name: cms_comments
@@ -17,7 +15,6 @@
 #  is_published :boolean          default(TRUE)
 #
 
->>>>>>> 60108ba2b98d9283f2800983444413f0b911c825
 require 'rails_helper'
 
 RSpec.describe Cms::Comment, type: :model do

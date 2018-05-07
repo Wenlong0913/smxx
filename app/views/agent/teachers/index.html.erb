@@ -1,0 +1,103 @@
+
+<div class="container">
+<h1> 老师管理
+  <div class="pull-right">
+    <%= link_to '添加老师', new_agent_teacher_path, class: 'btn btn-primary' %>
+    <%#= link_to '分类搜索', '#', class: 'btn btn-info' %>
+  </div>
+</h1>
+</div>
+
+<div id="search-results" class="section-container bg-silver m-b-20 p-0 primary-content">
+<!-- BEGIN container -->
+<div class="container">
+    <!-- BEGIN search-container -->
+  <div class="search-container">
+    <!-- BEGIN search-content -->
+    <div class="search-content">
+      <!-- BEGIN search-toolbar -->
+      <div class="search-toolbar">
+        <!-- BEGIN row -->
+        <div class="row">
+          <!-- BEGIN col-6 -->
+          <div class="col-md-6">
+            <h4>老师列表
+            <% if params[:search].present? %>
+                <span>: 搜索出 <%= @teachers.size %> 商品</span>
+            <% end %>
+            </h4>
+          </div>
+          <!-- END col-6 -->
+          <!-- BEGIN col-6 -->
+          <div class="col-md-6 text-right">
+            <ul class="sort-list">
+              <li class="text"><i class="fa fa-filter"></i> 排序方式:</li>
+              <li class="<%= 'sign' unless params[:reorder].present? %>">
+                <%= link_to '默认', agent_teachers_path %>
+              </li>
+              
+            </ul>
+          </div>
+          <!-- END col-6 -->
+        </div>
+        <!-- END row -->
+      </div>
+      <!-- END search-toolbar -->
+      <!-- BEGIN search-item-container -->
+      <div class="search-item-container">
+        <% @teachers.each_with_index do |teacher, index| %>
+          <% if index%3 == 0 %>
+            <!-- BEGIN item-row -->
+            <div class="item-row">
+          <% end %>
+            <!-- BEGIN item -->
+            <div class="item item-thumbnail">
+                <%= link_to agent_teacher_path(teacher), class: 'item-image' do%>
+                  <%= image_tag teacher.image_items.first.try{image_url}||'no-picture.png'%>
+                <% end %>
+                <div class="item-info" style="letter-spacing: 2px;">
+                  <h4 class="item-title">
+                    <%= link_to teacher.name, agent_teacher_path(teacher) %>
+                  </h4>
+                  <p class="item-desc"><%= teacher.description.blank? ? "暂无描述".html_safe :  teacher.description %></p>
+                 
+                </div>
+                <%= link_to '删除', agent_teacher_path(teacher), method: :delete, data: { confirm: '确定要删除吗?' }, class: 'btn btn-sm btn-danger pull-right' %>
+                <%= link_to '查看老师信息', agent_teacher_path(teacher), class: 'btn btn-sm btn-primary pull-right' %>
+            </div>
+          <!-- END item-row -->
+          <% if index%3 == 2 || index+1 == @teachers.size %>
+            <!-- END item -->
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <!-- END search-item-container -->
+      <!-- BEGIN pagination -->
+      <div class="text-center">
+        <%= paginate @teachers %>
+      </div>
+      <!-- END pagination -->
+    </div>
+    <!-- END search-content -->
+    <!-- BEGIN search-sidebar -->
+    <div class="search-sidebar">
+        <h4 class="title">查询</h4>
+        <%= simple_form_for :search, url: agent_teachers_path, method: :get do |f| %>
+          <div class="form-group">
+            <div class="control-label">关键字</div>
+            <%= f.text_field :keywords, value: (params[:search][:keywords] if params[:search]), placeholder: "输入查询关键字", class: 'form-control input-sm' %>
+          </div>
+    
+
+          <div class="form-group text-right">
+            <button type="submit" class="btn btn-sm btn-inverse"><i class="fa fa-search"></i> 查询</button>
+          </div>
+        <% end %>
+    </div>
+    <!-- END search-sidebar -->
+  </div>
+  <!-- END search-container -->
+</div>
+<!-- END container -->
+</div>

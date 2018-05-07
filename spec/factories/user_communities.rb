@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # == Schema Information
 #
 # Table name: user_communities
@@ -12,7 +10,6 @@
 #  is_current   :boolean          default(FALSE)
 #
 
->>>>>>> 60108ba2b98d9283f2800983444413f0b911c825
 FactoryGirl.define do
   factory :user_community do
     user nil

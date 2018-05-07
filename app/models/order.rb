@@ -123,6 +123,7 @@ class Order < ApplicationRecord
   end
 
   before_save do
+    
     if self.price.blank?
       self.price = 0
     end

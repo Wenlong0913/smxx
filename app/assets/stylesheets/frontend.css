@@ -14,3 +14,99 @@
  *= require_self
  *= require favorites
  */
+ a{
+     text-decoration:none
+ }
+ .span-text{
+     color: #666666;
+     margin-left: 5px;
+     font-size:18px;
+ }
+ .a-border{
+    display: inline-block;
+    max-width: 56%;
+    height: 30px;
+    border: 1px solid #22222226;
+    text-align: center;
+    vertical-align: center;
+    padding: 4px;
+    margin-bottom: 5px;
+ }
+ .a-border:hover span{
+   color: red;
+ }
+ .a-border:focus{
+     color: red;
+ }
+ .a-text {
+    color: #88898a;
+ }
+ .person-info .info ul li span{
+    color: #666666;
+    display: inline!important;
+    font-size: 15px;
+    }
+.box-boby .class-detail h3.detail-title{
+        height: 60px;
+        line-height: 60px;
+        color: #303332;
+        font-size: 16px;
+        padding-left: 20px;
+        border-bottom: 1px solid #f2f2f2;
+        background-color: #FFFFFF;
+     }
+.box-boby .class-detail h3{
+        float: none
+ }
+.content-h{
+    height:52px
+    }
+.text-box{
+    height:48px
+}
+/* .detail-content-top{
+    position: relative;
+    left:358px ;
+} */
+@media (max-width: 414px){
+.label-xs{
+    position: relative;
+    left: -114px !important;
+}
+.input-xs{
+    position: relative;
+    left: 84px;
+    top: -24px;
+    width: 198% !important;
+}
+.ul-xs{
+    position: relative;
+    left:0px ;
+}
+.ul-xs li input{
+    width: 56%!important;
+}
+.img-xs{
+    position: relative;
+    left:-54px ;
+}
+.navbar-default .navbar-nav > li > a:focus{
+ color: red
+}
+.h-xs{
+   position: relative;
+   left:-98px ;
+ }
+.person-info .info{
+    position: relative;
+    left:0px ;
+}
+/* .detail-content-top{
+    position: relative;
+    left:0px ;
+} */
+.btn-p {
+    position: relative;
+    left: 0px;
+}
+}
