@@ -6,8 +6,8 @@ class Admin::KeystoresController < Admin::BaseController
   # GET /admin/keystores
   def index
     authorize Keystore
-    @filter_colums = %w(id)
-    @keystores = build_query_filter(Keystore.all, only: @filter_colums).order(updated_at: :desc).page(params[:page])
+    @filter_colums = %w(id key value)
+    @keystores = build_query_filter(Keystore.all, only: @filter_colums).page(params[:page])
     respond_to do |format|
       if params[:json].present?
         format.html { send_data(@keystores.to_json, filename: "keystores-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.json") }

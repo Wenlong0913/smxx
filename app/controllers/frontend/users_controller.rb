@@ -122,14 +122,17 @@ class Frontend::UsersController < Frontend::BaseController
     end
   end
 
+  def favorites
+    @favorites_sites = current_user.favorites.where(resource_type: 'Site').order(updated_at: :desc)
+    @favorites_products = current_user.favorites.where(resource_type: 'Item').order(updated_at: :desc)
+  end
+
   def self_classorder
     if ['pending', 'open', 'paid', 'completed', 'cancelled'].include?(params[:type])
       @user_classorders = current_user.classorders.where(status: params[:type]).order("updated_at DESC").page(params[:page])
     else
       @user_classorders = current_user.classorders.order("updated_at DESC").page(params[:page])
-    end
-   
-   
+    end  
   end
 
   def self_showtable
@@ -138,8 +141,5 @@ class Frontend::UsersController < Frontend::BaseController
     else
       @user_showtable = current_user.classorders.order("updated_at DESC").page(params[:page])
     end
-   
-   
   end
-
 end

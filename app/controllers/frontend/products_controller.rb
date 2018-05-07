@@ -2,6 +2,7 @@ class Frontend::ProductsController < Frontend::BaseController
   acts_as_commentable resource: Product
   impressionist :actions=>[:show]
   acts_as_trackable user_id: :get_user_id, resource: :get_visit_resource, only: [:show]
+  acts_as_favoriteable resource: Product
 
   def index
     # 所有产品列表

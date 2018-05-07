@@ -52,6 +52,7 @@ module FrontendRoute
         get "binding_weixin"
         post "binding_weixin"
         post "binding_phone"
+        get "favorites"
         get "self_classorder"
         get "self_showtable"
       end
@@ -94,12 +95,14 @@ module FrontendRoute
         resources :communites
         resources :sites do
           commentable
+          favoriteable
         end
         resources :site_catalogs do
           resources :sites
         end
         resources :products do
           commentable
+          favoriteable
         end
         resources :product_catalogs do
           resources :products

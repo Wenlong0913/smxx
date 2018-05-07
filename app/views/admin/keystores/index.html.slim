@@ -75,6 +75,8 @@ h1.page-header
                 => link_to '查看', admin_keystore_path(keystore), class: 'btn btn-xs btn-default'
                 => link_to '编辑', edit_admin_keystore_path(keystore), class: 'btn btn-xs btn-default'
                 = link_to '删除', admin_keystore_path(keystore), data: { confirm: '确定要删除吗?' }, method: :delete, class: 'btn btn-xs btn-danger'
+= paginate @keystores
+
 / TODO: move this code to application.js
 javascript:
   $(document).ready(function(){

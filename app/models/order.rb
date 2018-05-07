@@ -156,6 +156,9 @@ class Order < ApplicationRecord
         self.order_products.each do |op|
           p = op.product
           p.stock = p.stock.to_i - op.amount
+          if p.stock == 0
+            p.status = 'completed'
+          end
           p.save!
         end
       end

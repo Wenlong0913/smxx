@@ -1,0 +1,12 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      forage/catalog_relation: Catalog relation
+    attributes:
+      forage/catalog_relation: {}
+    errors:
+      models:
+        catalog_relation: 
+  helpers:
+    catalog_relation: 

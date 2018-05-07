@@ -84,6 +84,14 @@ class Frontend::OrdersController < Frontend::BaseController
     if params[:order_id]
       order = Order.find(params[:order_id])
       product = order.order_products.first.product
+      one_account_orders = Order.joins(:order_products).where(user_id: current_user.id, status: ['paid', 'completed']).where("order_products.product_id = ?", product.id)
+      if product.maximum_for_one_account.to_i <= one_account_orders.count
+        order.errors.add 'order_account_signup'.to_sym, "一个账户最多定#{product.maximum_for_one_account}次!"
+        render js: <<-JS
+          window.alert('一个账户最多定#{product.maximum_for_one_account}次!')
+          JS
+        return
+      end
     else
       order = Order.new(user: current_user)
       product = Product.find(params[:order][:product][:id])
@@ -111,19 +119,21 @@ class Frontend::OrdersController < Frontend::BaseController
         end
       end
 
-      # 产品库存是否满足
-      if product.stock.to_i < product_amount.to_i
-        order.errors.add 'order_product_stock'.to_sym, "剩余座位#{product.stock}个!"
-        render js: <<-JS
-          onOrderCreate('#{order.errors.messages.to_json}')
-        JS
-        return
-      end
       order.order_products.new(product_id: product.id, amount: product_amount, price: product.sell_price)
       order.delivery_phone = params[:order][:delivery_phone] if params[:order][:delivery_phone].present?
       order.site = product.site
       order.price = product.sell_price.to_f * product_amount.to_i
       order.save!
+    end
+
+
+    # 产品库存是否满足
+    if product.stock.to_i < order.order_products.where(product_id: product.id).map(&:amount).sum()
+      order.errors.add 'order_product_stock'.to_sym, "剩余座位#{product.stock}个!"
+      render js: <<-JS
+        onOrderCreate('#{order.errors.messages.to_json}')
+      JS
+      return
     end
 
     if order.price == 0
@@ -133,14 +143,7 @@ class Frontend::OrdersController < Frontend::BaseController
       JS
       return
     end
-    # 产品库存是否满足
-    if product.stock.to_i < order.order_products.where(product_id: product.id).map(&:amount).sum()
-      order.errors.add 'order_product_stock'.to_sym, "剩余座位#{product.stock}个!"
-      render js: <<-JS
-        onOrderCreate('#{order.errors.messages.to_json}')
-      JS
-      return
-    end
+
     pay_channel =  wechat_device? ? 'wx_pub' : 'alipay_pc_direct'
     callback_url = URI(Settings.site.host)
     options = 'frontend/orders/' + order.id.to_s + '/paid_success'
@@ -270,7 +273,7 @@ class Frontend::OrdersController < Frontend::BaseController
       end
 
       one_account_orders = Order.joins(:order_products).where(user_id: current_user.id, status: ['paid', 'completed']).where("order_products.product_id = ?", product.id)
-      if product.maximum_for_one_account.to_i < one_account_orders.count
+      if product.maximum_for_one_account.to_i <= one_account_orders.count
         order.errors.add 'order_account_signup'.to_sym, "一个账户最多定#{product.maximum_for_one_account}次!"
         flag = false
         return flag

@@ -2,75 +2,52 @@
 	<%= render file: 'public/templetes/newshub/_header.html.erb' %>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-3 tr-sidebar tr-sticky">
+      <% unless mobile_device? %>
+			<div class="col-md-2 tr-sidebar tr-sticky">
 				<%= render file: 'public/templetes/newshub/_side_menu.html.erb' %>
 			</div>
+      <% end %>
       <!-- search_results 搜索结果 -->
-			<div class="col-sm-6">
+			<div class="col-md-7 col-xs-12 <%= 'padding-0' if mobile_device? %>">
         <div class="tr-content">
-          <div class="tr-section ">
-            <div class="section-title">
-							<h1><a href="javascript:void(0)"> <i class="fa fa-th" aria-hidden="true"></i> 搜索结果</a></h1>
-						</div>
-            <% if @search_results.any? %>
-	            <h3>
-                <i class="fa fa-smile-o"></i>找到
-                <span class="faild-text"><%= @search_results.size %></span>条与
-                <span class="faild-text"><%= params[:search][:keywords] %></span>相关内容
-              </h3>
+          <div class="tr-section">
+            <% if @search_results.present? %>
+	            <h4 class="text-center">共找到&nbsp;&nbsp;<span class="faild-text"><%= @search_results.size %>条</span><span class="faild-text"><%= params[:search][:keywords] %></span>&nbsp;&nbsp;相关的内容
+              </h4>
             <% else %>
-              <h3 style="margin-bottom: 30px;font-weight: 300;">
-                <i class="fa fa-frown-o"></i>抱歉：暂无
-                <span class="faild-text">
-                  <%= params[:search][:keywords] %>
-                </span>相关内容
-              </h3>
-              <%= form_for :search, url: search_result_path, method: :get, class: 'btn-input' do |f| %>
-                <%= f.text_field :keywords, value: params[:search]&&params[:search][:keywords], class: 'form-control', autocomplete: "off", placeholder: '请输入关键词，回车开始搜索' %>
-              <% end %>
+              <h4 class="text-center">抱歉暂无相关内容，请重新输入关键词搜索</h4>
             <% end %>
-            <div style="margin-top: 30px;margin-bottom: 30px;">
-              <span>分类筛选：</span>
-              <a href="<%= search_result_path(type: 'cms_pages', search: params[:search]) %>" class="btn <%= params[:type] == nil || params[:type] == 'cms_pages' ? 'btn-danger disabled' : 'btn-default' %>">新闻阅读</a>
-              <a href="<%= search_result_path(type: 'sites', search: params[:search]) %>" class="btn <%= params[:type] == 'sites' ? 'btn-danger disabled' : 'btn-default' %>">场馆信息</a>
-              <a href="<%= search_result_path(type: 'products', search: params[:search]) %>" class="btn <%= params[:type] == 'products' ? 'btn-danger disabled' : 'btn-default' %>">活动信息</a>
-            </div>
+            <%= form_for :search, url: search_result_path, method: :get, class: 'widget_search' do |f| %>
+              <%= f.text_field :keywords, class: 'sidebar-search-form', autocomplete: "off", placeholder: '请输入关键字搜索，如：活动预告，活动报名，抢票，免费，公益，福利，赠票，领票，预约' %>
+              <button type="submit" class="btn btn-primary">搜索</button>
+            <% end %>
           </div>
         </div>
 
+        <% if @search_results.present? %>
 				<div class="tr-content">
 					<div class="tr-section bg-transparent">
-
-						<% if @search_results.any? %>
-              <% if params[:type] == 'sites' %>
-                <%= render file: 'frontend/search/_sites_search.html.erb' %>
-              <% elsif params[:type] == 'products' %>
-                <%= render file: 'frontend/search/_products_search.html.erb' %>
-              <% else %>
-                <%= render file: 'frontend/search/_cms_pages_search.html.erb' %>
+            <div class="tr-post">
+              <% @search_results.each do |result| %>
+                <% if result.class.to_s == 'Product' %>
+                  <%= render :partial => "products_search", :locals => { :product => result } %>
+                <% elsif result.class.to_s == 'Cms::Page' %>
+                  <%= render :partial => "cms_pages_search", :locals => { :page => result } %>
+                <% elsif result.class.to_s == 'Site' %>
+                  <%= render :partial => "sites_search", :locals => { :site => result } %>
+                <% end %>
               <% end %>
-            <% else %>
-
-
-            <% end %>
+            </div>
 					</div>
-
-					<% if Keystore.value_for('banner-index-center-center-773x84').present? %>
-					<div class="tr-ad">
-						<% banner_index_center_center = Keystore.value_for('banner-index-center-center-773x84').split('|') %>
-						<a href="<%= banner_index_center_center[1] || 'javascript:void(0)' %>" targrt="_blank" ><img class="img-responsive" src="<%= banner_index_center_center[0] %>" alt="首页居中横幅"></a>
-					</div>
-					<% end %>
-
 				</div>
-        <div class="row text-center">
-          <%= paginate @search_results, remote: true %>
-        </div>
+        <% end %>
 			</div>
 
-			<div class="col-sm-3 tr-sidebar tr-sticky">
+      <% unless mobile_device? %>
+			<div class="col-md-3 tr-sidebar tr-sticky padding-0">
 				<%= render file: 'public/templetes/newshub/_sidebar.html.erb' %>
 			</div>
+      <% end %>
 		</div>
 	</div>
 </div>

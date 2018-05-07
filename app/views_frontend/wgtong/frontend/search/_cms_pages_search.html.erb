@@ -1,32 +1,80 @@
-<% @search_results.each do |result| %>
-  <div class="tr-post">
-    <div class="entry-header">
-      <div class="entry-thumbnail">
-        <a href="<%= get_cms_url(result) %>"><img class="img-responsive" src="<%= result.image_path %>" alt="<%= result.title %>"></a>
+<% if @cms_site.pages.ids.present? && @cms_site.pages.ids.include?(page.id) %>
+  <%
+    doc = Nokogiri::HTML(page.try(:content))
+    img_srcs = doc.css('img').map{ |i| i['src'] }
+  %>
+  <% if img_srcs.size < 4 %>
+    <div class="row" style="margin: 10px 0;">
+      <div class="col-md-3 col-xs-4 padding-r-l-5">
+        <a href="<%= get_cms_url(page) %>" class="cover_img_a" title="<%= page.title %>">
+          <div class="cover_img" style="background: no-repeat center url('<%= img_srcs[0].present? ? img_srcs[0] : page.thumb_image_path %>');">
+          </div>
+        </a>
+      </div>
+      <div class="col-md-9 col-xs-8">
+        <div class="header-text">
+          <h4>
+            <a href="<%= get_cms_url(page) %>" title="<%= page.title %>">
+              <% if mobile_device? %>
+                <%= page.title.truncate(24) %>
+              <% else %>
+                <%= page.title.truncate(40) %>
+              <% end %>
+            </a>
+          </h4>
+          <div class="info">
+            <a href="<%= get_cms_url(page) %>"><%= page.keywords.truncate(15) %></a>
+          </div>
+          <div class="info">
+            <% if page.is_foraged %>
+              <a href="<%= get_cms_url(page) %>" title="<%= page.forage["forage_from"] %>">by <%= page.forage["forage_from"] %></a>
+            <% else %>
+              <a href="<%= get_cms_url(page) %>" title="文广通，文化云，公共文化大数据">by 文广通</a>
+            <% end %>
+            <a href="<%= get_cms_url(page) %>">&middot;</a>
+            <a href="<%= get_cms_url(page) %>"><%= distance_of_time_in_words_to_now(page.updated_at) %>前</a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="post-content">
-      <div class="author">
-        <a href="javascript:void(0)"><img class="img-responsive img-circle" src="/templetes/newshub/images/others/user.png" alt="Image"></a>
+  <% else %>
+    <div class="row" style="margin: 10px 0;">
+      <div class="col-md-12 col-xs-12 padding-r-l-5">
+        <div class="header-text">
+          <h4>
+            <a href="<%= get_cms_url(page) %>" title="<%= page.title %>">
+              <%= page.title.truncate(30) %>
+            </a>
+          </h4>
+        </div>
       </div>
-      <div class="entry-meta">
-        <ul>
-          <li><a href="<%= get_cms_url(result) %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(result.updated_at) %>前</a></li>
-          <li><a href="<%= get_cms_url(result) %>"><i class="fa fa-eye"></i> <%= result.impressions_count %>阅读</a></li>
-          <li><a href="<%= get_cms_url(result) %>"><i class="fa fa-comments-o"></i> <%= Cms::Comment.where(source_id: result.id).size %>评论</a></li>
-          <li>
-            <div class="bdsharebuttonbox" data-tag="share_1">
-              <a class="bds_qzone" data-cmd="qzone"></a>
-              <a class="bds_tsina" data-cmd="tsina"></a>
-              <a class="bds_sqq" data-cmd="sqq"></a>
-              <a class="bds_weixin" data-cmd="weixin"></a>
-            </div>
-          </li>
-        </ul>
+      <div class="row" style="padding: 0 15px;">
+        <% loop_count = mobile_device? ? 3 : 4 %>
+        <% loop_count.times.each_with_index do |tim, index| %>
+          <div class="col-md-3 col-xs-4 padding-r-l-5">
+            <a href="<%= get_cms_url(page) %>" class="cover_img_a" title="<%= page.title %>">
+              <div class="cover_img" style="background: no-repeat center url('<%= img_srcs[index] %>');">
+              </div>
+            </a>
+          </div>
+        <% end %>
       </div>
-      <h2 class="entry-title">
-        <%= link_to result.title, get_cms_url(result), :class => 'replace_text' %>
-      </h2>
+      <div class="col-md-12 col-xs-12 padding-r-l-5">
+        <div class="header-text">
+          <div class="info">
+            <% if page.is_foraged %>
+              <a href="<%= get_cms_url(page) %>" title="<%= page.forage["forage_from"] %>">by <%= page.forage["forage_from"] %></a>
+            <% else %>
+              <a href="<%= get_cms_url(page) %>" title="文广通，文化云，公共文化大数据">by 文广通</a>
+            <% end %>
+            <a href="<%= get_cms_url(page) %>">&middot;</a>
+            <a href="<%= get_cms_url(page) %>"><%= distance_of_time_in_words_to_now(page.updated_at) %>前</a>
+            <a href="<%= get_cms_url(page) %>">&middot;</a>
+            <a href="<%= get_cms_url(page) %>"><%= page.keywords.truncate(15) %></a>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  <% end %>
+  <hr class="block-bootom-hr">
 <% end %>

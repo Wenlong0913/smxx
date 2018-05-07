@@ -2,6 +2,7 @@ class Frontend::SitesController < Frontend::BaseController
 	acts_as_commentable resource: Site
   impressionist :actions=>[:show]
   acts_as_trackable user_id: :get_user_id, resource: :get_visit_resource, only: [:show]
+  acts_as_favoriteable resource: Site
 
   def show
     @site = Site.find(params[:id])
