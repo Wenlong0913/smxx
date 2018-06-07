@@ -57,16 +57,13 @@
 .box-boby .class-detail h3{
         float: none
  }
-.content-h{
-    height:52px
-    }
-.text-box{
-    height:48px
+
+.input-group input[type="text"]{
+    min-height: 34px!important
 }
-/* .detail-content-top{
-    position: relative;
-    left:358px ;
-} */
+.img1{
+    width:280px;height:144px;position: relative;left:-15px ;
+}
 @media (max-width: 414px){
 .label-xs{
     position: relative;
@@ -107,5 +104,27 @@
 .btn-p {
     position: relative;
     left: 0px;
+}
+.ul-margin {
+    position: relative;
+    left:0px
+}
+.course-list ul li{
+    width:94%;
+    margin-bottom:1px 
+}
+.img1{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    position: relative;
+    left: 3px;
+}
+.text-box {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 0px ;
+    padding-right: 49px;
+   
 }
 }

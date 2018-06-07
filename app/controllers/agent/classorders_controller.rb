@@ -2,26 +2,14 @@ class Agent::ClassordersController < Agent::BaseController
   before_action :set_classorder, only: [:show, :edit, :update, :destroy]
 
   def index
-    authorize Classorder
-    
+    authorize Classorder 
    # @classorders = Classorder.all.page(params[:page])
       @classorders = @site.classorders.all
-      if params[:search].present?
-        conditions = []
-        query = []
-        keywords = params[:search][:keywords]
-        if !keywords.blank?
-          query << "name like ?"
-          conditions << "%" + keywords + "%"
-        end
-       
-        conditions.unshift query.join(' and ')
-        @classorders = @classorders.where(conditions)
+      @filter_colums = %w(id name)
+      if params[:search] && params[:search][:keywords]
+        @classorders = build_query_filter(@classorders, only: @filter_colums).order(updated_at: :desc).page(params[:page]).per(10)
       end
-      
-      @classorders = @classorders.order(updated_at: :desc)
-       @classorders = @classorders.page(params[:page]).per(10)
-  
+      @classorders=  @classorders.page(params[:page])
       respond_to do |format|
         if params[:json].present?
           # format.json { render json: {:users => @orders.select(:id, :nickname), :total => @orders.size} }

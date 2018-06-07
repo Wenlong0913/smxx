@@ -31,7 +31,9 @@
               </li>
               <li>
                 <span>上课时间:</span>
-                  &nbsp&nbsp<span><%= params[:week] + params[:day] + params[:time] %></sapn>
+                  &nbsp&nbsp<span id="span-text1"><%= params[:week]%></span>
+                  <span id="span-text2"><%= params[:day] %></span>
+                  <span id="span-text3"><%= params[:time] %></span>
               </li>
               <%= f.submit "立即选课", class:"btn btn-danger"%>
             <%else%>
@@ -44,3 +46,5 @@
   </div>
 <% end %>
 <%= render file: 'public/templetes/student2/_footer.html.erb' %>
+
+
