@@ -137,13 +137,11 @@ h1.page-header
                 td.field 库存量
                 td
                   a
-                  -@product.stock.each do |key,value|
-                   a[style="margin-left:5px"]  =value
+                    = @product.stock
                 td.field 库存单位
                 td
                   a
-                  -@product.unit.each do |key,value|
-                   a[style="margin-left:5px"]  =value
+                    = @product.unit
               tr.divider
                 td[colspan='2']
               tr
@@ -152,8 +150,8 @@ h1.page-header
                   a
                     = @product.phone
                 td.field 日期
-                td		
-                  a 
+                td
+                  a
                     = @product.date
                     = @product.time
               tr

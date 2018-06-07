@@ -12,6 +12,7 @@
  *= require frontend/slim.min
  *= require frontend/search_order
  *= require_self
+ *= require favorites
  */
  a{
      text-decoration:none

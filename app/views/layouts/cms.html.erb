@@ -32,7 +32,7 @@
         <% end %>
       <% else %>
         <% if File.exist?( @cms_site.template_dir + @channel.tmp_index )%>
-           <%= render file: @cms_site.template_dir + @channel.tmp_index %>
+          <%= render file: @cms_site.template_dir + @channel.tmp_index %>
         <% else %>
           <h1>找不到模版文件： <%= @channel.tmp_index %> </h1>
         <% end %>

@@ -15,7 +15,7 @@ div
         input.form-control[readonly=true @click="showCatalog = true" :value="catalogs" placeholder="点击输入框选择分类"]
         modal[title="产品分类" :show.sync="showCatalog" @cancel="showCatalog = false"]
           div
-            catalog-list[data-url=admin_product_catalogs_path :default="selecteDefault" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false" :editable='false']
+            catalog-list[data-url=agent_product_catalogs_path :default="selecteDefault" @selected="selected" v-if='showCatalog' :show-confirm-buttons="true" @closed="showCatalog = false" :editable='false']
           div[slot="footer"]
     .col-xs-6
       .form-group

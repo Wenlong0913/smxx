@@ -20,19 +20,12 @@ class Frontend::OrdersController < Frontend::BaseController
     redirect_to binding_phone_users_url(return_url: new_frontend_order_url(product_id: params[:product_id])) unless current_user.try(:mobile).try(:phone_number)
     @order = Order.new
     @product = Product.find(params[:product_id])
-   
-  end
-
-  def new_classorder
-    redirect_to binding_phone_users_url(return_url: new_frontend_order_url(product_id: params[:product_id])) unless current_user.try(:mobile).try(:phone_number)
-    @order = Order.new
-    @course = Course.find(params[:course_id])
   end
 
   def edit
   end
 
-  def create  
+  def create
     ActiveRecord::Base.transaction do
       price = 0
       params[:order][:order_products].each do |order_product|
@@ -44,12 +37,12 @@ class Frontend::OrdersController < Frontend::BaseController
       @frontend_order.price = price
       @frontend_order.description = params[:order][:description]
       @frontend_order.create_by = current_user.id
-      @frontend_order.save!    
+      @frontend_order.save!
       params[:order][:order_products].each do |order_product_params|
         order_product = @frontend_order.order_products.build
         order_product.product_id = order_product_params[:id]
         order_product.amount = order_product_params[:amount]
-        order_product.price = order_product_params[:price] 
+        order_product.price = order_product_params[:price]
         order_product.save!
       end
     end    
@@ -91,6 +84,14 @@ class Frontend::OrdersController < Frontend::BaseController
     if params[:order_id]
       order = Order.find(params[:order_id])
       product = order.order_products.first.product
+      one_account_orders = Order.joins(:order_products).where(user_id: current_user.id, status: ['paid', 'completed']).where("order_products.product_id = ?", product.id)
+      if product.maximum_for_one_account.to_i <= one_account_orders.count
+        order.errors.add 'order_account_signup'.to_sym, "一个账户最多定#{product.maximum_for_one_account}次!"
+        render js: <<-JS
+          window.alert('一个账户最多定#{product.maximum_for_one_account}次!')
+          JS
+        return
+      end
     else
       order = Order.new(user: current_user)
       product = Product.find(params[:order][:product][:id])
@@ -118,19 +119,21 @@ class Frontend::OrdersController < Frontend::BaseController
         end
       end
 
-      # 产品库存是否满足   
-      if params[:order][:kucun].to_i< product_amount.to_i
-        order.errors.add 'order_product_stock'.to_sym, "剩余座位#{product.stock}个!"
-        render js: <<-JS
-          onOrderCreate('#{order.errors.messages.to_json}')
-        JS
-        return
-      end    
       order.order_products.new(product_id: product.id, amount: product_amount, price: product.sell_price)
       order.delivery_phone = params[:order][:delivery_phone] if params[:order][:delivery_phone].present?
       order.site = product.site
       order.price = product.sell_price.to_f * product_amount.to_i
       order.save!
+    end
+
+
+    # 产品库存是否满足
+    if product.stock.to_i < order.order_products.where(product_id: product.id).map(&:amount).sum()
+      order.errors.add 'order_product_stock'.to_sym, "剩余座位#{product.stock}个!"
+      render js: <<-JS
+        onOrderCreate('#{order.errors.messages.to_json}')
+      JS
+      return
     end
 
     if order.price == 0
@@ -140,14 +143,7 @@ class Frontend::OrdersController < Frontend::BaseController
       JS
       return
     end
-    # 产品库存是否满足
-    if params[:order][:kucun].to_i < order.order_products.where(product_id: product.id).map(&:amount).sum()
-      order.errors.add 'order_product_stock'.to_sym, "剩余座位#{product.stock}个!"
-      render js: <<-JS
-        onOrderCreate('#{order.errors.messages.to_json}')
-      JS
-      return
-    end
+
     pay_channel =  wechat_device? ? 'wx_pub' : 'alipay_pc_direct'
     callback_url = URI(Settings.site.host)
     options = 'frontend/orders/' + order.id.to_s + '/paid_success'
@@ -242,7 +238,6 @@ class Frontend::OrdersController < Frontend::BaseController
     # Use callbacks to share common setup or constraints between actions.
     def set_order
       @order = Order.find(params[:id])
-    
     end
 
     # Only allow a trusted parameter "white list" through.
@@ -278,7 +273,7 @@ class Frontend::OrdersController < Frontend::BaseController
       end
 
       one_account_orders = Order.joins(:order_products).where(user_id: current_user.id, status: ['paid', 'completed']).where("order_products.product_id = ?", product.id)
-      if product.maximum_for_one_account.to_i < one_account_orders.count
+      if product.maximum_for_one_account.to_i <= one_account_orders.count
         order.errors.add 'order_account_signup'.to_sym, "一个账户最多定#{product.maximum_for_one_account}次!"
         flag = false
         return flag

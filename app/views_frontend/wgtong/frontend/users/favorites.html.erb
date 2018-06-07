@@ -1,0 +1,95 @@
+<style type="text/css">
+  .active {
+    background-color: #fff !important;
+  }
+</style>
+<div id="wrap">
+  <%= render file: @cms_site.template_dir + '_header.html' %>
+  <section id="start" class="padding-top-bottom text-center">
+    <div class="container">
+      <div class="tr-breadcrumb">
+        <div class="title pull-left">
+          <h1>关注&middot;收藏</h1>
+        </div>
+        <ol class="breadcrumb pull-right">
+          <li><a href="/">首页</a></li>
+          <li><%= link_to '个人中心', users_path %></li>
+        </ol>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="meta-widget meta-color">
+            <ul class="nav nav-tabs row" role="tablist">
+              <li role="presentation" class="active col-md-3 col-xs-6"><a href="#favorites" data-toggle="tab">关注</a></li>
+              <li role="presentation" class="col-md-3 col-xs-6"><a href="#collect" data-toggle="tab">收藏</a></li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active fade in" id="favorites">
+                <% if @favorites_sites.present? %>
+                  <% @favorites_sites.each do |site| %>
+                    <% Site.where(id: site.resource_id).each do |s| %>
+                      <div class="row">
+                        <div class="col-md-12 text-left">
+                          <div class="col-md-3">
+                            <a href="<%= frontend_site_path(s) %>">
+                              <img src="<%= s.first_image %>" class="img-responsive">
+                            </a>
+                          </div>
+                          <div class="col-md-9">
+                            <a href="<%= frontend_site_path(s) %>"><%= s.title %></a>
+                            <br>
+                            <span>联系人：<%= s.contact_name %></span>
+                            <br>
+                            <span>联系电话：<%= s.contact_phone %></span>
+                            <br>
+                            <span>地址：<%= s.address_line %></span>
+                          </div>
+                        </div>
+                      </div>
+                      <hr>
+                    <% end %>
+                  <% end %>
+                <% else %>
+                  <h4 class="text-center">暂无关注商家</h4>
+                <% end %>
+              </div>
+              <div role="tabpanel" class="tab-pane fade in" id="collect">
+                <% if @favorites_products.present? %>
+                  <% @favorites_products.each do |product| %>
+                    <% Product.where(id: product.resource_id).each do |p| %>
+                      <div class="row">
+                        <div class="col-md-12 text-left">
+                          <div class="col-md-3">
+                            <a href="<%= frontend_product_path(p) %>">
+                              <img src="<%= p.first_image %>" class="img-responsive">
+                            </a>
+                          </div>
+                          <div class="col-md-9">
+                            <a href="<%= frontend_product_path(p) %>">
+                              <%= p.name %>
+                            </a>
+                            <br>
+                            <span>时间：<%= p.date %></span>
+                            <br>
+                            <span>地址：<%= p.address_line1 %></span>
+                          </div>
+                        </div>
+                      </div>
+                      <hr>
+                    <% end %>
+                  <% end %>
+                <% else %>
+                  <div class="row">
+                    <h4>暂无收藏活动</h4>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <%= render file: @cms_site.template_dir + '_footer.html' %>
+</div>

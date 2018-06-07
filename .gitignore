@@ -11,8 +11,10 @@ db/schema.rb
 /public/webpack
 /public/photos
 /coverage/
+public/assets
 public/system/
 public/attachments/
+public/templetes
 public/ckeditor_assets/
 
 # Ignore application configuration

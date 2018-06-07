@@ -46,7 +46,6 @@ class User < ApplicationRecord
   has_many :classorders, dependent: :destroy
   has_many :shopping_carts, dependent: :destroy
   has_many :sites
- 
   has_many :preorder_conversitions
   has_many :create_order, class_name: 'Order', foreign_key: :create_by
   has_many :update_order, class_name: 'Order', foreign_key: :update_by
@@ -65,18 +64,18 @@ class User < ApplicationRecord
   has_many :complaints
   has_many_comments
   has_many_favorites
+  has_many :classorders, dependent: :destroy
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
-  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/ #1
-  validates_attachment_file_name :avatar, matches: [/png\z/i, /jpe?g\z/i] #2
-  validates_with AttachmentSizeValidator, attributes: :avatar, less_than: 10.megabytes #3这三个是跟上传图片插件paperclip有关的
-  validates_uniqueness_of :nickname, allow_blank: true  # validates_uniqueness_of 验证是否唯一
-  validates_uniqueness_of :cardnu, allow_blank: true
+  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
+  validates_attachment_file_name :avatar, matches: [/png\z/i, /jpe?g\z/i]
+  validates_with AttachmentSizeValidator, attributes: :avatar, less_than: 10.megabytes
+  validates_uniqueness_of :nickname, allow_blank: true
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_blank: true
-  validates :cardnu, format: { with: /\A[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)\z/,
-  message: "身份证号格式不正确" }, allow_blank: true
-  # 在这里写身份证和真实姓名和出生年月的验证
   attr_accessor :mobile_phone
   validates :mobile_phone, mobile_phone: true, allow_blank: true
+  validates_uniqueness_of :cardnu, allow_blank: true
+  validates :cardnu, format: { with: /\A[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)\z/,
+  message: "身份证号格式不正确" }, allow_blank: true
   enum gender: {
     female: 0, # 女
     male: 1,  # 男
@@ -107,11 +106,6 @@ class User < ApplicationRecord
   def name
     [attributes['nickname'],
       attributes['username'],
-      attributes['relname'],
-      attributes['cardnu'],
-      attributes['birth'],
-      attributes['locity'],
-      attributes['sex'],
       attributes['email'].to_s.sub(/@.*$/, ''),
       self.weixin.try(:name),
       self.mobile.try(:phone_number).to_s.sub(/\d{4}$/, '****')].map(&:presence).compact.first

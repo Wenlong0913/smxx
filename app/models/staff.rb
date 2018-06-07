@@ -46,6 +46,4 @@ class Staff < ApplicationRecord
     image_items.first.try(:image_url)
   end
 
-
 end
-

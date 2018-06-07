@@ -16,18 +16,19 @@
   <div class="product-attr-info">
       <ul class="list-inline row">
         <li class='col-sm-12 col-md-4'>库存: <b class="text-success"><%= @product.stock %><%= "(#{@product.unit})" if @product.unit.present? %></b></li>
-          <% if @product.discount.to_f > 0 && @product.discount.to_f < @product.price.to_f %>
-            <li class='col-sm-12 col-md-4'>
-              原价：<span class="discount text-danger">￥<%= @product.price.to_f / 100 %></span>
-            </li>
-            <li class='col-sm-12 col-md-4'>
-              优惠价：<span class="price text-primary">￥<%= @product.discount.to_f / 100 %></span>
-            </li>
-          <% else %>
-            <li class='col-sm-12 col-md-4'>
-              售价：<span class="price text-primary">￥<%= @product.price.to_f / 100 %></span>
-            </li>
-          <% end %>
+        <% if @product.discount.to_f > 0 && @product.discount.to_f < @product.price.to_f %>
+
+          <li class='col-sm-12 col-md-4'>
+            原价：<span class="discount text-danger">￥<%= @product.price.to_f / 100 %></span>
+          </li>
+          <li class='col-sm-12 col-md-4'>
+            优惠价：<span class="price text-primary">￥<%= @product.discount.to_f / 100 %></span>
+          </li>
+        <% else %>
+          <li class='col-sm-12 col-md-4'>
+            售价：<span class="price text-primary">￥<%= @product.price.to_f / 100 %></span>
+          </li>
+        <% end %>
       </ul>
   </div>
   <div class="product-attr-info">

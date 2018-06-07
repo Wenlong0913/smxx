@@ -1,47 +1,120 @@
-<div class="theiaStickySidebar">
-  <div class="tr-section">
-    <% @search_results.each do |product| %>
-      <div class="tr-post">
-        <div class="entry-header">
-          <div class="entry-thumbnail">
-            <a href="<%= frontend_product_path(product) %>">
-              <img class="img-responsive" src="<%= product.first_image %>" alt="Image">
-            </a>
-          </div>
+<%
+  doc = Nokogiri::HTML(product.try(:content))
+  img_srcs = doc.css('img').map{ |i| i['src'] }
+%>
+<% if img_srcs.size < 4 %>
+  <div class="row" style="margin: 10px 0;">
+    <div class="col-md-3 col-xs-4 padding-r-l-5">
+      <% if product.external_purchase_url.presence %>
+        <a href="<%= product.external_purchase_url %>" class="cover_img_a" target="_blank" title="<%= product.name %>">
+      <% elsif product.is_foraged %>
+        <a href="<%= product.forage_url %>" class="cover_img_a" target="_blank" title="<%= product.name %>">
+      <% else %>
+        <a href="<%= frontend_product_path(product) %>" class="cover_img_a" title="<%= product.name %>">
+      <% end %>
+        <div class="cover_img" style="background: no-repeat center url('<%= img_srcs[0].present? ? img_srcs[0] : product.first_image %>');">
         </div>
-        <div class="post-content">
-          <div class="author">
-            <a href="javascript:void(0)">
-              <img class="img-responsive img-circle" src="/templetes/newshub/images/others/user.png" alt="Image">
-            </a>
-          </div>
-          <div class="entry-meta">
-            <ul>
-              <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-clock-o"></i> <%= distance_of_time_in_words_to_now(product.updated_at) %>前</a></li>
-              <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-eye"></i> <%= product.visits_count %>阅读</a></li>
-              <li><a href="/frontend/products/<%= product.id %>"><i class="fa fa-comments-o"></i> <%= product.comments_count %>评论</a></li>
-            </ul>
-          </div>
-          <h2 class="entry-title">
-            <%= link_to product.name, frontend_product_path(product) %>
-          </h2>
-          <div class="read-more">
-            <div class="continue-reading pull-left">
-              <a href="<%= frontend_product_path(product) %>">阅读更多 <i class="fa fa-angle-right"></i></a>
-            </div>
-            <div class="feed pull-right">
-              <ul>
-                <div class="bdsharebuttonbox" data-tag="share_1">
-                  <a class="bds_qzone" data-cmd="qzone"></a>
-                  <a class="bds_tsina" data-cmd="tsina"></a>
-                  <a class="bds_sqq" data-cmd="sqq"></a>
-                  <a class="bds_weixin" data-cmd="weixin"></a>
-                </div>
-              </ul>
-            </div>
-          </div>
+      </a>
+    </div>
+    <div class="col-md-9 col-xs-8">
+      <div class="header-text">
+        <h4>
+          <% if product.external_purchase_url.presence %>
+            <a href="<%= product.external_purchase_url %>" target="_blank" title="<%= product.name %>">
+          <% elsif product.is_foraged %>
+            <a href="<%= product.forage_url %>" target="_blank" title="<%= product.name %>">
+          <% else %>
+            <a href="<%= frontend_product_path(product) %>" title="<%= product.name %>">
+          <% end %>
+            <%= product.name.truncate(24) %>
+          </a>
+        </h4>
+        <div class="info">
+          <% if product.date.present? %>
+          <a href="javascript:;" title="<%= product.date %>"><%= product.date %></a>
+          <a href="javascript:;">&middot;</a>
+          <% end %>
+          <% if product.address_line1.present? %>
+          <a href="javascript:;" title="<%= product.address_line1 %>"><%= product.address_line1.truncate(11) %></a>
+          <% end %>
+        </div>
+        <div class="info">
+          <% if product.is_foraged %>
+            <a href="javascript:;" title="<%= product.forage["forage_from"] %>"><%= product.forage["forage_from"] %></a>
+          <% else %>
+            <a href="<%= frontend_site_path(product.site) %>" title="<%= product.site.title %>"><%= product.site.title %></a>
+          <% end %>
+          <a href="javascript:;">&middot;</a>
+          <a href="javascript:;" title="<%= product.catalog.name %>"><%= product.catalog.name %></a>
+          <a href="javascript:;">&middot;</a>
+          <a href="javascript:;" title="">
+            <% if product.sell_price && product.sell_price > 0 %>
+              ￥<%= product.sell_price / 100 %>
+            <% else %>
+              免费
+            <% end %>
+          </a>
         </div>
       </div>
-    <% end %>
+    </div>
   </div>
-</div>
+<% else %>
+  <div class="row" style="margin: 10px 0;">
+    <div class="col-md-12 col-xs-12 padding-r-l-5">
+      <div class="header-text">
+        <h4>
+          <% if product.external_purchase_url.presence %>
+            <a href="<%= product.external_purchase_url %>" target="_blank" title="<%= product.name %>">
+          <% elsif product.is_foraged %>
+            <a href="<%= product.forage_url %>" target="_blank" title="<%= product.name %>">
+          <% else %>
+            <a href="<%= frontend_product_path(product) %>" title="<%= product.name %>">
+          <% end %>
+            <%= product.name.truncate(30) %>
+          </a>
+        </h4>
+      </div>
+    </div>
+    <div class="row" style="padding: 0 15px;">
+      <% loop_count = mobile_device? ? 3 : 4 %>
+      <% loop_count.times.each_with_index do |tim, index| %>
+        <div class="col-md-3 col-xs-4 padding-r-l-5">
+          <% if product.external_purchase_url.presence %>
+            <a href="<%= product.external_purchase_url %>" class="cover_img_a" target="_blank" title="<%= product.name %>">
+          <% elsif product.is_foraged %>
+            <a href="<%= product.forage_url %>" class="cover_img_a" target="_blank" title="<%= product.name %>">
+          <% else %>
+            <a href="<%= frontend_product_path(product) %>" class="cover_img_a" title="<%= product.name %>">
+          <% end %> 
+            <div class="cover_img" style="background: no-repeat center url('<%= img_srcs[index] %>');">
+            </div>
+          </a>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-12 col-xs-12 padding-r-l-5">
+      <div class="header-text">
+        <div class="info">
+          <% if product.is_foraged %>
+            <a href="javascript:;" title="<%= product.forage["forage_from"] %>"><%= product.forage["forage_from"] %></a>
+          <% else %>
+            <a href="<%= frontend_site_path(product.site) %>" title="<%= product.site.title %>"><%= product.site.title %></a>
+          <% end %>
+          <a>&middot;</a>
+          <a href="javascript:;" title="<%= product.catalog.name %>"><%= product.catalog.name %></a>
+          <a>&middot;</a>
+          <a href="javascript:;" title="<%= product.date %>"><%= product.date %></a>
+          <a href="javascript:;">&middot;</a>
+          <a href="javascript:;" title="">
+            <% if product.sell_price && product.sell_price > 0 %>
+              ￥<%= product.sell_price / 100 %>
+            <% else %>
+              免费
+            <% end %>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<hr class="block-bootom-hr">

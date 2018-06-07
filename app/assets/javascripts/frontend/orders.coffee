@@ -9,19 +9,26 @@ $(document).ready ->
       data:
         defaultvalues: {}
         defaultkeys: {}
-        members: [{key: (new Date()).getTime()}]
+        # members: [{key: (new Date()).getTime()}]
+        orderNumber: 1
+        tempMembers: [{key: (new Date()).getTime()}]
       methods:
-        addMembers: ->
-          if (this.members.length >= maximumForOneOrder)
-            alert('一个订单最多定' + maximumForOneOrder + '个!')
-          else
-            console.log('add members')
-            this.members.push({key: (new Date()).getTime()})
         removeMembers: (index)->
-          if (this.members.length > 1)
-            this.members.splice(index, 1)
+          if (this.tempMembers.length > 1)
+            this.tempMembers.splice(index, 1)
+            this.orderNumber = this.orderNumber - 1
           else
             alert('至少填写一个名额')
+      computed:
+        members: ->
+          temp = this.tempMembers
+          if temp.length < this.orderNumber
+            for i in [(temp.length+1)..this.orderNumber]
+              temp.push({key: (new Date()).getTime() + i})
+          else
+            temp = temp.splice(0, this.orderNumber)
+          this.tempMembers = temp
+          return temp
     # defaultkeys = bodyEdit.find("div[rel='attr_list_vue']").data('keys')
     # defaultvalues = bodyEdit.find("div[rel='attr_list_vue']").data('values')
     # attrList.lists = []

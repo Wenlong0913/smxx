@@ -47,7 +47,9 @@
                   <!-- begin media -->
                   <div class="media">
                     <% if Settings.project.imolin? || Settings.project.sxhop? || Settings.project.wgtong? %>
-                      <%= image_tag order.products.first.first_image, height: '50px' %>
+                      <% if order.products.present? %>
+                        <%= image_tag order.products.first.first_image, height: '50px' %>
+                      <% end %>
                     <% else %>
                       <%= image_tag 'no-picture.png' %>
                     <% end %>
@@ -68,8 +70,10 @@
                           <div class="col-xs-6">
                             客户：
                             <a href="javascript:void(0)" style="text-decoration: none;">
-                              <% if Settings.project.sxhop? || Settings.project.imolin? || Settings.project.wgtong? %>
+                              <% if Settings.project.sxhop? || Settings.project.imolin? %>
                                 <%= order.user.try(:nickname) %>
+                              <% elsif Settings.project.wgtong? %>
+                                <%= order.user.name %>
                               <% else %>
                                 <%= order.try(:member).try(:name)%>
                               <% end%>

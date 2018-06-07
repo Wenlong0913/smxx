@@ -25,11 +25,11 @@ class Vendor < Item
   audited
 
   # 供应商只能够属于公司
-  after_initialize do  #该after_initialize每当一个Active Record对象被实例化回调将被调用
+  after_initialize do
     self.site_id = Site::MAIN_ID
   end
 
-  before_validation do   
+  before_validation do
     self.site_id = Site::MAIN_ID
   end
 end

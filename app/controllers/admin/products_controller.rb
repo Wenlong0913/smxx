@@ -39,15 +39,12 @@ class Admin::ProductsController < Admin::BaseController
   # GET /admin/products/1
   def show
     authorize @product
-    # @Item = Item.all
   end
 
   # GET /admin/products/new
   def new
     authorize Product
     @product = Product.new
-  
-   
   end
 
   # GET /admin/products/1/edit
@@ -106,7 +103,7 @@ class Admin::ProductsController < Admin::BaseController
 
     def set_site_tags
       @tags_all = @site.tags.pluck(:name).uniq
-      @most_used_tags = @site.tags.most_used(5).uniq.map(&:name) #uniq删除数组中的重复元素后生成新数组并返回它
+      @most_used_tags = @site.tags.most_used(5).uniq.map(&:name)
     end
 
     def set_site
@@ -128,7 +125,6 @@ class Admin::ProductsController < Admin::BaseController
       end
       params[:product][:tag_list] = [] if params[:product][:tag_list].blank?
     end
-    
     def set_product_price
       params[:product][:price] = params[:product][:price].to_f * 100 unless params[:product][:price].blank?
       params[:product][:discount] = params[:product][:discount].to_f * 100 unless params[:product][:discount].blank?

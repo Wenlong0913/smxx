@@ -80,7 +80,7 @@ class Agent::ProductsController < Agent::BaseController
       end
     end
     if @product.purchase_type && @product.purchase_type.include?('sign_up')
-      @orders = OrderProduct.where(product_id: @product.id).map{|order_product| order_product.order}
+      @orders = @product.orders.where(status: ['paid','completed'])
     end
     respond_to do |format|
       format.html
@@ -104,7 +104,6 @@ class Agent::ProductsController < Agent::BaseController
   def new
     authorize Product
     @product = Product.new
-    
   end
 
   def edit
@@ -175,8 +174,8 @@ class Agent::ProductsController < Agent::BaseController
   def download_signup_members
     if params[:format] == 'csv'
       if @product.purchase_type && @product.purchase_type.include?('sign_up')
-        orders = OrderProduct.where(product_id: @product.id).map{|order_product| order_product.order}
-        members = orders.map{|o| o.member_attributes}.flatten.compact
+        @orders = @product.orders.where(status: ['paid','completed'])
+        members = @orders.map{|o| o.member_attributes}.flatten.compact
       end
       send_data(to_csv(members, @product), filename: "products-members-signup-#{Time.now.localtime.strftime('%Y%m%d%H%M%S')}.csv")
     end
@@ -203,7 +202,6 @@ class Agent::ProductsController < Agent::BaseController
     def filter_additional_attribute
       if params[:product][:additional_attribute_keys].present?
         params[:product][:additional_attribute_keys].each_pair do |k, v|
-          # 这里的意思是只要它的value值是有的那就可以修改成功，但是一旦value为空就把整个这一条信息给删除
           if v.blank?
             params[:product][:additional_attribute_keys].delete(k)
             params[:product][:additional_attribute_values].delete(k)
@@ -215,7 +213,6 @@ class Agent::ProductsController < Agent::BaseController
         @product.additional_attribute_values = params[:product][:additional_attribute_values]
       end
     end
-     
     def set_site_tags
       @site_tags      = @site.tags.pluck(:name).uniq
       @site_most_tags = @site.tags.most_used(5).uniq.map(&:name)
